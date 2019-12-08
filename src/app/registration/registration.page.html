@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>W</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-center">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
+          <app-introduction *ngIf="activeStep.id == 'introduction'" (onNextStep)="chooseWishListName($event)"></app-introduction>
+          <app-wish-list-name formControlName="name" *ngIf="activeStep.id == 'wishListName'" (onNextStep)="chooseDate($event)"></app-wish-list-name>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-button expand="block" (click)="nextStep()" [disabled]="buttonDisabled">Weiter</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
