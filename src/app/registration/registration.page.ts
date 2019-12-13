@@ -14,17 +14,27 @@ export class RegistrationPage implements OnInit {
     new RegistrationStep('introduction'),
     new RegistrationStep('wishListName'),
     new RegistrationStep('wishListDate'),
-    new RegistrationStep('wishListPartner')
+    new RegistrationStep('wishListPartner'),
+    new RegistrationStep('wishListWish')
   ]
 
   activeStep: RegistrationStep;
-  registrationForm: FormGroup ;
+  registrationForm: FormGroup;
+  searchKeyword: String;
 
   constructor(private formBuilder: FormBuilder) {
     this.registrationForm = this.formBuilder.group({
       name: ['', Validators.required],
       date: ['', Validators.required],
-      partner: ['', Validators.email]
+      partner: ['', Validators.email],
+      wishes: this.formBuilder.array([ 
+        this.formBuilder.group({
+          name: '',
+          price: '',
+          imageUrl: '',
+          productUrl: ''
+        }) 
+      ], [Validators.required, Validators.min(1)])
     });
   }
 
@@ -40,6 +50,8 @@ export class RegistrationPage implements OnInit {
       this.activeStep = this.registrationStates[2]
     } else if (this.activeStep.id == 'wishListDate') {
       this.activeStep = this.registrationStates[3]
+    } else if (this.activeStep.id == 'wishListPartner') {
+      this.activeStep = this.registrationStates[4]
     }
   }
 
@@ -55,9 +67,15 @@ export class RegistrationPage implements OnInit {
     } else if (this.activeStep.id == 'wishListPartner') {
       const form = this.registrationForm.value as RegistrationForm;
       return !form.partner;
-    } else {
+    } else if (this.activeStep.id == 'wishListWish') {
+      return !this.searchKeyword;
+    }else {
       return false;
     }
+  }
+
+  getUpdatedSearchKeyword(keyword: String) {
+    this.searchKeyword = keyword;
   }
 
 }
