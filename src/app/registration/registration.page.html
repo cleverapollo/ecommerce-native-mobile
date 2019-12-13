@@ -15,6 +15,7 @@
           <app-introduction *ngIf="activeStep.id == 'introduction'"></app-introduction>
           <app-wish-list-name formControlName="name" *ngIf="activeStep.id == 'wishListName'"></app-wish-list-name>
           <app-wish-list-date formControlName="date" *ngIf="activeStep.id == 'wishListDate'"></app-wish-list-date>
+          <app-wish-list-partner formControlName="partner" *ngIf="activeStep.id == 'wishListPartner'"></app-wish-list-partner>
         </form>
       </ion-col>
     </ion-row>
