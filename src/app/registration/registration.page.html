@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>W</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,8 +12,9 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="6">
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
-          <app-introduction *ngIf="activeStep.id == 'introduction'" (onNextStep)="chooseWishListName($event)"></app-introduction>
-          <app-wish-list-name formControlName="name" *ngIf="activeStep.id == 'wishListName'" (onNextStep)="chooseDate($event)"></app-wish-list-name>
+          <app-introduction *ngIf="activeStep.id == 'introduction'"></app-introduction>
+          <app-wish-list-name formControlName="name" *ngIf="activeStep.id == 'wishListName'"></app-wish-list-name>
+          <app-wish-list-date formControlName="date" *ngIf="activeStep.id == 'wishListDate'"></app-wish-list-date>
         </form>
       </ion-col>
     </ion-row>

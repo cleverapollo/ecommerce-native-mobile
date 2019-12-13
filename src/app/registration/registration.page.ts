@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegistrationStep } from './registration-step';
 import { RegistrationForm } from './registration-form';
 
@@ -12,7 +12,8 @@ export class RegistrationPage implements OnInit {
 
   private registrationStates: RegistrationStep[] = [
     new RegistrationStep('introduction'),
-    new RegistrationStep('wishListName')
+    new RegistrationStep('wishListName'),
+    new RegistrationStep('wishListDate')
   ]
 
   activeStep: RegistrationStep;
@@ -20,7 +21,8 @@ export class RegistrationPage implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.registrationForm = this.formBuilder.group({
-      name: ''
+      name: ['', Validators.required],
+      date: ['', Validators.required]
     });
   }
 
@@ -32,6 +34,8 @@ export class RegistrationPage implements OnInit {
   nextStep() {
     if (this.activeStep.id == 'introduction') {
       this.activeStep = this.registrationStates[1]
+    } else if (this.activeStep.id == 'wishListName') {
+      this.activeStep = this.registrationStates[2]
     }
   }
 
@@ -40,8 +44,10 @@ export class RegistrationPage implements OnInit {
   get buttonDisabled() : boolean  {
     if (this.activeStep.id == 'wishListName') { 
       const form = this.registrationForm.value as RegistrationForm;
-      console.log(form.name.length);
       return form.name.length == 0;
+    } else if (this.activeStep.id == 'wishListDate') {
+      const form = this.registrationForm.value as RegistrationForm;
+      return !form.date;
     } else {
       return false;
     }
