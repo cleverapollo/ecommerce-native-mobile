@@ -12,6 +12,7 @@ import { WishListNameComponent } from './wish-list-name/wish-list-name.component
 import { WishListDateComponent } from './wish-list-date/wish-list-date.component';
 import { WishListPartnerComponent } from './wish-list-partner/wish-list-partner.component';
 import { WishListWishComponent } from './wish-list-wish/wish-list-wish.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { WishListWishComponent } from './wish-list-wish/wish-list-wish.component
     WishListNameComponent, 
     WishListDateComponent,
     WishListPartnerComponent,
-    WishListWishComponent
+    WishListWishComponent,
+    SearchResultsComponent
   ]
 })
 export class RegistrationPageModule {}

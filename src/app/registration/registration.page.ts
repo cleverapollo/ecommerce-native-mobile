@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegistrationStep } from './registration-step';
 import { RegistrationForm } from './registration-form';
+import { SearchService } from './services/search.service';
+import { SearchResultItem } from './services/search-result-item';
 
 @Component({
   selector: 'app-registration',
@@ -15,14 +17,16 @@ export class RegistrationPage implements OnInit {
     new RegistrationStep('wishListName'),
     new RegistrationStep('wishListDate'),
     new RegistrationStep('wishListPartner'),
-    new RegistrationStep('wishListWish')
+    new RegistrationStep('wishListWish'),
+    new RegistrationStep('searchResults')
   ]
 
   activeStep: RegistrationStep;
   registrationForm: FormGroup;
   searchKeyword: String;
+  searchResult: Array<SearchResultItem> = new Array();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private searchService: SearchService) {
     this.registrationForm = this.formBuilder.group({
       name: ['', Validators.required],
       date: ['', Validators.required],
@@ -52,6 +56,14 @@ export class RegistrationPage implements OnInit {
       this.activeStep = this.registrationStates[3]
     } else if (this.activeStep.id == 'wishListPartner') {
       this.activeStep = this.registrationStates[4]
+    } else if (this.activeStep.id == 'wishListWish') {
+      this.searchService.searchForItems(this.searchKeyword).subscribe({
+        next: (wishes) => {
+          this.searchResult = wishes;
+          this.activeStep = this.registrationStates[5]
+        },
+        error: e => console.error(e)
+      });
     }
   }
 

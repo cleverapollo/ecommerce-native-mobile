@@ -19,4 +19,16 @@ export class ApiService {
       headers: headers
     });
   }
+
+  get<T>(url: string) : Observable<T> {
+    const headers = new HttpHeaders()
+      .set('Accept', 'application/json')
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Content-Type', 'application/json')
+
+    return this.httpClient.get<T>(`http://127.0.0.1:8080/${url}`, {
+      headers: headers,
+      responseType: 'json'
+    });
+  }
 }
