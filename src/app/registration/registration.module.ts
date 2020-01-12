@@ -15,6 +15,7 @@ import { WishListWishComponent } from './wish-list-wish/wish-list-wish.component
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { AccountFirstNameComponent } from './account-first-name/account-first-name.component';
+import { AccountEmailPasswordComponent } from './account-email-password/account-email-password.component';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { AccountFirstNameComponent } from './account-first-name/account-first-na
   ],
   declarations: [
     AccountFirstNameComponent,
+    AccountEmailPasswordComponent,
     RegistrationPage, 
     IntroductionComponent, 
     WishListNameComponent, 

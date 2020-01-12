@@ -20,6 +20,7 @@
           <app-search-results formControlName="wishes" [wishes]="searchResult" *ngIf="activeStep.id == 'searchResults'"></app-search-results>
           <div formGroupName="accountInfos">
             <app-account-first-name formControlName="firstName" *ngIf="activeStep.id == 'firstName'"></app-account-first-name>
+            <app-account-email-password formControlName="credentials" *ngIf="activeStep.id == 'emailPassword'"></app-account-email-password>
           </div>
         </form>
       </ion-col>

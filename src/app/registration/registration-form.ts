@@ -7,5 +7,9 @@ export interface RegistrationForm {
     wishes: [SearchResultItem];
     accountInfos: {
         firstName: String;
+        credentials: {
+            email: String;
+            password: String;
+        }
     }
 }
