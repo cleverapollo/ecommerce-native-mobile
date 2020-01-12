@@ -18,6 +18,9 @@
           <app-wish-list-partner formControlName="partner" *ngIf="activeStep.id == 'wishListPartner'"></app-wish-list-partner>
           <app-wish-list-wish (onKeyWordChange)="getUpdatedSearchKeyword($event)"  *ngIf="activeStep.id == 'wishListWish'"></app-wish-list-wish>
           <app-search-results formControlName="wishes" [wishes]="searchResult" *ngIf="activeStep.id == 'searchResults'"></app-search-results>
+          <div formGroupName="accountInfos">
+            <app-account-first-name formControlName="firstName" *ngIf="activeStep.id == 'firstName'"></app-account-first-name>
+          </div>
         </form>
       </ion-col>
     </ion-row>

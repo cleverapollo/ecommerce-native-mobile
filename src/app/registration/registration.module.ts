@@ -14,6 +14,7 @@ import { WishListPartnerComponent } from './wish-list-partner/wish-list-partner.
 import { WishListWishComponent } from './wish-list-wish/wish-list-wish.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { AccountFirstNameComponent } from './account-first-name/account-first-name.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
     RegistrationPageRoutingModule
   ],
   declarations: [
+    AccountFirstNameComponent,
     RegistrationPage, 
     IntroductionComponent, 
     WishListNameComponent, 

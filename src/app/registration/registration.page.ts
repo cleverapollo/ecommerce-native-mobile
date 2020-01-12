@@ -34,7 +34,10 @@ export class RegistrationPage implements OnInit {
       name: ['', Validators.required],
       date: ['', Validators.required],
       partner: ['', Validators.email],
-      wishes: ''
+      wishes: '',
+      accountInfos: this.formBuilder.group({
+        firstName: ['', Validators.required]
+      })
     });
   }
 
@@ -62,6 +65,8 @@ export class RegistrationPage implements OnInit {
       });
     } else if (this.activeStep.id == 'searchResults') {
       this.activeStep = this.registrationStates[6]
+    } else if (this.activeStep.id == 'firstName') {
+      this.activeStep = this.registrationStates[7]
     }
   }
 
@@ -82,6 +87,9 @@ export class RegistrationPage implements OnInit {
     } else if (this.activeStep.id == 'searchResults') {
       const form = this.registrationForm.value as RegistrationForm;
       return !form.wishes;
+    } else if (this.activeStep.id == 'firstName') {
+      const form = this.registrationForm.value as RegistrationForm;
+      return !form.accountInfos || !form.accountInfos.firstName;
     } else {
       return false;
     }

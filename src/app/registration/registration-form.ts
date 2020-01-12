@@ -4,5 +4,8 @@ export interface RegistrationForm {
     name: String;
     date: Date;
     partner: String;
-    wishes: [SearchResultItem]
+    wishes: [SearchResultItem];
+    accountInfos: {
+        firstName: String;
+    }
 }
