@@ -21,7 +21,7 @@ export class RegistrationPage implements OnInit {
     new RegistrationStep('searchResults'),
     new RegistrationStep('firstName'),
     new RegistrationStep('emailPassword'),
-    new RegistrationStep('emailNotification'),
+    new RegistrationStep('registrationCompleted'),
   ]
 
   activeStep: RegistrationStep;

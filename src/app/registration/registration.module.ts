@@ -16,6 +16,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { SearchResultComponent } from './search-result/search-result.component';
 import { AccountFirstNameComponent } from './account-first-name/account-first-name.component';
 import { AccountEmailPasswordComponent } from './account-email-password/account-email-password.component';
+import { RegistrationCompletedComponent } from './registration-completed/registration-completed.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { AccountEmailPasswordComponent } from './account-email-password/account-
     WishListDateComponent,
     WishListPartnerComponent,
     WishListWishComponent,
+    RegistrationCompletedComponent,
     SearchResultsComponent,
     SearchResultComponent
   ]

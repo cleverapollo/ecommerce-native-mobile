@@ -22,6 +22,7 @@
             <app-account-first-name formControlName="firstName" *ngIf="activeStep.id == 'firstName'"></app-account-first-name>
             <app-account-email-password formControlName="credentials" *ngIf="activeStep.id == 'emailPassword'"></app-account-email-password>
           </div>
+          <app-registration-completed *ngIf="activeStep.id == 'registrationCompleted'"></app-registration-completed>
         </form>
       </ion-col>
     </ion-row>
