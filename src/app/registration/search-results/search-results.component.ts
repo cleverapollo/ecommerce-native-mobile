@@ -16,7 +16,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class SearchResultsComponent implements OnInit, ControlValueAccessor {
 
-  private onChange: Function = (wish: SearchResultItem) => {}
+  private onChange: Function = (wish: Array<SearchResultItem>) => {}
   private onTouch: Function = () => {}
   private disabled: boolean = false;
 
@@ -29,7 +29,7 @@ export class SearchResultsComponent implements OnInit, ControlValueAccessor {
     console.log(this.wishes);
   }
 
-  writeValue(value: SearchResultItem): void {
+  writeValue(value: Array<SearchResultItem>): void {
     this.onChange(value);
   }
 
@@ -45,8 +45,9 @@ export class SearchResultsComponent implements OnInit, ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  updateValue(event: CustomEvent) {
-    this.writeValue(event.detail.value);
+  updateValue(item: SearchResultItem) {
+    const selectedWishes = [item]
+    this.writeValue(selectedWishes);
     this.onTouch();
   }
 

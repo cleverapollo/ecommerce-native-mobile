@@ -18,7 +18,10 @@ export class RegistrationPage implements OnInit {
     new RegistrationStep('wishListDate'),
     new RegistrationStep('wishListPartner'),
     new RegistrationStep('wishListWish'),
-    new RegistrationStep('searchResults')
+    new RegistrationStep('searchResults'),
+    new RegistrationStep('firstName'),
+    new RegistrationStep('emailPassword'),
+    new RegistrationStep('emailNotification'),
   ]
 
   activeStep: RegistrationStep;
@@ -31,14 +34,7 @@ export class RegistrationPage implements OnInit {
       name: ['', Validators.required],
       date: ['', Validators.required],
       partner: ['', Validators.email],
-      wishes: this.formBuilder.array([ 
-        this.formBuilder.group({
-          name: '',
-          price: '',
-          imageUrl: '',
-          productUrl: ''
-        }) 
-      ], [Validators.required, Validators.min(1)])
+      wishes: ''
     });
   }
 
@@ -64,6 +60,8 @@ export class RegistrationPage implements OnInit {
         },
         error: e => console.error(e)
       });
+    } else if (this.activeStep.id == 'searchResults') {
+      this.activeStep = this.registrationStates[6]
     }
   }
 
@@ -81,7 +79,10 @@ export class RegistrationPage implements OnInit {
       return !form.partner;
     } else if (this.activeStep.id == 'wishListWish') {
       return !this.searchKeyword;
-    }else {
+    } else if (this.activeStep.id == 'searchResults') {
+      const form = this.registrationForm.value as RegistrationForm;
+      return !form.wishes;
+    } else {
       return false;
     }
   }
