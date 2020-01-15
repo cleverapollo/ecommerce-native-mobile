@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-wish-list-wish',
@@ -7,14 +8,14 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class WishListWishComponent implements OnInit {
 
-  @Output() onKeyWordChange = new EventEmitter<string>();
+  keywords: String
 
-  constructor() { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {}
 
-  onInputChanged(event: CustomEvent) {
-    this.onKeyWordChange.emit(event.detail.value);
+  search() {
+    this.router.navigate(['../search-results'], { relativeTo: this.activatedRoute, queryParams: { keywords: this.keywords } })
   }
 
 }

@@ -1,7 +1,34 @@
-<ion-grid>
-  <ion-row>
-    <ion-col size="6" *ngFor="let wish of wishes; let i = index">
-      <app-search-result [wish]="wish" (onSelectWish)="updateValue($event)"></app-search-result>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>W</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-center">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" *ngFor="let wish of wishes; let i = index">
+              <app-search-result [wish]="wish" (onSelectWish)="updateValue($event)"></app-search-result>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-button expand="block" (click)="next()">Weiter</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

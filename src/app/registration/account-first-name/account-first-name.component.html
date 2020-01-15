@@ -1,14 +1,43 @@
-<ion-text color="tertiary">
-  <h1 class="ion-text-center">Herzlichen Glückwunsch!</h1>
-</ion-text>
-<p>
-  Du hast deine erste Wunschliste erstellt und 
-  deinen ersten Wunsch hinzugefügt.
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>W</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  Wir wünschen dir viel Spaß mit Wantic.
+<ion-content>
+  <ion-grid class="ion-center">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-text color="tertiary">
+          <h1 class="ion-text-center">Herzlichen Glückwunsch!</h1>
+        </ion-text>
+        <p>
+          Du hast deine erste Wunschliste erstellt und 
+          deinen ersten Wunsch hinzugefügt.
+        
+          Wir wünschen dir viel Spaß mit Wantic.
+        
+          Sag uns noch deinen Namen
+        </p>
+        <form [formGroup]="form">
+          <ion-item>
+            <ion-input formControlName="firstName" type="text" placeholder="Vorname"></ion-input>
+          </ion-item>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
 
-  Sag uns noch deinen Namen
-</p>
-<ion-item>
-  <ion-input type="text" placeholder="Vorname" (ionChange)="updateValue($event)"></ion-input>
-</ion-item>
+<ion-footer no-border>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-button expand="block" routerLink="../credentials" [disabled]="!form.valid">Weiter</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

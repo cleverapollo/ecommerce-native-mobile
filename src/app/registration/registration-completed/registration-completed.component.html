@@ -1,12 +1,39 @@
-<ion-text color="tertiary">
-  <h1 class="ion-text-center">Fast geschafft</h1>
-</ion-text>
-<p>
-  Wir haben dir gerade eine Mail gesendet,
-  um deine Mailadresse zu prüfen. Klicke
-  einfach auf den Bestätigungslink in der
-  Mail und schon kanns losgehen.
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>W</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  Bis gleich und viel Spaß beim Wünsche
-  speichern und teilen.
-</p>
+<ion-content>
+  <ion-grid class="ion-center">
+      <ion-row class="ion-justify-content-center">
+          <ion-col size-lg="6">
+            <ion-text color="tertiary">
+              <h1 class="ion-text-center">Fast geschafft</h1>
+            </ion-text>
+            <p>
+              Wir haben dir gerade eine Mail gesendet,
+              um deine Mailadresse zu prüfen. Klicke
+              einfach auf den Bestätigungslink in der
+              Mail und schon kanns losgehen.
+            
+              Bis gleich und viel Spaß beim Wünsche
+              speichern und teilen.
+            </p>            
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-grid>
+      <ion-row class="ion-justify-content-center">
+          <ion-col size-lg="6">
+              <ion-button expand="block" routerLink="/login">Zurück zum Login</ion-button>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-footer>

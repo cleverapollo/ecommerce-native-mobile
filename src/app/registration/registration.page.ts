@@ -4,6 +4,8 @@ import { RegistrationStep } from './registration-step';
 import { RegistrationForm } from './registration-form';
 import { SearchService } from './services/search.service';
 import { SearchResultItem } from './services/search-result-item';
+import { Router, ActivatedRoute } from '@angular/router';
+import { RegistrationFormService } from './registration-form.service';
 
 @Component({
   selector: 'app-registration',
@@ -11,6 +13,8 @@ import { SearchResultItem } from './services/search-result-item';
   styleUrls: ['./registration.page.scss'],
 })
 export class RegistrationPage implements OnInit {
+
+
 
   private registrationStates: RegistrationStep[] = [
     new RegistrationStep('introduction'),
@@ -24,6 +28,7 @@ export class RegistrationPage implements OnInit {
     new RegistrationStep('registrationCompleted'),
   ]
 
+  formControlName: String = 'name';
   activeStep: RegistrationStep;
   registrationForm: FormGroup;
   searchKeyword: String;
@@ -43,34 +48,6 @@ export class RegistrationPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStep = this.registrationStates[0];
-
-  }
-
-  nextStep() {
-    if (this.activeStep.id == 'introduction') {
-      this.activeStep = this.registrationStates[1]
-    } else if (this.activeStep.id == 'wishListName') {
-      this.activeStep = this.registrationStates[2]
-    } else if (this.activeStep.id == 'wishListDate') {
-      this.activeStep = this.registrationStates[3]
-    } else if (this.activeStep.id == 'wishListPartner') {
-      this.activeStep = this.registrationStates[4]
-    } else if (this.activeStep.id == 'wishListWish') {
-      this.searchService.searchForItems(this.searchKeyword).subscribe({
-        next: (wishes) => {
-          this.searchResult = wishes;
-          this.activeStep = this.registrationStates[5]
-        },
-        error: e => console.error(e)
-      });
-    } else if (this.activeStep.id == 'searchResults') {
-      this.activeStep = this.registrationStates[6]
-    } else if (this.activeStep.id == 'firstName') {
-      this.activeStep = this.registrationStates[7]
-    } else if (this.activeStep.id == 'emailPassword') {
-      this.activeStep = this.registrationStates[8]
-    }
   }
 
   onSubmit() {}

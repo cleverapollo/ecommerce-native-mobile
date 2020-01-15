@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RegistrationFormService } from '../registration-form.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-introduction',
@@ -7,8 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IntroductionComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private stateService: RegistrationFormService, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute) {
 
-  ngOnInit() {}
+   }
+
+  ngOnInit() {
+    this.stateService.changeButtonClickEvent(() => {
+      this.router.navigate(['../wish-list-name'], {relativeTo: this.activatedRoute});
+    })
+  }
 
 }

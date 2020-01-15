@@ -1,9 +1,40 @@
-<ion-text color="tertiary">
-    <h1 class="ion-text-center">Gib ein Datum an</h1>
-</ion-text>
-<ion-item>
-  <ion-datetime displayFormat="DD.MM.YYYY" placeholder="Trage einen Namen ein" (ionChange)="updateValue($event)"></ion-datetime>
-</ion-item>
-<p>
-  Ist die Wunschliste an ein bestimmtes Datum gebunden (z.B.: Hochzeit, Geburtstag, Weihnachten, ...)?
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>W</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-center">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-text color="tertiary">
+          <h1 class="ion-text-center">Gib ein Datum an</h1>
+        </ion-text>
+        <form [formGroup]="form">
+          <ion-item>
+            <ion-datetime formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
+          </ion-item>
+        </form>
+        <ion-text>
+          <p>
+            Ist die Wunschliste an ein bestimmtes Datum gebunden (z.B.: Hochzeit, Geburtstag, Weihnachten, ...)?
+          </p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-button expand="block" routerLink="../wish-list-partner" [disabled]="!form.valid">Weiter</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

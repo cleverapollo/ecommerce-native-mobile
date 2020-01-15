@@ -1,10 +1,41 @@
-<ion-text color="tertiary">
-    <h1 class="ion-text-center">Wunschliste gemeinsam nutzen?</h1>
-</ion-text>
-<ion-item>
-  <ion-input type="email" placeholder="E-Mail Adresse deines Partners" (ionChange)="updateValue($event)"></ion-input>
-</ion-item>
-<p>
-  Gib die E-Mail Adresse deines Partners an.
-  Ihr könnt dann gemeinsam Wünsche hinzufügen.
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>W</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-center">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-text color="tertiary">
+          <h1 class="ion-text-center">Wunschliste gemeinsam nutzen?</h1>
+      </ion-text>
+        <form [formGroup]="form">
+          <ion-item>
+            <ion-input formControlName="partner" type="email" placeholder="E-Mail Adresse deines Partners"></ion-input>
+          </ion-item>
+        </form>
+        <ion-text>
+          <p>
+            Gib die E-Mail Adresse deines Partners an.
+            Ihr könnt dann gemeinsam Wünsche hinzufügen.
+          </p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-button expand="block" routerLink="../wish-list-wish" [disabled]="!form.valid">Weiter</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

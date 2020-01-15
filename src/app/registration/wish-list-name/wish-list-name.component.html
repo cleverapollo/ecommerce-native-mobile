@@ -1,4 +1,33 @@
-<h1 class="ion-text-center">Lege deine erste Wunschliste an</h1>
-<ion-item>
-  <ion-input type="text" placeholder="Trage einen Namen ein" (ionChange)="updateValue($event)"></ion-input>
-</ion-item>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>W</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-center">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <h1 class="ion-text-center">Lege deine erste Wunschliste an</h1>
+        <form [formGroup]="form">
+          <ion-item>
+            <ion-input formControlName="name" type="text" placeholder="Trage einen Namen ein"></ion-input>
+          </ion-item>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-button expand="block" routerLink="../wish-list-date" [disabled]="!form.valid">Weiter</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

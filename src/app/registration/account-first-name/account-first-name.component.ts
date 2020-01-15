@@ -1,47 +1,22 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-account-first-name',
   templateUrl: './account-first-name.component.html',
-  styleUrls: ['./account-first-name.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AccountFirstNameComponent),
-      multi: true
-    }
-  ]
+  styleUrls: ['./account-first-name.component.scss']
 })
-export class AccountFirstNameComponent implements OnInit, ControlValueAccessor {
+export class AccountFirstNameComponent implements OnInit {
 
-  private onChange: Function = (name: String) => {}
-  private onTouch: Function = () => {}
-  private disabled: boolean = false;
+  form: FormGroup
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) { }
 
-  ngOnInit() {}
-
-  writeValue(value: String): void {
-    this.onChange(value);
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      'firstName': this.formBuilder.control('', [Validators.required])
+    });
   }
 
-  registerOnChange(fn: Function): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: Function): void {    
-    this.onTouch = fn;
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-  }
-
-  updateValue(event: CustomEvent) {
-    this.writeValue(event.detail.value);
-    this.onTouch();
-  }
 
 }

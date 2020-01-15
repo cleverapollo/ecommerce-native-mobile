@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
   }
 
   goToRegistration() {
-    this.router.navigate(['registration']);
+    this.router.navigate(['registration/introduction']);
   }
 
 }

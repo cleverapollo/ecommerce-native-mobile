@@ -1,5 +1,34 @@
 <ion-header>
   <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>W</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-center">
+      <ion-row class="ion-justify-content-center">
+          <ion-col size-lg="6">
+            <ion-router-outlet ></ion-router-outlet>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-grid>
+      <ion-row class="ion-justify-content-center">
+          <ion-col size-lg="6">
+              <ion-button expand="block" (click)="nextStep()" [disabled]="!valid">Weiter</ion-button>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-footer>
+
+<!--<ion-header>
+  <ion-toolbar>
     <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -11,7 +40,40 @@
   <ion-grid class="ion-center">
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="6">
+        <router-outlet ></router-outlet>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-button expand="block" (click)="nextStep()" [disabled]="!valid">Weiter</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>-->
+
+<!--
+<ion-footer no-border>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-button expand="block" routerLink="wish-list-name">Weiter</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>-->
+
+<!--
+<ion-content>
+  <ion-grid class="ion-center">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
+          <router-outlet></router-outlet>
           <app-introduction *ngIf="activeStep.id == 'introduction'"></app-introduction>
           <app-wish-list-name formControlName="name" *ngIf="activeStep.id == 'wishListName'"></app-wish-list-name>
           <app-wish-list-date formControlName="date" *ngIf="activeStep.id == 'wishListDate'"></app-wish-list-date>
@@ -38,3 +100,4 @@
     </ion-row>
   </ion-grid>
 </ion-footer>
+-->
