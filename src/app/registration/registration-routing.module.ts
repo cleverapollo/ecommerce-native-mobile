@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { RegistrationPage } from './registration.page';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { WishListNameComponent } from './wish-list-name/wish-list-name.component';
 import { WishListDateComponent } from './wish-list-date/wish-list-date.component';

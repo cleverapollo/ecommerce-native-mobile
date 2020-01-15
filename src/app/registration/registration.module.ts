@@ -6,7 +6,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { RegistrationPageRoutingModule } from './registration-routing.module';
 
-import { RegistrationPage } from './registration.page';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { WishListNameComponent } from './wish-list-name/wish-list-name.component';
 import { WishListDateComponent } from './wish-list-date/wish-list-date.component';
@@ -29,7 +28,6 @@ import { RegistrationCompletedComponent } from './registration-completed/registr
   declarations: [
     AccountFirstNameComponent,
     AccountEmailPasswordComponent,
-    RegistrationPage, 
     IntroductionComponent, 
     WishListNameComponent, 
     WishListDateComponent,
