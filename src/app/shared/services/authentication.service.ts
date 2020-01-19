@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { Storage } from '@ionic/storage';
 import { LoginResponse } from './login-response';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,15 @@ export class AuthenticationService {
 
   authenticationState = new BehaviorSubject(false);
 
-  constructor(private storage: Storage, private apiService: ApiService) {}
+  constructor(private storage: Storage, private platform: Platform, private apiService: ApiService) {
+    this.platform.ready().then(() => {
+      this.storage.get('auth-token').then((token) => {
+        if (token) {
+          this.authenticationState.next(true);
+        }
+      })
+    })
+  }
 
   login(email: string, password: string) : Promise<void> {
     return new Promise((resolve, reject) => {
@@ -31,10 +40,9 @@ export class AuthenticationService {
 
   }
 
-  logout() {
-    this.storage.remove('auth-token').then(() => {
-      this.authenticationState.next(false);
-    });
+  async logout() {
+    await this.storage.remove('auth-token');
+    this.authenticationState.next(false);
   }
 
   isAuthenticated() {
