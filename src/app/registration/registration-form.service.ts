@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { RegistrationForm } from './registration-form';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationFormService {
 
-  private _onButtonClicked: BehaviorSubject<() => void> = new BehaviorSubject(() => void { });
-  private _valid: BehaviorSubject<Boolean> = new BehaviorSubject(true); 
+  private _form: BehaviorSubject<RegistrationForm> = new BehaviorSubject(new RegistrationForm());
 
-  constructor() { }
+  constructor() {}
 
-  onButtonClicked$ = this._onButtonClicked.asObservable();
-  changeButtonClickEvent(event: () => void) {
-    this._onButtonClicked.next(event);
-  }
-
-  valid$ = this._valid.asObservable();
-  changeValidState(state: Boolean) {
-    this._valid.next(state);
+  form$ = this._form.asObservable();
+  updateForm(updatedForm: RegistrationForm) {
+    this._form.next(updatedForm);
   }
 
 }

@@ -1,15 +1,29 @@
 import { SearchResultItem } from './services/search-result-item';
 
+export class AccountInfos {
+    firstName: String
+    email: String
+    password: String
+}
+
+export class WishListInfos {
+    name: String
+    date: Date
+    wishes: Array<SearchResultItem> = new Array();
+}
+
 export interface RegistrationForm {
-    name: String;
-    date: Date;
-    partner: String;
-    wishes: [SearchResultItem];
-    accountInfos: {
-        firstName: String;
-        credentials: {
-            email: String;
-            password: String;
-        }
+    accountInfos: AccountInfos
+    wishList: WishListInfos
+    partners: Array<String>
+}
+
+export class RegistrationForm implements RegistrationForm {
+
+    constructor() {
+        this.accountInfos = new AccountInfos();
+        this.wishList = new WishListInfos();
+        this.partners = new Array();
     }
+
 }

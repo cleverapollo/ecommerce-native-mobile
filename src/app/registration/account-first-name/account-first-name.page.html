@@ -36,7 +36,7 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="6">
-        <ion-button expand="block" routerLink="../credentials" [disabled]="!form.valid">Weiter</ion-button>
+        <ion-button expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
