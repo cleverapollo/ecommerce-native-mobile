@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { LoginForm } from './login-form';
 import { Router } from '@angular/router';
@@ -13,10 +13,13 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService, private router: Router) { 
+  constructor(
+    private formBuilder: FormBuilder, 
+    private authService: AuthenticationService, 
+    private router: Router) { 
     this.loginForm = this.formBuilder.group({
-      email: '',
-      password: ''
+      email: this.formBuilder.control('', [Validators.required, Validators.email]),
+      password: this.formBuilder.control('', [Validators.required])
     })
   }
 

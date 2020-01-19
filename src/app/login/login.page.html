@@ -13,7 +13,7 @@
             </ion-item>
           </div>
           <div class="ion-padding">
-            <ion-button type="submit" expand="block">Einloggen</ion-button>
+            <ion-button type="submit" [disabled]="!loginForm.valid" expand="block">Einloggen</ion-button>
           </div>
           <div class="ion-text-center">
             <a>Passwort vergessen?</a>
