@@ -4,6 +4,7 @@ import { RegistrationForm } from '../registration-form';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
+import { RegistrationService } from '../services/registration.service';
 
 @Component({
   selector: 'app-account-email-password',
@@ -21,7 +22,8 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router, 
     private route: ActivatedRoute,
-    private formService: RegistrationFormService) { 
+    private formService: RegistrationFormService,
+    private registrationApiService: RegistrationService) { 
   }
 
   ngOnInit() {
@@ -43,9 +45,11 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     this.currentForm.accountInfos.password = this.form.controls['password'].value;
     this.formService.updateForm(this.currentForm);
 
-    console.log(this.currentForm);
-
-    this.router.navigate(['../registration-complete'], { relativeTo: this.route })
+    this.registrationApiService.register(this.currentForm)
+      .then(() => {
+        this.router.navigate(['../registration-complete'], { relativeTo: this.route })
+      })
+      .catch((e => console.error(e)));
   }
 
 }

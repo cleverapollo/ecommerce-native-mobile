@@ -37,6 +37,7 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
   }
 
   next() {
+    this.currentForm.partners = new Array();
     this.currentForm.partners[0] = this.form.controls['partner'].value;
     this.formService.updateForm(this.currentForm);
     this.router.navigate(['../wish-list-wish'], { relativeTo: this.route })

@@ -23,7 +23,6 @@ export class RegistrationForm implements RegistrationForm {
     constructor() {
         this.accountInfos = new AccountInfos();
         this.wishList = new WishListInfos();
-        this.partners = new Array();
     }
 
 }
