@@ -29,6 +29,7 @@ export class LoginPage implements OnInit {
   onSubmit() {
     const input = this.loginForm.value as LoginForm;
     this.authService.login(input.email, input.password).then(() => {
+      this.loginForm.reset();
       this.router.navigate(['home']);
     }).catch(() => {
       console.error('Fehler beim Login!');

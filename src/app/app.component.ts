@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthenticationService } from './shared/services/authentication.service';
@@ -45,7 +45,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private menuController: MenuController
   ) {
     this.initializeApp();
   }
@@ -63,5 +64,12 @@ export class AppComponent {
         }
       })
     });
+  }
+
+  logout() {
+    this.authenticationService.logout().then(() => {
+      this.menuController.toggle();
+      this.router.navigate(['login']);
+    })
   }
 }
