@@ -12,7 +12,7 @@ import { WishListDatePage } from './wish-list-date/wish-list-date.page';
 import { WishListPartnerPage } from './wish-list-partner/wish-list-partner.page';
 import { WishListWishPage } from './wish-list-wish/wish-list-wish.page';
 import { SearchResultsPage } from './search-results/search-results.page';
-import { SearchResultComponent } from './search-result/search-result.component';
+import { SearchResultComponent } from './search-results/search-result/search-result.component';
 import { AccountFirstNamePage } from './account-first-name/account-first-name.page';
 import { AccountEmailPasswordPage } from './account-email-password/account-email-password.page';
 import { RegistrationCompletedPage } from './registration-completed/registration-completed.page';
