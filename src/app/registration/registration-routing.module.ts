@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IntroductionComponent } from './introduction/introduction.component';
-import { WishListNameComponent } from './wish-list-name/wish-list-name.component';
-import { WishListDateComponent } from './wish-list-date/wish-list-date.component';
-import { WishListPartnerComponent } from './wish-list-partner/wish-list-partner.component';
-import { WishListWishComponent } from './wish-list-wish/wish-list-wish.component';
-import { SearchResultsComponent } from './search-results/search-results.component';
+import { IntroductionPage } from './introduction/introduction.page';
+import { WishListNamePage } from './wish-list-name/wish-list-name.page';
+import { WishListDatePage } from './wish-list-date/wish-list-date.page';
+import { WishListPartnerPage } from './wish-list-partner/wish-list-partner.page';
+import { WishListWishPage } from './wish-list-wish/wish-list-wish.page';
+import { SearchResultsPage } from './search-results/search-results.page';
 import { SearchResultsResolver } from './search-results.resolver';
-import { AccountFirstNameComponent } from './account-first-name/account-first-name.component';
-import { AccountEmailPasswordComponent } from './account-email-password/account-email-password.component';
-import { RegistrationCompletedComponent } from './registration-completed/registration-completed.component';
+import { AccountFirstNamePage } from './account-first-name/account-first-name.page';
+import { AccountEmailPasswordPage } from './account-email-password/account-email-password.page';
+import { RegistrationCompletedPage } from './registration-completed/registration-completed.page';
 
 const routes: Routes = [
   {
@@ -18,40 +18,40 @@ const routes: Routes = [
     children: [
       {
         path: 'introduction',
-        component: IntroductionComponent
+        component: IntroductionPage
       },
       {
         path: 'wish-list-name',
-        component: WishListNameComponent
+        component: WishListNamePage
       },
       {
         path: 'wish-list-date',
-        component: WishListDateComponent
+        component: WishListDatePage
       },
       {
         path: 'wish-list-partner',
-        component: WishListPartnerComponent
+        component: WishListPartnerPage
       },
       {
         path: 'wish-list-wish',
-        component: WishListWishComponent
+        component: WishListWishPage
       },
       {
         path: 'search-results',
-        component: SearchResultsComponent,
+        component: SearchResultsPage,
         resolve: { products: SearchResultsResolver }
       },
       {
         path: 'first-name',
-        component: AccountFirstNameComponent
+        component: AccountFirstNamePage
       },
       {
         path: 'credentials',
-        component: AccountEmailPasswordComponent
+        component: AccountEmailPasswordPage
       },
       {
         path: 'registration-complete',
-        component: RegistrationCompletedComponent
+        component: RegistrationCompletedPage
       }
     ]
   },

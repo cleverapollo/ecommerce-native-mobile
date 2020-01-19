@@ -5,10 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-results',
-  templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.scss']
+  templateUrl: './search-results.page.html',
+  styleUrls: ['./search-results.page.scss']
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsPage implements OnInit {
 
   selectedWish: SearchResultItem;
   wishes: Array<SearchResultItem> = new Array();

@@ -3,10 +3,10 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-wish-list-name',
-  templateUrl: './wish-list-name.component.html',
-  styleUrls: ['./wish-list-name.component.scss']
+  templateUrl: './wish-list-name.page.html',
+  styleUrls: ['./wish-list-name.page.scss']
 })
-export class WishListNameComponent implements OnInit {
+export class WishListNamePage implements OnInit {
 
   form: FormGroup
 

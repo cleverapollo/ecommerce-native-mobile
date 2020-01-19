@@ -1,12 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-wish-list-wish',
-  templateUrl: './wish-list-wish.component.html',
-  styleUrls: ['./wish-list-wish.component.scss'],
+  templateUrl: './wish-list-wish.page.html',
+  styleUrls: ['./wish-list-wish.page.scss'],
 })
-export class WishListWishComponent implements OnInit {
+export class WishListWishPage implements OnInit {
 
   keywords: String
 

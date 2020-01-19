@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { WishListWishComponent } from './wish-list-wish.component';
+import { RegistrationCompletedPage } from './registration-completed.page';
 
-describe('WishListWishComponent', () => {
-  let component: WishListWishComponent;
-  let fixture: ComponentFixture<WishListWishComponent>;
+describe('RegistrationCompletedPage', () => {
+  let component: RegistrationCompletedPage;
+  let fixture: ComponentFixture<RegistrationCompletedPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishListWishComponent ],
+      declarations: [ RegistrationCompletedPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WishListWishComponent);
+    fixture = TestBed.createComponent(RegistrationCompletedPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

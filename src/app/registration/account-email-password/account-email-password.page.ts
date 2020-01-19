@@ -3,10 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-account-email-password',
-  templateUrl: './account-email-password.component.html',
-  styleUrls: ['./account-email-password.component.scss']
+  templateUrl: './account-email-password.page.html',
+  styleUrls: ['./account-email-password.page.scss']
 })
-export class AccountEmailPasswordComponent implements OnInit {
+export class AccountEmailPasswordPage implements OnInit {
 
   form: FormGroup
 

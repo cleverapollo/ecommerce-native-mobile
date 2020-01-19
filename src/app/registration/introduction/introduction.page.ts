@@ -4,10 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-introduction',
-  templateUrl: './introduction.component.html',
-  styleUrls: ['./introduction.component.scss'],
+  templateUrl: './introduction.page.html',
+  styleUrls: ['./introduction.page.scss'],
 })
-export class IntroductionComponent implements OnInit {
+export class IntroductionPage implements OnInit {
 
   constructor(
     private stateService: RegistrationFormService, 

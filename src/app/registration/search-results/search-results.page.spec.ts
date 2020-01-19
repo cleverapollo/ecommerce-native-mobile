@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { WishListNameComponent } from './wish-list-name.component';
+import { SearchResultsPage } from './search-results.page';
 
-describe('WishListNameComponent', () => {
-  let component: WishListNameComponent;
-  let fixture: ComponentFixture<WishListNameComponent>;
+describe('SearchResultsComponent', () => {
+  let component: SearchResultsPage;
+  let fixture: ComponentFixture<SearchResultsPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishListNameComponent ],
+      declarations: [ SearchResultsPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WishListNameComponent);
+    fixture = TestBed.createComponent(SearchResultsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -3,10 +3,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroup, FormBuilder, Valida
 
 @Component({
   selector: 'app-wish-list-date',
-  templateUrl: './wish-list-date.component.html',
-  styleUrls: ['./wish-list-date.component.scss']
+  templateUrl: './wish-list-date.page.html',
+  styleUrls: ['./wish-list-date.page.scss']
 })
-export class WishListDateComponent implements OnInit {
+export class WishListDatePage implements OnInit {
 
   form: FormGroup
 
