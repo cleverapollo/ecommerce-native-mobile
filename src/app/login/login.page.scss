@@ -1,4 +1,22 @@
 h1 {
     color: var(--ion-color-tertiary);
+    font-family: 'Playfair Display';
     font-weight: bold;
+    font-size: 18pt;
+}
+
+ion-button {
+    font-family: 'Roboto';
+    font-size: 10pt;
+    text-transform: uppercase;
+}
+
+#button-login {
+    color: white;
+}
+
+#link-forgot-password {
+    font-family: 'Roboto';
+    font-size: 10pt;
+    color: var(--ion-color-secondary)
 }

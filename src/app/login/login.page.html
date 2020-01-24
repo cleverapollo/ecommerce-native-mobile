@@ -5,18 +5,18 @@
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
           <h1 class="ion-text-center">Login</h1>
           <div class="ion-padding">
-            <ion-item>
+            <ion-item id="input-email" >
               <ion-input name="email" type="email" placeholder="E-Mail" formControlName="email"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="password" type="password" placeholder="Passwort" formControlName="password"></ion-input>
+              <ion-input id="input-password" name="password" type="password" placeholder="Passwort" formControlName="password"></ion-input>
             </ion-item>
           </div>
           <div class="ion-padding">
-            <ion-button type="submit" [disabled]="!loginForm.valid" expand="block">Einloggen</ion-button>
+            <ion-button id="button-login" type="submit" [disabled]="!loginForm.valid" expand="block">Einloggen</ion-button>
           </div>
           <div class="ion-text-center">
-            <a>Passwort vergessen?</a>
+            <a id="link-forgot-password">Passwort vergessen?</a>
           </div>
         </form>
       </ion-col>
