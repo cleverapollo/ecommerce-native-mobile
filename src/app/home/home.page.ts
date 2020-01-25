@@ -9,16 +9,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HomePage implements OnInit {
 
-  get wishLists(): Array<WishList> {
-    return this.route.snapshot.data.wishLists;
-  }
+  wishLists: Array<WishList> = new Array();
 
   constructor(private route: ActivatedRoute) {
-   
   }
 
   ngOnInit() {
-    console.log(this.route.snapshot.data)
+    this.wishLists = this.route.snapshot.data.wishLists;
   }
 
 }
