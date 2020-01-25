@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -12,6 +12,12 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
 import { HttpClientModule } from '@angular/common/http';
 import { WishListResolver } from './home/wish-list.resolver';
+
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de'
+import localeDeExtra from '@angular/common/locales/extra/de';
+
+registerLocaleData(localeDe, 'de', localeDeExtra)
 
 export function jwtOptionsFactory(storage) {
   return {
@@ -44,7 +50,8 @@ export function jwtOptionsFactory(storage) {
     StatusBar,
     SplashScreen,
     WishListResolver,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: LOCALE_ID, useValue: 'de' }
   ],
   bootstrap: [AppComponent]
 })
