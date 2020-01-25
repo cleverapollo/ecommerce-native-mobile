@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class ApiService {
     });
   }
 
-  get<T>(url: string) : Observable<T> {
+  get<T>(url: string, queryParams?: HttpParams) : Observable<T> {
     const headers = new HttpHeaders()
       .set('Accept', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
@@ -28,7 +28,8 @@ export class ApiService {
 
     return this.httpClient.get<T>(`http://127.0.0.1:8080/${url}`, {
       headers: headers,
-      responseType: 'json'
+      responseType: 'json',
+      params: queryParams
     });
   }
 }

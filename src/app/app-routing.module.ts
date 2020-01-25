@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/services/auth.guard';
+import { WishListResolver } from './home/wish-list.resolver';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
   {
     path: 'home',
     canActivate: [AuthGuard],
+    resolve: { wishLists: WishListResolver },
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
