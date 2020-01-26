@@ -17,7 +17,6 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
   <ion-grid>
     <ion-row>
@@ -45,15 +44,17 @@
     </ion-row>
   </ion-grid>
 
-  <ion-button id="button-add-wish" fill="clear" expand="full" >
-    <ion-icon slot="start" name="add"></ion-icon>
-    Wunsch hinzufügen
+  <ion-card>
+    <img [src]="wish.imageUrl">
+    <ion-card-content>
+      <div>{{ wish.name }}</div>
+      <div>{{ wish.price | currency }}</div>
+    </ion-card-content>
+  </ion-card>
+  <ion-button color="secondary" expand="block" fill="outline">
+    WEBSEITE BESUCHEN
   </ion-button>
-  <ion-grid>
-    <ion-row>
-      <ion-col (click)="selectWish(wish)" class="column-wishes" size="6" *ngFor="let wish of wishList.wishes">
-        <app-wish [wish]="wish"></app-wish>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-button color="tertiary" expand="block" fill="outline">
+    VON WUNSCHLISTE LÖSCHEN
+  </ion-button>
 </ion-content>

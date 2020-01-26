@@ -27,6 +27,11 @@ const routes: Routes = [
     path: 'wish-list-detail',
     canActivate: [AuthGuard],
     loadChildren: () => import('./wish-list-detail/wish-list-detail.module').then( m => m.WishListDetailPageModule)
+  },
+  {
+    path: 'wish-detail',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./wish-detail/wish-detail.module').then( m => m.WishDetailPageModule)
   }
 ];
 

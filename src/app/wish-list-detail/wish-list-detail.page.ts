@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { WishList } from '../home/wishlist.model';
+import { WishList, Wish } from '../home/wishlist.model';
 import { Observable, Subscription } from 'rxjs';
 import { Router, NavigationStart } from '@angular/router';
 import { map, filter } from 'rxjs/operators'
@@ -16,7 +16,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   wishList: WishList;
 
-  constructor(private wishListService: WishListService) { }
+  constructor(private router: Router, private wishListService: WishListService) { }
 
   ngOnInit() {
     this.subscription = this.wishListService.selectedWishList$.subscribe(w => {
@@ -26,6 +26,11 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  selectWish(wish: Wish) {
+    this.wishListService.updateSelectedWish(wish);
+    this.router.navigate(['wish-detail']);
   }
 
 }
