@@ -4,6 +4,7 @@ import { ApiService } from './api.service';
 import { Storage } from '@ionic/storage';
 import { LoginResponse } from './login-response';
 import { Platform } from '@ionic/angular';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,14 @@ export class AuthenticationService {
 
   authenticationState = new BehaviorSubject(false);
 
-  constructor(private storage: Storage, private platform: Platform, private apiService: ApiService) {
+  constructor(private storage: Storage, private platform: Platform, private apiService: ApiService, private jwtHelper: JwtHelperService) {
     this.platform.ready().then(() => {
       this.storage.get('auth-token').then((token) => {
-        if (token) {
+        if (token && !this.jwtHelper.isTokenExpired(token)) {
           this.authenticationState.next(true);
+        }
+        if (this.jwtHelper.isTokenExpired(token)) {
+          this.storage.remove('auth-token');
         }
       })
     })
