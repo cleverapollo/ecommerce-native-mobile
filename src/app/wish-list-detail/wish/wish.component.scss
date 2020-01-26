@@ -1,0 +1,20 @@
+#wish-name {
+    font-family: 'Roboto';
+    font-size: 14pt;
+    color: var(--ion-color-dark);
+}
+
+#wish-date {
+    font-family: 'Roboto';
+    font-size: 14pt;
+    color: var(--ion-color-secondary);
+}
+
+.wish-description {
+    border-top: 1px dashed #f7f6f1;
+}
+
+ion-img {
+    width: 50%;
+    margin: auto;
+}

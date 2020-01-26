@@ -23,7 +23,7 @@
   </ion-text>
   <ion-grid>
     <ion-row>
-      <ion-col class="column-wish-list" size="6" *ngFor="let wishList of wishLists">
+      <ion-col class="column-wish-list" size="6" *ngFor="let wishList of wishLists" (click)="selectWishList(wishList)">
         <app-wish-list [wishList]="wishList"></app-wish-list>
       </ion-col>
     </ion-row>

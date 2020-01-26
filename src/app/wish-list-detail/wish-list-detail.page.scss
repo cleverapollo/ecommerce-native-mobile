@@ -1,0 +1,26 @@
+#button-add-wish {
+    background-color: white;
+    color: var(--ion-color-dark);
+    ion-icon {
+        color: var(--ion-color-primary);
+    }
+}
+
+.column-wishes {
+    background-color: white;
+}
+
+.img-avatar {
+    border-radius: 50%;
+    width: 30pt;
+}
+
+.friends-images {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    img {
+        width: 20pt;
+        border-radius: 50%;
+    }
+}
