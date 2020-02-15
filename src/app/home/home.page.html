@@ -23,7 +23,38 @@
   </ion-text>
   <ion-grid>
     <ion-row>
-      <ion-col class="column-wish-list" size="6" *ngFor="let wishList of wishLists" (click)="selectWishList(wishList)">
+      <ion-col size="6" style="padding: 0;">
+        <ion-grid style="padding: 2px;">
+          <ion-row>
+            <ion-col size="12"  style="background-color: white; padding: 0; padding-bottom: 5px; border-bottom: 2px solid #f7f6f1;">
+              <div style="height: 168px;" class="ion-text-center">
+                <div style="padding-top: 33.3%;">
+                  <div>
+                    <ion-icon name="add"></ion-icon>
+                  </div>
+                  <div>
+                      Wunsch <br>
+                      hinzufügen
+                  </div>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col size="12" style="background-color: white; padding: 0; padding-top: 5px; border-top: 2px solid #f7f6f1;">
+              <div style="height: 168px;" class="ion-text-center">
+                <div style="padding-top: 33.3%;">
+                  <div>
+                    <ion-icon name="add"></ion-icon>
+                  </div>
+                  <div>
+                      neue Wunschliste anlegen
+                  </div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col style="border: 2px solid #f7f6f1;" class="column-wish-list" size="6" *ngFor="let wishList of wishLists" (click)="selectWishList(wishList)">
         <app-wish-list [wishList]="wishList"></app-wish-list>
       </ion-col>
     </ion-row>
