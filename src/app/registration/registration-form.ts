@@ -1,4 +1,4 @@
-import { SearchResultItem } from './services/search-result-item';
+import { SearchResultItem } from '../shared/features/product-search/search-result-item';
 
 export class AccountInfos {
     firstName: String

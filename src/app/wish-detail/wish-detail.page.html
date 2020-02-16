@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button>
+      <ion-button  [routerLink]="['/home']" routerDirection="back">
         <ion-icon slot="icon-only" name="logo-angular"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -9,7 +9,7 @@
       <ion-button>
         <ion-icon slot="icon-only" name="contacts"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button [routerLink]="['/wish-search']">
         <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
       <ion-menu-button></ion-menu-button>

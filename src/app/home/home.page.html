@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button>
+      <ion-button  [routerLink]="['/home']">
         <ion-icon slot="icon-only" name="logo-angular"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -9,7 +9,7 @@
       <ion-button>
         <ion-icon slot="icon-only" name="contacts"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button [routerLink]="['/wish-search']">
         <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
       <ion-menu-button></ion-menu-button>
@@ -26,7 +26,7 @@
       <ion-col size="6" style="padding: 0;">
         <ion-grid style="padding: 2px;">
           <ion-row>
-            <ion-col size="12"  style="background-color: white; padding: 0; padding-bottom: 5px; border-bottom: 2px solid #f7f6f1;">
+            <ion-col [routerLink]="['/wish-search']" size="12"  style="background-color: white; padding: 0; padding-bottom: 5px; border-bottom: 2px solid #f7f6f1;">
               <div style="height: 168px;" class="ion-text-center">
                 <div style="padding-top: 33.3%;">
                   <div>

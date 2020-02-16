@@ -1,0 +1,32 @@
+ion-img {
+    img {
+        height: 163px !important;
+    }
+}
+
+ion-button {
+    font-size: 10pt;
+    font-weight: bold;
+    --border-radius: 9pt;
+    --border-width: 2pt;
+    --color: var(--ion-color-tertiary);
+}
+
+.name {
+    font-family: 'Roboto';
+    font-size: 14pt;
+    font-weight: 500;
+    color: var(--ion-color-dark);
+}
+
+.price {
+    font-family: 'Roboto';
+    color: var(--ion-color-primary);
+    font-weight: 400;
+    font-size: 14pt;
+}
+
+.product-info {
+    margin-top: 7pt;
+    margin-bottom: 7pt;
+}

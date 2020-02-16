@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef, OnDestroy } from '@angular/core';
-import { SearchResultItem } from '../services/search-result-item';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { SearchResultItem } from '../../shared/features/product-search/search-result-item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RegistrationForm } from '../registration-form';
 import { Subscription } from 'rxjs';
