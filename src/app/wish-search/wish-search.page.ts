@@ -1,6 +1,9 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { SearchService } from '../shared/features/product-search/search.service';
 import { SearchResultItem } from '../shared/features/product-search/search-result-item';
+import { WishListService } from '../shared/services/wish-list.service';
+import { Wish } from '../home/wishlist.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wish-search',
@@ -15,7 +18,11 @@ export class WishSearchPage implements OnInit {
 
   products: Array<SearchResultItem>
 
-  constructor(private searchService: SearchService) { }
+  constructor(
+    private searchService: SearchService, 
+    private wishListService: WishListService,
+    private router: Router
+    ) { }
 
   ngOnInit() {
     this.devMode = isDevMode();
@@ -29,6 +36,17 @@ export class WishSearchPage implements OnInit {
     }, e => console.error(e), () => {
       this.loading = false;
     });
+  }
+
+  updateValue(item: SearchResultItem) {
+    let wish = new Wish();
+    wish.name = item.name;
+    wish.price = item.price;
+    wish.imageUrl = item.imageUrl;
+    wish.productUrl = item.productUrl;
+    wish.wishListId = 0;
+    this.wishListService.updateSelectedWish(wish);
+    this.router.navigate(['wish-new']);
   }
 
 }

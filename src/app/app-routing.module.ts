@@ -40,6 +40,10 @@ const routes: Routes = [
   {
     path: 'wish-search',
     loadChildren: () => import('./wish-search/wish-search.module').then( m => m.WishSearchPageModule)
+  },
+  {
+    path: 'wish-new',
+    loadChildren: () => import('./wish-new/wish-new.module').then( m => m.WishNewPageModule)
   }
 ];
 

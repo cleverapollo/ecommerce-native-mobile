@@ -1,0 +1,35 @@
+ion-input {
+    border: 2pt solid var(--ion-color-secondary);
+    border-radius: 9pt;
+    height: 48px;
+    --background: #f7f6f1;
+}
+
+ion-textarea {
+    border: 2pt solid var(--ion-color-secondary);
+    border-radius: 9pt;
+    --background: #f7f6f1;
+}
+
+.image-container {
+    margin-right: 20px;
+    margin-left: 20px;
+    ion-img {
+        width: 50%;
+        margin: auto;
+    }
+}
+
+ion-select {
+    border: 2pt solid var(--ion-color-secondary);
+    border-radius: 9pt;
+    height: 48px;
+    min-width: 100% !important;
+    --background: #f7f6f1;
+}
+
+ion-button {
+    margin-top: 32px;
+    --color: white;
+    font-size: 10pt;
+}
