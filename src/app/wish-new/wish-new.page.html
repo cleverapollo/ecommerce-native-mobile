@@ -35,8 +35,8 @@
       </ion-item>
 
       <ion-item lines="none">
-        <ion-select formControlName="wishListId" placeholder="Wunschliste auswählen" [compareWith]="compareWithFn">
-          <ion-select-option *ngFor="let option of wishListSelectOptions">
+        <ion-select formControlName="wishListId" placeholder="Wunschliste auswählen">
+          <ion-select-option *ngFor="let option of wishListSelectOptions" [value]="option.id">
             {{ option.name }}
           </ion-select-option>
         </ion-select>

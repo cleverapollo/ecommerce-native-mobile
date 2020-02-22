@@ -29,16 +29,13 @@ export class WishNewPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.wishListSelectOptions = this.route.snapshot.data.wishListSelectOptions;
-    this.form = this.formBuilder.group({
-      'wishListId': this.formBuilder.control('', [Validators.required]),
-      'name': this.formBuilder.control('', [Validators.required]),
-      'price': this.formBuilder.control('', [Validators.required]),
-    });
     this.wishSubscription = this.wishListService.selectedWish$.subscribe(w => {
       this.wish = w;
-      this.form.controls.name.setValue(this.wish.name);
-      this.form.controls.price.setValue(this.wish.price);
-      this.form.controls.wishListId.setValue(this.wish.wishListId);
+      this.form = this.formBuilder.group({
+        'wishListId': this.formBuilder.control(this.wish.wishListId, [Validators.required]),
+        'name': this.formBuilder.control(this.wish.name, [Validators.required]),
+        'price': this.formBuilder.control(this.wish.price, [Validators.required]),
+      });
     }, e => console.error(e));
   }
 
@@ -46,15 +43,10 @@ export class WishNewPage implements OnInit, OnDestroy {
     this.wishSubscription.unsubscribe();
   }
 
-  compareWithFn = (o1: WishListSelectOption, o2: WishListSelectOption) => {
-    return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  }
-
   saveWish() {
     this.wish.wishListId = this.form.controls.wishListId.value;
     this.wish.name = this.form.controls.name.value;
     this.wish.price = this.form.controls.price.value;
-
     this.wishListApiService.addWish(this.wish)
       .toPromise()
       .then( (updatedWishList: WishList) => { 
