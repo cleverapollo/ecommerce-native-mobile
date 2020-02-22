@@ -1,6 +1,8 @@
 {
   "name": "wantic",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "c15b9952"
 }
