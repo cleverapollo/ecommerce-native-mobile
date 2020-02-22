@@ -25,6 +25,7 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
     this.wishLists = this.route.snapshot.data.wishLists;
+    this.wishListService.updateSelectedWishList(null);
   }
 
   selectWishList(wishList: WishList) {

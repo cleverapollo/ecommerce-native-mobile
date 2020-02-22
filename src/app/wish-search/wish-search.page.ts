@@ -55,7 +55,7 @@ export class WishSearchPage implements OnInit, OnDestroy {
     wish.price = item.price;
     wish.imageUrl = item.imageUrl;
     wish.productUrl = item.productUrl;
-    wish.wishListId = this.selectedWishList.id;
+    wish.wishListId = this.selectedWishList ? this.selectedWishList.id : null;
     this.wishListService.updateSelectedWish(wish);
     this.router.navigate(['wish-new']);
   }
