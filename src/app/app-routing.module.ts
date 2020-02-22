@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/services/auth.guard';
 import { WishListResolver } from './home/wish-list.resolver';
+import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-options.resolver';
 
 const routes: Routes = [
   {
@@ -35,14 +36,18 @@ const routes: Routes = [
   },
   {
     path: 'wish-list-new',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./wish-list-new/wish-list-new.module').then( m => m.WishListNewPageModule)
   },
   {
     path: 'wish-search',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./wish-search/wish-search.module').then( m => m.WishSearchPageModule)
   },
   {
     path: 'wish-new',
+    canActivate: [AuthGuard],
+    resolve: { wishListSelectOptions: WishListSelectOptionsResolver },
     loadChildren: () => import('./wish-new/wish-new.module').then( m => m.WishNewPageModule)
   }
 ];

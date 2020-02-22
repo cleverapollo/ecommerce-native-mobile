@@ -1,16 +1,20 @@
-import { Component, OnInit, isDevMode } from '@angular/core';
+import { Component, OnInit, isDevMode, OnDestroy } from '@angular/core';
 import { SearchService } from '../shared/features/product-search/search.service';
 import { SearchResultItem } from '../shared/features/product-search/search-result-item';
 import { WishListService } from '../shared/services/wish-list.service';
-import { Wish } from '../home/wishlist.model';
+import { Wish, WishList } from '../home/wishlist.model';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wish-search',
   templateUrl: './wish-search.page.html',
   styleUrls: ['./wish-search.page.scss'],
 })
-export class WishSearchPage implements OnInit {
+export class WishSearchPage implements OnInit, OnDestroy {
+
+  private selectedWishList: WishList = null
+  private wishListSubscription: Subscription
 
   keywords: String
   devMode: Boolean
@@ -27,6 +31,13 @@ export class WishSearchPage implements OnInit {
   ngOnInit() {
     this.devMode = isDevMode();
     this.products = [];
+    this.wishListSubscription = this.wishListService.selectedWishList$.subscribe( w => {
+      this.selectedWishList = w;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.wishListSubscription.unsubscribe();
   }
 
   search() {
@@ -44,7 +55,7 @@ export class WishSearchPage implements OnInit {
     wish.price = item.price;
     wish.imageUrl = item.imageUrl;
     wish.productUrl = item.productUrl;
-    wish.wishListId = 0;
+    wish.wishListId = this.selectedWishList.id;
     this.wishListService.updateSelectedWish(wish);
     this.router.navigate(['wish-new']);
   }

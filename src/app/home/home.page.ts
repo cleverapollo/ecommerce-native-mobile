@@ -23,6 +23,10 @@ export class HomePage implements OnInit {
     this.wishLists = this.route.snapshot.data.wishLists;
   }
 
+  ionViewWillEnter() {
+    this.wishLists = this.route.snapshot.data.wishLists;
+  }
+
   selectWishList(wishList: WishList) {
     this.wishListService.updateSelectedWishList(wishList);
     this.router.navigate(['wish-list-detail']);

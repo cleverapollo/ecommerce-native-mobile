@@ -16,6 +16,7 @@ import { WishListResolver } from './home/wish-list.resolver';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de'
 import localeDeExtra from '@angular/common/locales/extra/de';
+import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-options.resolver';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -50,6 +51,7 @@ export function jwtOptionsFactory(storage) {
     StatusBar,
     SplashScreen,
     WishListResolver,
+    WishListSelectOptionsResolver,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'de' }
   ],

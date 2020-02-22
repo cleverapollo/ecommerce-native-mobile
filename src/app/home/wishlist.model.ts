@@ -7,7 +7,13 @@ export class Wish {
 }
 
 export class WishList {
-    name: String
-    date: String
+    id: Number;
+    name: String;
+    date: String;
     wishes: Array<Wish>;
+}
+
+export class WishListSelectOption {
+    id: Number;
+    name: String;
 }
