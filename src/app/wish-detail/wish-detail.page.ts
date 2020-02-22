@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../shared/services/alert.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-wish-detail',
@@ -21,6 +22,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   constructor(
     private router: Router, 
+    private inAppBrowser: InAppBrowser,
     public alertService: AlertService,
     private wishListService: WishListService, 
     private wishListApiService: WishListApiService
@@ -39,6 +41,12 @@ export class WishDetailPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.wishListSubscription.unsubscribe();
+  }
+
+  openProductURL() {
+    const url = this.wish.productUrl
+    const browser = this.inAppBrowser.create(url);
+    browser.show();
   }
 
   deleteWish() {

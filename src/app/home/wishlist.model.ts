@@ -3,7 +3,7 @@ export class Wish {
     wishListId: Number;
     name: String;
     price: String;
-    productUrl: String;
+    productUrl: string;
     imageUrl: String;
 }
 
