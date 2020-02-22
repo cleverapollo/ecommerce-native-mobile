@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="wantic-toolbar">
     <ion-buttons slot="start">
       <ion-button  [routerLink]="['/home']">
         <ion-icon slot="icon-only" src="assets/icon/wantic_logo.svg"></ion-icon>
@@ -27,9 +27,7 @@
               <img src="assets/images/avatar-placeholder.jpg">
             </ion-avatar>
             <ion-label>
-              <h1>{{ wishList.name }}  
-                <ion-icon name="create"></ion-icon>
-              </h1>
+              <h1>{{ wishList.name }}</h1>
               <p>{{ wishList.date | date }}</p>
             </ion-label>
           </ion-item>
