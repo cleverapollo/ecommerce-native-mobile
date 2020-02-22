@@ -1,4 +1,5 @@
 export class Wish {
+    id: Number;
     wishListId: Number;
     name: String;
     price: String;

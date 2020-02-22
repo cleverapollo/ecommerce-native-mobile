@@ -24,6 +24,12 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     });
   }
 
+  ionViewWillEnter() { 
+    this.subscription = this.wishListService.selectedWishList$.subscribe(w => {
+      this.wishList = w;
+    });
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

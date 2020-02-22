@@ -20,6 +20,10 @@ export class WishListApiService {
     return this.apiService.put(`wish-list/${wish.wishListId}/add-wish`, wish);
   }
 
+  removeWish(wish: Wish) : Observable<Object> {
+    return this.apiService.delete(`wish-list/${wish.wishListId}/wish/${wish.id}`);
+  }
+
   getWishListSelectOptions() : Observable<Array<WishListSelectOption>> {
     const params = new HttpParams().set('view', 'SELECTION');
     return this.apiService.get(`wish-list`, params)
