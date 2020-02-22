@@ -7,6 +7,7 @@ import { LoadingController, AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { WishList } from '../home/wishlist.model';
 import { WishListEdit } from './wish-list-edit.model';
+import { AlertService } from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-wish-list-edit',
@@ -37,7 +38,7 @@ export class WishListEditPage implements OnInit, OnDestroy {
     private wishListService: WishListService,
     private router: Router,
     public loadingController: LoadingController,
-    public alertController: AlertController
+    public alertService: AlertService
     ) { }
 
   ngOnInit() {
@@ -100,46 +101,36 @@ export class WishListEditPage implements OnInit, OnDestroy {
   }
 
   deleteWishList() {
-    const alert = this.alertController.create({
-      header: 'Wunschliste löschen',
-      message: `Möchtest du deine Wunschliste ${this.wishList.name} wirklich löschen?`,
-      buttons: [
-        {
-          text: 'Ja',
-          role: 'ok',
-          handler: (value) => {
-            this.loadingController.create({
-              message: "Deine Wunschliste wird gerade gelöscht..."
-            }).then( spinner => {
-              spinner.present().then(() => {
-                this.apiService.delete(this.wishList.id)
-                .toPromise()
-                .then( emptyResponse => {
-                  this.subscription.unsubscribe();
-                  spinner.dismiss().finally(() => {
-                    this.router.navigate(['home']);
-                  });
-                })
-                .catch( e => {
-                  spinner.dismiss().finally(() => {
-                    console.error(e);
-                  });
-                });
-              }, e => {
-                spinner.dismiss().finally(() => {
-                  console.error(e);
-                });
-              })
-            })
-          }
-        },
-        {
-          text: 'Nein',
-          role: 'cancel'
-        }
-      ]
-    }).then( alert => {
+    const header = 'Wunschliste löschen';
+    const message =  `Möchtest du deine Wunschliste ${this.wishList.name} wirklich löschen?`;
+    this.alertService.createDeleteAlert(header, message, this.onDeleteConfirmation).then( alert => {
       alert.present();
+    })
+  }
+
+  private onDeleteConfirmation = (value) => {
+    this.loadingController.create({
+      message: "Deine Wunschliste wird gerade gelöscht..."
+    }).then(spinner => {
+      spinner.present().then(() => {
+        this.apiService.delete(this.wishList.id)
+          .toPromise()
+          .then(emptyResponse => {
+            this.subscription.unsubscribe();
+            spinner.dismiss().finally(() => {
+              this.router.navigate(['home']);
+            });
+          })
+          .catch(e => {
+            spinner.dismiss().finally(() => {
+              console.error(e);
+            });
+          });
+      }, e => {
+        spinner.dismiss().finally(() => {
+          console.error(e);
+        });
+      })
     })
   }
 
