@@ -28,7 +28,7 @@
             </ion-avatar>
             <ion-label>
               <h1>{{ wishList.name }}  
-                <ion-icon name="create"></ion-icon>
+                <ion-icon [routerLink]="['/wish-list-edit']" name="create"></ion-icon>
               </h1>
               <p>{{ wishList.date | date }}</p>
             </ion-label>

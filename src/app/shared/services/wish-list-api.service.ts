@@ -4,6 +4,7 @@ import { WishListCreate } from 'src/app/wish-list-new/wish-list-new.model';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { WishListSelectOption, Wish, WishList } from 'src/app/home/wishlist.model';
+import { WishListEdit } from 'src/app/wish-list-edit/wish-list-edit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class WishListApiService {
 
   create(wishList: WishListCreate) : Observable<Object> {
     return this.apiService.post('wish-list', wishList);
+  }
+
+  update(id: Number, wishList: WishListEdit) : Observable<Object> {
+    return this.apiService.put(`wish-list/${id}`, wishList);
   }
 
   addWish(wish: Wish) : Observable<Object> {

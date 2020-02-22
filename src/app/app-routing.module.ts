@@ -49,6 +49,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { wishListSelectOptions: WishListSelectOptionsResolver },
     loadChildren: () => import('./wish-new/wish-new.module').then( m => m.WishNewPageModule)
+  },
+  {
+    path: 'wish-list-edit',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./wish-list-edit/wish-list-edit.module').then( m => m.WishListEditPageModule)
   }
 ];
 

@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text>
+    <h1 class="ion-text-center wantic-page-header">Wunschliste bearbeiten</h1>
+  </ion-text>
+
+  <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">
+    <ion-item lines="none">
+      <label>
+        <span>Name der Wunschliste</span>
+        <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name"></ion-input>
+      </label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <label>
+        <span>Datum</span>
+        <ion-datetime style="padding-left:0;" formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
+      </label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <label>
+        <span>Partner hinzufügen</span>
+        <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="partner"></ion-input>
+      </label>
+    </ion-item>
+  </form>
+
+  <ion-item lines="none" style="margin-left: 20px; margin-right: 20px;">
+    <ion-label>Geteilt mit</ion-label>
+  </ion-item>
+
+  <ion-item lines="none" *ngIf="showNoMembersHint" style="margin-left: 20px; margin-right: 20px;">
+    <ion-text>Bisher hast du noch niemanden dazu eingeladen deiner neuen Wunschliste beizutreten.</ion-text>
+  </ion-item>
+
+  <ion-list style="margin-left: 20px; margin-right: 20px;">
+    <ion-item lines="none" *ngFor="let member of invitedMembers" lines="none">
+      <ion-avatar slot="start">
+        <img src="assets/images/avatar-placeholder.jpg">
+      </ion-avatar>
+      <ion-label>
+        {{ member }}
+      </ion-label>
+      <ion-button fill="clear" (click)="removeMember(member)">
+        <ion-icon name="remove-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <ion-item *ngIf="memberIsLoading" lines="none">
+      <ion-label>Lädt ...</ion-label>
+      <ion-spinner></ion-spinner>
+    </ion-item>
+  </ion-list>
+
+  <form style="margin-left: 20px; margin-right: 20px;">
+
+    <ion-item lines="none">
+      <ion-label>Einladen</ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="tertiary">Gib die E-Mail Adresse ein und die gewünschte Person wird per Mail von dir zur Wunschliste eingeladen.</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-input [formControl]="newMember" type="email" placeholder="E-Mail Adresse eingeben"></ion-input>
+    </ion-item>
+  
+    <ion-button fill="clear" (click)="addMember()" [disabled]="!newMember.valid">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      <ion-text color="primary">Weitere Personen einladen</ion-text>
+    </ion-button>
+  </form>
+
+ 
+
+  <ion-button (click)="updateWishList()" style="margin-left: 20px; margin-right: 20px;" color="primary" expand="block" [disabled]="!form.valid">
+    ÄNDERUNGEN SPEICHERN
+  </ion-button>
+  <ion-button style="margin-left: 20px; margin-right: 20px; margin-top: 10px;" color="primary" fill="outline" expand="block">
+    WUNSCHLISTE LÖSCHEN
+  </ion-button>
+
+</ion-content>
