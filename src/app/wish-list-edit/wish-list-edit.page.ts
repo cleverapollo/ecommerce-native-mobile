@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { WishListService } from '../shared/services/wish-list.service';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { WishList } from '../home/wishlist.model';
 import { WishListEdit } from './wish-list-edit.model';
@@ -36,7 +36,8 @@ export class WishListEditPage implements OnInit, OnDestroy {
     private apiService: WishListApiService,
     private wishListService: WishListService,
     private router: Router,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    public alertController: AlertController
     ) { }
 
   ngOnInit() {
@@ -96,6 +97,50 @@ export class WishListEditPage implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+  deleteWishList() {
+    const alert = this.alertController.create({
+      header: 'Wunschliste löschen',
+      message: `Möchtest du deine Wunschliste ${this.wishList.name} wirklich löschen?`,
+      buttons: [
+        {
+          text: 'Ja',
+          role: 'ok',
+          handler: (value) => {
+            this.loadingController.create({
+              message: "Deine Wunschliste wird gerade gelöscht..."
+            }).then( spinner => {
+              spinner.present().then(() => {
+                this.apiService.delete(this.wishList.id)
+                .toPromise()
+                .then( emptyResponse => {
+                  this.subscription.unsubscribe();
+                  spinner.dismiss().finally(() => {
+                    this.router.navigate(['home']);
+                  });
+                })
+                .catch( e => {
+                  spinner.dismiss().finally(() => {
+                    console.error(e);
+                  });
+                });
+              }, e => {
+                spinner.dismiss().finally(() => {
+                  console.error(e);
+                });
+              })
+            })
+          }
+        },
+        {
+          text: 'Nein',
+          role: 'cancel'
+        }
+      ]
+    }).then( alert => {
+      alert.present();
+    })
   }
 
 }

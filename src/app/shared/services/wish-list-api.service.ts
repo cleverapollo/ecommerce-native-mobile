@@ -21,6 +21,11 @@ export class WishListApiService {
     return this.apiService.put(`wish-list/${id}`, wishList);
   }
 
+  delete(id: Number) : Observable<Object> {
+    console.log(id);
+    return this.apiService.delete(`wish-list/${id}`);
+  }
+
   addWish(wish: Wish) : Observable<Object> {
     return this.apiService.put(`wish-list/${wish.wishListId}/add-wish`, wish);
   }
