@@ -17,6 +17,7 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de'
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-options.resolver';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -48,6 +49,7 @@ export function jwtOptionsFactory(storage) {
     })
   ],
   providers: [
+    InAppBrowser,
     StatusBar,
     SplashScreen,
     WishListResolver,
