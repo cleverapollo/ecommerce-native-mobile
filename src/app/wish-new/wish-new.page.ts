@@ -5,6 +5,7 @@ import { Wish, WishListSelectOption, WishList } from '../home/wishlist.model';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-wish-new',
@@ -24,7 +25,8 @@ export class WishNewPage implements OnInit, OnDestroy {
     private router: Router,
     private formBuilder: FormBuilder, 
     private wishListService: WishListService,
-    private wishListApiService: WishListApiService
+    private wishListApiService: WishListApiService,
+    private navController: NavController
     ) { }
 
   ngOnInit() {
@@ -54,6 +56,10 @@ export class WishNewPage implements OnInit, OnDestroy {
         this.router.navigate(['wish-list-detail']);
       })
       .catch( e => console.error(e) );
+  }
+
+  goBack() {
+    this.navController.navigateBack('/wish-search');
   }
 
 }

@@ -12,6 +12,8 @@ h1.wantic-page-header {
     color: var(--ion-color-tertiary);
 }
 
+// toolbar 
+
 .wantic-toolbar {
     --background: #f7f6f1;
     --border-style: none;
@@ -19,4 +21,28 @@ h1.wantic-page-header {
 
 ion-button.wantic-logo {
     height: 45px;
+}
+
+// form
+
+ion-input, ion-datetime, ion-select {
+    height: 48px;
+}
+
+ion-input, ion-datetime, ion-select, ion-textarea {
+    border: 2pt solid var(--ion-color-secondary);
+    border-radius: 9pt;
+    --background: #f7f6f1;
+    --color: var(--ion-color-primary);
+    --placeholder-color: var(--ion-color-secondary) !important;
+    --padding-start: 19px !important;
+}
+
+form {
+    ion-item {
+        margin-bottom: 20px;
+        ion-label {
+            font-size: 17px !important;
+        }
+    }
 }
