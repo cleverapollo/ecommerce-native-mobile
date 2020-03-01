@@ -4,7 +4,7 @@ import { WishListCreate } from './wish-list-new.model';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { WishListService } from '../shared/services/wish-list.service';
 import { WishList } from '../home/wishlist.model';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -34,6 +34,7 @@ export class WishListNewPage implements OnInit {
     private apiService: WishListApiService,
     private wishListService: WishListService,
     private router: Router,
+    private navController: NavController,
     public loadingController: LoadingController
   ) { }
 
@@ -87,6 +88,10 @@ export class WishListNewPage implements OnInit {
         });
       });
     });
+  }
+
+  goBack() {
+    this.navController.navigateBack('/home');
   }
 
 }

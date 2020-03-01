@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Router, NavigationStart } from '@angular/router';
 import { map, filter } from 'rxjs/operators'
 import { WishListService } from '../shared/services/wish-list.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-wish-list-detail',
@@ -16,7 +17,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   wishList: WishList;
 
-  constructor(private router: Router, private wishListService: WishListService) { }
+  constructor(private router: Router, private wishListService: WishListService, private navController: NavController) { }
 
   ngOnInit() {
     this.subscription = this.wishListService.selectedWishList$.subscribe(w => {
@@ -37,6 +38,10 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   selectWish(wish: Wish) {
     this.wishListService.updateSelectedWish(wish);
     this.router.navigate(['wish-detail']);
+  }
+
+  goBack() {
+    this.navController.navigateBack('/home');
   }
 
 }

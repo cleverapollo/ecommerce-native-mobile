@@ -1,46 +1,43 @@
 <ion-header>
   <ion-toolbar class="wantic-toolbar">
     <ion-buttons slot="start">
-      <ion-button  [routerLink]="['/home']">
-        <ion-icon slot="icon-only" src="assets/icon/wantic_logo.svg"></ion-icon>
+      <ion-button size="large" class="wantic-logo"  [routerLink]="['/home']">
+        <img src="assets/icon/wantic_logo.svg">
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button>
-        <ion-icon slot="icon-only" name="contacts"></ion-icon>
+        <img src="assets/icon/friends-wish-lists-icon.svg">
       </ion-button>
       <ion-button [routerLink]="['/wish-search']">
         <ion-icon slot="icon-only" src="assets/icon/search-icon.svg"></ion-icon>
       </ion-button>
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button>
+        <img src="assets/icon/burger_menu_item.svg">
+      </ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col offset="1" size="10">
-        <div>
-          <ion-item lines="none">
-            <ion-avatar slot="start">
-              <img src="assets/images/avatar-placeholder.jpg">
-            </ion-avatar>
-            <ion-label>
-              <h1>{{ wishList.name }}</h1>
-              <p>{{ wishList.date | date }}</p>
-            </ion-label>
-          </ion-item>
-          <div class="friends-images">
-            <img src="assets/images/avatar-placeholder.jpg">
-            <img src="assets/images/avatar-placeholder.jpg">
-            <img src="assets/images/avatar-placeholder.jpg">
-          </div>
-        </div>
-      </ion-col>
-      <ion-col size="1"></ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-item lines="none">
+    <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
+      <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
+    </ion-button>
+      <ion-avatar style="margin-right: 11px;">
+        <img style="border: 3px solid #ff704f;" src="assets/images/avatar-placeholder.jpg">
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h1>{{ wishList.name }}</h1>
+        <p>{{ wishList.date | date }}</p>
+      </ion-label>
+  </ion-item>
+
+  <div class="friends-images">
+    <img src="assets/images/avatar-placeholder.jpg">
+    <img src="assets/images/avatar-placeholder.jpg">
+    <img src="assets/images/avatar-placeholder.jpg">
+  </div>
 
   <ion-card>
     <img [src]="wish.imageUrl">

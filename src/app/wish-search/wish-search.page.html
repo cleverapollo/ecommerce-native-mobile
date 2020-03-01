@@ -1,18 +1,20 @@
 <ion-header>
   <ion-toolbar class="wantic-toolbar">
     <ion-buttons slot="start">
-      <ion-button  [routerLink]="['/home']">
-        <ion-icon slot="icon-only" src="assets/icon/wantic_logo.svg"></ion-icon>
+      <ion-button size="large" class="wantic-logo"  [routerLink]="['/home']">
+        <img src="assets/icon/wantic_logo.svg">
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button>
-        <ion-icon slot="icon-only" name="contacts"></ion-icon>
+        <img src="assets/icon/friends-wish-lists-icon.svg">
       </ion-button>
       <ion-button [routerLink]="['/wish-search']">
         <ion-icon slot="icon-only" src="assets/icon/search-icon.svg"></ion-icon>
       </ion-button>
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button>
+        <img src="assets/icon/burger_menu_item.svg">
+      </ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

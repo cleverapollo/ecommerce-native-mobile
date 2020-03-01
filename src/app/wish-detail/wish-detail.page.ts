@@ -6,6 +6,7 @@ import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../shared/services/alert.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-wish-detail',
@@ -25,7 +26,8 @@ export class WishDetailPage implements OnInit, OnDestroy {
     private inAppBrowser: InAppBrowser,
     public alertService: AlertService,
     private wishListService: WishListService, 
-    private wishListApiService: WishListApiService
+    private wishListApiService: WishListApiService,
+    private navController: NavController
     ) { }
 
   ngOnInit() {
@@ -70,6 +72,10 @@ export class WishDetailPage implements OnInit, OnDestroy {
       this.router.navigate(['wish-list-detail']);
     })
     .catch( e => console.error(e));
+  }
+
+  goBack() {
+    this.navController.navigateBack('/wish-list-detail');
   }
 
 }
