@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { WishListService } from '../shared/services/wish-list.service';
 import { Router } from '@angular/router';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { WishList } from '../home/wishlist.model';
 import { WishListEdit } from './wish-list-edit.model';
@@ -38,7 +38,8 @@ export class WishListEditPage implements OnInit, OnDestroy {
     private wishListService: WishListService,
     private router: Router,
     public loadingController: LoadingController,
-    public alertService: AlertService
+    public alertService: AlertService,
+    private navController: NavController
     ) { }
 
   ngOnInit() {
@@ -132,6 +133,10 @@ export class WishListEditPage implements OnInit, OnDestroy {
         });
       })
     })
+  }
+
+  goBack() {
+    this.navController.navigateBack('/wish-list-detail')
   }
 
 }

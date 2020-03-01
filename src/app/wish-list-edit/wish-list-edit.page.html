@@ -1,36 +1,27 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-text>
-    <h1 class="ion-text-center wantic-page-header">Wunschliste bearbeiten</h1>
-  </ion-text>
+  <ion-item lines="none" id="wish-list-edit-header">
+    <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
+      <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
+    </ion-button>
+    <ion-text>
+      <h1 class="ion-text-center wantic-page-header">Wunschliste bearbeiten</h1>
+    </ion-text>
+  </ion-item>
 
   <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">
     <ion-item lines="none">
-      <label>
-        <span>Name der Wunschliste</span>
-        <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name"></ion-input>
-      </label>
+      <ion-label position="stacked">Name der Wunschliste</ion-label>
+      <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name"></ion-input>
     </ion-item>
 
     <ion-item lines="none">
-      <label>
-        <span>Datum</span>
-        <ion-datetime style="padding-left:0;" formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
-      </label>
+      <ion-label position="stacked">Datum</ion-label>
+      <ion-datetime formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
     </ion-item>
 
     <ion-item lines="none">
-      <label>
-        <span>Partner hinzufügen</span>
-        <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="partner"></ion-input>
-      </label>
+      <ion-label position="stacked">Datum</ion-label>
+      <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="partner"></ion-input>
     </ion-item>
   </form>
 
