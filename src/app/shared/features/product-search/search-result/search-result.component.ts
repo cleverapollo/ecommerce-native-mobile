@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SearchResultItem } from '../search-result-item';
+import { ModalController } from '@ionic/angular';
+import { SearchResultDetailModalComponent } from '../search-result-detail-modal/search-result-detail-modal.component';
 
 @Component({
   selector: 'app-search-result',
@@ -11,12 +13,23 @@ export class SearchResultComponent implements OnInit {
   @Input() wish: SearchResultItem
   @Output() onSelectWish = new EventEmitter<SearchResultItem>();
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {}
 
   selectWish() {
     this.onSelectWish.emit(this.wish);
+  }
+
+  async showDetails() {
+    const modal = await this.modalController.create({
+      component: SearchResultDetailModalComponent,
+      componentProps: {
+        searchResultItem: this.wish
+      }
+    });
+
+    await modal.present();
   }
 
 }

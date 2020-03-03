@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { IonicModule } from '@ionic/angular';
+import { SearchResultDetailModalComponent } from './search-result-detail-modal/search-result-detail-modal.component';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { IonicModule } from '@ionic/angular';
         SearchResultComponent
     ],
     declarations: [
-        SearchResultComponent
+        SearchResultComponent,
+        SearchResultDetailModalComponent
     ]
   })
   export class ProductSearchModule {}
