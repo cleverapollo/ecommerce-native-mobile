@@ -21,15 +21,17 @@ export class SearchResultComponent implements OnInit {
     this.onSelectWish.emit(this.wish);
   }
 
-  async showDetails() {
-    const modal = await this.modalController.create({
+  showDetails() {
+    console.log('show details');
+    this.modalController.create({
       component: SearchResultDetailModalComponent,
       componentProps: {
         searchResultItem: this.wish
-      }
-    });
-
-    await modal.present();
+      },
+      cssClass: 'wantic-modal'
+    }).then( (modal) => {
+      modal.present();
+    })
   }
 
 }

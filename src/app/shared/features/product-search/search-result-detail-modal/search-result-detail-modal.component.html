@@ -1,6 +1,16 @@
-<ion-img [src]="searchResultItem.imageUrl" style="height: 163px;"></ion-img>
-<div>
-  <p>{{ searchResultItem.name }}</p>
-  <p><ion-text color="primary">{{ searchResultItem.price }}</ion-text></p>
-</div>
-<ion-button expand="block" fill="outline" color="tertiary" (click)="selectWish()">Hinzufügen</ion-button>
+<ion-content>
+  <div class="ion-text-end">
+    <ion-button (click)="dismiss()" fill="clear" color="dark" strong="true">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </div>
+  <ion-img [src]="searchResultItem.imageUrl" style="height: 163px;"></ion-img>
+  <div class="search-result-item-description">
+    <p>{{ searchResultItem.name }}</p>
+    <p><ion-text color="primary">{{ searchResultItem.price }}</ion-text></p>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-button expand="block" fill="outline" color="tertiary" (click)="selectWish()">Hinzufügen</ion-button>
+</ion-footer>

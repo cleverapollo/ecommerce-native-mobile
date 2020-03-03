@@ -13,4 +13,8 @@ export class SearchResultDetailModalComponent {
 
   constructor(private modalController: ModalController) { }
   
+  dismiss() {
+    this.modalController.dismiss();
+  }
+
 }

@@ -15,6 +15,9 @@ import { SearchResultDetailModalComponent } from './search-result-detail-modal/s
     declarations: [
         SearchResultComponent,
         SearchResultDetailModalComponent
+    ],
+    entryComponents: [
+        SearchResultDetailModalComponent
     ]
   })
   export class ProductSearchModule {}
