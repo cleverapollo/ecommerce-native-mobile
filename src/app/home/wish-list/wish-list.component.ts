@@ -10,9 +10,7 @@ export class WishListComponent implements OnInit {
 
   @Input() wishList: WishList
 
-  constructor() {
-    console.log(this.wishList)
-  }
+  constructor() {}
 
   ngOnInit() {}
 

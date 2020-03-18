@@ -1,0 +1,37 @@
+<div class="friend-avatar-container">
+  <img src="assets/images/avatar-placeholder.jpg">
+</div>
+
+<ion-grid class="wish-list-container">
+  <ion-row>
+    <ion-col size="6">
+      <ion-img *ngIf="wishList.wishes.length > 0" [src]="wishList.wishes[0].imageUrl"></ion-img>
+      <img *ngIf="!wishList.wishes.length" src="assets/images/wish-list-placeholder.png">
+    </ion-col>
+    <ion-col size="6">
+      <ion-img *ngIf="wishList.wishes.length > 1" [src]="wishList.wishes[1].imageUrl"></ion-img>
+      <img *ngIf="wishList.wishes.length < 2" src="assets/images/wish-list-placeholder.png">
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="6">
+      <ion-img *ngIf="wishList.wishes.length > 2" [src]="wishList.wishes[2].imageUrl"></ion-img>
+      <img *ngIf="wishList.wishes.length < 3" src="assets/images/wish-list-placeholder.png">
+    </ion-col>
+    <ion-col size="6">
+      <ion-img *ngIf="wishList.wishes.length > 3" [src]="wishList.wishes[3].imageUrl"></ion-img>
+      <img *ngIf="wishList.wishes.length < 4" src="assets/images/wish-list-placeholder.png">
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="12">
+      <div class="wish-list-description">
+        <div class="friend-name">{{ wishList.friendName }}</div>
+        <div class="wish-list-name">{{ wishList.name }}</div>
+        <div class="wish-list-date">{{ wishList.date | date }}</div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

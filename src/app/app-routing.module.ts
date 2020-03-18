@@ -54,7 +54,13 @@ const routes: Routes = [
     path: 'wish-list-edit',
     canActivate: [AuthGuard],
     loadChildren: () => import('./wish-list-edit/wish-list-edit.module').then( m => m.WishListEditPageModule)
+  },
+  {
+    path: 'friends-wish-list-overview',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./friends-wish-list-overview/friends-wish-list-overview.module').then( m => m.FriendsWishListOverviewPageModule)
   }
+
 ];
 
 @NgModule({

@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar class="wantic-toolbar">
+    <ion-buttons slot="start">
+      <ion-button size="large" class="wantic-logo" [routerLink]="['/home']">
+        <img src="assets/icon/wantic-logo.svg">
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <img src="assets/icon/friends-wish-lists-active.svg">
+      </ion-button>
+      <ion-button [routerLink]="['/wish-search']">
+        <ion-icon slot="icon-only" src="assets/icon/search-icon.svg"></ion-icon>
+      </ion-button>
+      <ion-menu-button>
+        <img src="assets/icon/burger-menu.svg">
+      </ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text>
+    <h1 class="ion-text-center">Meine Familie & Freunde</h1>
+  </ion-text>
+  <ion-grid>
+    <ion-row>
+      <ion-col style="border: 2px solid #f7f6f1; padding: 0;" size="6" *ngFor="let wishList of wishLists" (click)="selectWishList(wishList)">
+        <app-friend-wish-list [wishList]="wishList"></app-friend-wish-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

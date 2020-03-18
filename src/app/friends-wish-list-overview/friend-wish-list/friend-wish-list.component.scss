@@ -1,0 +1,34 @@
+.friend-name {
+    font-family: 'Roboto';
+    font-size: 26px;
+    color: var(--ion-color-dark);
+}
+
+.friend-avatar-container {
+    background: linear-gradient(to bottom, #f7f6f1 50%, white 50%);
+    text-align: center;
+    img {
+        width: 40pt;
+        border-radius: 40pt;
+    }
+}
+
+.wish-list-container {
+    background-color: white;
+}
+
+.wish-list-name {
+    font-family: 'Roboto';
+    font-size: 20px;
+    color: var(--ion-color-primary);
+}
+
+.wish-list-date {
+    font-family: 'Roboto';
+    font-size: 14px;
+    color: var(--ion-color-secondary);
+}
+
+.wish-list-description {
+    border-top: 1px dashed #f7f6f1;
+}
