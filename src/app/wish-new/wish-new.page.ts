@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListService } from '../shared/services/wish-list.service';
-import { Wish, WishListSelectOption } from '../home/wishlist.model';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { NavController } from '@ionic/angular';
-import { WishListDto } from '../shared/models/wish-list.model';
+import { WishListDto, WishDto, WishListSelectOptionDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-new',
@@ -17,9 +16,9 @@ export class WishNewPage implements OnInit, OnDestroy {
 
   private wishSubscription: Subscription
   
-  wishListSelectOptions: Array<WishListSelectOption>
+  wishListSelectOptions: Array<WishListSelectOptionDto>
   form: FormGroup
-  wish: Wish
+  wish: WishDto
 
   constructor(
     private route: ActivatedRoute, 

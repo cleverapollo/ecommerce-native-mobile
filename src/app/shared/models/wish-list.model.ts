@@ -9,6 +9,11 @@ export class WishDto {
     imageUrl: String;
 }
 
+export class WishListSelectOptionDto {
+    id: Number;
+    name: String;
+}
+
 export class WishListMemberDto {
     name: String;
     failedToSendEmail: boolean;

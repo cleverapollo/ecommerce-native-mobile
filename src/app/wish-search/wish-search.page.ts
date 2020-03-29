@@ -2,10 +2,9 @@ import { Component, OnInit, isDevMode, OnDestroy } from '@angular/core';
 import { SearchService } from '../shared/features/product-search/search.service';
 import { SearchResultItem } from '../shared/features/product-search/search-result-item';
 import { WishListService } from '../shared/services/wish-list.service';
-import { Wish } from '../home/wishlist.model';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { WishListDto } from '../shared/models/wish-list.model';
+import { WishListDto, WishDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-search',
@@ -51,7 +50,7 @@ export class WishSearchPage implements OnInit, OnDestroy {
   }
 
   updateValue(item: SearchResultItem) {
-    let wish = new Wish();
+    let wish = new WishDto();
     wish.name = item.name;
     wish.price = item.price;
     wish.imageUrl = item.imageUrl;

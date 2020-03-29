@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Wish } from 'src/app/home/wishlist.model';
+import { WishDto } from 'src/app/shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish',
@@ -8,7 +8,7 @@ import { Wish } from 'src/app/home/wishlist.model';
 })
 export class WishComponent implements OnInit {
 
-  @Input() wish: Wish;
+  @Input() wish: WishDto;
 
   constructor() { }
 

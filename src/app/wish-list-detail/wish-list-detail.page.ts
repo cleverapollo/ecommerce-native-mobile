@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Wish } from '../home/wishlist.model';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { WishListService } from '../shared/services/wish-list.service';
 import { NavController } from '@ionic/angular';
-import { WishListDto } from '../shared/models/wish-list.model';
+import { WishListDto, WishDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-list-detail',
@@ -35,7 +34,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  selectWish(wish: Wish) {
+  selectWish(wish: WishDto) {
     this.wishListService.updateSelectedWish(wish);
     this.router.navigate(['wish-detail']);
   }

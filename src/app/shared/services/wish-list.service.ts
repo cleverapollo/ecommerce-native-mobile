@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Wish } from 'src/app/home/wishlist.model';
 import { BehaviorSubject } from 'rxjs';
-import { WishListDto } from '../models/wish-list.model';
+import { WishListDto, WishDto } from '../models/wish-list.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,7 @@ import { WishListDto } from '../models/wish-list.model';
 export class WishListService {
 
   private _selectedWishList: BehaviorSubject<WishListDto> = new BehaviorSubject(new WishListDto());
-  private _selectedWish: BehaviorSubject<Wish> = new BehaviorSubject(new Wish());
+  private _selectedWish: BehaviorSubject<WishDto> = new BehaviorSubject(new WishDto());
 
   constructor() {}
 
@@ -20,7 +19,7 @@ export class WishListService {
     this._selectedWishList.next(wishList);
   }
 
-  updateSelectedWish(wish: Wish) {
+  updateSelectedWish(wish: WishDto) {
     this._selectedWish.next(wish);
   }
 }
