@@ -5,9 +5,10 @@ import { WishListService } from '../shared/services/wish-list.service';
 import { Router } from '@angular/router';
 import { LoadingController, AlertController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { WishList } from '../home/wishlist.model';
-import { WishListEdit } from './wish-list-edit.model';
+import { WishListEdit, InivtedMemberDisplayInfo, MemberToInvite } from './wish-list-edit.model';
 import { AlertService } from '../shared/services/alert.service';
+import { UserApiService } from '../shared/services/user-api.service';
+import { WishListDto, MemberToInviteDto, WishListMemberDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-list-edit',
@@ -17,16 +18,15 @@ import { AlertService } from '../shared/services/alert.service';
 export class WishListEditPage implements OnInit, OnDestroy {
 
   private subscription: Subscription;
-  private wishList: WishList;
+  private wishList: WishListDto;
 
   form: FormGroup
-  invitedMembers: Array<String>
-  newMember: FormControl
-  memberIsLoading: Boolean
+  newMemberForm: FormGroup;
 
-  get members() : Array<String> {
-    return this.form.controls.members.value 
-  }
+  invitedMembers: Array<InivtedMemberDisplayInfo>
+  
+  memberIsLoading: Boolean = false;
+  memberNotFound: Boolean = false;
 
   get showNoMembersHint() : Boolean {
     return !this.invitedMembers.length && !this.memberIsLoading
@@ -39,7 +39,8 @@ export class WishListEditPage implements OnInit, OnDestroy {
     private router: Router,
     public loadingController: LoadingController,
     public alertService: AlertService,
-    private navController: NavController
+    private navController: NavController,
+    private userApiService: UserApiService
     ) { }
 
   ngOnInit() {
@@ -49,12 +50,16 @@ export class WishListEditPage implements OnInit, OnDestroy {
         'name': this.formBuilder.control(this.wishList.name, [Validators.required]),
         'date': this.formBuilder.control(this.wishList.date, [Validators.required]),
         'partner': this.formBuilder.control('', [Validators.email]),
-        'members': this.formBuilder.array([])
+        'members': this.formBuilder.array(this.wishList.members),
+        'membersToInvite': this.formBuilder.array(this.wishList.membersToInvite)
       });
+      this.invitedMembers = this.form.controls.members.value.map( m => InivtedMemberDisplayInfo.forMember(m));
     });
-    this.newMember = this.formBuilder.control('', [Validators.email])
-    this.memberIsLoading = false;
-    this.invitedMembers = new Array<String>();
+
+    this.newMemberForm = this.formBuilder.group({
+      'email': this.formBuilder.control('', [Validators.email]),
+      'name': this.formBuilder.control('')
+    });
   }
 
   ngOnDestroy(): void {
@@ -62,35 +67,71 @@ export class WishListEditPage implements OnInit, OnDestroy {
   }
 
   addMember() {
-    this.memberIsLoading = true;
-    // ToDo: check if user exists in db
-    this.invitedMembers.push(this.newMember.value);
-    this.newMember.reset();
-    this.memberIsLoading = false;
-  }
-
-  removeMember(member: String) {
-    const index = this.invitedMembers.indexOf(member);
-    if (index !== -1) {
-      this.invitedMembers.splice(index, 1);
+    const email = this.newMemberForm.controls.email.value;
+    if (!this.memberNotFound) {
+      this.memberIsLoading = true;
+      this.userApiService.searchUserByEmail(email).subscribe((response) => {
+     
+        if (response.userExists) {
+          this.invitedMembers.push(InivtedMemberDisplayInfo.forUserSearchResult(response));
+          this.form.controls.members.value.push(WishListMemberDto.forUserSearchResult(response));
+          this.newMemberForm.reset();
+        } else {
+          this.memberNotFound = true;
+          this.newMemberForm.controls.name.setValidators([Validators.minLength(2), Validators.required]);
+          this.newMemberForm.controls.name.updateValueAndValidity();
+        }
+        
+      }, e => console.error(e), () => {
+        this.memberIsLoading = false;
+      });
+    } else {
+      const name =  this.newMemberForm.controls.name.value;
+      const memberToInvite = new MemberToInviteDto(name, email);
+      this.form.controls.membersToInvite.value.push(memberToInvite);
+      this.invitedMembers.push(InivtedMemberDisplayInfo.forMemberToInvite(memberToInvite));
+      this.memberNotFound = false;
+      this.newMemberForm.reset();
     }
   }
 
+  removeMember(displayInfo: InivtedMemberDisplayInfo) {
+    const member = this.findMemberById(this.wishList, displayInfo.id);
+    if (member) {
+      const index = this.form.controls.members.value.indexOf(member);
+      if (index !== -1) {
+        this.form.controls.members.value.splice(index, 1);
+        this.invitedMembers.splice(this.invitedMembers.indexOf(displayInfo), 1);
+      }
+    }
+  }
+
+  private findMemberById(wishList: WishListDto, id: String) : WishListMemberDto {
+    let result = null;
+    if (id) {
+        const member = wishList.members.find((m) => m.email === id);
+        const preactiveMember = wishList.members.find((m) => m.preactiveUserId === id);
+        result = member ? member : preactiveMember;
+    }
+    return result;
+}
+
   updateWishList() {
-    let wishList = new WishListEdit();
+    let wishList = new WishListDto();
     wishList.name = this.form.controls.name.value;
     wishList.date = this.form.controls.date.value;
-    wishList.partners = [];
-    wishList.members = [];
+    wishList.members = this.form.controls.members.value;
+    wishList.membersToInvite = this.form.controls.membersToInvite.value;
 
     this.loadingController.create({
       message: "Deine Wunschliste wird gerade aktualisiert..."
     }).then( spinner => {
       spinner.present().then(() => {
-        this.apiService.update(this.wishList.id, wishList).subscribe( (response : WishList) => {
+        this.apiService.update(this.wishList.id, wishList).subscribe( (response : WishListDto) => {
           spinner.dismiss().finally(() => {
+            this.wishList = response;
             this.wishListService.updateSelectedWishList(response);
-            this.router.navigate(['wish-list-detail']);
+            // this.router.navigate(['wish-list-detail']);
           })
         }, e => {
           spinner.dismiss().finally(() => {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { WishList } from './wishlist.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishListService } from '../shared/services/wish-list.service';
+import { WishListDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,7 @@ import { WishListService } from '../shared/services/wish-list.service';
 })
 export class HomePage implements OnInit {
 
-  wishLists: Array<WishList> = new Array();
+  wishLists: Array<WishListDto> = new Array();
 
   constructor(
     private route: ActivatedRoute, 
@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
     this.wishListService.updateSelectedWishList(null);
   }
 
-  selectWishList(wishList: WishList) {
+  selectWishList(wishList: WishListDto) {
     this.wishListService.updateSelectedWishList(wishList);
     this.router.navigate(['wish-list-detail']);
   }

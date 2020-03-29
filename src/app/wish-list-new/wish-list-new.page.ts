@@ -3,9 +3,9 @@ import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@ang
 import { WishListCreate } from './wish-list-new.model';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { WishListService } from '../shared/services/wish-list.service';
-import { WishList } from '../home/wishlist.model';
 import { LoadingController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { WishListDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-list-new',
@@ -76,7 +76,7 @@ export class WishListNewPage implements OnInit {
       message: "Deine Wunschliste wird gerade angelegt..."
     }).then( spinner => {
       spinner.present().then(() => {
-        this.apiService.create(wishList).subscribe( (response : WishList) => {
+        this.apiService.create(wishList).subscribe( (response : WishListDto) => {
           spinner.dismiss().finally(() => {
             this.wishListService.updateSelectedWishList(response);
             this.router.navigate(['wish-list-detail']);

@@ -20,7 +20,7 @@
     </ion-item>
 
     <ion-item lines="none">
-      <ion-label position="stacked">Datum</ion-label>
+      <ion-label position="stacked">Partner hinzufügen</ion-label>
       <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="partner"></ion-input>
     </ion-item>
   </form>
@@ -30,18 +30,19 @@
   </ion-item>
 
   <ion-item lines="none" *ngIf="showNoMembersHint" style="margin-left: 20px; margin-right: 20px;">
-    <ion-text>Bisher hast du noch niemanden dazu eingeladen deiner neuen Wunschliste beizutreten.</ion-text>
+    <ion-text>Bisher hast du noch niemanden dazu eingeladen deiner Wunschliste beizutreten.</ion-text>
   </ion-item>
 
   <ion-list style="margin-left: 20px; margin-right: 20px;">
-    <ion-item lines="none" *ngFor="let member of invitedMembers" lines="none">
+    <ion-item lines="none" *ngFor="let displayInfo of invitedMembers">
       <ion-avatar slot="start">
-        <img src="assets/images/avatar-placeholder.jpg">
+        <img *ngIf="!displayInfo.imageUrl" src="assets/images/avatar-placeholder.jpg">
       </ion-avatar>
       <ion-label>
-        {{ member }}
+        {{ displayInfo.text }}
+        <p *ngIf="displayInfo.subText">{{ displayInfo.subText }}</p>
       </ion-label>
-      <ion-button fill="clear" (click)="removeMember(member)">
+      <ion-button fill="clear" (click)="removeMember(displayInfo)">
         <ion-icon name="remove-circle-outline"></ion-icon>
       </ion-button>
     </ion-item>
@@ -51,21 +52,26 @@
     </ion-item>
   </ion-list>
 
-  <form style="margin-left: 20px; margin-right: 20px;">
+  <form [formGroup]="newMemberForm" style="margin-left: 20px; margin-right: 20px;">
 
     <ion-item lines="none">
       <ion-label>Einladen</ion-label>
     </ion-item>
 
     <ion-item lines="none">
-      <ion-text color="tertiary">Gib die E-Mail Adresse ein und die gewünschte Person wird per Mail von dir zur Wunschliste eingeladen.</ion-text>
+      <ion-text color="tertiary" *ngIf="!memberNotFound">Gib die E-Mail Adresse ein und die gewünschte Person wird per Mail von dir zur Wunschliste eingeladen.</ion-text>
+      <ion-text color="tertiary" *ngIf="memberNotFound">Die angegbene Person ist leider noch nicht bei Wantic. Gib deshalb zusätzlich einen Namen ein, um diese später identifizieren zu können.</ion-text>
     </ion-item>
 
     <ion-item lines="none">
-      <ion-input [formControl]="newMember" type="email" placeholder="E-Mail Adresse eingeben"></ion-input>
+      <ion-input formControlName="email" type="email" placeholder="E-Mail Adresse eingeben"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" *ngIf="memberNotFound">
+      <ion-input formControlName="name" type="text" placeholder="Name eingeben"></ion-input>
     </ion-item>
   
-    <ion-button fill="clear" (click)="addMember()" [disabled]="!newMember.valid">
+    <ion-button fill="clear" (click)="addMember()" [disabled]="!newMemberForm.valid">
       <ion-icon name="add-circle-outline"></ion-icon>
       <ion-text color="primary">Weitere Personen einladen</ion-text>
     </ion-button>

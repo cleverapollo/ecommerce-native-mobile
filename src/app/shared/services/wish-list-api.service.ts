@@ -3,8 +3,8 @@ import { ApiService } from './api.service';
 import { WishListCreate } from 'src/app/wish-list-new/wish-list-new.model';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { WishListSelectOption, Wish, WishList } from 'src/app/home/wishlist.model';
-import { WishListEdit } from 'src/app/wish-list-edit/wish-list-edit.model';
+import { WishListSelectOption, Wish } from 'src/app/home/wishlist.model';
+import { WishListDto } from '../models/wish-list.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,11 @@ export class WishListApiService {
     return this.apiService.post('wish-list', wishList);
   }
 
-  update(id: Number, wishList: WishListEdit) : Observable<Object> {
+  update(id: Number, wishList: WishListDto) : Observable<Object> {
     return this.apiService.put(`wish-list/${id}`, wishList);
   }
 
   delete(id: Number) : Observable<Object> {
-    console.log(id);
     return this.apiService.delete(`wish-list/${id}`);
   }
 
@@ -36,7 +35,7 @@ export class WishListApiService {
 
   getWishListSelectOptions() : Observable<Array<WishListSelectOption>> {
     const params = new HttpParams().set('view', 'SELECTION');
-    return this.apiService.get(`wish-list`, params)
+    return this.apiService.get(`wish-list`, params);
   }
 
 }

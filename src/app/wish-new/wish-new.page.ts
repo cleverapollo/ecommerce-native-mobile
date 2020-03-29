@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListService } from '../shared/services/wish-list.service';
-import { Wish, WishListSelectOption, WishList } from '../home/wishlist.model';
+import { Wish, WishListSelectOption } from '../home/wishlist.model';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { NavController } from '@ionic/angular';
+import { WishListDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-new',
@@ -51,7 +52,7 @@ export class WishNewPage implements OnInit, OnDestroy {
     this.wish.price = this.form.controls.price.value;
     this.wishListApiService.addWish(this.wish)
       .toPromise()
-      .then( (updatedWishList: WishList) => { 
+      .then( (updatedWishList: WishListDto) => { 
         this.wishListService.updateSelectedWishList(updatedWishList);
         this.router.navigate(['wish-list-detail']);
       })

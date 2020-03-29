@@ -1,3 +1,5 @@
+import { WishListMemberDto } from '../shared/models/wish-list.model';
+
 export class Wish {
     id: Number;
     wishListId: Number;
@@ -5,13 +7,6 @@ export class Wish {
     price: String;
     productUrl: string;
     imageUrl: String;
-}
-
-export class WishList {
-    id: Number;
-    name: String;
-    date: String;
-    wishes: Array<Wish>;
 }
 
 export class WishListSelectOption {

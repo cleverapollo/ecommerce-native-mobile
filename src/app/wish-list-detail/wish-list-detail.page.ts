@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { WishList, Wish } from '../home/wishlist.model';
-import { Observable, Subscription } from 'rxjs';
-import { Router, NavigationStart } from '@angular/router';
-import { map, filter } from 'rxjs/operators'
+import { Wish } from '../home/wishlist.model';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { WishListService } from '../shared/services/wish-list.service';
 import { NavController } from '@ionic/angular';
+import { WishListDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-list-detail',
@@ -15,7 +15,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   private subscription: Subscription
 
-  wishList: WishList;
+  wishList: WishListDto;
 
   constructor(private router: Router, private wishListService: WishListService, private navController: NavController) { }
 

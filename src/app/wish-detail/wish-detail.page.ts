@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Wish, WishList } from '../home/wishlist.model';
+import { Wish } from '../home/wishlist.model';
 import { WishListService } from '../shared/services/wish-list.service';
 import { Subscription } from 'rxjs';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../shared/services/alert.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { NavController } from '@ionic/angular';
+import { WishListDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-detail',
@@ -18,7 +19,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   private subscription: Subscription;
   private wishListSubscription: Subscription;
 
-  wishList: WishList
+  wishList: WishListDto
   wish: Wish
 
   constructor(
