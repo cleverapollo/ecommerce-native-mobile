@@ -14,6 +14,7 @@ export class WishListMemberDto {
     failedToSendEmail: boolean;
     email: String = null;
     preactiveUserId: String = null;
+    profileImageUrl: String = null;
 
     static forUserSearchResult(userSearchResult: UserSearchResult) : WishListMemberDto {
         let model = new WishListMemberDto()
