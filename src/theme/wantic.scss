@@ -1,9 +1,15 @@
+// variables
+
+$wantic-background-color: #F0EDE333;
+
+// definitions
+
 a {
     color: var(--ion-color-tertiary)
 }
 
 ion-content {
-    --ion-background-color: #f7f6f1;
+    --ion-background-color: var($wantic-background-color);
 }
 
 h1.wantic-page-header {
@@ -15,7 +21,7 @@ h1.wantic-page-header {
 // toolbar 
 
 .wantic-toolbar {
-    --background: #f7f6f1;
+    --background: var($wantic-background-color);
     --border-style: none;
 }
 
@@ -32,7 +38,7 @@ ion-input, ion-datetime, ion-select {
 ion-input, ion-datetime, ion-select, ion-textarea {
     border: 2pt solid var(--ion-color-secondary);
     border-radius: 9pt;
-    --background: #f7f6f1;
+    --background: var($wantic-background-color);
     --color: var(--ion-color-primary);
     --placeholder-color: var(--ion-color-secondary) !important;
     --padding-start: 19px !important;
@@ -51,5 +57,53 @@ form {
     --width: 70%;
     --height: 70%;
     --border-radius: 11pt;
+}
 
+// registration 
+
+h1.registration {
+    color: var(--ion-color-tertiary);
+    font-family: 'Playfair Display';
+    font-weight: bold;
+    font-size: 38px;
+}
+
+.registration-header {
+    text-align: center;
+    position: relative;
+    padding-top: 16px;
+    .back-button {
+        position: absolute;
+        left: 0;
+        margin-top: 0;
+    }
+}
+
+.registration-circle {
+    border-radius: 50%;
+    width: 430px;
+    height: 330pt;
+    background: var(--ion-color-secondary);
+    position: relative;
+    right: 25px;
+    .form {
+        margin: auto;
+        position: relative;
+        top: 10%;
+        ion-item {
+            background: var(--ion-color-secondary);
+            padding-right: 50px;
+            padding-left: 50px;
+            ion-searchbar, ion-input, ion-datetime {
+                border: none;
+                --backround: var($wantic-background-color)
+            }
+        }
+        .subtext {
+            color: var(--ion-color-tertiary);
+            font-size: 12px;
+            padding-right: 50px;
+            padding-left: 50px;
+        }
+    }
 }

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { RegistrationService } from '../services/registration.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-account-email-password',
@@ -23,7 +24,8 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     private router: Router, 
     private route: ActivatedRoute,
     private formService: RegistrationFormService,
-    private registrationApiService: RegistrationService) { 
+    private registrationApiService: RegistrationService,
+    private navController: NavController) { 
   }
 
   ngOnInit() {
@@ -50,6 +52,10 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
         this.router.navigate(['../registration-complete'], { relativeTo: this.route })
       })
       .catch((e => console.error(e)));
+  }
+
+  goBack() {
+    this.navController.back();
   }
 
 }

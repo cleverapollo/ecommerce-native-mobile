@@ -1,8 +1,28 @@
+
+
 h1 {
     color: var(--ion-color-tertiary);
     font-family: 'Playfair Display';
     font-weight: bold;
     font-size: 18pt;
+}
+
+.wantic-logo {
+    width: 25%;
+    margin: auto;
+    margin-top: 15px;
+    background-color: #FFD1B633;
+}
+
+ion-footer {
+    background-color: #FFD1B633;
+}
+
+ion-content {
+    background-color: #FFD1B633;
+    form {
+        background-color: white;
+    }
 }
 
 ion-button {

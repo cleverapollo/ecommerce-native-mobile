@@ -4,6 +4,7 @@ import { RegistrationForm } from '../registration-form';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-account-first-name',
@@ -21,7 +22,8 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router, 
     private route: ActivatedRoute,
-    private formService: RegistrationFormService) {}
+    private formService: RegistrationFormService,
+    private navController: NavController) {}
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( form => {
@@ -40,6 +42,10 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
     this.currentForm.accountInfos.firstName = this.form.controls['firstName'].value;
     this.formService.updateForm(this.currentForm);
     this.router.navigate(['../credentials'], { relativeTo: this.route })
+  }
+
+  goBack() {
+    this.navController.back();
   }
 
 }

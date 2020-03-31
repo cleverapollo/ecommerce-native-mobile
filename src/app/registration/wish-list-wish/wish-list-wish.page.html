@@ -1,30 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>W</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="registration-header">
+  <ion-button fill="clear" class="back-button" (click)="goBack()">
+    <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
+  </ion-button>
+  <div>
+    <img src="assets/icon/wantic-logo-active.svg">
+  </div>
+</div>
 
-<ion-content>
-  <ion-grid class="ion-center">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="6">
-        <ion-text color="tertiary">
-          <h1 class="ion-text-center">Füge deinen ersten Wunsch hinzu.</h1>
-        </ion-text>
-        <ion-item>
-          <ion-searchbar [(ngModel)]="keywords" placeholder="toaster"></ion-searchbar>
-        </ion-item>
-        <p>
-          Trage deinen Wunsch in die Suche ein und
-          wähle das passende Produkt aus.
-        </p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+<div class="registration-circle">
+  <div class="form">
+    <h1 class="registration ion-text-center">Füge deinen ersten Wunsch hinzu.</h1>
+    <ion-item>
+      <ion-searchbar [(ngModel)]="keywords" placeholder="toaster"></ion-searchbar>
+    </ion-item>
+    <p class="subtext ion-text-center">
+      Trage deinen Wunsch in die Suche ein und <br>
+      wähle das passende Produkt aus.
+    </p>
+  </div>
+</div>
 
 <ion-footer no-border>
   <ion-grid>

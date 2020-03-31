@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RegistrationForm } from '../registration-form';
 import { Subscription } from 'rxjs';
 import { RegistrationFormService } from '../registration-form.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-search-results',
@@ -21,7 +22,8 @@ export class SearchResultsPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private formService: RegistrationFormService) {}
+    private formService: RegistrationFormService,
+    private navController: NavController) {}
 
   ngOnInit() {
     this.wishes = this.route.snapshot.data.products;
@@ -42,6 +44,10 @@ export class SearchResultsPage implements OnInit, OnDestroy {
     this.currentForm.wishList.wishes[0] = this.selectedWish;
     this.formService.updateForm(this.currentForm);
     this.router.navigate(['../first-name'], { relativeTo: this.route });
+  }
+
+  goBack() {
+    this.navController.back();
   }
 
 }
