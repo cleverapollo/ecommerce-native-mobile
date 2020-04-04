@@ -1,22 +1,26 @@
-<div class="registration-header">
-  <ion-button fill="clear" class="back-button" (click)="goBack()">
-    <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
-  </ion-button>
-  <div>
-    <img src="assets/icon/wantic-logo-active.svg">
+<ion-header>
+  <div class="registration-header">
+    <ion-button fill="clear" class="back-button" (click)="goBack()">
+      <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
+    </ion-button>
+    <div>
+      <img src="assets/icon/wantic-logo-active.svg">
+    </div>
   </div>
-</div>
+</ion-header>
 
-<div class="registration-circle">
-  <div class="form">
-    <h1 class="registration ion-text-center">Lege deine erste Wunschliste an</h1>
-    <form [formGroup]="form">
-      <ion-item>
-        <ion-input formControlName="name" type="text" placeholder="Trage einen Namen ein"></ion-input>
-      </ion-item>
-    </form>
+<ion-content>
+  <div class="registration-circle">
+    <div class="form">
+      <h1 class="registration ion-text-center">Lege deine erste Wunschliste an</h1>
+      <form [formGroup]="form">
+        <ion-item>
+          <ion-input formControlName="name" type="text" placeholder="Trage einen Namen ein"></ion-input>
+        </ion-item>
+      </form>
+    </div>
   </div>
-</div>
+</ion-content>
 
 <ion-footer no-border>
   <ion-grid>
