@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RegistrationForm } from '../registration-form';
+import { RegistrationDto } from '../registration-form';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
@@ -15,7 +15,7 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
 
   form: FormGroup
 
-  private currentForm: RegistrationForm
+  private registrationDto: RegistrationDto;
   private formSubscription: Subscription;
 
   constructor(
@@ -26,8 +26,8 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
     private navController: NavController) { }
 
   ngOnInit() {
-    this.formSubscription = this.formService.form$.subscribe( form => {
-      this.currentForm = form
+    this.formSubscription = this.formService.form$.subscribe( registrationDto => {
+      this.registrationDto = registrationDto
     });
     this.form = this.formBuilder.group({
       'partner': this.formBuilder.control('', [Validators.email])
@@ -39,9 +39,8 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.currentForm.partners = new Array();
-    this.currentForm.partners[0] = this.form.controls['partner'].value;
-    this.formService.updateForm(this.currentForm);
+    this.registrationDto.wishListPartnerEmail = this.form.controls['partner'].value;
+    this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-wish'], { relativeTo: this.route })
   }
 

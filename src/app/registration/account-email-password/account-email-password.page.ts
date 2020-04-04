@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RegistrationForm } from '../registration-form';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { RegistrationService } from '../services/registration.service';
 import { NavController } from '@ionic/angular';
+import { RegistrationDto } from '../registration-form';
 
 @Component({
   selector: 'app-account-email-password',
@@ -16,7 +16,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
 
   form: FormGroup
 
-  private currentForm: RegistrationForm
+  private registrationDto: RegistrationDto
   private formSubscription: Subscription;
 
   constructor(
@@ -29,8 +29,8 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.formSubscription = this.formService.form$.subscribe( form => {
-      this.currentForm = form
+    this.formSubscription = this.formService.form$.subscribe( registrationDto => {
+      this.registrationDto = registrationDto
     });
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -43,11 +43,11 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.currentForm.accountInfos.email = this.form.controls['email'].value;
-    this.currentForm.accountInfos.password = this.form.controls['password'].value;
-    this.formService.updateForm(this.currentForm);
+    this.registrationDto.userEmail = this.form.controls['email'].value;
+    this.registrationDto.userPassword = this.form.controls['password'].value;
+    this.formService.updateDto(this.registrationDto);
 
-    this.registrationApiService.register(this.currentForm)
+    this.registrationApiService.register(this.registrationDto)
       .then(() => {
         this.router.navigate(['../registration-complete'], { relativeTo: this.route })
       })

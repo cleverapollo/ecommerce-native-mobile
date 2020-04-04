@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SearchResultItem } from '../../shared/features/product-search/search-result-item';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RegistrationForm } from '../registration-form';
 import { Subscription } from 'rxjs';
 import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
+import { RegistrationDto } from '../registration-form';
+import { WishDto } from 'src/app/shared/models/wish-list.model';
 
 @Component({
   selector: 'app-search-results',
@@ -16,7 +17,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
   selectedWish: SearchResultItem;
   wishes: Array<SearchResultItem> = new Array();
 
-  private currentForm: RegistrationForm
+  private registrationDto: RegistrationDto
   private formSubscription: Subscription;
 
   constructor(
@@ -27,8 +28,8 @@ export class SearchResultsPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.wishes = this.route.snapshot.data.products;
-    this.formSubscription = this.formService.form$.subscribe( form => {
-      this.currentForm = form
+    this.formSubscription = this.formService.form$.subscribe( registrationDto => {
+      this.registrationDto = registrationDto
     });
   }
 
@@ -41,8 +42,11 @@ export class SearchResultsPage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.currentForm.wishList.wishes[0] = this.selectedWish;
-    this.formService.updateForm(this.currentForm);
+    let wishDto = new WishDto()
+    this.selectedWish.assignToWishDto(wishDto);
+
+    this.registrationDto.wishListWish = wishDto;
+    this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../first-name'], { relativeTo: this.route });
   }
 

@@ -1,6 +1,6 @@
-import { Component, OnInit, forwardRef, OnDestroy } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RegistrationForm } from '../registration-form';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { RegistrationDto } from '../registration-form';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
@@ -15,7 +15,7 @@ export class WishListDatePage implements OnInit, OnDestroy {
 
   form: FormGroup
 
-  private currentForm: RegistrationForm
+  private registrationDto: RegistrationDto;
   private formSubscription: Subscription;
 
   constructor(
@@ -26,8 +26,8 @@ export class WishListDatePage implements OnInit, OnDestroy {
     private navController: NavController) { }
 
   ngOnInit() {
-    this.formSubscription = this.formService.form$.subscribe( form => {
-      this.currentForm = form
+    this.formSubscription = this.formService.form$.subscribe( registrationDto => {
+      this.registrationDto = registrationDto
     });
     this.form = this.formBuilder.group({
       'date': this.formBuilder.control('', [Validators.required])
@@ -39,8 +39,8 @@ export class WishListDatePage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.currentForm.wishList.date = this.form.controls['date'].value;
-    this.formService.updateForm(this.currentForm);
+    this.registrationDto.wishListDate = this.form.controls['date'].value;
+    this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-partner'], { relativeTo: this.route })
   }
 

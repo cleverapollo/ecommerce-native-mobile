@@ -1,28 +1,14 @@
-import { SearchResultItem } from '../shared/features/product-search/search-result-item';
+import { WishDto } from '../shared/models/wish-list.model';
 
-export class AccountInfos {
-    firstName: String
-    email: String
-    password: String
-}
+export class RegistrationDto {
+    userFirstName: String
+    userEmail: String
+    userPassword: String
+    
+    wishListName: String
+    wishListDate: Date
+    wishListWish: WishDto
 
-export class WishListInfos {
-    name: String
-    date: Date
-    wishes: Array<SearchResultItem> = new Array();
-}
-
-export interface RegistrationForm {
-    accountInfos: AccountInfos
-    wishList: WishListInfos
-    partners: Array<String>
-}
-
-export class RegistrationForm implements RegistrationForm {
-
-    constructor() {
-        this.accountInfos = new AccountInfos();
-        this.wishList = new WishListInfos();
-    }
-
+    wishListPartnerName: String = null
+    wishListPartnerEmail: String = null
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RegistrationForm } from '../registration-form';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
+import { RegistrationDto } from '../registration-form';
 
 @Component({
   selector: 'app-account-first-name',
@@ -15,7 +15,7 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
 
   form: FormGroup
 
-  private currentForm: RegistrationForm
+  private registrationDto: RegistrationDto
   private formSubscription: Subscription;
 
   constructor(
@@ -27,7 +27,7 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( form => {
-      this.currentForm = form
+      this.registrationDto = form
     });
     this.form = this.formBuilder.group({
       'firstName': this.formBuilder.control('', [Validators.required])
@@ -39,8 +39,8 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.currentForm.accountInfos.firstName = this.form.controls['firstName'].value;
-    this.formService.updateForm(this.currentForm);
+    this.registrationDto.userFirstName = this.form.controls['firstName'].value;
+    this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../credentials'], { relativeTo: this.route })
   }
 

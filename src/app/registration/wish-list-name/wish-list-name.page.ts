@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
-import { RegistrationForm } from '../registration-form';
 import { Observable, Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
+import { RegistrationDto } from '../registration-form';
 
 @Component({
   selector: 'app-wish-list-name',
@@ -15,7 +15,7 @@ export class WishListNamePage implements OnInit, OnDestroy {
 
   form: FormGroup
 
-  private currentForm: RegistrationForm
+  private registrationDto: RegistrationDto
   private formSubscription: Subscription;
 
   constructor(
@@ -26,8 +26,8 @@ export class WishListNamePage implements OnInit, OnDestroy {
     private navController: NavController) {}
 
   ngOnInit() {
-    this.formSubscription = this.formService.form$.subscribe( form => {
-      this.currentForm = form
+    this.formSubscription = this.formService.form$.subscribe( registrationDto => {
+      this.registrationDto = registrationDto
     });
     this.form = this.formBuilder.group({
       'name': this.formBuilder.control('', [Validators.required])
@@ -39,8 +39,8 @@ export class WishListNamePage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.currentForm.wishList.name = this.form.controls['name'].value;
-    this.formService.updateForm(this.currentForm);
+    this.registrationDto.wishListName = this.form.controls['name'].value;
+    this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-date'], { relativeTo: this.route })
   }
 

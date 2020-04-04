@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { RegistrationForm } from './registration-form';
+import { RegistrationDto } from './registration-form';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationFormService {
 
-  private _form: BehaviorSubject<RegistrationForm> = new BehaviorSubject(new RegistrationForm());
+  private _form: BehaviorSubject<RegistrationDto> = new BehaviorSubject(new RegistrationDto());
 
   constructor() {}
 
   form$ = this._form.asObservable();
-  updateForm(updatedForm: RegistrationForm) {
+  updateDto(updatedForm: RegistrationDto) {
     this._form.next(updatedForm);
   }
 
