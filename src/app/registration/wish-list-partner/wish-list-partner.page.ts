@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
+import { UserApiService } from 'src/app/shared/services/user-api.service';
 
 @Component({
   selector: 'app-wish-list-partner',
@@ -30,7 +31,8 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
       this.registrationDto = registrationDto
     });
     this.form = this.formBuilder.group({
-      'partner': this.formBuilder.control('', [Validators.email])
+      'email': this.formBuilder.control('', [Validators.email]),
+      'name': this.formBuilder.control('', [Validators.min(2)])
     });
   }
 
@@ -39,9 +41,15 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.registrationDto.wishListPartnerEmail = this.form.controls['partner'].value;
+    this.registrationDto.wishListPartnerEmail = this.form.controls['email'].value;
+    this.registrationDto.wishListPartnerName = this.form.controls['name'].value;
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-wish'], { relativeTo: this.route })
+
+    this.form.controls['email'].setValidators([Validators.email, Validators.required]);
+    this.form.controls['email'].updateValueAndValidity()
+    this.form.controls['name'].setValidators([Validators.min(2), Validators.required]);
+    this.form.controls['name'].updateValueAndValidity()
   }
 
   goBack() {

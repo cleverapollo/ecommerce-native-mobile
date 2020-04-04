@@ -5,11 +5,14 @@ export class SearchResultItem {
     price: String;
     imageUrl: String;
     productUrl: string;
+}
 
-    assignToWishDto(wishDto: WishDto) {
-        wishDto.name = this.name
-        wishDto.price = this.price
-        wishDto.imageUrl = this.imageUrl
-        wishDto.productUrl = this.productUrl
+export class SearchResultItemMapper {
+    static map(from: SearchResultItem, to: WishDto) : WishDto  {
+        to.name = from.name
+        to.price = from.price
+        to.imageUrl = from.imageUrl
+        to.productUrl = from.productUrl
+        return to
     }
 }

@@ -10,6 +10,7 @@ export class SearchResultsResolver implements Resolve<Observable<Array<SearchRes
   constructor(private searchService: SearchService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.searchService.searchForItems(route.paramMap.get('keywords'));
+    const keywords = route.queryParams.keywords;
+    return this.searchService.searchForItems(keywords);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
@@ -34,7 +34,10 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     });
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: this.formBuilder.group({
+        value: ['', [Validators.required]],
+        confirm: ['', [Validators.required]]
+      }, { validators: [this.passwordConformValidator] })
     })
   }
 
@@ -44,7 +47,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
 
   next() {
     this.registrationDto.userEmail = this.form.controls['email'].value;
-    this.registrationDto.userPassword = this.form.controls['password'].value;
+    this.registrationDto.userPassword = this.form.controls['password']['value'].value;
     this.formService.updateDto(this.registrationDto);
 
     this.registrationApiService.register(this.registrationDto)
@@ -56,6 +59,12 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
 
   goBack() {
     this.navController.back();
+  }
+
+  private passwordConformValidator(c: AbstractControl): { invalid: boolean } {
+    if (c.get('value').value !== c.get('confirm').value) {
+      return { invalid: true };
+    }
   }
 
 }

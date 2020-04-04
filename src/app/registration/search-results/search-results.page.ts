@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SearchResultItem } from '../../shared/features/product-search/search-result-item';
+import { SearchResultItem, SearchResultItemMapper } from '../../shared/features/product-search/search-result-item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RegistrationFormService } from '../registration-form.service';
@@ -42,10 +42,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
   }
 
   next() {
-    let wishDto = new WishDto()
-    this.selectedWish.assignToWishDto(wishDto);
-
-    this.registrationDto.wishListWish = wishDto;
+    this.registrationDto.wishListWish = SearchResultItemMapper.map(this.selectedWish, new WishDto());
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../first-name'], { relativeTo: this.route });
   }
