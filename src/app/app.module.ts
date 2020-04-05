@@ -18,6 +18,7 @@ import localeDe from '@angular/common/locales/de'
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-options.resolver';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -52,6 +53,7 @@ export function jwtOptionsFactory(storage) {
     InAppBrowser,
     StatusBar,
     SplashScreen,
+    FriendsWishListResolver,
     WishListResolver,
     WishListSelectOptionsResolver,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/services/auth.guard';
 import { WishListResolver } from './home/wish-list.resolver';
 import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-options.resolver';
+import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
 
 const routes: Routes = [
   {
@@ -58,6 +59,7 @@ const routes: Routes = [
   {
     path: 'friends-wish-list-overview',
     canActivate: [AuthGuard],
+    resolve: { wishLists: FriendsWishListResolver },
     loadChildren: () => import('./friends-wish-list-overview/friends-wish-list-overview.module').then( m => m.FriendsWishListOverviewPageModule)
   },
   {
