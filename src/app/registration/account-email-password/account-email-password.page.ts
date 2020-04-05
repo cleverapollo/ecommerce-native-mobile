@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { RegistrationService } from '../services/registration.service';
 import { NavController } from '@ionic/angular';
-import { RegistrationDto } from '../registration-form';
+import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
 
 @Component({
   selector: 'app-account-email-password',
@@ -16,7 +16,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
 
   form: FormGroup
 
-  private registrationDto: RegistrationDto
+  private registrationDto: RegistrationRequest
   private formSubscription: Subscription;
 
   constructor(
@@ -50,11 +50,18 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     this.registrationDto.userPassword = this.form.controls['password']['value'].value;
     this.formService.updateDto(this.registrationDto);
 
-    this.registrationApiService.register(this.registrationDto)
+    if ((this.registrationDto as RegistrationPartnerDto).userId) {
+      this.registrationApiService.registerPartner(this.registrationDto as RegistrationPartnerDto).then(() => {
+        this.router.navigate(['../registration-complete'], { relativeTo: this.route })
+      })
+      .catch((e => console.error(e)));
+    } else {
+      this.registrationApiService.register(this.registrationDto as RegistrationDto)
       .then(() => {
         this.router.navigate(['../registration-complete'], { relativeTo: this.route })
       })
       .catch((e => console.error(e)));
+    }
   }
 
   goBack() {

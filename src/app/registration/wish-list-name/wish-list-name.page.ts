@@ -27,7 +27,11 @@ export class WishListNamePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto
+      if (registrationDto) {
+        this.registrationDto = registrationDto as RegistrationDto
+      } else {
+        this.formService.updateDto(new RegistrationDto());
+      }
     });
     this.form = this.formBuilder.group({
       'name': this.formBuilder.control('', [Validators.required])

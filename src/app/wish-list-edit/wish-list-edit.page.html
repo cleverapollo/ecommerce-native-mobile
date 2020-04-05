@@ -20,8 +20,24 @@
     </ion-item>
 
     <ion-item lines="none">
-      <ion-label position="stacked">Partner hinzufügen</ion-label>
-      <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="partner"></ion-input>
+      <ion-label position="stacked">Partner</ion-label>
+      <ion-input type="email" formControlName="partner" readonly></ion-input>
+    </ion-item>
+  </form>
+
+  <form [formGroup]="newPartnerForm" *ngIf="!form.controls.partner.value" style="margin-left: 20px; margin-right: 20px;">
+    <ion-item lines="none">
+      <ion-label>Partner hinzufügen</ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Name eingeben</ion-label>
+      <ion-input formControlName="name" type="text" placeholder="Name eingeben"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">E-Mail Adresse angeben</ion-label>
+      <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="email"></ion-input>
     </ion-item>
   </form>
 

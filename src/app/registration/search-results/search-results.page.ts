@@ -29,7 +29,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.wishes = this.route.snapshot.data.products;
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto
+      this.registrationDto = registrationDto as RegistrationDto
     });
   }
 

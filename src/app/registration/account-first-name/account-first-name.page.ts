@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
-import { RegistrationDto } from '../registration-form';
+import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
 
 @Component({
   selector: 'app-account-first-name',
@@ -14,8 +14,14 @@ import { RegistrationDto } from '../registration-form';
 export class AccountFirstNamePage implements OnInit, OnDestroy {
 
   form: FormGroup
+  pageViewViaEmail: Boolean;
 
-  private registrationDto: RegistrationDto
+  // only when invited by mail available
+  userId: String = null;
+  inviterName: String = null;
+  wishListName: String = null;
+
+  private registrationDto: RegistrationRequest;
   private formSubscription: Subscription;
 
   constructor(
@@ -26,9 +32,20 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
     private navController: NavController) {}
 
   ngOnInit() {
-    this.formSubscription = this.formService.form$.subscribe( form => {
-      this.registrationDto = form
+    this.route.queryParams.subscribe((params) => {
+      console.log(params);
+      if (params['id']) {
+        this.pageViewViaEmail = true;
+        this.userId = params['id'];
+        this.inviterName = params['invitedBy'];
+        this.wishListName = params['wishListName'];
+      };
+    })
+
+    this.formSubscription = this.formService.form$.subscribe( dto => {
+      this.registrationDto = dto
     });
+
     this.form = this.formBuilder.group({
       'firstName': this.formBuilder.control('', [Validators.required])
     });
@@ -39,6 +56,10 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
   }
 
   next() {
+    if (this.userId) {
+      this.registrationDto = new RegistrationPartnerDto();
+      (this.registrationDto as RegistrationPartnerDto).userId = this.userId;
+    }
     this.registrationDto.userFirstName = this.form.controls['firstName'].value;
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../credentials'], { relativeTo: this.route })

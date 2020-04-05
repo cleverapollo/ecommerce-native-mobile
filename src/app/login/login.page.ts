@@ -17,13 +17,19 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder, 
     private authService: AuthenticationService, 
     private router: Router) { 
+
+  }
+
+  ngOnInit() {
+    this.authService.authenticationState.subscribe(state => {
+      if (state) {
+        this.router.navigate(['home']);
+      }
+    });
     this.loginForm = this.formBuilder.group({
       email: this.formBuilder.control('', [Validators.required, Validators.email]),
       password: this.formBuilder.control('', [Validators.required])
     })
-  }
-
-  ngOnInit() {
   }
 
   onSubmit() {

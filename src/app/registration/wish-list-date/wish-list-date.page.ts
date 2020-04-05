@@ -27,7 +27,7 @@ export class WishListDatePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto
+      this.registrationDto = registrationDto as RegistrationDto
     });
     this.form = this.formBuilder.group({
       'date': this.formBuilder.control('', [Validators.required])

@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { WishListEdit, InivtedMemberDisplayInfo, MemberToInvite } from './wish-list-edit.model';
 import { AlertService } from '../shared/services/alert.service';
 import { UserApiService } from '../shared/services/user-api.service';
-import { WishListDto, MemberToInviteDto, WishListMemberDto } from '../shared/models/wish-list.model';
+import { WishListDto, MemberToInviteDto, WishListMemberDto, PartnerToInviteDto, WishListPartnerDto } from '../shared/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-list-edit',
@@ -22,11 +22,14 @@ export class WishListEditPage implements OnInit, OnDestroy {
 
   form: FormGroup
   newMemberForm: FormGroup;
+  newPartnerForm: FormGroup;
 
   invitedMembers: Array<InivtedMemberDisplayInfo>
   
   memberIsLoading: Boolean = false;
   memberNotFound: Boolean = false;
+
+  partnerIsLoading: Boolean = false;
 
   get showNoMembersHint() : Boolean {
     return !this.invitedMembers.length && !this.memberIsLoading
@@ -49,10 +52,17 @@ export class WishListEditPage implements OnInit, OnDestroy {
       this.form = this.formBuilder.group({
         'name': this.formBuilder.control(this.wishList.name, [Validators.required]),
         'date': this.formBuilder.control(this.wishList.date, [Validators.required]),
-        'partner': this.formBuilder.control('', [Validators.email]),
+        'partner': this.formBuilder.control(this.wishList.partner.name),
         'members': this.formBuilder.array(this.wishList.members),
         'membersToInvite': this.formBuilder.array(this.wishList.membersToInvite)
       });
+
+      const partnerToInvite = this.wishList.partnerToInvite;
+      this.newPartnerForm = this.formBuilder.group({
+        'email': this.formBuilder.control(partnerToInvite ?  partnerToInvite.email : '', [Validators.email]),
+        'name': this.formBuilder.control(partnerToInvite ? partnerToInvite.name : '', [Validators.minLength(2)])
+      });
+
       this.invitedMembers = this.form.controls.members.value.map( m => InivtedMemberDisplayInfo.forMember(m));
     });
 
@@ -60,6 +70,7 @@ export class WishListEditPage implements OnInit, OnDestroy {
       'email': this.formBuilder.control('', [Validators.email]),
       'name': this.formBuilder.control('')
     });
+ 
   }
 
   ngOnDestroy(): void {
@@ -95,6 +106,22 @@ export class WishListEditPage implements OnInit, OnDestroy {
     }
   }
 
+  addPartner() {
+    const email = this.newPartnerForm.controls.email.value;
+    this.partnerIsLoading = true;
+    this.userApiService.searchUserByEmail(email).subscribe((response) => {
+      if (response.userExists) {
+        this.form.controls.partner.setValue(WishListPartnerDto.forUserSearchResult(response));
+        this.newPartnerForm.reset();
+      } else {
+
+        this.form.controls.partner.setValue(null);
+      }
+    }, e => console.error(e), () => {
+      this.partnerIsLoading = false;
+    });
+  }
+
   removeMember(displayInfo: InivtedMemberDisplayInfo) {
     const member = this.findMemberById(this.wishList, displayInfo.id);
     if (member) {
@@ -122,6 +149,13 @@ export class WishListEditPage implements OnInit, OnDestroy {
     wishList.date = this.form.controls.date.value;
     wishList.members = this.form.controls.members.value;
     wishList.membersToInvite = this.form.controls.membersToInvite.value;
+    wishList.partner = this.form.controls.partner.value;
+
+    const name = this.newPartnerForm.controls.name.value;
+    const email = this.newPartnerForm.controls.email.value;
+    if (name && email) {
+      wishList.partnerToInvite = new PartnerToInviteDto(name, email);
+    }
 
     this.loadingController.create({
       message: "Deine Wunschliste wird gerade aktualisiert..."

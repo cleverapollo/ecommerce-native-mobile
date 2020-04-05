@@ -4,7 +4,7 @@ import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthenticationService } from './shared/services/authentication.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -55,14 +55,6 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
-      this.authenticationService.authenticationState.subscribe(state => {
-        if (state) {
-          this.router.navigate(['home']);
-        } else {
-          this.router.navigate(['login']);
-        }
-      })
     });
   }
 

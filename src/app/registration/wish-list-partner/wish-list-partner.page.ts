@@ -28,7 +28,7 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto
+      this.registrationDto = registrationDto as RegistrationDto
     });
     this.form = this.formBuilder.group({
       'email': this.formBuilder.control('', [Validators.email]),
