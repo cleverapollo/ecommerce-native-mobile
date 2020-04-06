@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FriendWish } from 'src/app/friends-wish-list-overview/friends-wish-list-overview.model';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { WishApiService } from 'src/app/shared/services/wish-api.service';
 
 @Component({
   selector: 'app-friends-wish',
@@ -11,7 +12,7 @@ export class FriendsWishComponent implements OnInit {
 
   @Input() wish: FriendWish;
 
-  constructor(private inAppBrowser: InAppBrowser) { }
+  constructor(private inAppBrowser: InAppBrowser, private wishApiService: WishApiService) { }
 
   ngOnInit() {}
 
@@ -21,8 +22,10 @@ export class FriendsWishComponent implements OnInit {
     browser.show();
   }
 
-  reserve(reserve: Boolean) {
-    this.wish.bought = reserve;
+  reserve() {
+    this.wishApiService.purchase(this.wish.id).subscribe((response: FriendWish) => {
+      this.wish = response;
+    }, e => console.error(e));
   }
 
 }

@@ -31,6 +31,17 @@ export class ApiService {
     });
   }
 
+  patch(url: string) : Observable<Object> {
+    let headers = new HttpHeaders();
+    headers.append('Accept', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Content-Type', 'application/json');
+
+    return this.httpClient.patch(`http://127.0.0.1:8080/${url}`, {
+      headers: headers
+    });
+  }
+
   delete(url: string) : Observable<Object> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');

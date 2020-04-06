@@ -5,10 +5,10 @@
 <div class="wish-description">
   <div id="wish-name">{{ wish.name }}</div>
   <div id="wish-date">{{ wish.price | currency }}</div>
-  <ion-button class="give-button" *ngIf="!wish.bought && !wish.reservedByFriend" expand="block" fill="outline" color="tertiary" (click)="reserve(true)">
+  <ion-button class="give-button" *ngIf="!wish.bought && !wish.reservedByFriend" expand="block" fill="outline" color="tertiary" (click)="reserve()">
       SCHENKEN
   </ion-button>
-  <ion-button class="give-button" *ngIf="wish.bought && !wish.reservedByFriend" expand="block" color="tertiary" (click)="reserve(false)">
+  <ion-button class="give-button" *ngIf="wish.bought && !wish.reservedByFriend" expand="block" color="tertiary" (click)="reserve()">
     NICHT MEHR SCHENKEN
   </ion-button>
 </div>
