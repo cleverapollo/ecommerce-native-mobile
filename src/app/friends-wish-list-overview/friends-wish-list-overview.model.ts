@@ -3,7 +3,7 @@ export class FriendWishList {
     name: String;
     date: String;
     wishes: Array<FriendWish>;
-    friendName: String;
+    nameOfFriend: String;
 }
 
 export class FriendWish {
