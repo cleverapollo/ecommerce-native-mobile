@@ -4,6 +4,7 @@ import { AuthGuard } from './shared/services/auth.guard';
 import { WishListResolver } from './home/wish-list.resolver';
 import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-options.resolver';
 import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
+import { UserProfileResolver } from './profile-edit/user-profile.resolver';
 
 const routes: Routes = [
   {
@@ -70,6 +71,7 @@ const routes: Routes = [
   {
     path: 'profile-edit',
     canActivate: [AuthGuard],
+    resolve: { profile: UserProfileResolver },
     loadChildren: () => import('./profile-edit/profile-edit.module').then( m => m.ProfileEditPageModule)
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
 import { UserSearchResult } from './user-api.model';
+import { UserProfile } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,10 @@ export class UserApiService {
 
   searchUserByEmail(email: string) : Observable<UserSearchResult> {
     return this.apiService.get(`user/${email}/by-email`);
+  }
+
+  getProfile() : Observable<UserProfile> {
+    return this.apiService.get(`user/profile`);
   }
 
 }

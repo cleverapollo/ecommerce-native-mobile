@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserApiService } from '../shared/services/user-api.service';
+import { UserProfile } from '../shared/models/user.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile-edit',
@@ -10,14 +13,22 @@ export class ProfileEditPage implements OnInit {
 
   form: FormGroup
 
-  constructor(private formBuilder: FormBuilder) { }
+  profile: UserProfile
+
+  constructor(
+    private formBuilder: FormBuilder, 
+    private route: ActivatedRoute, 
+    private userApiService: UserApiService
+  ) { }
 
   ngOnInit() {
+    this.profile = this.route.snapshot.data.profile;
+
     this.form = this.formBuilder.group({
-      firstName: this.formBuilder.control('', [Validators.required, Validators.min(2)]),
-      lastName: this.formBuilder.control('', [Validators.min(2)]),
-      birthday: this.formBuilder.control('', []),
-      email: this.formBuilder.control('', [Validators.required, Validators.email]),
+      firstName: this.formBuilder.control(this.profile.firstName, [Validators.required, Validators.min(2)]),
+      lastName: this.formBuilder.control(this.profile.lastName, [Validators.min(2)]),
+      birthday: this.formBuilder.control(this.profile.birthday, []),
+      email: this.formBuilder.control(this.profile.email, [Validators.required, Validators.email]),
       passwordChange: this.formBuilder.group({
         currentPassword: this.formBuilder.control(''),
         newPassword: this.formBuilder.control(''),
