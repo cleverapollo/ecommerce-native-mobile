@@ -5,23 +5,23 @@
 <ion-grid class="wish-list-container">
   <ion-row>
     <ion-col size="6">
-      <ion-img *ngIf="wishList.wishes.length > 0" [src]="wishList.wishes[0].imageUrl"></ion-img>
-      <img *ngIf="!wishList.wishes.length" src="assets/images/wish-list-placeholder.png">
+      <ion-img *ngIf="wishList.wishes.length > 0 && wishList.wishes[0].imageUrl" [src]="wishList.wishes[0].imageUrl"></ion-img>
+      <img *ngIf="!wishList.wishes.length || !wishList.wishes[0].imageUrl" src="assets/images/wish-list-placeholder.png">
     </ion-col>
     <ion-col size="6">
-      <ion-img *ngIf="wishList.wishes.length > 1" [src]="wishList.wishes[1].imageUrl"></ion-img>
-      <img *ngIf="wishList.wishes.length < 2" src="assets/images/wish-list-placeholder.png">
+      <ion-img *ngIf="wishList.wishes.length > 1 && wishList.wishes[1].imageUrl" [src]="wishList.wishes[1].imageUrl"></ion-img>
+      <img *ngIf="wishList.wishes.length < 2 || !wishList.wishes[1].imageUrl" src="assets/images/wish-list-placeholder.png">
     </ion-col>
   </ion-row>
 
   <ion-row>
     <ion-col size="6">
-      <ion-img *ngIf="wishList.wishes.length > 2" [src]="wishList.wishes[2].imageUrl"></ion-img>
-      <img *ngIf="wishList.wishes.length < 3" src="assets/images/wish-list-placeholder.png">
+      <ion-img *ngIf="wishList.wishes.length > 2 && wishList.wishes[2].imageUrl" [src]="wishList.wishes[2].imageUrl"></ion-img>
+      <img *ngIf="wishList.wishes.length < 3 || !wishList.wishes[2].imageUrl" src="assets/images/wish-list-placeholder.png">
     </ion-col>
     <ion-col size="6">
-      <ion-img *ngIf="wishList.wishes.length > 3" [src]="wishList.wishes[3].imageUrl"></ion-img>
-      <img *ngIf="wishList.wishes.length < 4" src="assets/images/wish-list-placeholder.png">
+      <ion-img *ngIf="wishList.wishes.length > 3 && wishList.wishes[3].imageUrl" [src]="wishList.wishes[3].imageUrl"></ion-img>
+      <img *ngIf="wishList.wishes.length < 4 || !wishList.wishes[3].imageUrl" src="assets/images/wish-list-placeholder.png">
     </ion-col>
   </ion-row>
 
