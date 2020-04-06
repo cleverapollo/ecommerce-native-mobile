@@ -20,7 +20,7 @@ export class AppComponent {
     },
     {
       title: 'Profil bearbeiten',
-      url: '/list',
+      url: 'profile-edit',
       icon: 'build'
     },
     {
