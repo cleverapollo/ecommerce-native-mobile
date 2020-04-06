@@ -37,6 +37,15 @@ export class ProfileEditPage implements OnInit {
     })
   }
 
-  saveChanges() {}
+  saveChanges() {
+    this.profile.firstName = this.form.controls.firstName.value;
+    this.profile.lastName = this.form.controls.lastName.value;
+    this.profile.birthday = this.form.controls.birthday.value;
+    this.profile.email = this.form.controls.email.value;
+
+    this.userApiService.updateProfile(this.profile).subscribe((updatedData: UserProfile) => {
+      this.profile = updatedData;
+    }, console.error);
+  }
 
 }

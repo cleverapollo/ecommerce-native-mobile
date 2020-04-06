@@ -19,4 +19,8 @@ export class UserApiService {
     return this.apiService.get(`user/profile`);
   }
 
+  updateProfile(updatedProfile: UserProfile) : Observable<Object> {
+    return this.apiService.put(`user/update-profile`, updatedProfile);
+  }
+
 }
