@@ -32,11 +32,9 @@ export class AuthenticationService {
         username: email,
         password: password
       }).subscribe((response: LoginResponse) => {
-        this.storage.set('auth-token', response.token).then(() => {
-          this.authenticationState.next(true);
+        this.saveToken(response.token).then(() => {
           resolve();
         }).catch( e => {
-          this.authenticationState.next(false);
           reject();
         });
       });
@@ -51,6 +49,18 @@ export class AuthenticationService {
 
   isAuthenticated() {
     return this.authenticationState.value;
+  }
+
+  saveToken(token: String) : Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.storage.set('auth-token', token).then(() => {
+        this.authenticationState.next(true);
+        resolve();
+      }).catch( e => {
+        this.authenticationState.next(false);
+        reject();
+      });
+    })
   }
 
 }

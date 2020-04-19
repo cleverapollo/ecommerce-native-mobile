@@ -14,7 +14,6 @@ import { WishDto } from 'src/app/shared/models/wish-list.model';
 })
 export class SearchResultsPage implements OnInit, OnDestroy {
 
-  selectedWish: SearchResultItem;
   wishes: Array<SearchResultItem> = new Array();
 
   private registrationDto: RegistrationDto
@@ -29,7 +28,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.wishes = this.route.snapshot.data.products;
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto as RegistrationDto
+      this.registrationDto = registrationDto as RegistrationDto;
     });
   }
 
@@ -38,11 +37,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
   }
 
   updateValue(item: SearchResultItem) {
-    this.selectedWish = item;
-  }
-
-  next() {
-    this.registrationDto.wishListWish = SearchResultItemMapper.map(this.selectedWish, new WishDto());
+    this.registrationDto.wishListWish = SearchResultItemMapper.map(item, new WishDto());
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../first-name'], { relativeTo: this.route });
   }

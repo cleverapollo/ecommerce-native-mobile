@@ -30,7 +30,7 @@ export class WishListDatePage implements OnInit, OnDestroy {
       this.registrationDto = registrationDto as RegistrationDto
     });
     this.form = this.formBuilder.group({
-      'date': this.formBuilder.control('', [Validators.required])
+      'date': this.formBuilder.control(this.registrationDto.wishListDate, [Validators.required])
     });
   }
 

@@ -6,6 +6,7 @@ import { RegistrationFormService } from '../registration-form.service';
 import { RegistrationService } from '../services/registration.service';
 import { NavController } from '@ionic/angular';
 import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
   selector: 'app-account-email-password',
@@ -25,7 +26,8 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formService: RegistrationFormService,
     private registrationApiService: RegistrationService,
-    private navController: NavController) { 
+    private navController: NavController,
+    private authService: AuthenticationService) { 
   }
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
       this.registrationDto = registrationDto
     });
     this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: [this.registrationDto.userEmail, [Validators.required, Validators.email]],
       password: this.formBuilder.group({
         value: ['', [Validators.required]],
         confirm: ['', [Validators.required]]
@@ -57,8 +59,9 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
       .catch((e => console.error(e)));
     } else {
       this.registrationApiService.register(this.registrationDto as RegistrationDto)
-      .then(() => {
-        this.router.navigate(['../registration-complete'], { relativeTo: this.route })
+      .then((response) => {
+        this.authService.saveToken(response.token);
+        this.router.navigate(['../registration-complete'], { relativeTo: this.route });
       })
       .catch((e => console.error(e)));
     }

@@ -31,8 +31,8 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
       this.registrationDto = registrationDto as RegistrationDto
     });
     this.form = this.formBuilder.group({
-      'email': this.formBuilder.control('', [Validators.email]),
-      'name': this.formBuilder.control('', [Validators.min(2)])
+      'email': this.formBuilder.control(this.registrationDto.wishListPartnerEmail, [Validators.email]),
+      'name': this.formBuilder.control(this.registrationDto.wishListPartnerName, [Validators.min(2)])
     });
   }
 

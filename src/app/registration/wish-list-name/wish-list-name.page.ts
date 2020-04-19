@@ -34,7 +34,7 @@ export class WishListNamePage implements OnInit, OnDestroy {
       }
     });
     this.form = this.formBuilder.group({
-      'name': this.formBuilder.control('', [Validators.required])
+      'name': this.formBuilder.control(this.registrationDto.wishListName, [Validators.required])
     });
   }
 
