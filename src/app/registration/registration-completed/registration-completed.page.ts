@@ -11,6 +11,4 @@ export class RegistrationCompletedPage implements OnInit {
 
   ngOnInit() {}
 
-  
-
 }

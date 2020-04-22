@@ -13,11 +13,9 @@ export class RegistrationService {
   register(dto: RegistrationDto) : Promise<LoginResponse> {
     return new Promise((resolve, reject) => {
       this.apiService.post('auth/register', dto).subscribe( response => {
-        console.log(response);
-        resolve();
+        resolve(response as LoginResponse);
       }, e => {
-        console.error(e);
-        reject();
+        reject(e);
       });
     })
   }
@@ -25,11 +23,9 @@ export class RegistrationService {
   registerPartner(dto: RegistrationPartnerDto) : Promise<void> {
     return new Promise((resolve, reject) => {
       this.apiService.post('auth/register-partner', dto).subscribe( response => {
-        console.log(response);
         resolve();
       }, e => {
-        console.error(e);
-        reject();
+        reject(e);
       });
     })
   }
