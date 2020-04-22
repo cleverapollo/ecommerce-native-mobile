@@ -20,7 +20,6 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.wishListService.selectedWishList$.subscribe(w => {
-      console.log(w);
       this.wishList = w;
     });
   }
@@ -32,4 +31,12 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
   goBack() {
     this.navController.navigateBack('/friends-wish-list-overview');
   }
+
+  updateWish(updatedWish: FriendWish) {
+    const index = this.wishList.wishes.findIndex( w => w.id === updatedWish.id );
+    if (index !== -1) {
+      this.wishList.wishes[index] = updatedWish;
+      this.wishListService.updateSelectedWishList(this.wishList);
+    }
+  } 
 }
