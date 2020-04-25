@@ -149,7 +149,10 @@ export class WishListEditPage implements OnInit, OnDestroy {
     wishList.date = this.form.controls.date.value;
     wishList.members = this.form.controls.members.value;
     wishList.membersToInvite = this.form.controls.membersToInvite.value;
-    wishList.partner = this.form.controls.partner.value;
+
+    let wishListPartner = this.wishList.partner;
+    wishListPartner.email = this.form.controls.partner.value;
+    wishList.partner = wishListPartner;
 
     const name = this.newPartnerForm.controls.name.value;
     const email = this.newPartnerForm.controls.email.value;
