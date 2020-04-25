@@ -24,8 +24,9 @@
     <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
       <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
     </ion-button>
-      <ion-avatar style="margin-right: 11px;">
-        <img style="border: 3px solid #ff704f;" src="assets/images/avatar-placeholder.jpg">
+      <ion-avatar class="creator-image">
+        <img *ngIf="!wishList.creatorProfileImageUrl" style="border: 3px solid #ff704f;" src="assets/images/avatar-placeholder.jpg">
+        <img *ngIf="wishList.creatorProfileImageUrl" style="border: 3px solid #ff704f;" [src]="wishList.creatorProfileImageUrl | secure | async">
       </ion-avatar>
       <ion-label class="ion-text-wrap">
         <h1>{{ wishList.name }}</h1>
@@ -37,7 +38,7 @@
   </ion-item>
 
   <div class="friends-images" *ngIf="wishList.members">
-    <img *ngFor="let member of wishList.members" [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/images/avatar-placeholder.jpg'">
+    <img *ngFor="let member of wishList.members" [src]="member.profileImageUrl ? (member.profileImageUrl | secure | async) : 'assets/images/avatar-placeholder.jpg'">
   </div>
 
   <ion-button [routerLink]="['/wish-search']" id="button-add-wish" fill="clear" expand="full" >

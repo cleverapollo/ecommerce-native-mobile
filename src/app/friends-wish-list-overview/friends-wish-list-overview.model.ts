@@ -5,6 +5,7 @@ export class FriendWishList {
     wishes: Array<FriendWish>;
     nameOfFriend: String;
     profileImageUrlFriend: String;
+    memberProfieImageUrls: Array<String>;
 }
 
 export class FriendWish {

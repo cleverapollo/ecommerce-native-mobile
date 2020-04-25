@@ -8,13 +8,15 @@ import { WishListDetailPageRoutingModule } from './wish-list-detail-routing.modu
 
 import { WishListDetailPage } from './wish-list-detail.page';
 import { WishComponent } from './wish/wish.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    WishListDetailPageRoutingModule
+    WishListDetailPageRoutingModule,
+    SharedModule
   ],
   declarations: [WishListDetailPage, WishComponent]
 })

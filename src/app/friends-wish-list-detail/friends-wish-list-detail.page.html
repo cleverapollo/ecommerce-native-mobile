@@ -24,8 +24,8 @@
      <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
        <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
      </ion-button>
-       <ion-avatar style="margin-right: 11px;">
-         <img style="border: 3px solid #ff704f;" src="assets/images/avatar-placeholder.jpg">
+       <ion-avatar class="creator-image">
+         <img style="border: 3px solid #ff704f;" [src]="wishList.profileImageUrlFriend ? (wishList.profileImageUrlFriend | secure | async) : assets/images/avatar-placeholder.jpg">
        </ion-avatar>
        <ion-label class="ion-text-wrap">
          <h1>{{ wishList.friendName }} <small>{{ wishList.name }}</small></h1>
@@ -33,10 +33,8 @@
        </ion-label>
    </ion-item>
  
-   <div class="friends-images">
-     <img src="assets/images/avatar-placeholder.jpg">
-     <img src="assets/images/avatar-placeholder.jpg">
-     <img src="assets/images/avatar-placeholder.jpg">
+   <div class="friends-images" *ngIf="wishList.memberProfieImageUrls && wishList.memberProfieImageUrls.length">
+     <img *ngFor="let imageUrl of wishList.memberProfieImageUrls" [src]="imageUrl">
    </div>
  
    <ion-grid>

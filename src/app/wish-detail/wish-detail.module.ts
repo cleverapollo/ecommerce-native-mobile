@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { WishDetailPageRoutingModule } from './wish-detail-routing.module';
 
 import { WishDetailPage } from './wish-detail.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    WishDetailPageRoutingModule
+    WishDetailPageRoutingModule,
+    SharedModule
   ],
   declarations: [WishDetailPage]
 })
