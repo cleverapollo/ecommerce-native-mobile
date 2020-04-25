@@ -13,3 +13,16 @@
 .wish-list-description {
     border-top: 1px dashed #f7f6f1;
 }
+
+ion-avatar {
+    max-width: 21px;
+    max-height: 21px;
+    float: right;
+}
+
+.no-padding-top {
+    padding-top: 0;
+}
+.no-padding-bottom {
+    padding-bottom: 0;
+}

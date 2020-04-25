@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { WishListComponent } from './wish-list/wish-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { WishListComponent } from './wish-list/wish-list.component';
         path: '',
         component: HomePage
       }
-    ])
+    ]),
+    SharedModule
   ],
   declarations: [HomePage, WishListComponent]
 })

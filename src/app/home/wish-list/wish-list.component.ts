@@ -10,8 +10,14 @@ export class WishListComponent implements OnInit {
 
   @Input() wishList: WishListDto
 
+  wishListPartnersImageUrls: String[] = [];
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.wishList.partner && this.wishList.partner.profileImageUrl) {
+      this.wishListPartnersImageUrls.push(this.wishList.partner.profileImageUrl);
+    }
+  }
 
 }
