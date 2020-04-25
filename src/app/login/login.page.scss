@@ -1,5 +1,4 @@
 
-
 h1 {
     color: var(--ion-color-tertiary);
     font-family: 'Playfair Display';
@@ -11,11 +10,23 @@ h1 {
     width: 25%;
     margin: auto;
     margin-top: 15px;
-    background-color: #FFD1B633;
+    background-color: #f7f6f0;
+}
+
+form {
+    padding-top: 19px;
+    #login-input-email {
+        margin-bottom: 16px;
+    }
+}
+
+ion-grid {
+    padding-right: 24px;
+    padding-left: 24px;
 }
 
 ion-footer {
-    background-color: #FFD1B633;
+    background-color: #f7f6f0;
 }
 
 ion-content {
@@ -25,22 +36,34 @@ ion-content {
     }
 }
 
+ion-item {
+    --inner-padding-end: 0;
+    --padding-start: 0;
+    --highlight-color-invalid: transparent;
+}
+
 ion-input {
     --background: white;
+    border-width: 1pt;
 }
 
 ion-button {
     font-family: 'Roboto';
     font-size: 10pt;
     text-transform: uppercase;
+    height: 48px;
 }
 
 #button-login {
     color: white;
 }
 
-#link-forgot-password {
-    font-family: 'Roboto';
-    font-size: 10pt;
-    color: var(--ion-color-secondary)
+.container-forgot-password {
+    padding-bottom: 19px;
+    #link-forgot-password {
+        font-family: 'Roboto';
+        font-size: 10pt;
+        color: var(--ion-color-primary)
+    }
 }
+

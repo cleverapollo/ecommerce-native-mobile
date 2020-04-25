@@ -9,17 +9,13 @@
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
           <h1 class="ion-text-center">Login</h1>
           <div class="ion-padding">
-            <ion-item id="input-email" >
-              <ion-input name="email" type="email" placeholder="E-Mail" formControlName="email"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input id="input-password" name="password" type="password" placeholder="Passwort" formControlName="password"></ion-input>
-            </ion-item>
+            <ion-input id="login-input-email" inputmode="email" name="email" type="email" placeholder="E-Mail" formControlName="email"></ion-input>
+            <ion-input id="input-password" name="password" type="password" placeholder="Passwort" formControlName="password"></ion-input>
           </div>
           <div class="ion-padding">
             <ion-button id="button-login" type="submit" [disabled]="!loginForm.valid" expand="block">Einloggen</ion-button>
           </div>
-          <div class="ion-text-center">
+          <div class="ion-text-center container-forgot-password">
             <a id="link-forgot-password">Passwort vergessen?</a>
           </div>
         </form>
