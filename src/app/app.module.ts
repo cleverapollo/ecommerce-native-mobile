@@ -20,6 +20,7 @@ import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-optio
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from './profile-edit/user-profile.resolver';
+import { SecurePipe } from './shared/secure.pipe';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 

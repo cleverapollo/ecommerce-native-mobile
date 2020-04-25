@@ -1,5 +1,8 @@
 <div class="friend-avatar-container">
-  <img src="assets/images/avatar-placeholder.jpg">
+  <ion-avatar>
+    <img *ngIf="!wishList.profileImageUrlFriend" src="assets/images/avatar-placeholder.jpg">
+    <img *ngIf="wishList.profileImageUrlFriend" [src]="wishList.profileImageUrlFriend | secure | async">
+  </ion-avatar>
 </div>
 
 <ion-grid class="wish-list-container">

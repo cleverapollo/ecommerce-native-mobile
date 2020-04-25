@@ -6,10 +6,8 @@
 
 .friend-avatar-container {
     background: linear-gradient(to bottom, #f7f6f1 50%, white 50%);
-    text-align: center;
-    img {
-        width: 40pt;
-        border-radius: 40pt;
+    ion-avatar {
+        margin: auto
     }
 }
 

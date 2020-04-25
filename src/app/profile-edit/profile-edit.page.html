@@ -25,9 +25,12 @@
   <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">
 
     <ion-item lines="none" id="profile-image-upload">
+
       <ion-label position="stacked">Profilbild</ion-label>
       <div class="container">
-        <img [src]="profile.profileImageUrl | secure | async" *ngIf="!imageIsUploading && profile.profileImageUrl"/>
+        <ion-avatar>
+          <img [src]="profile.profileImageUrl | secure | async" *ngIf="!imageIsUploading && profile.profileImageUrl"/>
+        </ion-avatar>
         <ion-button fill="clear">
           <ion-icon slot="icon-only" src="assets/icon/pencil.svg"></ion-icon>
         </ion-button>

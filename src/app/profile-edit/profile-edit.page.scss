@@ -1,17 +1,17 @@
 #profile-image-upload {
     div.container {
         position: relative;
-        img {
-            border-radius: 50%;
-            border: 3pt solid var(--ion-color-secondary);
+        display: inline-block;
+        ion-avatar {
             margin-bottom: 12px;
             margin-top: 12px;
-            height: 106px;
+            border: 3pt solid var(--ion-color-secondary);
+            display: inline-block;
+            min-height: 108px;
+            min-width: 108px;
         }
-        ion-button {
-            float: right;
+        button {
             bottom: 15px;
-            position: absolute;
         }
     }
 }
