@@ -1,9 +1,30 @@
-<div class="friend-avatar-container">
-  <ion-avatar>
-    <img *ngIf="!wishList.profileImageUrlFriend" src="assets/images/avatar-placeholder.jpg">
-    <img *ngIf="wishList.profileImageUrlFriend" [src]="wishList.profileImageUrlFriend | secure | async">
+<ion-grid class="friend-avatar-container">
+
+  <!--0-->
+  <ion-avatar *ngIf="!wishList.ownerProfileImageUrls" class="auto-margin">
+    <img src="assets/images/avatar-placeholder.jpg"/>
   </ion-avatar>
-</div>
+
+  <!--1-->
+  <ion-avatar *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 1" class="auto-margin">
+    <img [src]="wishList.ownerProfileImageUrls[0] | secure | async"/>
+  </ion-avatar>
+
+  <!--2-->
+  <ion-row *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length && wishList.ownerProfileImageUrls.length == 2">
+    <ion-col size="6">
+      <ion-avatar class="float-right">
+        <img [src]="wishList.ownerProfileImageUrls[0] | secure | async"/>
+      </ion-avatar>
+    </ion-col>
+    <ion-col size="6">
+      <ion-avatar>
+        <img [src]="wishList.ownerProfileImageUrls[1] | secure | async"/>
+      </ion-avatar>
+    </ion-col>
+  </ion-row>
+
+</ion-grid>
 
 <ion-grid class="wish-list-container">
   <ion-row>

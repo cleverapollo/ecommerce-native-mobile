@@ -114,3 +114,38 @@ h1.registration {
 app-login {
     background-color: #f7f6f0;
 }
+
+// 
+.creator-image {
+    min-width: 40px;
+    min-height: 40px;
+    img {
+        border: 3px solid #ff704f;
+    }
+}
+
+.creator-image.standalone {
+    margin-left: 50px;
+    margin-right: 11px;
+}
+
+.creator-image.first {
+    margin-left: 10px;
+}
+
+.creator-image.last {
+    margin-right: 11px;
+}
+
+.friends-images {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    ion-avatar {
+        margin: auto;
+        max-height: 24px;
+        max-width: 24px;
+    }
+}
+
+//

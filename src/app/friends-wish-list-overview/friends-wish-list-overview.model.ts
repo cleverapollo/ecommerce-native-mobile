@@ -4,8 +4,8 @@ export class FriendWishList {
     date: String;
     wishes: Array<FriendWish>;
     nameOfFriend: String;
-    profileImageUrlFriend: String;
     memberProfieImageUrls: Array<String>;
+    ownerProfileImageUrls: Array<String>;
 }
 
 export class FriendWish {

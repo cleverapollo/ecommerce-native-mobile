@@ -24,9 +24,25 @@
     <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
       <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
     </ion-button>
-      <ion-avatar class="creator-image">
-        <img style="border: 3px solid #ff704f;" [src]="wishList.creatorProfileImageUrl ? (wishList.creatorProfileImageUrl | secure | async) : 'assets/images/avatar-placeholder.jpg'">
+     <!---->
+       <!--0-->
+       <ion-avatar class="creator-image standalone" *ngIf="!wishList.ownerProfileImageUrls">
+        <img  src="assets/images/avatar-placeholder.jpg">
       </ion-avatar>
+
+      <!--1-->
+      <ion-avatar class="creator-image standalone" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 1">
+        <img [src]="wishList.ownerProfileImageUrls[0] | secure | async">
+      </ion-avatar>
+
+      <!--2-->
+      <ion-avatar class="creator-image first" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
+        <img  [src]="wishList.ownerProfileImageUrls[0] | secure | async">
+      </ion-avatar>
+      <ion-avatar class="creator-image last" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
+        <img [src]="wishList.ownerProfileImageUrls[1] | secure | async">
+      </ion-avatar>
+      <!---->
       <ion-label class="ion-text-wrap">
         <h1>{{ wishList.name }}</h1>
         <p>{{ wishList.date | date }}</p>
@@ -34,7 +50,9 @@
   </ion-item>
 
   <div class="friends-images" *ngIf="wishList.members">
-    <img *ngFor="let member of wishList.members" [src]="member.profileImageUrl ? (member.profileImageUrl | secure | async) : 'assets/images/avatar-placeholder.jpg'">
+    <ion-avatar *ngFor="let member of wishList.members">
+      <img [src]="member.profileImageUrl ? (member.profileImageUrl | secure | async) : 'assets/images/avatar-placeholder.jpg'">
+    </ion-avatar>
   </div>
 
   <ion-card>

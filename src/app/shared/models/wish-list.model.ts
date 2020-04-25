@@ -75,5 +75,5 @@ export class WishListDto {
     membersToInvite: [MemberToInviteDto];
     partner: WishListPartnerDto;
     partnerToInvite: PartnerToInviteDto;
-    creatorProfileImageUrl: String;
+    ownerProfileImageUrls: [String];
 }

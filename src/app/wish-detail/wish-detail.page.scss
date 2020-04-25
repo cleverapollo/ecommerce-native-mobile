@@ -6,25 +6,8 @@ ion-card {
     background-color: white;
 }
 
-.friends-images {
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-    img {
-        width: 20pt;
-        border-radius: 50%;
-    }
-}
-
 ion-button {
     font-family: 'Roboto';
     font-size: 10pt;
     font-weight: bold;
-}
-
-.creator-image {
-    margin-right: 11px;
-    min-width: 40px;
-    min-height: 40px;
-    margin-left: 50px;
 }
