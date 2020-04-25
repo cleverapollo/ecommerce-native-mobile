@@ -15,7 +15,6 @@ export class ProfileEditPage implements OnInit {
 
   profile: UserProfile
 
-  imageUrl: any = null;
   imageIsUploading: Boolean = false;
 
   constructor(
@@ -62,7 +61,8 @@ export class ProfileEditPage implements OnInit {
       this.imageIsUploading = true;
 
       this.userApiService.uploadFile(request).subscribe((response) => {
-        this.imageUrl = response.fileDownloadUri;
+        this.profile.profileImageUrl = response.fileDownloadUri;
+        this.profile.profileImageFileName = response.fileName;
       }, e => console.error, () => {
         this.imageIsUploading = false;
       });

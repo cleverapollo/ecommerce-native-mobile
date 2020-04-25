@@ -27,7 +27,7 @@
     <ion-item lines="none" id="profile-image-upload">
       <ion-label position="stacked">Profilbild</ion-label>
       <div class="container">
-        <img [src]="imageUrl | secure | async" *ngIf="!imageIsUploading && imageUrl"/>
+        <img [src]="profile.profileImageUrl | secure | async" *ngIf="!imageIsUploading && profile.profileImageUrl"/>
         <ion-button fill="clear">
           <ion-icon slot="icon-only" src="assets/icon/pencil.svg"></ion-icon>
         </ion-button>

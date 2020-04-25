@@ -5,6 +5,8 @@ export class UserProfile {
     lastName: String;
     birthday: Date;
     email: String;
+    profileImageUrl: String = null;
+    profileImageFileName: String = null;
 }
 
 export class UploadFileResponse {
