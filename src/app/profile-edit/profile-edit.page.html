@@ -24,6 +24,17 @@
 
   <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">
 
+    <ion-item lines="none" id="profile-image-upload">
+      <ion-label position="stacked">Profilbild</ion-label>
+      <div class="container">
+        <img [src]="imageUrl | secure | async" *ngIf="!imageIsUploading && imageUrl"/>
+        <ion-button fill="clear">
+          <ion-icon slot="icon-only" src="assets/icon/pencil.svg"></ion-icon>
+        </ion-button>
+      </div>
+      <ion-input type="file" accept="image/png, image/jpeg" (change)="uploadImage($event)"></ion-input>
+    </ion-item>
+
     <ion-item lines="none">
       <ion-label position="stacked">Vorname</ion-label>
       <ion-input type="text" formControlName="firstName"></ion-input>

@@ -15,6 +15,9 @@ export class ProfileEditPage implements OnInit {
 
   profile: UserProfile
 
+  imageUrl: any = null;
+  imageIsUploading: Boolean = false;
+
   constructor(
     private formBuilder: FormBuilder, 
     private route: ActivatedRoute, 
@@ -46,6 +49,27 @@ export class ProfileEditPage implements OnInit {
     this.userApiService.updateProfile(this.profile).subscribe((updatedData: UserProfile) => {
       this.profile = updatedData;
     }, console.error);
+  }
+
+  uploadImage(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = () => {
+
+      let request = new FormData();
+      request.append('file', file);
+      this.imageIsUploading = true;
+
+      this.userApiService.uploadFile(request).subscribe((response) => {
+        this.imageUrl = response.fileDownloadUri;
+      }, e => console.error, () => {
+        this.imageIsUploading = false;
+      });
+    }
+    reader.onerror = (error) => {
+      console.error(error);
+    }
   }
 
 }
