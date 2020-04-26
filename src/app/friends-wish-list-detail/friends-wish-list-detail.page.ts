@@ -39,4 +39,11 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
       this.wishListService.updateSelectedWishList(this.wishList);
     }
   } 
+
+  get ownerProfileImageUrls(): String[] {
+    const imagesUrls = this.wishList.owners
+        .filter(o => o.profileImageUrl !== null)
+        .map(o => o.profileImageUrl);
+    return imagesUrls;
+  }
 }

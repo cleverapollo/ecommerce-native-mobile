@@ -3,9 +3,9 @@ export class FriendWishList {
     name: String;
     date: String;
     wishes: Array<FriendWish>;
-    nameOfFriend: String;
+    owners: Array<FriendWishListOwner>;
+
     memberProfieImageUrls: Array<String>;
-    ownerProfileImageUrls: Array<String>;
 }
 
 export class FriendWish {
@@ -17,4 +17,9 @@ export class FriendWish {
     imageUrl: String;
     reservedByFriend: Boolean;
     bought: Boolean;
+}
+
+export class FriendWishListOwner {
+    firstName: String;
+    profileImageUrl: String;
 }
