@@ -1,20 +1,37 @@
-#wish-name {
+.wish-name {
     font-family: 'Roboto';
-    font-size: 14pt;
-    color: var(--ion-color-dark);
+    font-size: 14px;
+    color: #3E3E3E;
 }
 
-#wish-date {
+.wish-price {
     font-family: 'Roboto';
-    font-size: 14pt;
-    color: var(--ion-color-secondary);
+    font-size: 14px;
+    color: var(--ion-color-primary);
 }
 
 .wish-description {
     border-top: 1px dashed #f7f6f1;
 }
 
-ion-img {
+/*ion-img {
     width: 50%;
     margin: auto;
+}*/
+
+ion-card {
+    div.image-container {
+        min-height: 140px;
+        img {
+            width: 50%;
+            margin: auto;
+            padding-top: 16px;
+        }
+    }
+    background-color: white;
+    margin: 0;
+    height: 100%;
+    ion-card-content {
+        border-top: 1px dashed #F0EDE3;
+    }
 }

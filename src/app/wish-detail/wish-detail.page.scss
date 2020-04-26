@@ -4,6 +4,9 @@ ion-card {
         margin: auto;
     }
     background-color: white;
+    ion-card-content {
+        border-top: 1px dashed #F0EDE3;
+    }
 }
 
 ion-button {

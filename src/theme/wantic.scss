@@ -2,6 +2,21 @@ a {
     color: var(--ion-color-tertiary)
 }
 
+ion-button.wantic-save-button {
+    --ion-color-contrast: white !important;
+    font-family: 'Roboto';
+    font-size: 10pt;
+    text-transform: uppercase;
+    height: 48px;
+}
+
+ion-button.wantic-delete-button {
+    font-family: 'Roboto';
+    font-size: 10pt;
+    text-transform: uppercase;
+    height: 48px;
+}
+
 ion-content {
     --ion-background-color: var(--wantic-background-color);
 }
