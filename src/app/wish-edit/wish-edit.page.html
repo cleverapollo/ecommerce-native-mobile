@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar class="wantic-toolbar">
+    <ion-buttons slot="start">
+      <ion-button size="large" class="wantic-logo" [routerLink]="['/home']">
+        <img src="assets/icon/wantic-logo-active.svg">
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/friends-wish-list-overview']">
+        <img src="assets/icon/friends-wish-lists.svg">
+      </ion-button>
+      <ion-button [routerLink]="['/wish-search']">
+        <ion-icon slot="icon-only" src="assets/icon/search-icon.svg"></ion-icon>
+      </ion-button>
+      <ion-menu-button>
+        <img src="assets/icon/burger-menu.svg">
+      </ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item lines="none">
+    <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
+      <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
+    </ion-button>
+    <ion-text>
+      <h1 class="ion-text-center wantic-page-header">Wunsch bearbeiten</h1>
+    </ion-text>
+  </ion-item>
+
+  <div class="image-container">
+    <ion-img *ngIf="wish.imageUrl" [src]="wish.imageUrl"></ion-img>
+  </div>
+
+  <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">
+
+    <!--wish list id-->
+    <ion-item lines="none">
+      <ion-label position="stacked">Wunschliste</ion-label>
+      <ion-input type="text" [value]="wishListName" readonly></ion-input>
+    </ion-item>
+
+    <!--name-->
+    <ion-item lines="none">
+      <ion-label position="stacked">Name</ion-label>
+      <ion-textarea formControlName="name"></ion-textarea>
+    </ion-item>
+
+    <!--price-->
+    <ion-item lines="none">
+      <ion-label position="stacked">Preis</ion-label>
+      <ion-input type="number" formControlName="price" inputmode="decimal" step="0.1"></ion-input>
+    </ion-item>
+
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-button class="wantic-save-button" (click)="saveWish()" style="margin-left: 20px; margin-right: 20px;" color="primary" expand="block" [disabled]="!form.valid">
+    WUNSCH SPEICHERN
+  </ion-button>
+</ion-footer>

@@ -73,7 +73,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { profile: UserProfileResolver },
     loadChildren: () => import('./profile-edit/profile-edit.module').then( m => m.ProfileEditPageModule)
+  },
+  {
+    path: 'wish-edit',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./wish-edit/wish-edit.module').then( m => m.WishEditPageModule)
   }
+
 
 
 
