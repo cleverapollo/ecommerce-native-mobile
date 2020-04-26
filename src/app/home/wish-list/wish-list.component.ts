@@ -9,6 +9,7 @@ import { WishListDto } from 'src/app/shared/models/wish-list.model';
 export class WishListComponent implements OnInit {
 
   @Input() wishList: WishListDto
+  @Input() index: number;
 
   wishListPartnersImageUrls: String[] = [];
 
@@ -17,6 +18,16 @@ export class WishListComponent implements OnInit {
   ngOnInit() {
     if (this.wishList.partner && this.wishList.partner.profileImageUrl) {
       this.wishListPartnersImageUrls.push(this.wishList.partner.profileImageUrl);
+    }
+  }
+
+  get side() : String {
+    if (this.index % 2 == 0) {
+      return 'right';
+    } else if (this.index % 2 == 1) {
+      return 'left';
+    } else {
+      return 'center';
     }
   }
 

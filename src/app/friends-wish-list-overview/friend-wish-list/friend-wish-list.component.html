@@ -7,19 +7,19 @@
 
   <!--1-->
   <ion-avatar *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 1" class="auto-margin">
-    <img [src]="ownerProfileImageUrls[0] | secure | async"/>
+    <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | secure | async"/>
   </ion-avatar>
 
   <!--2-->
   <ion-row *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length && ownerProfileImageUrls.length == 2">
     <ion-col size="6">
       <ion-avatar class="float-right">
-        <img [src]="ownerProfileImageUrls[0] | secure | async"/>
+        <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | secure | async"/>
       </ion-avatar>
     </ion-col>
     <ion-col size="6">
       <ion-avatar>
-        <img [src]="ownerProfileImageUrls[1] | secure | async"/>
+        <img *ngIf="ownerProfileImageUrls[1]" [src]="ownerProfileImageUrls[1] | secure | async"/>
       </ion-avatar>
     </ion-col>
   </ion-row>

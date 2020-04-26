@@ -1,4 +1,4 @@
-<ion-img [src]="wish.imageUrl" style="height: 163px;"></ion-img>
+<ion-img [src]="wish.imageUrl" *ngIf="wish.imageUrl" style="height: 163px;"></ion-img>
 <div class="product-info" (click)="showDetails()">
   <div>
     <ion-label class="name">

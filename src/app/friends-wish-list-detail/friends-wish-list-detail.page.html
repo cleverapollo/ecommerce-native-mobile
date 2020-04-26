@@ -32,15 +32,15 @@
 
       <!--1-->
       <ion-avatar class="creator-image standalone" *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 1">
-        <img [src]="ownerProfileImageUrls[0] | secure | async">
+        <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | secure | async">
       </ion-avatar>
 
       <!--2-->
       <ion-avatar class="creator-image first" *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 2">
-        <img  [src]="ownerProfileImageUrls[0] | secure | async">
+        <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | secure | async">
       </ion-avatar>
       <ion-avatar class="creator-image last" *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 2">
-        <img [src]="ownerProfileImageUrls[1] | secure | async">
+        <img *ngIf="ownerProfileImageUrls[1]" [src]="ownerProfileImageUrls[1] | secure | async">
       </ion-avatar>
       <!---->
        <ion-label class="ion-text-wrap">
@@ -51,7 +51,7 @@
  
    <div class="friends-images" *ngIf="wishList.memberProfieImageUrls && wishList.memberProfieImageUrls.length">
      <ion-avatar *ngFor="let imageUrl of wishList.memberProfieImageUrls">
-      <img [src]="imageUrl | secure | async">
+      <img *ngIf="imageUrl" [src]="imageUrl | secure | async">
      </ion-avatar>
    </div>
  

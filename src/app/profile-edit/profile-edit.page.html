@@ -28,8 +28,8 @@
 
       <ion-label position="stacked">Profilbild</ion-label>
       <div class="container">
-        <ion-avatar>
-          <img [src]="profile.profileImageUrl | secure | async" *ngIf="!imageIsUploading && profile.profileImageUrl"/>
+        <ion-avatar *ngIf="profile && profile.profileImageUrl">
+          <img [src]="profile.profileImageUrl | secure | async" *ngIf="!imageIsUploading"/>
         </ion-avatar>
         <ion-button fill="clear">
           <ion-icon slot="icon-only" src="assets/icon/pencil.svg"></ion-icon>

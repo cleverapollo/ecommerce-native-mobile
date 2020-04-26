@@ -9,10 +9,6 @@ h1 {
   color: var(--ion-color-tertiary);
 }
 
-.column-wish-list {
-  background-color: white;
-}
-
 .add-button-height {
   height: 150px;
 }
@@ -25,4 +21,16 @@ h1 {
   height: 30pt;
   width: 30pt;
   color: var(--ion-color-primary);
+}
+
+ion-col.wish-list {
+  background-color: white;
+}
+
+ion-col.wish-list-right {
+  padding-left: 0;
+}
+
+ion-col.wish-list-left {
+  padding-right: 0;
 }

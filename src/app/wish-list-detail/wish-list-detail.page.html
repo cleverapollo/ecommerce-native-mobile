@@ -32,15 +32,15 @@
 
       <!--1-->
       <ion-avatar class="creator-image standalone" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 1">
-        <img [src]="wishList.ownerProfileImageUrls[0] | secure | async">
+        <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | secure | async">
       </ion-avatar>
 
       <!--2-->
       <ion-avatar class="creator-image first" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-        <img  [src]="wishList.ownerProfileImageUrls[0] | secure | async">
+        <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | secure | async">
       </ion-avatar>
       <ion-avatar class="creator-image last" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-        <img [src]="wishList.ownerProfileImageUrls[1] | secure | async">
+        <img *ngIf="wishList.ownerProfileImageUrls[1]" [src]="wishList.ownerProfileImageUrls[1] | secure | async">
       </ion-avatar>
       <!---->
       <ion-label class="ion-text-wrap">

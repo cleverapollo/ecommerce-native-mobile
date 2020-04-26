@@ -30,7 +30,7 @@
   </ion-item>
 
   <div class="image-container">
-    <ion-img [src]="wish.imageUrl"></ion-img>
+    <ion-img *ngIf="wish.imageUrl" [src]="wish.imageUrl"></ion-img>
   </div>
 
   <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">

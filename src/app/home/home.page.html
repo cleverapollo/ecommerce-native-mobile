@@ -2,18 +2,18 @@
   <ion-toolbar class="wantic-toolbar">
     <ion-buttons slot="start">
       <ion-button size="large" class="wantic-logo" [routerLink]="['/home']">
-        <img src="assets/icon/wantic-logo-active.svg">
+        <img src="assets/icon/wantic-logo-active.svg" />
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button [routerLink]="['/friends-wish-list-overview']">
-        <img src="assets/icon/friends-wish-lists.svg">
+        <img src="assets/icon/friends-wish-lists.svg" />
       </ion-button>
       <ion-button [routerLink]="['/wish-search']">
         <ion-icon slot="icon-only" src="assets/icon/search-icon.svg"></ion-icon>
       </ion-button>
       <ion-menu-button>
-        <img src="assets/icon/burger-menu.svg">
+        <img src="assets/icon/burger-menu.svg" />
       </ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
@@ -25,8 +25,8 @@
   </ion-text>
   <ion-grid>
     <ion-row>
-      <ion-col size="6" style="padding: 0;">
-        <ion-grid style="padding: 2px;">
+      <ion-col size="6" style="padding-right: 0;">
+        <ion-grid style="margin-right: 6px; padding: 0">
           <ion-row>
             <ion-col [routerLink]="['/wish-search']" size="12"  style="background-color: white; padding: 0; padding-bottom: 5px; border-bottom: 2px solid #f7f6f1;">
               <div class="ion-text-center add-button-height">
@@ -48,7 +48,8 @@
                     <ion-icon class="add-icon" name="add"></ion-icon>
                   </div>
                   <div>
-                      neue Wunschliste anlegen
+                      Wunschliste <br>
+                      hinzufügen
                   </div>
                 </div>
               </div>
@@ -56,8 +57,11 @@
           </ion-row>
         </ion-grid>
       </ion-col>
-      <ion-col style="border: 2px solid #f7f6f1;" class="column-wish-list" size="6" *ngFor="let wishList of wishLists" (click)="selectWishList(wishList)">
-        <app-wish-list [wishList]="wishList"></app-wish-list>
+      <ion-col  [ngClass]="{ 'wish-list-right': i % 2 == 0 , 'wish-list-left': i % 2 == 1 }" 
+                style="border: 2px solid #f7f6f1;" class="wish-list" size="6" 
+                *ngFor="let wishList of wishLists; let i = index;" 
+                (click)="selectWishList(wishList)">
+        <app-wish-list [wishList]="wishList" [index]="i"></app-wish-list>
       </ion-col>
     </ion-row>
   </ion-grid>

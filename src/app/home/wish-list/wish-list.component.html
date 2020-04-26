@@ -1,36 +1,36 @@
-<ion-grid>
+<ion-grid [ngClass]="side">
   <ion-row>
     <ion-col size="6">
-      <ion-img *ngIf="wishList.wishes.length > 0" [src]="wishList.wishes[0].imageUrl"></ion-img>
+      <ion-img *ngIf="wishList.wishes.length > 0 && wishList.wishes[0].imageUrl" [src]="wishList.wishes[0].imageUrl"></ion-img>
       <img *ngIf="!wishList.wishes.length" src="assets/images/wish-list-placeholder.png">
     </ion-col>
     <ion-col size="6">
-      <ion-img *ngIf="wishList.wishes.length > 1" [src]="wishList.wishes[1].imageUrl"></ion-img>
+      <ion-img *ngIf="wishList.wishes.length > 1 && wishList.wishes[1].imageUrl" [src]="wishList.wishes[1].imageUrl"></ion-img>
       <img *ngIf="wishList.wishes.length < 2" src="assets/images/wish-list-placeholder.png">
     </ion-col>
   </ion-row>
 
   <ion-row>
     <ion-col size="6">
-      <ion-img *ngIf="wishList.wishes.length > 2" [src]="wishList.wishes[2].imageUrl"></ion-img>
+      <ion-img *ngIf="wishList.wishes.length > 2 && wishList.wishes[2].imageUrl" [src]="wishList.wishes[2].imageUrl"></ion-img>
       <img *ngIf="wishList.wishes.length < 3" src="assets/images/wish-list-placeholder.png">
     </ion-col>
     <ion-col size="6">
-      <ion-img *ngIf="wishList.wishes.length > 3" [src]="wishList.wishes[3].imageUrl"></ion-img>
+      <ion-img *ngIf="wishList.wishes.length > 3 && wishList.wishes[3].imageUrl" [src]="wishList.wishes[3].imageUrl"></ion-img>
       <img *ngIf="wishList.wishes.length < 4" src="assets/images/wish-list-placeholder.png">
     </ion-col>
   </ion-row>
 
-  <ion-row>
+  <ion-row class="wish-list-description">
     <ion-col size="12" class="no-padding-bottom">
       <div id="wish-list-name">{{ wishList.name }}</div>
     </ion-col>
     <ion-col [size]="wishListPartnersImageUrls.length ? 8 : 12" class="no-padding-top">
       <div id="wish-list-date">{{ wishList.date | date }}</div>
     </ion-col>
-    <ion-col size="4" *ngIf="wishListPartnersImageUrls.length" class="no-padding-top">
+    <ion-col size="4" *ngIf="wishListPartnersImageUrls && wishListPartnersImageUrls.length" class="no-padding-top">
       <ion-avatar *ngFor="let imageUrl of wishListPartnersImageUrls">
-        <img [src]="imageUrl | secure | async" />
+        <img [src]="imageUrl | secure | async" *ngIf="imageUrl"/>
       </ion-avatar>
     </ion-col>
   </ion-row>

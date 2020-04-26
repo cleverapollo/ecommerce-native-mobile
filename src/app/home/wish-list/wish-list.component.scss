@@ -11,7 +11,7 @@
 }
 
 .wish-list-description {
-    border-top: 1px dashed #f7f6f1;
+    border-top: 1px dashed #F0EDE3;
 }
 
 ion-avatar {
@@ -25,4 +25,22 @@ ion-avatar {
 }
 .no-padding-bottom {
     padding-bottom: 0;
+}
+
+ion-grid {
+    background-color: white;
+    padding: 0;
+}
+
+ion-grid.left {
+    margin-right: 4px;
+}
+
+ion-grid.right {
+    margin-left: 4px;
+}
+
+ion-grid.center {
+    margin-left: 2px;
+    margin-right: 2px;
 }
