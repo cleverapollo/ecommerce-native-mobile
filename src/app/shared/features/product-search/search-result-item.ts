@@ -10,7 +10,7 @@ export class SearchResultItem {
 export class SearchResultItemMapper {
     static map(from: SearchResultItem, to: WishDto) : WishDto  {
         to.name = from.name
-        to.price = from.price
+        to.price = parseFloat(String(from.price))
         to.imageUrl = from.imageUrl
         to.productUrl = from.productUrl
         return to
