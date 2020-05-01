@@ -16,6 +16,7 @@ import { AccountFirstNamePage } from './account-first-name/account-first-name.pa
 import { AccountEmailPasswordPage } from './account-email-password/account-email-password.page';
 import { RegistrationCompletedPage } from './registration-completed/registration-completed.page';
 import { ProductSearchModule } from '../shared/features/product-search/product-search.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { ProductSearchModule } from '../shared/features/product-search/product-s
     ReactiveFormsModule,
     IonicModule,
     RegistrationPageRoutingModule,
-    ProductSearchModule
+    ProductSearchModule,
+    SharedModule
   ],
   declarations: [
     AccountFirstNamePage,
