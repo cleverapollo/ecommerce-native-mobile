@@ -1,16 +1,12 @@
 import { WishDto } from '../shared/models/wish-list.model';
 
-export interface RegistrationRequest {
+export class RegistrationRequest {
     userFirstName: String
     userEmail: String
     userPassword: String
 }
 
-export class RegistrationDto implements RegistrationRequest {
-    userFirstName: String
-    userEmail: String
-    userPassword: String
-    
+export class RegistrationDto extends RegistrationRequest {
     wishListName: String
     wishListDate: Date
     wishListWish: WishDto
@@ -19,9 +15,6 @@ export class RegistrationDto implements RegistrationRequest {
     wishListPartnerEmail: String = null
 }
 
-export class RegistrationPartnerDto implements RegistrationRequest {
+export class RegistrationPartnerDto extends RegistrationRequest {
     userId: String;
-    userFirstName: String
-    userEmail: String
-    userPassword: String
 }
