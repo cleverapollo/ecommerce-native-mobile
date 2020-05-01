@@ -48,8 +48,12 @@ ion-input, ion-datetime, ion-select {
     height: 48px;
 }
 
+ion-input.ng-invalid.ng-touched, ion-input.ng-invalid.ng-dirty {
+    border-color: var(--ion-color-danger);
+}
+
 ion-input, ion-datetime, ion-select, ion-textarea {
-    border: 2pt solid var(--ion-color-secondary);
+    border: 1pt solid var(--ion-color-tertiary);
     border-radius: 9pt;
     --background: var(--wantic-background-color);
     --color: var(--ion-color-primary);
@@ -86,6 +90,7 @@ h1.registration {
     font-family: 'Playfair Display';
     font-weight: bold;
     font-size: 38px;
+    padding-top: 2em;
 }
 
 .registration-header {
@@ -100,7 +105,7 @@ h1.registration {
     }
 }
 
-.registration-circle {
+/*.registration-circle {
     border-radius: 50%;
     width: 460px;
     height: 360pt;
@@ -122,7 +127,7 @@ h1.registration {
             }
         }
     }
-}
+}*/
 
 // 
 
