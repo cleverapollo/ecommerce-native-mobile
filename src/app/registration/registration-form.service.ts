@@ -7,7 +7,7 @@ import { RegistrationDto, RegistrationRequest } from './registration-form';
 })
 export class RegistrationFormService {
 
-  private _form: BehaviorSubject<RegistrationRequest> = new BehaviorSubject(null);
+  private _form: BehaviorSubject<RegistrationRequest> = new BehaviorSubject(new RegistrationRequest());
 
   constructor() {}
 
