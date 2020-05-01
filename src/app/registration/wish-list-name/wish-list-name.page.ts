@@ -5,6 +5,7 @@ import { RegistrationFormService } from '../registration-form.service';
 import { Observable, Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { RegistrationDto } from '../registration-form';
+import { ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-list-name',
@@ -14,6 +15,12 @@ import { RegistrationDto } from '../registration-form';
 export class WishListNamePage implements OnInit, OnDestroy {
 
   form: FormGroup
+
+  validationMessages = {
+    name: [
+      { type: 'required', message: 'Gib bitte einen Namen für deine Wunschliste an.' }
+    ]
+  }
 
   private registrationDto: RegistrationDto
   private formSubscription: Subscription;

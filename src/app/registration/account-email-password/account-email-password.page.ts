@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
@@ -7,6 +7,8 @@ import { RegistrationService } from '../services/registration.service';
 import { NavController } from '@ionic/angular';
 import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
+import { CustomValidation } from 'src/app/shared/custom-validation';
 
 @Component({
   selector: 'app-account-email-password',
@@ -15,7 +17,25 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 })
 export class AccountEmailPasswordPage implements OnInit, OnDestroy {
 
-  form: FormGroup
+  form: FormGroup;
+  validationMessages: ValidationMessages = {
+    email: [
+      new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
+      new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.'),
+    ],
+    password: [
+      new ValidationMessage('passwordDoesNotMatch', 'Die Passwört stimmen nicht überein.'),
+    ],
+    passwordValue: [
+      new ValidationMessage('required', 'Gib bitte ein Passwort ein.'),
+      new ValidationMessage('minlength', 'Kurze Passwörter sind leicht zu erraten. Verwende ein Passwort mit mindestens 7 Zeichen.'),
+      new ValidationMessage('passwordTooWeak', 'Dein Passwort muss mindestens eine Zahl, einen Großbuchstaben, einen Kleinbuchstaben und ein Sonderzeichen () enthalten.'),
+    ],
+    passwordConfirm: [
+      new ValidationMessage('required', 'Bestätige bitte dein Passwort.'),
+    ]
+  }
+
 
   private registrationDto: RegistrationRequest
   private formSubscription: Subscription;
@@ -32,15 +52,22 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto
+      this.registrationDto = registrationDto;
+      this.form = this.formBuilder.group({
+        email: [this.registrationDto.userEmail, [Validators.required, Validators.email]],
+        password: this.formBuilder.group({
+          value: [null, Validators.compose([
+            Validators.required,
+            CustomValidation.passwordValidator({ passwordTooWeak: true }),
+            Validators.minLength(8)
+          ])
+          ],
+          confirm: [null, Validators.compose([Validators.required])]
+        }, { 
+          validator: CustomValidation.passwordMatchValidator
+        })
+      })
     });
-    this.form = this.formBuilder.group({
-      email: [this.registrationDto.userEmail, [Validators.required, Validators.email]],
-      password: this.formBuilder.group({
-        value: ['', [Validators.required]],
-        confirm: ['', [Validators.required]]
-      }, { validators: [this.passwordConformValidator] })
-    })
   }
 
   ngOnDestroy() {
@@ -71,10 +98,5 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     this.navController.back();
   }
 
-  private passwordConformValidator(c: AbstractControl): { invalid: boolean } {
-    if (c.get('value').value !== c.get('confirm').value) {
-      return { invalid: true };
-    }
-  }
 
 }

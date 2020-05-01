@@ -10,40 +10,31 @@
 </ion-header>
 
 <ion-content>
-  <div class="registration-circle">
-    <div class="form">
-      <h1 class="registration ion-text-center" *ngIf="!pageViewViaEmail">Herzlichen <br> Glückwunsch!</h1>
-      <h1 class="registration ion-text-center" *ngIf="pageViewViaEmail">Herzlich <br> Willkommen!</h1>
-      <p class="subtext ion-text-center" *ngIf="!pageViewViaEmail">
-        Du hast deine erste Wunschliste erstellt und <br>
-        deinen ersten Wunsch hinzugefügt.<br><br>
-      
-        Wir wünschen dir viel Spaß mit Wantic. <br><br>
-      
-        Sag uns noch deinen Namen 
-      </p>
-      <p class="subtext ion-text-center" *ngIf="pageViewViaEmail">
-        {{ inviterName }} hat dich als Partner zur Wunschliste <br>
-        "{{ wishListName }}" eingeladen.<br><br>
-      
-        Um die Wunschliste gemeinsam bearbeiten zu<br>
-        können, benötigst du einen Account.
-      </p>
-      <form [formGroup]="form">
-        <ion-item>
-          <ion-input formControlName="firstName" type="text" placeholder="Vorname"></ion-input>
-        </ion-item>
-      </form>
-    </div>
-  </div>
+  <h1 class="registration ion-text-center" *ngIf="!pageViewViaEmail">Herzlichen <br> Glückwunsch!</h1>
+  <h1 class="registration ion-text-center" *ngIf="pageViewViaEmail">Herzlich <br> Willkommen!</h1>
+  <p class="subtext ion-text-center" *ngIf="!pageViewViaEmail">
+    Du hast deine erste Wunschliste erstellt und <br>
+    deinen ersten Wunsch hinzugefügt.<br><br>
+  
+    Wir wünschen dir viel Spaß mit Wantic. <br><br>
+  
+    Sag uns noch deinen Namen 
+  </p>
+  <p class="subtext ion-text-center" *ngIf="pageViewViaEmail">
+    {{ inviterName }} hat dich als Partner zur Wunschliste <br>
+    "{{ wishListName }}" eingeladen.<br><br>
+  
+    Um die Wunschliste gemeinsam bearbeiten zu<br>
+    können, benötigst du einen Account.
+  </p>
+  <form [formGroup]="form" *ngIf="form">
+    <ion-item lines="none">
+      <ion-input formControlName="firstName" type="text" placeholder="Vorname"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('firstName')" [validationMessages]="validationMessages.firstName"></app-validation-messages>
+  </form>
 </ion-content>
 
 <ion-footer no-border>
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="6">
-        <ion-button expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-button *ngIf="form" expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
 </ion-footer>

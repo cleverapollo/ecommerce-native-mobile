@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
 import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
+import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
 
 @Component({
   selector: 'app-account-first-name',
@@ -15,6 +16,11 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
 
   form: FormGroup
   pageViewViaEmail: Boolean;
+  validationMessages: ValidationMessages = {
+    firstName: [
+      new ValidationMessage('required', 'Gib bitte deinen Namen an.')
+    ]
+  }
 
   // only when invited by mail available
   userId: String = null;
@@ -33,7 +39,6 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      console.log(params);
       if (params['id']) {
         this.pageViewViaEmail = true;
         this.userId = params['id'];
@@ -43,12 +48,12 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
     })
 
     this.formSubscription = this.formService.form$.subscribe( dto => {
-      this.registrationDto = dto
+      this.registrationDto = dto;
+      this.form = this.formBuilder.group({
+        'firstName': this.formBuilder.control(this.registrationDto.userFirstName, [Validators.required])
+      });
     });
 
-    this.form = this.formBuilder.group({
-      'firstName': this.formBuilder.control('', [Validators.required])
-    });
   }
 
   ngOnDestroy() {

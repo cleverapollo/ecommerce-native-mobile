@@ -14,6 +14,11 @@ import { NavController } from '@ionic/angular';
 export class WishListDatePage implements OnInit, OnDestroy {
 
   form: FormGroup
+  validationMessages = {
+    date: [
+      { type: 'required', message: 'Gib bitte ein Datum an, an welches deine Wunschliste gebunden ist.' }
+    ]
+  }
 
   private registrationDto: RegistrationDto;
   private formSubscription: Subscription;
@@ -27,10 +32,16 @@ export class WishListDatePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto as RegistrationDto
-    });
-    this.form = this.formBuilder.group({
-      'date': this.formBuilder.control(this.registrationDto.wishListDate, [Validators.required])
+      this.registrationDto = registrationDto as RegistrationDto;
+      
+      let value = '';
+      if (this.registrationDto && this.registrationDto.wishListDate) {
+        value = this.registrationDto.wishListDate.toDateString();
+      }
+
+      this.form = this.formBuilder.group({
+        'date': this.formBuilder.control(value, [Validators.required])
+      });
     });
   }
 
@@ -39,6 +50,7 @@ export class WishListDatePage implements OnInit, OnDestroy {
   }
 
   next() {
+    this.formSubscription.unsubscribe();
     this.registrationDto.wishListDate = this.form.controls['date'].value;
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-partner'], { relativeTo: this.route })
