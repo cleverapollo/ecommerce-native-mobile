@@ -1,4 +1,4 @@
-<div class="validation-errors ion-text-center">
+<div class="validation-errors wantic-margin-right-left">
   <ng-container *ngFor="let validation of validationMessages">
     <p class="error-message" *ngIf="control.hasError(validation.type) && (control.dirty || control.touched)">
       <ion-text color="danger">{{ validation.message }}</ion-text>

@@ -13,16 +13,20 @@
       <ion-label position="stacked">Name der Wunschliste</ion-label>
       <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked">Datum</ion-label>
       <ion-datetime formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
     </ion-item>
+    <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked">Partner hinzufügen</ion-label>
       <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="partner"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="form.get('partner')" [validationMessages]="validationMessages.partner"></app-validation-messages>
+
   </form>
 
   <div class="wantic-margin-right-left">
@@ -79,7 +83,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button *ngIf="form" (click)="saveWishList()" color="primary" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left">
+  <ion-button *ngIf="form" (click)="saveWishList()" color="primary" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button">
     NEUE WUNSCHLISTE ANLEGEN
   </ion-button>
 </ion-footer>

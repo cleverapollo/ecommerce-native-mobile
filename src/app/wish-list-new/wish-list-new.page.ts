@@ -6,6 +6,7 @@ import { WishListService } from '../shared/services/wish-list.service';
 import { LoadingController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { WishListDto } from '../shared/models/wish-list.model';
+import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-list-new',
@@ -14,7 +15,25 @@ import { WishListDto } from '../shared/models/wish-list.model';
 })
 export class WishListNewPage implements OnInit {
 
-  form: FormGroup
+  form: FormGroup;
+  
+  get validationMessages(): ValidationMessages {
+    return {
+      name: [
+        new ValidationMessage('required', 'Vergib bitte einen Namen für deine Wunschliste.')
+      ],
+      date: [
+        new ValidationMessage('required', 'Gib bitte ein Datum an, an welches deine Wunschliste gebunden ist.')
+      ],
+      partner: [
+        new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.')
+      ],
+      newMember: [
+        new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.')
+      ],
+    }
+  };
+
   invitedMembers: Array<String>
   newMember: FormControl
   memberIsLoading: Boolean
