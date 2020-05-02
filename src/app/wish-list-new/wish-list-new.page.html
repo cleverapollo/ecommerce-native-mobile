@@ -8,7 +8,7 @@
     </ion-text>
   </ion-item>
 
-  <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">
+  <form [formGroup]="form" *ngIf="form">
     <ion-item lines="none">
       <ion-label position="stacked">Name der Wunschliste</ion-label>
       <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name"></ion-input>
@@ -25,15 +25,17 @@
     </ion-item>
   </form>
 
-  <ion-item lines="none" style="margin-left: 20px; margin-right: 20px;">
-    <ion-label>Geteilt mit</ion-label>
-  </ion-item>
+  <div class="wantic-margin-right-left">
+    <ion-item lines="none">
+      <ion-label>Geteilt mit</ion-label>
+    </ion-item>
+  
+    <ion-item lines="none" *ngIf="showNoMembersHint">
+      <ion-text>Bisher hast du noch niemanden dazu eingeladen deiner neuen Wunschliste beizutreten.</ion-text>
+    </ion-item>
+  </div>
 
-  <ion-item lines="none" *ngIf="showNoMembersHint" style="margin-left: 20px; margin-right: 20px;">
-    <ion-text>Bisher hast du noch niemanden dazu eingeladen deiner neuen Wunschliste beizutreten.</ion-text>
-  </ion-item>
-
-  <ion-list style="margin-left: 20px; margin-right: 20px;">
+  <ion-list *ngIf="invitedMembers">
     <ion-item lines="none" *ngFor="let member of invitedMembers" lines="none">
       <ion-avatar slot="start">
         <img src="assets/images/avatar-placeholder.jpg">
@@ -51,8 +53,7 @@
     </ion-item>
   </ion-list>
 
-  <form style="margin-left: 20px; margin-right: 20px;">
-
+  <form>
     <ion-item lines="none">
       <ion-label>Einladen</ion-label>
     </ion-item>
@@ -65,19 +66,20 @@
       <ion-input [formControl]="newMember" type="email" placeholder="E-Mail Adresse eingeben"></ion-input>
     </ion-item>
   
-    <ion-button fill="clear" (click)="addMember()" [disabled]="!newMember.valid">
+    <ion-button fill="clear" (click)="addMember()" [disabled]="!newMember.valid" class="wantic-margin-right-left">
       <ion-icon name="add-circle-outline"></ion-icon>
       <ion-text color="primary">Weitere Personen einladen</ion-text>
     </ion-button>
   </form>
 
- 
-
-  <ion-button (click)="saveWishList()" style="margin-left: 20px; margin-right: 20px;" color="primary" expand="block" [disabled]="!form.valid">
-    NEUE WUNSCHLISTE ANLEGEN
-  </ion-button>
-  <ion-button style="margin-left: 20px; margin-right: 20px; margin-top: 10px;" color="primary" fill="outline" expand="block">
+  <ion-button style="margin-top: 10px;" color="primary" fill="outline" expand="block" class="wantic-margin-right-left">
     ABBRECHEN
   </ion-button>
 
 </ion-content>
+
+<ion-footer>
+  <ion-button *ngIf="form" (click)="saveWishList()" color="primary" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left">
+    NEUE WUNSCHLISTE ANLEGEN
+  </ion-button>
+</ion-footer>

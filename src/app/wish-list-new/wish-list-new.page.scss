@@ -5,3 +5,31 @@
         margin-top: 6px;
     }    
 }
+
+form {
+    ion-item {
+        --inner-padding-start: 0;
+        --inner-padding-end: 0;
+        --padding-start: 0;
+        --padding-end: 0;
+        border: none;
+        ion-input, ion-datetime {
+            border: 1pt solid var(--ion-color-tertiary);
+            border-radius: 9pt;
+        }
+    }
+}
+
+.wantic-margin-right-left {
+    margin-left: var(--wantic-margin);
+    margin-right: var(--wantic-margin);
+    ion-item {
+        --padding-start: 0;
+        --padding-end: 0;
+    }
+}
+
+ion-button.wantic-margin-right-left {
+    --padding-start: 0;
+    --padding-end: 0;
+}
