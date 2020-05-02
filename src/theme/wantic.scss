@@ -4,10 +4,16 @@ a {
 
 ion-button.wantic-save-button {
     --ion-color-contrast: white !important;
+    --color: white !important;
     font-family: 'Roboto';
-    font-size: 10pt;
+    font-size: 10px;
     text-transform: uppercase;
     height: 48px;
+    --border-radius: 50pt;
+    margin-left: 46pt;
+    margin-right: 46pt;
+    margin-bottom: 40pt;
+    letter-spacing: 1pt;
 }
 
 ion-button.wantic-delete-button {
@@ -58,11 +64,15 @@ ion-item.ion-invalid.ion-touched, ion-item.ion-invalid.ion-dirty {
     border-color: var(--ion-color-danger);
 }
 
-ion-input, ion-datetime, ion-select, ion-textarea {
-    --background: var(--wantic-background-color);
+ion-input, ion-datetime, ion-select, ion-textarea, ion-searchbar {
+    --background: white !important;
     --color: var(--ion-color-primary);
-    --placeholder-color: var(--ion-color-primary) !important;
+    --placeholder-color: #FFA571 !important;
     --padding-start: 19px !important;
+    --padding-top: 12px !important;
+    --padding-bottom: 12px !important;
+    font-family: Arial !important;
+    font-size: 14px;
 }
 
 form {
@@ -71,17 +81,24 @@ form {
         --inner-padding-end: 0;
         --padding-start: 0;
         --padding-end: 0;
-        margin-left: 24pt;
-        margin-right: 24pt;
+        margin-left: 46pt;
+        margin-right: 46pt;
         margin-bottom: 20px;
-        ion-input, ion-datetime, ion-textarea {
-            border: 1pt solid var(--ion-color-tertiary);
+        ion-input, ion-datetime, ion-textarea, ion-searchbar {
+            border: 2px solid var(--ion-color-secondary);
             border-radius: 9pt;
+        }
+        ion-searchbar {
+            --placeholder-font-style: italic;
+            background: white;
         }
         ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty {
             border-color: var(--ion-color-danger);
         }
         ion-datetime.ion-invalid.ion-touched, ion-datetime.ion-invalid.ion-dirty {
+            border-color: var(--ion-color-danger);
+        }
+        ion-searchbar.ion-invalid.ion-touched, ion-searchbar.ion-invalid.ion-dirty {
             border-color: var(--ion-color-danger);
         }
         ion-label {
@@ -115,7 +132,8 @@ h1.registration {
     font-family: 'Playfair Display';
     font-weight: bold;
     font-size: 38px;
-    padding-top: 2em;
+    padding-top: 125px;
+    padding-bottom: 57px;
 }
 
 .registration-header {

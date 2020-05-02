@@ -11,10 +11,7 @@
 
 <ion-content>
   <h1 class="registration ion-text-center">Lege deine erste Wunschliste an</h1>
-  <form [formGroup]="form">
-    <p class="subtext ion-text-center">
-      Gib den Namen deiner ersten Wunschliste an.
-    </p>
+  <form [formGroup]="form" *ngIf="form">
     <ion-item lines="none">
       <ion-input formControlName="name" type="text" placeholder="Trage einen Namen ein"></ion-input>
     </ion-item>
@@ -23,11 +20,5 @@
 </ion-content>
 
 <ion-footer no-border>
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="6">
-        <ion-button expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-button *ngIf="form" class="wantic-save-button" expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
 </ion-footer>

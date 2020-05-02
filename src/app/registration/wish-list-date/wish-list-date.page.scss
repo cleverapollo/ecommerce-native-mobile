@@ -1,0 +1,11 @@
+ion-datetime {
+    border: none;
+}
+
+form {
+    ion-item {
+        border: 2px solid var(--ion-color-secondary);
+        border-radius: 9pt;
+        --background: white !important;
+    }
+}

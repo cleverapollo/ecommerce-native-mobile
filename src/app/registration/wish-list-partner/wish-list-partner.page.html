@@ -11,23 +11,22 @@
 
 <ion-content>
   <h1 class="registration ion-text-center">Wunschliste <br> gemeinsam <br> nutzen?</h1>
+  <p class="subtext ion-text-center">
+    Möchtest du deine Wunschliste gemeinsam mit einer/einem Partner*in nutzen? Trage hier ihren/seinen Namen und die E-mail Adresse ein. Du kannst diesen Punkt aber auch überspringen.
+  </p>
   <form *ngIf="form" [formGroup]="form">
+    <ion-item lines="none">
+      <ion-input formControlName="name" type="text" placeholder="Vorname deines Partners"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
     <ion-item lines="none">
       <ion-input formControlName="email" type="email" placeholder="E-Mail Adresse deines Partners"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
-    <ion-item lines="none">
-      <ion-input formControlName="name" type="text" placeholder="Name deines Partners"></ion-input>
-    </ion-item>
-    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
-    <p class="subtext ion-text-center">
-      Gib die E-Mail Adresse deines Partners an.<br>
-      Ihr könnt dann gemeinsam Wünsche hinzufügen.
-    </p>
   </form>
 </ion-content>
 
 <ion-footer no-border class="ion-text-center">
   <a role="button" routerLink="../wish-list-wish">Überspringen</a>
-  <ion-button *ngIf="form" expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
+  <ion-button *ngIf="form" class="wantic-save-button" expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
 </ion-footer>

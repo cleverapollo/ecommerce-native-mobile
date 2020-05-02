@@ -5,16 +5,19 @@ ion-img {
 }
 
 ion-button {
-    font-size: 10pt;
+    font-size: 10px;
     font-weight: bold;
+    height: 36px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
     --border-radius: 9pt;
-    --border-width: 2pt;
+    --border-width: 2px;
     --color: var(--ion-color-tertiary);
 }
 
 .name {
     font-family: 'Roboto';
-    font-size: 14pt;
+    font-size: 14px;
     font-weight: 500;
     color: var(--ion-color-dark);
 }
@@ -23,7 +26,7 @@ ion-button {
     font-family: 'Roboto';
     color: var(--ion-color-primary);
     font-weight: 400;
-    font-size: 14pt;
+    font-size: 14px;
 }
 
 .product-info {
