@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IntroductionPage } from './introduction/introduction.page';
 import { WishListNamePage } from './wish-list-name/wish-list-name.page';
 import { WishListDatePage } from './wish-list-date/wish-list-date.page';
 import { WishListPartnerPage } from './wish-list-partner/wish-list-partner.page';
@@ -16,10 +15,6 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      {
-        path: 'introduction',
-        component: IntroductionPage
-      },
       {
         path: 'wish-list-name',
         component: WishListNamePage

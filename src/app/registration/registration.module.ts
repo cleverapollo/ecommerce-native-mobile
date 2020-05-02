@@ -6,7 +6,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { RegistrationPageRoutingModule } from './registration-routing.module';
 
-import { IntroductionPage } from './introduction/introduction.page';
 import { WishListNamePage } from './wish-list-name/wish-list-name.page';
 import { WishListDatePage } from './wish-list-date/wish-list-date.page';
 import { WishListPartnerPage } from './wish-list-partner/wish-list-partner.page';
@@ -31,7 +30,6 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     AccountFirstNamePage,
     AccountEmailPasswordPage,
-    IntroductionPage, 
     WishListNamePage, 
     WishListDatePage,
     WishListPartnerPage,

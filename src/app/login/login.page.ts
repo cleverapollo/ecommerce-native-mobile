@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
   }
 
   goToRegistration() {
-    this.router.navigate(['registration/introduction']);
+    this.router.navigate(['registration/wish-list-name']);
   }
 
 }
