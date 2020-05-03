@@ -57,7 +57,7 @@
   </div>
 
   <ion-card>
-    <img [src]="wish.imageUrl">
+    <img *ngIf="wish.imageUrl" [src]="wish.imageUrl">
     <ion-card-content>
       <ion-row>
         <ion-col size="10" class="no-padding-bottom">
@@ -72,10 +72,10 @@
       </ion-row>
     </ion-card-content>
   </ion-card>
-  <ion-button color="secondary" expand="block" fill="outline" (click)="openProductURL()">
+  <ion-button class="wantic-save-button" color="primary" expand="block" fill="outline" (click)="openProductURL()">
     WEBSEITE BESUCHEN
   </ion-button>
-  <ion-button class="wantic-delete-button"  color="tertiary" expand="block" fill="outline" (click)="deleteWish()">
+  <ion-button class="wantic-save-button"  color="tertiary" expand="block" fill="outline" (click)="deleteWish()">
     WUNSCH LÖSCHEN
   </ion-button>
 </ion-content>

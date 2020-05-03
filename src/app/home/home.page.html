@@ -58,7 +58,7 @@
         </ion-grid>
       </ion-col>
       <ion-col  [ngClass]="{ 'wish-list-right': i % 2 == 0 , 'wish-list-left': i % 2 == 1 }" 
-                style="border: 2px solid #f7f6f1;" class="wish-list" size="6" 
+                style="border: 2px solid #f7f6f1; box-shadow: 0 4px 16px rgba(0,0,0,.12);" class="wish-list" size="6" 
                 *ngFor="let wishList of wishLists; let i = index;" 
                 (click)="selectWishList(wishList)">
         <app-wish-list [wishList]="wishList" [index]="i"></app-wish-list>

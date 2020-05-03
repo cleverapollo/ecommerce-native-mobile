@@ -25,7 +25,7 @@
   </ion-text>
 
   <ion-item lines="none">
-    <ion-searchbar [(ngModel)]="keywords" placeholder="toaster"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="keywords" placeholder="toaster" style="background: white;"></ion-searchbar>
   </ion-item>
 
   <ion-grid class="ion-center" *ngIf="!loading && products.length > 0">
@@ -53,11 +53,5 @@
 </ion-content>
 
 <ion-footer no-border *ngIf="devMode">
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="6">
-        <ion-button expand="block" (click)="search()">Suchen</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-button class="wantic-save-button" expand="block" (click)="search()" [disabled]="!keywords || !keywords.length">Suchen</ion-button>
 </ion-footer>
