@@ -22,7 +22,7 @@
 <ion-content>
   <h1 class="ion-text-center wantic-page-header">Profil bearbeiten</h1>
 
-  <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">
+  <form *ngIf="form" [formGroup]="form">
 
     <ion-item lines="none" id="profile-image-upload">
 
@@ -42,21 +42,25 @@
       <ion-label position="stacked">Vorname</ion-label>
       <ion-input type="text" formControlName="firstName"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="form.get('firstName')" [validationMessages]="validationMessages.firstName"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked">Nachname</ion-label>
       <ion-input type="text" formControlName="lastName"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="form.get('lastName')" [validationMessages]="validationMessages.lastName"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked">Geburtsdatum</ion-label>
       <ion-datetime formControlName="birthday" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
     </ion-item>
+    <app-validation-messages [control]="form.get('birthday')" [validationMessages]="validationMessages.birthday"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked">E-Mail</ion-label>
       <ion-input type="email" formControlName="email" readonly></ion-input>
     </ion-item>
+    <app-validation-messages [control]="form.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
 
     <hr>
 
@@ -82,7 +86,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button class="wantic-save-button" (click)="saveChanges()" style="margin-left: 20px; margin-right: 20px;" color="primary" expand="block" [disabled]="!form.valid">
+  <ion-button *ngIf="form" class="wantic-save-button" (click)="saveChanges()" color="primary" expand="block" [disabled]="!form.valid">
     ÄNDERUNGEN SPEICHERN
   </ion-button>
 </ion-footer>

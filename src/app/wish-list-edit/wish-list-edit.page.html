@@ -8,24 +8,30 @@
     </ion-text>
   </ion-item>
 
-  <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">
+  <form [formGroup]="form">
+
     <ion-item lines="none">
       <ion-label position="stacked">Name der Wunschliste</ion-label>
       <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.wishListName"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked">Datum</ion-label>
       <ion-datetime formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
     </ion-item>
+    <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked">Partner</ion-label>
       <ion-input type="email" formControlName="partner" readonly></ion-input>
     </ion-item>
+    <app-validation-messages [control]="form.get('partner')" [validationMessages]="validationMessages.partner"></app-validation-messages>
+
   </form>
 
-  <form [formGroup]="newPartnerForm" *ngIf="!form.controls.partner.value" style="margin-left: 20px; margin-right: 20px;">
+  <form [formGroup]="newPartnerForm" *ngIf="!form.controls.partner.value">
+    
     <ion-item lines="none">
       <ion-label>Partner hinzufügen</ion-label>
     </ion-item>
@@ -39,6 +45,7 @@
       <ion-label position="stacked">E-Mail Adresse angeben</ion-label>
       <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="email"></ion-input>
     </ion-item>
+
   </form>
 
   <ion-item lines="none" style="margin-left: 20px; margin-right: 20px;">
@@ -68,7 +75,7 @@
     </ion-item>
   </ion-list>
 
-  <form [formGroup]="newMemberForm" style="margin-left: 20px; margin-right: 20px;">
+  <form [formGroup]="newMemberForm" >
 
     <ion-item lines="none">
       <ion-label>Einladen</ion-label>
@@ -103,7 +110,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button class="wantic-save-button" (click)="updateWishList()" style="margin-left: 20px; margin-right: 20px;" color="primary" expand="block" [disabled]="!form.valid">
+  <ion-button class="wantic-save-button" (click)="updateWishList()" color="primary" expand="block" [disabled]="!form.valid">
     ÄNDERUNGEN SPEICHERN
   </ion-button>
 </ion-footer>

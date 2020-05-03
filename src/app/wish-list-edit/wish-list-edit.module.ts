@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { WishListEditPageRoutingModule } from './wish-list-edit-routing.module';
 
 import { WishListEditPage } from './wish-list-edit.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { WishListEditPage } from './wish-list-edit.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    WishListEditPageRoutingModule
+    WishListEditPageRoutingModule,
+    SharedModule
   ],
   declarations: [WishListEditPage]
 })

@@ -33,7 +33,7 @@
     <ion-img *ngIf="wish.imageUrl" [src]="wish.imageUrl"></ion-img>
   </div>
 
-  <form [formGroup]="form" style="margin-left: 20px; margin-right: 20px;">
+  <form *ngIf="form" [formGroup]="form">
 
     <!--wish list id-->
     <ion-item lines="none">
@@ -46,18 +46,20 @@
       <ion-label position="stacked">Name</ion-label>
       <ion-textarea formControlName="name"></ion-textarea>
     </ion-item>
+    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 
     <!--price-->
     <ion-item lines="none">
       <ion-label position="stacked">Preis</ion-label>
       <ion-input type="number" formControlName="price" inputmode="decimal" step="0.1"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="form.get('price')" [validationMessages]="validationMessages.price"></app-validation-messages>
 
   </form>
 </ion-content>
 
 <ion-footer>
-  <ion-button class="wantic-save-button" (click)="saveWish()" style="margin-left: 20px; margin-right: 20px;" color="primary" expand="block" [disabled]="!form.valid">
+  <ion-button *ngIf="form" class="wantic-save-button" (click)="saveWish()" color="primary" expand="block" [disabled]="!form.valid">
     WUNSCH SPEICHERN
   </ion-button>
 </ion-footer>

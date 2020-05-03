@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WishListService } from '../shared/services/wish-list.service';
 import { NavController } from '@ionic/angular';
 import { WishApiService } from '../shared/services/wish-api.service';
+import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-edit',
@@ -20,7 +21,17 @@ export class WishEditPage implements OnInit {
   wishListName: String;
   
   wishListSelectOptions: Array<WishListSelectOptionDto>
-  form: FormGroup
+  form: FormGroup;
+  get validationMessages(): ValidationMessages {
+    return {
+      name: [
+        new ValidationMessage('required', 'Vergib deinem Wunsch bitte eine Bezeichnung.')
+      ],
+      price: [
+        new ValidationMessage('required', 'Vergib deinem Wunsch bitte einen Preis.')
+      ]
+    }
+  }
   wish: WishDto
 
   constructor(

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { WishEditPageRoutingModule } from './wish-edit-routing.module';
 
 import { WishEditPage } from './wish-edit.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { WishEditPage } from './wish-edit.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    WishEditPageRoutingModule
+    WishEditPageRoutingModule,
+    SharedModule
   ],
   declarations: [WishEditPage]
 })

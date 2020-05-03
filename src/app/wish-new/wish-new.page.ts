@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto, WishListSelectOptionDto } from '../shared/models/wish-list.model';
+import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-new',
@@ -17,7 +18,21 @@ export class WishNewPage implements OnInit, OnDestroy {
   private wishSubscription: Subscription
   
   wishListSelectOptions: Array<WishListSelectOptionDto>
-  form: FormGroup
+  form: FormGroup;
+  get validationMessages(): ValidationMessages {
+    return {
+      wishListId: [
+        new ValidationMessage('required', 'Weise deinem Wunsch bitte eine Wunschliste zu.')
+      ],
+      name: [
+        new ValidationMessage('required', 'Vergib deinem Wunsch bitte eine Bezeichnung.')
+      ],
+      price: [
+        new ValidationMessage('required', 'Vergib deinem Wunsch bitte einen Preis.')
+      ]
+    }
+  }
+
   wish: WishDto
 
   constructor(

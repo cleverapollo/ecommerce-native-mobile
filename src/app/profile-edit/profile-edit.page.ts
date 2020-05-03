@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserApiService } from '../shared/services/user-api.service';
 import { UserProfile } from '../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
+import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
+import { CustomValidation } from '../shared/custom-validation';
 
 @Component({
   selector: 'app-profile-edit',
@@ -11,7 +13,23 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProfileEditPage implements OnInit {
 
-  form: FormGroup
+  form: FormGroup;
+  get validationMessages(): ValidationMessages {
+    return {
+      firstName: [
+        new ValidationMessage('required', 'Gib bitte deinen Vornamen an.'),
+        new ValidationMessage('minlength', 'Dein Vorname muss aus mindestens zwei Zeichen bestehen.')
+      ],
+      lastName: [
+        new ValidationMessage('minlength', 'Dein Nachname muss aus mindestens zwei Zeichen bestehen.')
+      ],
+      birthday: [],
+      email: [
+        new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
+        new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.'),
+      ]
+    }
+  }
 
   profile: UserProfile
 
@@ -29,7 +47,7 @@ export class ProfileEditPage implements OnInit {
     this.form = this.formBuilder.group({
       firstName: this.formBuilder.control(this.profile.firstName, [Validators.required, Validators.min(2)]),
       lastName: this.formBuilder.control(this.profile.lastName, [Validators.min(2)]),
-      birthday: this.formBuilder.control(this.profile.birthday, []),
+      birthday: this.formBuilder.control(this.profile.birthday),
       email: this.formBuilder.control(this.profile.email, [Validators.required, Validators.email]),
       passwordChange: this.formBuilder.group({
         currentPassword: this.formBuilder.control(''),

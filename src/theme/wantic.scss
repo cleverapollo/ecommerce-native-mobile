@@ -84,21 +84,16 @@ form {
         margin-left: 46pt;
         margin-right: 46pt;
         margin-bottom: 20px;
-        ion-input, ion-datetime, ion-textarea, ion-searchbar {
+        ion-input, ion-datetime, ion-textarea, ion-searchbar, ion-select {
             border: 2px solid var(--ion-color-secondary);
             border-radius: 9pt;
+            background: white;
         }
         ion-searchbar {
             --placeholder-font-style: italic;
             background: white;
         }
-        ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty {
-            border-color: var(--ion-color-danger);
-        }
-        ion-datetime.ion-invalid.ion-touched, ion-datetime.ion-invalid.ion-dirty {
-            border-color: var(--ion-color-danger);
-        }
-        ion-searchbar.ion-invalid.ion-touched, ion-searchbar.ion-invalid.ion-dirty {
+        .ion-invalid.ion-touched, .ion-invalid.ion-dirty {
             border-color: var(--ion-color-danger);
         }
         ion-label {

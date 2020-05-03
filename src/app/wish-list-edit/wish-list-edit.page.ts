@@ -9,6 +9,7 @@ import { WishListEdit, InivtedMemberDisplayInfo, MemberToInvite } from './wish-l
 import { AlertService } from '../shared/services/alert.service';
 import { UserApiService } from '../shared/services/user-api.service';
 import { WishListDto, MemberToInviteDto, WishListMemberDto, PartnerToInviteDto, WishListPartnerDto } from '../shared/models/wish-list.model';
+import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-list-edit',
@@ -20,9 +21,17 @@ export class WishListEditPage implements OnInit, OnDestroy {
   private subscription: Subscription;
   private wishList: WishListDto;
 
-  form: FormGroup
+  form: FormGroup;
   newMemberForm: FormGroup;
   newPartnerForm: FormGroup;
+
+  get validationMessages(): ValidationMessages {
+    return {
+      wishListName: [
+        new ValidationMessage('required', 'Vergib für deine Wunschliste bitte einen Namen.')
+      ],
+    }
+  }
 
   invitedMembers: Array<InivtedMemberDisplayInfo>
   
