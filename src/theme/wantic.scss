@@ -127,20 +127,8 @@ h1.registration {
     font-family: 'Playfair Display';
     font-weight: bold;
     font-size: 38px;
-    padding-top: 125px;
+    padding-top: 10px;
     padding-bottom: 57px;
-}
-
-.registration-header {
-    text-align: center;
-    position: relative;
-    padding-top: 16px;
-    background-color: var(--wantic-background-color);
-    .back-button {
-        position: absolute;
-        left: 0;
-        margin-top: 0;
-    }
 }
 
 ion-header {
@@ -210,4 +198,13 @@ app-login {
     font-family: 'Roboto';
     font-size: 14px;
     color: var(--ion-color-primary);
+}
+
+.image-container {
+    margin-right: 20px;
+    margin-left: 20px;
+    ion-img {
+        width: 50%;
+        margin: auto;
+    }
 }

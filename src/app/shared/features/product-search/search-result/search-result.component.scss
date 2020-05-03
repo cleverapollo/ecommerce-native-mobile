@@ -1,6 +1,12 @@
-ion-img {
-    img {
-        height: 163px !important;
+ion-card {
+    margin: 0;
+    background: white;
+    div.image-container {
+        height: 165px;
+        img {
+            padding-top: 16px;
+            max-height: 162px;
+        }
     }
 }
 
@@ -13,23 +19,4 @@ ion-button {
     --border-radius: 9pt;
     --border-width: 2px;
     --color: var(--ion-color-tertiary);
-}
-
-.name {
-    font-family: 'Roboto';
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ion-color-dark);
-}
-
-.price {
-    font-family: 'Roboto';
-    color: var(--ion-color-primary);
-    font-weight: 400;
-    font-size: 14px;
-}
-
-.product-info {
-    margin-top: 7pt;
-    margin-bottom: 7pt;
 }
