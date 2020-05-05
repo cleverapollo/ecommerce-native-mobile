@@ -25,7 +25,7 @@
   </ion-text>
   <ion-grid>
     <ion-row>
-      <ion-col style="border: 2px solid #f7f6f1; padding: 0; box-shadow: 0 4px 16px rgba(0,0,0,.12);" *ngFor="let wishList of wishLists" (click)="selectWishList(wishList)">
+      <ion-col *ngFor="let wishList of wishLists" size="6" (click)="selectWishList(wishList)">
         <app-friend-wish-list [wishList]="wishList"></app-friend-wish-list>
       </ion-col>
     </ion-row>

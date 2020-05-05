@@ -1,17 +1,18 @@
-#wish-list-name {
-    font-family: 'Roboto';
+.wish-list-name {
     font-size: 20px;
+    font-weight: 500;
     color: var(--ion-color-dark);
 }
 
-#wish-list-date {
-    font-family: 'Roboto';
+.wish-list-date {
     font-size: 14px;
+    font-weight: 400;
     color: var(--ion-color-secondary);
 }
 
 .wish-list-description {
-    border-top: 1px dashed #F0EDE3;
+    border-top: 2px dashed #F0EDE3;
+    margin-top: 12px;
 }
 
 ion-avatar {
@@ -43,4 +44,14 @@ ion-grid.right {
 ion-grid.center {
     margin-left: 2px;
     margin-right: 2px;
+}
+
+ion-col.wish-image-container {
+    height: 100px;
+    ion-img {
+        height: 95px;
+    }
+    img.placeholder-image {
+        max-height: 95px;
+    }
 }

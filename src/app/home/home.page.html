@@ -25,10 +25,10 @@
   </ion-text>
   <ion-grid>
     <ion-row>
-      <ion-col size="6" style="padding-right: 0;">
+      <ion-col size="6" class="button-container">
         <ion-grid style="margin-right: 6px; padding: 0">
           <ion-row>
-            <ion-col [routerLink]="['/wish-search']" size="12"  style="background-color: white; padding: 0; padding-bottom: 5px; border-bottom: 2px solid #f7f6f1;">
+            <ion-col class="add-wish-button" [routerLink]="['/wish-search']" size="12" >
               <div class="ion-text-center add-button-height">
                 <div class="add-button-padding">
                   <div>
@@ -41,7 +41,7 @@
                 </div>
               </div>
             </ion-col>
-            <ion-col [routerLink]="['/wish-list-new']" size="12" style="background-color: white; padding: 0; padding-top: 5px; border-top: 2px solid #f7f6f1;">
+            <ion-col class="add-wish-list-button" [routerLink]="['/wish-list-new']" size="12">
               <div class="ion-text-center add-button-height">
                 <div class="add-button-padding">
                   <div>
@@ -58,7 +58,7 @@
         </ion-grid>
       </ion-col>
       <ion-col  [ngClass]="{ 'wish-list-right': i % 2 == 0 , 'wish-list-left': i % 2 == 1 }" 
-                style="border: 2px solid #f7f6f1; box-shadow: 0 4px 16px rgba(0,0,0,.12);" class="wish-list" size="6" 
+                class="wish-list" size="6" 
                 *ngFor="let wishList of wishLists; let i = index;" 
                 (click)="selectWishList(wishList)">
         <app-wish-list [wishList]="wishList" [index]="i"></app-wish-list>

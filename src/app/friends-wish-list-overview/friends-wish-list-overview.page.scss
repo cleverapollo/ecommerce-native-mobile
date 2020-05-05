@@ -4,3 +4,11 @@ h1 {
     color: var(--ion-color-tertiary);
   }
 
+ion-col {
+  border: 2px solid #f7f6f1; 
+  border-radius: 10pt;
+  padding: 0; 
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  background: white;
+  margin-bottom: 12px;
+}

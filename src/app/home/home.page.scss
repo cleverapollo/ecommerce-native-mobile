@@ -25,6 +25,9 @@ h1 {
 
 ion-col.wish-list {
   background-color: white;
+  border: 2px solid #f7f6f1; 
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  margin-bottom: 12px;
 }
 
 ion-col.wish-list-right {
@@ -33,4 +36,22 @@ ion-col.wish-list-right {
 
 ion-col.wish-list-left {
   padding-right: 0;
+}
+
+.button-container {
+  padding: 0;
+  margin-bottom: 12px;
+}
+.add-wish-button, .add-wish-list-button {
+  background-color: white; 
+  border: 2px solid #f7f6f1;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  padding: 0; 
+}
+.add-wish-list-button {
+  padding-top: 5px; 
+  
+}
+.add-wish-button {
+  padding-bottom: 5px;
 }

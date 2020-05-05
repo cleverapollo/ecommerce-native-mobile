@@ -1,6 +1,7 @@
 .friend-name {
     font-family: 'Roboto';
-    font-size: 26px;
+    font-size: 20px;
+    font-weight: 500;
     color: var(--ion-color-dark);
 }
 
@@ -17,26 +18,28 @@
 
 .wish-list-container {
     background-color: white;
-    height: 85%;
-    ion-row {
-        height: 120px;
+    height: 200px;
+    img {
+        max-height: 100px;
     }
 }
 
 .wish-list-name {
-    font-family: 'Roboto';
-    font-size: 20px;
+    font-size: 14px;
+    font-weight: 400;
     color: var(--ion-color-primary);
 }
 
 .wish-list-date {
-    font-family: 'Roboto';
     font-size: 14px;
+    font-weight: 400;
     color: var(--ion-color-secondary);
 }
 
 .wish-list-description {
-    border-top: 1px dashed #f7f6f1;
+    border-top: 2pt dashed #F0EDE3;
+    background: white;
+    padding: 5px;
 }
 
 img {
