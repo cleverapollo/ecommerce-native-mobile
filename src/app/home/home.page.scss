@@ -9,12 +9,8 @@ h1 {
   color: var(--ion-color-tertiary);
 }
 
-.add-button-height {
-  height: 150px;
-}
-
 .add-button-padding {
-  padding-top: 15%;
+  padding-top: 5%;
 }
 
 .add-icon {
@@ -47,6 +43,7 @@ ion-col.wish-list-left {
   border: 2px solid #f7f6f1;
   box-shadow: 0 4px 16px rgba(0,0,0,.12);
   padding: 0; 
+  height: 119px;
 }
 .add-wish-list-button {
   padding-top: 5px; 
