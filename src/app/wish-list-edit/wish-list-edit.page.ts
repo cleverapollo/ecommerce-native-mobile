@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { WishListService } from '../shared/services/wish-list.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoadingController, AlertController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { WishListEdit, InivtedMemberDisplayInfo, MemberToInvite } from './wish-list-edit.model';
@@ -10,6 +10,7 @@ import { AlertService } from '../shared/services/alert.service';
 import { UserApiService } from '../shared/services/user-api.service';
 import { WishListDto, MemberToInviteDto, WishListMemberDto, PartnerToInviteDto, WishListPartnerDto } from '../shared/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
+import { FriendSelectOption } from '../shared/models/friend.model';
 
 @Component({
   selector: 'app-wish-list-edit',
@@ -34,7 +35,7 @@ export class WishListEditPage implements OnInit, OnDestroy {
   }
 
   invitedMembers: Array<InivtedMemberDisplayInfo>
-  
+  friends: Array<FriendSelectOption>;
   memberIsLoading: Boolean = false;
   memberNotFound: Boolean = false;
 
@@ -45,6 +46,7 @@ export class WishListEditPage implements OnInit, OnDestroy {
   }
 
   constructor(    
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder, 
     private apiService: WishListApiService,
     private wishListService: WishListService,
@@ -58,11 +60,14 @@ export class WishListEditPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.wishListService.selectedWishList$.subscribe(w => {
       this.wishList = w;
+
+      const partner = this.wishList.partner;
+
       this.form = this.formBuilder.group({
         'name': this.formBuilder.control(this.wishList.name, [Validators.required]),
         'date': this.formBuilder.control(this.wishList.date, [Validators.required]),
-        'partner': this.formBuilder.control(this.wishList.partner.name),
-        'members': this.formBuilder.array(this.wishList.members),
+        'partner': this.formBuilder.control(partner ? partner.name: null),
+        'members': this.formBuilder.control(this.wishList.members),
         'membersToInvite': this.formBuilder.array(this.wishList.membersToInvite)
       });
 
@@ -73,6 +78,7 @@ export class WishListEditPage implements OnInit, OnDestroy {
       });
 
       this.invitedMembers = this.form.controls.members.value.map( m => InivtedMemberDisplayInfo.forMember(m));
+      this.friends = this.route.snapshot.data.friends;
     });
 
     this.newMemberForm = this.formBuilder.group({
@@ -156,18 +162,24 @@ export class WishListEditPage implements OnInit, OnDestroy {
     let wishList = new WishListDto();
     wishList.name = this.form.controls.name.value;
     wishList.date = this.form.controls.date.value;
-    wishList.members = this.form.controls.members.value;
     wishList.membersToInvite = this.form.controls.membersToInvite.value;
 
-    let wishListPartner = this.wishList.partner;
-    wishListPartner.email = this.form.controls.partner.value;
-    wishList.partner = wishListPartner;
+    const partnerEmail = this.form.controls.partner.value;
+    if (partnerEmail) {
+      let wishListPartner = this.wishList.partner;
+      wishListPartner.email = partnerEmail;
+      wishList.partner = wishListPartner;
+    }
 
     const name = this.newPartnerForm.controls.name.value;
     const email = this.newPartnerForm.controls.email.value;
     if (name && email) {
       wishList.partnerToInvite = new PartnerToInviteDto(name, email);
     }
+
+    const memberEmails = this.form.controls.members.value as Array<FriendSelectOption>;
+    const memberDtos = memberEmails.map(f => WishListMemberDto.forFriendSelectOption(f));
+    wishList.members = memberDtos;
 
     this.loadingController.create({
       message: "Deine Wunschliste wird gerade aktualisiert..."
@@ -224,6 +236,10 @@ export class WishListEditPage implements OnInit, OnDestroy {
 
   goBack() {
     this.navController.navigateBack('/wish-list-detail')
+  }
+
+  compareWith = (o1, o2) => {
+    return o1 && o2 ? o1.email === o2.email  : o1 == o2;
   }
 
 }

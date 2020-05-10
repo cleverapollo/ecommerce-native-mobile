@@ -1,4 +1,5 @@
 import { UserSearchResult } from '../services/user-api.model';
+import { FriendSelectOption } from './friend.model';
 
 export class WishDto {
     id: Number;
@@ -26,6 +27,14 @@ export class WishListMemberDto {
         model.name = userSearchResult.firstName;
         model.failedToSendEmail = false;
         model.email = userSearchResult.email;
+        return model;
+    }
+
+    static forFriendSelectOption(selectOption: FriendSelectOption) : WishListMemberDto {
+        let model = new WishListMemberDto();
+        model.email = selectOption.email;
+        model.name = selectOption.firstName;
+        model.failedToSendEmail = false;
         return model;
     }
 }
@@ -71,7 +80,7 @@ export class WishListDto {
     name: String;
     date: Date;
     wishes: [WishDto];
-    members: [WishListMemberDto];
+    members: WishListMemberDto[];
     membersToInvite: [MemberToInviteDto];
     partner: WishListPartnerDto;
     partnerToInvite: PartnerToInviteDto;

@@ -4,9 +4,10 @@ import { WishListCreate } from './wish-list-new.model';
 import { WishListApiService } from '../shared/services/wish-list-api.service';
 import { WishListService } from '../shared/services/wish-list.service';
 import { LoadingController, NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { WishListDto } from '../shared/models/wish-list.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { WishListDto, WishListMemberDto } from '../shared/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
+import { FriendSelectOption } from '../shared/models/friend.model';
 
 @Component({
   selector: 'app-wish-list-new',
@@ -34,9 +35,10 @@ export class WishListNewPage implements OnInit {
     }
   };
 
-  invitedMembers: Array<String>
-  newMember: FormControl
-  memberIsLoading: Boolean
+  invitedMembers: Array<String>;
+  newMember: FormControl;
+  memberIsLoading: Boolean;
+  friends: Array<FriendSelectOption>;
 
   loadingSpinner;
 
@@ -49,6 +51,7 @@ export class WishListNewPage implements OnInit {
   }
 
   constructor(
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder, 
     private apiService: WishListApiService,
     private wishListService: WishListService,
@@ -62,11 +65,12 @@ export class WishListNewPage implements OnInit {
       'name': this.formBuilder.control('', [Validators.required]),
       'date': this.formBuilder.control('', [Validators.required]),
       'partner': this.formBuilder.control('', [Validators.email]),
-      'members': this.formBuilder.array([])
+      'members': this.formBuilder.control([null])
     });
     this.newMember = this.formBuilder.control('', [Validators.email])
     this.memberIsLoading = false;
     this.invitedMembers = new Array<String>();
+    this.friends = this.route.snapshot.data.friends;
   }
 
   addMember() {
@@ -89,7 +93,10 @@ export class WishListNewPage implements OnInit {
     wishList.name = this.form.controls.name.value;
     wishList.date = this.form.controls.date.value;
     wishList.partners = [];
-    wishList.members = [];
+
+    const memberEmails = this.form.controls.members.value as Array<FriendSelectOption>;
+    const memberDtos = memberEmails.map(f => WishListMemberDto.forFriendSelectOption(f));
+    wishList.members = memberDtos;
 
     this.loadingController.create({
       message: "Deine Wunschliste wird gerade angelegt..."

@@ -38,7 +38,7 @@ export class InivtedMemberDisplayInfo {
         const model = new InivtedMemberDisplayInfo();
         model.id = member.email ? member.email : member.preactiveUserId;
         model.text = member.name;
-        model.imageUrl = null;
+        model.imageUrl = member.profileImageUrl;
         model.subText = 'eingeladen';
         return model;
     }

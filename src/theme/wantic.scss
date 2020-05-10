@@ -2,6 +2,11 @@ a {
     color: var(--ion-color-tertiary)
 }
 
+.wantic-margin-right-left {
+    margin-right: var(--wantic-margin);
+    margin-left: var(--wantic-margin);
+}
+
 ion-button.wantic-save-button {
     --ion-color-contrast: white !important;
     --color: white !important;

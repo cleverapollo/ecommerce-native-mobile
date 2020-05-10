@@ -27,6 +27,14 @@
     </ion-item>
     <app-validation-messages [control]="form.get('partner')" [validationMessages]="validationMessages.partner"></app-validation-messages>
 
+    <ion-item lines="none">
+      <ion-label position="stacked">Gäste hinzufügen</ion-label>
+      <ion-select multiple="true" formControlName="members">
+        <ion-select-option *ngFor="let friend of friends" [value]="friend">
+          {{ friend.firstName }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
   </form>
 
   <div class="wantic-margin-right-left">

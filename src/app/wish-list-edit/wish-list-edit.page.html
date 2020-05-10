@@ -28,6 +28,15 @@
     </ion-item>
     <app-validation-messages [control]="form.get('partner')" [validationMessages]="validationMessages.partner"></app-validation-messages>
 
+    <ion-item lines="none">
+      <ion-label position="stacked">Gäste hinzufügen</ion-label>
+      <ion-select multiple="true" formControlName="members" [compareWith]="compareWith">
+        <ion-select-option *ngFor="let friend of friends" [value]="friend">
+          {{ friend.firstName }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
   </form>
 
   <form [formGroup]="newPartnerForm" *ngIf="!form.controls.partner.value">
@@ -48,18 +57,16 @@
 
   </form>
 
-  <ion-item lines="none" style="margin-left: 20px; margin-right: 20px;">
-    <ion-label>Geteilt mit</ion-label>
-  </ion-item>
+  <p class="wantic-margin-right-left">Geteilt mit:</p>
+  <p class="wantic-margin-right-left" *ngIf="showNoMembersHint">
+    Bisher hast du noch niemanden dazu eingeladen deiner Wunschliste beizutreten.
+  </p>
 
-  <ion-item lines="none" *ngIf="showNoMembersHint" style="margin-left: 20px; margin-right: 20px;">
-    <ion-text>Bisher hast du noch niemanden dazu eingeladen deiner Wunschliste beizutreten.</ion-text>
-  </ion-item>
-
-  <ion-list style="margin-left: 20px; margin-right: 20px;">
+  <ion-list class="wantic-margin-right-left">
     <ion-item lines="none" *ngFor="let displayInfo of invitedMembers">
       <ion-avatar slot="start">
         <img *ngIf="!displayInfo.imageUrl" src="assets/images/avatar-placeholder.jpg">
+        <img *ngIf="displayInfo.imageUrl" [src]="displayInfo.imageUrl | secure | async">
       </ion-avatar>
       <ion-label>
         {{ displayInfo.text }}
@@ -94,7 +101,7 @@
       <ion-input formControlName="name" type="text" placeholder="Name eingeben"></ion-input>
     </ion-item>
   
-    <ion-button fill="clear" (click)="addMember()" [disabled]="!newMemberForm.valid">
+    <ion-button class="wantic-margin-right-left" fill="clear" (click)="addMember()" [disabled]="!newMemberForm.valid">
       <ion-icon name="add-circle-outline"></ion-icon>
       <ion-text color="primary">Weitere Personen einladen</ion-text>
     </ion-button>
