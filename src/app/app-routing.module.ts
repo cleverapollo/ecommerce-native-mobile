@@ -10,7 +10,7 @@ import { FriendSelectOptionsResolver } from './wish-list-new/friend-list-select-
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'start',
     pathMatch: 'full'
   },
   {
@@ -81,7 +81,12 @@ const routes: Routes = [
     path: 'wish-edit',
     canActivate: [AuthGuard],
     loadChildren: () => import('./wish-edit/wish-edit.module').then( m => m.WishEditPageModule)
+  },
+  {
+    path: 'start',
+    loadChildren: () => import('./start/start.module').then( m => m.StartPageModule)
   }
+
 
 
 

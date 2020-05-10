@@ -1,0 +1,18 @@
+ion-content {
+    --background: url("../../assets/images/start-background-image.svg");
+    img {
+        margin-top: 135px;
+    }
+    p {
+        margin-top: 54px;
+        margin-bottom: 41px;
+        margin-right: 40px;
+        margin-left: 40px;
+        color: white;
+    }
+    ion-button {
+        margin-bottom: 11px;
+        margin-right: 40px;
+        margin-left: 40px;
+    }
+}
