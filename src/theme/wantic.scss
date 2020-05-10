@@ -1,5 +1,7 @@
-a {
-    color: var(--ion-color-tertiary)
+a.wantic-link {
+    color: var(--ion-color-tertiary);
+    font-size: 10px;
+    text-decoration: underline;
 }
 
 .wantic-margin-right-left {
@@ -19,6 +21,10 @@ ion-button.wantic-save-button {
     margin-right: 46pt;
     margin-bottom: 40pt;
     letter-spacing: 1pt;
+}
+
+ion-button.wantic-save-button.button-disabled {
+    --background: #ffae80
 }
 
 ion-button.wantic-delete-button {
@@ -151,12 +157,6 @@ ion-header {
     }
 }
 
-
-// 
-
-app-login {
-    background-color: #f7f6f0;
-}
 
 // 
 .creator-image {

@@ -1,35 +1,30 @@
-<div class="wantic-logo">
-  <img src="assets/icon/wantic-logo-full.svg">
-</div>
+<ion-header>
+  <ion-toolbar >
+    <ion-buttons slot="start">
+      <ion-button fill="clear" class="back-button" (click)="goBack()">
+        <ion-icon slot="icon-only" src="assets/icon/arrow-left.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title><img src="assets/icon/wantic-logo-s.svg"></ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-  <ion-grid class="ion-center">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="6">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
-          <h1 class="ion-text-center">Login</h1>
-          <div class="ion-padding">
-            <ion-input id="login-input-email" inputmode="email" name="email" type="email" placeholder="E-Mail" formControlName="email"></ion-input>
-            <ion-input id="input-password" name="password" type="password" placeholder="Passwort" formControlName="password"></ion-input>
-          </div>
-          <div class="ion-padding">
-            <ion-button id="button-login" type="submit" [disabled]="!loginForm.valid" expand="block">Einloggen</ion-button>
-          </div>
-          <div class="ion-text-center container-forgot-password">
-            <a id="link-forgot-password">Passwort vergessen?</a>
-          </div>
-        </form>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+  <h1 class="ion-text-center registration">Login</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+    
+    <ion-item lines="none">
+      <ion-input id="login-input-email" inputmode="email" name="email" type="email" placeholder="E-Mail" formControlName="email"></ion-input>
+    </ion-item>
 
-<ion-footer no-border>
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="6">
-          <ion-button expand="block" fill="outline" (click)="goToRegistration()">Neuen Account anlegen</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-footer>
+    <ion-item lines="none">
+      <ion-input id="input-password" name="password" type="password" placeholder="Passwort" formControlName="password"></ion-input>
+    </ion-item>
+
+    <ion-button class="wantic-save-button" type="submit" [disabled]="!loginForm.valid" expand="block">Einloggen</ion-button>
+  </form>
+
+  <div class="ion-text-center container-forgot-password">
+    <a class="wantic-link"><ion-text color="tertiary">Passwort vergessen?</ion-text></a>
+  </div>
+</ion-content>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { LoginForm } from './login-form';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
 
   constructor(
+    private navController: NavController,
     private formBuilder: FormBuilder, 
     private authService: AuthenticationService, 
     private router: Router) { 
@@ -42,8 +44,8 @@ export class LoginPage implements OnInit {
     });
   }
 
-  goToRegistration() {
-    this.router.navigate(['registration/wish-list-name']);
+  goBack() {
+    this.navController.back();
   }
 
 }
