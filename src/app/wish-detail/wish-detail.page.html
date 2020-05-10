@@ -58,6 +58,7 @@
 
   <ion-card>
     <img *ngIf="wish.imageUrl" [src]="wish.imageUrl">
+    <img class="placeholder" *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg">
     <ion-card-content>
       <ion-row>
         <ion-col size="10" class="no-padding-bottom">

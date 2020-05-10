@@ -1,6 +1,7 @@
 <ion-card>
   <div class="image-container">
     <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" />
+    <img class="placeholder" *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg">
   </div>
   <ion-card-content>
     <div class="wish-name">{{ wish.name }}</div>

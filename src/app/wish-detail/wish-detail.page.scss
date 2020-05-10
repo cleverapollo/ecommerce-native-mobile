@@ -3,6 +3,11 @@ ion-card {
         width: 50%;
         margin: auto;
     }
+    img.placeholder {
+        width: 70%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
     background-color: white;
     ion-card-content {
         border-top: 1px dashed #F0EDE3;
