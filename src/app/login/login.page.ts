@@ -4,6 +4,7 @@ import { AuthenticationService } from '../shared/services/authentication.service
 import { LoginForm } from './login-form';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,15 @@ import { NavController } from '@ionic/angular';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
+  validationMessages: ValidationMessages = {
+    email: [
+      new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
+      new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.'),
+    ],
+    password: [
+      new ValidationMessage('required', 'Gib bitte dein Passwort an.'),
+    ]
+  }
 
   constructor(
     private navController: NavController,

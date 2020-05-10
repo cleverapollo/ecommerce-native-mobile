@@ -16,10 +16,12 @@
     <ion-item lines="none">
       <ion-input id="login-input-email" inputmode="email" name="email" type="email" placeholder="E-Mail" formControlName="email"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="loginForm.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-input id="input-password" name="password" type="password" placeholder="Passwort" formControlName="password"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="loginForm.get('password')" [validationMessages]="validationMessages.password"></app-validation-messages>
 
     <ion-button class="wantic-save-button" type="submit" [disabled]="!loginForm.valid" expand="block">Einloggen</ion-button>
   </form>
