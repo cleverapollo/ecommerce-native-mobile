@@ -6,6 +6,7 @@ import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-optio
 import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from './profile-edit/user-profile.resolver';
 import { FriendSelectOptionsResolver } from './wish-list-new/friend-list-select-options.resolver';
+import { UserRoleResolver } from './shared/user-role.resolver';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
   {
     path: 'home',
     canActivate: [AuthGuard],
-    resolve: { wishLists: WishListResolver },
+    resolve: { wishLists: WishListResolver, userRole: UserRoleResolver },
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
   {
     path: 'wish-list-detail',
     canActivate: [AuthGuard],
+    resolve: { userRole: UserRoleResolver },
     loadChildren: () => import('./wish-list-detail/wish-list-detail.module').then( m => m.WishListDetailPageModule)
   },
   {

@@ -22,6 +22,7 @@ import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wi
 import { UserProfileResolver } from './profile-edit/user-profile.resolver';
 import { SecurePipe } from './shared/secure.pipe';
 import { FriendSelectOptionsResolver } from './wish-list-new/friend-list-select-options.resolver';
+import { UserRoleResolver } from './shared/user-role.resolver';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -61,6 +62,7 @@ export function jwtOptionsFactory(storage) {
     UserProfileResolver,
     WishListResolver,
     WishListSelectOptionsResolver,
+    UserRoleResolver,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'de' }
   ],

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { WishListService } from '../shared/services/wish-list.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '../shared/models/wish-list.model';
@@ -15,8 +15,19 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   private subscription: Subscription
 
   wishList: WishListDto;
+  subText = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wünsche zu deiner Wunschliste hinzufügen.';
 
-  constructor(private router: Router, private wishListService: WishListService, private navController: NavController) { }
+  get userIsUnverified(): Boolean {
+    const userRole: string = this.route.snapshot.data.userRole;
+    return userRole === 'ROLE_USER_UNVERIFIED';
+  }
+
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute,
+    private wishListService: WishListService, 
+    private navController: NavController
+  ) { }
 
   ngOnInit() {
     this.subscription = this.wishListService.selectedWishList$.subscribe(w => {

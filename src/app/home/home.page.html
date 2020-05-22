@@ -9,7 +9,7 @@
       <ion-button [routerLink]="['/friends-wish-list-overview']">
         <img src="assets/icon/friends-wish-lists.svg" />
       </ion-button>
-      <ion-button [routerLink]="['/wish-search']">
+      <ion-button [routerLink]="['/wish-search']" *ngIf="!userIsUnverified">
         <ion-icon slot="icon-only" src="assets/icon/search-icon.svg"></ion-icon>
       </ion-button>
       <ion-menu-button>
@@ -18,6 +18,8 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<app-email-unverified-hint *ngIf="userIsUnverified" [(subText)]="subText"></app-email-unverified-hint>
 
 <ion-content>
   <ion-text>
@@ -28,7 +30,7 @@
       <ion-col size="6" size-lg="2" class="button-container">
         <ion-grid style="margin-right: 6px; padding: 0">
           <ion-row>
-            <ion-col class="add-wish-button" [routerLink]="['/wish-search']" size="12" >
+            <ion-col class="add-wish-button" [routerLink]="['/wish-search']" size="12" [ngClass]="{ 'no-pointer-events': userIsUnverified }">
               <div class="ion-text-center">
                 <div class="add-button-padding">
                   <div>
@@ -41,7 +43,7 @@
                 </div>
               </div>
             </ion-col>
-            <ion-col class="add-wish-list-button" [routerLink]="['/wish-list-new']" size="12">
+            <ion-col class="add-wish-list-button" [routerLink]="['/wish-list-new']" size="12" [ngClass]="{ 'no-pointer-events': userIsUnverified }">
               <div class="ion-text-center">
                 <div class="add-button-padding">
                   <div>

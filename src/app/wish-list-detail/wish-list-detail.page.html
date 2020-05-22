@@ -9,7 +9,7 @@
       <ion-button>
         <img src="assets/icon/friends-wish-lists.svg">
       </ion-button>
-      <ion-button [routerLink]="['/wish-search']">
+      <ion-button [routerLink]="['/wish-search']" *ngIf="!userIsUnverified">
         <ion-icon slot="icon-only" src="assets/icon/search-icon.svg"></ion-icon>
       </ion-button>
       <ion-menu-button>
@@ -19,6 +19,9 @@
   </ion-toolbar>
 </ion-header>
 
+<app-email-unverified-hint *ngIf="userIsUnverified" [(subText)]="subText"></app-email-unverified-hint>
+
+
 <ion-content>
  <ion-item lines="none">
     <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
@@ -26,7 +29,7 @@
     </ion-button>
      <!---->
        <!--0-->
-       <ion-avatar class="creator-image standalone" *ngIf="!wishList.ownerProfileImageUrls">
+       <ion-avatar class="creator-image standalone" *ngIf="!wishList.ownerProfileImageUrls.length">
         <img  src="assets/images/avatar-placeholder.jpg">
       </ion-avatar>
 
@@ -58,7 +61,7 @@
     </ion-avatar>
   </div>
 
-  <ion-button [routerLink]="['/wish-search']" id="button-add-wish" fill="clear" expand="full" >
+  <ion-button [routerLink]="['/wish-search']" id="button-add-wish" fill="clear" expand="full" [disabled]="userIsUnverified">
     <ion-icon slot="start" name="add"></ion-icon>
     Wunsch hinzufügen
   </ion-button>

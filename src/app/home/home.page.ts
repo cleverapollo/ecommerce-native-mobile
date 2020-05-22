@@ -11,13 +11,18 @@ import { WishListDto } from '../shared/models/wish-list.model';
 export class HomePage implements OnInit {
 
   wishLists: Array<WishListDto> = new Array();
+  subText: string = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wunschlisten und Wünsche hinzufügen.';
+
+  get userIsUnverified(): Boolean {
+    const userRole: string = this.route.snapshot.data.userRole;
+    return userRole === 'ROLE_USER_UNVERIFIED';
+  }
 
   constructor(
     private route: ActivatedRoute, 
     private wishListService: WishListService,
     private router: Router
-    ) {
-  }
+    ) {}
 
   ngOnInit() {
     this.wishLists = this.route.snapshot.data.wishLists;

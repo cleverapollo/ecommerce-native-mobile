@@ -51,9 +51,10 @@ export class AuthenticationService {
     return this.authenticationState.value;
   }
 
-  saveToken(token: String) : Promise<void> {
+  saveToken(token: string) : Promise<void> {
     return new Promise((resolve, reject) => {
       this.storage.set('auth-token', token).then(() => {
+        console.log('token: ', this.jwtHelper.decodeToken(token));
         this.authenticationState.next(true);
         resolve();
       }).catch( e => {

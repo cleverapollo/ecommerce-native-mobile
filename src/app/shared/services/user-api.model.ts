@@ -4,3 +4,10 @@ export class UserSearchResult {
     public imageUrl: String = null;
     public userExists: boolean;
 }
+
+export interface WanticJwtToken {
+    sub: string;
+    role: string;
+    exp: Number;
+    iat: Number;
+}
