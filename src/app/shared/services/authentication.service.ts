@@ -11,7 +11,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthenticationService {
 
-  authenticationState = new BehaviorSubject(false);
+  authenticationState = new BehaviorSubject(null);
 
   constructor(private storage: Storage, private platform: Platform, private apiService: ApiService, private jwtHelper: JwtHelperService) {
     this.platform.ready().then(() => {
@@ -47,8 +47,12 @@ export class AuthenticationService {
     this.authenticationState.next(false);
   }
 
-  isAuthenticated() {
-    return this.authenticationState.value;
+  isAuthenticated() : boolean | Promise<boolean> {
+    let state = this.authenticationState.value;
+    if (state === null) {
+      return this.validTokenExists();
+    }
+    return state;
   }
 
   saveToken(token: string) : Promise<void> {
@@ -62,6 +66,19 @@ export class AuthenticationService {
         reject();
       });
     })
+  }
+
+  validTokenExists() : Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.storage.get('auth-token').then((token) => {
+        if (token) {
+          const isExpired = this.jwtHelper.isTokenExpired(token);
+          resolve(!isExpired);
+        } else {
+          reject();
+        }
+      })
+    });
   }
 
 }
