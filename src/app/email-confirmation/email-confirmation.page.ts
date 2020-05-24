@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailVerificationResponse, EmailVerificationStatus } from '../shared/services/registration-api.model';
-import { RegistrationApiService } from '../shared/services/registration-api.service';
+import { EmailVerificationResponse, EmailVerificationStatus } from '../shared/api/registration-api.model';
+import { RegistrationApiService } from '../shared/api/registration-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 

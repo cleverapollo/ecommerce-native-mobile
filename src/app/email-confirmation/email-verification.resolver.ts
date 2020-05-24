@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { RegistrationApiService } from '../shared/services/registration-api.service';
-import { EmailVerificationResponse } from '../shared/services/registration-api.model';
+import { RegistrationApiService } from '../shared/api/registration-api.service';
+import { EmailVerificationResponse } from '../shared/api/registration-api.model';
 
 @Injectable()
 export class EmailVerificationResolver implements Resolve<Observable<EmailVerificationResponse>> {

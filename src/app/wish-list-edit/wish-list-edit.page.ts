@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { WishListApiService } from '../shared/services/wish-list-api.service';
+import { WishListApiService } from '../shared/api/wish-list-api.service';
 import { WishListService } from '../shared/services/wish-list.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoadingController, AlertController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { WishListEdit, InivtedMemberDisplayInfo, MemberToInvite } from './wish-list-edit.model';
 import { AlertService } from '../shared/services/alert.service';
-import { UserApiService } from '../shared/services/user-api.service';
+import { UserApiService } from '../shared/api/user-api.service';
 import { WishListDto, MemberToInviteDto, WishListMemberDto, PartnerToInviteDto, WishListPartnerDto } from '../shared/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
 import { FriendSelectOption } from '../shared/models/friend.model';

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WishListService } from '../shared/services/wish-list.service';
 import { Subscription } from 'rxjs';
-import { WishListApiService } from '../shared/services/wish-list-api.service';
+import { WishListApiService } from '../shared/api/wish-list-api.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../shared/services/alert.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';

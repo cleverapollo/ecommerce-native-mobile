@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../shared/models/user.model';
-import { UserApiService } from '../shared/services/user-api.service';
+import { UserApiService } from '../shared/api/user-api.service';
 
 @Injectable()
 export class UserProfileResolver implements Resolve<Observable<UserProfile>> {

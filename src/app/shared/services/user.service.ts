@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { WanticJwtToken } from './user-api.model';
+import { WanticJwtToken } from '../api/user-api.model';
 
 @Injectable({
   providedIn: 'root'

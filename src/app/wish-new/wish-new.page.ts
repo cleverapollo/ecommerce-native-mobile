@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListService } from '../shared/services/wish-list.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WishListApiService } from '../shared/services/wish-list-api.service';
+import { WishListApiService } from '../shared/api/wish-list-api.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto, WishListSelectOptionDto } from '../shared/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';

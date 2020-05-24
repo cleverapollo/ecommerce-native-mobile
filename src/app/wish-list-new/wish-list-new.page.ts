@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { WishListCreate } from './wish-list-new.model';
-import { WishListApiService } from '../shared/services/wish-list-api.service';
+import { WishListApiService } from '../shared/api/wish-list-api.service';
 import { WishListService } from '../shared/services/wish-list.service';
 import { LoadingController, NavController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';

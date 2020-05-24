@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
-import { UserApiService } from 'src/app/shared/services/user-api.service';
+import { UserApiService } from 'src/app/shared/api/user-api.service';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
 
 @Component({

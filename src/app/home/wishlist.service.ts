@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../shared/services/api.service';
+import { ApiService } from '../shared/api/api.service';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { WishListDto } from '../shared/models/wish-list.model';

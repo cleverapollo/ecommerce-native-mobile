@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from 'src/app/shared/services/api.service';
+import { ApiService } from 'src/app/shared/api/api.service';
 import { SearchResultItem } from './search-result-item';
 import { Observable } from 'rxjs';
 

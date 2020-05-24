@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishListService } from '../shared/services/wish-list.service';
 import { NavController } from '@ionic/angular';
-import { WishApiService } from '../shared/services/wish-api.service';
+import { WishApiService } from '../shared/api/wish-api.service';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
 
 @Component({

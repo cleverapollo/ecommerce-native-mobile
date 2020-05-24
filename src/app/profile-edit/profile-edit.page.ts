@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserApiService } from '../shared/services/user-api.service';
+import { UserApiService } from '../shared/api/user-api.service';
 import { UserProfile } from '../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';

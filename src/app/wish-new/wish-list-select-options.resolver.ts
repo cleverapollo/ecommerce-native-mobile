@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { WishListApiService } from '../shared/services/wish-list-api.service';
+import { WishListApiService } from '../shared/api/wish-list-api.service';
 import { WishListSelectOptionDto } from '../shared/models/wish-list.model';
 
 @Injectable()

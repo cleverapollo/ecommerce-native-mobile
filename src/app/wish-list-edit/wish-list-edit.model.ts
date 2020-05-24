@@ -1,4 +1,4 @@
-import { UserSearchResult } from '../shared/services/user-api.model';
+import { UserSearchResult } from '../shared/api/user-api.model';
 import { MemberToInviteDto, WishListMemberDto } from '../shared/models/wish-list.model';
 
 export class WishListEdit {

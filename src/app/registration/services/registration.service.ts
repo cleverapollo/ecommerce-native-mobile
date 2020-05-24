@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from 'src/app/shared/services/api.service';
+import { ApiService } from 'src/app/shared/api/api.service';
 import { RegistrationDto, RegistrationPartnerDto } from '../registration-form';
 import { LoginResponse } from 'src/app/shared/services/login-response';
 
