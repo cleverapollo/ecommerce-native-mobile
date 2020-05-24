@@ -8,6 +8,8 @@ import { UserProfileResolver } from './profile-edit/user-profile.resolver';
 import { FriendSelectOptionsResolver } from './wish-list-new/friend-list-select-options.resolver';
 import { UserRoleResolver } from './shared/user-role.resolver';
 import { RoleGuard } from './shared/services/role.guard';
+import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';
+import { EmailVerificationTokenGuard } from './email-confirmation/email-verification-token.guard';
 
 const routes: Routes = [
   {
@@ -88,11 +90,13 @@ const routes: Routes = [
   {
     path: 'start',
     loadChildren: () => import('./start/start.module').then( m => m.StartPageModule)
+  },
+  {
+    path: 'email-confirmation',
+    canActivate: [EmailVerificationTokenGuard],
+    resolve: { emailVerificationResponse: EmailVerificationResolver },
+    loadChildren: () => import('./email-confirmation/email-confirmation.module').then( m => m.EmailConfirmationPageModule)
   }
-
-
-
-
 
 ];
 
