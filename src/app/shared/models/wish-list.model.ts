@@ -5,7 +5,7 @@ export class WishDto {
     id: Number;
     wishListId: Number;
     name: String;
-    price: Number;
+    price: String;
     productUrl: string;
     imageUrl: String;
 }
