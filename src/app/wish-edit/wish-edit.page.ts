@@ -54,7 +54,9 @@ export class WishEditPage implements OnInit {
     }, e => console.error(e));
 
     this.wishListSubscription = this.wishListService.selectedWishList$.subscribe(w => {
-      this.wishListName = w.name;
+      if (w) {
+        this.wishListName = w.name;
+      }
     });
   }
 
@@ -65,7 +67,7 @@ export class WishEditPage implements OnInit {
 
   saveWish() {
     this.wish.name = this.form.controls.name.value;
-    this.wish.price = parseFloat(this.form.controls.price.value); 
+    this.wish.price = this.form.controls.price.value; 
     this.wishApiService.update(this.wish).toPromise().then( (updatedWish: WishDto) => { 
         this.wishListService.updateSelectedWish(updatedWish);
     }).catch( e => console.error);

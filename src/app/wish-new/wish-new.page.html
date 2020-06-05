@@ -56,7 +56,7 @@
     <!--price-->
     <ion-item lines="none">
       <ion-label position="stacked">Preis</ion-label>
-      <ion-input inputmode="decimal" type="number" formControlName="price"></ion-input>
+      <ion-input type="text" formControlName="price"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('price')" [validationMessages]="validationMessages.price"></app-validation-messages>
 

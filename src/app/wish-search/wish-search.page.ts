@@ -52,7 +52,7 @@ export class WishSearchPage implements OnInit, OnDestroy {
   updateValue(item: SearchResultItem) {
     let wish = new WishDto();
     wish.name = item.name;
-    wish.price = parseFloat(String(item.price));
+    wish.price = item.price;
     wish.imageUrl = item.imageUrl;
     wish.productUrl = item.productUrl;
     wish.wishListId = this.selectedWishList ? this.selectedWishList.id : null;
