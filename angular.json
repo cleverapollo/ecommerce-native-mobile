@@ -66,6 +66,22 @@
                 }
               ]
             },
+            "beta": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.beta.ts"
+                }
+              ]
+            },
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ]
+            },
             "ci": {
               "progress": false
             }
@@ -79,6 +95,12 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },
+            "beta": {
+              "browserTarget": "app:build:beta"
+            },
+            "dev": {
+              "browserTarget": "app:build:dev"
             },
             "ci": {
               "progress": false

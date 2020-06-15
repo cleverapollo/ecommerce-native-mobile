@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SERVER_URL } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ApiService {
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
-    return this.httpClient.post(`http://127.0.0.1:8080/${url}`, body, {
+    return this.httpClient.post(`${SERVER_URL}/${url}`, body, {
       headers: headers
     });
   }
@@ -26,7 +27,7 @@ export class ApiService {
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
-    return this.httpClient.put(`http://127.0.0.1:8080/${url}`, body, {
+    return this.httpClient.put(`${SERVER_URL}/${url}`, body, {
       headers: headers
     });
   }
@@ -37,7 +38,7 @@ export class ApiService {
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
-    return this.httpClient.patch(`http://127.0.0.1:8080/${url}`, {
+    return this.httpClient.patch(`${SERVER_URL}/${url}`, {
       headers: headers
     });
   }
@@ -48,7 +49,7 @@ export class ApiService {
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
-    return this.httpClient.delete(`http://127.0.0.1:8080/${url}`, {
+    return this.httpClient.delete(`${SERVER_URL}/${url}`, {
       headers: headers
     });
   }
@@ -59,7 +60,7 @@ export class ApiService {
       .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/json')
 
-    return this.httpClient.get<T>(`http://127.0.0.1:8080/${url}`, {
+    return this.httpClient.get<T>(`${SERVER_URL}/${url}`, {
       headers: headers,
       responseType: 'json',
       params: queryParams
