@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,8 +13,14 @@ export class SecurePipe implements PipeTransform {
 
   transform(url): Observable<SafeUrl> {
     if (url) {
+      const headers = new HttpHeaders()
+        .set('Access-Control-Allow-Origin', '*')
+      
+      // FIXME: check why server sends http instead https
+      let modifiedUrl = (url as string).replace('http', 'https');
+
       return this.http
-      .get(url, { responseType: 'blob' }).pipe(
+      .get(modifiedUrl, { responseType: 'blob', headers: headers }).pipe(
         map(val => this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(val))),
       );
     }
