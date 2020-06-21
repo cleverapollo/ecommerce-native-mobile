@@ -24,7 +24,7 @@ import { SecurePipe } from './shared/secure.pipe';
 import { FriendSelectOptionsResolver } from './wish-list-new/friend-list-select-options.resolver';
 import { UserRoleResolver } from './shared/user-role.resolver';
 import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';
-import { SERVER_URL, environment } from 'src/environments/environment';
+import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -33,7 +33,7 @@ export function jwtOptionsFactory(storage) {
     tokenGetter: () => {
       return storage.get('auth-token');
     },
-    whitelistedDomains: [`${environment.serverConfig.secondLevelDomain}`],
+    whitelistedDomains: WHITELISTED_DOMAINS,
     blacklistedRoutes: [`${SERVER_URL}/auth*`]
   }
 }

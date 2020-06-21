@@ -11,3 +11,4 @@ export const environment: EnvironmentConfig = {
 
 const serverConfig = environment.serverConfig;
 export const SERVER_URL = `${serverConfig.networkProtocol}://${serverConfig.secondLevelDomain}`;
+export const WHITELISTED_DOMAINS = [`${serverConfig.secondLevelDomain}`];
