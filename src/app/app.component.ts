@@ -61,7 +61,7 @@ export class AppComponent {
   logout() {
     this.authenticationService.logout().then(() => {
       this.menuController.toggle();
-      this.router.navigate(['login']);
+      this.router.navigate(['start']);
     })
   }
 }
