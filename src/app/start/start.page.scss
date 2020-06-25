@@ -1,5 +1,6 @@
 ion-content {
-    --background: url("../../assets/images/start-background-image.svg");
+    background-image: url("../../assets/images/start-background-image.svg");
+    --background: none;
     img {
         margin-top: 135px;
     }
