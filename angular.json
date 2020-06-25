@@ -176,6 +176,9 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },
+            "beta": {
+              "browserTarget": "app:build:beta"
             }
           }
         },
@@ -189,6 +192,10 @@
             "production": {
               "cordovaBuildTarget": "app:ionic-cordova-build:production",
               "devServerTarget": "app:serve:production"
+            },
+            "beta": {
+              "cordovaBuildTarget": "app:ionic-cordova-build:beta",
+              "devServerTarget": "app:serve:beta"
             }
           }
         }
