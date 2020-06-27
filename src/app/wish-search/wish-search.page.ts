@@ -1,10 +1,11 @@
-import { Component, OnInit, isDevMode, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SearchService } from '../shared/features/product-search/search.service';
 import { SearchResultItem } from '../shared/features/product-search/search-result-item';
 import { WishListService } from '../shared/services/wish-list.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { WishListDto, WishDto } from '../shared/models/wish-list.model';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-wish-search',
@@ -17,7 +18,6 @@ export class WishSearchPage implements OnInit, OnDestroy {
   private wishListSubscription: Subscription
 
   keywords: String
-  devMode: Boolean
   loading: Boolean
 
   products: Array<SearchResultItem>
@@ -25,11 +25,11 @@ export class WishSearchPage implements OnInit, OnDestroy {
   constructor(
     private searchService: SearchService, 
     private wishListService: WishListService,
-    private router: Router
+    private router: Router,
+    public platform: Platform
     ) { }
 
   ngOnInit() {
-    this.devMode = isDevMode();
     this.products = [];
     this.wishListSubscription = this.wishListService.selectedWishList$.subscribe( w => {
       this.selectedWishList = w;

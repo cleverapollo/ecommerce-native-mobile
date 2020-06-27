@@ -44,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: 'wish-list-new',
-    canActivate: [AuthGuard, RoleGuard],
+    canActivate: [AuthGuard], // RoleGuard
     resolve: { friends: FriendSelectOptionsResolver },
     loadChildren: () => import('./wish-list-new/wish-list-new.module').then( m => m.WishListNewPageModule)
   },
@@ -55,7 +55,7 @@ const routes: Routes = [
   },
   {
     path: 'wish-new',
-    canActivate: [AuthGuard, RoleGuard],
+    canActivate: [AuthGuard],  // RoleGuard
     resolve: { wishListSelectOptions: WishListSelectOptionsResolver },
     loadChildren: () => import('./wish-new/wish-new.module').then( m => m.WishNewPageModule)
   },

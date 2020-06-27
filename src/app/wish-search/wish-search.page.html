@@ -52,6 +52,6 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer no-border *ngIf="devMode">
+<ion-footer no-border *ngIf="!platform.is('android') && !platform.is('ios')">
   <ion-button class="wantic-save-button" expand="block" (click)="search()" [disabled]="!keywords || !keywords.length">Suchen</ion-button>
 </ion-footer>

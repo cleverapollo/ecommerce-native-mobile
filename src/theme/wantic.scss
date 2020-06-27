@@ -35,11 +35,15 @@ ion-button.wantic-delete-button {
 }
 
 ion-content {
+    --ion-background-color-rgb: var(--wantic-background-color-rgb);
     --ion-background-color: var(--wantic-background-color);
 }
 
 ion-footer {
     background-color: var(--wantic-background-color);
+    --ion-background-color-rgb: var(--wantic-background-color-rgb);
+    --ion-background-color: var(--wantic-background-color);
+    border: none;
 }
 
 h1.wantic-page-header {
@@ -51,7 +55,7 @@ h1.wantic-page-header {
 // toolbar 
 
 .wantic-toolbar {
-    --background: var(--wantic-background-color);
+    --background: var(--wantic-background-color-rgb);
     --border-style: none;
 }
 
@@ -107,8 +111,9 @@ form {
         .ion-invalid.ion-touched, .ion-invalid.ion-dirty {
             border-color: var(--ion-color-danger);
         }
-        ion-label {
+        ion-label.label-stacked {
             font-size: 17px !important;
+            margin-bottom: 10px !important;
         }
     }
 }
@@ -143,12 +148,13 @@ h1.registration {
 }
 
 ion-header {
+    --ion-background-color-rgb: var(--wantic-background-color-rgb);
     --ion-background-color: var(--wantic-background-color);
     ion-toolbar {
+        --ion-background-color-rgb: var(--wantic-background-color-rgb);
         --ion-background-color: var(--wantic-background-color);
         --min-height: 50px;
         --border-style: none;
-        margin-top: 10px;
         ion-buttons > ion-button.skip-button {
             letter-spacing: 1pt;
             font-weight: 700;

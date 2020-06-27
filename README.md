@@ -16,4 +16,4 @@ OS
 - android
 - ios
 
-`ionic cordova run ${OS} --configuration=${ENV}`
+`ionic cordova run ${OS} -l --configuration=${ENV}`
