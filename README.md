@@ -21,4 +21,5 @@ OS
 ## sources and references
 
 - [How to Build an Ionic HTTP Loading Interceptor & Retry Logic](https://www.youtube.com/watch?v=IJWCpa_-MeU)
+- [Ionic Development Tips](https://ionicframework.com/docs/developing/tips)
 
