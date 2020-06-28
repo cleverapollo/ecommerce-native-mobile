@@ -85,7 +85,7 @@
 
 </ion-content>
 
-<ion-footer no-border>
+<ion-footer no-border *ngIf="showFooterSection">
   <ion-button *ngIf="form" class="wantic-save-button" (click)="saveChanges()" color="primary" expand="block" [disabled]="!form.valid">
     ÄNDERUNGEN SPEICHERN
   </ion-button>

@@ -4,7 +4,8 @@ import { UserApiService } from '../shared/api/user-api.service';
 import { UserProfile } from '../shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
-import { CustomValidation } from '../shared/custom-validation';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile-edit',
@@ -35,14 +36,24 @@ export class ProfileEditPage implements OnInit {
 
   imageIsUploading: Boolean = false;
 
+  get showFooterSection(): Boolean {
+    if (this.platform.is('cordova')) {
+      return !this.keyBoard.isVisible;
+    }
+    return true;
+  }
+
   constructor(
     private formBuilder: FormBuilder, 
     private route: ActivatedRoute, 
-    private userApiService: UserApiService
+    private userApiService: UserApiService,
+    public keyBoard: Keyboard,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
     this.profile = this.route.snapshot.data.profile;
+    this.keyBoard.disableScroll(false);
 
     this.form = this.formBuilder.group({
       firstName: this.formBuilder.control(this.profile.firstName, [Validators.required, Validators.min(2)]),
