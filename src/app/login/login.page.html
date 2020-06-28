@@ -1,11 +1,13 @@
-<ion-header no-border>
-  <ion-toolbar >
+<ion-header no-border >
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-button fill="clear" class="back-button" (click)="goBack()">
-        <ion-icon slot="icon-only" src="assets/icon/arrow-left.svg"></ion-icon>
+        <ion-icon slot="start" src="assets/icon/arrow-left.svg"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title><img src="assets/icon/wantic-logo-s.svg"></ion-title>
+    <ion-title>
+      <img class="img-toolbar-wantic-logo" src="assets/icon/wantic-logo-s.svg">
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
