@@ -51,7 +51,7 @@ ion-footer {
 }
 
 h1.wantic-page-header {
-    font-family: playfair-display, serif;
+    font-family: playfair-display;
     font-size: 18pt;
     color: var(--ion-color-tertiary);
 }
@@ -144,7 +144,7 @@ ion-button.wantic-margin-right-left {
 
 h1.registration {
     color: var(--ion-color-tertiary);
-    font-family: playfair-display, serif;
+    font-family: playfair-display;
     font-weight: bold;
     font-size: 38px;
     padding-top: 10px;
@@ -154,6 +154,7 @@ h1.registration {
 ion-header {
     --ion-background-color-rgb: var(--wantic-background-color-rgb);
     --ion-background-color: var(--wantic-background-color);
+    background: var(--wantic-background-color);
     ion-toolbar {
         --ion-background-color-rgb: var(--wantic-background-color-rgb);
         --ion-background-color: var(--wantic-background-color);
