@@ -9,6 +9,10 @@ a.wantic-link {
     margin-left: var(--wantic-margin);
 }
 
+img.img-toolbar-wantic-logo {
+    height: 40px; // $toolbar-ios-hight - 4px
+}
+
 ion-button.wantic-save-button {
     --ion-color-contrast: white !important;
     --color: white !important;
