@@ -1,7 +1,7 @@
 import { EnvironmentConfig } from './environment.d';
 
 export const environment: EnvironmentConfig = {
-    production: false,
+    production: true,
     debugMessage: 'running on beta environment',
     serverConfig: {
         networkProtocol: 'https',
