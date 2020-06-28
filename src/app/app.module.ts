@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WishListResolver } from './home/wish-list.resolver';
 
 import { registerLocaleData } from '@angular/common';
@@ -25,6 +25,7 @@ import { FriendSelectOptionsResolver } from './wish-list-new/friend-list-select-
 import { UserRoleResolver } from './shared/user-role.resolver';
 import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
+import { HttpRequestLoadingInterceptor } from './interceptors/http-loading.interceptor';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -67,7 +68,8 @@ export function jwtOptionsFactory(storage) {
     WishListSelectOptionsResolver,
     UserRoleResolver,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: LOCALE_ID, useValue: 'de' }
+    { provide: LOCALE_ID, useValue: 'de' },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestLoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
