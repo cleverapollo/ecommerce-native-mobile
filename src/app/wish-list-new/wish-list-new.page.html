@@ -21,73 +21,31 @@
     </ion-item>
     <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
 
-    <ion-item lines="none">
-      <ion-label position="stacked">Partner hinzufügen</ion-label>
-      <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="partner"></ion-input>
-    </ion-item>
-    <app-validation-messages [control]="form.get('partner')" [validationMessages]="validationMessages.partner"></app-validation-messages>
+    <div formGroupName="partner">
 
-    <ion-item lines="none">
-      <ion-label position="stacked">Gäste hinzufügen</ion-label>
-      <ion-select multiple="true" formControlName="members">
-        <ion-select-option *ngFor="let friend of friends" [value]="friend">
-          {{ friend.firstName }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-  </form>
+      <p class="form-group-label">Partner hinzufügen</p>
 
-  <div class="wantic-margin-right-left">
-    <ion-item lines="none">
-      <ion-label>Geteilt mit</ion-label>
-    </ion-item>
-  
-    <ion-item lines="none" *ngIf="showNoMembersHint">
-      <ion-text>Bisher hast du noch niemanden dazu eingeladen deiner neuen Wunschliste beizutreten.</ion-text>
-    </ion-item>
-  </div>
+      <ion-item lines="none">
+        <ion-input type="text" placeholder="Name deines Partners" formControlName="name"></ion-input>
+      </ion-item>
+      <app-validation-messages [control]="form.get('partner.name')" [validationMessages]="validationMessages.partnerName"></app-validation-messages>
 
-  <ion-list *ngIf="invitedMembers">
-    <ion-item lines="none" *ngFor="let member of invitedMembers" lines="none">
-      <ion-avatar slot="start">
-        <img src="assets/images/avatar-placeholder.jpg">
-      </ion-avatar>
-      <ion-label>
-        {{ member }}
-      </ion-label>
-      <ion-button fill="clear" (click)="removeMember(member)">
-        <ion-icon name="remove-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-item>
-    <ion-item *ngIf="memberIsLoading" lines="none">
-      <ion-label>Lädt ...</ion-label>
-      <ion-spinner></ion-spinner>
-    </ion-item>
-  </ion-list>
+      <ion-item lines="none">
+        <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="email"></ion-input>
+      </ion-item>
+      <app-validation-messages [control]="form.get('partner.email')" [validationMessages]="validationMessages.partnerEmail"></app-validation-messages>
 
-  <form>
-    <ion-item lines="none">
-      <ion-label>Einladen</ion-label>
-    </ion-item>
+    </div>
 
-    <ion-item lines="none">
-      <ion-text color="tertiary">Gib die E-Mail Adresse ein und die gewünschte Person wird per Mail von dir zur Wunschliste eingeladen.</ion-text>
-    </ion-item>
-
-    <ion-item lines="none">
-      <ion-input [formControl]="newMember" type="email" placeholder="E-Mail Adresse eingeben"></ion-input>
-    </ion-item>
-  
-    <ion-button fill="clear" (click)="addMember()" [disabled]="!newMember.valid" class="wantic-margin-right-left">
-      <ion-icon name="add-circle-outline"></ion-icon>
-      <ion-text color="primary">Weitere Personen einladen</ion-text>
-    </ion-button>
   </form>
 
 </ion-content>
 
-<ion-footer>
+<ion-footer no-border>
   <ion-button *ngIf="form" (click)="saveWishList()" color="primary" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button">
     NEUE WUNSCHLISTE ANLEGEN
+  </ion-button>
+  <ion-button color="primary" expand="block" fill="outline" class="wantic-save-button">
+    ABBRECHEN
   </ion-button>
 </ion-footer>

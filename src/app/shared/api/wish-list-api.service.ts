@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { WishListCreate } from 'src/app/wish-list-new/wish-list-new.model';
+import { WishListCreateRequest } from 'src/app/wish-list-new/wish-list-new.model';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { WishListDto, WishDto, WishListSelectOptionDto } from '../models/wish-list.model';
@@ -12,7 +12,7 @@ export class WishListApiService {
 
   constructor(private apiService: ApiService) { }
 
-  create(wishList: WishListCreate) : Observable<Object> {
+  create(wishList: WishListCreateRequest) : Observable<Object> {
     return this.apiService.post('wish-list', wishList);
   }
 

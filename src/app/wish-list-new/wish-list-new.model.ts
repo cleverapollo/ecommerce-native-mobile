@@ -1,9 +1,10 @@
-import { WishListMemberDto } from '../shared/models/wish-list.model';
-
-export class WishListCreate {
-    name: String
+export class WishListCreateRequest {
+    name: string
     date: Date
-    partners: Array<String> 
-    members: Array<WishListMemberDto>
-    wishes: Array<any> = [];
+    partner: WishListCreatePartnerRequest
+}
+
+export class WishListCreatePartnerRequest {
+    name: string;
+    email: string;
 }
