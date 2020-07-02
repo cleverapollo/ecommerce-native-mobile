@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { WishListCreateRequest } from 'src/app/wish-list-new/wish-list-new.model';
+import { WishListCreateRequest, WishListUpdateRequest } from 'src/app/wish-list-create-update/wish-list-create-update.model';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { WishListDto, WishDto, WishListSelectOptionDto } from '../models/wish-list.model';
@@ -16,8 +16,8 @@ export class WishListApiService {
     return this.apiService.post('wish-list', wishList);
   }
 
-  update(id: Number, wishList: WishListDto) : Observable<Object> {
-    return this.apiService.put(`wish-list/${id}`, wishList);
+  update(wishList: WishListUpdateRequest) : Observable<Object> {
+    return this.apiService.put(`wish-list/${wishList.id}`, wishList);
   }
 
   delete(id: Number) : Observable<Object> {

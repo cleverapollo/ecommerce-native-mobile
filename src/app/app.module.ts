@@ -20,8 +20,7 @@ import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-optio
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from './profile-edit/user-profile.resolver';
-import { SecurePipe } from './shared/secure.pipe';
-import { FriendSelectOptionsResolver } from './wish-list-new/friend-list-select-options.resolver';
+import { FriendSelectOptionsResolver } from './wish-list-create-update/friend-list-select-options.resolver';
 import { UserRoleResolver } from './shared/user-role.resolver';
 import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';

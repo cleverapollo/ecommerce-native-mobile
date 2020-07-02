@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { WishListNewPageRoutingModule } from './wish-list-new-routing.module';
+import { WishListNewPageRoutingModule } from './wish-list-create-update-routing.module';
 
-import { WishListNewPage } from './wish-list-new.page';
+import { WishListCreateUpdatePage } from './wish-list-create-update.page';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -18,6 +18,6 @@ import { SharedModule } from '../shared/shared.module';
     WishListNewPageRoutingModule,
     SharedModule
   ],
-  declarations: [WishListNewPage]
+  declarations: [WishListCreateUpdatePage]
 })
-export class WishListNewPageModule {}
+export class WishListCreateUpdatePageModule {}

@@ -4,7 +4,7 @@
       <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
     </ion-button>
     <ion-text>
-      <h1 class="ion-text-center wantic-page-header">Neue Wunschliste anlegen</h1>
+      <h1 class="ion-text-center wantic-page-header">{{ title }}</h1>
     </ion-text>
   </ion-item>
 
@@ -39,11 +39,15 @@
 
   </form>
 
+  <ion-button *ngIf="isUpdatePage" class="wantic-save-button" (click)="deleteWishList()" color="tertiary" fill="outline" expand="block">
+    WUNSCHLISTE LÖSCHEN
+  </ion-button>
+
 </ion-content>
 
 <ion-footer no-border>
-  <ion-button *ngIf="form" (click)="saveWishList()" color="primary" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button">
-    NEUE WUNSCHLISTE ANLEGEN
+  <ion-button *ngIf="form" (click)="createOrUpdateWishList()" color="primary" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button">
+    {{ buttonTitle }}
   </ion-button>
   <ion-button color="primary" expand="block" fill="outline" class="wantic-save-button">
     ABBRECHEN
