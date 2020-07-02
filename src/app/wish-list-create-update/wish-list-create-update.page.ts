@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListCreateRequest, WishListCreateOrUpdateRequest, WishListUpdateRequest } from './wish-list-create-update.model';
 import { WishListApiService } from '../shared/api/wish-list-api.service';
 import { WishListService } from '../shared/services/wish-list.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '../shared/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AlertService } from '../shared/services/alert.service';
+import { ToastService } from '../shared/toast.service';
 
 @Component({
   selector: 'app-wish-list-create-update',
@@ -54,6 +55,7 @@ export class WishListCreateUpdatePage implements OnInit {
     private wishListService: WishListService,
     private navController: NavController,
     private alertService: AlertService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -96,7 +98,11 @@ export class WishListCreateUpdatePage implements OnInit {
     this.apiService.create(request as WishListCreateRequest).subscribe( (response : WishListDto) => {
       this.wishListService.updateSelectedWishList(response);
       this.navController.navigateForward('/wish-list-edit');
-    }, console.error);
+      this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
+    }, e => {
+      console.error(e);
+      this.toastService.presentErrorToast('Bei der Erstellung deiner Wunschliste ist leider ein Fehler aufgetreten.');
+    });
   }
 
   private update(request: WishListCreateOrUpdateRequest) {
@@ -104,7 +110,11 @@ export class WishListCreateUpdatePage implements OnInit {
     updateRequest.id = this.wishList.id;
     this.apiService.update(updateRequest).subscribe( (response : WishListDto) => {
       this.wishListService.updateSelectedWishList(response);
-    }, console.error);
+      this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
+    }, e => {
+      console.error(e);
+      this.toastService.presentErrorToast('Bei der Aktualisierung deiner Wunschliste ist leider ein Fehler aufgetreten.');
+    });
   }
 
   deleteWishList() {
@@ -120,9 +130,13 @@ export class WishListCreateUpdatePage implements OnInit {
     .toPromise()
     .then(emptyResponse => {
       this.subscription.unsubscribe();
+      this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich gelöscht');
       this.navController.navigateBack('home');
     })
-    .catch(console.error);
+    .catch( e => {
+      console.log(e);
+      this.toastService.presentErrorToast('Beim Löschen deiner Wunschliste ist leider ein Fehler aufgetreten.');
+    });
   }
 
 }
