@@ -35,15 +35,15 @@
 
       <!--1-->
       <ion-avatar class="creator-image standalone" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 1">
-        <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | secure | async">
+        <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
       </ion-avatar>
 
       <!--2-->
       <ion-avatar class="creator-image first" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-        <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | secure | async">
+        <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
       </ion-avatar>
       <ion-avatar class="creator-image last" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-        <img *ngIf="wishList.ownerProfileImageUrls[1]" [src]="wishList.ownerProfileImageUrls[1] | secure | async">
+        <img *ngIf="wishList.ownerProfileImageUrls[1]" [src]="wishList.ownerProfileImageUrls[1] | cacheImage | async">
       </ion-avatar>
       <!---->
       <ion-label class="ion-text-wrap">
@@ -57,7 +57,7 @@
 
   <div class="friends-images" *ngIf="wishList.members">
     <ion-avatar *ngFor="let member of wishList.members">
-      <img [src]="member.profileImageUrl ? (member.profileImageUrl | secure | async) : 'assets/images/avatar-placeholder.jpg'">
+      <img [src]="member.profileImageUrl ? (member.profileImageUrl | cacheImage | async) : 'assets/images/avatar-placeholder.jpg'">
     </ion-avatar>
   </div>
 
