@@ -29,7 +29,7 @@
     </ion-button>
      <!---->
        <!--0-->
-       <ion-avatar class="creator-image standalone" *ngIf="!wishList.ownerProfileImageUrls.length">
+       <ion-avatar class="creator-image standalone" *ngIf="!wishList.ownerProfileImageUrls || !wishList.ownerProfileImageUrls.length">
         <img  src="assets/images/avatar-placeholder.jpg">
       </ion-avatar>
 
