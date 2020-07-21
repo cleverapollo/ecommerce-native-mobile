@@ -1,0 +1,9 @@
+ion-list {
+    margin-left: var(--wantic-margin);
+    margin-right: var(--wantic-margin);
+    margin-top: 60px;
+    ion-item {
+        --border-style: dashed;
+        --border-color: var(--ion-color-primary);
+    }
+}
