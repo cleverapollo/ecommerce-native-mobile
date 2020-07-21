@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.authService.authenticationState.subscribe(state => {
       if (state) {
-        this.router.navigate(['home']);
+        this.router.navigate(['']);
       }
     });
     this.loginForm = this.formBuilder.group({
@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
     const input = this.loginForm.value as LoginForm;
     this.authService.login(input.email, input.password).then(() => {
       this.loginForm.reset();
-      this.router.navigate(['home']);
+      this.router.navigate(['']);
     }).catch(() => {
       console.error('Fehler beim Login!');
     });

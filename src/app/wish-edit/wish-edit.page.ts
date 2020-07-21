@@ -74,7 +74,7 @@ export class WishEditPage implements OnInit {
   }
 
   goBack() {
-    this.navController.navigateBack('/wish-detail');
+    this.navController.back();
   }
 
 }

@@ -14,14 +14,7 @@ import { EmailVerificationTokenGuard } from './email-confirmation/email-verifica
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'start',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    canActivate: [AuthGuard],
-    resolve: { wishLists: WishListResolver, userRole: UserRoleResolver },
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./tab-bar/tab-bar.module').then( m => m.TabBarPageModule)
   },
   {
     path: 'login',
@@ -49,11 +42,6 @@ const routes: Routes = [
     loadChildren: () => import('./wish-list-create-update/wish-list-create-update.module').then( m => m.WishListCreateUpdatePageModule)
   },
   {
-    path: 'wish-search',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./wish-search/wish-search.module').then( m => m.WishSearchPageModule)
-  },
-  {
     path: 'wish-new',
     canActivate: [AuthGuard],  // RoleGuard
     resolve: { wishListSelectOptions: WishListSelectOptionsResolver },
@@ -66,21 +54,9 @@ const routes: Routes = [
     loadChildren: () => import('./wish-list-create-update/wish-list-create-update.module').then( m => m.WishListCreateUpdatePageModule)
   },
   {
-    path: 'friends-wish-list-overview',
-    canActivate: [AuthGuard],
-    resolve: { wishLists: FriendsWishListResolver },
-    loadChildren: () => import('./friends-wish-list-overview/friends-wish-list-overview.module').then( m => m.FriendsWishListOverviewPageModule)
-  },
-  {
     path: 'friends-wish-list-detail',
     canActivate: [AuthGuard],
     loadChildren: () => import('./friends-wish-list-detail/friends-wish-list-detail.module').then( m => m.FriendsWishListDetailPageModule)
-  },
-  {
-    path: 'profile-edit',
-    canActivate: [AuthGuard],
-    resolve: { profile: UserProfileResolver },
-    loadChildren: () => import('./profile-edit/profile-edit.module').then( m => m.ProfileEditPageModule)
   },
   {
     path: 'wish-edit',

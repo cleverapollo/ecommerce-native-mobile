@@ -75,7 +75,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.navController.navigateBack('/wish-list-detail');
+    this.navController.back();
   }
 
 }

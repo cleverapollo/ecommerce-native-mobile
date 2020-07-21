@@ -82,7 +82,7 @@ export class WishListCreateUpdatePage implements OnInit {
   }
 
   goBack() {
-    this.navController.navigateBack('/home');
+    this.navController.back();
   }
 
   createOrUpdateWishList() {

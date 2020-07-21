@@ -74,7 +74,7 @@ export class WishNewPage implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.navController.navigateBack('/wish-search');
+    this.navController.back();
   }
 
 }
