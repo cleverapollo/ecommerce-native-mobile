@@ -46,11 +46,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'settings',
+        path: 'menu',
         children: [
           {
             path: '',
-            loadChildren: () => import('./../settings/settings.module').then( m => m.SettingsPageModule)
+            loadChildren: () => import('../menu/menu.module').then( m => m.MenuPageModule)
           }
         ]
       },
