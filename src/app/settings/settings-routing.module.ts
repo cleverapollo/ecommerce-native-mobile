@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { SettingsPage } from './settings.page';
-import { UserProfileResolver } from '../profile-edit/user-profile.resolver';
+import { UserProfileResolver } from '../shared/user-profile.resolver';
 
 const routes: Routes = [
   {

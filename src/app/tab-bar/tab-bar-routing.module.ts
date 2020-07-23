@@ -6,7 +6,7 @@ import { AuthGuard } from '../shared/services/auth.guard';
 import { WishListResolver } from '../home/wish-list.resolver';
 import { UserRoleResolver } from '../shared/user-role.resolver';
 import { FriendsWishListResolver } from '../friends-wish-list-overview/friends-wish-list.resolver';
-import { UserProfileResolver } from '../profile-edit/user-profile.resolver';
+import { UserProfileResolver } from '../shared/user-profile.resolver';
 
 const routes: Routes = [
   {

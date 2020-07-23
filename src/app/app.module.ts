@@ -19,7 +19,7 @@ import localeDeExtra from '@angular/common/locales/extra/de';
 import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-options.resolver';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
-import { UserProfileResolver } from './profile-edit/user-profile.resolver';
+import { UserProfileResolver } from './shared/user-profile.resolver';
 import { FriendSelectOptionsResolver } from './wish-list-create-update/friend-list-select-options.resolver';
 import { UserRoleResolver } from './shared/user-role.resolver';
 import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';

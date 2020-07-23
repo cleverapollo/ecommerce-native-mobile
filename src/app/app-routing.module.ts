@@ -4,7 +4,7 @@ import { AuthGuard } from './shared/services/auth.guard';
 import { WishListResolver } from './home/wish-list.resolver';
 import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-options.resolver';
 import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
-import { UserProfileResolver } from './profile-edit/user-profile.resolver';
+import { UserProfileResolver } from './shared/user-profile.resolver';
 import { FriendSelectOptionsResolver } from './wish-list-create-update/friend-list-select-options.resolver';
 import { UserRoleResolver } from './shared/user-role.resolver';
 import { RoleGuard } from './shared/services/role.guard';
