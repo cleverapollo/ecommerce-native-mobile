@@ -78,11 +78,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { profile: UserProfileResolver },
     loadChildren: () => import('./profile-edit/profile-edit.module').then( m => m.ProfileEditPageModule)
-  },
-  {
-    path: 'settings',
-    resolve: { profile: UserProfileResolver },
-    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   }
 
 ];

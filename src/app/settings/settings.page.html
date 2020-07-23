@@ -1,6 +1,9 @@
 <ion-header no-border>
-  <ion-toolbar class="ion-text-center">
-    <ion-title size="large" class="wantic-title">wantic</ion-title>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="wantic-title">wantic</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +16,7 @@
       Profil
     </ion-list-header>
 
-    <ion-item>
+    <ion-item [routerLink]="['profile-settings-firstname']">
       <ion-icon slot="end" name="arrow-forward"></ion-icon>
       <ion-label>
         <h2>Vorname</h2>
