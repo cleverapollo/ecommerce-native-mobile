@@ -29,6 +29,10 @@ const routes: Routes = [
   {
     path: 'password-update',
     loadChildren: () => import('./pages/password-update/password-update.module').then( m => m.PasswordUpdatePageModule)
+  },
+  {
+    path: 'account-delete',
+    loadChildren: () => import('./pages/account-delete/account-delete.module').then( m => m.AccountDeletePageModule)
   }
 ];
 
