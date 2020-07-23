@@ -56,12 +56,6 @@ const routes: Routes = [
     resolve: { emailVerificationResponse: EmailVerificationResolver },
     loadChildren: () => import('./email-confirmation/email-confirmation.module').then( m => m.EmailConfirmationPageModule)
   },
-  {
-    path: 'profile-edit',
-    canActivate: [AuthGuard],
-    resolve: { profile: UserProfileResolver },
-    loadChildren: () => import('./profile-edit/profile-edit.module').then( m => m.ProfileEditPageModule)
-  }
 
 ];
 
