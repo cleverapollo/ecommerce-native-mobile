@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'profile-settings-firstname',
     loadChildren: () => import('./pages/profile-settings-firstname/profile-settings-firstname.module').then( m => m.ProfileSettingsFirstnamePageModule)
+  },
+  {
+    path: 'last-name-update',
+    loadChildren: () => import('./pages/last-name-update/last-name-update.module').then( m => m.LastNameUpdatePageModule)
   }
 ];
 
