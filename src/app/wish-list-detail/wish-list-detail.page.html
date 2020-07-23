@@ -1,16 +1,15 @@
 <ion-header no-border>
-  <ion-toolbar class="ion-text-center">
-    <ion-title size="large" class="wantic-title">wantic</ion-title>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="wantic-title">wantic</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <app-email-unverified-hint [(subText)]="subText"></app-email-unverified-hint>
 
 <ion-content>
  <ion-item lines="none">
-    <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
-      <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
-    </ion-button>
      <!---->
        <!--0-->
        <ion-avatar class="creator-image standalone" *ngIf="!wishList.ownerProfileImageUrls || !wishList.ownerProfileImageUrls.length">
