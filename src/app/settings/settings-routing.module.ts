@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'email-update',
     loadChildren: () => import('./pages/email-update/email-update.module').then( m => m.EmailUpdatePageModule)
+  },
+  {
+    path: 'password-update',
+    loadChildren: () => import('./pages/password-update/password-update.module').then( m => m.PasswordUpdatePageModule)
   }
 ];
 
