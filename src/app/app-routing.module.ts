@@ -25,23 +25,6 @@ const routes: Routes = [
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
   {
-    path: 'wish-list-detail',
-    canActivate: [AuthGuard],
-    resolve: { userRole: UserRoleResolver },
-    loadChildren: () => import('./wish-list-detail/wish-list-detail.module').then( m => m.WishListDetailPageModule)
-  },
-  {
-    path: 'wish-detail',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./wish-detail/wish-detail.module').then( m => m.WishDetailPageModule)
-  },
-  {
-    path: 'wish-list-new',
-    canActivate: [AuthGuard], // RoleGuard
-    resolve: { friends: FriendSelectOptionsResolver },
-    loadChildren: () => import('./wish-list-create-update/wish-list-create-update.module').then( m => m.WishListCreateUpdatePageModule)
-  },
-  {
     path: 'wish-new',
     canActivate: [AuthGuard],  // RoleGuard
     resolve: { wishListSelectOptions: WishListSelectOptionsResolver },

@@ -11,21 +11,21 @@
     </ion-button>
      <!---->
        <!--0-->
-       <ion-avatar class="creator-image standalone" *ngIf="!wishList.ownerProfileImageUrls || !wishList.ownerProfileImageUrls.length">
+       <ion-avatar class="creator-image standalone" *ngIf="!wishList?.ownerProfileImageUrls || !wishList?.ownerProfileImageUrls.length">
         <img  src="assets/images/avatar-placeholder.jpg">
       </ion-avatar>
 
       <!--1-->
-      <ion-avatar class="creator-image standalone" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 1">
-        <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | secure | async">
+      <ion-avatar class="creator-image standalone" *ngIf="wishList?.ownerProfileImageUrls && wishList?.ownerProfileImageUrls.length == 1">
+        <img *ngIf="wishList?.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
       </ion-avatar>
 
       <!--2-->
-      <ion-avatar class="creator-image first" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-        <img *ngIf="wishList.ownerProfileImageUrls[0]"  [src]="wishList.ownerProfileImageUrls[0] | secure | async">
+      <ion-avatar class="creator-image first" *ngIf="wishList?.ownerProfileImageUrls && wishList?.ownerProfileImageUrls.length == 2">
+        <img *ngIf="wishList?.ownerProfileImageUrls[0]"  [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
       </ion-avatar>
-      <ion-avatar class="creator-image last" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-        <img *ngIf="wishList.ownerProfileImageUrls[1]" [src]="wishList.ownerProfileImageUrls[1] | secure | async">
+      <ion-avatar class="creator-image last" *ngIf="wishList?.ownerProfileImageUrls && wishList?.ownerProfileImageUrls.length == 2">
+        <img *ngIf="wishList?.ownerProfileImageUrls[1]" [src]="wishList.ownerProfileImageUrls[1] | cacheImage | async">
       </ion-avatar>
       <!---->
       <ion-label class="ion-text-wrap">

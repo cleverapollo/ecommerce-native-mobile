@@ -7,18 +7,14 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { WishListComponent } from './wish-list/wish-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { HomePageRoutingModule } from './home-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: HomePage
-      }
-    ]),
+    HomePageRoutingModule,
     SharedModule
   ],
   declarations: [HomePage, WishListComponent]

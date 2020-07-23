@@ -23,7 +23,6 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   }
 
   constructor(
-    private router: Router, 
     private route: ActivatedRoute,
     private wishListService: WishListService, 
     private navController: NavController
@@ -47,7 +46,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   selectWish(wish: WishDto) {
     this.wishListService.updateSelectedWish(wish);
-    this.router.navigate(['wish-detail']);
+    this.navController.navigateForward('tabs/home/wish-list-detail/wish-detail');
   }
 
   goBack() {
