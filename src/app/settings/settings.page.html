@@ -16,6 +16,17 @@
       Profil
     </ion-list-header>
 
+    <ion-item [routerLink]="['profile-image-update']">
+      <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      <ion-label>
+        <h2>Profilbild</h2>
+        <ion-avatar class="creator-image">
+          <img *ngIf="profile?.profileImageUrl" [src]="profile.profileImageUrl | secure | async"/>
+          <img *ngIf="!profile?.profileImageUrl" src="assets/images/avatar-placeholder.jpg"/>
+        </ion-avatar>
+      </ion-label>
+    </ion-item>
+
     <ion-item [routerLink]="['profile-settings-firstname']">
       <ion-icon slot="end" name="arrow-forward"></ion-icon>
       <ion-label>

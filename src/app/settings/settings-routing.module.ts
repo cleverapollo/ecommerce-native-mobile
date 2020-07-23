@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'account-delete',
     loadChildren: () => import('./pages/account-delete/account-delete.module').then( m => m.AccountDeletePageModule)
+  },
+  {
+    path: 'profile-image-update',
+    loadChildren: () => import('./pages/profile-image-update/profile-image-update.module').then( m => m.ProfileImageUpdatePageModule)
   }
 ];
 
