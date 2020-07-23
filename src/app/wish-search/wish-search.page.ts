@@ -2,10 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SearchService } from '../shared/features/product-search/search.service';
 import { SearchResultItem } from '../shared/features/product-search/search-result-item';
 import { WishListService } from '../shared/services/wish-list.service';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { WishListDto, WishDto } from '../shared/models/wish-list.model';
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-wish-search',
@@ -23,9 +22,9 @@ export class WishSearchPage implements OnInit, OnDestroy {
   products: Array<SearchResultItem>
 
   constructor(
+    private navController: NavController,
     private searchService: SearchService, 
     private wishListService: WishListService,
-    private router: Router,
     public platform: Platform
     ) { }
 
@@ -57,7 +56,7 @@ export class WishSearchPage implements OnInit, OnDestroy {
     wish.productUrl = item.productUrl;
     wish.wishListId = this.selectedWishList ? this.selectedWishList.id : null;
     this.wishListService.updateSelectedWish(wish);
-    this.router.navigate(['wish-new']);
+    this.navController.navigateForward('tabs/wish-search/wish-new');
   }
 
 }

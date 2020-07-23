@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FriendWishList, FriendWish } from './friends-wish-list-overview.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FriendWishListService } from '../shared/services/friend-wish-list.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-friends-wish-list-overview',
@@ -15,7 +16,7 @@ export class FriendsWishListOverviewPage implements OnInit {
   wishLists: [FriendWishList];
 
   constructor(
-    private router: Router, 
+    private navContoller: NavController, 
     private route: ActivatedRoute,
     private wishListService: FriendWishListService
   ) {
@@ -26,7 +27,7 @@ export class FriendsWishListOverviewPage implements OnInit {
 
   selectWishList(wishList: FriendWishList) {
     this.wishListService.updateSelectedWishList(wishList);
-    this.router.navigate(['friends-wish-list-detail']);
+    this.navContoller.navigateForward('tabs/friends-wish-list-overview/friends-wish-list-detail');
   }
 
 }

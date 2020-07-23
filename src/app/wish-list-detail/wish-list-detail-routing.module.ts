@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { WishListDetailPage } from './wish-list-detail.page';
 import { AuthGuard } from '../shared/services/auth.guard';
+import { FriendSelectOptionsResolver } from '../wish-list-create-update/friend-list-select-options.resolver';
 
 const routes: Routes = [
   {
@@ -13,6 +14,12 @@ const routes: Routes = [
     path: 'wish-detail',
     canActivate: [AuthGuard],
     loadChildren: () => import('./../wish-detail/wish-detail.module').then( m => m.WishDetailPageModule)
+  },
+  {
+    path: 'wish-list-edit',
+    canActivate: [AuthGuard],
+    resolve: { friends: FriendSelectOptionsResolver },
+    loadChildren: () => import('./../wish-list-create-update/wish-list-create-update.module').then( m => m.WishListCreateUpdatePageModule)
   },
 ];
 

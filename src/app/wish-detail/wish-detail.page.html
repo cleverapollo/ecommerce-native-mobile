@@ -1,6 +1,9 @@
 <ion-header no-border>
-  <ion-toolbar class="ion-text-center">
-    <ion-title size="large" class="wantic-title">wantic</ion-title>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="wantic-title">wantic</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -51,7 +54,7 @@
           <div class="wish-price">{{ wish.price }}</div>
         </ion-col>
         <ion-col size="2">
-          <ion-button fill="clear" class="ion-text-right" [routerLink]="['/wish-edit']">
+          <ion-button fill="clear" class="ion-text-right" [routerLink]="['../wish-edit']">
             <ion-icon slot="icon-only" src="assets/icon/pencil.svg"></ion-icon>
           </ion-button>
         </ion-col>

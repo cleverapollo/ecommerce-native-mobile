@@ -34,7 +34,7 @@
         <h1>{{ wishList.name }}</h1>
         <p>{{ wishList.date | date }}</p>
       </ion-label>
-      <ion-button fill="clear" [routerLink]="['/wish-list-edit']">
+      <ion-button fill="clear" [routerLink]="['../wish-list-edit']">
         <ion-icon slot="icon-only" src="assets/icon/pencil.svg" [routerLink]="['/wish-list-edit']"></ion-icon>
       </ion-button>
   </ion-item>

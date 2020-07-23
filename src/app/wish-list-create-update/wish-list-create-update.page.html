@@ -1,12 +1,14 @@
+<ion-header no-border>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="wantic-title">wantic</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <ion-item lines="none" id="wish-list-new-header">
-    <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
-      <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
-    </ion-button>
-    <ion-text>
-      <h1 class="ion-text-center wantic-page-header">{{ title }}</h1>
-    </ion-text>
-  </ion-item>
+  <h1 class="ion-text-center wantic-page-header">{{ title }}</h1>
 
   <form [formGroup]="form" *ngIf="form">
     <ion-item lines="none">
@@ -37,19 +39,13 @@
 
     </div>
 
+    <ion-button *ngIf="form" (click)="createOrUpdateWishList()" color="primary" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button no-margin-bottom">
+      {{ buttonTitle }}
+    </ion-button>
+    <ion-button *ngIf="isUpdatePage" class="wantic-save-button" (click)="deleteWishList()" color="tertiary" fill="outline" expand="block">
+      WUNSCHLISTE LÖSCHEN
+    </ion-button>
+
   </form>
 
-  <ion-button *ngIf="isUpdatePage" class="wantic-save-button" (click)="deleteWishList()" color="tertiary" fill="outline" expand="block">
-    WUNSCHLISTE LÖSCHEN
-  </ion-button>
-
 </ion-content>
-
-<ion-footer no-border>
-  <ion-button *ngIf="form" (click)="createOrUpdateWishList()" color="primary" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button">
-    {{ buttonTitle }}
-  </ion-button>
-  <ion-button color="primary" expand="block" fill="outline" class="wantic-save-button">
-    ABBRECHEN
-  </ion-button>
-</ion-footer>
