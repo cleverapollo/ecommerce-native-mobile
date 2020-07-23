@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: 'birthday-update',
     loadChildren: () => import('./pages/birthday-update/birthday-update.module').then( m => m.BirthdayUpdatePageModule)
+  },
+  {
+    path: 'email-update',
+    loadChildren: () => import('./pages/email-update/email-update.module').then( m => m.EmailUpdatePageModule)
   }
 ];
 
