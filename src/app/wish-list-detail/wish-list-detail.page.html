@@ -42,6 +42,9 @@
     <ion-avatar *ngFor="let member of wishList.members">
       <img [src]="member.profileImageUrl ? (member.profileImageUrl | cacheImage | async) : 'assets/images/avatar-placeholder.jpg'">
     </ion-avatar>
+    <ion-avatar [routerLink]="['../wish-list-guests']"> 
+      <img src="assets/icon/icon-add-guests.svg"/>
+    </ion-avatar>
   </div>
 
   <ion-button [routerLink]="['/tabs/wish-search']" id="button-add-wish" fill="clear" expand="full">
