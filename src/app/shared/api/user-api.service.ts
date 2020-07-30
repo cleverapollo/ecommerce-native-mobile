@@ -19,6 +19,22 @@ export class UserApiService {
     return this.apiService.get(`user/profile`);
   }
 
+  partialUpdateFirstName(firstName: string): Observable<UserProfile> {
+    return this.apiService.patch('user/profiles/firstname', { firstName: firstName }) as Observable<UserProfile>
+  }
+
+  partialUpdateLastName(lastName: string): Observable<UserProfile> {
+    return this.apiService.patch('user/profiles/lastname', { lastName: lastName }) as Observable<UserProfile>
+  }
+
+  partialUpdateBirthday(birthday: Date): Observable<UserProfile> {
+    return this.apiService.patch('user/profiles/birthday', { birthday: birthday }) as Observable<UserProfile>
+  }
+
+  partialUpdateEmail(email: string): Observable<UserProfile> {
+    return this.apiService.patch('user/profiles/email', { email: email }) as Observable<UserProfile>
+  }
+
   updateProfile(updatedProfile: UserProfile) : Observable<Object> {
     return this.apiService.put(`user/update-profile`, updatedProfile);
   }

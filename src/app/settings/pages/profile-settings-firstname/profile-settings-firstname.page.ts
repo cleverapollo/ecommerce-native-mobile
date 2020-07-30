@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
+import { UserApiService } from 'src/app/shared/api/user-api.service';
 
 @Component({
   selector: 'app-profile-settings-firstname',
@@ -20,7 +21,7 @@ export class ProfileSettingsFirstnamePage implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private api: UserApiService) { }
 
   ngOnInit() {
     const firstName = this.route.snapshot.data.profile.firstName;
@@ -30,7 +31,9 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   }
 
   saveChanges() {
-    console.log('save changes');
+    this.api.partialUpdateFirstName(this.form.controls.firstName.value).toPromise().then( updatedProfile => {
+      console.log(updatedProfile);
+    }, e => console.error);
   }
 
 }

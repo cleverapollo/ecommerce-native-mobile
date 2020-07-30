@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
 import { ActivatedRoute } from '@angular/router';
+import { UserApiService } from 'src/app/shared/api/user-api.service';
 
 @Component({
   selector: 'app-email-update',
@@ -20,7 +21,7 @@ export class EmailUpdatePage implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private api: UserApiService) { }
 
   ngOnInit() {
     const email = this.route.snapshot.data.profile.email;
@@ -30,7 +31,9 @@ export class EmailUpdatePage implements OnInit {
   }
 
   saveChanges() {
-    console.log('save changes');
+    this.api.partialUpdateEmail(this.form.controls.email.value).toPromise().then( updatedProfile => {
+      console.log(updatedProfile);
+    }, e => console.error);
   }
 
 }
