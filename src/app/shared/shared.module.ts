@@ -6,15 +6,16 @@ import { ValidationMessagesComponent } from './validation-messages/validation-me
 import { IonicModule } from '@ionic/angular';
 import { EmailUnverifiedHintComponent } from './email-unverified-hint/email-unverified-hint.component';
 import { CacheImagePipe } from './pipes/cache-image.pipe';
+import { HintComponent } from './hint/hint.component';
 
 
 
 @NgModule({
-  declarations: [SecurePipe, OwnerNamesPipe, ValidationMessagesComponent, EmailUnverifiedHintComponent, CacheImagePipe],
+  declarations: [SecurePipe, OwnerNamesPipe, ValidationMessagesComponent, EmailUnverifiedHintComponent, CacheImagePipe, HintComponent],
   imports: [
     CommonModule,
     IonicModule
   ],
-  exports: [SecurePipe, OwnerNamesPipe, ValidationMessagesComponent, EmailUnverifiedHintComponent, CacheImagePipe]
+  exports: [SecurePipe, OwnerNamesPipe, ValidationMessagesComponent, EmailUnverifiedHintComponent, CacheImagePipe, HintComponent]
 })
 export class SharedModule { }
