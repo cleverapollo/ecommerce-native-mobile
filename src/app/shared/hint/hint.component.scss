@@ -1,0 +1,16 @@
+.wantic-hint {
+    color: white;
+    padding: var(--wantic-container-spacing);
+}
+
+.wantic-hint-default {
+    background-color: var(--ion-color-primary);
+}
+
+.wantic-hint-success {
+    background-color: var(--ion-color-success);
+}
+
+.wantic-hint-danger {
+    background-color: var(--ion-color-danger);
+}
