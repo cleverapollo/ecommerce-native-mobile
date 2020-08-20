@@ -1,5 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+export type HintType = "default" | "success" | "danger" | "info";
+export class HintConfig {
+  type: HintType;
+  text: String
+
+  constructor(type: HintType, text: String) {
+    this.type = type;
+    this.text = text;
+  }
+}
+
 @Component({
   selector: 'app-hint',
   templateUrl: './hint.component.html',
@@ -7,13 +18,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class HintComponent implements OnInit {
 
-  @Input() type: "default" | "success" | "danger" | "info";
-  @Input() text: String
+  @Input() config: HintConfig
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.type, this.text);
-  }
+  ngOnInit() {}
 
 }
+
+export const hintConfigForSuccessResponse = new HintConfig("success", "Deine Änderungen wurden erfolgreich gespeichert!");
+export const hintConfigForErrorResponse = new HintConfig("danger", "Deine Änderungen konnten leider nicht gespeichert werdem!");

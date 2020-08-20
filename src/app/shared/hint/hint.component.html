@@ -1,7 +1,7 @@
 <div class="ion-text-center wantic-hint"  
-  [ngClass]="{  'wantic-hint-success': type === 'success', 
-                'wantic-hint-danger': type === 'danger',
-                'wantic-hint-default': type === 'default'
+  [ngClass]="{  'wantic-hint-success': config?.type === 'success', 
+                'wantic-hint-danger': config?.type === 'danger',
+                'wantic-hint-default': config?.type === 'default'
               }">
-  <small>{{ text }}</small>
+  <small>{{ config?.text }}</small>
 </div>
