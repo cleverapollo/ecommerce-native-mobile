@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
 import { ActivatedRoute } from '@angular/router';
 import { UserApiService } from 'src/app/shared/api/user-api.service';
+import { HintConfig, hintConfigForSuccessResponse } from 'src/app/shared/hint/hint.component';
+import { UserProfileDataService } from '../../user-profile-data.service';
 
 @Component({
   selector: 'app-birthday-update',
@@ -11,6 +13,8 @@ import { UserApiService } from 'src/app/shared/api/user-api.service';
 })
 export class BirthdayUpdatePage implements OnInit {
 
+  showHint: Boolean;
+  hintConfig: HintConfig;
   form: FormGroup;
   get validationMessages(): ValidationMessages {
     return {
@@ -20,9 +24,15 @@ export class BirthdayUpdatePage implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private api: UserApiService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private formBuilder: FormBuilder, 
+    private api: UserApiService, 
+    private userProfileDataService: UserProfileDataService) 
+  { }
 
   ngOnInit() {
+    this.showHint = false;
     const birthday = this.route.snapshot.data.profile.birthday;
     this.form = this.formBuilder.group({
       birthday: this.formBuilder.control(birthday, [Validators.required])
@@ -30,9 +40,21 @@ export class BirthdayUpdatePage implements OnInit {
   }
 
   saveChanges() {
-    this.api.partialUpdateBirthday(this.form.controls.birthday.value).toPromise().then( updatedProfile => {
-      console.log(updatedProfile);
-    }, e => console.error);
+    this.api.partialUpdateBirthday(this.form.controls.birthday.value).toPromise()
+      .then(updatedProfile => {
+        this.userProfileDataService.updateUserProfile(updatedProfile);
+        this.hintConfig = hintConfigForSuccessResponse;
+      })
+      .catch(e => {
+        console.error(e);
+        this.hintConfig = hintConfigForSuccessResponse;
+      })
+      .finally(() => {
+        this.showHint = true;
+        setTimeout(() => {
+          this.showHint = false;
+        }, 3000);
+      });
   }
 
 
