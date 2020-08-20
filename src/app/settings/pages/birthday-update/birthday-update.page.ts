@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
 import { ActivatedRoute } from '@angular/router';
 import { UserApiService } from 'src/app/shared/api/user-api.service';
-import { HintConfig, hintConfigForSuccessResponse } from 'src/app/shared/hint/hint.component';
+import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/hint/hint.component';
 import { UserProfileDataService } from '../../user-profile-data.service';
 
 @Component({
@@ -47,7 +47,7 @@ export class BirthdayUpdatePage implements OnInit {
       })
       .catch(e => {
         console.error(e);
-        this.hintConfig = hintConfigForSuccessResponse;
+        this.hintConfig = hintConfigForErrorResponse;
       })
       .finally(() => {
         this.showHint = true;
