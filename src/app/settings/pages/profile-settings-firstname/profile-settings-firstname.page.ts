@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
 import { UserApiService } from 'src/app/shared/api/user-api.service';
+import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/hint/hint.component';
+import { UserProfileDataService } from '../../user-profile-data.service';
 
 @Component({
   selector: 'app-profile-settings-firstname',
@@ -12,6 +14,9 @@ import { UserApiService } from 'src/app/shared/api/user-api.service';
 export class ProfileSettingsFirstnamePage implements OnInit {
 
   form: FormGroup;
+  showHint: Boolean;
+  hintConfig: HintConfig
+  
   get validationMessages(): ValidationMessages {
     return {
       firstName: [
@@ -21,7 +26,12 @@ export class ProfileSettingsFirstnamePage implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private api: UserApiService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private formBuilder: FormBuilder, 
+    private api: UserApiService,
+    private userProfileDataService: UserProfileDataService) 
+  { }
 
   ngOnInit() {
     const firstName = this.route.snapshot.data.profile.firstName;
@@ -31,9 +41,21 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   }
 
   saveChanges() {
-    this.api.partialUpdateFirstName(this.form.controls.firstName.value).toPromise().then( updatedProfile => {
-      console.log(updatedProfile);
-    }, e => console.error);
+    this.api.partialUpdateFirstName(this.form.controls.firstName.value).toPromise()
+      .then(updatedProfile => {
+        this.userProfileDataService.updateUserProfile(updatedProfile);
+        this.hintConfig = hintConfigForSuccessResponse;
+      })
+      .catch(e => {
+        console.error(e);
+        this.hintConfig = hintConfigForErrorResponse;
+      })
+      .finally(() => {
+        this.showHint = true;
+        setTimeout(() => {
+          this.showHint = false;
+        }, 3000);
+      })
   }
 
 }
