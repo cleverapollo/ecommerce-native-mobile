@@ -21,8 +21,8 @@
       <ion-label>
         <h2>Profilbild</h2>
         <ion-avatar class="creator-image">
-          <img *ngIf="profile?.profileImageUrl" [src]="profile.profileImageUrl | cacheImage | async"/>
-          <img *ngIf="!profile?.profileImageUrl" src="assets/images/avatar-placeholder.jpg"/>
+          <img *ngIf="profile?.profileImageUrl" [src]="profile.profileImageUrl | cacheImage | async" alt="profile image"/>
+          <img *ngIf="!profile?.profileImageUrl" src="assets/images/avatar-placeholder.jpg" alt="placeholder image"/>
         </ion-avatar>
       </ion-label>
     </ion-item>
@@ -48,7 +48,7 @@
       <ion-icon slot="end" name="arrow-forward"></ion-icon>
       <ion-label>
         <h2>Geburtsdatum</h2>
-        <h3 *ngIf="profile.birthday">{{ profile.birthday | date:'DD.MM.YYYY' }}</h3>
+        <h3 *ngIf="profile.birthday">{{ profile.birthday | date:'dd.MM.yyyy' }}</h3>
         <h3 *ngIf="!profile.birthday"><i>noch nicht eingetragen</i></h3>
       </ion-label>
     </ion-item>
