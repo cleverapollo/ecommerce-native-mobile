@@ -33,7 +33,11 @@ const routes: Routes = [
     canActivate: [EmailVerificationTokenGuard],
     resolve: { emailVerificationResponse: EmailVerificationResolver },
     loadChildren: () => import('./email-confirmation/email-confirmation.module').then( m => m.EmailConfirmationPageModule)
+  },  {
+    path: 'reset-password',
+    loadChildren: () => import('./reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
+
 
 ];
 

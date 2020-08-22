@@ -17,3 +17,7 @@ export interface UpdatePasswordRequest {
     newPassword: String;
     newPasswordConfirmed: String;
 }
+
+export interface ResetPasswordRequest {
+    email: String;
+}
