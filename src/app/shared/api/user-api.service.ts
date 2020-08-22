@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { UserSearchResult, UpdatePasswordRequest, ResetPasswordRequest } from './user-api.model';
+import { UserSearchResult, UpdatePasswordRequest, ChangePasswordRequest } from './user-api.model';
 import { UserProfile, UploadFileResponse } from '../models/user.model';
-import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +41,10 @@ export class UserApiService {
 
   updatePassword(updatePasswordRequest: UpdatePasswordRequest): Observable<Object> {
     return this.apiService.put(`user/update-password`, updatePasswordRequest);
+  }
+
+  changePassword(changewPasswordRequest: ChangePasswordRequest): Observable<Object> {
+    return this.apiService.post(`user/change-password`, changewPasswordRequest);
   }
 
   updateProfile(updatedProfile: UserProfile) : Observable<Object> {

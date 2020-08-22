@@ -18,6 +18,8 @@ export interface UpdatePasswordRequest {
     newPasswordConfirmed: String;
 }
 
-export interface ResetPasswordRequest {
-    email: String;
+export interface ChangePasswordRequest {
+    password: string;
+    passwordConfirmed: string;
+    token: string;
 }
