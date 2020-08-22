@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { UserSearchResult } from './user-api.model';
+import { UserSearchResult, UpdatePasswordRequest } from './user-api.model';
 import { UserProfile, UploadFileResponse } from '../models/user.model';
 
 @Injectable({
@@ -33,6 +33,10 @@ export class UserApiService {
 
   partialUpdateEmail(email: string): Observable<UserProfile> {
     return this.apiService.patch('user/profiles/email', { email: email }) as Observable<UserProfile>
+  }
+
+  updatePassword(updatePasswordRequest: UpdatePasswordRequest): Observable<Object> {
+    return this.apiService.put(`user/update-password`, updatePasswordRequest);
   }
 
   updateProfile(updatedProfile: UserProfile) : Observable<Object> {

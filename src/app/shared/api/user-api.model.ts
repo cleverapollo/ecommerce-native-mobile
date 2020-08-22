@@ -11,3 +11,9 @@ export interface WanticJwtToken {
     exp: Number;
     iat: Number;
 }
+
+export interface UpdatePasswordRequest {
+    currentPassword: String;
+    newPassword: String;
+    newPasswordConfirmed: String;
+}

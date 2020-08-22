@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
 import { ActivatedRoute } from '@angular/router';
 import { CustomValidation } from 'src/app/shared/custom-validation';
+import { UserApiService } from 'src/app/shared/api/user-api.service';
+import { UpdatePasswordRequest } from 'src/app/shared/api/user-api.model';
+import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/hint/hint.component';
 
 @Component({
   selector: 'app-password-update',
@@ -12,6 +15,9 @@ import { CustomValidation } from 'src/app/shared/custom-validation';
 export class PasswordUpdatePage implements OnInit {
 
   form: FormGroup;
+  showHint: Boolean;
+  hintConfig: HintConfig
+  
   get validationMessages(): ValidationMessages {
     return {
       currentPassword: [
@@ -29,7 +35,7 @@ export class PasswordUpdatePage implements OnInit {
     }
   }
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private api: UserApiService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -52,7 +58,25 @@ export class PasswordUpdatePage implements OnInit {
   }
 
   saveChanges() {
-    console.log('save changes');
+    const request: UpdatePasswordRequest = {
+      currentPassword: this.form.controls.currentPassword.value,
+      newPassword: this.form.controls.value.value,
+      newPasswordConfirmed: this.form.controls.confirm.value
+    }
+    this.api.updatePassword(request).toPromise()
+      .then(() => {
+        this.hintConfig = hintConfigForSuccessResponse;
+      })
+      .catch(e => {
+        console.error(e);
+        this.hintConfig = hintConfigForErrorResponse;
+      })
+      .finally(() => {
+        this.showHint = true;
+        setTimeout(() => {
+          this.showHint = false;
+        }, 3000);
+      })
   }
 
 }
