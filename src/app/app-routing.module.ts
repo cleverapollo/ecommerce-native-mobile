@@ -12,9 +12,10 @@ import { EmailVerificationResolver } from './email-confirmation/email-verificati
 import { EmailVerificationTokenGuard } from './email-confirmation/email-verification-token.guard';
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./tab-bar/tab-bar.module').then( m => m.TabBarPageModule)
+  { 
+    path: '', 
+    redirectTo: 'start', 
+    pathMatch: 'full' 
   },
   {
     path: 'login',
@@ -33,7 +34,8 @@ const routes: Routes = [
     canActivate: [EmailVerificationTokenGuard],
     resolve: { emailVerificationResponse: EmailVerificationResolver },
     loadChildren: () => import('./email-confirmation/email-confirmation.module').then( m => m.EmailConfirmationPageModule)
-  },  {
+  },
+  {
     path: 'reset-password',
     loadChildren: () => import('./reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
