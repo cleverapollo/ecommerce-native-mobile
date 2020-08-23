@@ -37,8 +37,4 @@ export class WishListWishPage implements OnInit {
     });
   }
 
-  goBack() {
-    this.navController.back();
-  }
-
 }

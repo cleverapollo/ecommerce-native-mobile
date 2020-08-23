@@ -94,9 +94,4 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     }
   }
 
-  goBack() {
-    this.navController.back();
-  }
-
-
 }

@@ -55,8 +55,4 @@ export class WishListNamePage implements OnInit, OnDestroy {
     this.router.navigate(['../wish-list-date'], { relativeTo: this.route })
   }
 
-  goBack() {
-    this.navController.back();
-  }
-
 }

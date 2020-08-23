@@ -70,8 +70,4 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
     this.router.navigate(['../credentials'], { relativeTo: this.route })
   }
 
-  goBack() {
-    this.navController.back();
-  }
-
 }

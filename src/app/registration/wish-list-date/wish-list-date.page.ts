@@ -20,6 +20,9 @@ export class WishListDatePage implements OnInit, OnDestroy {
     ]
   }
 
+  get minDate(): number { return new Date().getFullYear(); } 
+  get maxDate(): number { return this.minDate + 10; }
+
   private registrationDto: RegistrationDto;
   private formSubscription: Subscription;
 
@@ -55,10 +58,5 @@ export class WishListDatePage implements OnInit, OnDestroy {
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-partner'], { relativeTo: this.route })
   }
-
-  goBack() {
-    this.navController.back();
-  }
-
 
 }

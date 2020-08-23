@@ -42,8 +42,4 @@ export class SearchResultsPage implements OnInit, OnDestroy {
     this.router.navigate(['../first-name'], { relativeTo: this.route });
   }
 
-  goBack() {
-    this.navController.back();
-  }
-
 }

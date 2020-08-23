@@ -57,9 +57,4 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-wish'], { relativeTo: this.route })
   }
-
-  goBack() {
-    this.navController.back();
-  }
-
 }
