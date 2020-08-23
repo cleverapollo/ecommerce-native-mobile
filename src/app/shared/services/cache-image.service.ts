@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { File, FileEntry } from '@ionic-native/file/ngx';
 import { Storage } from '@ionic/storage';
 
 @Injectable({
