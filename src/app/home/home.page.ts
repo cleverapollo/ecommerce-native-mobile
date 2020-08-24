@@ -36,7 +36,7 @@ export class HomePage implements OnInit {
 
   selectWishList(wishList: WishListDto) {
     this.wishListService.updateSelectedWishList(wishList);
-    this.navController.navigateForward('tabs/home/wish-list-detail');
+    this.navController.navigateForward('secure/home/wish-list-detail');
   }
 
 }

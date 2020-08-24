@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { LoginForm } from './login-form';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -27,15 +27,15 @@ export class LoginPage implements OnInit {
   constructor(
     private navController: NavController,
     private formBuilder: FormBuilder, 
-    private authService: AuthenticationService, 
-    private router: Router) { 
+    private authService: AuthenticationService,
+    private route: ActivatedRoute) { 
 
   }
 
   ngOnInit() {
     this.authService.authenticationState.subscribe(state => {
       if (state) {
-        this.router.navigate(['']);
+        this.navToHome();
       }
     });
     this.loginForm = this.formBuilder.group({
@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
     const input = this.loginForm.value as LoginForm;
     this.authService.login(input.email, input.password).then(() => {
       this.loginForm.reset();
-      this.router.navigate(['']);
+      this.navToHome();
     }).catch(() => {
       console.error('Fehler beim Login!');
     });
@@ -56,6 +56,10 @@ export class LoginPage implements OnInit {
 
   navToPasswordForgottenPage() {
     this.navController.navigateForward('reset-password');
+  }
+
+  navToHome() {
+    this.navController.navigateRoot('secure/home');
   }
 
   goBack() {

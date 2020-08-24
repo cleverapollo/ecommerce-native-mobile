@@ -10,7 +10,7 @@ import { UserProfileResolver } from '../shared/user-profile.resolver';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabBarPage, 
     children: [
       {
@@ -56,14 +56,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: 'secure/home',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: 'secure/home',
     pathMatch: 'full'
   }
 ];

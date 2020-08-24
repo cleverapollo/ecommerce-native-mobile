@@ -27,7 +27,7 @@ export class FriendsWishListOverviewPage implements OnInit {
 
   selectWishList(wishList: FriendWishList) {
     this.wishListService.updateSelectedWishList(wishList);
-    this.navContoller.navigateForward('tabs/friends-wish-list-overview/friends-wish-list-detail');
+    this.navContoller.navigateForward('secure/friends-wish-list-overview/friends-wish-list-detail');
   }
 
 }

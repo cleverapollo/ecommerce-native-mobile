@@ -46,7 +46,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   selectWish(wish: WishDto) {
     this.wishListService.updateSelectedWish(wish);
-    this.navController.navigateForward('tabs/home/wish-list-detail/wish-detail');
+    this.navController.navigateForward('secure/home/wish-list-detail/wish-detail');
   }
 
   goBack() {
