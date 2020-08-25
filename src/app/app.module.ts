@@ -21,7 +21,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from './shared/user-profile.resolver';
 import { FriendSelectOptionsResolver } from './wish-list-create-update/friend-list-select-options.resolver';
-import { UserRoleResolver } from './shared/user-role.resolver';
 import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { HttpRequestLoadingInterceptor } from './interceptors/http-loading.interceptor';
@@ -67,7 +66,6 @@ export function jwtOptionsFactory(storage) {
     UserProfileResolver,
     WishListResolver,
     WishListSelectOptionsResolver,
-    UserRoleResolver,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'de' },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestLoadingInterceptor, multi: true }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { WishListService } from '../shared/services/wish-list.service';
 import { WishListDto } from '../shared/models/wish-list.model';
 import { NavController } from '@ionic/angular';
@@ -13,11 +13,6 @@ export class HomePage implements OnInit {
 
   wishLists: Array<WishListDto> = new Array();
   subText: string = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wunschlisten und Wünsche hinzufügen.';
-
-  get userIsUnverified(): Boolean {
-    const userRole: string = this.route.snapshot.data.userRole;
-    return userRole === 'ROLE_USER_UNVERIFIED';
-  }
 
   constructor(
     private route: ActivatedRoute, 

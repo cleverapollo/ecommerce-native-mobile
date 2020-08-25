@@ -6,7 +6,6 @@ import { WishListSelectOptionsResolver } from './wish-new/wish-list-select-optio
 import { FriendsWishListResolver } from './friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from './shared/user-profile.resolver';
 import { FriendSelectOptionsResolver } from './wish-list-create-update/friend-list-select-options.resolver';
-import { UserRoleResolver } from './shared/user-role.resolver';
 import { RoleGuard } from './shared/services/role.guard';
 import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';
 import { EmailVerificationTokenGuard } from './email-confirmation/email-verification-token.guard';
