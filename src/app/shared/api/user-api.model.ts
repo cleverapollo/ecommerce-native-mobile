@@ -5,9 +5,16 @@ export class UserSearchResult {
     public userExists: boolean;
 }
 
+export enum UserState {
+    UNKNOWN = "UNKNOWN",
+    ACTIVE = "ACTIVE",
+    UNVERIFIED = "UNVERIFIED",
+    PREACTIVE = "PREACTIVE"
+}
+
 export interface WanticJwtToken {
     sub: string;
-    role: string;
+    userState: UserState;
     exp: Number;
     iat: Number;
 }

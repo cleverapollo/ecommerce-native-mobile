@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { RegistrationApiService } from '../api/registration-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { UserState } from '../api/user-api.model';
 
 @Component({
   selector: 'app-email-unverified-hint',
@@ -15,15 +16,15 @@ export class EmailUnverifiedHintComponent implements OnInit {
   private requestIsRunning: boolean = false;
   private successResponse: boolean = false;
   private errorResponse: boolean = false;
-  private userRole: string;
+  private userState: UserState;
 
   constructor(
     private registrationApiService: RegistrationApiService, 
     private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.role.then( role => {
-      this.userRole = role;
+    this.userService.userState.then( userState => {
+      this.userState = userState;
     });
   }
 
@@ -32,7 +33,7 @@ export class EmailUnverifiedHintComponent implements OnInit {
   }
 
   get showHint(): Boolean {
-    return this.userRole === 'ROLE_USER_UNVERIFIED';
+    return this.userState === UserState.UNVERIFIED;
   }
 
   get errorOccured() : boolean {
