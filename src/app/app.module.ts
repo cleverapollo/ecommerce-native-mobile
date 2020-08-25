@@ -25,6 +25,7 @@ import { EmailVerificationResolver } from './email-confirmation/email-verificati
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { HttpRequestLoadingInterceptor } from './interceptors/http-loading.interceptor';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -63,6 +64,7 @@ export function jwtOptionsFactory(storage) {
     FriendSelectOptionsResolver,
     FriendsWishListResolver,
     Keyboard,
+    SocialSharing,
     UserProfileResolver,
     WishListResolver,
     WishListSelectOptionsResolver,
