@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RegistrationApiService } from '../api/registration-api.service';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-email-unverified-hint',
@@ -10,38 +12,46 @@ export class EmailUnverifiedHintComponent implements OnInit {
 
   @Input() subText: string;
 
-  requestIsRunning: boolean = false;
+  private requestIsRunning: boolean = false;
+  private successResponse: boolean = false;
+  private errorResponse: boolean = false;
+  private userRole: string;
 
-  private _emailSentSuccessfully: boolean = false;
-  private _errorOccured: boolean = false;
-
-  constructor(private registrationApiService: RegistrationApiService) { }
+  constructor(
+    private registrationApiService: RegistrationApiService, 
+    private userService: UserService) { }
 
   ngOnInit() {
-    console.log(this.subText);
+    this.userService.role.then( role => {
+      this.userRole = role;
+    });
   }
 
   get showButton() : boolean { 
     return !this.errorOccured && !this.success
   }
 
-  resendVerificationLink() {
-    this.requestIsRunning = true;
-    this.registrationApiService.requestEmailVerificationLink().then(() => {
-      this._emailSentSuccessfully = true;
-    }, e => {
-      this._errorOccured = true;
-    }).finally(() => {
-      this.requestIsRunning = false;
-    });
+  get showHint(): Boolean {
+    return this.userRole === 'ROLE_USER_UNVERIFIED';
   }
 
   get errorOccured() : boolean {
-    return !this.requestIsRunning && this._errorOccured;
+    return !this.requestIsRunning && this.errorResponse;
   }
 
   get success(): boolean {
-    return !this.requestIsRunning && this._emailSentSuccessfully;
+    return !this.requestIsRunning && this.successResponse;
+  }
+
+  resendVerificationLink() {
+    this.requestIsRunning = true;
+    this.registrationApiService.requestEmailVerificationLink().then(() => {
+      this.successResponse = true;
+    }, e => {
+      this.errorResponse = true;
+    }).finally(() => {
+      this.requestIsRunning = false;
+    });
   }
 
 }

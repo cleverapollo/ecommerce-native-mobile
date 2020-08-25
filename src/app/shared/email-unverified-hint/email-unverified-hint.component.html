@@ -1,4 +1,4 @@
-<div class="ion-text-center wantic-info-box">
+<div class="ion-text-center wantic-info-box" *ngIf="showHint">
   <strong class="white-text">BITTE BESTÄTIGE DEINE E-MAIL-ADRESSE!</strong><br>
   <small class="white-text">{{ subText }}</small> <br>
   <ion-button color="tertiary" size="small" (click)="resendVerificationLink()" *ngIf="showButton">
