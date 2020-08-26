@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { WishListService } from '../shared/services/wish-list.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '../shared/models/wish-list.model';
+import { WishListApiService } from '../shared/api/wish-list-api.service';
 
 @Component({
   selector: 'app-wish-list-detail',
@@ -18,7 +19,8 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   constructor(
     private wishListService: WishListService, 
-    private navController: NavController
+    private navController: NavController,
+    private wishListApiService: WishListApiService
   ) { }
 
   ngOnInit() {
@@ -44,6 +46,12 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   goBack() {
     this.navController.back();
+  }
+
+  shareWishList() {
+    this.wishListApiService.getLinkForSocialSharing(this.wishList.id).toPromise().then( link => {
+      console.log(link);
+    }, e => console.error);
   }
 
 }

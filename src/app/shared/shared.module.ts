@@ -11,11 +11,25 @@ import { HintComponent } from './hint/hint.component';
 
 
 @NgModule({
-  declarations: [SecurePipe, OwnerNamesPipe, ValidationMessagesComponent, EmailUnverifiedHintComponent, CacheImagePipe, HintComponent],
+  declarations: [
+    SecurePipe, 
+    OwnerNamesPipe, 
+    ValidationMessagesComponent, 
+    EmailUnverifiedHintComponent, 
+    CacheImagePipe, 
+    HintComponent
+  ],
   imports: [
     CommonModule,
     IonicModule
   ],
-  exports: [SecurePipe, OwnerNamesPipe, ValidationMessagesComponent, EmailUnverifiedHintComponent, CacheImagePipe, HintComponent]
+  exports: [
+    SecurePipe, 
+    OwnerNamesPipe, 
+    ValidationMessagesComponent, 
+    EmailUnverifiedHintComponent, 
+    CacheImagePipe, 
+    HintComponent
+  ]
 })
 export class SharedModule { }

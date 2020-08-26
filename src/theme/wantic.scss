@@ -21,8 +21,8 @@ ion-button.wantic-save-button {
     text-transform: uppercase;
     height: 48px;
     --border-radius: 50pt;
-    margin-left: 46pt;
-    margin-right: 46pt;
+    margin-left: var(--wantic-margin);
+    margin-right: var(--wantic-margin);
     margin-bottom: 40pt;
     letter-spacing: 1pt;
 }
@@ -100,8 +100,8 @@ form {
         --inner-padding-end: 0;
         --padding-start: 0;
         --padding-end: 0;
-        margin-left: 46pt;
-        margin-right: 46pt;
+        margin-left: var(--wantic-margin);
+        margin-right: var(--wantic-margin);
         margin-bottom: 20px;
         ion-input, ion-datetime, ion-textarea, ion-searchbar, ion-select {
             border: 2px solid var(--ion-color-secondary);

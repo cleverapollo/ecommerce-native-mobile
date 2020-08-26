@@ -51,6 +51,10 @@
     <ion-icon slot="start" name="add"></ion-icon>
     Wunsch hinzufügen
   </ion-button>
+  <ion-button (click)="shareWishList()" id="button-share-wish-list" fill="clear" expand="full">
+    <ion-icon slot="start" name="share"></ion-icon>
+    Teilen
+  </ion-button>
   <ion-grid>
     <ion-row>
       <ion-col (click)="selectWish(wish)" size="6" *ngFor="let wish of wishList.wishes">

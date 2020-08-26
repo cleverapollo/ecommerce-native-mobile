@@ -1,0 +1,11 @@
+<form [formGroup]="form" *ngIf="form">
+  <h1>{{ wish.name }} schenken</h1>
+  <p>
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  </p>
+  <ion-item lines="none">
+    <ion-input inputmode="email" name="email" type="email" placeholder="E-Mail" formControlName="email"></ion-input>
+  </ion-item>
+  <app-validation-messages [control]="form.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
+  <ion-button class="wantic-save-button" type="submit" [disabled]="!form.valid" expand="block">Schenken</ion-button>
+</form>

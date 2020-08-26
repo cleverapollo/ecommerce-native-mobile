@@ -9,6 +9,8 @@ import { FriendSelectOptionsResolver } from './wish-list-create-update/friend-li
 import { RoleGuard } from './shared/services/role.guard';
 import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';
 import { EmailVerificationTokenGuard } from './email-confirmation/email-verification-token.guard';
+import { SharedWishListResolver } from './shared-wish-list/shared-wish-list.resolver';
+import { SharedWishListPageGuard } from './shared-wish-list/shared-wish-list-page.guard';
 
 const routes: Routes = [
   { 
@@ -46,7 +48,12 @@ const routes: Routes = [
     path: 'secure',
     loadChildren: () => import('./tab-bar/tab-bar.module').then( m => m.TabBarPageModule)
   },
-
+  {
+    path: 'shared-wish-list',
+    canActivate: [SharedWishListPageGuard],
+    resolve: { wishList: SharedWishListResolver },
+    loadChildren: () => import('./shared-wish-list/shared-wish-list.module').then( m => m.SharedWishListPageModule)
+  },
 ];
 
 @NgModule({

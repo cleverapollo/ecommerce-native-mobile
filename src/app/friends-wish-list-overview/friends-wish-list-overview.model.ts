@@ -23,3 +23,10 @@ export class FriendWishListOwner {
     firstName: String;
     profileImageUrl: String;
 }
+
+export class SharedWishListDto {
+    name: String;
+    date: Date;
+    wishes: Array<FriendWish>;
+    inviterName: String;
+}
