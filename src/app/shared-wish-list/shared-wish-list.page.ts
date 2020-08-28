@@ -3,6 +3,9 @@ import { SharedWishListDto, FriendWish } from '../friends-wish-list-overview/fri
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { GiveSharedWishModalComponent } from './give-shared-wish-modal/give-shared-wish-modal.component';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { WishListApiService } from '../shared/api/wish-list-api.service';
+import { StorageService } from '../shared/services/storage.service';
 
 @Component({
   selector: 'app-shared-wish-list',
@@ -13,22 +16,67 @@ export class SharedWishListPage implements OnInit {
 
   wishList: SharedWishListDto
 
-  constructor(private route: ActivatedRoute, private modalController: ModalController) { }
+  private STORAGE_KEY = 'SHARED_WISH_LIST_EMAIL';
+  private email?: string;
+
+  constructor(
+    private route: ActivatedRoute, 
+    private storageService: StorageService,
+    private modalController: ModalController,
+    private inAppBrowser: InAppBrowser,
+    private wishListApiService: WishListApiService
+  ) { }
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
+    this.initEmailIfExists();
   }
 
-  openModal(wish: FriendWish) {
-    this.modalController.create({
+  private async initEmailIfExists() {
+    this.email = await this.storageService.get<string>(this.STORAGE_KEY);
+  }
+
+  give(wish: FriendWish) {
+    if (this.email && wish.bought && !wish.reservedByFriend) {
+      this.togglePurchaseState(wish);
+    } else {
+      this.openModal(wish);
+    }
+  }
+
+  private async openModal(wish: FriendWish) {
+    const modal = await this.modalController.create({
       component: GiveSharedWishModalComponent,
       componentProps: {
-        wish: wish
+        wish: wish,
+        email: this.email
       },
-      cssClass: 'wantic-modal'
-    }).then( (modal) => {
-      modal.present();
+      cssClass: 'wantic-modal',
+    });
+
+    modal.onWillDismiss().then((data) => {
+      this.wishList = data['data'];
+      this.openWishInAppBrowserAfterThreeSeconds(wish);
     })
+    return modal.present();
+  } 
+
+  private togglePurchaseState(wish: FriendWish) {
+    this.wishListApiService.registerAndSatisfyWish({ 
+      identifier: this.route.snapshot.queryParams.identifier, 
+      email: this.email, 
+      wishId: wish.id 
+    }).toPromise().then( wishList => {
+      this.wishList = wishList;
+    }, console.error)
+  }
+
+  private openWishInAppBrowserAfterThreeSeconds(wish: FriendWish) {
+    setTimeout(() => {
+      const url = wish.productUrl
+      const browser = this.inAppBrowser.create(url);
+      browser.show();
+    }, 3000);
   }
 
 }

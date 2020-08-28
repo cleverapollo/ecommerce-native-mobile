@@ -30,3 +30,9 @@ export class SharedWishListDto {
     wishes: Array<FriendWish>;
     inviterName: String;
 }
+
+export interface RegisterAndSatisfyWishRequest {
+    identifier: String;
+    email: String;
+    wishId: Number;
+}

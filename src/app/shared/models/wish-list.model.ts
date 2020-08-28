@@ -19,7 +19,6 @@ export class WishListMemberDto {
     name: String;
     failedToSendEmail: boolean;
     email: String = null;
-    preactiveUserId: String = null;
     profileImageUrl: String = null;
 
     static forUserSearchResult(userSearchResult: UserSearchResult) : WishListMemberDto {
@@ -43,7 +42,6 @@ export class WishListPartnerDto {
     name: String;
     failedToSendEmail: boolean;
     email: String = null;
-    preactiveUserId: String = null;
     profileImageUrl: String = null;
 
     static forUserSearchResult(userSearchResult: UserSearchResult) : WishListMemberDto {

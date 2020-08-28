@@ -4,7 +4,7 @@ import { WishListCreateRequest, WishListUpdateRequest } from 'src/app/wish-list-
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { WishListDto, WishDto, WishListSelectOptionDto } from '../models/wish-list.model';
-import { SharedWishListDto } from 'src/app/friends-wish-list-overview/friends-wish-list-overview.model';
+import { SharedWishListDto, RegisterAndSatisfyWishRequest } from 'src/app/friends-wish-list-overview/friends-wish-list-overview.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +52,10 @@ export class WishListApiService {
   getSharedWishList(identifier: string) : Observable<SharedWishListDto> {
     const params = new HttpParams().set('identifier', identifier);
     return this.apiService.get('shared-wish-list', params);
+  }
+
+  registerAndSatisfyWish(data: RegisterAndSatisfyWishRequest) : Observable<SharedWishListDto> {
+    return this.apiService.post('shared-wish-list', data) as  Observable<SharedWishListDto>;
   }
   
 }

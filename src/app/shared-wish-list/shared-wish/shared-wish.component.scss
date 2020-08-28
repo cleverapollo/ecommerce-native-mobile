@@ -3,7 +3,10 @@
 }
 
 .give-button {
-    font-size: 10pt;
+    font-size: 10px;
+    font-weight: bold;
+    --border-radius: 40px;
+    letter-spacing: 1pt;
 }
 
 ion-img {
@@ -26,6 +29,11 @@ ion-card {
     ion-card-content {
         border-top: 1px dashed #F0EDE3;
     }
+}
+
+.wish-bought {
+    border: 2px solid var(--ion-color-tertiary);
+    border-radius: 10pt;
 }
 
 .wish-reserved {

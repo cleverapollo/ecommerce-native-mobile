@@ -3,12 +3,21 @@ import { SharedWishListDto } from '../friends-wish-list-overview/friends-wish-li
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { WishListApiService } from '../shared/api/wish-list-api.service';
+import { StorageService } from '../shared/services/storage.service';
 
 @Injectable()
-export class SharedWishListResolver implements Resolve<Observable<SharedWishListDto>> {
-  constructor(private wishListApi: WishListApiService) {}
+export class SharedWishListResolver implements Resolve<Promise<SharedWishListDto>> {
+  constructor(private wishListApi: WishListApiService, private storageService: StorageService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) { 
-    return this.wishListApi.getSharedWishList(route.queryParams.identifier);
+    return new Promise<SharedWishListDto>((resolve, reject) => {
+      let identifier = route.queryParams.identifier;
+      this.storageService.get<string>('SHARED_WISH_LIST_EMAIL').then((storedEmail) => {
+        if (storedEmail) {
+          identifier += `_${storedEmail}`;
+        }
+        this.wishListApi.getSharedWishList(identifier).toPromise().then(resolve).catch(reject);
+      })
+    })
   }
 }
