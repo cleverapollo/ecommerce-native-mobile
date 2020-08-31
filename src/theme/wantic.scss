@@ -186,6 +186,7 @@ ion-header {
 .creator-image.standalone {
     margin-left: 50px;
     margin-right: 11px;
+    margin-top: 0;
 }
 
 .creator-image.first {
@@ -213,6 +214,7 @@ ion-header {
     font-family: 'Roboto';
     font-size: 14px;
     color: #3E3E3E;
+    line-height: 20px;
 }
 
 .wish-price {
@@ -222,8 +224,8 @@ ion-header {
 }
 
 .image-container {
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
     ion-img {
         width: 50%;
         margin: auto;

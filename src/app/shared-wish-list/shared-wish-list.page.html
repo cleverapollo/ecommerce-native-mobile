@@ -1,6 +1,6 @@
 <ion-header no-border>
   <ion-toolbar class="ion-text-center">
-    <ion-title size="large" class="wantic-title">wantic</ion-title>
+    <img src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +10,8 @@
       <img  src="assets/images/avatar-placeholder.jpg">
     </ion-avatar>
     <ion-label class="ion-text-wrap">
-      <h1>{{ wishList.inviterName }} <br><small>{{ wishList.name }}</small></h1>
+      <h1>{{ wishList.inviterName }} </h1>
+      <p>{{ wishList.name }}</p>
       <p>{{ wishList.date | date }}</p>
     </ion-label>
   </ion-item>

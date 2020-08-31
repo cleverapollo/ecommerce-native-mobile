@@ -2,11 +2,13 @@
     border-top: 1px dashed #f7f6f1;
 }
 
-.give-button {
+ion-button.give-button {
     font-size: 10px;
     font-weight: bold;
     --border-radius: 40px;
     letter-spacing: 1pt;
+    margin-top: 9px;
+    --margin-top: 9px;
 }
 
 ion-img {
@@ -28,6 +30,8 @@ ion-card {
     height: 100%;
     ion-card-content {
         border-top: 1px dashed #F0EDE3;
+        padding-right: 10px;
+        padding-left: 10px;
     }
 }
 

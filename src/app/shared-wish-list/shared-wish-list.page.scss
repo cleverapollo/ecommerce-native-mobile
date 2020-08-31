@@ -1,0 +1,28 @@
+h1, p {
+    line-height: 19px;
+}
+
+p {
+    margin-top: 3px;
+    font-size: 17px;
+}
+
+ion-item {
+    margin-top: 10px;
+    --margin-top: 10px;
+    ion-label {
+        --margin-top: 0;
+        margin-top: 0;
+    }
+}
+
+ion-grid {
+    --padding-top: 0;
+    padding-top: 0;
+    margin-top: 25px;
+}
+
+ion-toolbar {
+    --padding-top: 10px;
+    --background: linear-gradient(to bottom, white, white 70%, transparent 70%, transparent 100%)
+}
