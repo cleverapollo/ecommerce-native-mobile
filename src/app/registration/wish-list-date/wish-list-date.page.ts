@@ -59,4 +59,8 @@ export class WishListDatePage implements OnInit, OnDestroy {
     this.router.navigate(['../wish-list-partner'], { relativeTo: this.route })
   }
 
+  skip() {
+    this.navController.navigateForward('registration/wish-list-partner');
+  }
+
 }

@@ -4,11 +4,13 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button color="dark" class="skip-button" routerLink="../wish-list-partner">
+      <ion-button color="dark" class="skip-button" (click)="skip()">
         ÜBERSPRINGEN
       </ion-button>
     </ion-buttons>
-    <ion-title class="wantic-title">wantic</ion-title>
+    <ion-title>
+      <img src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
