@@ -2,13 +2,13 @@
     background-color: white;
 }
 
-ion-searchbar {
-    border: 2pt solid var(--ion-color-secondary);
-    border-radius: 9pt;
-    height: 48px;
-    --background: #f7f6f1;
-    --color: var(--ion-color-primary);
-    --box-shadow: none;
+ion-item {
+    --padding-start: 55px;
+    --padding-end: 55px;
+}
+
+.searchbar-input.sc-ion-searchbar-md {
+        box-shadow: none !important;
 }
 
 .wantic-save-button {

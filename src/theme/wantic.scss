@@ -51,9 +51,13 @@ ion-footer {
 }
 
 h1.wantic-page-header {
-    font-family: playfair-display;
+    font-family: 'PlayfairDisplay' !important;
+    --ion-font-family: 'PlayfairDisplay' !important;
     font-size: 18pt;
+    line-height: 25pt;
     color: var(--ion-color-tertiary);
+    margin-top: 4px;
+    margin-bottom: 6px;
 }
 
 // toolbar 
@@ -83,7 +87,20 @@ ion-item.ion-invalid.ion-touched, ion-item.ion-invalid.ion-dirty {
     border-color: var(--ion-color-danger);
 }
 
-ion-input, ion-datetime, ion-select, ion-textarea, ion-searchbar {
+ion-searchbar {
+    --background: white !important;
+    --border-radius: 50pt !important;
+    --placeholder-font-style: italic !important;
+    --placeholder-color: var(--ion-color-secondary) !important;
+    --placeholder-opacity: 1 !important;
+    --box-shadow: none !important;
+    background: white !important;
+    border-radius: 50pt !important;
+    height: 48px !important;
+    line-height: 19px !important;
+}
+
+ion-input, ion-datetime, ion-select, ion-textarea {
     --background: white !important;
     --color: var(--ion-color-primary);
     --placeholder-color: #FFA571 !important;
@@ -103,13 +120,8 @@ form {
         margin-left: var(--wantic-margin);
         margin-right: var(--wantic-margin);
         margin-bottom: 20px;
-        ion-input, ion-datetime, ion-textarea, ion-searchbar, ion-select {
-            border: 2px solid var(--ion-color-secondary);
-            border-radius: 9pt;
-            background: white;
-        }
-        ion-searchbar {
-            --placeholder-font-style: italic;
+        ion-input, ion-datetime, ion-textarea, ion-select {
+            border-radius: 50pt;
             background: white;
         }
         .ion-invalid.ion-touched, .ion-invalid.ion-dirty {
@@ -144,7 +156,8 @@ ion-button.wantic-margin-right-left {
 
 h1.registration {
     color: var(--ion-color-tertiary);
-    font-family: playfair-display;
+    --font-family: 'PlayfairDisplay' !important;
+    font-family: 'PlayfairDisplay' !important;
     font-weight: bold;
     font-size: 38px;
     padding-top: 10px;

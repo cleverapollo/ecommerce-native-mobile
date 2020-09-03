@@ -10,7 +10,10 @@
   </ion-text>
 
   <ion-item lines="none">
-    <ion-searchbar [(ngModel)]="keywords" placeholder="toaster" style="background: white;"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="keywords" 
+                  placeholder="z.B. Fjällräven Kånken"
+                  enterkeyhint="search"
+                  inputmode="search"></ion-searchbar>
   </ion-item>
 
   <ion-grid class="ion-center" *ngIf="!loading && products.length > 0">
