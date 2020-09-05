@@ -1,0 +1,29 @@
+<ion-header no-border>
+  <ion-toolbar class="ion-text-center" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <img src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text>
+    <h1 class="wantic-page-header ion-text-center">Wunsch hinzufügen</h1>
+  </ion-text>
+
+  <form [formGroup]="searchByAmazonApiForm" (ngSubmit)="searchByAmazonApi()">
+    <ion-item lines="none">
+      <ion-label position="stacked">Was wünschst du dir?</ion-label>
+      <ion-input type="text" enterkeyhint="search" placeholder="z.B. Fjällräven Kånken" [formControl]="keywords"></ion-input>
+    </ion-item>
+  </form>
+
+  <form [formGroup]="searchByUrlForm" (ngSubmit)="searchByUrl()">
+    <ion-item lines="none">
+      <ion-label position="stacked">URL deines Wunsches einfügen</ion-label>
+      <ion-input type="url" inputmode="url" enterkeyhint="search" placeholder="z.B. www.zalando.de/fjällrävenkå" [formControl]="url"></ion-input>
+    </ion-item>
+  </form>
+
+</ion-content>

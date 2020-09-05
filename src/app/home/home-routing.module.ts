@@ -22,6 +22,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./../wish-list-detail/wish-list-detail.module').then( m => m.WishListDetailPageModule)
   },
+  {
+    path: 'wish-search-selection',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./../wish-search-selection/wish-search-selection.module').then( m => m.WishSearchSelectionPageModule)
+  },
 ];
 
 @NgModule({

@@ -5,6 +5,13 @@ export class SearchResultItem {
     price: String;
     imageUrl: String;
     productUrl: string;
+
+    constructor(name: String, imageUrl: String, productUrl: string) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.productUrl = productUrl;
+        this.price = "";
+    }
 }
 
 export class SearchResultItemMapper {
