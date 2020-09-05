@@ -10,31 +10,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-item lines="none">
-    <ion-button fill="clear" style="margin-right: 5px;" (click)="goBack()">
-      <ion-icon slot="icon-only" src="assets/icon/back_button.svg"></ion-icon>
-    </ion-button>
-    <ion-text>
-      <h1 class="ion-text-center wantic-page-header">Wunsch hinzufügen</h1>
-    </ion-text>
-  </ion-item>
+  <h1 class="ion-text-center wantic-page-header">Wunsch hinzufügen</h1>
 
   <div class="image-container">
     <ion-img *ngIf="wish.imageUrl" [src]="wish.imageUrl"></ion-img>
   </div>
 
   <form [formGroup]="form">
-
-    <!--wish list id-->
-    <ion-item lines="none">
-      <ion-label position="stacked">Wähle eine Wunschliste aus</ion-label>
-      <ion-select formControlName="wishListId" placeholder="Wunschliste auswählen">
-        <ion-select-option *ngFor="let option of wishListSelectOptions" [value]="option.id">
-          {{ option.name }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <app-validation-messages [control]="form.get('wishListId')" [validationMessages]="validationMessages.wishListId"></app-validation-messages>
 
     <!--name-->
     <ion-item lines="none">
@@ -49,6 +31,20 @@
       <ion-input type="text" formControlName="price"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('price')" [validationMessages]="validationMessages.price"></app-validation-messages>
+
+    <!--wish list id-->
+    <p class="wantic-margin-right-left">Wähle deine Wunschliste</p>
+    <div class="wantic-radio-group-container wantic-margin-right-left">
+      <div class="inputGroup" [ngClass]="{ 'border-top-right-left': isFirst }" *ngFor="let option of wishListSelectOptions; first as isFirst">
+        <input  [id]="option.id" type="radio" [value]="option.id" formControlName="wishListId"/>
+        <label [for]="option.id">{{ option.name }}</label>
+      </div>
+      <div class="container-add-new-wish-list">
+        <img src="./assets/icon/wantic-add.svg" alt="Hinzufügen Icon"/>
+        <label>Neue Wunschliste anlegen</label>
+      </div>
+    </div>
+    <app-validation-messages [control]="form.get('wishListId')" [validationMessages]="validationMessages.wishListId"></app-validation-messages>
 
   </form>
 
