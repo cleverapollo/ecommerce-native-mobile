@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable, EMPTY } from 'rxjs';
-import { LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { retryWhen, delay, tap, catchError, finalize, map } from 'rxjs/operators';
+import { LoadingService } from '../shared/services/loading.service';
 
 @Injectable()
 export class HttpRequestLoadingInterceptor implements HttpInterceptor {
@@ -10,20 +11,12 @@ export class HttpRequestLoadingInterceptor implements HttpInterceptor {
     private static MAX_RETRY_COUNT = 3;
     private static RETRY_DELAY = 1000;
 
-    constructor(private loadingController: LoadingController, 
+    constructor(private loadingService: LoadingService, 
         private toastController: ToastController,
         private alertController: AlertController) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.loadingController.getTop().then(hasLoading => {
-            if (!hasLoading) {
-                this.loadingController.create({
-                    spinner: 'circles',
-                    translucent: true
-                }).then(loading => loading.present());
-            }
-        })
-        
+        this.loadingService.showLoadingSpinner();
         return next.handle(request).pipe( 
             retryWhen(err => {
                 let retries = 1;
@@ -46,11 +39,7 @@ export class HttpRequestLoadingInterceptor implements HttpInterceptor {
                 return EMPTY;
             }),
             finalize(() => {
-                this.loadingController.getTop().then(hasLoading => {
-                    if (hasLoading) {
-                        this.loadingController.dismiss();
-                    }
-                })
+                this.loadingService.dismissLoadingSpinner();
             })
         );
     }
