@@ -6,11 +6,11 @@ export class SearchResultItem {
     imageUrl: String;
     productUrl: string;
 
-    constructor(name: String, imageUrl: String, productUrl: string) {
+    constructor(name: String, imageUrl: String, productUrl: string, price: String) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.productUrl = productUrl;
-        this.price = "";
+        this.price = price;
     }
 }
 

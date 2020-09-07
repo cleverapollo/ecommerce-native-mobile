@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { SearchResultDataService } from '../shared/services/search-result-data.service';
 import { NavController } from '@ionic/angular';
 import { ProductSearchService } from '../shared/services/product-search.service';
 
@@ -15,12 +14,11 @@ export class WishSearchSelectionPage implements OnInit {
   keywords = new FormControl('');
   
   searchByUrlForm: FormGroup;
-  url = new FormControl('https://www.zalando.de/nike-performance-boutique-bra-skins-sport-bh-n1241i08r-j11.html');
+  url = new FormControl('https://www.otto.de/p/mcw-tv-rack-mcw-a27-t-2-staufaecher-mit-tuer-und-einlegeboden-in-3-positionen-S090801K/#variationId=S090801K4KU2');
 
   constructor(
     private productSearchService: ProductSearchService, 
-    private formBuilder: FormBuilder, 
-    private searchResultDataService: SearchResultDataService,
+    private formBuilder: FormBuilder,
     private navController: NavController
   ) { }
 
@@ -37,8 +35,6 @@ export class WishSearchSelectionPage implements OnInit {
 
   searchByUrl() {
     this.productSearchService.searchByUrl(this.url.value).then(searchResults => {
-      this.searchResultDataService.updateSearchTerm(this.url.value);
-      this.searchResultDataService.update(searchResults);
       this.navController.navigateForward('secure/home/wish-search-selection/wish-search-results');
     }, console.error);
   }

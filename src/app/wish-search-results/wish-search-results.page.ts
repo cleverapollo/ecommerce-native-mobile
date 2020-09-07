@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SearchResultDataService } from '../shared/services/search-result-data.service';
 import { SearchResultItem, SearchResultItemMapper } from '../shared/features/product-search/search-result-item';
@@ -6,16 +6,31 @@ import { ProductSearchService } from '../shared/services/product-search.service'
 import { WishDto } from '../shared/models/wish-list.model';
 import { NavController } from '@ionic/angular';
 import { WishListService } from '../shared/services/wish-list.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wish-search-results',
   templateUrl: './wish-search-results.page.html',
   styleUrls: ['./wish-search-results.page.scss'],
 })
-export class WishSearchResultsPage implements OnInit {
+export class WishSearchResultsPage implements OnInit, OnDestroy {
 
-  results: SearchResultItem[] = [];
+  private resultSubscription: Subscription;
+  get results$(): Observable<SearchResultItem[]> {
+    return this.searchResultDataService.$lastSearchResults;
+  }
+  
+  private _results: SearchResultItem[] = [];
 
+  set results(value) {
+    this.loading = false;
+    this._results = value;
+  } 
+  get results(): SearchResultItem[] {
+    return this._results
+  };
+
+  loading: Boolean;
   searchByUrlForm: FormGroup;
 
   get url(): string {
@@ -27,18 +42,24 @@ export class WishSearchResultsPage implements OnInit {
     private formBuilder: FormBuilder, 
     private navController: NavController,
     private searchResultDataService: SearchResultDataService,
-    private wishListService: WishListService
+    private wishListService: WishListService,
+    private changeDetection: ChangeDetectorRef
   ) { }
 
-  ngOnInit() {
-    this.searchResultDataService.$lastSearchResults.subscribe( results => {
-      console.log(results);
-      this.results = results;
-    }, console.error);
 
+  ngOnDestroy(): void {
+    this.resultSubscription.unsubscribe();
+  }
+
+  ngOnInit() {
+    this.loading = true;
     this.searchResultDataService.$lastSearchTerm.subscribe( term => {
       this.createForm(term);
     }, console.error);
+
+    this.resultSubscription = this.results$.subscribe({
+      next: results => { this.results = results; this.changeDetection.detectChanges(); }
+    })
   }
 
   private createForm(value: String) {
@@ -49,9 +70,6 @@ export class WishSearchResultsPage implements OnInit {
 
   searchByUrl() {
     this.productSearchService.searchByUrl(this.url).then(searchResults => {
-      this.results = searchResults;
-      this.searchResultDataService.update(this.results);
-      this.searchResultDataService.updateSearchTerm(this.url);
     }, console.error);
   }
 
@@ -60,6 +78,5 @@ export class WishSearchResultsPage implements OnInit {
     this.wishListService.updateSelectedWish(wish);
     this.navController.navigateForward('secure/wish-search/wish-new');
   }
-
 
 }
