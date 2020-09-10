@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../api/api.service';
-import { Storage } from '@ionic/storage';
 import { LoginResponse } from './login-response';
 import { Platform } from '@ionic/angular';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,25 +13,34 @@ export class AuthenticationService {
 
   authenticationState = new BehaviorSubject(null);
 
-  constructor(private storage: Storage, private platform: Platform, private apiService: ApiService, private jwtHelper: JwtHelperService) {
+  constructor(
+    private storageService: StorageService, 
+    private platform: Platform, 
+    private apiService: ApiService, 
+    private jwtHelper: JwtHelperService
+  ) {
     this.platform.ready().then(() => {
-      this.storage.get('auth-token').then((token) => {
+      this.storageService.get<string>('auth-token').then((token) => {
         if (token && !this.jwtHelper.isTokenExpired(token)) {
           this.authenticationState.next(true);
         }
         if (this.jwtHelper.isTokenExpired(token)) {
-          this.storage.remove('auth-token');
+          this.storageService.remove('auth-token');
         }
       })
     })
   }
 
-  login(email: string, password: string) : Promise<void> {
+  login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
     return new Promise((resolve, reject) => {
       this.apiService.post('auth/login', {
         username: email,
         password: password
       }).subscribe((response: LoginResponse) => {
+        if (saveCredentials) {
+          this.storageService.set('login_email', email).catch(console.error);
+          this.storageService.set('login_password', password).catch(console.error);
+        }
         this.saveToken(response.token).then(() => {
           resolve();
         }).catch( e => {
@@ -43,7 +52,7 @@ export class AuthenticationService {
   }
 
   async logout() {
-    await this.storage.remove('auth-token');
+    await this.storageService.remove('auth-token');
     this.authenticationState.next(false);
   }
 
@@ -57,7 +66,7 @@ export class AuthenticationService {
 
   saveToken(token: string) : Promise<void> {
     return new Promise((resolve, reject) => {
-      this.storage.set('auth-token', token).then(() => {
+      this.storageService.set('auth-token', token).then(() => {
         console.log('token: ', this.jwtHelper.decodeToken(token));
         this.authenticationState.next(true);
         resolve();
@@ -70,7 +79,7 @@ export class AuthenticationService {
 
   validTokenExists() : Promise<boolean> {
     return new Promise((resolve, reject) => {
-      this.storage.get('auth-token').then((token) => {
+      this.storageService.get<string>('auth-token').then((token) => {
         if (token) {
           const isExpired = this.jwtHelper.isTokenExpired(token);
           resolve(!isExpired);

@@ -23,6 +23,11 @@
     </ion-item>
     <app-validation-messages [control]="loginForm.get('password')" [validationMessages]="validationMessages.password"></app-validation-messages>
 
+    <ion-item lines="none" class="toggleContainer">
+      <ion-label [ngClass]="{ 'toggle-checked': loginForm.get('saveCredentials').value, 'toggle-unchecked': !loginForm.get('saveCredentials').value }">Angemeldet bleiben</ion-label>
+      <ion-toggle slot="end" name="saveCredentials" color="primary" formControlName="saveCredentials"></ion-toggle>
+    </ion-item>
+
     <ion-button class="wantic-save-button" type="submit" [disabled]="!loginForm.valid" expand="block">Einloggen</ion-button>
   </form>
 

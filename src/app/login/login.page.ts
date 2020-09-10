@@ -40,13 +40,14 @@ export class LoginPage implements OnInit {
     });
     this.loginForm = this.formBuilder.group({
       email: this.formBuilder.control('', [Validators.required, Validators.email]),
-      password: this.formBuilder.control('', [Validators.required])
+      password: this.formBuilder.control('', [Validators.required]),
+      saveCredentials: this.formBuilder.control(false)
     })
   }
 
   onSubmit() {
     const input = this.loginForm.value as LoginForm;
-    this.authService.login(input.email, input.password).then(() => {
+    this.authService.login(input.email, input.password, input.saveCredentials).then(() => {
       this.loginForm.reset();
       this.navToHome();
     }).catch(() => {
