@@ -23,11 +23,11 @@ export class WishListCreateUpdatePage implements OnInit {
   form: FormGroup;
 
   get title(): string {
-    return  this.isUpdatePage ? 'Wunschliste bearbeiten' : 'Neue Wunschliste anlegen';
+    return  this.isUpdatePage ? 'Wunschliste bearbeiten' : 'Neue Wunschliste hinzufügen';
   }
 
   get buttonTitle(): string {
-    return this.isUpdatePage ? 'Änderungen speichern' : 'Neue Wunschliste anlegen' 
+    return this.isUpdatePage ? 'Änderungen speichern' : 'Wunschliste anlegen' 
   }
 
   get isUpdatePage(): boolean {

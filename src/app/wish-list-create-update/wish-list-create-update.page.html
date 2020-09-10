@@ -15,12 +15,12 @@
   <form [formGroup]="form" *ngIf="form">
     <ion-item lines="none">
       <ion-label position="stacked">Name der Wunschliste</ion-label>
-      <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name"></ion-input>
+      <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name" clearInput="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 
     <ion-item lines="none">
-      <ion-label position="stacked">Datum</ion-label>
+      <ion-label position="stacked">Datum des Ereignisses</ion-label>
       <ion-datetime formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
     </ion-item>
     <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
@@ -30,18 +30,18 @@
       <p class="form-group-label">Partner hinzufügen</p>
 
       <ion-item lines="none">
-        <ion-input type="text" placeholder="Name deines Partners" formControlName="name"></ion-input>
+        <ion-input type="text" placeholder="Name deines Partners" formControlName="name" clearInput="true"></ion-input>
       </ion-item>
       <app-validation-messages [control]="form.get('partner.name')" [validationMessages]="validationMessages.partnerName"></app-validation-messages>
 
       <ion-item lines="none">
-        <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="email"></ion-input>
+        <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="email" clearInput="true"></ion-input>
       </ion-item>
       <app-validation-messages [control]="form.get('partner.email')" [validationMessages]="validationMessages.partnerEmail"></app-validation-messages>
 
     </div>
 
-    <ion-button *ngIf="form" (click)="createOrUpdateWishList()" color="primary" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button no-margin-bottom">
+    <ion-button *ngIf="form" (click)="createOrUpdateWishList()" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button no-margin-bottom">
       {{ buttonTitle }}
     </ion-button>
     <ion-button *ngIf="isUpdatePage" class="wantic-save-button" (click)="deleteWishList()" color="tertiary" fill="outline" expand="block">
