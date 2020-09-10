@@ -14,7 +14,7 @@
      <!---->
        <!--0-->
        <ion-avatar class="creator-image standalone" *ngIf="!wishList?.ownerProfileImageUrls || !wishList?.ownerProfileImageUrls.length">
-        <img  src="assets/images/avatar-placeholder.jpg">
+        <img  src="assets/images/avatar-placeholder-small.svg">
       </ion-avatar>
 
       <!--1-->
@@ -39,7 +39,7 @@
   <div class="friends-images" *ngIf="wishList.members">
     <ion-avatar *ngFor="let member of wishList.members">
       <img *ngIf="member.profileImageUrl" [src]="member.profileImageUrl | secure | async">
-      <img *ngIf="!member.profileImageUrl" src="assets/images/avatar-placeholder.jpg">
+      <img *ngIf="!member.profileImageUrl" src="assets/images/avatar-placeholder-small.svg">
     </ion-avatar>
   </div>
 

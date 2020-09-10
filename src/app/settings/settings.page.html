@@ -24,7 +24,7 @@
         <h2>Profilbild</h2>
         <ion-avatar class="creator-image">
           <img *ngIf="profile?.profileImageUrl" [src]="profile.profileImageUrl | cacheImage | async" alt="profile image"/>
-          <img *ngIf="!profile?.profileImageUrl" src="assets/images/avatar-placeholder.jpg" alt="placeholder image"/>
+          <img *ngIf="!profile?.profileImageUrl" src="assets/images/avatar-placeholder-small.svg" alt="placeholder image"/>
         </ion-avatar>
       </ion-label>
     </ion-item>
