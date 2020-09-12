@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '../services/login-response';
 import { RegistrationDto, RegistrationPartnerDto } from 'src/app/registration/registration-form';
+import { LoginResponse } from '../services/login-response';
 
 @Injectable({
   providedIn: 'root'
