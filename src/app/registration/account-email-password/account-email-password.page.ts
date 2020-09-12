@@ -1,14 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
-import { RegistrationService } from '../services/registration.service';
-import { NavController } from '@ionic/angular';
 import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
 import { CustomValidation } from 'src/app/shared/custom-validation';
+import { AuthService } from 'src/app/shared/api/auth.service';
 
 @Component({
   selector: 'app-account-email-password',
@@ -45,8 +44,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     private router: Router, 
     private route: ActivatedRoute,
     private formService: RegistrationFormService,
-    private registrationApiService: RegistrationService,
-    private navController: NavController,
+    private authApiService: AuthService,
     private authService: AuthenticationService) { 
   }
 
@@ -80,17 +78,14 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     this.formService.updateDto(this.registrationDto);
 
     if ((this.registrationDto as RegistrationPartnerDto).userId) {
-      this.registrationApiService.registerPartner(this.registrationDto as RegistrationPartnerDto).then(() => {
+      this.authApiService.registerPartner(this.registrationDto as RegistrationPartnerDto).subscribe(() => {
         this.router.navigate(['../registration-complete'], { relativeTo: this.route })
-      })
-      .catch((e => console.error(e)));
+      }, console.error)
     } else {
-      this.registrationApiService.register(this.registrationDto as RegistrationDto)
-      .then((response) => {
+      this.authApiService.register(this.registrationDto as RegistrationDto).subscribe(response => {
         this.authService.saveToken(response.token);
         this.router.navigate(['../registration-complete'], { relativeTo: this.route });
-      })
-      .catch((e => console.error(e)));
+      }, console.error)
     }
   }
 

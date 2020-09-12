@@ -25,61 +25,31 @@ export class StorageService {
   ) { }
 
   async get<T>(storageKey: string, secure: boolean = false) : Promise<T> {
-    if (secure && environment.production) {
-      return this.secureGet(storageKey);
-    }
     return new Promise((resolve, reject) => {
       this.platformReady().then(() => {
-        this.storage.get(storageKey).then((storedValue: T) => {
-          resolve(storedValue);
-        }, reject);
-      });
+        this.getStorage(secure).then(storage => {
+          storage.get(storageKey).then((storedValue: T) => {
+            resolve(storedValue);
+          }, reject);
+        }, reject)
+      }, reject);
     });
   }
-
-  private async secureGet<T>(storageKey: string) : Promise<T> {
-    return new Promise((resolve, reject) => {
-      this.getSecureStorage().then((storage) => {
-        storage.get(storageKey).then((storedValue: T) => {
-          resolve(storedValue);
-        }, reject);
-      })
-    });
-  }
-
 
   async set(storageKey: string, value: any, secure: boolean = false) {
-    if (secure && environment.production) { 
-      return this.secureSet(storageKey, value);
-    }
     await this.platformReady().then(() => {
-      this.storage.set(storageKey, value)
-    });
-  }
-
-  private async secureSet(storageKey: string, value: any) {
-    return new Promise((resolve, reject) => {
-      this.getSecureStorage().then(storage => {
-        storage.set(storageKey, value).then(resolve, reject);
-      })
-    })
+      this.getStorage(secure).then(storage => {
+        return storage.set(storageKey, value)
+      }, console.error);
+    }, console.error);
   }
 
   async remove(storageKey: string, secure: boolean = false) {
-    if (secure && environment.production) { 
-      return this.secureRemove(storageKey);
-    }
     await this.platformReady().then(() => {
-      this.storage.remove(storageKey);
-    });
-  }
-
-  private async secureRemove(storageKey: string) {
-    return new Promise((resolve, reject) => {
-      this.getSecureStorage().then(storage => {
-        storage.remove(storageKey).then(resolve, reject);
-      });
-    });
+      this.getStorage(secure).then(storage => {
+        storage.remove(storageKey);
+      }, console.error);
+    }, console.error);
   }
 
   async clear() {
@@ -92,7 +62,14 @@ export class StorageService {
     return await this.platform.ready();
   }
 
-  private getSecureStorage(): Promise<Keychain | SecureStorageObject> {
+  private async getStorage(secure: boolean): Promise<Keychain | SecureStorageObject | Storage> {
+    if (secure && environment.production) {
+      return this.getSecureStorage();
+    }
+    return Promise.resolve(this.storage);
+  }
+
+  private async getSecureStorage(): Promise<Keychain | SecureStorageObject | Storage> {
     return new Promise((resolve, reject) => {
       if (this.platform.is('ios')) {
         resolve(this.keychain);
@@ -100,19 +77,15 @@ export class StorageService {
         this.secureStorage.create('secureStorage').then(storage => {
           resolve(storage);
         }, (storage: SecureStorageObject) => {
-          if (environment.production) {
-            storage.secureDevice().then(() => {
-              resolve(storage);
-            }, reason => {
-              console.error('Screen Lock is disabled.')
-              reject(reason);
-            });
-          } else {
+          storage.secureDevice().then(() => {
             resolve(storage);
-          }
+          }, reason => {
+            console.error('Screen Lock is disabled.')
+            reject(reason);
+          });
         });
       } else {
-        reject('supported only for ios and android');
+        resolve(this.storage);
       }
     });
   }

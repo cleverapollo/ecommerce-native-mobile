@@ -5,6 +5,8 @@ import { LoginForm } from './login-form';
 import { NavController } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../shared/services/user.service';
+import { StorageService, StorageKeys } from '../shared/services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -28,20 +30,33 @@ export class LoginPage implements OnInit {
     private navController: NavController,
     private formBuilder: FormBuilder, 
     private authService: AuthenticationService,
-    private route: ActivatedRoute) { 
+    private userService: UserService,
+    private storageService: StorageService) { 
 
   }
 
   ngOnInit() {
-    this.authService.authenticationState.subscribe(state => {
-      if (state) {
-        this.navToHome();
-      }
-    });
+    this.navToHomeIfAlreadyLoggedIn();
+    this.createForm();
+    this.patchValuesIfNeeded();
+  }
+
+  private createForm() {
     this.loginForm = this.formBuilder.group({
       email: this.formBuilder.control('', [Validators.required, Validators.email]),
       password: this.formBuilder.control('', [Validators.required]),
       saveCredentials: this.formBuilder.control(false)
+    })
+  }
+
+  private patchValuesIfNeeded() {
+    this.userService.userSettings.then( settings => {
+      if (settings && settings.credentialsSaved) {
+        this.loginForm.controls['saveCredentials'].patchValue(settings.credentialsSaved);
+        this.storageService.get(StorageKeys.LOGIN_EMAIL).then(email => {
+          this.loginForm.controls['email'].patchValue(email);
+        });
+      }
     })
   }
 
@@ -61,6 +76,14 @@ export class LoginPage implements OnInit {
 
   navToHome() {
     this.navController.navigateRoot('secure/home');
+  }
+
+  navToHomeIfAlreadyLoggedIn() {
+    this.authService.authenticationState.subscribe(state => {
+      if (state) {
+        this.navToHome();
+      }
+    });
   }
 
   goBack() {

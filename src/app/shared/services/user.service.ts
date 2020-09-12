@@ -28,12 +28,16 @@ export class UserService {
     });
   }
 
-  get userSettings(): Promise<{ credentialsSaved: boolean }> {
+  get userSettings(): Promise<UserSettings> {
     return new Promise((resolve, reject) => {
-      this.storageService.get<{ credentialsSaved: boolean }>('userSettings').then( settings => {
+      this.storageService.get<UserSettings>(StorageKeys.USER_SETTINGS).then( settings => {
         resolve(settings);
       }, reject);
     });
   }
 
+}
+
+export interface UserSettings {
+  credentialsSaved?: boolean
 }
