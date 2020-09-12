@@ -27,13 +27,16 @@ import { HttpRequestLoadingInterceptor } from './interceptors/http-loading.inter
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharedWishListResolver } from './shared-wish-list/shared-wish-list.resolver';
+import { Keychain } from '@ionic-native/keychain/ngx';
+import { SecureStorage } from '@ionic-native/secure-storage/ngx';
+import { StorageKeys } from './shared/services/storage.service';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
-      return storage.get('auth-token');
+      return storage.get(StorageKeys.AUTH_TOKEN);
     },
     whitelistedDomains: WHITELISTED_DOMAINS,
     blacklistedRoutes: [`${SERVER_URL}/auth*`]
@@ -65,6 +68,8 @@ export function jwtOptionsFactory(storage) {
     FriendSelectOptionsResolver,
     FriendsWishListResolver,
     Keyboard,
+    Keychain,
+    SecureStorage,
     SharedWishListResolver,
     SocialSharing,
     UserProfileResolver,
