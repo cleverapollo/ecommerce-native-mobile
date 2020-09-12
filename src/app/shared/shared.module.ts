@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SecurePipe } from './secure.pipe';
+import { SecurePipe } from './pipes/secure.pipe';
 import { OwnerNamesPipe } from './pipes/owner-names.pipe';
 import { IonicModule } from '@ionic/angular';
 import { CacheImagePipe } from './pipes/cache-image.pipe';
