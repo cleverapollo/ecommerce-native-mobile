@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CustomValidation } from 'src/app/shared/custom-validation';
 import { UserApiService } from 'src/app/shared/api/user-api.service';
 import { UpdatePasswordRequest } from 'src/app/shared/api/user-api.model';
-import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/hint/hint.component';
+import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/components/hint/hint.component';
 
 @Component({
   selector: 'app-password-update',

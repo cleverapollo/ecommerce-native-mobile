@@ -4,7 +4,7 @@ import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation
 import { ActivatedRoute } from '@angular/router';
 import { UserApiService } from 'src/app/shared/api/user-api.service';
 import { UserProfileDataService } from '../../user-profile-data.service';
-import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/hint/hint.component';
+import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/components/hint/hint.component';
 
 @Component({
   selector: 'app-email-update',

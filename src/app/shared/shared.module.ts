@@ -6,7 +6,7 @@ import { ValidationMessagesComponent } from './validation-messages/validation-me
 import { IonicModule } from '@ionic/angular';
 import { EmailUnverifiedHintComponent } from './email-unverified-hint/email-unverified-hint.component';
 import { CacheImagePipe } from './pipes/cache-image.pipe';
-import { HintComponent } from './hint/hint.component';
+import { HintComponent } from './components/hint/hint.component';
 
 
 
