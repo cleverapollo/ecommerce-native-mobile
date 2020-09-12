@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
+import { ValidationMessages, ValidationMessage } from 'src/app/shared/components/validation-messages/validation-message';
 import { UserApiService } from 'src/app/shared/api/user-api.service';
 import { UserProfileDataService } from '../../user-profile-data.service';
 import { Subscription } from 'rxjs';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
+import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-list-guests',

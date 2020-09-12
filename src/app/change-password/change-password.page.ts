@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
 import { CustomValidation } from '../shared/custom-validation';
 import { UserApiService } from '../shared/api/user-api.service';
 import { ChangePasswordRequest } from '../shared/api/user-api.model';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
 
 @Component({
   selector: 'app-change-password',

@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
+import { ValidationMessages, ValidationMessage } from 'src/app/shared/components/validation-messages/validation-message';
 import { CustomValidation } from 'src/app/shared/custom-validation';
 import { AuthService } from 'src/app/shared/api/auth.service';
 

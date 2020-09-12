@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
 import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
-import { ValidationMessages, ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
+import { ValidationMessages, ValidationMessage } from 'src/app/shared/components/validation-messages/validation-message';
 
 @Component({
   selector: 'app-account-first-name',

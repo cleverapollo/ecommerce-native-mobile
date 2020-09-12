@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WishListApiService } from '../shared/api/wish-list-api.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto, WishListSelectOptionDto } from '../shared/models/wish-list.model';
-import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
+import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-new',

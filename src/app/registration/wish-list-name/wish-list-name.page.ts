@@ -5,7 +5,7 @@ import { RegistrationFormService } from '../registration-form.service';
 import { Observable, Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { RegistrationDto } from '../registration-form';
-import { ValidationMessage } from 'src/app/shared/validation-messages/validation-message';
+import { ValidationMessage } from 'src/app/shared/components/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-list-name',

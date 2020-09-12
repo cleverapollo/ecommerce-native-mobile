@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { LoginForm } from './login-form';
 import { NavController } from '@ionic/angular';
-import { ValidationMessages, ValidationMessage } from '../shared/validation-messages/validation-message';
+import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 import { StorageService, StorageKeys } from '../shared/services/storage.service';
