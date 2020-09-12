@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailVerificationResponse, EmailVerificationStatus } from '../shared/api/registration-api.model';
 import { RegistrationApiService } from '../shared/api/registration-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
+import { EmailVerificationResponse, EmailVerificationStatus } from '../shared/models/email-verification.model';
 
 @Component({
   selector: 'app-email-confirmation',

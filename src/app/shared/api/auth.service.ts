@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
 import { RegistrationDto, RegistrationPartnerDto } from 'src/app/registration/registration-form';
-import { LoginResponse } from '../services/login-response';
+import { LoginResponse } from '../models/login.model';
 
 @Injectable({
   providedIn: 'root'

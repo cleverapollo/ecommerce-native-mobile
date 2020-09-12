@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { EmailVerificationResponse } from './registration-api.model';
+import { EmailVerificationResponse } from '../models/email-verification.model';
 
 @Injectable({
   providedIn: 'root'

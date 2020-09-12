@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { UserSearchResult, UpdatePasswordRequest, ChangePasswordRequest } from './user-api.model';
-import { UserProfile, UploadFileResponse } from '../models/user.model';
+import { UserProfile, UploadFileResponse, UserSearchResult } from '../models/user.model';
+import { UpdatePasswordRequest, ChangePasswordRequest } from '../models/login.model';
 
 @Injectable({
   providedIn: 'root'

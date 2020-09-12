@@ -1,15 +1,7 @@
-export class UserSearchResult {
-    public firstName: String;
-    public email: String;
-    public imageUrl: String = null;
-    public userExists: boolean;
-}
+import { UserState } from '../models/user.model';
 
-export enum UserState {
-    UNKNOWN = "UNKNOWN",
-    ACTIVE = "ACTIVE",
-    UNVERIFIED = "UNVERIFIED",
-    PREACTIVE = "PREACTIVE"
+export class LoginResponse {
+    token: string;
 }
 
 export interface WanticJwtToken {

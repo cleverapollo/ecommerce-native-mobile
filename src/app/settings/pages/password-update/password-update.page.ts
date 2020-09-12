@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/components/validation-messages/validation-message';
-import { ActivatedRoute } from '@angular/router';
 import { CustomValidation } from 'src/app/shared/custom-validation';
 import { UserApiService } from 'src/app/shared/api/user-api.service';
-import { UpdatePasswordRequest } from 'src/app/shared/api/user-api.model';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/components/hint/hint.component';
+import { UpdatePasswordRequest } from 'src/app/shared/models/login.model';
 
 @Component({
   selector: 'app-password-update',

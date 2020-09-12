@@ -1,5 +1,5 @@
-import { UserSearchResult } from '../api/user-api.model';
 import { FriendSelectOption } from './friend.model';
+import { UserSearchResult } from './user.model';
 
 export class WishDto {
     id: Number;
