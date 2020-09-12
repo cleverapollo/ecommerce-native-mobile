@@ -1,21 +1,14 @@
-#button-add-wish {
-    background-color: white;
-    color: var(--ion-color-dark);
-    ion-icon {
-        color: var(--ion-color-primary);
-    }
-    margin-right: 10px;
-    margin-left: 10px;
-    box-shadow: 0 4px 16px rgba(0,0,0,.12);
-}
-
 .img-avatar {
     border-radius: 50%;
     width: 30pt;
 }
 
-.friends-images {
-    ion-avatar {
-        display: inline-block;
+section.page-actions {
+    ion-icon {
+        height: 26.56px;
+        width: 27.84px;
+        margin-right: 17.24px;
+        margin-left: 17.24px;
     }
 }
+

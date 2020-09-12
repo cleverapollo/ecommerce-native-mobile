@@ -20,11 +20,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { friends: FriendSelectOptionsResolver },
     loadChildren: () => import('./../wish-list-create-update/wish-list-create-update.module').then( m => m.WishListCreateUpdatePageModule)
-  },
-  {
-    path: 'wish-list-guests',
-    loadChildren: () => import('./../wish-list-guests/wish-list-guests.module').then( m => m.WishListGuestsPageModule)
-  },
+  }
 ];
 
 @NgModule({

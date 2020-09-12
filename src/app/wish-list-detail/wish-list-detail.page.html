@@ -11,7 +11,8 @@
 <app-email-unverified-hint [(subText)]="subText"></app-email-unverified-hint>
 
 <ion-content>
- <ion-item lines="none">
+
+  <section class="ion-text-center wish-list-detail-container">
      <!---->
        <!--0-->
        <ion-avatar class="creator-image standalone" *ngIf="!wishList.ownerProfileImageUrls || !wishList.ownerProfileImageUrls.length">
@@ -31,32 +32,23 @@
         <img *ngIf="wishList.ownerProfileImageUrls[1]" [src]="wishList.ownerProfileImageUrls[1] | cacheImage | async">
       </ion-avatar>
       <!---->
-      <ion-label class="ion-text-wrap">
-        <h1>{{ wishList.name }}</h1>
-        <p>{{ wishList.date | date }}</p>
-      </ion-label>
-      <ion-button fill="clear" [routerLink]="['../wish-list-edit']">
-        <ion-icon slot="icon-only" src="assets/icon/pencil.svg" [routerLink]="['/wish-list-edit']"></ion-icon>
-      </ion-button>
-  </ion-item>
+    <div class="details">
+      <h1 class="wish-list-name">{{ wishList.name }}</h1>
+      <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
+    </div>
+    <div class="friends-images" *ngIf="wishList.members && wishList.members.length">
+      <ion-avatar *ngFor="let member of wishList.members">
+        <img [src]="member.profileImageUrl ? (member.profileImageUrl | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
+      </ion-avatar>
+    </div>
+  </section>
 
-  <div class="friends-images" *ngIf="wishList.members">
-    <ion-avatar *ngFor="let member of wishList.members">
-      <img [src]="member.profileImageUrl ? (member.profileImageUrl | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
-    </ion-avatar>
-    <ion-avatar [routerLink]="['../wish-list-guests']"> 
-      <img src="assets/icon/icon-add-guests.svg"/>
-    </ion-avatar>
-  </div>
+  <section class="ion-text-center page-actions">
+    <ion-icon src="assets/icon/plus.svg" [routerLink]="['/secure/wish-search']"></ion-icon>
+    <ion-icon src="assets/icon/pencil.svg" [routerLink]="['../wish-list-edit']"></ion-icon>
+    <ion-icon src="assets/icon/share.svg" (click)="shareWishList()"></ion-icon>
+  </section>
 
-  <ion-button [routerLink]="['/secure/wish-search']" id="button-add-wish" fill="clear" expand="full">
-    <ion-icon slot="start" name="add"></ion-icon>
-    Wunsch hinzufügen
-  </ion-button>
-  <ion-button (click)="shareWishList()" id="button-share-wish-list" fill="clear" expand="full">
-    <ion-icon slot="start" name="share"></ion-icon>
-    Teilen
-  </ion-button>
   <ion-grid>
     <ion-row>
       <ion-col (click)="selectWish(wish)" size="6" *ngFor="let wish of wishList.wishes">
