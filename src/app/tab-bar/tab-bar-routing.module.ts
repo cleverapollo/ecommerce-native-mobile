@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TabBarPage } from './tab-bar.page';
-import { AuthGuard } from '../shared/services/auth.guard';
+import { AuthGuard } from '../shared/guards/auth.guard';
 import { WishListResolver } from '../home/wish-list.resolver';
 import { FriendsWishListResolver } from '../friends-wish-list-overview/friends-wish-list.resolver';
 

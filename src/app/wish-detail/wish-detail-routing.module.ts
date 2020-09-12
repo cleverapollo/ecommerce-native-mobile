@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { WishDetailPage } from './wish-detail.page';
-import { AuthGuard } from '../shared/services/auth.guard';
+import { AuthGuard } from '../shared/guards/auth.guard';
 
 const routes: Routes = [
   {
