@@ -6,7 +6,7 @@ export const environment: EnvironmentConfig = {
     serverConfig: {
         networkProtocol: 'http',
         thirdLevelDomain: '',
-        secondLevelDomain: '127.0.0.1',
+        secondLevelDomain: '10.0.2.2',
         port: 8080
     }
 };

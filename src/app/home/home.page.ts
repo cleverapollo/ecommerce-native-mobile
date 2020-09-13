@@ -13,6 +13,9 @@ export class HomePage implements OnInit {
 
   wishLists: Array<WishListDto> = new Array();
   subText: string = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wunschlisten und Wünsche hinzufügen.';
+  get title(): string {
+    return this.wishLists.length > 1 ? 'Meine Wunschlisten' : 'Meine Wunschliste';
+  } 
 
   constructor(
     private route: ActivatedRoute, 
