@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { WishNewPageRoutingModule } from './wish-new-routing.module';
+import { WishNewPageRoutingModule } from './wish-create-update-routing.module';
 
-import { WishNewPage } from './wish-new.page';
+import { WishCreateUpdatePage } from './wish-create-update.page';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -18,6 +18,6 @@ import { SharedModule } from '../shared/shared.module';
     WishNewPageRoutingModule,
     SharedModule
   ],
-  declarations: [WishNewPage]
+  declarations: [WishCreateUpdatePage]
 })
-export class WishNewPageModule {}
+export class WishCreateUpdatePageModule {}

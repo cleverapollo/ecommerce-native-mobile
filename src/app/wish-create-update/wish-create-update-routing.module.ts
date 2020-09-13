@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { WishNewPage } from './wish-new.page';
+import { WishCreateUpdatePage } from './wish-create-update.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: WishNewPage
+    component: WishCreateUpdatePage
   }
 ];
 

@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'wish-edit',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./../wish-edit/wish-edit.module').then( m => m.WishEditPageModule)
+    loadChildren: () => import('./../wish-create-update/wish-create-update.module').then( m => m.WishCreateUpdatePageModule)
   },
 ];
 

@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { FriendSelectOptionsResolver } from '../wish-list-create-update/friend-list-select-options.resolver';
-import { WishListSelectOptionsResolver } from '../wish-new/wish-list-select-options.resolver';
+import { WishListSelectOptionsResolver } from '../wish-create-update/wish-list-select-options.resolver';
 
 const routes: Routes = [
   {

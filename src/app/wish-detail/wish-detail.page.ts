@@ -22,11 +22,9 @@ export class WishDetailPage implements OnInit, OnDestroy {
   wish: WishDto
 
   constructor(
-    private router: Router, 
     private inAppBrowser: InAppBrowser,
     public alertService: AlertService,
     private wishListService: WishListService, 
-    private wishListApiService: WishListApiService,
     private navController: NavController
     ) { }
 
@@ -34,7 +32,6 @@ export class WishDetailPage implements OnInit, OnDestroy {
     this.wishListSubscription = this.wishListService.selectedWishList$.subscribe(w => {
       this.wishList = w;
     });
-
     this.subscription = this.wishListService.selectedWish$.subscribe(w => {
       this.wish = w;
     });
@@ -49,29 +46,6 @@ export class WishDetailPage implements OnInit, OnDestroy {
     const url = this.wish.productUrl
     const browser = this.inAppBrowser.create(url);
     browser.show();
-  }
-
-  deleteWish() {
-    const header = 'Wunsch löschen';
-    const message = `Möchtest du deinen Wunsch ${this.wish.name} wirklich löschen?`;
-    this.alertService.createDeleteAlert(header, message, this.onDeleteConfirmation).then( alert => {
-      alert.present();
-    })
-  }
-
-  private onDeleteConfirmation = (value) => {
-    this.wishListApiService.removeWish(this.wish)
-    .toPromise()
-    .then( emptyResponse => {
-      const wishIndex = this.wishList.wishes.findIndex( w => w.id == this.wish.id );
-      if (wishIndex > -1) {
-        this.wishList.wishes.splice(wishIndex, 1);
-        this.wishListService.updateSelectedWishList(this.wishList);
-      }
-      this.wishListService.updateSelectedWish(null);
-      this.router.navigate(['wish-list-detail']);
-    })
-    .catch( e => console.error(e));
   }
 
   goBack() {
