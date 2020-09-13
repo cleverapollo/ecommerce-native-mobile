@@ -44,7 +44,7 @@
   </section>
 
   <section class="ion-text-center page-actions">
-    <ion-icon src="assets/icon/plus.svg" [routerLink]="['/secure/wish-search']"></ion-icon>
+    <ion-icon src="assets/icon/plus.svg" (click)="goToSearchSelectionPage()"></ion-icon>
     <ion-icon src="assets/icon/pencil.svg" [routerLink]="['../wish-list-edit']"></ion-icon>
     <ion-icon src="assets/icon/share.svg" (click)="shareWishList()"></ion-icon>
   </section>

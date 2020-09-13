@@ -22,6 +22,9 @@ export class WishListCreateUpdatePage implements OnInit {
 
   form: FormGroup;
 
+  get minDate(): number { return new Date().getFullYear(); } 
+  get maxDate(): number { return this.minDate + 10; }
+
   get title(): string {
     return  this.isUpdatePage ? 'Wunschliste bearbeiten' : 'Neue Wunschliste hinzufügen';
   }
@@ -74,8 +77,8 @@ export class WishListCreateUpdatePage implements OnInit {
         'name': this.formBuilder.control(name, [Validators.required]),
         'date': this.formBuilder.control(date, [Validators.required]),
         'partner': this.formBuilder.group({
-          'email': this.formBuilder.control('', [Validators.email]),
-          'name': this.formBuilder.control('', []),
+          'email': this.formBuilder.control(null, [Validators.email]),
+          'name': this.formBuilder.control(null, []),
         })
       });
     }

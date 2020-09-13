@@ -57,18 +57,8 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.createForm();
     this.wishListSelectOptions = this.route.snapshot.data.wishListSelectOptions;
-    this.wishSubscription = this.wishListService.selectedWish$.subscribe(w => {
-      this.wish = w;
-      this.form = this.formBuilder.group({
-        'wishListId': this.formBuilder.control(this.wish.wishListId, [Validators.required]),
-        'name': this.formBuilder.control(this.wish.name, [Validators.required]),
-        'price': this.formBuilder.control(this.wish.price, [Validators.required]),
-      });
-    }, e => console.error(e));
-    this.wishListSubscription = this.wishListService.selectedWishList$.subscribe(w => {
-      this.wishList = w;
-    });
   }
 
   ngOnDestroy(): void {
@@ -90,6 +80,29 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     this.alertService.createDeleteAlert(header, message, this.onDeleteConfirmation).then( alert => {
       alert.present();
     })
+  }
+
+  private createForm() {
+    this.form = this.formBuilder.group({
+      'wishListId': this.formBuilder.control(null, [Validators.required]),
+      'name': this.formBuilder.control('', [Validators.required]),
+      'price': this.formBuilder.control('', [Validators.required]),
+    });
+    this.patchValues();
+  }
+
+  private patchValues() {
+    this.wishSubscription = this.wishListService.selectedWish$.subscribe(w => {
+      this.wish = w;
+      this.form.controls['name'].patchValue(this.wish.name);
+      this.form.controls['price'].patchValue(this.wish.price);
+    }, e => console.error(e));
+    this.wishListSubscription = this.wishListService.selectedWishList$.subscribe(w => {
+      if (w) {
+        this.wishList = w;
+        this.form.controls['wishListId'].patchValue(this.wishList.id);
+      }
+    });
   }
 
   private onDeleteConfirmation = (value) => {

@@ -21,7 +21,7 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">Datum des Ereignisses</ion-label>
-      <ion-datetime formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
+      <ion-datetime [min]="minDate" [max]="maxDate" formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
     </ion-item>
     <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
 

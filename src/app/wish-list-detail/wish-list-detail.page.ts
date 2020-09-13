@@ -48,6 +48,10 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     this.navController.back();
   }
 
+  goToSearchSelectionPage() {
+    this.navController.navigateForward('secure/home/wish-search-selection');
+  }
+
   shareWishList() {
     this.wishListApiService.getLinkForSocialSharing(this.wishList.id).toPromise().then( link => {
       console.log(link);
