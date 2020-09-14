@@ -1,4 +1,4 @@
-<ion-header no-border>
+<ion-header class="ion-no-border">
   <ion-toolbar class="ion-text-center">
     <img src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
   </ion-toolbar>
@@ -40,6 +40,6 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer no-border *ngIf="!platform.is('android') && !platform.is('ios')">
+<ion-footer class="ion-no-border" *ngIf="!platform.is('android') && !platform.is('ios')">
   <ion-button class="wantic-save-button" expand="block" (click)="search()" [disabled]="!keywords || !keywords.length">Suchen</ion-button>
 </ion-footer>
