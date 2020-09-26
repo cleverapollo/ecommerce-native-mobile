@@ -34,7 +34,7 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   { }
 
   ngOnInit() {
-    const firstName = this.route.snapshot.data.profile.firstName;
+    const firstName = history.state.data.profile.firstName;
     this.form = this.formBuilder.group({
       firstName: this.formBuilder.control(firstName, [Validators.required, Validators.min(2)])
     });

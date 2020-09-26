@@ -1,54 +1,46 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar mode="ios">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>
-      <img src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-<app-email-unverified-hint [(subText)]="subText"></app-email-unverified-hint>
-
 <ion-content>
-
   <section class="ion-text-center wish-list-detail-container">
-     <!---->
-       <!--0-->
-       <ion-avatar class="creator-image standalone" *ngIf="!wishList.ownerProfileImageUrls || !wishList.ownerProfileImageUrls.length">
-        <img  src="assets/images/avatar-placeholder-small.svg">
-      </ion-avatar>
-
-      <!--1-->
-      <ion-avatar class="creator-image standalone" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 1">
-        <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
-      </ion-avatar>
-
-      <!--2-->
-      <ion-avatar class="creator-image first" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-        <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
-      </ion-avatar>
-      <ion-avatar class="creator-image last" *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-        <img *ngIf="wishList.ownerProfileImageUrls[1]" [src]="wishList.ownerProfileImageUrls[1] | cacheImage | async">
-      </ion-avatar>
-      <!---->
+    <!---->
+    <!--0-->
+    <ion-avatar class="creator-image standalone"
+      *ngIf="!wishList.ownerProfileImageUrls || !wishList.ownerProfileImageUrls.length">
+      <img src="assets/images/avatar-placeholder-small.svg">
+    </ion-avatar>
+  
+    <!--1-->
+    <ion-avatar class="creator-image standalone"
+      *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 1">
+      <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
+    </ion-avatar>
+  
+    <!--2-->
+    <ion-avatar class="creator-image first"
+      *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
+      <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
+    </ion-avatar>
+    <ion-avatar class="creator-image last"
+      *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
+      <img *ngIf="wishList.ownerProfileImageUrls[1]" [src]="wishList.ownerProfileImageUrls[1] | cacheImage | async">
+    </ion-avatar>
+    <!---->
     <div class="details">
       <h1 class="wish-list-name">{{ wishList.name }}</h1>
       <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
     </div>
     <div class="friends-images" *ngIf="wishList.members && wishList.members.length">
       <ion-avatar *ngFor="let member of wishList.members">
-        <img [src]="member.profileImageUrl ? (member.profileImageUrl | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
+        <img
+          [src]="member.profileImageUrl ? (member.profileImageUrl | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
       </ion-avatar>
     </div>
   </section>
-
+  
   <section class="ion-text-center page-actions">
     <ion-icon src="assets/icon/plus.svg" (click)="goToSearchSelectionPage()"></ion-icon>
     <ion-icon src="assets/icon/pencil.svg" [routerLink]="['../wish-list-edit']"></ion-icon>
     <ion-icon src="assets/icon/share.svg" (click)="shareWishList()"></ion-icon>
   </section>
-
+  
   <ion-grid>
     <ion-row>
       <ion-col (click)="selectWish(wish)" size="6" *ngFor="let wish of wishList.wishes">

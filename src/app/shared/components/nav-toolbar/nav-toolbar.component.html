@@ -1,0 +1,17 @@
+<ion-grid class="wantic-toolbar">
+  <ion-row>
+    <ion-col class="wantic-back-button-container">
+      <button class="wantic-back-button" (click)="goBack()" *ngIf="canGoBack">
+        <img src="assets/icon/back_button.svg" alt="Zurück Button" />
+      </button>
+    </ion-col>
+    <ion-col class="wantic-logo-container">
+      <img class="wantic-logo" src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
+    </ion-col>
+    <ion-col class="wantic-skip-button-container">
+      <button class="wantic-skip-button" *ngIf="canSkip">
+        ÜBERSPRINGEN
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

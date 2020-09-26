@@ -34,7 +34,7 @@ export class EmailUpdatePage implements OnInit {
     { }
 
   ngOnInit() {
-    const email = this.route.snapshot.data.profile.email;
+    const email = history.state.data.profile.email;
     this.form = this.formBuilder.group({
       email: this.formBuilder.control(email, [Validators.required, Validators.email])
     });

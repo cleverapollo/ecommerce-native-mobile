@@ -33,7 +33,7 @@ export class BirthdayUpdatePage implements OnInit {
 
   ngOnInit() {
     this.showHint = false;
-    const birthday = this.route.snapshot.data.profile.birthday;
+    const birthday = history.state.data.profile.birthday;
     this.form = this.formBuilder.group({
       birthday: this.formBuilder.control(birthday, [Validators.required])
     });

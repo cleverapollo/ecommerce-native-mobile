@@ -24,7 +24,7 @@ export class ProfileImageUpdatePage implements OnInit {
     { }
 
   ngOnInit() {
-    this.profile = this.route.snapshot.data.profile;
+    this.profile = history.state.data.profile;
   }
 
   uploadImage(event) {

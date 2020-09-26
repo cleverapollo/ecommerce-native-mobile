@@ -7,6 +7,7 @@ import { CacheImagePipe } from './pipes/cache-image.pipe';
 import { HintComponent } from './components/hint/hint.component';
 import { EmailUnverifiedHintComponent } from './components/email-unverified-hint/email-unverified-hint.component';
 import { ValidationMessagesComponent } from './components/validation-messages/validation-messages.component';
+import { NavToolbarComponent } from './components/nav-toolbar/nav-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ValidationMessagesComponent } from './components/validation-messages/va
     ValidationMessagesComponent, 
     EmailUnverifiedHintComponent, 
     CacheImagePipe, 
-    HintComponent
+    HintComponent,
+    NavToolbarComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { ValidationMessagesComponent } from './components/validation-messages/va
     ValidationMessagesComponent, 
     EmailUnverifiedHintComponent, 
     CacheImagePipe, 
-    HintComponent
+    HintComponent,
+    NavToolbarComponent
   ]
 })
 export class SharedModule { }

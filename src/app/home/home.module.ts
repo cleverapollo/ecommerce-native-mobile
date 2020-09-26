@@ -5,7 +5,6 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
-import { WishListComponent } from './wish-list/wish-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { HomePageRoutingModule } from './home-routing.module';
 
@@ -17,6 +16,6 @@ import { HomePageRoutingModule } from './home-routing.module';
     HomePageRoutingModule,
     SharedModule
   ],
-  declarations: [HomePage, WishListComponent]
+  declarations: [HomePage]
 })
 export class HomePageModule {}

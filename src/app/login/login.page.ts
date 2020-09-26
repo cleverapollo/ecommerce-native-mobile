@@ -75,7 +75,7 @@ export class LoginPage implements OnInit {
   }
 
   navToHome() {
-    this.navController.navigateRoot('secure/home');
+    this.navController.navigateRoot('secure');
   }
 
   navToHomeIfAlreadyLoggedIn() {

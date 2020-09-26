@@ -1,55 +1,8 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="ion-text-center">
-    <img src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
-  </ion-toolbar>
+  <app-nav-toolbar></app-nav-toolbar>
+  <app-email-unverified-hint [(subText)]="subText"></app-email-unverified-hint>
 </ion-header>
 
-<app-email-unverified-hint [(subText)]="subText"></app-email-unverified-hint>
-
 <ion-content>
-  <ion-text>
-    <h1 class="wantic-page-header ion-text-center">{{ title }}</h1>
-  </ion-text>
-  <ion-grid class="wantic-container">
-    <ion-row>
-      <ion-col size="6" size-lg="2" class="button-container">
-        <ion-grid style="margin-right: 6px; padding: 0">
-          <ion-row>
-            <ion-col class="add-wish-button" [routerLink]="['wish-search-selection']" size="12">
-              <div class="ion-text-center">
-                <div class="add-button-padding">
-                  <div>
-                    <ion-icon class="add-icon" src="assets/icon/plus.svg"></ion-icon>
-                  </div>
-                  <div class="add-button-label">
-                      Wunsch <br>
-                      hinzufügen
-                  </div>
-                </div>
-              </div>
-            </ion-col>
-            <ion-col class="add-wish-list-button" [routerLink]="['wish-list-new']" size="12" >
-              <div class="ion-text-center">
-                <div class="add-button-padding">
-                  <div>
-                    <ion-icon class="add-icon" src="assets/icon/plus.svg"></ion-icon>
-                  </div>
-                  <div class="add-button-label">
-                      Wunschliste <br>
-                      hinzufügen
-                  </div>
-                </div>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-col>
-      <ion-col  [ngClass]="{ 'wish-list-right': i % 2 == 0 , 'wish-list-left': i % 2 == 1 }" 
-                class="wish-list" size="6" size-lg="2"
-                *ngFor="let wishList of wishLists; let i = index;" 
-                (click)="selectWishList(wishList)">
-        <app-wish-list [wishList]="wishList" [index]="i"></app-wish-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-router-outlet></ion-router-outlet>
 </ion-content>
