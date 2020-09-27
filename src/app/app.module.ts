@@ -30,6 +30,7 @@ import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-
 import { Keychain } from '@ionic-native/keychain/ngx';
 import { SecureStorage } from '@ionic-native/secure-storage/ngx';
 import { StorageKeys } from './core/services/storage.service';
+import { CoreModule } from '@core/core.module';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -48,10 +49,10 @@ export function jwtOptionsFactory(storage) {
   entryComponents: [],
   imports: [
     BrowserModule,
+    CoreModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    HttpClientModule,
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
