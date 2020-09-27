@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { WishListResolver } from './home/wish-list.resolver';
+import { WishListResolver } from '@wishLists/home/wish-list.resolver';
 
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de'

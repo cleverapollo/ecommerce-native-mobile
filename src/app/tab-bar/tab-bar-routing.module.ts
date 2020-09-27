@@ -17,12 +17,12 @@ const routes: Routes = [
       {
         path: 'home',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./../home/home.module').then(m => m.HomePageModule)
+        loadChildren: () => import('@wishLists/home/home.module').then(m => m.HomePageModule)
       },
       {
         path: 'friends-home',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./../friends-home/friends-home.module').then( m => m.FriendsHomePageModule)
+        loadChildren: () => import('@friends/friends-home//friends-home.module').then( m => m.FriendsHomePageModule)
       },
       {
         path: 'wish-search',
