@@ -8,7 +8,7 @@ import { HintComponent } from './components/hint/hint.component';
 import { EmailUnverifiedHintComponent } from './components/email-unverified-hint/email-unverified-hint.component';
 import { ValidationMessagesComponent } from './components/validation-messages/validation-messages.component';
 import { NavToolbarComponent } from './components/nav-toolbar/nav-toolbar.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     IonicModule
   ],
@@ -32,7 +33,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     EmailUnverifiedHintComponent, 
     CacheImagePipe, 
     HintComponent,
-    NavToolbarComponent
+    NavToolbarComponent,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class SharedModule { }
