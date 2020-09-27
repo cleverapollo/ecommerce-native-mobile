@@ -4,7 +4,7 @@ import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-li
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { WishListDto, WishDto, WishListSelectOptionDto } from '@core/models/wish-list.model';
-import { SharedWishListDto, RegisterAndSatisfyWishRequest } from 'src/app/friends-wish-list-overview/friends-wish-list-overview.model';
+import { SharedWishListDto, RegisterAndSatisfyWishRequest } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 
 @Injectable({
   providedIn: 'root'

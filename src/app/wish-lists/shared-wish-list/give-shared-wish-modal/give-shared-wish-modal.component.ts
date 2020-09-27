@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FriendWish } from 'src/app/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { ModalController } from '@ionic/angular';

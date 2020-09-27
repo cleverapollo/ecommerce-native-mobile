@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FriendsWishListDetailPage } from './friends-wish-list-detail.page';
+import { FriendsWishListDetailPage } from '@friends/friends-wish-list-detail/friends-wish-list-detail.page';
 
 const routes: Routes = [
   {

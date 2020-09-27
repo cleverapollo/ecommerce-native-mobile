@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FriendWishListOwner } from 'src/app/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWishListOwner } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 
 @Pipe({
   name: 'ownerNames'

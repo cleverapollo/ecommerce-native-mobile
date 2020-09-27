@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedWishListDto, FriendWish } from '../../friends-wish-list-overview/friends-wish-list-overview.model';
+import { SharedWishListDto, FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { GiveSharedWishModalComponent } from './give-shared-wish-modal/give-shared-wish-modal.component';

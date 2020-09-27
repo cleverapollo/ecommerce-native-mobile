@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FriendsWishListResolver } from '../friends-wish-list-overview/friends-wish-list.resolver';
+import { FriendsWishListResolver } from '@friends/friends-wish-list-overview/friends-wish-list.resolver';
 import { AuthGuard } from '@guards/auth.guard';
 
 import { FriendsHomePage } from './friends-home.page';
@@ -19,12 +19,12 @@ const routes: Routes = [
         path: 'friends-wish-list-overview',
         canActivate: [AuthGuard],
         resolve: { wishLists: FriendsWishListResolver },
-        loadChildren: () => import('./../friends-wish-list-overview/friends-wish-list-overview.module').then( m => m.FriendsWishListOverviewPageModule)
+        loadChildren: () => import('@friends/friends-wish-list-overview/friends-wish-list-overview.module').then( m => m.FriendsWishListOverviewPageModule)
       },
       {
         path: 'friends-wish-list-detail',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./../friends-wish-list-detail/friends-wish-list-detail.module').then( m => m.FriendsWishListDetailPageModule)
+        loadChildren: () => import('@friends/friends-wish-list-detail/friends-wish-list-detail.module').then( m => m.FriendsWishListDetailPageModule)
       },
     ]
   }

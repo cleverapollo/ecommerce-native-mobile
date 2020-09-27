@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FriendsWishListOverviewPage } from './friends-wish-list-overview.page';
+import { FriendsWishListOverviewPage } from '@friends/friends-wish-list-overview/friends-wish-list-overview.page';
 import { AuthGuard } from '@guards/auth.guard';
 
 const routes: Routes = [
@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'friends-wish-list-detail',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./../friends-wish-list-detail/friends-wish-list-detail.module').then( m => m.FriendsWishListDetailPageModule)
+    loadChildren: () => import('@friends/friends-wish-list-detail/friends-wish-list-detail.module').then( m => m.FriendsWishListDetailPageModule)
   },
 ];
 

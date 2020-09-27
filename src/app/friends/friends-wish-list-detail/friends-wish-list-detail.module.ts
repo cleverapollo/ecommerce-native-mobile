@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FriendsWishListDetailPageRoutingModule } from './friends-wish-list-detail-routing.module';
+import { FriendsWishListDetailPageRoutingModule } from '@friends/friends-wish-list-detail/friends-wish-list-detail-routing.module';
 
-import { FriendsWishListDetailPage } from './friends-wish-list-detail.page';
+import { FriendsWishListDetailPage } from '@friends/friends-wish-list-detail/friends-wish-list-detail.page';
 import { FriendsWishComponent } from './friends-wish/friends-wish.component';
 import { SharedModule } from '@shared/shared.module';
 

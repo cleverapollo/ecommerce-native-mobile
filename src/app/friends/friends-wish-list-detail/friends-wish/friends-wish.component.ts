@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FriendWish } from 'src/app/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { WishApiService } from '@core/api/wish-api.service';
 
