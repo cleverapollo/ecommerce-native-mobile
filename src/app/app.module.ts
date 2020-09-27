@@ -23,7 +23,7 @@ import { UserProfileResolver } from './shared/user-profile.resolver';
 import { FriendSelectOptionsResolver } from './wish-list-create-update/friend-list-select-options.resolver';
 import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
-import { HttpRequestLoadingInterceptor } from './interceptors/http-loading.interceptor';
+import { HttpRequestLoadingInterceptor } from './_interceptors/http-loading.interceptor';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharedWishListResolver } from './shared-wish-list/shared-wish-list.resolver';
