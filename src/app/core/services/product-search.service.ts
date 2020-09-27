@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { InAppBrowser, InAppBrowserEvent, InAppBrowserEventType, InAppBrowserObject } from '@ionic-native/in-app-browser/ngx';
 import { isArray, isObject } from 'util';
-import { SearchResultItem } from '@shared/features/product-search/search-result-item';
+import { SearchResultItem } from '@core/models/search-result-item';
 import { LoadingService } from './loading.service';
 import { HttpClient } from '@angular/common/http';
 import { SearchResultDataService } from './search-result-data.service';

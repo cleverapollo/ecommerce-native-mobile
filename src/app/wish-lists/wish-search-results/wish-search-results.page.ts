@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
-import { SearchResultItem, SearchResultItemMapper } from '@shared/features/product-search/search-result-item';
+import { SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
 import { ProductSearchService } from '@core/services/product-search.service';
 import { WishDto } from '@core/models/wish-list.model';
 import { NavController } from '@ionic/angular';

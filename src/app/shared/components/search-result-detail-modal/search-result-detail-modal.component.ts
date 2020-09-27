@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
-import { SearchResultItem } from '../search-result-item';
+import { Component, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { SearchResultItem } from '@core/models/search-result-item';
 
 @Component({
   selector: 'app-search-result-detail-modal',

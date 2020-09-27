@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { SearchResultItem } from '../search-result-item';
+import { SearchResultItem } from '@core/models/search-result-item';
 import { ModalController } from '@ionic/angular';
-import { SearchResultDetailModalComponent } from '../search-result-detail-modal/search-result-detail-modal.component';
+import { SearchResultDetailModalComponent } from '@shared/components/search-result-detail-modal/search-result-detail-modal.component';
 
 @Component({
   selector: 'app-search-result',

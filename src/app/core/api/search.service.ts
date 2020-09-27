@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@core/api/api.service';
-import { SearchResultItem } from './search-result-item';
+import { SearchResultItem } from '../models/search-result-item';
 import { Observable } from 'rxjs';
 
 @Injectable({

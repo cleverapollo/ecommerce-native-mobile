@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SearchResultItem } from '@shared/features/product-search/search-result-item';
-import { SearchService } from '@shared/features/product-search/search.service';
+import { SearchResultItem } from '@core/models/search-result-item';
+import { SearchService } from '@core/api/search.service';
 
 @Injectable()
 export class SearchResultsResolver implements Resolve<Observable<Array<SearchResultItem>>> {
