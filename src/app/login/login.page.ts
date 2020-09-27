@@ -71,7 +71,7 @@ export class LoginPage implements OnInit {
   }
 
   navToPasswordForgottenPage() {
-    this.navController.navigateForward('reset-password');
+    this.navController.navigateForward('forgot-password/reset-password');
   }
 
   navToHome() {

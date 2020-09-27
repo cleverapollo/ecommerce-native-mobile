@@ -30,12 +30,8 @@ const routes: Routes = [
     loadChildren: () => import('@registration/email-confirmation/email-confirmation.module').then( m => m.EmailConfirmationPageModule)
   },
   {
-    path: 'reset-password',
-    loadChildren: () => import('./forgot-password/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
-  },
-  {
-    path: 'change-password',
-    loadChildren: () => import('./forgot-password/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+    path: 'forgot-password',
+    loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordModule)
   },
   {
     path: 'secure',
