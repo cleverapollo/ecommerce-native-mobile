@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TabBarPage } from './tab-bar.page';
-import { AuthGuard } from '../shared/guards/auth.guard';
+import { AuthGuard } from './../_guards/auth.guard';
 
 const routes: Routes = [
   {

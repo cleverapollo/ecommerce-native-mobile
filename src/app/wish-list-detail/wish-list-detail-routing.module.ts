@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { WishListDetailPage } from './wish-list-detail.page';
-import { AuthGuard } from '../shared/guards/auth.guard';
+import { AuthGuard } from './../_guards/auth.guard';
 import { FriendSelectOptionsResolver } from '../wish-list-create-update/friend-list-select-options.resolver';
 
 const routes: Routes = [

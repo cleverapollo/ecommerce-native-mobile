@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { WishSearchPage } from './wish-search.page';
-import { AuthGuard } from '../shared/guards/auth.guard';
+import { AuthGuard } from './../_guards/auth.guard';
 import { WishListSelectOptionsResolver } from '../wish-create-update/wish-list-select-options.resolver';
 
 const routes: Routes = [

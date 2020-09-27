@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FriendsWishListResolver } from '../friends-wish-list-overview/friends-wish-list.resolver';
-import { AuthGuard } from '../shared/guards/auth.guard';
+import { AuthGuard } from './../_guards/auth.guard';
 
 import { FriendsHomePage } from './friends-home.page';
 
