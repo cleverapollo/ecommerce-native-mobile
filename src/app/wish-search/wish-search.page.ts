@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SearchService } from '../shared/features/product-search/search.service';
 import { SearchResultItem } from '../shared/features/product-search/search-result-item';
-import { WishListService } from '../shared/services/wish-list.service';
+import { WishListService } from '@core/services/wish-list.service';
 import { Subscription } from 'rxjs';
-import { WishListDto, WishDto } from '../shared/models/wish-list.model';
+import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { Platform, NavController } from '@ionic/angular';
 
 @Component({

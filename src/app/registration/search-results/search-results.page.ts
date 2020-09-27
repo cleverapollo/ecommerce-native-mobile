@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
 import { RegistrationDto } from '../registration-form';
-import { WishDto } from 'src/app/shared/models/wish-list.model';
+import { WishDto } from '@core/models/wish-list.model';
 
 @Component({
   selector: 'app-search-results',

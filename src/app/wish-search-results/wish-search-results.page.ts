@@ -1,11 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SearchResultDataService } from '../shared/services/search-result-data.service';
+import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { SearchResultItem, SearchResultItemMapper } from '../shared/features/product-search/search-result-item';
-import { ProductSearchService } from '../shared/services/product-search.service';
-import { WishDto } from '../shared/models/wish-list.model';
+import { ProductSearchService } from '@core/services/product-search.service';
+import { WishDto } from '@core/models/wish-list.model';
 import { NavController } from '@ionic/angular';
-import { WishListService } from '../shared/services/wish-list.service';
+import { WishListService } from '@core/services/wish-list.service';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { UserProfile } from '../shared/models/user.model';
+import { UserProfile } from '@core/models/user.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
-import { UserApiService } from '../shared/api/user-api.service';
+import { UserApiService } from '@core/api/user-api.service';
 import { map, publishReplay, refCount } from 'rxjs/operators';
 
 export interface StoredUserProfile {

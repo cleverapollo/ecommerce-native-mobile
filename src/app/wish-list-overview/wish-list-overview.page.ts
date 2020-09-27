@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { WishListDto } from '../shared/models/wish-list.model';
-import { WishListService } from '../shared/services/wish-list.service';
+import { WishListDto } from '@core/models/wish-list.model';
+import { WishListService } from '@core/services/wish-list.service';
 
 @Component({
   selector: 'app-wish-list-overview',

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/components/validation-messages/validation-message';
 import { ActivatedRoute } from '@angular/router';
-import { UserApiService } from 'src/app/shared/api/user-api.service';
+import { UserApiService } from '@core/api/user-api.service';
 import { UserProfileDataService } from '../../user-profile-data.service';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/components/hint/hint.component';
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService, StorageKeys } from './storage.service';
-import { UserState } from '../models/user.model';
-import { WanticJwtToken } from '../models/login.model';
+import { UserState } from '@core/models/user.model';
+import { WanticJwtToken } from '@core/models/login.model';
 
 @Injectable({
   providedIn: 'root'

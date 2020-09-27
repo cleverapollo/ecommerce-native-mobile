@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { WishListService } from '../shared/services/wish-list.service';
+import { WishListService } from '@core/services/wish-list.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WishListApiService } from '../shared/api/wish-list-api.service';
-import { WishListDto, WishDto, WishListSelectOptionDto } from '../shared/models/wish-list.model';
+import { WishListApiService } from '@core/api/wish-list-api.service';
+import { WishListDto, WishDto, WishListSelectOptionDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
-import { WishApiService } from '../shared/api/wish-api.service';
-import { AlertService } from '../shared/services/alert.service';
+import { WishApiService } from '@core/api/wish-api.service';
+import { AlertService } from '@core/services/alert.service';
 
 @Component({
   selector: 'app-wish-create-update',

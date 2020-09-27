@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListCreateRequest, WishListCreateOrUpdateRequest, WishListUpdateRequest } from './wish-list-create-update.model';
-import { WishListApiService } from '../shared/api/wish-list-api.service';
-import { WishListService } from '../shared/services/wish-list.service';
+import { WishListApiService } from '@core/api/wish-list-api.service';
+import { WishListService } from '@core/services/wish-list.service';
 import { NavController } from '@ionic/angular';
-import { WishListDto } from '../shared/models/wish-list.model';
+import { WishListDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
 import { Subscription } from 'rxjs';
-import { AlertService } from '../shared/services/alert.service';
-import { ToastService } from '../shared/services/toast.service';
+import { AlertService } from '@core/services/alert.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-wish-list-create-update',

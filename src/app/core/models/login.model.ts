@@ -1,4 +1,4 @@
-import { UserState } from '../models/user.model';
+import { UserState } from '@core/models/user.model';
 
 export class LoginResponse {
     token: string;

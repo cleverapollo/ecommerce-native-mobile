@@ -1,4 +1,4 @@
-import { WishDto } from '../shared/models/wish-list.model';
+import { WishDto } from '@core/models/wish-list.model';
 
 export class RegistrationRequest {
     userFirstName: String

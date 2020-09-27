@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FriendWishList, FriendWish } from '../friends-wish-list-overview/friends-wish-list-overview.model';
 import { Subscription } from 'rxjs';
-import { FriendWishListService } from '../shared/services/friend-wish-list.service';
+import { FriendWishListService } from '@core/services/friend-wish-list.service';
 import { NavController } from '@ionic/angular';
 
 @Component({

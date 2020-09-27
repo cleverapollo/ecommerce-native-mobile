@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { WishListService } from '../shared/services/wish-list.service';
+import { WishListService } from '@core/services/wish-list.service';
 import { Subscription } from 'rxjs';
-import { WishListApiService } from '../shared/api/wish-list-api.service';
+import { WishListApiService } from '@core/api/wish-list-api.service';
 import { Router } from '@angular/router';
-import { AlertService } from '../shared/services/alert.service';
+import { AlertService } from '@core/services/alert.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { NavController } from '@ionic/angular';
-import { WishListDto, WishDto } from '../shared/models/wish-list.model';
+import { WishListDto, WishDto } from '@core/models/wish-list.model';
 
 @Component({
   selector: 'app-wish-detail',

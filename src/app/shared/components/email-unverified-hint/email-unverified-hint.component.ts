@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UserState } from '../../models/user.model';
-import { RegistrationApiService } from '../../api/registration-api.service';
-import { UserService } from '../../services/user.service';
+import { UserState } from '@core/models/user.model';
+import { RegistrationApiService } from '@core/api/registration-api.service';
+import { UserService } from '@core/services/user.service';
 
 @Component({
   selector: 'app-email-unverified-hint',

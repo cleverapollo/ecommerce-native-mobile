@@ -4,9 +4,9 @@ import { LoginForm } from './login-form';
 import { NavController } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../shared/services/authentication.service';
-import { UserService } from '../shared/services/user.service';
-import { StorageService, StorageKeys } from '../shared/services/storage.service';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { UserService } from '@core/services/user.service';
+import { StorageService, StorageKeys } from '@core/services/storage.service';
 
 @Component({
   selector: 'app-login',

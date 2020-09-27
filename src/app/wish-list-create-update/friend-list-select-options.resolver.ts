@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { FriendApiService } from '../shared/api/friend-api.service';
-import { FriendSelectOption } from '../shared/models/friend.model';
+import { FriendApiService } from '@core/api/friend-api.service';
+import { FriendSelectOption } from '@core/models/friend.model';
 
 @Injectable()
 export class FriendSelectOptionsResolver implements Resolve<Observable<Array<FriendSelectOption>>> {

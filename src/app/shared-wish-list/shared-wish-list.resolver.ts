@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { SharedWishListDto } from '../friends-wish-list-overview/friends-wish-list-overview.model';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { WishListApiService } from '../shared/api/wish-list-api.service';
-import { StorageService } from '../shared/services/storage.service';
+import { WishListApiService } from '@core/api/wish-list-api.service';
+import { StorageService } from '@core/services/storage.service';
 
 @Injectable()
 export class SharedWishListResolver implements Resolve<Promise<SharedWishListDto>> {

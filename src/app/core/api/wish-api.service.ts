@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { WishDto } from '../models/wish-list.model';
+import { WishDto } from '@core/models/wish-list.model';
 
 @Injectable({
   providedIn: 'root'

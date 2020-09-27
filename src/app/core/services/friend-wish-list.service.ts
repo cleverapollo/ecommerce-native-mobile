@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FriendWishList } from 'src/app/friends-wish-list-overview/friends-wish-list-overview.model';
 import { BehaviorSubject } from 'rxjs';
-import { WishDto } from '../models/wish-list.model';
+import { WishDto } from '@core/models/wish-list.model';
 
 @Injectable({
   providedIn: 'root'

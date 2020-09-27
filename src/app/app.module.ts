@@ -29,7 +29,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharedWishListResolver } from './shared-wish-list/shared-wish-list.resolver';
 import { Keychain } from '@ionic-native/keychain/ngx';
 import { SecureStorage } from '@ionic-native/secure-storage/ngx';
-import { StorageKeys } from './shared/services/storage.service';
+import { StorageKeys } from './core/services/storage.service';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 

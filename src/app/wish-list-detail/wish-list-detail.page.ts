@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { WishListService } from '../shared/services/wish-list.service';
+import { WishListService } from '@core/services/wish-list.service';
 import { NavController } from '@ionic/angular';
-import { WishListDto, WishDto } from '../shared/models/wish-list.model';
-import { WishListApiService } from '../shared/api/wish-list-api.service';
+import { WishListDto, WishDto } from '@core/models/wish-list.model';
+import { WishListApiService } from '@core/api/wish-list-api.service';
 
 @Component({
   selector: 'app-wish-list-detail',

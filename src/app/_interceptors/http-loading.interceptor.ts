@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Observable, EMPTY } from 'rxjs';
 import { ToastController, AlertController } from '@ionic/angular';
 import { retryWhen, delay, tap, catchError, finalize, map } from 'rxjs/operators';
-import { LoadingService } from '../shared/services/loading.service';
+import { LoadingService } from '@core/services/loading.service';
 
 @Injectable()
 export class HttpRequestLoadingInterceptor implements HttpInterceptor {

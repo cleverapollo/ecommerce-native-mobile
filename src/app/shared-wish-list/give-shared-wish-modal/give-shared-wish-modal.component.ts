@@ -3,9 +3,9 @@ import { FriendWish } from 'src/app/friends-wish-list-overview/friends-wish-list
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from 'src/app/shared/components/validation-messages/validation-message';
 import { ModalController } from '@ionic/angular';
-import { WishListApiService } from 'src/app/shared/api/wish-list-api.service';
+import { WishListApiService } from '@core/api/wish-list-api.service';
 import { ActivatedRoute } from '@angular/router';
-import { StorageService } from 'src/app/shared/services/storage.service';
+import { StorageService } from '@core/services/storage.service';
 
 @Component({
   selector: 'app-give-shared-wish-modal',

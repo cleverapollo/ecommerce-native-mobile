@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CacheImageService } from '../services/cache-image.service';
+import { CacheImageService } from '@core/services/cache-image.service';
 import { Observable } from 'rxjs';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { HttpHeaders, HttpClient } from '@angular/common/http';

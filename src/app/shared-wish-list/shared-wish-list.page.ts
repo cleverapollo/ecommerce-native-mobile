@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { GiveSharedWishModalComponent } from './give-shared-wish-modal/give-shared-wish-modal.component';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { WishListApiService } from '../shared/api/wish-list-api.service';
-import { StorageService } from '../shared/services/storage.service';
+import { WishListApiService } from '@core/api/wish-list-api.service';
+import { StorageService } from '@core/services/storage.service';
 
 @Component({
   selector: 'app-shared-wish-list',

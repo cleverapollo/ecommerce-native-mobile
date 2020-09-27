@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { WishListDto, WishDto } from '../models/wish-list.model';
+import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
-import { UserApiService } from '../shared/api/user-api.service';
+import { UserApiService } from '@core/api/user-api.service';
 
 @Component({
   selector: 'app-reset-password',

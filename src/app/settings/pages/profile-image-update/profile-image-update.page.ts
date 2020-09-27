@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserApiService } from 'src/app/shared/api/user-api.service';
-import { UserProfile } from 'src/app/shared/models/user.model';
+import { UserApiService } from '@core/api/user-api.service';
+import { UserProfile } from '@core/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { HintConfig } from 'src/app/shared/components/hint/hint.component';
 import { UserProfileDataService } from '../../user-profile-data.service';

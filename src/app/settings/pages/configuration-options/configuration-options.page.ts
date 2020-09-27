@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserProfile } from 'src/app/shared/models/user.model';
+import { UserProfile } from '@core/models/user.model';
 import { UserProfileDataService } from '../../user-profile-data.service';
 
 @Component({

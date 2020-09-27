@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { FriendSelectOption } from '../models/friend.model';
+import { FriendSelectOption } from '@core/models/friend.model';
 
 @Injectable({
   providedIn: 'root'
