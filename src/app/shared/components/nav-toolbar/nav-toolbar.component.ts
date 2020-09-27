@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationEnd, Router, UrlTree } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav-toolbar',
@@ -11,20 +10,19 @@ import { filter, tap } from 'rxjs/operators';
 export class NavToolbarComponent implements OnInit {
 
   @Input() skipToPath: string | any[] | UrlTree;
+  @Input() rootPath: string | any[] | UrlTree;
+
+  get canGoBack(): boolean {
+    return this.router.url !== this.rootPath
+  };
   
-  canGoBack: boolean = false;
-  canSkip: boolean = false;
+  get canSkip(): boolean {
+    return this.skipToPath ? true : false;
+  }
 
   constructor(private navController: NavController, private router: Router) { }
 
-  ngOnInit() {
-    this.canSkip = this.skipToPath ? true : false;
-    this.router.events.pipe(
-      filter( e => e instanceof NavigationEnd)
-    ).subscribe((e: NavigationEnd) => {
-      this.canGoBack = e.url !== '/secure/home/wish-list-overview';
-    })
-  }
+  ngOnInit() { }
 
   goBack() {
     this.navController.back();
