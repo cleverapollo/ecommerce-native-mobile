@@ -15,7 +15,7 @@ const routes: Routes = [
       {
         path: '',
         resolve: { profile: UserProfileResolver },
-        loadChildren: () => import('./../settings/settings.module').then( m => m.SettingsPageModule)
+        loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
       }
     ]
   },
