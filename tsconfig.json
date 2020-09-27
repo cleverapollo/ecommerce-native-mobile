@@ -23,6 +23,7 @@
       "@friends/*": ["src/app/friends/*"],
       "@guards/*": ["src/app/_guards/*"],
       "@menu/*": ["src/app/menu/*"],
+      "@registration/*": ["src/app/registration/*"],
       "@shared/*": ["src/app/shared/*"],
       "@wishLists/*": ["src/app/wish-lists/*"]
     }
