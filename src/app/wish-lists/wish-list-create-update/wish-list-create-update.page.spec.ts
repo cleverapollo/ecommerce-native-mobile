@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { WishListCreateUpdatePage } from './wish-list-create-update.page';
+import { WishListCreateUpdatePage } from '@wishLists/wish-list-create-update.page';
 
 describe('WishListCreateUpdatePage', () => {
   let component: WishListCreateUpdatePage;

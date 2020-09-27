@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TabBarPage } from './tab-bar.page';
-import { AuthGuard } from './../_guards/auth.guard';
+import { AuthGuard } from '@guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
       {
         path: 'wish-search',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./../wish-search/wish-search.module').then( m => m.WishSearchPageModule)
+        loadChildren: () => import('@wishLists/wish-search/wish-search.module').then( m => m.WishSearchPageModule)
       },
       {
         path: 'menu',

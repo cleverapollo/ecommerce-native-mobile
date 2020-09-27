@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { EmailVerificationResolver } from './email-confirmation/email-verification.resolver';
 import { EmailVerificationTokenGuard } from './email-confirmation/email-verification-token.guard';
-import { SharedWishListResolver } from './shared-wish-list/shared-wish-list.resolver';
-import { SharedWishListPageGuard } from './shared-wish-list/shared-wish-list-page.guard';
+import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
+import { SharedWishListPageGuard } from '@wishLists/shared-wish-list/shared-wish-list-page.guard';
 
 const routes: Routes = [
   { 
@@ -45,7 +45,7 @@ const routes: Routes = [
     path: 'shared-wish-list',
     canActivate: [SharedWishListPageGuard],
     resolve: { wishList: SharedWishListResolver },
-    loadChildren: () => import('./shared-wish-list/shared-wish-list.module').then( m => m.SharedWishListPageModule)
+    loadChildren: () => import('@wishLists/shared-wish-list/shared-wish-list.module').then( m => m.SharedWishListPageModule)
   },
 ];
 

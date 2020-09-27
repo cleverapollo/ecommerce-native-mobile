@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { WishDetailPage } from './wish-detail.page';
-import { AuthGuard } from './../_guards/auth.guard';
+import { AuthGuard } from '@guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'wish-edit',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./../wish-create-update/wish-create-update.module').then( m => m.WishCreateUpdatePageModule)
+    loadChildren: () => import('@wishLists/wish-create-update/wish-create-update.module').then( m => m.WishCreateUpdatePageModule)
   },
 ];
 

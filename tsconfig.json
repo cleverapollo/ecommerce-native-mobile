@@ -20,7 +20,9 @@
     ],
     "paths": {
       "@core/*": ["src/app/core/*"],
-      "@shared/*": ["src/app/shared/*"]
+      "@guards/*": ["src/app/_guards/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@wishLists/*": ["src/app/wish-lists/*"]
     }
   },
   "angularCompilerOptions": {

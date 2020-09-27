@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { FriendsWishListOverviewPage } from './friends-wish-list-overview.page';
-import { AuthGuard } from './../_guards/auth.guard';
+import { AuthGuard } from '@guards/auth.guard';
 
 const routes: Routes = [
   {
