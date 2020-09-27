@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { BirthdayUpdatePageRoutingModule } from './birthday-update-routing.module';
 
 import { BirthdayUpdatePage } from './birthday-update.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [

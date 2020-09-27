@@ -8,7 +8,7 @@ import { WishListDetailPageRoutingModule } from './wish-list-detail-routing.modu
 
 import { WishListDetailPage } from './wish-list-detail.page';
 import { WishComponent } from './wish/wish.component';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [

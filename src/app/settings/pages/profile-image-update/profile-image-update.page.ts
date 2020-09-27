@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserApiService } from '@core/api/user-api.service';
 import { UserProfile } from '@core/models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { HintConfig } from 'src/app/shared/components/hint/hint.component';
+import { HintConfig } from '@shared/components/hint/hint.component';
 import { UserProfileDataService } from '../../user-profile-data.service';
 
 @Component({

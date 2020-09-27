@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { LastNameUpdatePageRoutingModule } from './last-name-update-routing.module';
 
 import { LastNameUpdatePage } from './last-name-update.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ProfileSettingsFirstnamePageRoutingModule } from './profile-settings-firstname-routing.module';
 
 import { ProfileSettingsFirstnamePage } from './profile-settings-firstname.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [

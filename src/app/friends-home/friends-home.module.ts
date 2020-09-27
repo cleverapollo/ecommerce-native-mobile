@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FriendsHomePageRoutingModule } from './friends-home-routing.module';
 
 import { FriendsHomePage } from './friends-home.page';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [

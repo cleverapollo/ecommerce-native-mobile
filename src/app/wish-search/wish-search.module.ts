@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { WishSearchPageRoutingModule } from './wish-search-routing.module';
 
 import { WishSearchPage } from './wish-search.page';
-import { ProductSearchModule } from '../shared/features/product-search/product-search.module';
-import { SharedModule } from '../shared/shared.module';
+import { ProductSearchModule } from '@shared/features/product-search/product-search.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [

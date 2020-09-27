@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SearchResultItem } from '../../shared/features/product-search/search-result-item';
+import { SearchResultItem } from '@shared/features/product-search/search-result-item';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

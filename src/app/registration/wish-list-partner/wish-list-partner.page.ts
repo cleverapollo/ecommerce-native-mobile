@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
 import { UserApiService } from '@core/api/user-api.service';
-import { ValidationMessages, ValidationMessage } from 'src/app/shared/components/validation-messages/validation-message';
+import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-list-partner',

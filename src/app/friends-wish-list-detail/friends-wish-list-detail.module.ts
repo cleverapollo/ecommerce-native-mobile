@@ -8,7 +8,7 @@ import { FriendsWishListDetailPageRoutingModule } from './friends-wish-list-deta
 
 import { FriendsWishListDetailPage } from './friends-wish-list-detail.page';
 import { FriendsWishComponent } from './friends-wish/friends-wish.component';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [

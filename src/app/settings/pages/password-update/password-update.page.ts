@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidationMessages, ValidationMessage } from 'src/app/shared/components/validation-messages/validation-message';
-import { CustomValidation } from 'src/app/shared/custom-validation';
+import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { CustomValidation } from '@shared/custom-validation';
 import { UserApiService } from '@core/api/user-api.service';
-import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from 'src/app/shared/components/hint/hint.component';
+import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 import { UpdatePasswordRequest } from '@core/models/login.model';
 
 @Component({

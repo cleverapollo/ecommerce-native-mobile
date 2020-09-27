@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CustomValidation } from '../shared/custom-validation';
+import { CustomValidation } from '@shared/custom-validation';
 import { UserApiService } from '@core/api/user-api.service';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
+import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { ChangePasswordRequest } from '@core/models/login.model';
 
 @Component({

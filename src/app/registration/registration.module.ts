@@ -14,8 +14,8 @@ import { SearchResultsPage } from './search-results/search-results.page';
 import { AccountFirstNamePage } from './account-first-name/account-first-name.page';
 import { AccountEmailPasswordPage } from './account-email-password/account-email-password.page';
 import { RegistrationCompletedPage } from './registration-completed/registration-completed.page';
-import { ProductSearchModule } from '../shared/features/product-search/product-search.module';
-import { SharedModule } from '../shared/shared.module';
+import { ProductSearchModule } from '@shared/features/product-search/product-search.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [

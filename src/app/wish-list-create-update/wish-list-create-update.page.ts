@@ -5,7 +5,7 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishListService } from '@core/services/wish-list.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
-import { ValidationMessages, ValidationMessage } from '../shared/components/validation-messages/validation-message';
+import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { Subscription } from 'rxjs';
 import { AlertService } from '@core/services/alert.service';
 import { ToastService } from '@core/services/toast.service';

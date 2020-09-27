@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SearchResultItem, SearchResultItemMapper } from '../../shared/features/product-search/search-result-item';
+import { SearchResultItem, SearchResultItemMapper } from '@shared/features/product-search/search-result-item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RegistrationFormService } from '../registration-form.service';

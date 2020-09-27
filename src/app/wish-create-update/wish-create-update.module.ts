@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { WishNewPageRoutingModule } from './wish-create-update-routing.module';
 
 import { WishCreateUpdatePage } from './wish-create-update.page';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [
