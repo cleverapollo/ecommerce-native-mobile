@@ -95,8 +95,8 @@
       "cordova-plugin-secure-storage-echo": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
