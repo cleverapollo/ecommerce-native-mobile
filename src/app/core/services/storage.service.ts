@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
-import { Keychain } from '@ionic-native/keychain/ngx';
 import { environment } from 'src/environments/environment';
 
 export enum StorageKeys {
@@ -20,7 +19,6 @@ export class StorageService {
   constructor(
     private storage: Storage,
     private secureStorage: SecureStorage,
-    private keychain: Keychain,
     private platform: Platform
   ) { }
 
@@ -62,18 +60,16 @@ export class StorageService {
     return await this.platform.ready();
   }
 
-  private async getStorage(secure: boolean): Promise<Keychain | SecureStorageObject | Storage> {
+  private async getStorage(secure: boolean): Promise<SecureStorageObject | Storage> {
     if (secure && environment.production) {
       return this.getSecureStorage();
     }
     return Promise.resolve(this.storage);
   }
 
-  private async getSecureStorage(): Promise<Keychain | SecureStorageObject | Storage> {
+  private async getSecureStorage(): Promise<SecureStorageObject | Storage> {
     return new Promise((resolve, reject) => {
-      if (this.platform.is('ios')) {
-        resolve(this.keychain);
-      } else if (this.platform.is('android')) {
+      if (this.platform.is('android') || this.platform.is('ios')) {
         this.secureStorage.create('secureStorage').then(storage => {
           resolve(storage);
         }, (storage: SecureStorageObject) => {
