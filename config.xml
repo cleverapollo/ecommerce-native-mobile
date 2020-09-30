@@ -3,7 +3,7 @@
     <name>Wantic</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="timi@wantic.com" href="https://www.wantic.io/">Wantic Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.0.29:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -147,4 +147,5 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <allow-navigation href="http://localhost:8100" sessionid="ad4ff83a" />
+    <allow-navigation href="http://192.168.0.29:8100" sessionid="cf759cd6" />
 </widget>
