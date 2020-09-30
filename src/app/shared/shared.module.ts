@@ -9,6 +9,7 @@ import { EmailUnverifiedHintComponent } from './components/email-unverified-hint
 import { ValidationMessagesComponent } from './components/validation-messages/validation-messages.component';
 import { NavToolbarComponent } from './components/nav-toolbar/nav-toolbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EmailUnverifiedHintComponent, 
     CacheImagePipe, 
     HintComponent,
-    NavToolbarComponent
+    NavToolbarComponent,
+    SearchResultComponent
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NavToolbarComponent,
     FormsModule,
     ReactiveFormsModule,
+    SearchResultComponent
   ]
 })
 export class SharedModule { }
