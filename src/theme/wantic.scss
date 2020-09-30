@@ -1,3 +1,8 @@
+ion-header {
+    margin-top: constant(safe-area-inset-top);
+    margin-top: env(safe-area-inset-top);
+ }
+
 a.wantic-link {
     color: var(--ion-color-tertiary);
     font-size: 10px;
