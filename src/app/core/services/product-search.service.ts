@@ -4,7 +4,9 @@ import { isArray, isObject } from 'util';
 import { SearchResultItem } from '@core/models/search-result-item';
 import { LoadingService } from './loading.service';
 import { HttpClient } from '@angular/common/http';
-import { SearchResultDataService } from './search-result-data.service';
+import { SearchQuery, SearchResultDataService, SearchType } from './search-result-data.service';
+import { SearchService } from '@core/api/search.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,8 @@ export class ProductSearchService {
     private http: HttpClient,
     private inAppBrowser: InAppBrowser, 
     private loadingService: LoadingService,
-    private searchResultDataService: SearchResultDataService
+    private searchResultDataService: SearchResultDataService,
+    private searchService: SearchService
   ) { }
 
   async searchByUrl(url: string): Promise<SearchResultItem[]> {
@@ -49,8 +52,13 @@ export class ProductSearchService {
       console.log('result after execution', results);
       this.searchResults = [];
       this.mapSearchResultArray(results, url);
-      this.searchResultDataService.updateSearchTerm(url);
-      this.searchResultDataService.update(this.searchResults);
+
+      const searchQuery = new SearchQuery();
+      searchQuery.searchTerm = url;
+      searchQuery.type = SearchType.URL;
+      searchQuery.results = this.searchResults;
+      this.searchResultDataService.update(searchQuery);
+
       return Promise.resolve(results)
     } catch(e) {
       return Promise.reject(e);
@@ -93,6 +101,19 @@ export class ProductSearchService {
       } else if (isArray(result)) {
         this.mapSearchResultArray(result as [any], url);
       }
+    });
+  }
+
+  searchByAmazonApi(keywords: string): Promise<SearchResultItem[]> {
+    return new Promise((resolve, reject) => {
+      this.searchService.searchForItems(keywords).toPromise().then( results => {
+        const searchQuery = new SearchQuery();
+        searchQuery.searchTerm = keywords;
+        searchQuery.type = SearchType.AMAZON_API;
+        searchQuery.results = results;
+        this.searchResultDataService.update(searchQuery);
+        resolve(results);
+      }, reject);
     });
   }
 

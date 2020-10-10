@@ -1,4 +1,8 @@
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="forceRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <section class="ion-text-center wish-list-detail-container">
     <!---->
       <!--0-->
@@ -40,7 +44,7 @@
           <div class="wish-price">{{ wish.price }}</div>
         </ion-col>
         <ion-col size="2">
-          <ion-button fill="clear" class="ion-text-right" [routerLink]="['../wish-edit']">
+          <ion-button fill="clear" class="ion-text-right" [routerLink]="['../edit']">
             <ion-icon slot="icon-only" src="assets/icon/pencil.svg"></ion-icon>
           </ion-button>
         </ion-col>

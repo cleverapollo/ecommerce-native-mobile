@@ -1,4 +1,8 @@
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="forceRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> 
+
   <section class="ion-text-center wish-list-detail-container">
     <!---->
     <!--0-->
@@ -36,8 +40,8 @@
   </section>
   
   <section class="ion-text-center page-actions">
-    <ion-icon src="assets/icon/plus.svg" (click)="goToSearchSelectionPage()"></ion-icon>
-    <ion-icon src="assets/icon/pencil.svg" [routerLink]="['../wish-list-edit']"></ion-icon>
+    <ion-icon src="assets/icon/plus.svg" [routerLink]="['../wish-search']"></ion-icon>
+    <ion-icon src="assets/icon/pencil.svg" [routerLink]="['../edit']"></ion-icon>
     <ion-icon src="assets/icon/share.svg" (click)="shareWishList()"></ion-icon>
   </section>
   

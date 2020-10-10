@@ -1,9 +1,15 @@
 <ion-content>
   <h1 class="wantic-page-header ion-text-center">Wunsch auswählen</h1>
 
-  <form *ngIf="searchByUrlForm" [formGroup]="searchByUrlForm" (ngSubmit)="searchByUrl()">
+  <form *ngIf="showUrlForm && searchByUrlForm" [formGroup]="searchByUrlForm" (ngSubmit)="searchByUrl()">
     <ion-item lines="none">
       <ion-input type="url" inputmode="url" enterkeyhint="search" placeholder="z.B. www.zalando.de/fjällrävenkå" formControlName="url"></ion-input>
+    </ion-item>
+  </form>
+
+  <form *ngIf="showKeywordsForm && searchByAmazonApiForm" [formGroup]="searchByAmazonApiForm" (ngSubmit)="searchByAmazonApi()">
+    <ion-item lines="none">
+      <ion-input type="search" inputmode="search" enterkeyhint="search" placeholder="z.B. Fjällräven Kånken" formControlName="keywords"></ion-input>
     </ion-item>
   </form>
 
@@ -13,7 +19,7 @@
         <ion-grid>
           <ion-row>
             <ion-col size="6" *ngFor="let result of results;">
-              <app-search-result [wish]="result" (onSelectWish)="updateValue($event)"></app-search-result>
+              <app-search-result [wish]="result" (onSelectWish)="navigateToWishNewPage($event)"></app-search-result>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -31,3 +37,7 @@
   </ion-grid>
 
 </ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="!platform.is('cordova')">
+  <ion-button class="wantic-save-button" expand="block" (click)="searchByAmazonApi()" [disabled]="!searchByAmazonApiForm.valid">Suchen</ion-button>
+</ion-footer>

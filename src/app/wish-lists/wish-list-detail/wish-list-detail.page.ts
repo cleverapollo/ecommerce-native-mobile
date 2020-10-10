@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { WishListService } from '@core/services/wish-list.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
+import { ActivatedRoute } from '@angular/router';
+import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 @Component({
   selector: 'app-wish-list-detail',
@@ -12,36 +12,37 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 })
 export class WishListDetailPage implements OnInit, OnDestroy {
 
-  private subscription: Subscription
-
   wishList: WishListDto;
+  refreshWishListData: boolean = false
   subText = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wünsche zu deiner Wunschliste hinzufügen.';
 
   constructor(
-    private wishListService: WishListService, 
     private navController: NavController,
-    private wishListApiService: WishListApiService
+    private wishListApiService: WishListApiService,
+    private route: ActivatedRoute,
+    private wishListStore: WishListStoreService,
   ) { }
 
   ngOnInit() {
-    this.subscription = this.wishListService.selectedWishList$.subscribe(w => {
-      this.wishList = w;
-    });
+    this.wishList = this.route.snapshot.data.wishList;
   }
 
   ionViewWillEnter() { 
-    this.subscription = this.wishListService.selectedWishList$.subscribe(w => {
-      this.wishList = w;
-    });
+    if (this.refreshWishListData) {
+      this.wishListStore.loadWishList(this.wishList.id).subscribe( wishList => {
+        this.wishList = wishList;
+      })
+    }
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  ionViewDidLeave() {
+    this.refreshWishListData = true;
   }
+
+  ngOnDestroy() {}
 
   selectWish(wish: WishDto) {
-    this.wishListService.updateSelectedWish(wish);
-    this.navController.navigateForward('secure/home/wish-list-detail/wish-detail');
+    this.navController.navigateForward(`secure/home/wish-list/${this.wishList.id}/wish/${wish.id}`);
   }
 
   goBack() {
@@ -56,6 +57,14 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     this.wishListApiService.getLinkForSocialSharing(this.wishList.id).toPromise().then( link => {
       console.log(link);
     }, e => console.error);
+  }
+
+  forceRefresh(event) {
+    this.wishListStore.loadWishList(this.wishList.id, true).subscribe(wishList => {
+      this.wishList = wishList;
+    }, console.error, () => {
+      event.target.complete();
+    })
   }
 
 }

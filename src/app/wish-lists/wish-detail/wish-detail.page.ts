@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { WishListService } from '@core/services/wish-list.service';
-import { Subscription } from 'rxjs';
-import { WishListApiService } from '@core/api/wish-list-api.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AlertService } from '@core/services/alert.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
+import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 @Component({
   selector: 'app-wish-detail',
@@ -15,32 +13,23 @@ import { WishListDto, WishDto } from '@core/models/wish-list.model';
 })
 export class WishDetailPage implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
-  private wishListSubscription: Subscription;
-
   wishList: WishListDto
   wish: WishDto
 
   constructor(
     private inAppBrowser: InAppBrowser,
     public alertService: AlertService,
-    private wishListService: WishListService, 
-    private navController: NavController
+    private navController: NavController,
+    private route: ActivatedRoute,
+    private wishListStore: WishListStoreService
     ) { }
 
   ngOnInit() {
-    this.wishListSubscription = this.wishListService.selectedWishList$.subscribe(w => {
-      this.wishList = w;
-    });
-    this.subscription = this.wishListService.selectedWish$.subscribe(w => {
-      this.wish = w;
-    });
+    this.wishList = this.route.snapshot.data.wishList;
+    this.wish = this.route.snapshot.data.wish;
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.wishListSubscription.unsubscribe();
-  }
+  ngOnDestroy() {}
 
   openProductURL() {
     const url = this.wish.productUrl
@@ -50,6 +39,14 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   goBack() {
     this.navController.back();
+  }
+
+  forceRefresh(event) {
+    this.wishListStore.loadWish(this.wish.id, true).subscribe(wish => {
+      this.wish = wish;
+    }, console.error, () => {
+      event.target.complete();
+    })
   }
 
 }

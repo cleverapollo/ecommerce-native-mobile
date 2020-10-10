@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
-import { WishListService } from '@core/services/wish-list.service';
+import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -13,13 +13,15 @@ export class WishListOverviewPage implements OnInit {
 
   wishLists: Array<WishListDto> = new Array();
   subText: string = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wunschlisten und Wünsche hinzufügen.';
+  refreshData: boolean = false
+
   get title(): string {
     return this.wishLists.length > 1 ? 'Meine Wunschlisten' : 'Meine Wunschliste';
   } 
 
   constructor(
     private route: ActivatedRoute, 
-    private wishListService: WishListService,
+    private wishListStore: WishListStoreService,
     private navController: NavController
   ) { }
 
@@ -28,12 +30,27 @@ export class WishListOverviewPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.wishLists = this.route.snapshot.data.wishLists;
-    this.wishListService.clearSelectedWishList();
+    if (this.refreshData) {
+      this.wishListStore.loadWishLists(false).subscribe( wishLists => {
+        this.wishLists = wishLists;
+      })
+    }
+  }
+
+  ionViewDidLeave() {
+    this.refreshData = true;
   }
 
   selectWishList(wishList: WishListDto) {
-    this.wishListService.updateSelectedWishList(wishList);
-    this.navController.navigateForward('secure/home/wish-list-detail');
+    this.navController.navigateForward(`secure/home/wish-list/${wishList.id}`);
   }
+
+  forceRefresh(event) {
+    this.wishListStore.loadWishLists(true).subscribe(wishLists => {
+      this.wishLists = wishLists;
+    }, console.error, () => {
+      event.target.complete();
+    })
+  }
+
 }

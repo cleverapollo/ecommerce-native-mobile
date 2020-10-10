@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WishListService } from './wish-list.service';
+import { WishListStoreService } from './wish-list-store.service';
 
-describe('WishListService', () => {
+describe('WishListStoreService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: WishListService = TestBed.get(WishListService);
+    const service: WishListStoreService = TestBed.get(WishListStoreService);
     expect(service).toBeTruthy();
   });
 });

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '@guards/auth.guard';
+import { WishListSelectOptionsResolver } from '@wishLists/wish-create-update/wish-list-select-options.resolver';
 
 import { WishSearchResultsPage } from './wish-search-results.page';
 
@@ -7,7 +9,13 @@ const routes: Routes = [
   {
     path: '',
     component: WishSearchResultsPage
-  }
+  },
+  {
+    path: 'wish-new',
+    canActivate: [AuthGuard],  // RoleGuard
+    resolve: { wishListSelectOptions: WishListSelectOptionsResolver },
+    loadChildren: () => import('@wishLists/wish-create-update/wish-create-update.module').then( m => m.WishCreateUpdatePageModule)
+  },
 ];
 
 @NgModule({

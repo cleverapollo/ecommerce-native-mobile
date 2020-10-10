@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService, StorageKeys } from './storage.service';
 import { UserService, UserSettings } from './user.service';
 import { AuthService } from '../api/auth.service';
+import { CacheService } from 'ionic-cache';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class AuthenticationService {
     private platform: Platform,
     private jwtHelper: JwtHelperService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cache: CacheService
   ) { 
     this.init();
   }
@@ -60,6 +62,7 @@ export class AuthenticationService {
   async logout() {
     await this.storageService.remove(StorageKeys.AUTH_TOKEN, true);
     await this.storageService.remove(StorageKeys.LOGIN_PASSWORD, true);
+    await this.cache.clearAll();
     this.authenticationState.next(false);
   }
 

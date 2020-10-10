@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { WishListDetailPage } from './wish-list-detail.page';
 import { AuthGuard } from '@guards/auth.guard';
-import { FriendSelectOptionsResolver } from '@wishLists/wish-list-create-update/friend-list-select-options.resolver';
+import { WishResolver } from '@wishLists/home/wish.resolver';
 
 const routes: Routes = [
   {
@@ -11,15 +11,20 @@ const routes: Routes = [
     component: WishListDetailPage
   },
   {
-    path: 'wish-detail',
+    path: 'wish/:wishId',
     canActivate: [AuthGuard],
+    resolve: { wish: WishResolver },
     loadChildren: () => import('@wishLists/wish-detail/wish-detail.module').then( m => m.WishDetailPageModule)
   },
   {
-    path: 'wish-list-edit',
+    path: 'edit',
     canActivate: [AuthGuard],
-    resolve: { friends: FriendSelectOptionsResolver },
     loadChildren: () => import('@wishLists/wish-list-create-update/wish-list-create-update.module').then( m => m.WishListCreateUpdatePageModule)
+  },
+  {
+    path: 'wish-search',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('@wishLists/wish-search-selection/wish-search-selection.module').then( m => m.WishSearchSelectionPageModule)
   }
 ];
 

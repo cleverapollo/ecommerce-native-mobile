@@ -1,30 +1,45 @@
 import { Injectable } from '@angular/core';
 import { SearchResultItem } from '@core/models/search-result-item';
+import { CacheService } from 'ionic-cache';
 import { BehaviorSubject } from 'rxjs';
+
+export enum SearchType {
+  AMAZON_API, URL
+}
+export class SearchQuery {
+  results: SearchResultItem[] = [];
+  searchTerm: string = '';
+  type: SearchType = SearchType.AMAZON_API;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchResultDataService {
 
-  private _lastSearchResults: BehaviorSubject<SearchResultItem[]> = new BehaviorSubject([]);
-  $lastSearchResults = this._lastSearchResults.asObservable();
+  private readonly CACHE_KEY = 'lastSearchQuery';
 
-  private _lastSearchTerm: BehaviorSubject<String> = new BehaviorSubject(null);
-  $lastSearchTerm = this._lastSearchTerm.asObservable();
+  private _lastSearchQuery: BehaviorSubject<SearchQuery> = new BehaviorSubject(new SearchQuery());
+  $lastSearchQuery = this._lastSearchQuery.asObservable();
 
-  constructor() { }
-
-  update(items: SearchResultItem[]) {
-    this._lastSearchResults.next(items);
+  constructor(private cache: CacheService) { 
+    this.cache.itemExists(this.CACHE_KEY).then( exists => {
+      if (exists) {
+        this.cache.getItem(this.CACHE_KEY).then(( query => {
+          this.update(query);
+        }));
+      }
+    });
   }
 
-  updateSearchTerm(searchTerm: String) {
-    this._lastSearchTerm.next(searchTerm);
+  update(searchQuery: SearchQuery) {
+    this._lastSearchQuery.next(searchQuery);
+    this.cache.saveItem(this.CACHE_KEY, searchQuery, null, 60 * 60);
   }
 
   clear() {
-    this._lastSearchResults.next([]);
+    this._lastSearchQuery.next(new SearchQuery());
+    this.cache.removeItem(this.CACHE_KEY);
   }
 
 }

@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { AuthGuard } from '@guards/auth.guard';
-import { FriendSelectOptionsResolver } from '@wishLists/wish-list-create-update/friend-list-select-options.resolver';
 import { WishListSelectOptionsResolver } from '@wishLists/wish-create-update/wish-list-select-options.resolver';
+import { WishListsResolver } from './wish-lists.resolver';
 import { WishListResolver } from './wish-list.resolver';
 
 const routes: Routes = [
@@ -20,18 +20,18 @@ const routes: Routes = [
       {
         path: 'wish-list-overview',
         canActivate: [AuthGuard],
-        resolve: { wishLists: WishListResolver },
+        resolve: { wishLists: WishListsResolver },
         loadChildren: () => import('@wishLists/wish-list-overview/wish-list-overview.module').then( m => m.WishListOverviewPageModule)
       },
       {
         path: 'wish-list-new',
         canActivate: [AuthGuard], // RoleGuard
-        resolve: { friends: FriendSelectOptionsResolver },
         loadChildren: () => import('@wishLists/wish-list-create-update/wish-list-create-update.module').then( m => m.WishListCreateUpdatePageModule)
       },
       {
-        path: 'wish-list-detail',
+        path: 'wish-list/:wishListId',
         canActivate: [AuthGuard],
+        resolve: { wishList: WishListResolver },
         loadChildren: () => import('@wishLists/wish-list-detail/wish-list-detail.module').then( m => m.WishListDetailPageModule)
       },
       {

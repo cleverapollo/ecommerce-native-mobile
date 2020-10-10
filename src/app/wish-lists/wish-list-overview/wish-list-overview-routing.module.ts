@@ -6,7 +6,7 @@ import { WishListOverviewPage } from './wish-list-overview.page';
 const routes: Routes = [
   {
     path: '',
-    component: WishListOverviewPage
+    component: WishListOverviewPage,
   }
 ];
 

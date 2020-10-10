@@ -10,7 +10,7 @@ const routes: Routes = [
     component: WishDetailPage
   },
   {
-    path: 'wish-edit',
+    path: 'edit',
     canActivate: [AuthGuard],
     loadChildren: () => import('@wishLists/wish-create-update/wish-create-update.module').then( m => m.WishCreateUpdatePageModule)
   },

@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { WishListService } from '@core/services/wish-list.service';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishListDto, WishDto, WishListSelectOptionDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { WishApiService } from '@core/api/wish-api.service';
 import { AlertService } from '@core/services/alert.service';
+import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 @Component({
   selector: 'app-wish-create-update',
@@ -15,9 +14,6 @@ import { AlertService } from '@core/services/alert.service';
   styleUrls: ['./wish-create-update.page.scss'],
 })
 export class WishCreateUpdatePage implements OnInit, OnDestroy {
-
-  private wishSubscription: Subscription
-  private wishListSubscription: Subscription;
 
   wish: WishDto
   wishList: WishListDto
@@ -50,21 +46,44 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     private route: ActivatedRoute, 
     private router: Router,
     private formBuilder: FormBuilder, 
-    private wishListService: WishListService,
     private wishListApiService: WishListApiService,
     private wishApiService: WishApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private wishListStore: WishListStoreService
     ) { }
 
   ngOnInit() {
+    this.initViewData();
     this.createForm();
-    this.wishListSelectOptions = this.route.snapshot.data.wishListSelectOptions;
   }
 
-  ngOnDestroy(): void {
-    this.wishListSubscription.unsubscribe();
-    this.wishSubscription.unsubscribe();
+  private initViewData() {
+    this.wishList = this.route.snapshot.data.wishList;
+    this.wishListSelectOptions = this.route.snapshot.data.wishListSelectOptions;
+    if (this.isUpdatePage) {
+      this.wish = this.route.snapshot.data.wish;
+    } else {
+      this.wish = this.router.getCurrentNavigation().extras.state.searchResult;
+    }
   }
+
+  private createForm() {
+    let wishListId = null;
+    if (this.isUpdatePage) {
+      wishListId = this.wish.wishListId;
+    } else if (this.wishList) {
+      wishListId = this.wishList.id;
+    }
+    const name = this.wish.name ? this.wish.name : '';
+    const price = this.wish.price ? this.wish.price : '';
+    this.form = this.formBuilder.group({
+      'wishListId': this.formBuilder.control(wishListId, [Validators.required]),
+      'name': this.formBuilder.control(name, [Validators.required]),
+      'price': this.formBuilder.control(price, [Validators.required]),
+    });
+  }
+
+  ngOnDestroy(): void {}
 
   createOrUpdateWish() {
     if (this.isUpdatePage) {
@@ -82,37 +101,9 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     })
   }
 
-  private createForm() {
-    this.form = this.formBuilder.group({
-      'wishListId': this.formBuilder.control(null, [Validators.required]),
-      'name': this.formBuilder.control('', [Validators.required]),
-      'price': this.formBuilder.control('', [Validators.required]),
-    });
-    this.patchValues();
-  }
-
-  private patchValues() {
-    this.wishSubscription = this.wishListService.selectedWish$.subscribe(w => {
-      this.wish = w;
-      this.form.controls['name'].patchValue(this.wish.name);
-      this.form.controls['price'].patchValue(this.wish.price);
-    }, e => console.error(e));
-    this.wishListSubscription = this.wishListService.selectedWishList$.subscribe(w => {
-      if (w) {
-        this.wishList = w;
-        this.form.controls['wishListId'].patchValue(this.wishList.id);
-      }
-    });
-  }
-
   private onDeleteConfirmation = (value) => {
     this.wishListApiService.removeWish(this.wish).toPromise().then( emptyResponse => {
-      const wishIndex = this.wishList.wishes.findIndex( w => w.id == this.wish.id );
-      if (wishIndex > -1) {
-        this.wishList.wishes.splice(wishIndex, 1);
-        this.wishListService.updateSelectedWishList(this.wishList);
-      }
-      this.wishListService.updateSelectedWish(null);
+      this.wishListStore.removeWishFromCache(this.wish);
       this.router.navigate(['wish-list-detail']);
     }, console.error);
   }
@@ -121,17 +112,16 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     this.wish.wishListId = this.form.controls.wishListId.value;
     this.wish.name = this.form.controls.name.value;
     this.wish.price = this.form.controls.price.value;
-    this.wishListApiService.addWish(this.wish).toPromise().then( (updatedWishList: WishListDto) => { 
-        this.wishListService.updateSelectedWishList(updatedWishList);
-        this.router.navigate(['wish-list-detail']);
+    this.wishApiService.createWish(this.wish).toPromise().then(createdWish => { 
+        this.wishListStore.saveWishToCache(createdWish);
       }, console.error);
   }
 
   private updateWish() {
     this.wish.name = this.form.controls.name.value;
     this.wish.price = this.form.controls.price.value; 
-    this.wishApiService.update(this.wish).toPromise().then( (updatedWish: WishDto) => { 
-        this.wishListService.updateSelectedWish(updatedWish);
+    this.wishApiService.update(this.wish).toPromise().then(updatedWish => { 
+        this.wishListStore.updateCachedWish(updatedWish);
     }, console.error);
   }
 

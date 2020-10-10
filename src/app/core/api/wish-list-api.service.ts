@@ -22,8 +22,12 @@ export class WishListApiService {
     return this.apiService.get(`wish-list`, params)
   }
 
-  update(wishList: WishListUpdateRequest) : Observable<Object> {
-    return this.apiService.put(`wish-list/${wishList.id}`, wishList);
+  getWishList(id: Number) : Observable<WishListDto> {
+    return this.apiService.get(`wish-list/${id}`)
+  }
+
+  update(wishList: WishListUpdateRequest) : Observable<WishListDto> {
+    return this.apiService.put<WishListDto>(`wish-list/${wishList.id}`, wishList);
   }
 
   delete(id: Number) : Observable<Object> {

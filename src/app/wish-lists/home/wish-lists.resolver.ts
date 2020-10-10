@@ -7,11 +7,10 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 @Injectable()
-export class WishListResolver implements Resolve<Observable<WishListDto>> {
+export class WishListsResolver implements Resolve<Observable<Array<WishListDto>>> {
   constructor(private wishListStore: WishListStoreService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const wishListId = Number(route.paramMap.get('wishListId'));
-    return this.wishListStore.loadWishList(wishListId);
+    return this.wishListStore.loadWishLists();
   }
 }

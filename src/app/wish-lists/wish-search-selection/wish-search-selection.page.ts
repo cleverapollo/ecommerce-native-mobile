@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { NavController } from '@ionic/angular';
 import { ProductSearchService } from '@core/services/product-search.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-wish-search-selection',
@@ -19,7 +19,8 @@ export class WishSearchSelectionPage implements OnInit {
   constructor(
     private productSearchService: ProductSearchService, 
     private formBuilder: FormBuilder,
-    private navController: NavController
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -31,12 +32,20 @@ export class WishSearchSelectionPage implements OnInit {
     });
   }
 
-  searchByAmazonApi() {}
+  searchByAmazonApi() {
+    this.productSearchService.searchByAmazonApi(this.keywords.value).then(searchResults => {
+      this.navigateToSearchResultPage();
+    }, console.error);
+  }
 
   searchByUrl() {
     this.productSearchService.searchByUrl(this.url.value).then(searchResults => {
-      this.navController.navigateForward('secure/home/wish-search-selection/wish-search-results');
+      this.navigateToSearchResultPage();
     }, console.error);
+  }
+
+  private navigateToSearchResultPage() {
+    this.router.navigate(['wish-search-results'], { relativeTo: this.route });
   }
 
 }

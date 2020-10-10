@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { WishListResolver } from '@wishLists/home/wish-list.resolver';
+import { WishListsResolver } from '@wishLists/home/wish-lists.resolver';
 
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de'
@@ -20,7 +20,6 @@ import { WishListSelectOptionsResolver } from '@wishLists/wish-create-update/wis
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FriendsWishListResolver } from '@friends/friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from '@shared/user-profile.resolver';
-import { FriendSelectOptionsResolver } from '@wishLists/wish-list-create-update/friend-list-select-options.resolver';
 import { EmailVerificationResolver } from '@registration/email-confirmation/email-verification.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { HttpRequestLoadingInterceptor } from './_interceptors/http-loading.interceptor';
@@ -29,8 +28,11 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { Keychain } from '@ionic-native/keychain/ngx';
 import { SecureStorage } from '@ionic-native/secure-storage/ngx';
-import { StorageKeys } from './core/services/storage.service';
+import { StorageKeys } from '@core/services/storage.service';
 import { CoreModule } from '@core/core.module';
+import { CacheModule } from "ionic-cache";
+import { WishListResolver } from '@wishLists/home/wish-list.resolver';
+import { WishResolver } from '@wishLists/home/wish.resolver';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -50,6 +52,7 @@ export function jwtOptionsFactory(storage) {
   imports: [
     BrowserModule,
     CoreModule,
+    CacheModule.forRoot({ keyPrefix: 'wantic-app-cache' }),
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
@@ -66,7 +69,6 @@ export function jwtOptionsFactory(storage) {
     StatusBar,
     SplashScreen,
     EmailVerificationResolver,
-    FriendSelectOptionsResolver,
     FriendsWishListResolver,
     Keyboard,
     Keychain,
@@ -74,6 +76,8 @@ export function jwtOptionsFactory(storage) {
     SharedWishListResolver,
     SocialSharing,
     UserProfileResolver,
+    WishResolver,
+    WishListsResolver,
     WishListResolver,
     WishListSelectOptionsResolver,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListCreateRequest, WishListCreateOrUpdateRequest, WishListUpdateRequest } from './wish-list-create-update.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { WishListService } from '@core/services/wish-list.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { Subscription } from 'rxjs';
 import { AlertService } from '@core/services/alert.service';
 import { ToastService } from '@core/services/toast.service';
+import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { ActivatedRoute } from '@angular/router';
+import { WishApiService } from '@core/api/wish-api.service';
 
 @Component({
   selector: 'app-wish-list-create-update',
@@ -55,17 +57,16 @@ export class WishListCreateUpdatePage implements OnInit {
   constructor(
     private formBuilder: FormBuilder, 
     private apiService: WishListApiService,
-    private wishListService: WishListService,
     private navController: NavController,
     private alertService: AlertService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private wishListStore: WishListStoreService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.subscription = this.wishListService.selectedWishList$.subscribe( wishListDto => {
-      this.wishList = wishListDto;
-      this.initFormIfNotPresent();
-    });
+    this.wishList = this.route.snapshot.data.wishList;
+    this.initFormIfNotPresent();
   }
 
   initFormIfNotPresent() {
@@ -98,9 +99,8 @@ export class WishListCreateUpdatePage implements OnInit {
   }
 
   private create(request: WishListCreateOrUpdateRequest) {
-    this.apiService.create(request as WishListCreateRequest).subscribe( (response : WishListDto) => {
-      this.wishListService.updateSelectedWishList(response);
-      this.navController.navigateForward('/wish-list-edit');
+    this.apiService.create(request as WishListCreateRequest).subscribe( (createdWishList : WishListDto) => {
+      this.wishListStore.saveWishListToCache(createdWishList);
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
     }, e => {
       console.error(e);
@@ -111,8 +111,8 @@ export class WishListCreateUpdatePage implements OnInit {
   private update(request: WishListCreateOrUpdateRequest) {
     const updateRequest = request as WishListUpdateRequest;
     updateRequest.id = this.wishList.id;
-    this.apiService.update(updateRequest).subscribe( (response : WishListDto) => {
-      this.wishListService.updateSelectedWishList(response);
+    this.apiService.update(updateRequest).subscribe( updatedWishList => {
+      this.wishListStore.updatedCachedWishList(updatedWishList);
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
     }, e => {
       console.error(e);

@@ -10,24 +10,24 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  post(url: string, body: any) : Observable<Object> {
+  post<T>(url: string, body: any) : Observable<T> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
-    return this.httpClient.post(`${SERVER_URL}/${url}`, body, {
+    return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
       headers: headers
     });
   }
 
-  put(url: string, body: any) : Observable<Object> {
+  put<T>(url: string, body: any) : Observable<T> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
-    return this.httpClient.put(`${SERVER_URL}/${url}`, body, {
+    return this.httpClient.put<T>(`${SERVER_URL}/${url}`, body, {
       headers: headers
     });
   }

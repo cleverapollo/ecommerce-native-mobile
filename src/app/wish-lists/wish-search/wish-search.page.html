@@ -1,44 +1,8 @@
 <ion-header class="ion-no-border">
-  <app-nav-toolbar rootPath="/secure/wish-search"></app-nav-toolbar>
+  <app-nav-toolbar rootPath="/secure/wish-search/wish-search-results"></app-nav-toolbar>
   <app-email-unverified-hint [(subText)]="subText"></app-email-unverified-hint>
 </ion-header>
 
 <ion-content>
-  <ion-text>
-    <h1 class="ion-text-center wantic-page-header">Was wünschst du dir?</h1>
-  </ion-text>
-
-  <ion-item lines="none">
-    <ion-searchbar [(ngModel)]="keywords" 
-                  placeholder="z.B. Fjällräven Kånken"
-                  enterkeyhint="search"
-                  inputmode="search"></ion-searchbar>
-  </ion-item>
-
-  <ion-grid class="ion-center" *ngIf="!loading && products.length > 0">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="6">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6" *ngFor="let product of products; let i = index" class="search-result">
-              <app-search-result [wish]="product" (onSelectWish)="updateValue($event)"></app-search-result>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid class="ion-center" *ngIf="loading">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="6"> <ion-skeleton-text animated></ion-skeleton-text></ion-col>
-      <ion-col size="6"> <ion-skeleton-text animated></ion-skeleton-text></ion-col>
-      <ion-col size="6"> <ion-skeleton-text animated></ion-skeleton-text></ion-col>
-      <ion-col size="6"> <ion-skeleton-text animated></ion-skeleton-text></ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-router-outlet></ion-router-outlet>
 </ion-content>
-
-<ion-footer class="ion-no-border" *ngIf="!platform.is('android') && !platform.is('ios')">
-  <ion-button class="wantic-save-button" expand="block" (click)="search()" [disabled]="!keywords || !keywords.length">Suchen</ion-button>
-</ion-footer>
