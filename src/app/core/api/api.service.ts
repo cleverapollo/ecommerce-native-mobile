@@ -15,7 +15,10 @@ export class ApiService {
     private httpClient: HttpClient, 
     private nativeHttpClient: HTTP,
     private platform: Platform
-    ) { }
+    ) { 
+      this.nativeHttpClient.setHeader('*', 'Accept', 'application/json')
+      this.nativeHttpClient.setHeader('*', 'Content-Type', 'application/json')
+    }
 
   post<T>(url: string, body: any) : Observable<T> {
     if (this.platform.is('cordova')) {
@@ -38,16 +41,8 @@ export class ApiService {
   }
 
   private postNativeHttpClient<T>(url: string, body: any) : Observable<T> {
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/json');
-
-    return from(this.nativeHttpClient.post(`${SERVER_URL}/${url}`, body, {
-      'Accept': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json'
-    })).pipe(map( response => response.data));
+    return from(this.nativeHttpClient.post(`${SERVER_URL}/${url}`, body, {}))
+      .pipe(map( response => response.data));
   }
 
   put<T>(url: string, body: any) : Observable<T> {
@@ -109,13 +104,7 @@ export class ApiService {
     queryParams.keys().forEach( (key) => {
       params[key] = queryParams.get(key);
     });
-
-    const headers = {
-      'Accept': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json'
-    }
-    return from(this.nativeHttpClient.get(url, params, headers)).pipe(
+    return from(this.nativeHttpClient.get(url, params, {})).pipe(
       map((response) => response.data)
     ) 
   }
