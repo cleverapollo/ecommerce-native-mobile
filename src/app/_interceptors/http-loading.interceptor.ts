@@ -35,7 +35,7 @@ export class HttpRequestLoadingInterceptor implements HttpInterceptor {
             }),
             catchError(err => {
                 console.log(err);
-                this.showPresentFailedAlert('present failed');
+                this.showPresentFailedAlert(err);
                 return EMPTY;
             }),
             finalize(() => {
@@ -52,10 +52,10 @@ export class HttpRequestLoadingInterceptor implements HttpInterceptor {
         toast.present();
     }
 
-    async showPresentFailedAlert(msg) {
+    async showPresentFailedAlert(msg: string) {
         const alert = await this.alertController.create({
             header: 'Technischer Fehler',
-            message: 'Deine Aktion konnte aufgrund eines technischen Fehlers nicht abgeschlossen werden.',
+            message: msg,
             buttons: ['OK']
         });
         alert.present();
