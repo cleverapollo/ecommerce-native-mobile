@@ -1,30 +1,26 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FriendWishList, FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
-import { Subscription } from 'rxjs';
-import { FriendWishListService } from '@core/services/friend-wish-list.service';
 import { NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
   templateUrl: './friends-wish-list-detail.page.html',
   styleUrls: ['./friends-wish-list-detail.page.scss'],
 })
-export class FriendsWishListDetailPage implements OnInit, OnDestroy {
-
-  private subscription: Subscription
+export class FriendsWishListDetailPage implements OnInit {
 
   wishList: FriendWishList
 
-  constructor(private wishListService: FriendWishListService, private navController: NavController) { }
+  constructor(
+    private navController: NavController, 
+    private route: ActivatedRoute,
+    private friendWishListStore: FriendWishListStoreService) { }
 
   ngOnInit() {
-    this.subscription = this.wishListService.selectedWishList$.subscribe(w => {
-      this.wishList = w;
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.wishList = this.route.snapshot.data.wishList;
+    console.log(this.wishList);
   }
 
   goBack() {
@@ -35,7 +31,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
     const index = this.wishList.wishes.findIndex( w => w.id === updatedWish.id );
     if (index !== -1) {
       this.wishList.wishes[index] = updatedWish;
-      this.wishListService.updateSelectedWishList(this.wishList);
+      this.friendWishListStore.updateCachedWishList(this.wishList);
     }
   } 
 
@@ -44,5 +40,13 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
         .filter(o => o.profileImageUrl !== null)
         .map(o => o.profileImageUrl);
     return imagesUrls;
+  }
+
+  forceRefresh(event) {
+    this.friendWishListStore.loadWishList(this.wishList.id, true).subscribe(wishList => {
+      this.wishList = wishList;
+    }, console.error, () => {
+      event.target.complete();
+    })
   }
 }

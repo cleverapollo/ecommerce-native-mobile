@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FriendWishList, FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FriendWishListService } from '@core/services/friend-wish-list.service';
+import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 
 @Component({
   selector: 'app-friends-wish-list-overview',
@@ -11,23 +11,28 @@ import { NavController } from '@ionic/angular';
 })
 export class FriendsWishListOverviewPage implements OnInit {
 
-  testData: FriendWishList = new FriendWishList()
-
-  wishLists: [FriendWishList];
+  wishLists: FriendWishList[];
 
   constructor(
     private navContoller: NavController, 
     private route: ActivatedRoute,
-    private wishListService: FriendWishListService
-  ) {
+    private friendWishListStore: FriendWishListStoreService
+  ) {}
+
+  ngOnInit() {
     this.wishLists = this.route.snapshot.data.wishLists;
   }
 
-  ngOnInit() {}
-
   selectWishList(wishList: FriendWishList) {
-    this.wishListService.updateSelectedWishList(wishList);
-    this.navContoller.navigateForward('secure/friends-home/friends-wish-list-detail');
+    this.navContoller.navigateForward(`secure/friends-home/wish-list/${wishList.id}`);
+  }
+
+  forceRefresh(event) {
+    this.friendWishListStore.loadWishLists(true).subscribe(wishLists => {
+      this.wishLists = wishLists;
+    }, console.error, () => {
+      event.target.complete();
+    })
   }
 
 }

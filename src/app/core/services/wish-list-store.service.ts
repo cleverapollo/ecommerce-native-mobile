@@ -31,7 +31,7 @@ export class WishListStoreService {
   // WISH LISTS
 
   loadWishLists(forceRefresh: boolean = false): Observable<Array<WishListDto>> {
-    let request = this.wishListApiService.getWishLists('DASHBOARD');
+    let request = this.wishListApiService.getWishLists('DASHBOARD') as Observable<Array<WishListDto>>;
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
     } 

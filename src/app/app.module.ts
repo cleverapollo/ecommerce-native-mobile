@@ -33,6 +33,7 @@ import { CoreModule } from '@core/core.module';
 import { CacheModule } from "ionic-cache";
 import { WishListResolver } from '@wishLists/home/wish-list.resolver';
 import { WishResolver } from '@wishLists/home/wish.resolver';
+import { FriendsWishListDetailResolver } from '@friends/friends-wish-list-detail/friends-wish-list-detail.resolver';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -70,6 +71,7 @@ export function jwtOptionsFactory(storage) {
     SplashScreen,
     EmailVerificationResolver,
     FriendsWishListResolver,
+    FriendsWishListDetailResolver,
     Keyboard,
     Keychain,
     SecureStorage,
