@@ -1,18 +1,3 @@
-.wish-list-name {
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--ion-color-dark);
-}
-
-.wish-list-date {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--ion-color-secondary);
-}
-
-.wish-list-description {
-    border-top: 1px dashed #F0EDE3;
-}
 
 ion-avatar {
     max-width: 21px;
@@ -45,19 +30,3 @@ ion-grid.center {
     margin-right: 2px;
 }
 
-ion-row.wish-images-container-top {
-    border-bottom: 1px solid #F7F7F7;
-}
-ion-col.wish-image-container {
-    height: 100px;
-    padding: 0;
-    img {
-        height: 95px;
-    }
-    img.placeholder-image {
-        max-height: 95px;
-    }
-}
-.wish-image-container.wish-one, .wish-image-container.wish-three {
-    border-right: 1px solid #F7F7F7;;
-}
