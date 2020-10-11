@@ -36,7 +36,7 @@ export class LastNameUpdatePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.showHint = false;
-    this.subscription = this.userProfileDataServer.userProfile$.subscribe( userProfile => {
+    this.subscription = this.userProfileDataServer.loadUserProfile().subscribe( userProfile => {
       const lastName = userProfile.lastName ? userProfile.lastName : "";
       this.form = this.formBuilder.group({
         lastName: this.formBuilder.control(lastName, [Validators.required, Validators.min(2)])
@@ -51,7 +51,7 @@ export class LastNameUpdatePage implements OnInit, OnDestroy {
   saveChanges() {
     this.api.partialUpdateLastName(this.form.controls.lastName.value).toPromise()
       .then( updatedProfile => {
-        this.userProfileDataServer.updateUserProfile(updatedProfile);
+        this.userProfileDataServer.updateCachedUserProfile(updatedProfile);
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch( e => {

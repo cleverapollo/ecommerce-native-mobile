@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 import { UserApiService } from '@core/api/user-api.service';
 import { map, publishReplay, refCount } from 'rxjs/operators';
+import { CacheService } from 'ionic-cache';
 
 export interface StoredUserProfile {
   item: UserProfile;
@@ -16,64 +17,30 @@ export interface StoredUserProfile {
 })
 export class UserProfileDataService {
 
-  private STORAGE_KEY_USER_PROFILE = 'user-profile';
-  private _userProfile: BehaviorSubject<UserProfile> = new BehaviorSubject(new UserProfile());
-  
-  userProfileData: Observable<UserProfile>;
-  userProfile$ = this._userProfile.asObservable();
+  private readonly CACHE_DEFAULT_TTL = 60 * 60;
+  private readonly CACHE_KEY = 'userProfile'
+  private readonly CACHE_GROUP_KEY = 'user';
 
-  constructor(private storage: Storage, private platform: Platform, private api: UserApiService) {
-    this.initUserProfile();
+  constructor(
+    private cache: CacheService, 
+    private api: UserApiService) 
+  {}
+
+  loadUserProfile(forceRefresh: boolean = false): Observable<UserProfile> {
+    let request = this.api.getProfile();
+    if (forceRefresh) {
+      return this.cache.loadFromDelayedObservable(this.CACHE_KEY, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
+    } 
+    return this.cache.loadFromObservable(this.CACHE_KEY, request, this.CACHE_GROUP_KEY)
   }
 
-  getUserProfile(): Observable<UserProfile> {
-    if (!this.userProfileData) {
-      this.userProfileData = this.getUserProfileFromServer()
-    }
-    return this.userProfileData;
+  updateCachedUserProfile(userProfile: UserProfile) {
+    this.cache.saveItem(this.CACHE_KEY, userProfile, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL)
+      .catch(() => { this.removeCachedUserProfile() });
   }
 
-  updateUserProfile(userProfile: UserProfile) {
-    const itemToStore: StoredUserProfile = {
-      item: userProfile,
-      modifiedAt: new Date()
-    }
-    this.storage.set(this.STORAGE_KEY_USER_PROFILE, itemToStore);
-    this._userProfile.next(userProfile);
+  removeCachedUserProfile() {
+    this.cache.removeItem(this.CACHE_KEY)
   }
 
-  clearCache() {
-    this.userProfileData = null;
-    this.storage.remove(this.STORAGE_KEY_USER_PROFILE);
-    this._userProfile.next(null);
-  }
-
-  private initUserProfile() {
-    this.platform.ready().then(() => {
-      this.getUserProfileFromCache().then((storedUserProfile: StoredUserProfile) => {
-        if (storedUserProfile) {
-          this._userProfile.next(storedUserProfile.item);
-        } else {
-          this.refreshFromServer();
-        }
-      });
-    });
-  }
-
-  private getUserProfileFromCache(): Promise<StoredUserProfile> {
-    return this.storage.get(this.STORAGE_KEY_USER_PROFILE);
-  }
-
-  private getUserProfileFromServer(): Observable<UserProfile> {
-    return this.api.getProfile().pipe(
-      publishReplay(1),
-      refCount()
-    );
-  }
-
-  private refreshFromServer() {
-    this.getUserProfileFromServer().subscribe(userProfile => {
-      this.updateUserProfile(userProfile);
-    });
-  }
 }

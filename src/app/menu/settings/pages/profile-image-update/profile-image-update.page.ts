@@ -61,10 +61,10 @@ export class ProfileImageUpdatePage implements OnInit {
   }
 
   private updateProfile(url: String, fileName: String) {
-    this.userProfileDataService.userProfile$.toPromise().then( profile => {
+    this.userProfileDataService.loadUserProfile().toPromise().then( profile => {
       profile.profileImageUrl = url;
       profile.profileImageFileName = fileName;
-      this.userProfileDataService.updateUserProfile(profile);
+      this.userProfileDataService.updateCachedUserProfile(profile);
       this.profile = profile;
     })
   }

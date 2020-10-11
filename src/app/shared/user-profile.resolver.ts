@@ -10,6 +10,6 @@ export class UserProfileResolver implements Resolve<Observable<UserProfile>> {
   constructor(private userProfileDataService: UserProfileDataService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.userProfileDataService.getUserProfile();
+    return this.userProfileDataService.loadUserProfile();
   }
 }

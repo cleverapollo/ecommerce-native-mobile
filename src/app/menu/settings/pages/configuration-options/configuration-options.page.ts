@@ -10,7 +10,9 @@ import { UserProfileDataService } from '../../user-profile-data.service';
 })
 export class ConfigurationOptionsPage implements OnInit {
   
+  refreshData: boolean = false;
   profile: UserProfile
+  
   get dataForChildRoutes() {
     return {
       data: {
@@ -19,19 +21,30 @@ export class ConfigurationOptionsPage implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private userProfileDataServer: UserProfileDataService) { }
+  constructor(private route: ActivatedRoute, private userProfileStore: UserProfileDataService) { }
 
   ngOnInit() {
-    this.initProfileIfNeeded()
+    this.profile = this.route.snapshot.data.profile;
   }
 
-  initProfileIfNeeded() {
-    this.userProfileDataServer.userProfile$.subscribe( userProfile => {
-      if (!this.profile) {
-        this.profile = this.route.snapshot.data.profile;
-      } else if (this.profile && userProfile) {
-        this.profile = userProfile;
-      }
+  ionViewWillEnter() {
+    if (this.refreshData) {
+      this.userProfileStore.loadUserProfile(false).subscribe(profile => {
+        this.profile = profile;
+      })
+    }
+  }
+
+  ionViewDidLeave() {
+    this.refreshData = true;
+  }
+
+  forceRefresh(event) {
+    this.userProfileStore.loadUserProfile(true).subscribe(profile => {
+      this.profile = profile;
+    }, console.error, () => {
+      event.target.complete();
     })
   }
+
 }

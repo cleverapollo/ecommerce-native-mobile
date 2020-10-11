@@ -42,7 +42,7 @@ export class BirthdayUpdatePage implements OnInit {
   saveChanges() {
     this.api.partialUpdateBirthday(this.form.controls.birthday.value).toPromise()
       .then(updatedProfile => {
-        this.userProfileDataService.updateUserProfile(updatedProfile);
+        this.userProfileDataService.updateCachedUserProfile(updatedProfile);
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch(e => {

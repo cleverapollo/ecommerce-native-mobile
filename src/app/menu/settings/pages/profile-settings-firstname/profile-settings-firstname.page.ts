@@ -43,7 +43,7 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   saveChanges() {
     this.api.partialUpdateFirstName(this.form.controls.firstName.value).toPromise()
       .then(updatedProfile => {
-        this.userProfileDataService.updateUserProfile(updatedProfile);
+        this.userProfileDataService.updateCachedUserProfile(updatedProfile);
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch(e => {

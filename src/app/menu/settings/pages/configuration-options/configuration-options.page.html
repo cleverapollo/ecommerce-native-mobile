@@ -1,4 +1,8 @@
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="forceRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> 
+
   <h1 class="ion-text-center wantic-page-header">Einstellungen</h1>
 
   <ion-list>
@@ -22,7 +26,8 @@
       <ion-icon slot="end" name="arrow-forward"></ion-icon>
       <ion-label>
         <h2>Vorname</h2>
-        <h3>{{ profile.firstName }}</h3>
+        <h3 *ngIf="profile.firstName">{{ profile.firstName }}</h3>
+        <h3 *ngIf="!profile.firstName"><em>noch nicht eingetragen</em></h3>
       </ion-label>
     </ion-item>
 
@@ -31,7 +36,7 @@
       <ion-label>
         <h2>Nachname</h2>
         <h3 *ngIf="profile.lastName">{{ profile.lastName }}</h3>
-        <h3 *ngIf="!profile.lastName"><i>noch nicht eingetragen</i></h3>
+        <h3 *ngIf="!profile.lastName"><em>noch nicht eingetragen</em></h3>
       </ion-label>
     </ion-item>
 
@@ -40,7 +45,7 @@
       <ion-label>
         <h2>Geburtsdatum</h2>
         <h3 *ngIf="profile.birthday">{{ profile.birthday | date:'dd.MM.yyyy' }}</h3>
-        <h3 *ngIf="!profile.birthday"><i>noch nicht eingetragen</i></h3>
+        <h3 *ngIf="!profile.birthday"><em>noch nicht eingetragen</em></h3>
       </ion-label>
     </ion-item>
 

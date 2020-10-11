@@ -43,7 +43,7 @@ export class EmailUpdatePage implements OnInit {
   saveChanges() {
     this.api.partialUpdateEmail(this.form.controls.email.value).toPromise()
       .then(updatedProfile => {
-        this.userProfileDataService.updateUserProfile(updatedProfile);
+        this.userProfileDataService.updateCachedUserProfile(updatedProfile);
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch(e => {
