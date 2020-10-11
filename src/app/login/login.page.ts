@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { UserService } from '@core/services/user.service';
 import { StorageService, StorageKeys } from '@core/services/storage.service';
+import { CacheService } from 'ionic-cache';
 
 @Component({
   selector: 'app-login',
@@ -31,12 +32,12 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder, 
     private authService: AuthenticationService,
     private userService: UserService,
-    private storageService: StorageService) { 
+    private storageService: StorageService,
+    private cache: CacheService) { 
 
   }
 
   ngOnInit() {
-    this.navToHomeIfAlreadyLoggedIn();
     this.createForm();
     this.patchValuesIfNeeded();
   }
@@ -64,6 +65,7 @@ export class LoginPage implements OnInit {
     const input = this.loginForm.value as LoginForm;
     this.authService.login(input.email, input.password, input.saveCredentials).then(() => {
       this.loginForm.reset();
+      this.cache.clearAll();
       this.navToHome();
     }).catch(() => {
       console.error('Fehler beim Login!');
@@ -76,14 +78,6 @@ export class LoginPage implements OnInit {
 
   navToHome() {
     this.navController.navigateRoot('secure');
-  }
-
-  navToHomeIfAlreadyLoggedIn() {
-    this.authService.authenticationState.subscribe(state => {
-      if (state) {
-        this.navToHome();
-      }
-    });
   }
 
   goBack() {

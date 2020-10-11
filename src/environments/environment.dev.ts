@@ -6,7 +6,7 @@ export const environment: EnvironmentConfig = {
     serverConfig: {
         networkProtocol: 'http',
         thirdLevelDomain: '',
-        secondLevelDomain: 'localhost',
+        secondLevelDomain: 'localhost', // for android and iOS simulators = 10.0.2.2
         port: 8080
     }
 };
