@@ -1,5 +1,5 @@
-<ion-card (click)="openProductURL()" [ngClass]="{ 'wish-reserved': wish.reservedByFriend }">
-  <div class="image-container">
+<ion-card [ngClass]="{ 'wish-reserved': wish.reservedByFriend, 'wish-bought': wish.bought }">
+  <div class="image-container" (click)="openProductURL()">
     <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" />
     <img *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg">
   </div>
@@ -12,7 +12,7 @@
     </ion-button>
     <ion-button class="give-button" *ngIf="wish.bought && !wish.reservedByFriend" expand="block" color="tertiary"
       (click)="reserve()">
-      NICHT MEHR SCHENKEN
+      NICHT MEHR <br> SCHENKEN
     </ion-button>
   </ion-card-content>
 </ion-card>
