@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, EMPTY } from 'rxjs';
 import { ToastController, AlertController } from '@ionic/angular';
 import { retryWhen, delay, tap, catchError, finalize, map } from 'rxjs/operators';
@@ -35,7 +35,9 @@ export class HttpRequestLoadingInterceptor implements HttpInterceptor {
             }),
             catchError(err => {
                 console.log(err);
-                this.showPresentFailedAlert(err);
+                if (err instanceof HttpErrorResponse) {
+                    this.showPresentFailedAlert(err);
+                }
                 return EMPTY;
             }),
             finalize(() => {
@@ -52,10 +54,10 @@ export class HttpRequestLoadingInterceptor implements HttpInterceptor {
         toast.present();
     }
 
-    async showPresentFailedAlert(msg: string) {
+    async showPresentFailedAlert(error: HttpErrorResponse) {
         const alert = await this.alertController.create({
-            header: 'Technischer Fehler',
-            message: msg,
+            header: `${error.status}`,
+            message: error.message,
             buttons: ['OK']
         });
         alert.present();
