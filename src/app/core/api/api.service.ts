@@ -41,7 +41,7 @@ export class ApiService {
   }
 
   private postNativeHttpClient<T>(url: string, body: any) : Observable<T> {
-    return from(this.nativeHttpClient.post(`${SERVER_URL}/${url}`, body, {}))
+    return from(this.nativeHttpClient.post(`${SERVER_URL}/${url}`, JSON.stringify(body), {}))
       .pipe(map( response => response.data));
   }
 
