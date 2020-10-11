@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
-import { UserProfileDataService } from '../../user-profile-data.service';
+import { UserProfileStore } from '../../user-profile-store.service';
 
 @Component({
   selector: 'app-profile-settings-firstname',
@@ -30,7 +30,7 @@ export class ProfileSettingsFirstnamePage implements OnInit {
     private route: ActivatedRoute, 
     private formBuilder: FormBuilder, 
     private api: UserApiService,
-    private userProfileDataService: UserProfileDataService) 
+    private userProfileStore: UserProfileStore) 
   { }
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   saveChanges() {
     this.api.partialUpdateFirstName(this.form.controls.firstName.value).toPromise()
       .then(updatedProfile => {
-        this.userProfileDataService.updateCachedUserProfile(updatedProfile);
+        this.userProfileStore.updateCachedUserProfile(updatedProfile);
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch(e => {

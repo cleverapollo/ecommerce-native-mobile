@@ -3,7 +3,7 @@ import { UserApiService } from '@core/api/user-api.service';
 import { UserProfile } from '@core/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { HintConfig } from '@shared/components/hint/hint.component';
-import { UserProfileDataService } from '../../user-profile-data.service';
+import { UserProfileStore } from '../../user-profile-store.service';
 
 @Component({
   selector: 'app-profile-image-update',
@@ -20,7 +20,7 @@ export class ProfileImageUpdatePage implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private userApiService: UserApiService, 
-    private userProfileDataService: UserProfileDataService) 
+    private userProfileStore: UserProfileStore) 
     { }
 
   ngOnInit() {
@@ -61,10 +61,10 @@ export class ProfileImageUpdatePage implements OnInit {
   }
 
   private updateProfile(url: String, fileName: String) {
-    this.userProfileDataService.loadUserProfile().toPromise().then( profile => {
+    this.userProfileStore.loadUserProfile().toPromise().then( profile => {
       profile.profileImageUrl = url;
       profile.profileImageFileName = fileName;
-      this.userProfileDataService.updateCachedUserProfile(profile);
+      this.userProfileStore.updateCachedUserProfile(profile);
       this.profile = profile;
     })
   }

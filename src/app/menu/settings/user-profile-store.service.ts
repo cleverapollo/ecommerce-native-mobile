@@ -15,7 +15,7 @@ export interface StoredUserProfile {
 @Injectable({
   providedIn: 'root'
 })
-export class UserProfileDataService {
+export class UserProfileStore {
 
   private readonly CACHE_DEFAULT_TTL = 60 * 60;
   private readonly CACHE_KEY = 'userProfile'

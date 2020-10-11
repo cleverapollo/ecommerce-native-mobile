@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { ActivatedRoute } from '@angular/router';
 import { UserApiService } from '@core/api/user-api.service';
-import { UserProfileDataService } from '../../user-profile-data.service';
+import { UserProfileStore } from '../../user-profile-store.service';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 
 @Component({
@@ -30,7 +30,7 @@ export class EmailUpdatePage implements OnInit {
     private route: ActivatedRoute, 
     private formBuilder: FormBuilder, 
     private api: UserApiService,
-    private userProfileDataService: UserProfileDataService) 
+    private userProfileStore: UserProfileStore) 
     { }
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class EmailUpdatePage implements OnInit {
   saveChanges() {
     this.api.partialUpdateEmail(this.form.controls.email.value).toPromise()
       .then(updatedProfile => {
-        this.userProfileDataService.updateCachedUserProfile(updatedProfile);
+        this.userProfileStore.updateCachedUserProfile(updatedProfile);
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch(e => {

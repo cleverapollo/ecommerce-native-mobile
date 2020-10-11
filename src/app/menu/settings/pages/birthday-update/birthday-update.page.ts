@@ -4,7 +4,7 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { ActivatedRoute } from '@angular/router';
 import { UserApiService } from '@core/api/user-api.service';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
-import { UserProfileDataService } from '../../user-profile-data.service';
+import { UserProfileStore } from '../../user-profile-store.service';
 
 @Component({
   selector: 'app-birthday-update',
@@ -28,7 +28,7 @@ export class BirthdayUpdatePage implements OnInit {
     private route: ActivatedRoute, 
     private formBuilder: FormBuilder, 
     private api: UserApiService, 
-    private userProfileDataService: UserProfileDataService) 
+    private userProfileStore: UserProfileStore) 
   { }
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class BirthdayUpdatePage implements OnInit {
   saveChanges() {
     this.api.partialUpdateBirthday(this.form.controls.birthday.value).toPromise()
       .then(updatedProfile => {
-        this.userProfileDataService.updateCachedUserProfile(updatedProfile);
+        this.userProfileStore.updateCachedUserProfile(updatedProfile);
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch(e => {

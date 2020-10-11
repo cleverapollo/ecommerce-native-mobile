@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
-import { UserProfileDataService } from '../../user-profile-data.service';
+import { UserProfileStore } from '../../user-profile-store.service';
 import { Subscription } from 'rxjs';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 
@@ -31,12 +31,12 @@ export class LastNameUpdatePage implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder, 
     private api: UserApiService,
-    private userProfileDataServer: UserProfileDataService
+    private userProfileStore: UserProfileStore
   ) { }
 
   ngOnInit() {
     this.showHint = false;
-    this.subscription = this.userProfileDataServer.loadUserProfile().subscribe( userProfile => {
+    this.subscription = this.userProfileStore.loadUserProfile().subscribe( userProfile => {
       const lastName = userProfile.lastName ? userProfile.lastName : "";
       this.form = this.formBuilder.group({
         lastName: this.formBuilder.control(lastName, [Validators.required, Validators.min(2)])
@@ -51,7 +51,7 @@ export class LastNameUpdatePage implements OnInit, OnDestroy {
   saveChanges() {
     this.api.partialUpdateLastName(this.form.controls.lastName.value).toPromise()
       .then( updatedProfile => {
-        this.userProfileDataServer.updateCachedUserProfile(updatedProfile);
+        this.userProfileStore.updateCachedUserProfile(updatedProfile);
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch( e => {
