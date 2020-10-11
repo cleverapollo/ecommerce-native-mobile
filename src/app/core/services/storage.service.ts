@@ -69,7 +69,7 @@ export class StorageService {
 
   private async getSecureStorage(): Promise<SecureStorageObject | Storage> {
     return new Promise((resolve, reject) => {
-      if (this.platform.is('android') || this.platform.is('ios')) {
+      if (this.platform.is('cordova')) {
         this.secureStorage.create('secureStorage').then(storage => {
           resolve(storage);
         }, (storage: SecureStorageObject) => {

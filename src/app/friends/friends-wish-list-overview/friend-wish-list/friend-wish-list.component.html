@@ -1,7 +1,7 @@
 <ion-grid class="friend-avatar-container">
 
   <!--0-->
-  <ion-avatar *ngIf="!ownerProfileImageUrls" class="auto-margin">
+  <ion-avatar *ngIf="!ownerProfileImageUrls || !ownerProfileImageUrls.length" class="auto-margin">
     <img src="assets/images/avatar-placeholder-small.svg"/>
   </ion-avatar>
 
