@@ -1,5 +1,24 @@
 .img-avatar {
     border-radius: 50%;
-    width: 30pt;
+    width: 40pt;
 }
 
+ion-avatar.creator-image {
+    vertical-align: top;
+}
+
+.wish-list-owner-names {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.wish-list-name {
+    font-size: 14px;
+}
+
+.wish-list-date {
+    font-size: 14px;
+    color: var(--ion-color-secondary);
+    margin: 0;
+}

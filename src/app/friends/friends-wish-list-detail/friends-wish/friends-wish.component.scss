@@ -14,8 +14,9 @@ ion-img {
 ion-card {
     div.image-container {
         min-height: 140px;
+        text-align: center;
         img {
-            width: 50%;
+            max-height: 166px;
             margin: auto;
             padding-top: 16px;
         }

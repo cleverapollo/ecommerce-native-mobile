@@ -8,6 +8,9 @@
 .friend-avatar-container {
     background: linear-gradient(to bottom, #f7f6f1 50%, white 50%);
     height: 15%;
+    ion-avatar {
+        border: 3px solid white;
+    }
     ion-avatar.auto-margin {
         margin: auto
     }

@@ -3,37 +3,42 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> 
 
-  <ion-item lines="none">
-     <!---->
-       <!--0-->
-      <ion-avatar class="creator-image standalone" *ngIf="!ownerProfileImageUrls">
-        <img  src="assets/images/avatar-placeholder-small.svg">
+  <section class="ion-text-center wish-list-detail-container">
+    <!---->
+    <!--0-->
+    <ion-avatar class="creator-image standalone"
+      *ngIf="!ownerProfileImageUrls || !ownerProfileImageUrls.length">
+      <img src="assets/images/avatar-placeholder-small.svg">
+    </ion-avatar>
+  
+    <!--1-->
+    <ion-avatar class="creator-image standalone"
+      *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 1">
+      <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | cacheImage | async">
+    </ion-avatar>
+  
+    <!--2-->
+    <ion-avatar class="creator-image first"
+      *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 2">
+      <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | cacheImage | async">
+    </ion-avatar>
+    <ion-avatar class="creator-image last"
+      *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 2">
+      <img *ngIf="ownerProfileImageUrls[1]" [src]="ownerProfileImageUrls[1] | cacheImage | async">
+    </ion-avatar>
+    <!---->
+    <div class="details">
+      <p class="wish-list-owner-names">{{ wishList.owners | ownerNames }}</p>
+      <p class="wish-list-name">{{ wishList.name }}</p>
+      <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
+    </div>
+    <div class="friends-images" *ngIf="wishList.memberProfieImageUrls && wishList.memberProfieImageUrls.length">
+      <ion-avatar *ngFor="let imageUrl of wishList.memberProfieImageUrls">
+        <img
+          [src]="imageUrl ? (imageUrl | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
       </ion-avatar>
-
-      <!--1-->
-      <ion-avatar class="creator-image standalone" *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 1">
-        <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | secure | async">
-      </ion-avatar>
-
-      <!--2-->
-      <ion-avatar class="creator-image first" *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 2">
-        <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | secure | async">
-      </ion-avatar>
-      <ion-avatar class="creator-image last" *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 2">
-        <img *ngIf="ownerProfileImageUrls[1]" [src]="ownerProfileImageUrls[1] | secure | async">
-      </ion-avatar>
-      <!---->
-       <ion-label class="ion-text-wrap">
-         <h1>{{ wishList.owners | ownerNames }} <small>{{ wishList.name }}</small></h1>
-         <p>{{ wishList.date | date }}</p>
-       </ion-label>
-   </ion-item>
- 
-   <div class="friends-images" *ngIf="wishList.memberProfieImageUrls && wishList.memberProfieImageUrls.length">
-     <ion-avatar *ngFor="let imageUrl of wishList.memberProfieImageUrls">
-      <img *ngIf="imageUrl" [src]="imageUrl | secure | async">
-     </ion-avatar>
-   </div>
+    </div>
+  </section>
  
    <ion-grid>
      <ion-row>
