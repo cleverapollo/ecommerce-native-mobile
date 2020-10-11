@@ -34,6 +34,7 @@ import { CacheModule } from "ionic-cache";
 import { WishListResolver } from '@wishLists/home/wish-list.resolver';
 import { WishResolver } from '@wishLists/home/wish.resolver';
 import { FriendsWishListDetailResolver } from '@friends/friends-wish-list-detail/friends-wish-list-detail.resolver';
+import { HTTP } from '@ionic-native/http/ngx';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -69,6 +70,7 @@ export function jwtOptionsFactory(storage) {
     InAppBrowser,
     StatusBar,
     SplashScreen,
+    HTTP,
     EmailVerificationResolver,
     FriendsWishListResolver,
     FriendsWishListDetailResolver,
