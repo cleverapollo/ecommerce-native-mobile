@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FriendApiService } from '@core/api/friend-api.service';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { WishListDto } from '@core/models/wish-list.model';
 import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { CacheService } from 'ionic-cache';
 import { Observable } from 'rxjs';
@@ -16,7 +15,7 @@ export class FriendWishListStoreService {
   private readonly CACHE_KEY_WISH_LISTS = 'friendWishLists'
 
   private cacheKeyWishList(id: Number): string {
-    return `getWishList${id}`
+    return `getFriendWishList${id}`
   }
 
   constructor(
