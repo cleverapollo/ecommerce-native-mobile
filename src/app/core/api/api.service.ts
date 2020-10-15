@@ -134,7 +134,9 @@ export class ApiService {
     if (queryParams) {
       urlForRequest = `${urlForRequest}?${queryParams.toString()}`;
     }
+    console.debug('GET ', urlForRequest);
     let request = this.nativeHttpClient.get(urlForRequest, null, null)
+    this.loadingService.showLoadingSpinner();
     return this.handleResponse<T>(from(request));
   }
 

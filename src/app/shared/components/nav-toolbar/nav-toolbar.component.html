@@ -9,7 +9,7 @@
       <img class="wantic-logo" src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
     </ion-col>
     <ion-col class="wantic-skip-button-container">
-      <button class="wantic-skip-button" *ngIf="canSkip">
+      <button class="wantic-skip-button" *ngIf="canSkip" (click)="skip()">
         ÜBERSPRINGEN
       </button>
     </ion-col>
