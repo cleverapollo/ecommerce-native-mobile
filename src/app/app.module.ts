@@ -2,7 +2,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpBackend, HttpXhrBackend } from '@angular/common/http';
 import { WishListsResolver } from '@wishLists/home/wish-lists.resolver';
 
 import { registerLocaleData } from '@angular/common';
@@ -35,6 +35,7 @@ import { WishListResolver } from '@wishLists/home/wish-list.resolver';
 import { WishResolver } from '@wishLists/home/wish.resolver';
 import { FriendsWishListDetailResolver } from '@friends/friends-wish-list-detail/friends-wish-list-detail.resolver';
 import { HTTP } from '@ionic-native/http/ngx';
+import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -64,7 +65,8 @@ export function jwtOptionsFactory(storage) {
         useFactory: jwtOptionsFactory,
         deps: [Storage]
       },
-    })
+    }),
+    NativeHttpModule
   ],
   providers: [
     InAppBrowser,
@@ -86,7 +88,8 @@ export function jwtOptionsFactory(storage) {
     WishListSelectOptionsResolver,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'de' },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestLoadingInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestLoadingInterceptor, multi: true },
+    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend]},
   ],
   bootstrap: [AppComponent]
 })

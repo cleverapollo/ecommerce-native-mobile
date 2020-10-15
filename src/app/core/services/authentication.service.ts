@@ -6,6 +6,7 @@ import { StorageService, StorageKeys } from './storage.service';
 import { UserService, UserSettings } from './user.service';
 import { AuthService } from '../api/auth.service';
 import { CacheService } from 'ionic-cache';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class AuthenticationService {
     private jwtHelper: JwtHelperService,
     private userService: UserService,
     private authService: AuthService,
-    private cache: CacheService
+    private cache: CacheService,
+    private nativeHttpClient: HTTP
   ) { 
     this.init();
   }
@@ -49,6 +51,7 @@ export class AuthenticationService {
   login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
     return new Promise((resolve, reject) => {
       this.authService.login(email, password).subscribe(response => {
+        console.info('login successful', response)
         if (saveCredentials) {
           this.saveCredentialsAndUserSettings(email, password);
         }
@@ -89,11 +92,13 @@ export class AuthenticationService {
 
   saveToken(token: string) : Promise<void> {
     return new Promise((resolve, reject) => {
+      this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`)
       this.storageService.set(StorageKeys.AUTH_TOKEN, token, true).then(() => {
         console.log('token: ', this.jwtHelper.decodeToken(token));
         this.authenticationState.next(true);
         resolve();
       }).catch( e => {
+        console.error('could not save token ', e)
         this.authenticationState.next(false);
         reject();
       });
