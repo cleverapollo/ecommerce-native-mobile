@@ -148,13 +148,12 @@ export class ApiService {
   } 
 
   private getNativeHttpClient<T>(url: string, queryParams?: HttpParams): Observable<T> {
-    let urlForRequest = `${SERVER_URL}/${url}`;
+    let urlForRequest =`${SERVER_URL}/${url}`;
     if (queryParams) {
-      let encodedQueryParams = encodeURI(queryParams.toString())
-      urlForRequest = `${urlForRequest}?${encodedQueryParams}`;
+      urlForRequest = `${urlForRequest}?${queryParams.toString()}`;
     }
     console.debug('GET ', urlForRequest);
-    let request = this.nativeHttpClient.get(urlForRequest, null, null)
+    let request = this.nativeHttpClient.get(encodeURI(urlForRequest), null, null)
     this.loadingService.showLoadingSpinner();
     return this.handleResponse<T>(from(request));
   }
