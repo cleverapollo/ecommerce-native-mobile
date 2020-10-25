@@ -10,6 +10,7 @@ import { ValidationMessagesComponent } from './components/validation-messages/va
 import { NavToolbarComponent } from './components/nav-toolbar/nav-toolbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchResultComponent } from './components/search-result/search-result.component';
+import { SearchResultDetailModalComponent } from './components/search-result-detail-modal/search-result-detail-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SearchResultComponent } from './components/search-result/search-result.
     CacheImagePipe, 
     HintComponent,
     NavToolbarComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    SearchResultDetailModalComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { SearchResultComponent } from './components/search-result/search-result.
     NavToolbarComponent,
     FormsModule,
     ReactiveFormsModule,
-    SearchResultComponent
+    SearchResultComponent,
+    SearchResultDetailModalComponent
   ]
 })
 export class SharedModule { }
