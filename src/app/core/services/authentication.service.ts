@@ -92,7 +92,9 @@ export class AuthenticationService {
 
   saveToken(token: string) : Promise<void> {
     return new Promise((resolve, reject) => {
-      this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`)
+      if (this.platform.is('cordova')) {
+        this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`);
+      }
       this.storageService.set(StorageKeys.AUTH_TOKEN, token, true).then(() => {
         console.log('token: ', this.jwtHelper.decodeToken(token));
         this.authenticationState.next(true);

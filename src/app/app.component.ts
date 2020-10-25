@@ -24,8 +24,10 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      if (this.platform.is('cordova')) {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+      }
       this.cache.setDefaultTTL(60 * 60);
       this.cache.setOfflineInvalidate(false);
       console.log(environment.debugMessage);

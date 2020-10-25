@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { InAppBrowser, InAppBrowserEvent, InAppBrowserEventType, InAppBrowserObject } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser/ngx';
 import { isArray, isObject } from 'util';
 import { SearchResultItem } from '@core/models/search-result-item';
 import { LoadingService } from './loading.service';
 import { HttpClient } from '@angular/common/http';
 import { SearchQuery, SearchResultDataService, SearchType } from './search-result-data.service';
 import { SearchService } from '@core/api/search.service';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class ProductSearchService {
   private searchResults: SearchResultItem[] = [];
 
   constructor(
+    private platform: Platform,
     private http: HttpClient,
     private inAppBrowser: InAppBrowser, 
     private loadingService: LoadingService,
@@ -66,6 +68,9 @@ export class ProductSearchService {
   }
 
   private async getCodeToExecute(url) {
+    if (this.platform.is('cordova')) {
+      return from(this.scriptParseImgsFromWebsite.toString()); 
+    }
     return this.http.get(this.scriptFilePath(url), { responseType: 'text' });
   }
 
@@ -92,6 +97,17 @@ export class ProductSearchService {
     } else {
       return `${assetPath}/parse-imgs-from-website.js`;
     }
+  }
+
+  private scriptParseImgsFromWebsite() {
+    Array.from(document.getElementsByTagName('img')).map(x => {
+      if (x.src) {
+        return { name: x.alt, imageUrl: x.src };
+      } else if (x.srcset) {
+        return { name: x.alt, imageUrl: x.srcset.split(',')[0] };
+      }
+      return { name: '', imageUrl: '' };
+    }).filter(x => x.imageUrl !== "" && x.imageUrl.startsWith('http'));
   }
 
   private mapSearchResultArray(results: [any], url: string) {
