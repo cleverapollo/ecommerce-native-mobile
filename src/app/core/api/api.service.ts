@@ -13,15 +13,21 @@ import { LoadingService } from '@core/services/loading.service';
 export class ApiService {
 
   constructor(
-    private httpClient: HttpClient, 
+    private httpClient: HttpClient,
     private nativeHttpClient: HTTP,
     private platform: Platform,
     private loadingService: LoadingService
-    ) { 
+  ) {
+    this.initNativeHttpClient();
+  }
+
+  private initNativeHttpClient() {
+    if (this.platform.is('cordova')) {
       this.nativeHttpClient.setHeader('*', 'Accept', 'application/json');
       this.nativeHttpClient.setHeader('*', 'Content-Type', 'application/json');
       this.nativeHttpClient.setDataSerializer('json');
     }
+  }
 
   // POST
 
@@ -34,8 +40,10 @@ export class ApiService {
   }
 
   private postHttpClient<T>(url: string, body: any) : Observable<T> {
+    let headers = new HttpHeaders();
+    this.createHttpHeaders(headers);
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
-      headers: this.httpHeaders
+      headers: headers
     });
   }
 
@@ -56,8 +64,10 @@ export class ApiService {
   }
 
   private putHttpClient<T>(url: string, body: any): Observable<T> {
+    let headers = new HttpHeaders();
+    this.createHttpHeaders(headers);
     return this.httpClient.put<T>(`${SERVER_URL}/${url}`, body, {
-      headers: this.httpHeaders
+      headers: headers
     });
   }
 
@@ -78,8 +88,10 @@ export class ApiService {
   }
 
   private patchHttpClient<T>(url: string, body?: any | null): Observable<T> {
+    let headers = new HttpHeaders();
+    this.createHttpHeaders(headers);
     return this.httpClient.patch<T>(`${SERVER_URL}/${url}`, body, {
-      headers: this.httpHeaders
+      headers: headers
     });
   }
 
@@ -100,8 +112,10 @@ export class ApiService {
   }
 
   private deleteHttpClient<T>(url: string): Observable<T> {
+    let headers = new HttpHeaders();
+    this.createHttpHeaders(headers);
     return this.httpClient.delete<T>(`${SERVER_URL}/${url}`, {
-      headers: this.httpHeaders
+      headers: headers
     });
   }
 
@@ -122,8 +136,12 @@ export class ApiService {
   }
 
   private getHttpClient<T>(url: string, queryParams?: HttpParams) : Observable<T> {
+    const headers = new HttpHeaders()
+      .set('Accept', 'application/json')
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Content-Type', 'application/json')
     return this.httpClient.get<T>(`${SERVER_URL}/${url}`, {
-      headers: this.httpHeaders,
+      headers: headers,
       responseType: 'json',
       params: queryParams
     });
@@ -142,12 +160,10 @@ export class ApiService {
 
   // helper
 
-  private get httpHeaders(): HttpHeaders {
-    let headers = new HttpHeaders();
+  private createHttpHeaders(headers: HttpHeaders) {
     headers.append('Accept', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
-    return headers;
   }
 
   private handleResponse<T>(request: Observable<any>): Observable<T> {
