@@ -22,12 +22,20 @@ export class NativeTokenInterceptor implements HttpInterceptor {
     }
 
     private async handle(req: HttpRequest<any>, next: HttpHandler) {
-        const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
-        const authRequest = req.clone({
-            setHeaders: {
-                Authorization: `Bearer ${token}`
+        try {
+            const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
+            if (token) {
+                const authRequest = req.clone({
+                    setHeaders: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                return next.handle(authRequest).toPromise();
+            } else {
+                return next.handle(req).toPromise();
             }
-        })
-        return next.handle(authRequest).toPromise()
+        } catch(error) {
+            return next.handle(req).toPromise();
+        }
     }
 }
