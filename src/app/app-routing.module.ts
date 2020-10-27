@@ -4,6 +4,7 @@ import { EmailVerificationResolver } from '@registration/email-confirmation/emai
 import { EmailVerificationTokenGuard } from '@registration/email-confirmation/email-verification-token.guard';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { SharedWishListPageGuard } from '@wishLists/shared-wish-list/shared-wish-list-page.guard';
+import { AutoLoginGuard } from '@guards/auto-login.guard';
 
 const routes: Routes = [
   { 
@@ -21,7 +22,8 @@ const routes: Routes = [
   },
   {
     path: 'start',
-    loadChildren: () => import('./start/start.module').then( m => m.StartPageModule)
+    loadChildren: () => import('./start/start.module').then( m => m.StartPageModule),
+    canLoad: [AutoLoginGuard]
   },
   {
     path: 'email-confirmation',

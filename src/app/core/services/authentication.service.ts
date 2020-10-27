@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService, StorageKeys } from './storage.service';
@@ -14,12 +14,12 @@ import { HTTP } from '@ionic-native/http/ngx';
 export class AuthenticationService {
 
   authenticationState = new BehaviorSubject(null);
-  get isAuthenticated() : boolean | Promise<boolean> {
+  get isAuthenticated() : Observable<boolean> {
     let state = this.authenticationState.value;
     if (state === null) {
-      return this.validTokenExists();
+      return from(this.validTokenExists());
     }
-    return state;
+    return of(state);
   }
 
   constructor(
@@ -58,7 +58,7 @@ export class AuthenticationService {
         this.saveToken(response.token)
           .then(resolve)
           .catch(reject);
-      });
+      }, reject);
     })
   }
 
@@ -102,7 +102,7 @@ export class AuthenticationService {
       }).catch( e => {
         console.error('could not save token ', e)
         this.authenticationState.next(false);
-        reject();
+        reject(e);
       });
     })
   }
