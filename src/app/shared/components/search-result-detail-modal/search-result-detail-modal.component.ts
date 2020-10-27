@@ -17,4 +17,10 @@ export class SearchResultDetailModalComponent {
     this.modalController.dismiss();
   }
 
+  selectWish() {
+    this.modalController.dismiss({
+      selectWish: true
+    });
+  }
+
 }
