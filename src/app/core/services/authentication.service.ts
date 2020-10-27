@@ -118,14 +118,17 @@ export class AuthenticationService {
   }
 
   private validTokenExists() : Promise<boolean> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then((token) => {
         if (token) {
           const isExpired = this.jwtHelper.isTokenExpired(token);
           resolve(!isExpired);
         } else {
-          reject();
+          resolve(false);
         }
+      }, e => {
+        console.info('no auth token found');
+        resolve(false);
       })
     });
   }
