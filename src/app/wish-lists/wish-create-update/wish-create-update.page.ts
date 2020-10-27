@@ -58,13 +58,9 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   }
 
   private initViewData() {
+    this.wish = this.route.snapshot.data.wish ? this.route.snapshot.data.wish : this.router.getCurrentNavigation().extras.state.searchResult;
     this.wishList = this.route.snapshot.data.wishList;
     this.wishListSelectOptions = this.route.snapshot.data.wishListSelectOptions;
-    if (this.isUpdatePage) {
-      this.wish = this.route.snapshot.data.wish;
-    } else {
-      this.wish = this.router.getCurrentNavigation().extras.state.searchResult;
-    }
   }
 
   private createForm() {
