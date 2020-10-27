@@ -1,5 +1,8 @@
 ion-content {
     background-image: url("../../assets/images/start-background-image.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     --background: none;
     img {
         margin-top: 135px;
