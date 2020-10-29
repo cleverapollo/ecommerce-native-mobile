@@ -6,7 +6,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class ToastService {
 
-  private static TOAST_DURATION = 2000
+  private static TOAST_DURATION = 3000
 
   constructor(private toastController: ToastController) { }
 
@@ -22,7 +22,9 @@ export class ToastService {
     const toast = await this.toastController.create({
       message: message,
       color: color,
-      duration: ToastService.TOAST_DURATION
+      duration: ToastService.TOAST_DURATION,
+      position: 'top',
+      cssClass: 'center-text'
     });
     toast.present();
   }
