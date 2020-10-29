@@ -7,6 +7,8 @@ import { UserService, UserSettings } from './user.service';
 import { AuthService } from '../api/auth.service';
 import { CacheService } from 'ionic-cache';
 import { HTTP } from '@ionic-native/http/ngx';
+import { resolve } from 'url';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +31,8 @@ export class AuthenticationService {
     private userService: UserService,
     private authService: AuthService,
     private cache: CacheService,
-    private nativeHttpClient: HTTP
+    private nativeHttpClient: HTTP,
+    private router: Router
   ) { 
     this.init();
   }
@@ -41,7 +44,10 @@ export class AuthenticationService {
           if (!this.jwtHelper.isTokenExpired(token)) {
             this.authenticationState.next(true);
           } else {
-            this.reloginIfPossible();
+            this.reloginIfPossible().then(() => {
+              this.authenticationState.next(true);
+              this.router.navigateByUrl('/secure/home');
+            });
           }
         }
       })
@@ -69,25 +75,25 @@ export class AuthenticationService {
     this.authenticationState.next(false);
   }
 
-  private reloginIfPossible() {
-    this.userService.userSettings.then(settings => {
-      if (settings && settings.credentialsSaved) {
-        this.storageService.get<string>(StorageKeys.LOGIN_EMAIL).then( email => {
-          this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD).then(password => {
-            this.authService.login(email, password).subscribe(response => {
-              this.saveToken(response.token)
-            })
-          }, this.removeAuthTokenOnError);
-        }, this.removeAuthTokenOnError);
+  private async reloginIfPossible(): Promise<void> {
+    try {
+      const userSettings = await this.userService.userSettings;
+      if (userSettings && userSettings.credentialsSaved) {
+        const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
+        const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
+        const loginResponse = await this.authService.login(email, password).toPromise();
+        this.saveToken(loginResponse.token)
+          .then(Promise.resolve)
+          .catch(Promise.reject);
       } else {
         this.storageService.remove(StorageKeys.AUTH_TOKEN);
+        Promise.reject();
       }
-    });
-  }
-
-  private removeAuthTokenOnError(reason: any) {
-    console.error(reason);
-    this.storageService.remove(StorageKeys.AUTH_TOKEN);
+    } catch (error) {
+      console.error(error);
+      this.storageService.remove(StorageKeys.AUTH_TOKEN);
+      Promise.reject();
+    }
   }
 
   saveToken(token: string) : Promise<void> {
