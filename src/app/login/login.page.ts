@@ -67,8 +67,6 @@ export class LoginPage implements OnInit {
       this.loginForm.reset();
       this.cache.clearAll();
       this.navToHome();
-    }).catch(() => {
-      console.error('Fehler beim Login!');
     });
   }
 
