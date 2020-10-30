@@ -9,8 +9,7 @@ import { Subscription } from 'rxjs';
 import { AlertService } from '@core/services/alert.service';
 import { ToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { ActivatedRoute } from '@angular/router';
-import { WishApiService } from '@core/api/wish-api.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-wish-list-create-update',
@@ -20,7 +19,6 @@ import { WishApiService } from '@core/api/wish-api.service';
 export class WishListCreateUpdatePage implements OnInit {
 
   private wishList: WishListDto;
-  private subscription: Subscription;
 
   form: FormGroup;
 
@@ -61,7 +59,8 @@ export class WishListCreateUpdatePage implements OnInit {
     private alertService: AlertService,
     private toastService: ToastService,
     private wishListStore: WishListStoreService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -102,6 +101,7 @@ export class WishListCreateUpdatePage implements OnInit {
     this.apiService.create(request as WishListCreateRequest).subscribe( createdWishList => {
       this.wishListStore.saveWishListToCache(createdWishList);
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
+      this.router.navigateByUrl(`/secure/home/wish-list/${createdWishList.id}`);
     });
   }
 
@@ -122,11 +122,11 @@ export class WishListCreateUpdatePage implements OnInit {
     });
   }
 
-  private onDeleteConfirmation = (value) => {
+  private onDeleteConfirmation = () => {
     this.apiService.delete(this.wishList.id).toPromise().then(() => {
-      this.subscription.unsubscribe();
+      this.wishListStore.removeCachedWishList(this.wishList.id);
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich gelöscht');
-      this.navController.navigateBack('home');
+      this.router.navigateByUrl('/secure/home/wish-list-overview');
     });
   }
 
