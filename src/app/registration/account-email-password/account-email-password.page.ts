@@ -79,14 +79,18 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
 
     if ((this.registrationDto as RegistrationPartnerDto).userId) {
       this.authApiService.registerPartner(this.registrationDto as RegistrationPartnerDto).subscribe(() => {
-        this.router.navigate(['../registration-complete'], { relativeTo: this.route })
-      }, console.error)
+        this.navigateToRegistrationCompletePage();
+      })
     } else {
       this.authApiService.register(this.registrationDto as RegistrationDto).subscribe(response => {
         this.authService.saveToken(response.token);
-        this.router.navigate(['../registration-complete'], { relativeTo: this.route });
-      }, console.error)
+        this.navigateToRegistrationCompletePage();
+      })
     }
   }
 
+
+  private navigateToRegistrationCompletePage() {
+    this.router.navigate(['../registration-complete'], { relativeTo: this.route });
+  }
 }

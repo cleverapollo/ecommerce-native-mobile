@@ -17,10 +17,11 @@ export class AuthService {
   constructor(private apiService: ApiService, private toastService: ToastService) { }
 
   login(email: string, password: string): Observable<LoginResponse> {
-    return this.apiService.post<LoginResponse>(`${AuthService.REST_END_POINT}/login`, {
+    let requestData = {
       username: email,
       password: password
-    }).pipe(
+    };
+    return this.apiService.post<LoginResponse>(`${AuthService.REST_END_POINT}/login`, requestData).pipe(
       catchError( error => this.handleLoginError(error))
     );
   }
