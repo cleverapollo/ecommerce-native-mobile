@@ -54,6 +54,15 @@ export class WishListStoreService {
 
   removeCachedWishList(id: Number) {
     this.cache.removeItem(this.cacheKeyWishList(id));
+    this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: WishListDto[]) => {
+      const wishListIndex = wishLists.findIndex( w => w.id == id);
+      if (wishListIndex !== -1) {
+        wishLists.splice(wishListIndex, 1);
+        this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
+      } else {
+        this.removeCachedWishLists();
+      }
+    });
   }
 
   updatedCachedWishList(wishList: WishListDto) {
