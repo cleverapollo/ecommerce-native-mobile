@@ -97,10 +97,11 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     })
   }
 
-  private onDeleteConfirmation = (value) => {
-    this.wishListApiService.removeWish(this.wish).toPromise().then( emptyResponse => {
-      this.wishListStore.removeWishFromCache(this.wish);
-      this.router.navigate([`secure/home/wish-list/${this.wish.wishListId}`]);
+  private onDeleteConfirmation = () => {
+    this.wishListApiService.removeWish(this.wish).toPromise().then(() => {
+      this.wishListStore.removeWishFromCache(this.wish).then(() => {
+        this.router.navigate([`secure/home/wish-list/${this.wish.wishListId}`]);
+      });
     });
   }
 

@@ -115,20 +115,22 @@ export class WishListStoreService {
     });
   }
 
-  removeWishFromCache(wish: WishDto) {
-    this.cache.removeItem(this.cacheKeyWish(wish.id)).then(() => {
-      this.cache.getItem(this.cacheKeyWishList(wish.wishListId)).then((wishList: WishListDto) => {
-        const wishIndex = wishList.wishes.findIndex(w => w.id == wish.id);
-        if (wishIndex !== -1) {
-          wishList.wishes.splice(wishIndex, 1);
-          this.updatedCachedWishList(wishList);
-        } else {
-          this.removeCachedWishList(wish.wishListId);
-        }
-      }, () => {
+  async removeWishFromCache(wish: WishDto): Promise<void> {
+    try {
+      await this.cache.removeItem(this.cacheKeyWish(wish.id));
+      const wishList: WishListDto = await this.cache.getItem(this.cacheKeyWishList(wish.wishListId));
+      const wishIndex = wishList.wishes.findIndex(w => w.id == wish.id);
+      if (wishIndex !== -1) {
+        wishList.wishes.splice(wishIndex, 1);
+        this.updatedCachedWishList(wishList);
+      } else {
         this.removeCachedWishList(wish.wishListId);
-      });
-    });
+      }
+      return Promise.resolve();
+    } catch(error) {
+      this.removeCachedWishList(wish.wishListId);
+      return Promise.reject();
+    }
   }
 
   saveWishToCache(wish: WishDto) {
