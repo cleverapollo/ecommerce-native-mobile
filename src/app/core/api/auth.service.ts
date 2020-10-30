@@ -6,6 +6,7 @@ import { LoginResponse } from '@core/models/login.model';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '@core/services/toast.service';
+import { ApiErrorHandlerService } from './api-error-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
 
   private static REST_END_POINT = 'auth'
 
-  constructor(private apiService: ApiService, private toastService: ToastService) { }
+  constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
   login(email: string, password: string): Observable<LoginResponse> {
     let requestData = {
@@ -22,30 +23,24 @@ export class AuthService {
       password: password
     };
     return this.apiService.post<LoginResponse>(`${AuthService.REST_END_POINT}/login`, requestData).pipe(
-      catchError( error => this.handleLoginError(error))
+      catchError( error => this.errorHandler.handleError(error, this.errorMessageForLoginServerError))
+    );
+  }
+  
+  register(dto: RegistrationDto) : Observable<LoginResponse> {
+    return this.apiService.post<LoginResponse>(`${AuthService.REST_END_POINT}/register`, dto).pipe(
+      catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))
     );
   }
 
-  private handleLoginError(error: any) {
-    let errorMessage = this.errorMessageForLoginResponse(error);
-    this.toastService.presentErrorToast(errorMessage);
-    return throwError(error);
+  registerPartner(dto: RegistrationPartnerDto) : Observable<any> {
+    return  this.apiService.post(`${AuthService.REST_END_POINT}/register-partner`, dto).pipe(
+      catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))
+    );
   }
 
-  private errorMessageForLoginResponse(error: any) {
-    let errorMessage = 'Ein allgemeiner Fehler ist aufgetreten, bitte versuche es später noch einmal.';
-    if (error instanceof HttpErrorResponse) {
-      if (error.error instanceof ErrorEvent) {
-        console.log(`Error: ${error.error.message}`);
-      } else {
-        console.log(`error status : ${error.status} ${error.statusText}`);
-        errorMessage = this.errorMessageForLoginServerError(error, errorMessage);
-      }
-    }
-    return errorMessage;
-  }
-
-  private errorMessageForLoginServerError(error: HttpErrorResponse, errorMessage: string) {
+  private errorMessageForLoginServerError(error: HttpErrorResponse): string {
+    let errorMessage: string
     switch (error.status) {
       case 401:
         errorMessage = 'Dein Passwort stimmt nicht mit deiner E-Mail-Adresse überein.';
@@ -60,38 +55,8 @@ export class AuthService {
     return errorMessage;
   }
 
-  register(dto: RegistrationDto) : Observable<LoginResponse> {
-    return this.apiService.post<LoginResponse>(`${AuthService.REST_END_POINT}/register`, dto).pipe(
-      catchError(error => this.handleRegistrationError(error))
-    );
-  }
-
-  registerPartner(dto: RegistrationPartnerDto) : Observable<any> {
-    return  this.apiService.post(`${AuthService.REST_END_POINT}/register-partner`, dto).pipe(
-      catchError(error => this.handleRegistrationError(error))
-    );
-  }
-
-  private handleRegistrationError(error: any) {
-    let errorMessage = this.errorMessageForRegistrationResponse(error);
-    this.toastService.presentErrorToast(errorMessage);
-    return throwError(error);
-  }
-
-  private errorMessageForRegistrationResponse(error: any) {
-    let errorMessage = 'Ein allgemeiner Fehler ist aufgetreten, bitte versuche es später noch einmal.';
-    if (error instanceof HttpErrorResponse) {
-      if (error.error instanceof ErrorEvent) {
-        console.log(`Error: ${error.error.message}`);
-      } else {
-        console.log(`error status : ${error.status} ${error.statusText}`);
-        errorMessage = this.errorMessageForRegistrationServerError(error, errorMessage);
-      }
-    }
-    return errorMessage;
-  }
-
-  private errorMessageForRegistrationServerError(error: HttpErrorResponse, errorMessage: string) {
+  private errorMessageForRegistrationServerError(error: HttpErrorResponse) {
+    let errorMessage: string
     switch (error.status) {
       case 409:
         errorMessage = 'Ein Benutzer mit der eingegeben E-Mail-Adresse existiert bereits!';
