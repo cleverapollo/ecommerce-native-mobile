@@ -133,14 +133,18 @@ export class WishListStoreService {
     }
   }
 
-  saveWishToCache(wish: WishDto) {
-    this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
-    this.cache.getItem(this.cacheKeyWishList(wish.wishListId)).then((wishList: WishListDto) => {
+  async saveWishToCache(wish: WishDto): Promise<void> {
+    try {
+      await this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
+      const wishList: WishListDto = await this.cache.getItem(this.cacheKeyWishList(wish.wishListId));
       wishList.wishes.push(wish);
       this.updatedCachedWishList(wishList);
-    }, () => {
+      Promise.resolve();
+    } catch(error) {
       this.removeCachedWishList(wish.wishListId);
-    });
+      Promise.reject(error);
+    }
+
   }
 
 }
