@@ -45,7 +45,7 @@ export class EmailUnverifiedHintComponent implements OnInit {
 
   resendVerificationLink() {
     this.requestIsRunning = true;
-    this.registrationApiService.requestEmailVerificationLink().then(() => {
+    this.registrationApiService.requestEmailVerificationLink().toPromise().then(() => {
       this.successResponse = true;
     }, e => {
       this.errorResponse = true;

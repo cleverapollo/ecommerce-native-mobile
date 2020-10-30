@@ -55,7 +55,6 @@ export class LastNameUpdatePage implements OnInit, OnDestroy {
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch( e => {
-        console.error(e);
         this.hintConfig = hintConfigForErrorResponse;
       })
       .finally(() => {

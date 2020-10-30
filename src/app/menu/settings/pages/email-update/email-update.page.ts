@@ -47,7 +47,6 @@ export class EmailUpdatePage implements OnInit {
         this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch(e => {
-        console.error(e);
         this.hintConfig = hintConfigForErrorResponse;
       })
       .finally(() => {

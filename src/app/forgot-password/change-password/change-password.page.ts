@@ -67,9 +67,9 @@ export class ChangePasswordPage implements OnInit {
       passwordConfirmed: this.form.controls.confirm.value,
       token: this.token
     }
-    this.api.changePassword(request).toPromise().then( emptyResponse => {
+    this.api.changePassword(request).toPromise().then(() => {
       this.passwordChangedSuccessful = true;
-    }, e => console.error);
+    });
   }
 
   navBackToLogin() {

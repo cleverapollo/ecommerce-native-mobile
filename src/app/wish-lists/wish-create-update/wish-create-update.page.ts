@@ -101,7 +101,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     this.wishListApiService.removeWish(this.wish).toPromise().then( emptyResponse => {
       this.wishListStore.removeWishFromCache(this.wish);
       this.router.navigate([`secure/home/wish-list/${this.wish.wishListId}`]);
-    }, console.error);
+    });
   }
 
   private createWish() {
@@ -112,7 +112,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     this.wishApiService.createWish(this.wish).toPromise().then(createdWish => { 
         this.wishListStore.saveWishToCache(createdWish);
         this.router.navigate([`secure/home/wish-list/${wishListId}`]);
-      }, console.error);
+    });
   }
 
   private updateWish() {
@@ -120,7 +120,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     this.wish.price = this.form.controls.price.value; 
     this.wishApiService.update(this.wish).toPromise().then(updatedWish => { 
         this.wishListStore.updateCachedWish(updatedWish);
-    }, console.error);
+    });
   }
 
 }

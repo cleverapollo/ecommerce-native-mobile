@@ -90,7 +90,7 @@ export class WishListCreateUpdatePage implements OnInit {
   }
 
   createOrUpdateWishList() {
-    let request: WishListCreateOrUpdateRequest = new WishListCreateOrUpdateRequest();
+    let request = new WishListCreateOrUpdateRequest();
     request.name = this.form.controls.name.value;
     request.date = this.form.controls.date.value;
     request.partner = this.form.controls.partner.value;
@@ -99,12 +99,9 @@ export class WishListCreateUpdatePage implements OnInit {
   }
 
   private create(request: WishListCreateOrUpdateRequest) {
-    this.apiService.create(request as WishListCreateRequest).subscribe( (createdWishList : WishListDto) => {
+    this.apiService.create(request as WishListCreateRequest).subscribe( createdWishList => {
       this.wishListStore.saveWishListToCache(createdWishList);
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
-    }, e => {
-      console.error(e);
-      this.toastService.presentErrorToast('Bei der Erstellung deiner Wunschliste ist leider ein Fehler aufgetreten.');
     });
   }
 
@@ -114,9 +111,6 @@ export class WishListCreateUpdatePage implements OnInit {
     this.apiService.update(updateRequest).subscribe( updatedWishList => {
       this.wishListStore.updatedCachedWishList(updatedWishList);
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
-    }, e => {
-      console.error(e);
-      this.toastService.presentErrorToast('Bei der Aktualisierung deiner Wunschliste ist leider ein Fehler aufgetreten.');
     });
   }
 
@@ -125,20 +119,14 @@ export class WishListCreateUpdatePage implements OnInit {
     const message =  `Möchtest du deine Wunschliste ${this.wishList.name} wirklich löschen?`;
     this.alertService.createDeleteAlert(header, message, this.onDeleteConfirmation).then( alert => {
       alert.present();
-    })
+    });
   }
 
   private onDeleteConfirmation = (value) => {
-    this.apiService.delete(this.wishList.id)
-    .toPromise()
-    .then(emptyResponse => {
+    this.apiService.delete(this.wishList.id).toPromise().then(() => {
       this.subscription.unsubscribe();
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich gelöscht');
       this.navController.navigateBack('home');
-    })
-    .catch( e => {
-      console.log(e);
-      this.toastService.presentErrorToast('Beim Löschen deiner Wunschliste ist leider ein Fehler aufgetreten.');
     });
   }
 

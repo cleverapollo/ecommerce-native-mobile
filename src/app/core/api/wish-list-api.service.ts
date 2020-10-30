@@ -5,61 +5,80 @@ import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { WishListDto, WishDto, WishListSelectOptionDto } from '@core/models/wish-list.model';
 import { SharedWishListDto, RegisterAndSatisfyWishRequest, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { ApiErrorHandlerService } from './api-error-handler.service';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WishListApiService {
 
-  constructor(private apiService: ApiService) { }
+  private static REST_END_POINT = 'wish-list';
 
-  create(wishList: WishListCreateRequest) : Observable<Object> {
-    return this.apiService.post('wish-list', wishList);
+  constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
+
+  create(wishList: WishListCreateRequest): Observable<WishListDto> {
+    return this.apiService.post<WishListDto>(`${WishListApiService.REST_END_POINT}`, wishList).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
 
   getWishLists(forView: string) : Observable<Array<WishListDto> | Array<FriendWishList>> {
     const params = new HttpParams().set('view', forView);
-    return this.apiService.get(`wish-list`, params)
+    return this.apiService.get<Array<WishListDto> | Array<FriendWishList>>(`wish-list`, params).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
 
-  getWishList(id: Number) : Observable<WishListDto> {
-    return this.apiService.get(`wish-list/${id}`)
+  getWishList(id: Number): Observable<WishListDto> {
+    return this.apiService.get<WishListDto>(`${WishListApiService.REST_END_POINT}/${id}`).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
 
-  update(wishList: WishListUpdateRequest) : Observable<WishListDto> {
-    return this.apiService.put<WishListDto>(`wish-list/${wishList.id}`, wishList);
+  update(wishList: WishListUpdateRequest): Observable<WishListDto> {
+    return this.apiService.put<WishListDto>(`${WishListApiService.REST_END_POINT}/${wishList.id}`, wishList).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
 
-  delete(id: Number) : Observable<Object> {
-    return this.apiService.delete(`wish-list/${id}`);
+  delete(id: Number): Observable<Object> {
+    return this.apiService.delete(`${WishListApiService.REST_END_POINT}/${id}`).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
 
-  addWish(wish: WishDto) : Observable<Object> {
-    return this.apiService.put(`wish-list/${wish.wishListId}/add-wish`, wish);
+  removeWish(wish: WishDto): Observable<Object> {
+    return this.apiService.delete(`${WishListApiService.REST_END_POINT}/${wish.wishListId}/wish/${wish.id}`).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
 
-  removeWish(wish: WishDto) : Observable<Object> {
-    return this.apiService.delete(`wish-list/${wish.wishListId}/wish/${wish.id}`);
-  }
-
-  getWishListSelectOptions() : Observable<Array<WishListSelectOptionDto>> {
+  getWishListSelectOptions(): Observable<Array<WishListSelectOptionDto>> {
     const params = new HttpParams().set('view', 'SELECTION');
-    return this.apiService.get(`wish-list`, params);
+    return this.apiService.get<Array<WishListSelectOptionDto>>(`${WishListApiService.REST_END_POINT}`, params).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
 
-  getLinkForSocialSharing(id: Number) : Observable<String> {
-    return this.apiService.get(`wish-list/${id}/create-social-sharing-link`);
+  getLinkForSocialSharing(id: Number): Observable<String> {
+    return this.apiService.get<String>(`${WishListApiService.REST_END_POINT}/${id}/create-social-sharing-link`).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
 
   // shared wish list 
 
-  getSharedWishList(identifier: string) : Observable<SharedWishListDto> {
+  getSharedWishList(identifier: string): Observable<SharedWishListDto> {
     const params = new HttpParams().set('identifier', identifier);
-    return this.apiService.get('shared-wish-list', params);
+    return this.apiService.get<SharedWishListDto>('shared-wish-list', params).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
 
-  registerAndSatisfyWish(data: RegisterAndSatisfyWishRequest) : Observable<SharedWishListDto> {
-    return this.apiService.post('shared-wish-list', data) as  Observable<SharedWishListDto>;
+  registerAndSatisfyWish(data: RegisterAndSatisfyWishRequest): Observable<SharedWishListDto> {
+    return this.apiService.post<SharedWishListDto>('shared-wish-list', data).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
   }
-  
 }

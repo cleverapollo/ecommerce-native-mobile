@@ -13,7 +13,7 @@ import { ApiErrorHandlerService } from './api-error-handler.service';
 })
 export class AuthService {
 
-  private static REST_END_POINT = 'auth'
+  private static REST_END_POINT = 'auth';
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
@@ -26,7 +26,7 @@ export class AuthService {
       catchError( error => this.errorHandler.handleError(error, this.errorMessageForLoginServerError))
     );
   }
-  
+
   register(dto: RegistrationDto) : Observable<LoginResponse> {
     return this.apiService.post<LoginResponse>(`${AuthService.REST_END_POINT}/register`, dto).pipe(
       catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))

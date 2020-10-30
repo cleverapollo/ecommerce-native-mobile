@@ -35,10 +35,9 @@ export class WishSearchPage implements OnInit, OnDestroy {
 
   search() {
     this.loading = true;
-    this.searchService.searchForItems(this.keywords).subscribe( results => {
-      this.products = results;
-    }, e => console.error(e), () => {
-      this.loading = false;
+    this.searchService.searchForItems(this.keywords).subscribe({
+      next: results => { this.products = results; },
+      complete: () => { this.loading = false; }
     });
   }
 

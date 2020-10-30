@@ -56,7 +56,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   shareWishList() {
     this.wishListApiService.getLinkForSocialSharing(this.wishList.id).toPromise().then( link => {
       console.log(link);
-    }, e => console.error);
+    });
   }
 
   forceRefresh(event) {

@@ -31,9 +31,9 @@ export class ResetPasswordPage implements OnInit {
 
   resetPassword() {
     console.log(this.form.controls.email.value)
-    this.api.resetPassword(this.form.controls.email.value).toPromise().then(emptyResponse => {
+    this.api.resetPassword(this.form.controls.email.value).toPromise().then(() => {
       this.passwordResetRequestSuccessful = true;
-    }, console.error);
+    });
   }
 
 }

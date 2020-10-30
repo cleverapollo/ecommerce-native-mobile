@@ -32,13 +32,13 @@ export class ApiService {
     });
   }
 
-  patch(url: string, body?: any | null) : Observable<Object> {
+  patch<T>(url: string, body?: any | null) : Observable<T> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
-    return this.httpClient.patch(`${SERVER_URL}/${url}`, body, {
+    return this.httpClient.patch<T>(`${SERVER_URL}/${url}`, body, {
       headers: headers
     });
   }

@@ -43,15 +43,16 @@ export class GiveSharedWishModalComponent implements OnInit {
 
   registerAndSatisfyWishRequest() {
     const email = this.form.controls.email.value;
-    this.wishListApiService.registerAndSatisfyWish({ 
+    const requestData = {
       identifier: this.route.snapshot.queryParams.identifier, 
       email: email, 
       wishId: this.wish.id 
-    }).toPromise().then( wishList => {
+    };
+    this.wishListApiService.registerAndSatisfyWish(requestData).toPromise().then( wishList => {
       this.storageService.set(this.STORAGE_KEY, email).finally(() => {
         this.modalController.dismiss(wishList);
       });
-    }, console.error)
+    })
   }
 
 }

@@ -71,10 +71,9 @@ export class EmailConfirmationPage implements OnInit {
 
   requestEmailVerficiationLink() {
     this.emailProcessStart = true;
-    this.registrationApiService.requestEmailVerificationLink().then(() => {
+    this.registrationApiService.requestEmailVerificationLink().toPromise().then(() => {
       this.emailSentSuccessfully = true;
     }, e => {
-      console.error(e);
       this.errorWhileSendingEmail = true;
     });
   }

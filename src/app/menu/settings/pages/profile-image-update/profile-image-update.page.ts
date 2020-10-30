@@ -39,7 +39,6 @@ export class ProfileImageUpdatePage implements OnInit {
         this.updateProfile(response.fileDownloadUri, response.fileName);
         this.hintConfig = new HintConfig("success", "Dein Profilbild wurde erfolgreich hochgeladen!");
       }, e => {
-        console.error(e);
         this.hintConfig = new HintConfig("danger", "Aufgrund eines Fehlers konnte dein Profilbild nicht hochgeladen werden!")
       }, () => {
         this.imageIsUploading = false;

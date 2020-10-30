@@ -30,7 +30,7 @@ export class FriendsWishComponent implements OnInit {
     this.wishApiService.purchase(this.wish.id).subscribe((response: FriendWish) => {
       this.wish = response;
       this.onWishPurchased.emit(response);
-    }, e => console.error(e));
+    });
   }
 
 }
