@@ -42,10 +42,6 @@ export class WishListCreateUpdatePage implements OnInit {
       name: [
         new ValidationMessage('required', 'Vergib bitte einen Namen für deine Wunschliste.')
       ],
-      date: [
-        new ValidationMessage('required', 'Gib bitte ein Datum an, an welches deine Wunschliste gebunden ist.')
-      ],
-      partnerName: [],
       partnerEmail: [
         new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.')
       ],
@@ -75,7 +71,7 @@ export class WishListCreateUpdatePage implements OnInit {
 
       this.form = this.formBuilder.group({
         'name': this.formBuilder.control(name, [Validators.required]),
-        'date': this.formBuilder.control(date, [Validators.required]),
+        'date': this.formBuilder.control(date, []),
         'partner': this.formBuilder.group({
           'email': this.formBuilder.control(null, [Validators.email]),
           'name': this.formBuilder.control(null, []),
