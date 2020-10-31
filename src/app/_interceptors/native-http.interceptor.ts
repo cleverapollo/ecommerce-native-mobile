@@ -80,8 +80,9 @@ export class NativeHttpInterceptor implements HttpInterceptor {
 
   private createEncodedUrlFromRequest(request: HttpRequest<any>) {
     const queryParams = request.params;
+    const invalidQueryParams = !queryParams || (Object.keys(queryParams).length === 0 && queryParams.constructor === Object);
     let url = request.url;
-    if (queryParams) {
+    if (!invalidQueryParams) {
       url = `${url}?${queryParams.toString()}`;
     }
     this.logUrl(url);
