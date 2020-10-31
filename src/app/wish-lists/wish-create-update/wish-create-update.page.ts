@@ -7,6 +7,7 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { WishApiService } from '@core/api/wish-api.service';
 import { AlertService } from '@core/services/alert.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { SearchResultDataService } from '@core/services/search-result-data.service';
 
 @Component({
   selector: 'app-wish-create-update',
@@ -49,7 +50,8 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     private wishListApiService: WishListApiService,
     private wishApiService: WishApiService,
     private alertService: AlertService,
-    private wishListStore: WishListStoreService
+    private wishListStore: WishListStoreService,
+    private searchResultDataService: SearchResultDataService
     ) { }
 
   ngOnInit() {
@@ -110,10 +112,11 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     this.wish.wishListId = wishListId;
     this.wish.name = this.form.controls.name.value;
     this.wish.price = this.form.controls.price.value;
-    this.wishApiService.createWish(this.wish).toPromise().then(createdWish => { 
-        this.wishListStore.saveWishToCache(createdWish).then(() => {
-          this.router.navigate([`secure/home/wish-list/${wishListId}`]);
-        });
+    this.wishApiService.createWish(this.wish).toPromise().then(createdWish => {
+      this.searchResultDataService.clear();
+      this.wishListStore.saveWishToCache(createdWish).then(() => {
+        this.router.navigate([`secure/home/wish-list/${wishListId}`]);
+      });
     });
   }
 

@@ -28,7 +28,8 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
   loading: Boolean;
   searchByUrlForm: FormGroup;
   searchByAmazonApiForm: FormGroup;
-  searchType: SearchType
+  searchType: SearchType;
+  removeSearchResultsAfterLeavingPage: boolean = true;
 
   get showUrlForm(): boolean {
     return this.searchType === SearchType.URL;
@@ -57,6 +58,16 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
       this.createForm(query.searchTerm);
       this.results = query.results;
     }, console.error);
+  }
+
+  ionViewDidEnter() {
+    this.removeSearchResultsAfterLeavingPage = true;
+  }
+
+  ionViewDidLeave() {
+    if (this.removeSearchResultsAfterLeavingPage) {
+      this.searchResultDataService.clear();
+    }
   }
 
   private createForm(value: String) {
@@ -98,7 +109,7 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
     if (wishList) {
       wish.wishListId = wishList.id;
     }
-    console.log('search result', wish);
+    this.removeSearchResultsAfterLeavingPage = false;
     this.router.navigate(['wish-new'], {relativeTo: this.route, state: { searchResult: wish }});
   }
 
