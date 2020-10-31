@@ -3,13 +3,13 @@
 
   <form *ngIf="showUrlForm && searchByUrlForm" [formGroup]="searchByUrlForm" (ngSubmit)="searchByUrl()">
     <ion-item lines="none">
-      <ion-input type="url" inputmode="url" enterkeyhint="search" placeholder="z.B. www.zalando.de/fjällrävenkå" formControlName="url"></ion-input>
+      <ion-input type="url" inputmode="url" enterkeyhint="search" placeholder="z.B. www.zalando.de/fjällrävenkå" formControlName="url" clearInput="true"></ion-input>
     </ion-item>
   </form>
 
   <form *ngIf="showKeywordsForm && searchByAmazonApiForm" [formGroup]="searchByAmazonApiForm" (ngSubmit)="searchByAmazonApi()">
     <ion-item lines="none">
-      <ion-input type="search" inputmode="search" enterkeyhint="search" placeholder="z.B. Fjällräven Kånken" formControlName="keywords"></ion-input>
+      <ion-input type="search" inputmode="search" enterkeyhint="search" placeholder="z.B. Fjällräven Kånken" formControlName="keywords" clearInput="true"></ion-input>
     </ion-item>
   </form>
 
