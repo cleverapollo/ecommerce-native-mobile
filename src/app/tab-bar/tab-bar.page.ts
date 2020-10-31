@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SearchResultDataService } from '@core/services/search-result-data.service';
+import { IonTabs, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab-bar',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabBarPage implements OnInit {
 
-  constructor() { }
+  @ViewChild(IonTabs)
+  public tabs: IonTabs;
+
+  constructor(private navController: NavController, private searchResultDataService: SearchResultDataService) { }
 
   ngOnInit() {
+  }
+
+  onTabButtonClicked() {
+    const selectedTab = this.tabs.getSelected();
+    this.navController.navigateRoot(`secure/${selectedTab}`);
+    if (selectedTab !== 'wish-search') {
+      this.searchResultDataService.clear();
+    }
   }
 
 }
