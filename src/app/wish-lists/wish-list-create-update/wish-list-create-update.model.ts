@@ -5,6 +5,10 @@ export class WishListCreateOrUpdateRequest {
 }
 
 export class WishListCreateRequest extends WishListCreateOrUpdateRequest {
+    constructor(name?: string) {
+        super();
+        this.name = name
+    }
 }
 
 export class WishListUpdateRequest extends WishListCreateOrUpdateRequest {

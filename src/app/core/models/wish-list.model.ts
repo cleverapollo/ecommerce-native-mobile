@@ -13,6 +13,13 @@ export class WishDto {
 export class WishListSelectOptionDto {
     id: Number;
     name: String;
+
+    static forCreatedWishList(wishList: WishListDto): WishListSelectOptionDto {
+        const model = new WishListSelectOptionDto();
+        model.id = wishList.id;
+        model.name = wishList.name;
+        return model;
+    }
 }
 
 export class WishListMemberDto {

@@ -11,6 +11,7 @@ import { NavToolbarComponent } from './components/nav-toolbar/nav-toolbar.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { SearchResultDetailModalComponent } from './components/search-result-detail-modal/search-result-detail-modal.component';
+import { WishListRadioComponent } from './components/wish-list-radio/wish-list-radio.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SearchResultDetailModalComponent } from './components/search-result-det
     HintComponent,
     NavToolbarComponent,
     SearchResultComponent,
-    SearchResultDetailModalComponent
+    SearchResultDetailModalComponent,
+    WishListRadioComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { SearchResultDetailModalComponent } from './components/search-result-det
     FormsModule,
     ReactiveFormsModule,
     SearchResultComponent,
-    SearchResultDetailModalComponent
+    SearchResultDetailModalComponent,
+    WishListRadioComponent
   ]
 })
 export class SharedModule { }

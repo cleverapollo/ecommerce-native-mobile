@@ -24,16 +24,7 @@
     <!--wish list id-->
     <section *ngIf="!isUpdatePage">
       <p class="wantic-margin-right-left">Wähle deine Wunschliste</p>
-      <div class="wantic-radio-group-container wantic-margin-right-left">
-        <div class="inputGroup" [ngClass]="{ 'border-top-right-left': isFirst }" *ngFor="let option of wishListSelectOptions; first as isFirst">
-          <input  [id]="option.id" type="radio" [value]="option.id" formControlName="wishListId"/>
-          <label [for]="option.id">{{ option.name }}</label>
-        </div>
-        <div class="container-add-new-wish-list">
-          <img src="./assets/icon/wantic-add.svg" alt="Hinzufügen Icon"/>
-          <label>Neue Wunschliste anlegen</label>
-        </div>
-      </div>
+      <app-wish-list-radio formControlName="wishListId" [initialValue]="form.get('wishListId').value"></app-wish-list-radio>
       <app-validation-messages [control]="form.get('wishListId')" [validationMessages]="validationMessages.wishListId"></app-validation-messages>
     </section>
 

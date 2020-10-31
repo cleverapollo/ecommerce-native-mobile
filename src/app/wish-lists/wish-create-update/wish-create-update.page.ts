@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { WishListDto, WishDto, WishListSelectOptionDto } from '@core/models/wish-list.model';
+import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { WishApiService } from '@core/api/wish-api.service';
 import { AlertService } from '@core/services/alert.service';
@@ -18,7 +18,6 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
 
   wish: WishDto
   wishList: WishListDto
-  wishListSelectOptions: Array<WishListSelectOptionDto>
 
   form: FormGroup;
   get validationMessages(): ValidationMessages {
@@ -62,7 +61,6 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   private initViewData() {
     this.wish = this.route.snapshot.data.wish ? this.route.snapshot.data.wish : this.router.getCurrentNavigation().extras.state.searchResult;
     this.wishList = this.route.snapshot.data.wishList;
-    this.wishListSelectOptions = this.route.snapshot.data.wishListSelectOptions;
   }
 
   private createForm() {
