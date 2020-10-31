@@ -14,7 +14,7 @@ export class WishListSelectOptionDto {
     id: Number;
     name: String;
 
-    static forCreatedWishList(wishList: WishListDto): WishListSelectOptionDto {
+    static forWishList(wishList: WishListDto): WishListSelectOptionDto {
         const model = new WishListSelectOptionDto();
         model.id = wishList.id;
         model.name = wishList.name;

@@ -53,8 +53,8 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
   }
 
   private initWishListSelectOptions() {
-    this.subscription = this.wishListApiService.getWishListSelectOptions().subscribe(wishListSelectOptions => {
-      this.wishListSelectOptions = wishListSelectOptions;
+    this.subscription = this.wishListStore.loadWishLists().subscribe(wishLists => {
+      this.wishListSelectOptions = wishLists.map(wishList => WishListSelectOptionDto.forWishList(wishList))
       if (this.initialValue) {
         this.wishListId = this.initialValue;
       }
@@ -98,7 +98,7 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
   }
 
   private handleNewCreatedWishList(createdWishList: WishListDto) {
-    const newWishListSelectOption = WishListSelectOptionDto.forCreatedWishList(createdWishList);
+    const newWishListSelectOption = WishListSelectOptionDto.forWishList(createdWishList);
     this.wishListSelectOptions.push(newWishListSelectOption);
     this.writeValue(newWishListSelectOption);
   }
