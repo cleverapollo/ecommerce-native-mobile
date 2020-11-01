@@ -3,9 +3,9 @@ import { SharedWishListDto, FriendWish } from '@friends/friends-wish-list-overvi
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { GiveSharedWishModalComponent } from './give-shared-wish-modal/give-shared-wish-modal.component';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { StorageService } from '@core/services/storage.service';
+import { BrowserService } from '@core/services/browser.service';
 
 @Component({
   selector: 'app-shared-wish-list',
@@ -23,7 +23,7 @@ export class SharedWishListPage implements OnInit {
     private route: ActivatedRoute, 
     private storageService: StorageService,
     private modalController: ModalController,
-    private inAppBrowser: InAppBrowser,
+    private browserService: BrowserService,
     private wishListApiService: WishListApiService
   ) { }
 
@@ -74,8 +74,7 @@ export class SharedWishListPage implements OnInit {
   private openWishInAppBrowserAfterThreeSeconds(wish: FriendWish) {
     setTimeout(() => {
       const url = wish.productUrl
-      const browser = this.inAppBrowser.create(url);
-      browser.show();
+      this.browserService.openInAppBrowser(url);
     }, 3000);
   }
 

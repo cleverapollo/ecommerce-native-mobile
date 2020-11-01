@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { WishApiService } from '@core/api/wish-api.service';
+import { BrowserService } from '@core/services/browser.service';
 
 @Component({
   selector: 'app-friends-wish',
@@ -14,7 +14,7 @@ export class FriendsWishComponent implements OnInit {
   @Output() onWishPurchased: EventEmitter<FriendWish> = new EventEmitter<FriendWish>();
 
   constructor(
-    private inAppBrowser: InAppBrowser,
+    private browserService: BrowserService,
     private wishApiService: WishApiService
   ) { }
 
@@ -22,8 +22,7 @@ export class FriendsWishComponent implements OnInit {
 
   openProductURL() {
     const url = this.wish.productUrl
-    const browser = this.inAppBrowser.create(url);
-    browser.show();
+    this.browserService.openInAppBrowser(url); 
   }
 
   reserve() {

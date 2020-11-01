@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { SearchResultItem } from '@core/models/search-result-item';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { BrowserService } from '@core/services/browser.service';
 
 @Component({
   selector: 'app-search-result-detail-modal',
@@ -12,7 +12,10 @@ export class SearchResultDetailModalComponent {
 
   @Input() searchResultItem: SearchResultItem
 
-  constructor(private modalController: ModalController, private inAppBrowser: InAppBrowser) { }
+  constructor(
+    private modalController: ModalController, 
+    private browserService: BrowserService
+  ) { }
   
   dismiss() {
     this.modalController.dismiss();
@@ -25,9 +28,8 @@ export class SearchResultDetailModalComponent {
   }
 
   openProductURL() {
-    const url = this.searchResultItem.productUrl
-    const browser = this.inAppBrowser.create(url);
-    browser.show();
+    const url = this.searchResultItem.productUrl;
+    this.browserService.openInAppBrowser(url);
   }
 
 }

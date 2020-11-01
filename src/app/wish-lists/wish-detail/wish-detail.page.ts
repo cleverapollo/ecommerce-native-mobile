@@ -5,6 +5,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { BrowserService } from '@core/services/browser.service';
 
 @Component({
   selector: 'app-wish-detail',
@@ -17,7 +18,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   wish: WishDto
 
   constructor(
-    private inAppBrowser: InAppBrowser,
+    private browserService: BrowserService,
     public alertService: AlertService,
     private navController: NavController,
     private route: ActivatedRoute,
@@ -32,9 +33,8 @@ export class WishDetailPage implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   openProductURL() {
-    const url = this.wish.productUrl
-    const browser = this.inAppBrowser.create(url);
-    browser.show();
+    const url = this.wish.productUrl;
+    this.browserService.openInAppBrowser(url);
   }
 
   goBack() {
