@@ -8,6 +8,7 @@ import { SearchQuery, SearchResultDataService, SearchType } from './search-resul
 import { SearchService } from '@core/api/search.service';
 import { from, Observable } from 'rxjs';
 import { Platform } from '@ionic/angular';
+import { FileService } from './file.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class ProductSearchService {
     private inAppBrowser: InAppBrowser, 
     private loadingService: LoadingService,
     private searchResultDataService: SearchResultDataService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private fileService: FileService
   ) { }
 
   async searchByUrl(url: string): Promise<SearchResultItem[]> {
@@ -30,16 +32,18 @@ export class ProductSearchService {
       const browser = this.inAppBrowser.create(url, '_blank', { location: 'no', clearcache: 'yes', toolbar: 'no', hidden: 'yes' });
       browser.on('loadstart').subscribe(event => {
         this.onLoadStart();
-      }); 
+      }, this.handleGeneralError); 
       browser.on('exit').subscribe(event => {
         this.onBrowserExit();
-      });
+      }, this.handleGeneralError);
       browser.on('loadstop').subscribe(event => {
-        console.log('loading finished ...');
         this.onLoadComplete(browser, url).then(results => {
           resolve(results);
-        }, reject);
-      }, console.error);
+        }, error => {
+          this.handleGeneralError(error);
+          reject();
+        });
+      }, this.handleGeneralError);
       browser.on('loaderror').subscribe(event => {
         this.onLoadError();
         reject();
@@ -48,8 +52,11 @@ export class ProductSearchService {
   }
 
   private async onLoadComplete(browser: InAppBrowserObject, url) {
+    console.log('loading finished ...');
+    this.loadingService.dismissLoadingSpinner();
     try {
       const code = await (await this.getCodeToExecute(url)).toPromise();
+      console.log('code to excecute', code);
       const results: [any] = await browser.executeScript({ code: code });
       console.log('result after execution', results);
       this.searchResults = [];
@@ -62,14 +69,15 @@ export class ProductSearchService {
       this.searchResultDataService.update(searchQuery);
 
       return Promise.resolve(results)
-    } catch(e) {
+    } catch (e) {
+      console.error('browser onLoadComplete', e);
       return Promise.reject(e);
     }
   }
 
   private async getCodeToExecute(url) {
     if (this.platform.is('cordova')) {
-      return from(this.scriptParseImgsFromWebsite.toString()); 
+      return from(this.fileService.getTextContentFromFileInAssetFolder('parse-imgs-from-website.js', 'scripts')); 
     }
     return this.http.get(this.scriptFilePath(url), { responseType: 'text' });
   }
@@ -89,6 +97,11 @@ export class ProductSearchService {
     this.loadingService.dismissLoadingSpinner();
   }
 
+  private handleGeneralError(error) {
+    console.log('general error ...', error);
+    this.loadingService.dismissLoadingSpinner();
+  }
+
   private scriptFilePath(url: string) {
     let assetPath = './assets/scripts';
     if (url.indexOf('otto.de') !== -1) {
@@ -97,17 +110,6 @@ export class ProductSearchService {
     } else {
       return `${assetPath}/parse-imgs-from-website.js`;
     }
-  }
-
-  private scriptParseImgsFromWebsite() {
-    Array.from(document.getElementsByTagName('img')).map(x => {
-      if (x.src) {
-        return { name: x.alt, imageUrl: x.src };
-      } else if (x.srcset) {
-        return { name: x.alt, imageUrl: x.srcset.split(',')[0] };
-      }
-      return { name: '', imageUrl: '' };
-    }).filter(x => x.imageUrl !== "" && x.imageUrl.startsWith('http'));
   }
 
   private mapSearchResultArray(results: [any], url: string) {
