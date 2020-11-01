@@ -2,7 +2,7 @@
 @import "./wish-list-card.scss";
 @import "./wish-card.scss";
 
-ion-header {
+ion-header.safe-area-inset-top {
     margin-top: constant(safe-area-inset-top);
     margin-top: env(safe-area-inset-top);
  }
