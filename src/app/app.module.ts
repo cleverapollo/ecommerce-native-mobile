@@ -35,6 +35,7 @@ import { WishListResolver } from '@wishLists/home/wish-list.resolver';
 import { WishResolver } from '@wishLists/home/wish.resolver';
 import { FriendsWishListDetailResolver } from '@friends/friends-wish-list-detail/friends-wish-list-detail.resolver';
 import { HTTP } from '@ionic-native/http/ngx';
+import { File } from '@ionic-native/file/ngx';
 import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
 import { NativeHttpInterceptor } from './_interceptors/native-http.interceptor';
 import { NativeTokenInterceptor } from './_interceptors/native-token.interceptor';
@@ -76,6 +77,7 @@ export function jwtOptionsFactory(storage) {
     SplashScreen,
     HTTP,
     EmailVerificationResolver,
+    File,
     FriendsWishListResolver,
     FriendsWishListDetailResolver,
     Keyboard,
