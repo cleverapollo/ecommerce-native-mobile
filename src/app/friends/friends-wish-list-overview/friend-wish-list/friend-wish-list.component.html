@@ -1,25 +1,25 @@
 <ion-grid class="friend-avatar-container">
 
   <!--0-->
-  <ion-avatar *ngIf="!ownerProfileImageUrls || !ownerProfileImageUrls.length" class="auto-margin">
+  <ion-avatar *ngIf="!ownerProfileImageInfos || !ownerProfileImageInfos.length" class="auto-margin">
     <img src="assets/images/avatar-placeholder-small.svg"/>
   </ion-avatar>
 
   <!--1-->
-  <ion-avatar *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length == 1" class="auto-margin">
-    <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | secure | async"/>
+  <ion-avatar *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 1" class="auto-margin">
+    <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | secure | async"/>
   </ion-avatar>
 
   <!--2-->
-  <ion-row *ngIf="ownerProfileImageUrls && ownerProfileImageUrls.length && ownerProfileImageUrls.length == 2">
+  <ion-row *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length && ownerProfileImageInfos.length == 2">
     <ion-col size="6">
       <ion-avatar class="float-right">
-        <img *ngIf="ownerProfileImageUrls[0]" [src]="ownerProfileImageUrls[0] | secure | async"/>
+        <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | secure | async"/>
       </ion-avatar>
     </ion-col>
     <ion-col size="6">
       <ion-avatar>
-        <img *ngIf="ownerProfileImageUrls[1]" [src]="ownerProfileImageUrls[1] | secure | async"/>
+        <img *ngIf="ownerProfileImageInfos[1]" [src]="ownerProfileImageInfos[1] | secure | async"/>
       </ion-avatar>
     </ion-col>
   </ion-row>

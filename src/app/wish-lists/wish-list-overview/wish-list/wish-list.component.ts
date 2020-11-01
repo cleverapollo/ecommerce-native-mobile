@@ -16,8 +16,8 @@ export class WishListComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    if (this.wishList.partner && this.wishList.partner.profileImageUrl) {
-      this.wishListPartnersImageUrls.push(this.wishList.partner.profileImageUrl);
+    if (this.wishList.partner && this.wishList.partner.profileImageInfo?.urlString) {
+      this.wishListPartnersImageUrls.push(this.wishList.partner.profileImageInfo?.urlString);
     }
   }
 

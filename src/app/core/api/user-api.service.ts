@@ -45,6 +45,12 @@ export class UserApiService {
     );
   }
 
+  partialUpdateProfileImage(formData: FormData): Observable<UserProfile> {
+    return this.apiService.post<UserProfile>(`${UserApiService.REST_END_POINT}/profile-image`, formData).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
+  }
+
   resetPassword(email: string) {
     return this.apiService.post(`${UserApiService.REST_END_POINT}/reset-password`, { email: email}).pipe(
       catchError(error => this.errorHandler.handleError(error))
@@ -63,8 +69,14 @@ export class UserApiService {
     );
   }
 
-  uploadFile(request) : Observable<UploadFileResponse> {
-    return this.apiService.post<UploadFileResponse>(`${UserApiService.REST_END_POINT}/upload-profile-image`, request).pipe(
+  downloadProfileImage(url: string): Observable<Blob> {
+    return this.apiService.downloadFile(url,).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
+  }
+
+  deleteProfileImage(fileName: string) {
+    return this.apiService.delete(`${UserApiService.REST_END_POINT}/profile-image/${fileName}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

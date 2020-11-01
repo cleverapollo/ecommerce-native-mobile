@@ -1,3 +1,5 @@
+import { ProfileImageDto } from '@core/models/user.model';
+
 export class FriendWishList {
     id: Number;
     name: String;
@@ -5,7 +7,7 @@ export class FriendWishList {
     wishes: Array<FriendWish>;
     owners: Array<FriendWishListOwner>;
 
-    memberProfieImageUrls: Array<String>;
+    memberProfieImageInfos: Array<ProfileImageDto>;
 }
 
 export class FriendWish {
@@ -21,7 +23,7 @@ export class FriendWish {
 
 export class FriendWishListOwner {
     firstName: String;
-    profileImageUrl: String;
+    profileImageInfo: ProfileImageDto;
 }
 
 export class SharedWishListDto {

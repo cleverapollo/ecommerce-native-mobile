@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserApiService } from '@core/api/user-api.service';
 import { UserProfile } from '@core/models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { HintConfig } from '@shared/components/hint/hint.component';
 import { UserProfileStore } from '../../user-profile-store.service';
+import { FileService } from '@core/services/file.service';
 
 @Component({
   selector: 'app-profile-image-update',
@@ -14,62 +14,66 @@ export class ProfileImageUpdatePage implements OnInit {
 
   profile: UserProfile
   imageIsUploading: Boolean = false;
-  showHint: Boolean;
-  hintConfig: HintConfig
+
+  get profileImageAvailable(): boolean {
+    return this.fileName !== null;
+  }
+
+  get fileName(): String {
+    let fileName = this.profile?.profileImageInfo?.fileName;
+    if (!fileName) {
+      const url = this.profile?.profileImageInfo?.urlString;
+      if (url) {
+        fileName = url.substring(url.lastIndexOf('/') + 1);
+      }
+    }
+    return fileName;
+  }
 
   constructor(
-    private route: ActivatedRoute, 
     private userApiService: UserApiService, 
-    private userProfileStore: UserProfileStore) 
-    { }
+    private userProfileStore: UserProfileStore,
+    private fileService: FileService
+  ) { }
 
   ngOnInit() {
-    this.profile = history.state.data.profile;
+    this.profile = history.state.data?.profile;
+    console.log(this.profile);
   }
 
   uploadImage(event) {
     const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onload = () => {
-      let request = new FormData();
-      request.append('file', file);
+    this.readFileContentAsFormData(file).then(formData => {
       this.imageIsUploading = true;
-      this.userApiService.uploadFile(request).subscribe((response) => {
-        this.updateProfile(response.fileDownloadUri, response.fileName);
-        this.hintConfig = new HintConfig("success", "Dein Profilbild wurde erfolgreich hochgeladen!");
-      }, e => {
-        this.hintConfig = new HintConfig("danger", "Aufgrund eines Fehlers konnte dein Profilbild nicht hochgeladen werden!")
-      }, () => {
+      this.userApiService.partialUpdateProfileImage(formData).toPromise().then(updatedProfile => {
+        console.log('updated profile ', updatedProfile);
+        this.userProfileStore.updateCachedUserProfile(updatedProfile).finally(() => {
+          this.userProfileStore.refreshUserProfileImage();
+        });
+        this.profile = updatedProfile;
+      }).finally(() => {
         this.imageIsUploading = false;
-        this.makeHintVisible()
       });
-    }
-    reader.onerror = (error) => {
-      console.error(error);
-      this.hintConfig = new HintConfig("danger", "Aufgrund eines Fehlers konnte dein Profilbild nicht hochgeladen werden!")
-      this.makeHintVisible()
-    }
+    });
   }
 
-  private makeHintVisible() {
-    this.showHint = true;
-    setTimeout(() => {
-      this.showHint = false;
-    }, 3000);
-  }
-
-  private updateProfile(url: String, fileName: String) {
-    this.userProfileStore.loadUserProfile().toPromise().then( profile => {
-      profile.profileImageUrl = url;
-      profile.profileImageFileName = fileName;
-      this.userProfileStore.updateCachedUserProfile(profile);
-      this.profile = profile;
-    })
+  private readFileContentAsFormData(file: any): Promise<FormData> {
+    return new Promise((resolve, reject) => {
+      this.fileService.readFileContentAsArrayBuffer(file).then((blob) => {
+        const formData = new FormData();
+        formData.append('file', blob);
+        resolve(formData);
+      }, reject);
+    });
   }
 
   deleteImage() {
-    console.log('delete image');
+    const fileName = this.fileName?.toString();
+    this.userApiService.deleteProfileImage(fileName).toPromise().then(() => {
+      this.profile.profileImageInfo = null;
+      this.userProfileStore.updateCachedUserProfile(this.profile);
+      this.userProfileStore.removeUserProfileImage();
+    });
   }
 
 }

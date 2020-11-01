@@ -1,23 +1,20 @@
-<app-hint *ngIf="showHint" [config]="hintConfig"></app-hint>
-
 <ion-content>
-
   <h1 class="ion-text-center wantic-page-header">Profil bearbeiten</h1>
   <ion-grid class="wantic-margin-right-left">
     <p>Profilbild</p>
     <ion-row>
       <ion-col size="4">
         <ion-avatar class="creator-image">
-          <img *ngIf="profile?.profileImageUrl && !imageIsUploading" [src]="profile.profileImageUrl | cacheImage | async" alt="profile image"/>
-          <img *ngIf="!profile?.profileImageUrl && !imageIsUploading" src="assets/images/avatar-placeholder-small.svg" alt="placeholder image"/>
+          <img *ngIf="profile?.profileImageInfo && !imageIsUploading" [src]="profile.profileImageInfo | cacheImage | async" alt="profile image"/>
+          <img *ngIf="!profile?.profileImageInfo && !imageIsUploading" src="assets/images/avatar-placeholder-small.svg" alt="placeholder image"/>
         </ion-avatar>
       </ion-col>
       <ion-col size="8">
         <input type="file" style="display: none" accept="image/png, image/jpeg" (change)="uploadImage($event)" #hiddenfileinput/>
-        <ion-button class="wantic-save-button" color="primary" expand="block" (click)="hiddenfileinput.click()">
+        <ion-button class="wantic-save-button" color="primary" expand="block" (click)="hiddenfileinput.click()" [disabled]="imageIsUploading">
           FOTO AUSWÄHLEN
         </ion-button>
-        <ion-button class="wantic-save-button" color="tertiary" expand="block" fill="clear" (click)="deleteImage()">
+        <ion-button class="wantic-save-button" color="tertiary" expand="block" fill="clear" (click)="deleteImage()" [disabled]="!profileImageAvailable || imageIsUploading">
           Foto löschen
         </ion-button>
       </ion-col>

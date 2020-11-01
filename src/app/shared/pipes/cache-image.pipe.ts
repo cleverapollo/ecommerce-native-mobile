@@ -1,47 +1,29 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CacheImageService } from '@core/services/cache-image.service';
-import { Observable } from 'rxjs';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import { ProfileImageDto } from '@core/models/user.model';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 
 @Pipe({
   name: 'cacheImage'
 })
 export class CacheImagePipe implements PipeTransform {
 
-  constructor(private cacheImageService: CacheImageService, private http: HttpClient, private sanitizer: DomSanitizer) {}
+  constructor(
+    private userProfileStore: UserProfileStore,  
+    private sanitizer: DomSanitizer
+  ) {}
 
-  transform(url: String): Promise<SafeUrl> {
+  transform(imageInfo: ProfileImageDto): Promise<SafeUrl> {
+    const url = imageInfo.urlString;
+    let cacheKey = url;
+    if (imageInfo.isFromLoggedInUser) {
+      cacheKey = 'profileImage';
+    }
     return new Promise((resolve, reject) => {
-      const fileName = url.substring(url.lastIndexOf('/') + 1);
-      this.cacheImageService.loadImage(fileName).then((blob) => {
-        console.log('load from cache', blob, this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob)));
+      this.userProfileStore.loadImage(url, false, cacheKey).subscribe(blob => {
         resolve(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob)));
-      }).catch( e => {
-        this.loadImageFromServer(url).then(blob => {
-          console.log('load from server', this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob)));
-          this.cacheImageService.saveImage(fileName, blob);
-          resolve(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob)));
-        }).catch(reject);
       });
     });
-  }
-
-  private loadImageFromServer(url) {
-    if (url) {
-      const headers = new HttpHeaders()
-        .set('Access-Control-Allow-Origin', '*')
-      
-      // FIXME: check why server sends http instead https
-      let modifiedUrl = url;
-      if (environment.production) {
-        modifiedUrl = (url as string).replace('http', 'https');
-      }
-
-      return this.http.get(modifiedUrl, { responseType: 'blob', headers: headers }).toPromise();
-    }
   }
 
 }

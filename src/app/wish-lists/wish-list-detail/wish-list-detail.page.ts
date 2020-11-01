@@ -4,6 +4,7 @@ import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { ProfileImageDto } from '@core/models/user.model';
 
 @Component({
   selector: 'app-wish-list-detail',
@@ -15,6 +16,13 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   wishList: WishListDto;
   refreshWishListData: boolean = false
   subText = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wünsche zu deiner Wunschliste hinzufügen.';
+
+  get ownerProfileImageInfos(): ProfileImageDto[] {
+    const imagesUrls = this.wishList.ownerProfileImageInfos
+        .filter(imageInfo => imageInfo != null)
+        .map(imageInfo => imageInfo);
+    return imagesUrls;
+  }
 
   constructor(
     private navController: NavController,

@@ -1,5 +1,5 @@
 import { FriendSelectOption } from './friend.model';
-import { UserSearchResult } from './user.model';
+import { ProfileImageDto, UserSearchResult } from './user.model';
 
 export class WishDto {
     id: Number;
@@ -26,7 +26,7 @@ export class WishListMemberDto {
     name: String;
     failedToSendEmail: boolean;
     email: String = null;
-    profileImageUrl: String = null;
+    profileImageInfo: ProfileImageDto = null;
 
     static forUserSearchResult(userSearchResult: UserSearchResult) : WishListMemberDto {
         let model = new WishListMemberDto()
@@ -49,7 +49,7 @@ export class WishListPartnerDto {
     name: String;
     failedToSendEmail: boolean;
     email: String = null;
-    profileImageUrl: String = null;
+    profileImageInfo: ProfileImageDto = null;
 
     static forUserSearchResult(userSearchResult: UserSearchResult) : WishListMemberDto {
         let model = new WishListMemberDto()
@@ -89,5 +89,5 @@ export class WishListDto {
     membersToInvite: [MemberToInviteDto];
     partner: WishListPartnerDto;
     partnerToInvite: PartnerToInviteDto;
-    ownerProfileImageUrls: [String];
+    ownerProfileImageInfos: [ProfileImageDto];
 }

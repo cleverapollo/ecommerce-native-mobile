@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WishApiService } from '@core/api/wish-api.service';
+import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { BrowserService } from '@core/services/browser.service';
 
 @Component({

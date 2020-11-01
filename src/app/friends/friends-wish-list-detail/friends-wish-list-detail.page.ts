@@ -3,6 +3,7 @@ import { FriendWishList, FriendWish } from '@friends/friends-wish-list-overview/
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
+import { ProfileImageDto } from '@core/models/user.model';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
@@ -35,10 +36,10 @@ export class FriendsWishListDetailPage implements OnInit {
     }
   } 
 
-  get ownerProfileImageUrls(): String[] {
+  get ownerProfileImageInfos(): ProfileImageDto[] {
     const imagesUrls = this.wishList.owners
-        .filter(o => o.profileImageUrl !== null)
-        .map(o => o.profileImageUrl);
+        .filter(o => o.profileImageInfo !== null)
+        .map(o => o.profileImageInfo);
     return imagesUrls;
   }
 

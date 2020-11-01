@@ -66,4 +66,14 @@ export class ApiService {
       params: queryParams
     });
   }
+
+  downloadFile(url: string): Observable<Blob> {
+    const headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*')
+
+    return this.httpClient.get(url, {
+      headers: headers,
+      responseType: 'blob'
+    });
+  }
 }

@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BrowserService } from '@core/services/browser.service';
+import { ProfileImageDto } from '@core/models/user.model';
 
 @Component({
   selector: 'app-wish-detail',
@@ -16,6 +17,13 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   wishList: WishListDto
   wish: WishDto
+
+  get ownerProfileImageInfos(): ProfileImageDto[] {
+    const imagesUrls = this.wishList.ownerProfileImageInfos
+        .filter(imageInfo => imageInfo !== null)
+        .map(imageInfo => imageInfo);
+    return imagesUrls;
+  }
 
   constructor(
     private browserService: BrowserService,

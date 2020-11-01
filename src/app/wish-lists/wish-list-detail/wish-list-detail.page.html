@@ -7,24 +7,24 @@
     <!---->
     <!--0-->
     <ion-avatar class="creator-image standalone"
-      *ngIf="!wishList.ownerProfileImageUrls || !wishList.ownerProfileImageUrls.length">
+      *ngIf="!ownerProfileImageInfos || !ownerProfileImageInfos.length">
       <img src="assets/images/avatar-placeholder-small.svg">
     </ion-avatar>
   
     <!--1-->
     <ion-avatar class="creator-image standalone"
-      *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 1">
-      <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
+      *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 1">
+      <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | cacheImage | async">
     </ion-avatar>
   
     <!--2-->
     <ion-avatar class="creator-image first"
-      *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-      <img *ngIf="wishList.ownerProfileImageUrls[0]" [src]="wishList.ownerProfileImageUrls[0] | cacheImage | async">
+      *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 2">
+      <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | cacheImage | async">
     </ion-avatar>
     <ion-avatar class="creator-image last"
-      *ngIf="wishList.ownerProfileImageUrls && wishList.ownerProfileImageUrls.length == 2">
-      <img *ngIf="wishList.ownerProfileImageUrls[1]" [src]="wishList.ownerProfileImageUrls[1] | cacheImage | async">
+      *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 2">
+      <img *ngIf="ownerProfileImageInfos[1]" [src]="ownerProfileImageInfos[1] | cacheImage | async">
     </ion-avatar>
     <!---->
     <div class="details">
@@ -34,7 +34,7 @@
     <div class="friends-images" *ngIf="wishList.members && wishList.members.length">
       <ion-avatar *ngFor="let member of wishList.members">
         <img
-          [src]="member.profileImageUrl ? (member.profileImageUrl | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
+          [src]="member.profileImageInfo ? (member.profileImageInfo | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
       </ion-avatar>
     </div>
   </section>

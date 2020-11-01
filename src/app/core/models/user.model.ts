@@ -3,8 +3,7 @@ export class UserProfile {
     lastName: String;
     birthday: Date;
     email: String;
-    profileImageUrl: String = null;
-    profileImageFileName: String = null;
+    profileImageInfo: ProfileImageDto;
 }
 
 export class UserSearchResult {
@@ -26,4 +25,10 @@ export class UploadFileResponse {
     fileDownloadUri: String;
     fileType: String;
     size: Number;
+}
+
+export class ProfileImageDto {
+    urlString: string;
+    fileName: string;
+    isFromLoggedInUser: boolean;
 }

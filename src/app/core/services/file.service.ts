@@ -77,4 +77,18 @@ export class FileService {
       });
     });
   }
+
+  readFileContentAsArrayBuffer(file: any): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = () => {
+        resolve(file);
+      };
+      reader.onerror = (error) => {
+        console.error(error);
+        reject(error);
+      };
+    });
+  }
 }
