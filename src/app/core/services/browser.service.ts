@@ -9,7 +9,11 @@ export class BrowserService {
   constructor(private browser: InAppBrowser) { }
 
   openInAppBrowser(url: string) {
-    const browser = this.browser.create(url, '_blank');
+    const browser = this.browser.create(url, '_blank', { 
+      presentationstyle: 'pagesheet', 
+      toolbarposition: 'top', 
+      location: 'no',
+    });
     browser.show();
   }
 
