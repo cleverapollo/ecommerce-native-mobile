@@ -82,17 +82,15 @@ export class AuthenticationService {
         const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
         const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
         const loginResponse = await this.authService.login(email, password).toPromise();
-        this.saveToken(loginResponse.token)
-          .then(Promise.resolve)
-          .catch(Promise.reject);
+        return this.saveToken(loginResponse.token);
       } else {
         this.storageService.remove(StorageKeys.AUTH_TOKEN);
-        Promise.reject();
+        return Promise.reject();
       }
     } catch (error) {
       console.error(error);
       this.storageService.remove(StorageKeys.AUTH_TOKEN);
-      Promise.reject();
+      return Promise.reject();
     }
   }
 
