@@ -5,3 +5,7 @@ h1 {
 ion-button.wantic-save-button {
   margin-bottom: 12px;
 }
+
+ion-textarea {
+  height: auto; // auto-grow does not work on ios
+}
