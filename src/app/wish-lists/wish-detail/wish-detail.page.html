@@ -29,7 +29,7 @@
    </div>
    <div class="friends-images" *ngIf="wishList.members && wishList.members.length">
      <ion-avatar *ngFor="let member of wishList.members">
-       <img [src]="member.profileImageInfo?.urlString ? (member.profileImageInfo?.urlString | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
+       <img [src]="member.profileImageInfo ? (member.profileImageInfo | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
      </ion-avatar>
    </div>
  </section>
