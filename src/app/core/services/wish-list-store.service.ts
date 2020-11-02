@@ -137,7 +137,7 @@ export class WishListStoreService {
     try {
       await this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
       const wishList: WishListDto = await this.cache.getItem(this.cacheKeyWishList(wish.wishListId));
-      wishList.wishes.push(wish);
+      wishList.wishes.unshift(wish);
       this.updatedCachedWishList(wishList);
       Promise.resolve();
     } catch(error) {
