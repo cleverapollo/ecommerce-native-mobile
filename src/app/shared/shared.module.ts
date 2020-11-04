@@ -14,6 +14,7 @@ import { SearchResultDetailModalComponent } from './components/search-result-det
 import { WishListRadioComponent } from './components/wish-list-radio/wish-list-radio.component';
 import { UserInitialsComponent } from './components/user-initials/user-initials.component';
 import { OwnersInfoComponent } from './components/owners-info/owners-info.component';
+import { TruncateNamePipe } from './pipes/truncate-name.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { OwnersInfoComponent } from './components/owners-info/owners-info.compon
     SearchResultComponent,
     SearchResultDetailModalComponent,
     UserInitialsComponent,
-    WishListRadioComponent
+    WishListRadioComponent,
+    TruncateNamePipe
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,7 @@ import { OwnersInfoComponent } from './components/owners-info/owners-info.compon
     ReactiveFormsModule,
     SearchResultComponent,
     SearchResultDetailModalComponent,
+    TruncateNamePipe,
     UserInitialsComponent,
     WishListRadioComponent
   ]
