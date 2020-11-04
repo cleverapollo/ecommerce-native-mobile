@@ -5,6 +5,14 @@
     color: var(--ion-color-dark);
 }
 
+.centered-user-initials {
+    display: flex;
+    align-items: center;
+    app-user-initials {
+        margin: auto;
+    }
+}
+
 .friend-avatar-container {
     background: linear-gradient(to bottom, #f7f6f1 50%, white 50%);
     height: 15%;

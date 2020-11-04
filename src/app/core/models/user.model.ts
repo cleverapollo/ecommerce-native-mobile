@@ -6,6 +6,12 @@ export class UserProfile {
     profileImageInfo: ProfileImageDto;
 }
 
+export class UserDto {
+    firstName: String;
+    lastName: String;
+    profileImageInfo: ProfileImageDto;
+}
+
 export class UserSearchResult {
     public firstName: String;
     public email: String;

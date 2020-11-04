@@ -18,11 +18,16 @@ export class WishDetailPage implements OnInit, OnDestroy {
   wishList: WishListDto
   wish: WishDto
 
-  get ownerProfileImageInfos(): ProfileImageDto[] {
-    const imagesUrls = this.wishList.ownerProfileImageInfos
-        .filter(imageInfo => imageInfo !== null)
-        .map(imageInfo => imageInfo);
-    return imagesUrls;
+  get wishListOwnerCount(): number {
+    return this.wishList?.owners?.length || 0;
+  }
+
+  cssClass(first: boolean, last: boolean) {
+    return {
+      'standalone': this.wishListOwnerCount == 1,
+      'first': this.wishListOwnerCount > 1 && first,
+      'last': this.wishListOwnerCount > 1 && last
+    }
   }
 
   constructor(

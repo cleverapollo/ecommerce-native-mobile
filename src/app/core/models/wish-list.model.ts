@@ -1,5 +1,5 @@
 import { FriendSelectOption } from './friend.model';
-import { ProfileImageDto, UserSearchResult } from './user.model';
+import { ProfileImageDto, UserDto, UserSearchResult } from './user.model';
 
 export class WishDto {
     id: Number;
@@ -81,13 +81,13 @@ export class PartnerToInviteDto {
 }
 
 export class WishListDto {
-    id: Number;
-    name: String;
+    id: number;
+    name: string;
     date: Date;
     wishes: [WishDto];
     members: WishListMemberDto[];
     membersToInvite: [MemberToInviteDto];
     partner: WishListPartnerDto;
     partnerToInvite: PartnerToInviteDto;
-    ownerProfileImageInfos: [ProfileImageDto];
+    owners: [UserDto];
 }

@@ -3,18 +3,24 @@
     width: 40pt;
 }
 
-ion-avatar.creator-image {
+div.user-initials, ion-avatar.creator-image {
     vertical-align: top;
+}
+div.user-initials {
+    display: inline-block;
+    margin-right: 5px;
 }
 
 .wish-list-owner-names {
     font-size: 20px;
     font-weight: bold;
     margin: 0;
+    padding-bottom: 3px;
 }
 
 .wish-list-name {
-    font-size: 14px;
+    font-size: 14px !important;
+    font-weight: normal;
 }
 
 .wish-list-date {

@@ -3,13 +3,13 @@
   <ion-grid class="wantic-margin-right-left">
     <p>Profilbild</p>
     <ion-row>
-      <ion-col size="4">
-        <ion-avatar class="creator-image">
+      <ion-col size="6">
+        <ion-avatar class="profile-image">
           <img *ngIf="profile?.profileImageInfo && !imageIsUploading" [src]="profile.profileImageInfo | cacheImage | async" alt="profile image"/>
           <img *ngIf="!profile?.profileImageInfo && !imageIsUploading" src="assets/images/avatar-placeholder-small.svg" alt="placeholder image"/>
         </ion-avatar>
       </ion-col>
-      <ion-col size="8">
+      <ion-col size="6">
         <input type="file" style="display: none" accept="image/png, image/jpeg" (change)="uploadImage($event)" #hiddenfileinput/>
         <ion-button class="wantic-save-button" color="primary" expand="block" (click)="hiddenfileinput.click()" [disabled]="imageIsUploading">
           FOTO AUSWÄHLEN

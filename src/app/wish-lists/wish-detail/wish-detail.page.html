@@ -4,35 +4,18 @@
   </ion-refresher>
 
   <section class="ion-text-center wish-list-detail-container">
-    <!---->
-      <!--0-->
-      <ion-avatar class="creator-image standalone" *ngIf="!ownerProfileImageInfos || !ownerProfileImageInfos.length">
-       <img  src="assets/images/avatar-placeholder-small.svg">
-     </ion-avatar>
-
-     <!--1-->
-     <ion-avatar class="creator-image standalone" *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 1">
-       <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | cacheImage | async">
-     </ion-avatar>
-
-     <!--2-->
-     <ion-avatar class="creator-image first" *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 2">
-       <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | cacheImage | async">
-     </ion-avatar>
-     <ion-avatar class="creator-image last" *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 2">
-       <img *ngIf="ownerProfileImageInfos[1]" [src]="ownerProfileImageInfos[1] | cacheImage | async">
-     </ion-avatar>
-     <!---->
-   <div class="details">
-     <h1 class="wish-list-name">{{ wishList.name }}</h1>
-     <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
-   </div>
-   <div class="friends-images" *ngIf="wishList.members && wishList.members.length">
-     <ion-avatar *ngFor="let member of wishList.members">
-       <img [src]="member.profileImageInfo ? (member.profileImageInfo | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
-     </ion-avatar>
-   </div>
- </section>
+    <app-owners-info [owners]="wishList.owners"></app-owners-info>
+    <div class="details">
+      <h1 class="wish-list-name">{{ wishList.name }}</h1>
+      <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
+    </div>
+    <div class="friends-images" *ngIf="wishList.members && wishList.members.length">
+      <ion-avatar *ngFor="let member of wishList.members">
+        <img
+          [src]="member.profileImageInfo ? (member.profileImageInfo | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
+      </ion-avatar>
+    </div>
+  </section>
 
   <ion-card>
     <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" (click)="openProductURL()" alt="Produktbild">

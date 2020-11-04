@@ -13,7 +13,7 @@ import { ProfileImageDto } from '@core/models/user.model';
 export class FriendsWishListDetailPage implements OnInit {
 
   wishList: FriendWishList
-
+  
   constructor(
     private navController: NavController, 
     private route: ActivatedRoute,
@@ -21,7 +21,6 @@ export class FriendsWishListDetailPage implements OnInit {
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
-    console.log(this.wishList);
   }
 
   goBack() {
@@ -35,13 +34,6 @@ export class FriendsWishListDetailPage implements OnInit {
       this.friendWishListStore.updateCachedWishList(this.wishList);
     }
   } 
-
-  get ownerProfileImageInfos(): ProfileImageDto[] {
-    const imagesUrls = this.wishList.owners
-        .filter(o => o.profileImageInfo !== null)
-        .map(o => o.profileImageInfo);
-    return imagesUrls;
-  }
 
   forceRefresh(event) {
     this.friendWishListStore.loadWishList(this.wishList.id, true).subscribe(wishList => {

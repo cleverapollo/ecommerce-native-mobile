@@ -15,7 +15,7 @@
       <ion-icon slot="end" name="arrow-forward"></ion-icon>
       <ion-label>
         <h2>Profilbild</h2>
-        <ion-avatar class="creator-image">
+        <ion-avatar class="profile-image">
           <img *ngIf="profile?.profileImageInfo" [src]="profile.profileImageInfo | cacheImage | async" alt="profile image"/>
           <img *ngIf="!profile?.profileImageInfo" src="assets/images/avatar-placeholder-small.svg" alt="placeholder image"/>
         </ion-avatar>

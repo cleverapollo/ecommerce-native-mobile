@@ -254,25 +254,10 @@ ion-header {
     }
 }
 
-.creator-image {
-    width: 40pt;
-    height: 40pt;
+.profile-image {
     img {
         border: 3px solid #ff704f;
     }
-}
-
-.creator-image.standalone {
-    margin-right: 9px;
-    margin-top: 0;
-}
-
-.creator-image.first {
-    margin-left: 10px;
-}
-
-.creator-image.last {
-    margin-right: 11px;
 }
 
 .friends-images {
@@ -313,4 +298,9 @@ ion-header {
 ion-grid.wantic-container {
     padding-right: var(--wantic-container-spacing);
     padding-left: var(--wantic-container-spacing);
+}
+
+app-owners-info {
+    display: inline-block;
+    vertical-align: top;
 }

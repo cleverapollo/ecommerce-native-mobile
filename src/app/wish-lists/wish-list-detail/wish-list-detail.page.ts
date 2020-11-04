@@ -17,11 +17,16 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   refreshWishListData: boolean = false
   subText = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wünsche zu deiner Wunschliste hinzufügen.';
 
-  get ownerProfileImageInfos(): ProfileImageDto[] {
-    const imagesUrls = this.wishList.ownerProfileImageInfos
-        .filter(imageInfo => imageInfo != null)
-        .map(imageInfo => imageInfo);
-    return imagesUrls;
+  get wishListOwnerCount(): number {
+    return this.wishList?.owners?.length || 0;
+  }
+
+  cssClass(first: boolean, last: boolean) {
+    return {
+      'standalone': this.wishListOwnerCount == 1,
+      'first': this.wishListOwnerCount > 1 && first,
+      'last': this.wishListOwnerCount > 1 && last
+    }
   }
 
   constructor(

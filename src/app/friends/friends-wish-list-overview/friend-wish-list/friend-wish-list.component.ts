@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProfileImageDto } from '@core/models/user.model';
 import { FriendWishList } from '../friends-wish-list-overview.model';
 
 @Component({
@@ -15,11 +14,5 @@ export class FriendWishListComponent implements OnInit {
 
   ngOnInit() {}
 
-  get ownerProfileImageInfos(): ProfileImageDto[] {
-    const imagesUrls = this.wishList.owners
-        .filter(o => o.profileImageInfo !== null)
-        .map(o => o.profileImageInfo);
-    return imagesUrls;
-  }
 
 }

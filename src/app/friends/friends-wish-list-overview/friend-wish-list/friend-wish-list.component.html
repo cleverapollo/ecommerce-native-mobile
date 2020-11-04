@@ -1,25 +1,31 @@
 <ion-grid class="friend-avatar-container">
 
-  <!--0-->
-  <ion-avatar *ngIf="!ownerProfileImageInfos || !ownerProfileImageInfos.length" class="auto-margin">
-    <img src="assets/images/avatar-placeholder-small.svg"/>
+  <ion-avatar *ngIf="wishList?.owners?.length == 1 && wishList?.owners[0].profileImageInfo" class="auto-margin">
+    <img *ngIf="wishList?.owners[0].profileImageInfo" [src]="wishList.owners[0].profileImageInfo | cacheImage | async"/>
   </ion-avatar>
+  <div  *ngIf="wishList.owners?.length == 1 && !wishList.owners[0].profileImageInfo" class="centered-user-initials">
+    <app-user-initials [firstName]="wishList.owners[0].firstName" [lastName]="wishList.owners[0].lastName"></app-user-initials>
+  </div>
 
-  <!--1-->
-  <ion-avatar *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 1" class="auto-margin">
-    <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | cacheImage | async"/>
-  </ion-avatar>
 
   <!--2-->
-  <ion-row *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length && ownerProfileImageInfos.length == 2">
+  <ion-row *ngIf="wishList.owners?.length == 2">
     <ion-col size="6">
       <ion-avatar class="float-right">
-        <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | cacheImage | async"/>
+        <img *ngIf="wishList.owners[0].profileImageInfo" [src]="wishList.owners[0].profileImageInfo | cacheImage | async"/>
+        <app-user-initials *ngIf="!wishList.owners[0].profileImageInfo"
+          [firstName]="wishList.owners[0].firstName" 
+          [lastName]="wishList.owners[0].lastName">
+        </app-user-initials>
       </ion-avatar>
     </ion-col>
     <ion-col size="6">
       <ion-avatar>
-        <img *ngIf="ownerProfileImageInfos[1]" [src]="ownerProfileImageInfos[1] | cacheImage | async"/>
+        <img *ngIf="wishList.owners[1].profileImageInfo" [src]="wishList.owners[1].profileImageInfo | cacheImage | async"/>
+        <app-user-initials *ngIf="!wishList.owners[1].profileImageInfo"
+          [firstName]="wishList.owners[1].firstName" 
+          [lastName]="wishList.owners[1].lastName">
+        </app-user-initials>
       </ion-avatar>
     </ion-col>
   </ion-row>

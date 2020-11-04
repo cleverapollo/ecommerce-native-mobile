@@ -3,30 +3,8 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> 
 
-  <section class="ion-text-center wish-list-detail-container">
-    <!---->
-    <!--0-->
-    <ion-avatar class="creator-image standalone"
-      *ngIf="!ownerProfileImageInfos || !ownerProfileImageInfos.length">
-      <img src="assets/images/avatar-placeholder-small.svg">
-    </ion-avatar>
-  
-    <!--1-->
-    <ion-avatar class="creator-image standalone"
-      *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 1">
-      <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | cacheImage | async">
-    </ion-avatar>
-  
-    <!--2-->
-    <ion-avatar class="creator-image first"
-      *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 2">
-      <img *ngIf="ownerProfileImageInfos[0]" [src]="ownerProfileImageInfos[0] | cacheImage | async">
-    </ion-avatar>
-    <ion-avatar class="creator-image last"
-      *ngIf="ownerProfileImageInfos && ownerProfileImageInfos.length == 2">
-      <img *ngIf="ownerProfileImageInfos[1]" [src]="ownerProfileImageInfos[1] | cacheImage | async">
-    </ion-avatar>
-    <!---->
+  <section class="ion-text-center wish-list-detail-container"> 
+    <app-owners-info [owners]="wishList.owners"></app-owners-info>
     <div class="details">
       <p class="wish-list-owner-names">{{ wishList.owners | ownerNames }}</p>
       <p class="wish-list-name">{{ wishList.name }}</p>
@@ -35,7 +13,7 @@
     <div class="friends-images" *ngIf="wishList.memberProfieImageInfos && wishList.memberProfieImageInfos.length">
       <ion-avatar *ngFor="let imageInfo of wishList.memberProfieImageInfos">
         <img
-          [src]="imageInfo ? (imageInfo | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
+          [src]="imageInfo ? (imageInfo | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'" alt="">
       </ion-avatar>
     </div>
   </section>

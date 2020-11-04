@@ -12,10 +12,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { SearchResultDetailModalComponent } from './components/search-result-detail-modal/search-result-detail-modal.component';
 import { WishListRadioComponent } from './components/wish-list-radio/wish-list-radio.component';
+import { UserInitialsComponent } from './components/user-initials/user-initials.component';
+import { OwnersInfoComponent } from './components/owners-info/owners-info.component';
 
 @NgModule({
   declarations: [
     SecurePipe, 
+    OwnersInfoComponent,
     OwnerNamesPipe, 
     ValidationMessagesComponent, 
     EmailUnverifiedHintComponent, 
@@ -24,6 +27,7 @@ import { WishListRadioComponent } from './components/wish-list-radio/wish-list-r
     NavToolbarComponent,
     SearchResultComponent,
     SearchResultDetailModalComponent,
+    UserInitialsComponent,
     WishListRadioComponent
   ],
   imports: [
@@ -34,6 +38,7 @@ import { WishListRadioComponent } from './components/wish-list-radio/wish-list-r
   ],
   exports: [
     SecurePipe, 
+    OwnersInfoComponent,
     OwnerNamesPipe, 
     ValidationMessagesComponent, 
     EmailUnverifiedHintComponent, 
@@ -44,6 +49,7 @@ import { WishListRadioComponent } from './components/wish-list-radio/wish-list-r
     ReactiveFormsModule,
     SearchResultComponent,
     SearchResultDetailModalComponent,
+    UserInitialsComponent,
     WishListRadioComponent
   ]
 })

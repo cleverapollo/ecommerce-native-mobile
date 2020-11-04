@@ -1,0 +1,8 @@
+<div class="owner-info" *ngFor="let owner of owners; let first = first; let last = last;">
+  <ion-avatar class="creator-image" *ngIf="owner.profileImageInfo !== null" [ngClass]="cssClass(first, last)">
+    <img [src]="owner.profileImageInfo | cacheImage | async" alt="Bild vom Freund" />
+  </ion-avatar>
+  <div class="user-initials creator-image" *ngIf="!owner.profileImageInfo && owner.firstName" [ngClass]="cssClass(first, last)">
+    <app-user-initials [firstName]="owner.firstName" [lastName]="owner.lastName"></app-user-initials>
+  </div>
+</div>
