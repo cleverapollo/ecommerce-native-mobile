@@ -9,12 +9,6 @@
       <h1 class="wish-list-name">{{ wishList.name }}</h1>
       <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
     </div>
-    <div class="friends-images" *ngIf="wishList.members && wishList.members.length">
-      <ion-avatar *ngFor="let member of wishList.members">
-        <img
-          [src]="member.profileImageInfo ? (member.profileImageInfo | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'">
-      </ion-avatar>
-    </div>
   </section>
 
   <ion-card>

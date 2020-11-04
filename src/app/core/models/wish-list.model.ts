@@ -22,62 +22,11 @@ export class WishListSelectOptionDto {
     }
 }
 
-export class WishListMemberDto {
-    name: String;
-    failedToSendEmail: boolean;
-    email: String = null;
-    profileImageInfo: ProfileImageDto = null;
-
-    static forUserSearchResult(userSearchResult: UserSearchResult) : WishListMemberDto {
-        let model = new WishListMemberDto()
-        model.name = userSearchResult.firstName;
-        model.failedToSendEmail = false;
-        model.email = userSearchResult.email;
-        return model;
-    }
-
-    static forFriendSelectOption(selectOption: FriendSelectOption) : WishListMemberDto {
-        let model = new WishListMemberDto();
-        model.email = selectOption.email;
-        model.name = selectOption.firstName;
-        model.failedToSendEmail = false;
-        return model;
-    }
-}
-
 export class WishListPartnerDto {
     name: String;
     failedToSendEmail: boolean;
     email: String = null;
     profileImageInfo: ProfileImageDto = null;
-
-    static forUserSearchResult(userSearchResult: UserSearchResult) : WishListMemberDto {
-        let model = new WishListMemberDto()
-        model.name = userSearchResult.firstName;
-        model.failedToSendEmail = false;
-        model.email = userSearchResult.email;
-        return model;
-    }
-}
-
-export class MemberToInviteDto {
-    name: String;
-    email: String;
-
-    constructor(name: String, email: String) {
-        this.name = name;
-        this.email = email;
-    }
-}
-
-export class PartnerToInviteDto {
-    name: String;
-    email: String;
-
-    constructor(name: String, email: String) {
-        this.name = name;
-        this.email = email;
-    }
 }
 
 export class WishListDto {
@@ -85,9 +34,6 @@ export class WishListDto {
     name: string;
     date: Date;
     wishes: [WishDto];
-    members: WishListMemberDto[];
-    membersToInvite: [MemberToInviteDto];
     partner: WishListPartnerDto;
-    partnerToInvite: PartnerToInviteDto;
     owners: [UserDto];
 }

@@ -16,7 +16,6 @@ import { WishListsResolver } from '@wishLists/home/wish-lists.resolver';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de'
 import localeDeExtra from '@angular/common/locales/extra/de';
-import { WishListSelectOptionsResolver } from '@wishLists/wish-create-update/wish-list-select-options.resolver';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FriendsWishListResolver } from '@friends/friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from '@shared/user-profile.resolver';
@@ -89,7 +88,6 @@ export function jwtOptionsFactory(storage) {
     WishResolver,
     WishListsResolver,
     WishListResolver,
-    WishListSelectOptionsResolver,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'de' },
     { provide: HTTP_INTERCEPTORS, useClass: NativeTokenInterceptor, multi: true },
