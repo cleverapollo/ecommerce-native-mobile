@@ -22,7 +22,7 @@ export class FriendsWishComponent implements OnInit {
 
   openProductURL() {
     const url = this.wish.productUrl
-    this.browserService.openInAppBrowser(url); 
+    this.browserService.openSystemBrowser(url); 
   }
 
   reserve() {
