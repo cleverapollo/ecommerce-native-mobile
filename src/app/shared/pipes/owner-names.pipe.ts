@@ -1,12 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FriendWishListOwner } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
-
+import { UserDto } from '@core/models/user.model';
 @Pipe({
   name: 'ownerNames'
 })
 export class OwnerNamesPipe implements PipeTransform {
 
-  transform(owners: [FriendWishListOwner]): String {
+  transform(owners: [UserDto]): String {
     return owners.map(o => o.firstName).join(" & ");
   }
 

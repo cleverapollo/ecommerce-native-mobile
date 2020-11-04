@@ -1,11 +1,11 @@
-import { ProfileImageDto } from '@core/models/user.model';
+import { ProfileImageDto, UserDto } from '@core/models/user.model';
 
 export class FriendWishList {
     id: Number;
     name: String;
     date: String;
     wishes: Array<FriendWish>;
-    owners: Array<FriendWishListOwner>;
+    owners: Array<UserDto>;
 
     memberProfieImageInfos: Array<ProfileImageDto>;
 }
@@ -19,11 +19,6 @@ export class FriendWish {
     imageUrl: String;
     reservedByFriend: Boolean;
     bought: Boolean;
-}
-
-export class FriendWishListOwner {
-    firstName: String;
-    profileImageInfo: ProfileImageDto;
 }
 
 export class SharedWishListDto {
