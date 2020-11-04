@@ -1,4 +1,10 @@
 div.wantic-radio-group-container {
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: white;
+    border-radius: 10%;
     .inputGroup {
         background-color: #fff;
         display: block;
@@ -6,7 +12,7 @@ div.wantic-radio-group-container {
         border-bottom: 1px dashed #f7f6f1;
     
         label {
-          padding: 12px 30px;
+          padding: 12px 19px;
           width: 100%;
           display: block;
           text-align: left;
@@ -75,15 +81,7 @@ div.wantic-radio-group-container {
       }
 }
 
-.border-top-right-left {
-    border-radius: 50pt 50pt 0 0;
-}
-.border-bottom-right-left {
-    border-radius: 0 0 50pt 50pt;
-}
-
 .container-add-new-wish-list {
-    border-radius: 0 0 20pt 20pt;
     background-color: white;
     padding-top: 12px;
     padding-bottom: 12px;

@@ -1,6 +1,5 @@
 <div class="wantic-radio-group-container wantic-margin-right-left">
-  <div class="inputGroup" [ngClass]="{ 'border-top-right-left': isFirst }"
-    *ngFor="let option of wishListSelectOptions; first as isFirst">
+  <div class="inputGroup"  *ngFor="let option of wishListSelectOptions;">
     <input [id]="option.id" type="radio" [value]="option.id" [(ngModel)]="wishListId" />
     <label [for]="option.id">{{ option.name }}</label>
   </div>
