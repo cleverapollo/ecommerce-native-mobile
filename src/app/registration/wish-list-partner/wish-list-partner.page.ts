@@ -39,10 +39,11 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto as RegistrationDto;
+      this.registrationDto = (registrationDto as RegistrationDto);
+      const invitePartnerRequest = (registrationDto as RegistrationDto).invitePartnerRequest;
       this.form = this.formBuilder.group({
-        'email': this.formBuilder.control(this.registrationDto.wishListPartnerEmail, [Validators.email, Validators.required]),
-        'name': this.formBuilder.control(this.registrationDto.wishListPartnerName, [Validators.minLength(2), Validators.required])
+        'email': this.formBuilder.control(invitePartnerRequest?.email, [Validators.email, Validators.required]),
+        'name': this.formBuilder.control(invitePartnerRequest?.name, [Validators.minLength(2), Validators.required])
       });
     });
   }
@@ -52,8 +53,10 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.registrationDto.wishListPartnerEmail = this.form.controls['email'].value;
-    this.registrationDto.wishListPartnerName = this.form.controls['name'].value;
+    this.registrationDto.invitePartnerRequest = {
+      email: this.form.controls['email'].value,
+      name: this.form.controls['name'].value
+    };
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-wish'], { relativeTo: this.route })
   }

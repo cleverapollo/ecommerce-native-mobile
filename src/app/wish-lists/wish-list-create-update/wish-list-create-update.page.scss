@@ -20,3 +20,18 @@ ion-footer > ion-button {
 .no-margin-bottom {
     margin-bottom: 10px;
 }
+
+.partner-infos {
+    margin-bottom: 18px;
+    .info-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        .partner-image, .partner-initals {
+            display: inline-block;
+        }
+        .partner-name {
+            margin-left: 12px;
+        }
+    }
+}

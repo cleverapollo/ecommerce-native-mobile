@@ -10,6 +10,8 @@ import { AlertService } from '@core/services/alert.service';
 import { ToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { UserProfile, UserWishListDto } from '@core/models/user.model';
 
 @Component({
   selector: 'app-wish-list-create-update',
@@ -19,6 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class WishListCreateUpdatePage implements OnInit {
 
   private wishList: WishListDto;
+  private userEmail: string;
 
   form: FormGroup;
 
@@ -48,6 +51,21 @@ export class WishListCreateUpdatePage implements OnInit {
     }
   };
 
+  get partner(): UserWishListDto {
+    const owners = this.wishList?.owners;
+    let partner = null;
+    if (owners && owners.length > 1 && this.userEmail) {
+      partner = owners.filter(userWishList => {
+        return userWishList.email != this.userEmail;
+      })[0];
+    }
+    return partner;
+  }
+
+  get isCreator(): boolean {
+    return this.userEmail == this.wishList.creatorEmail;
+  }
+
   constructor(
     private formBuilder: FormBuilder, 
     private apiService: WishListApiService,
@@ -56,11 +74,15 @@ export class WishListCreateUpdatePage implements OnInit {
     private toastService: ToastService,
     private wishListStore: WishListStoreService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private userProfileStore: UserProfileStore
   ) { }
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
+    this.userProfileStore.loadUserProfile().subscribe(userProfile => {
+      this.userEmail = userProfile.email;
+    });
     this.initFormIfNotPresent();
   }
 

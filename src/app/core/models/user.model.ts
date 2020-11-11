@@ -2,14 +2,35 @@ export class UserProfile {
     firstName: String;
     lastName: String;
     birthday: Date;
-    email: String;
+    email: string;
     profileImageInfo: ProfileImageDto;
+}
+
+export enum EmailVerificationStatus {
+    UNVERIFIED,
+    VERIFICATION_EMAIL_SENT,
+    VERIFIED
+}
+
+export enum InvitationStatus {
+    ACCEPTED,
+    INVITED
 }
 
 export class UserDto {
     firstName: String;
     lastName: String;
     profileImageInfo: ProfileImageDto;
+    emailVerificationStatus: EmailVerificationStatus;
+}
+
+export class UserWishListDto {
+    firstName: string;
+    lastName?: string;
+    email: string;
+    profileImageInfo?: ProfileImageDto;
+    emailVerificationStatus: EmailVerificationStatus;
+    invitationStatus: InvitationStatus;
 }
 
 export class UserSearchResult {

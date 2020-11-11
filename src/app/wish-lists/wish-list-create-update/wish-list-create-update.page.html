@@ -14,7 +14,7 @@
     </ion-item>
     <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
 
-    <div formGroupName="partner">
+    <div formGroupName="partner" *ngIf="!wishList.partner">
 
       <p class="form-group-label">Partner hinzufügen</p>
 
@@ -30,10 +30,22 @@
 
     </div>
 
+    <div *ngIf="partner" class="wantic-margin-right-left partner-infos">
+      <p>Partner</p>
+      <div class="info-container">
+        <app-user-initials class="partner-initials" *ngIf="!partner.profileImageInfo" [firstName]="partner.firstName"></app-user-initials>
+        <ion-avatar class="creator-image partner-image" *ngIf="partner.profileImageInfo">
+          <img [src]="partner.profileImageInfo | cacheImage | async" alt="Bild vom Freund" />
+        </ion-avatar>
+        <span class="partner-name">{{ partner.firstName }}</span>
+      </div>
+      <em *ngIf="partner?.invitationStatus == 'INVITED'" >Dein Partner hat die Einladung noch nicht angenommen.</em>
+    </div>
+
     <ion-button *ngIf="form" (click)="createOrUpdateWishList()" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button no-margin-bottom">
       {{ buttonTitle }}
     </ion-button>
-    <ion-button *ngIf="isUpdatePage" class="wantic-save-button" (click)="deleteWishList()" color="tertiary" fill="outline" expand="block">
+    <ion-button *ngIf="isUpdatePage && isCreator" class="wantic-save-button" (click)="deleteWishList()" color="tertiary" fill="outline" expand="block">
       WUNSCHLISTE LÖSCHEN
     </ion-button>
 

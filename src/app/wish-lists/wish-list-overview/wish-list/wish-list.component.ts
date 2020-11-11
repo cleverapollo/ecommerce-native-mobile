@@ -11,15 +11,9 @@ export class WishListComponent implements OnInit {
   @Input() wishList: WishListDto
   @Input() index: number;
 
-  wishListPartnersImageUrls: String[] = [];
-
   constructor() {}
 
-  ngOnInit() {
-    if (this.wishList.partner && this.wishList.partner.profileImageInfo?.urlString) {
-      this.wishListPartnersImageUrls.push(this.wishList.partner.profileImageInfo?.urlString);
-    }
-  }
+  ngOnInit() {}
 
   get side() : String {
     if (this.index % 2 == 0) {

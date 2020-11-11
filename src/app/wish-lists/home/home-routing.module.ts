@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { HomePage } from './home.page';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@guards/auth.guard';
-import { WishListsResolver } from './wish-lists.resolver';
+import { HomePage } from './home.page';
 import { WishListResolver } from './wish-list.resolver';
+import { WishListsResolver } from './wish-lists.resolver';
+
 
 const routes: Routes = [
   {

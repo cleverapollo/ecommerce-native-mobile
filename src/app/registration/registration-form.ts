@@ -1,4 +1,5 @@
 import { WishDto } from '@core/models/wish-list.model';
+import { InvitePartnerRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
 
 export class RegistrationRequest {
     userFirstName: String
@@ -10,9 +11,7 @@ export class RegistrationDto extends RegistrationRequest {
     wishListName: String
     wishListDate: Date
     wishListWish: WishDto
-
-    wishListPartnerName: String = null
-    wishListPartnerEmail: String = null
+    invitePartnerRequest: InvitePartnerRequest = null;
 }
 
 export class RegistrationPartnerDto extends RegistrationRequest {

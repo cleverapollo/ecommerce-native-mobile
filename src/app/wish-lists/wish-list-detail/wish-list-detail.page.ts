@@ -4,7 +4,7 @@ import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { ProfileImageDto } from '@core/models/user.model';
+import { ProfileImageDto, UserWishListDto } from '@core/models/user.model';
 
 @Component({
   selector: 'app-wish-list-detail',

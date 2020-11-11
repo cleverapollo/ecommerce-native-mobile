@@ -21,13 +21,8 @@
     <ion-col size="12" class="no-padding-bottom">
       <div class="wish-list-name">{{ wishList.name }}</div>
     </ion-col>
-    <ion-col [size]="wishListPartnersImageUrls.length ? 8 : 12" class="no-padding-top">
-      <div class="wish-list-date">{{ wishList.date | date }}</div>
-    </ion-col>
-    <ion-col size="4" *ngIf="wishListPartnersImageUrls && wishListPartnersImageUrls.length" class="no-padding-top">
-      <ion-avatar *ngFor="let imageUrl of wishListPartnersImageUrls">
-        <img [src]="imageUrl | secure | async" *ngIf="imageUrl" alt="Bild des Partners"/>
-      </ion-avatar>
+    <ion-col size="12" class="no-padding-top">
+      <div class="wish-list-date">{{ wishList.date ? (wishList.date | date) : 'kein Datum festgelegt' }}</div>
     </ion-col>
   </ion-row>
 </ion-grid>

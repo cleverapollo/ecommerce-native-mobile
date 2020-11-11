@@ -1,7 +1,7 @@
 export class WishListCreateOrUpdateRequest {
     name: string
     date: Date
-    partner: WishListCreateOrUpdatePartnerRequest
+    partner: InvitePartnerRequest
 }
 
 export class WishListCreateRequest extends WishListCreateOrUpdateRequest {
@@ -15,7 +15,7 @@ export class WishListUpdateRequest extends WishListCreateOrUpdateRequest {
     id: Number
 }
 
-export class WishListCreateOrUpdatePartnerRequest {
+export class InvitePartnerRequest {
     name: string;
     email: string;
 }
