@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FriendApiService } from '@core/api/friend-api.service';
-import { WishListApiService } from '@core/api/wish-list-api.service';
 import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { CacheService } from 'ionic-cache';
 import { Observable } from 'rxjs';
@@ -20,12 +19,11 @@ export class FriendWishListStoreService {
 
   constructor(
     private friendApiService: FriendApiService, 
-    private wishListApiService: WishListApiService,
     private cache: CacheService
   ) { }
 
   loadWishLists(forceRefresh: boolean = false): Observable<Array<FriendWishList>> {
-    let request = this.wishListApiService.getWishLists('FRIENDS') as Observable<Array<FriendWishList>>;
+    let request = this.friendApiService.getWishLists() as Observable<Array<FriendWishList>>;
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
     } 
