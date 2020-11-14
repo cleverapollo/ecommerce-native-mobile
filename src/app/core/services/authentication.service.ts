@@ -9,6 +9,7 @@ import { CacheService } from 'ionic-cache';
 import { HTTP } from '@ionic-native/http/ngx';
 import { resolve } from 'url';
 import { Router } from '@angular/router';
+import { WanticJwtToken } from '@core/models/login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -94,21 +95,22 @@ export class AuthenticationService {
     }
   }
 
-  saveToken(token: string) : Promise<void> {
-    return new Promise((resolve, reject) => {
+  async saveToken(token: string) : Promise<void> {
       if (this.platform.is('cordova')) {
         this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`);
       }
-      this.storageService.set(StorageKeys.AUTH_TOKEN, token, true).then(() => {
-        console.log('token: ', this.jwtHelper.decodeToken(token));
+      try {
+        await this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
+        const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(token);
+        console.log(decodedToken.emailVerificationStatus);
+        await this.userService.updateEmailVerificationStatus(decodedToken.emailVerificationStatus);
         this.authenticationState.next(true);
-        resolve();
-      }).catch( e => {
-        console.error('could not save token ', e)
+        return Promise.resolve();
+      } catch(error) {
+        console.error('could not save token ', error)
         this.authenticationState.next(false);
-        reject(e);
-      });
-    })
+        return Promise.reject(error);
+      }
   }
 
   private saveCredentialsAndUserSettings(email: string, password: string) {

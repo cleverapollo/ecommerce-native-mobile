@@ -12,7 +12,6 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 export class WishListOverviewPage implements OnInit {
 
   wishLists: Array<WishListDto> = new Array();
-  subText: string = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wunschlisten und Wünsche hinzufügen.';
   refreshData: boolean = false
 
   get title(): string {

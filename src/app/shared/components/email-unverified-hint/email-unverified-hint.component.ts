@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UserState } from '@core/models/user.model';
+import { Component, OnInit } from '@angular/core';
+import { EmailVerificationStatus } from '@core/models/user.model';
 import { RegistrationApiService } from '@core/api/registration-api.service';
 import { UserService } from '@core/services/user.service';
 
@@ -10,48 +10,44 @@ import { UserService } from '@core/services/user.service';
 })
 export class EmailUnverifiedHintComponent implements OnInit {
 
-  @Input() subText: string;
+  private emailVerificationStatus: EmailVerificationStatus;
 
-  private requestIsRunning: boolean = false;
-  private successResponse: boolean = false;
-  private errorResponse: boolean = false;
-  private userState: UserState;
+  disableButton = false;
 
   constructor(
     private registrationApiService: RegistrationApiService, 
     private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.userState.then( userState => {
-      this.userState = userState;
-    });
+    this.userService.emailVerificationStatus.subscribe({
+      next: emailVerificationStatus => { this.emailVerificationStatus = emailVerificationStatus }
+    })
   }
 
   get showButton() : boolean { 
-    return !this.errorOccured && !this.success
+    return this.emailVerificationStatus === EmailVerificationStatus.UNVERIFIED;
   }
 
-  get showHint(): Boolean {
-    return this.userState === UserState.UNVERIFIED;
+  get showHint(): boolean {
+    return this.emailVerificationStatus !== EmailVerificationStatus.VERIFIED;
   }
 
-  get errorOccured() : boolean {
-    return !this.requestIsRunning && this.errorResponse;
-  }
-
-  get success(): boolean {
-    return !this.requestIsRunning && this.successResponse;
+  get subText(): String {
+    switch(this.emailVerificationStatus) {
+      case EmailVerificationStatus.UNVERIFIED:
+        return 'Deine E-Mail-Adresse wurde noch nicht bestätigt. Deshalb kannst du den vollen Funktionsumfang von Wantic leider noch nicht nutzen.';
+      case EmailVerificationStatus.VERIFICATION_EMAIL_SENT:
+        return 'Wir haben dir eine E-Mail zum Bestätigen deiner E-Mail-Adresse gesendet. Folge bitte der Anleitung in der E-Mail.'
+    }
+    return null;
   }
 
   resendVerificationLink() {
-    this.requestIsRunning = true;
-    this.registrationApiService.requestEmailVerificationLink().toPromise().then(() => {
-      this.successResponse = true;
-    }, e => {
-      this.errorResponse = true;
-    }).finally(() => {
-      this.requestIsRunning = false;
-    });
+    this.disableButton = true;
+    this.registrationApiService.requestEmailVerificationLink().subscribe({
+      next: () => { this.emailVerificationStatus = EmailVerificationStatus.VERIFICATION_EMAIL_SENT },
+      complete: () => { this.disableButton = false; }
+    })
   }
 
 }

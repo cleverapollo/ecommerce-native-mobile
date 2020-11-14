@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService, StorageKeys } from './storage.service';
-import { UserState } from '@core/models/user.model';
+import { EmailVerificationStatus, UserState } from '@core/models/user.model';
 import { WanticJwtToken } from '@core/models/login.model';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,18 @@ export class UserService {
         resolve(decodedToken.userState);
       }, reject);
     });
+  }
+
+  get emailVerificationStatus() : Observable<EmailVerificationStatus> {
+    return from(new Promise<EmailVerificationStatus>((resolve, reject) => {
+      this.storageService.get<string>(StorageKeys.EMAIL_VERIFICATION_STATUS).then( status => {
+        resolve(EmailVerificationStatus[status]);
+      }, reject);
+    }));
+  }
+
+  updateEmailVerificationStatus(status: string) {
+    return this.storageService.set(StorageKeys.EMAIL_VERIFICATION_STATUS, status)
   }
 
   get userSettings(): Promise<UserSettings> {

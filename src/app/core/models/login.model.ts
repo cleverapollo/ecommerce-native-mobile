@@ -7,6 +7,7 @@ export class LoginResponse {
 export interface WanticJwtToken {
     sub: string;
     userState: UserState;
+    emailVerificationStatus: string;
     exp: Number;
     iat: Number;
 }

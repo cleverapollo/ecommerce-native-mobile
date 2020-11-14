@@ -13,7 +13,7 @@ export class NavToolbarComponent implements OnInit {
   @Input() rootPath: string | any[] | UrlTree;
 
   get canGoBack(): boolean {
-    return this.router.url !== this.rootPath
+    return this.rootPath && this.router.url !== this.rootPath
   };
   
   get canSkip(): boolean {

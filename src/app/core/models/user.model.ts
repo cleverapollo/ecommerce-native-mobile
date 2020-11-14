@@ -6,12 +6,6 @@ export class UserProfile {
     profileImageInfo: ProfileImageDto;
 }
 
-export enum EmailVerificationStatus {
-    UNVERIFIED,
-    VERIFICATION_EMAIL_SENT,
-    VERIFIED
-}
-
 export enum InvitationStatus {
     ACCEPTED,
     INVITED
@@ -45,6 +39,10 @@ export enum UserState {
     ACTIVE = "ACTIVE",
     UNVERIFIED = "UNVERIFIED",
     PREACTIVE = "PREACTIVE"
+}
+
+export enum EmailVerificationStatus {
+    UNVERIFIED, VERIFICATION_EMAIL_SENT, VERIFIED
 }
 
 export class UploadFileResponse {

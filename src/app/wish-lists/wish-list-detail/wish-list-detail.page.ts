@@ -15,7 +15,6 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   wishList: WishListDto;
   refreshWishListData: boolean = false
-  subText = 'Wenn deine E-Mail-Adresse bestätigt ist kannst du hier neue Wünsche zu deiner Wunschliste hinzufügen.';
 
   get wishListOwnerCount(): number {
     return this.wishList?.owners?.length || 0;

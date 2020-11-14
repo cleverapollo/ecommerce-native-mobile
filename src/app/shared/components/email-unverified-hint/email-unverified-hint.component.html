@@ -1,10 +1,7 @@
 <div class="ion-text-center wantic-info-box" *ngIf="showHint">
   <strong class="white-text">BITTE BESTÄTIGE DEINE E-MAIL-ADRESSE!</strong><br>
-  <small class="white-text">{{ subText }}</small> <br>
-  <ion-button color="tertiary" size="small" (click)="resendVerificationLink()" *ngIf="showButton">
-    <ion-text ><ion-icon name="mail"></ion-icon> E-Mail erneut anfordern.</ion-text>
+  <small class="white-text" *ngIf="subText">{{ subText }}</small> <br>
+  <ion-button color="tertiary" size="small" (click)="resendVerificationLink()" *ngIf="showButton" [disabled]="disableButton">
+    <ion-text >E-Mail erneut anfordern</ion-text>
   </ion-button>
-
-  <small *ngIf="errorOccured"><ion-text color="danger">Die E-Mail konnte auf Grund eines technischen Fehlers nicht gesendet werden.</ion-text></small>
-  <small *ngIf="success"><ion-text color="success">Die E-Mail wurde erfolgreich gesendet!</ion-text></small>
 </div>

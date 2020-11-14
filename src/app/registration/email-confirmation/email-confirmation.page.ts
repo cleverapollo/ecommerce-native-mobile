@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RegistrationApiService } from '@core/api/registration-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { EmailVerificationResponse, EmailVerificationStatus } from '@core/models/email-verification.model';
+import { EmailVerificationResponse, EmailVerificationTokenStatus } from '@core/models/email-verification.model';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -12,8 +12,9 @@ import { EmailVerificationResponse, EmailVerificationStatus } from '@core/models
 export class EmailConfirmationPage implements OnInit {
 
   emailVerificationResponse: EmailVerificationResponse;
+  disableButton: boolean = false
 
-  private get status() : EmailVerificationStatus {
+  private get status() : EmailVerificationTokenStatus {
     return this.emailVerificationResponse.status;
   }
 
@@ -22,33 +23,21 @@ export class EmailConfirmationPage implements OnInit {
   }
 
   get success() : boolean {
-    return this.status === EmailVerificationStatus.SUCCESS;
+    return this.status === EmailVerificationTokenStatus.VALID;
   }
 
-  get notFound() : boolean {
-    return this.status === EmailVerificationStatus.TOKEN_NOT_FOUND;
+  get expired() : boolean {
+    return this.status === EmailVerificationTokenStatus.TOKEN_EXPIRED;
+  }
+
+  get userIsAlreadyVerified() : boolean {
+    return this.status === EmailVerificationTokenStatus.TOKEN_NOT_FOUND;
   }
 
   get error() : boolean {
-    return this.status === EmailVerificationStatus.TECHNICAL_ERROR;
+    return this.status === EmailVerificationTokenStatus.TECHNICAL_ERROR;
   }
 
-  // expired 
-  emailProcessStart: boolean = false;
-  errorWhileSendingEmail: boolean = false;
-  emailSentSuccessfully: boolean = false;
-
-  get expired() : boolean {
-    return this.expiredResendSuccessful || this.expiredResendFailed;
-  }
-
-  get expiredResendSuccessful() : boolean {
-    return this.status === EmailVerificationStatus.TOKEN_EXPIRED_RESEND_SUCCESSFUL;
-  }
-
-  get expiredResendFailed() : boolean {
-    return this.status === EmailVerificationStatus.TOKEN_EXPIRED_RESEND_FAILED;
-  }
 
   constructor(
     private route: ActivatedRoute, 
@@ -70,16 +59,18 @@ export class EmailConfirmationPage implements OnInit {
   }
 
   requestEmailVerficiationLink() {
-    this.emailProcessStart = true;
-    this.registrationApiService.requestEmailVerificationLink().toPromise().then(() => {
-      this.emailSentSuccessfully = true;
-    }, e => {
-      this.errorWhileSendingEmail = true;
+    this.disableButton = true;
+    this.registrationApiService.requestEmailVerificationLink().subscribe({
+      complete: () => { this.disableButton = false; }
     });
   }
 
   get showResendButton() : boolean {
-    return (this.expired || this.notFound) && !this.emailProcessStart
+    return this.expired;
+  }
+
+  get showGotToStartpageButton(): boolean {
+    return this.success || this.userIsAlreadyVerified;
   }
 
 }

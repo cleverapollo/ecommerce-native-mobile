@@ -17,15 +17,20 @@ export class WishListApiService {
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
+  acceptInvitation(id: number) {
+    return this.apiService.patch(`${WishListApiService.REST_END_POINT}/${id}/accept-invitation`).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
+  }
+
   create(wishList: WishListCreateRequest): Observable<WishListDto> {
     return this.apiService.post<WishListDto>(`${WishListApiService.REST_END_POINT}`, wishList).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
-  getWishLists(forView: string) : Observable<Array<WishListDto> | Array<FriendWishList>> {
-    const params = new HttpParams().set('view', forView);
-    return this.apiService.get<Array<WishListDto> | Array<FriendWishList>>(`wish-list`, params).pipe(
+  getWishLists() : Observable<Array<WishListDto>> {
+    return this.apiService.get<Array<WishListDto>>(`wish-list`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
