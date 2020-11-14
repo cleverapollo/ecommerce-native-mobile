@@ -20,7 +20,7 @@ export class WishListApiService {
   acceptInvitation(id: number) {
     return this.apiService.patch(`${WishListApiService.REST_END_POINT}/${id}/accept-invitation`).pipe(
       catchError(error => this.errorHandler.handleError(error))
-    );
+    ).toPromise();
   }
 
   create(wishList: WishListCreateRequest): Observable<WishListDto> {
