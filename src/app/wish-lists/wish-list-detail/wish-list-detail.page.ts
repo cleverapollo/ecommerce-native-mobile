@@ -33,6 +33,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     private wishListApiService: WishListApiService,
     private route: ActivatedRoute,
     private wishListStore: WishListStoreService,
+    private socialSharing: SocialSharing
   ) { }
 
   ngOnInit() {
@@ -66,8 +67,17 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   }
 
   shareWishList() {
+    const message = 'Hey, Caro hat sich zur Wunschliste Baby Geburt eingeladen. Schau doch einfach mal vorbei, ob du einen Wunsch erfüllen kannst. Eine Anmeldung ist hierfür nicht notwendig.';
+    const subject = 'Einladung zur Wunschliste';
     this.wishListApiService.getLinkForSocialSharing(this.wishList.id).toPromise().then( link => {
-      console.log(link);
+      this.socialSharing.shareWithOptions({
+        message: message,
+        subject: subject,
+        url: link
+      }, result => {
+        console.log("Share completed? " + result.completed); 
+        console.log("Shared to app: " + result.app);
+      }, console.error);
     });
   }
 

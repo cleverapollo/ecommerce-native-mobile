@@ -20,7 +20,7 @@ export class WishListResolver implements Resolve<Observable<WishListDto>> {
     }
   }
 
-  private acceptInvitationAndLoadWishLists(wishListId): Observable<WishListDto> {
+  private acceptInvitationAndLoadWishLists(wishListId: number): Observable<WishListDto> {
     return from(new Promise<WishListDto>((resolve, reject) => {
       this.wishListApiService.acceptInvitation(wishListId).finally(() => {
          this.wishListStore.loadWishList(wishListId).toPromise().then(wishList => {

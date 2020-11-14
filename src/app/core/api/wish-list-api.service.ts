@@ -60,8 +60,8 @@ export class WishListApiService {
   }
 
 
-  getLinkForSocialSharing(id: Number): Observable<String> {
-    return this.apiService.get<String>(`${WishListApiService.REST_END_POINT}/${id}/create-social-sharing-link`).pipe(
+  getLinkForSocialSharing(id: Number): Observable<string> {
+    return this.apiService.get<string>(`${WishListApiService.REST_END_POINT}/${id}/create-social-sharing-link`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
