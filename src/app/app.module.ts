@@ -38,6 +38,7 @@ import { File } from '@ionic-native/file/ngx';
 import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
 import { NativeHttpInterceptor } from './_interceptors/native-http.interceptor';
 import { NativeTokenInterceptor } from './_interceptors/native-token.interceptor';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -75,6 +76,7 @@ export function jwtOptionsFactory(storage) {
     StatusBar,
     SplashScreen,
     HTTP,
+    Deeplinks,
     EmailVerificationResolver,
     File,
     FriendsWishListResolver,

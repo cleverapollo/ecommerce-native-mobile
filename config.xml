@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.wantic.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.wantic.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Wantic</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="timi@wantic.com" href="https://www.wantic.io/">Wantic Team</author>
@@ -139,6 +139,16 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
+        <config-file target="*-Debug.plist" parent="com.apple.developer.associated-domains">
+            <array>
+                <string>applinks:wantic.io</string>
+            </array>
+        </config-file>
+        <config-file target="*-Release.plist" parent="com.apple.developer.associated-domains">
+            <array>
+                <string>applinks:wantic.io</string>
+            </array>
+        </config-file>
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />

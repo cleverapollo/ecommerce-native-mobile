@@ -23,6 +23,7 @@
     "@angular/router": "~9.1.12",
     "@auth0/angular-jwt": "^3.0.1",
     "@ionic-native/core": "^5.28.0",
+    "@ionic-native/deeplinks": "^5.29.0",
     "@ionic-native/file": "^5.29.0",
     "@ionic-native/http": "^5.28.0",
     "@ionic-native/in-app-browser": "^5.28.0",
@@ -101,7 +102,25 @@
       "cordova-plugin-ios-keychain": {},
       "cordova-plugin-secure-storage-echo": {},
       "cordova-plugin-advanced-http": {},
-      "cordova-plugin-file": {}
+      "cordova-plugin-file": {},
+      "ionic-plugin-deeplinks": {
+        "DEEPLINK_HOST": "wantic.io",
+        "URL_SCHEME": "wantic",
+        "DEEPLINK_SCHEME": "https",
+        "ANDROID_PATH_PREFIX": "/",
+        "ANDROID_2_PATH_PREFIX": "/",
+        "ANDROID_3_PATH_PREFIX": "/",
+        "ANDROID_4_PATH_PREFIX": "/",
+        "ANDROID_5_PATH_PREFIX": "/",
+        "DEEPLINK_2_SCHEME": " ",
+        "DEEPLINK_2_HOST": " ",
+        "DEEPLINK_3_SCHEME": " ",
+        "DEEPLINK_3_HOST": " ",
+        "DEEPLINK_4_SCHEME": " ",
+        "DEEPLINK_4_HOST": " ",
+        "DEEPLINK_5_SCHEME": " ",
+        "DEEPLINK_5_HOST": " "
+      }
     },
     "platforms": [
       "android",
