@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { GiveSharedWishModalComponent } from './give-shared-wish-modal/give-shared-wish-modal.component';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { StorageService } from '@core/services/storage.service';
+import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { BrowserService } from '@core/services/browser.service';
 
 @Component({
@@ -14,9 +14,8 @@ import { BrowserService } from '@core/services/browser.service';
 })
 export class SharedWishListPage implements OnInit {
 
-  wishList: SharedWishListDto
-
-  private STORAGE_KEY = 'SHARED_WISH_LIST_EMAIL';
+  wishList: SharedWishListDto;
+  
   private email?: string;
 
   constructor(
@@ -33,7 +32,7 @@ export class SharedWishListPage implements OnInit {
   }
 
   private async initEmailIfExists() {
-    this.email = await this.storageService.get<string>(this.STORAGE_KEY);
+    this.email = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL);
   }
 
   give(wish: FriendWish) {

@@ -5,7 +5,7 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { ModalController } from '@ionic/angular';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { ActivatedRoute } from '@angular/router';
-import { StorageService } from '@core/services/storage.service';
+import { StorageKeys, StorageService } from '@core/services/storage.service';
 
 @Component({
   selector: 'app-give-shared-wish-modal',
@@ -24,8 +24,6 @@ export class GiveSharedWishModalComponent implements OnInit {
       new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.'),
     ]
   }
-
-  private STORAGE_KEY = 'SHARED_WISH_LIST_EMAIL';
 
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +47,7 @@ export class GiveSharedWishModalComponent implements OnInit {
       wishId: this.wish.id 
     };
     this.wishListApiService.registerAndSatisfyWish(requestData).toPromise().then( wishList => {
-      this.storageService.set(this.STORAGE_KEY, email).finally(() => {
+      this.storageService.set(StorageKeys.SHARED_WISH_LIST_EMAIL, email).finally(() => {
         this.modalController.dismiss(wishList);
       });
     })
