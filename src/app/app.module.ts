@@ -21,7 +21,6 @@ import { EmailVerificationResolver } from '@registration/email-confirmation/emai
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { HttpRequestLoadingInterceptor } from './_interceptors/http-loading.interceptor';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { Keychain } from '@ionic-native/keychain/ngx';
 import { SecureStorage } from '@ionic-native/secure-storage/ngx';
@@ -81,7 +80,6 @@ export function jwtOptionsFactory(storage) {
     Keychain,
     SecureStorage,
     SharedWishListResolver,
-    SocialSharing,
     UserProfileResolver,
     WishResolver,
     WishListsResolver,
