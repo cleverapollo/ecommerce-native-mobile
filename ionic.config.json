@@ -1,7 +1,8 @@
 {
   "name": "wantic",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular",
   "id": "c15b9952"
