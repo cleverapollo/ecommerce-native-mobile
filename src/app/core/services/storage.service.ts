@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
-import { environment } from 'src/environments/environment';
+
+import { Plugins } from "@capacitor/core";
+const { Storage } = Plugins;
 
 export enum StorageKeys {
   USER_SETTINGS = 'userSettings',
@@ -19,7 +20,6 @@ export enum StorageKeys {
 export class StorageService {
 
   constructor(
-    private storage: Storage,
     private secureStorage: SecureStorage,
     private platform: Platform
   ) { }
@@ -27,34 +27,50 @@ export class StorageService {
   async get<T>(storageKey: string, secure: boolean = false) : Promise<T> {
     return new Promise((resolve, reject) => {
       this.platformReady().then(() => {
-        this.getStorage(secure).then(storage => {
-          storage.get(storageKey).then((storedValue: T) => {
-            resolve(storedValue);
-          }, reject);
-        }, reject)
+        if (secure && this.platform.is('cordova')) {  
+          this.getSecureStorage().then(storage => {
+            storage.get(storageKey).then(storedValue => {
+              resolve(JSON.parse(storedValue));
+            }, reject);
+          }, reject)
+        } else {
+          Storage.get({ key: storageKey }).then(object => {
+            resolve(JSON.parse(object.value));
+          })
+        }
+
       }, reject);
     });
   }
 
   async set(storageKey: string, value: any, secure: boolean = false) {
+    value = JSON.stringify(value);
     await this.platformReady().then(() => {
-      this.getStorage(secure).then(storage => {
-        return storage.set(storageKey, value)
-      }, console.error);
+      if (secure && this.platform.is('cordova')) { 
+        this.getSecureStorage().then(storage => {
+          return storage.set(storageKey, value)
+        }, console.error);
+      } else {
+        Storage.set({ key: storageKey, value: value })
+      }
     }, console.error);
   }
 
   async remove(storageKey: string, secure: boolean = false) {
     await this.platformReady().then(() => {
-      this.getStorage(secure).then(storage => {
-        storage.remove(storageKey);
-      }, console.error);
+      if (secure && this.platform.is('cordova')) {
+        this.getSecureStorage().then(storage => {
+          storage.remove(storageKey);
+        }, console.error);
+      } else {
+        Storage.remove({ key: storageKey });
+      }
     }, console.error);
   }
 
   async clear() {
     await this.platformReady().then(() => {
-      this.storage.clear();
+      Storage.clear();
     });
   }
 
@@ -62,16 +78,8 @@ export class StorageService {
     return await this.platform.ready();
   }
 
-  private async getStorage(secure: boolean): Promise<SecureStorageObject | Storage> {
-    if (secure && environment.production) {
-      return this.getSecureStorage();
-    }
-    return Promise.resolve(this.storage);
-  }
-
-  private async getSecureStorage(): Promise<SecureStorageObject | Storage> {
+  private async getSecureStorage(): Promise<SecureStorageObject> {
     return new Promise((resolve, reject) => {
-      if (this.platform.is('cordova')) {
         this.secureStorage.create('secureStorage').then(storage => {
           resolve(storage);
         }, (storage: SecureStorageObject) => {
@@ -82,9 +90,6 @@ export class StorageService {
             reject(reason);
           });
         });
-      } else {
-        resolve(this.storage);
-      }
     });
   }
 
