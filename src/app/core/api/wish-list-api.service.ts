@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { WishListDto, WishDto } from '@core/models/wish-list.model';
+import { WishListDto, WishDto, SharedWishListLink } from '@core/models/wish-list.model';
 import { SharedWishListDto, RegisterAndSatisfyWishRequest, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
@@ -60,8 +60,8 @@ export class WishListApiService {
   }
 
 
-  getLinkForSocialSharing(id: Number): Observable<string> {
-    return this.apiService.get<string>(`${WishListApiService.REST_END_POINT}/${id}/create-social-sharing-link`).pipe(
+  getLinkForSocialSharing(id: Number): Observable<SharedWishListLink> {
+    return this.apiService.get<SharedWishListLink>(`${WishListApiService.REST_END_POINT}/${id}/create-social-sharing-link`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

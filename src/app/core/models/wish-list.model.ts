@@ -29,3 +29,7 @@ export class WishListDto {
     creatorEmail: string;
     owners: UserWishListDto[];
 }
+
+export class SharedWishListLink {
+    value: string;
+}

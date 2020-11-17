@@ -4,7 +4,9 @@ import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { ProfileImageDto, UserWishListDto } from '@core/models/user.model';
+
+import { Plugins } from '@capacitor/core';
+const { Share } = Plugins;
 
 @Component({
   selector: 'app-wish-list-detail',
@@ -66,8 +68,17 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   }
 
   shareWishList() {
+    const message = 'Hey, Caro hat sich zur Wunschliste Baby Geburt eingeladen. Schau doch einfach mal vorbei, ob du einen Wunsch erfüllen kannst. Eine Anmeldung ist hierfür nicht notwendig.';
+    const subject = 'Einladung zur Wunschliste';
     this.wishListApiService.getLinkForSocialSharing(this.wishList.id).toPromise().then( link => {
-      console.log(link)
+      Share.share({
+        title: subject,
+        text: message,
+        url: link.value
+      }).catch(reason => {
+        console.error(reason);
+        console.log(link);
+      });
     });
   }
 
