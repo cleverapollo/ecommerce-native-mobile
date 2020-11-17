@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 
 import { NavController, Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { environment } from 'src/environments/environment';
 import { CacheService } from 'ionic-cache';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
@@ -11,6 +9,9 @@ import { AccountFirstNamePage } from '@registration/account-first-name/account-f
 import { ChangePasswordPage } from './forgot-password/change-password/change-password.page';
 import { SharedWishListPage } from '@wishLists/shared-wish-list/shared-wish-list.page';
 import { EmailConfirmationPage } from '@registration/email-confirmation/email-confirmation.page';
+
+import { Plugins, StatusBarStyle } from '@capacitor/core';
+const { SplashScreen, StatusBar } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -21,8 +22,6 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private cache: CacheService,
     private deeplinks: Deeplinks,
     private navController: NavController
@@ -33,8 +32,8 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
-        this.statusBar.styleDefault();
-        this.splashScreen.hide();
+        StatusBar.setStyle({ style: StatusBarStyle.Light })
+        SplashScreen.hide();
         this.initDeeplinks();
       }
       this.initCache();
