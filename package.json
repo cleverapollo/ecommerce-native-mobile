@@ -30,7 +30,6 @@
     "@ionic-native/file": "^5.29.0",
     "@ionic-native/http": "^5.28.0",
     "@ionic-native/in-app-browser": "^5.28.0",
-    "@ionic-native/keyboard": "^5.28.0",
     "@ionic-native/keychain": "^5.28.0",
     "@ionic-native/secure-storage": "^5.28.0",
     "@ionic/angular": "^5.3.2",

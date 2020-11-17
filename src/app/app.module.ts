@@ -20,7 +20,6 @@ import { UserProfileResolver } from '@shared/user-profile.resolver';
 import { EmailVerificationResolver } from '@registration/email-confirmation/email-verification.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { HttpRequestLoadingInterceptor } from './_interceptors/http-loading.interceptor';
-import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { Keychain } from '@ionic-native/keychain/ngx';
 import { SecureStorage } from '@ionic-native/secure-storage/ngx';
@@ -76,7 +75,6 @@ export function jwtOptionsFactory(storage) {
     File,
     FriendsWishListResolver,
     FriendsWishListDetailResolver,
-    Keyboard,
     Keychain,
     SecureStorage,
     SharedWishListResolver,
