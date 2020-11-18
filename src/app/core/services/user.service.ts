@@ -13,6 +13,7 @@ export class UserService {
   constructor(private storageService: StorageService,  private jwtHelper: JwtHelperService) { }
 
   get email() : Promise<string> {
+    console.log('UserService email');
     return new Promise((resolve, reject) => {
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then( rawToken => {
         const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(rawToken);
@@ -22,6 +23,7 @@ export class UserService {
   }
 
   get userState() : Promise<UserState> {
+    console.log('UserService userState');
     return new Promise((resolve, reject) => {
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then( rawToken => {
         const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(rawToken);

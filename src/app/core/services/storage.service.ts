@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 
+import 'capacitor-secure-storage-plugin';
 import { Plugins } from "@capacitor/core";
-const { Storage } = Plugins;
+const { Storage, SecureStoragePlugin } = Plugins;
 
 export enum StorageKeys {
   USER_SETTINGS = 'userSettings',
@@ -19,26 +19,26 @@ export enum StorageKeys {
 })
 export class StorageService {
 
-  constructor(
-    private secureStorage: SecureStorage,
-    private platform: Platform
-  ) { }
+  constructor(private platform: Platform) { }
 
   async get<T>(storageKey: string, secure: boolean = false) : Promise<T> {
     return new Promise((resolve, reject) => {
       this.platformReady().then(() => {
-        if (secure && this.platform.is('cordova')) {  
-          this.getSecureStorage().then(storage => {
-            storage.get(storageKey).then(storedValue => {
-              resolve(JSON.parse(storedValue));
-            }, reject);
-          }, reject)
+        if (secure) {  
+          SecureStoragePlugin.get({storageKey}).then((cachedObject: { value: string }) => {
+            resolve(JSON.parse(cachedObject.value));
+          }, error => {
+            console.log(storageKey, error);
+            resolve(null);
+          });
         } else {
           Storage.get({ key: storageKey }).then(object => {
             resolve(JSON.parse(object.value));
+          }, error => {
+            console.log(storageKey, error);
+            resolve(null);
           })
         }
-
       }, reject);
     });
   }
@@ -46,10 +46,8 @@ export class StorageService {
   async set(storageKey: string, value: any, secure: boolean = false) {
     value = JSON.stringify(value);
     await this.platformReady().then(() => {
-      if (secure && this.platform.is('cordova')) { 
-        this.getSecureStorage().then(storage => {
-          return storage.set(storageKey, value)
-        }, console.error);
+      if (secure) {
+        SecureStoragePlugin.set({storageKey, value}).then(console.log, console.error);
       } else {
         Storage.set({ key: storageKey, value: value })
       }
@@ -58,39 +56,20 @@ export class StorageService {
 
   async remove(storageKey: string, secure: boolean = false) {
     await this.platformReady().then(() => {
-      if (secure && this.platform.is('cordova')) {
-        this.getSecureStorage().then(storage => {
-          storage.remove(storageKey);
-        }, console.error);
-      } else {
-        Storage.remove({ key: storageKey });
-      }
+      const storage = secure ? SecureStoragePlugin : Storage;
+      storage.remove({ key: storageKey });
     }, console.error);
   }
 
   async clear() {
     await this.platformReady().then(() => {
       Storage.clear();
+      SecureStoragePlugin.clear();
     });
   }
 
   private async platformReady() {
     return await this.platform.ready();
-  }
-
-  private async getSecureStorage(): Promise<SecureStorageObject> {
-    return new Promise((resolve, reject) => {
-        this.secureStorage.create('secureStorage').then(storage => {
-          resolve(storage);
-        }, (storage: SecureStorageObject) => {
-          storage.secureDevice().then(() => {
-            resolve(storage);
-          }, reason => {
-            console.error('Screen Lock is disabled.')
-            reject(reason);
-          });
-        });
-    });
   }
 
 }

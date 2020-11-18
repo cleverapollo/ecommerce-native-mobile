@@ -20,8 +20,6 @@ import { EmailVerificationResolver } from '@registration/email-confirmation/emai
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { HttpRequestLoadingInterceptor } from './_interceptors/http-loading.interceptor';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
-import { Keychain } from '@ionic-native/keychain/ngx';
-import { SecureStorage } from '@ionic-native/secure-storage/ngx';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { CoreModule } from '@core/core.module';
 import { CacheModule } from "ionic-cache";
@@ -40,6 +38,7 @@ registerLocaleData(localeDe, 'de', localeDeExtra)
 export function jwtOptionsFactory(storageService: StorageService) {
   return {
     tokenGetter: () => {
+      console.log('jwtOptionsFactory tokenGetter');
       return storageService.get(StorageKeys.AUTH_TOKEN, true);
     },
     whitelistedDomains: WHITELISTED_DOMAINS,
@@ -73,8 +72,6 @@ export function jwtOptionsFactory(storageService: StorageService) {
     File,
     FriendsWishListResolver,
     FriendsWishListDetailResolver,
-    Keychain,
-    SecureStorage,
     SharedWishListResolver,
     UserProfileResolver,
     WishResolver,

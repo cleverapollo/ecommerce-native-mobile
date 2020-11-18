@@ -14,7 +14,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
     constructor(private platform: Platform, private storageService: StorageService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (!this.platform.is('cordova')) {
+        if (!this.platform.is('capacitor')) {
             return next.handle(request);
         }
 
@@ -23,6 +23,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     private async handle(req: HttpRequest<any>, next: HttpHandler) {
         try {
+            console.log('NativeTokenInterceptor');
             const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
             if (token) {
                 const authRequest = req.clone({

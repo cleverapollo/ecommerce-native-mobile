@@ -38,6 +38,6 @@
 
 </ion-content>
 
-<ion-footer class="ion-no-border" *ngIf="!platform.is('cordova')">
+<ion-footer class="ion-no-border" *ngIf="!platform.is('capacitor')">
   <ion-button class="wantic-save-button" expand="block" (click)="searchByAmazonApi()" [disabled]="!searchByAmazonApiForm.valid">Suchen</ion-button>
 </ion-footer>

@@ -76,7 +76,7 @@ export class ProductSearchService {
   }
 
   private async getCodeToExecute(url) {
-    if (this.platform.is('cordova')) {
+    if (this.platform.is('capacitor')) {
       return from(this.fileService.getTextContentFromFileInAssetFolder('parse-imgs-from-website.js', 'scripts')); 
     }
     return this.http.get(this.scriptFilePath(url), { responseType: 'text' });

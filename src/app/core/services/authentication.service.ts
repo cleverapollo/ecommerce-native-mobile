@@ -40,6 +40,7 @@ export class AuthenticationService {
 
   private init() {
     this.platform.ready().then(() => {
+      console.log('AuthenticationService init');
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then((token) => {
         if (token) {
           if (!this.jwtHelper.isTokenExpired(token)) {
@@ -96,7 +97,7 @@ export class AuthenticationService {
   }
 
   async saveToken(token: string) : Promise<void> {
-      if (this.platform.is('cordova')) {
+      if (this.platform.is('capacitor')) {
         this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`);
       }
       try {
@@ -124,6 +125,7 @@ export class AuthenticationService {
   }
 
   private validTokenExists() : Promise<boolean> {
+    console.log('AuthenticationService validTokenExists');
     return new Promise((resolve) => {
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then((token) => {
         if (token) {

@@ -15,7 +15,7 @@ export class ApiService {
     headers.append('Accept', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
-
+    console.log(`${SERVER_URL}/${url}`);
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
       headers: headers
     });

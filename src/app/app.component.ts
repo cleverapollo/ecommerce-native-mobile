@@ -31,7 +31,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      if (this.platform.is('cordova')) {
+      if (this.platform.is('capacitor')) {
         StatusBar.setStyle({ style: StatusBarStyle.Light })
         SplashScreen.hide();
         this.initDeeplinks();
