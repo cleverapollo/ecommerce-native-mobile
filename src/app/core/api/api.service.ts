@@ -17,7 +17,8 @@ export class ApiService {
     headers.append('Content-Type', 'application/json');
     console.log(`${SERVER_URL}/${url}`);
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
-      headers: headers
+      headers: headers,
+      responseType: 'json'
     });
   }
 
@@ -28,7 +29,8 @@ export class ApiService {
     headers.append('Content-Type', 'application/json');
 
     return this.httpClient.put<T>(`${SERVER_URL}/${url}`, body, {
-      headers: headers
+      headers: headers,
+      responseType: 'json'
     });
   }
 
@@ -39,7 +41,8 @@ export class ApiService {
     headers.append('Content-Type', 'application/json');
 
     return this.httpClient.patch<T>(`${SERVER_URL}/${url}`, body, {
-      headers: headers
+      headers: headers,
+      responseType: 'json'
     });
   }
 
@@ -50,7 +53,8 @@ export class ApiService {
     headers.append('Content-Type', 'application/json');
 
     return this.httpClient.delete(`${SERVER_URL}/${url}`, {
-      headers: headers
+      headers: headers,
+      responseType: 'json'
     });
   }
 
