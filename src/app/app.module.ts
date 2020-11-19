@@ -31,7 +31,6 @@ import { File } from '@ionic-native/file/ngx';
 import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
 import { NativeHttpInterceptor } from './_interceptors/native-http.interceptor';
 import { NativeTokenInterceptor } from './_interceptors/native-token.interceptor';
-import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -70,7 +69,6 @@ export function jwtOptionsFactory(storageService: StorageService) {
   providers: [
     InAppBrowser,
     HTTP,
-    Deeplinks,
     EmailVerificationResolver,
     File,
     FriendsWishListResolver,

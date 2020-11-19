@@ -1,17 +1,10 @@
-import { Component } from '@angular/core';
-
-import { NavController, Platform } from '@ionic/angular';
+import { Component, NgZone } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { CacheService } from 'ionic-cache';
-import { Deeplinks } from '@ionic-native/deeplinks/ngx';
-import { WishListDetailPage } from '@wishLists/wish-list-detail/wish-list-detail.page';
-import { AccountFirstNamePage } from '@registration/account-first-name/account-first-name.page';
-import { ChangePasswordPage } from './forgot-password/change-password/change-password.page';
-import { SharedWishListPage } from '@wishLists/shared-wish-list/shared-wish-list.page';
-import { EmailConfirmationPage } from '@registration/email-confirmation/email-confirmation.page';
-
 import { Plugins, StatusBarStyle } from '@capacitor/core';
-const { SplashScreen, StatusBar } = Plugins;
+import { Router } from '@angular/router';
+const { SplashScreen, StatusBar, App } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -23,8 +16,8 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private cache: CacheService,
-    private deeplinks: Deeplinks,
-    private navController: NavController
+    private zone: NgZone,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -47,17 +40,14 @@ export class AppComponent {
   }
 
   private initDeeplinks() {
-    this.deeplinks.routeWithNavController(this.navController, {
-      '/secure/home/wish-list/:wishListId': WishListDetailPage,
-      '/registration/first-name': AccountFirstNamePage,
-      '/forgot-password/change-password': ChangePasswordPage,
-      '/shared-wish-list': SharedWishListPage,
-      '/email-confirmation': EmailConfirmationPage
-    }).subscribe({
-      next: deeplink => { console.log('Successfully matched route', deeplink); },
-      error: console.error 
-    })
+    App.addListener('appUrlOpen', (data: any) => {
+      this.zone.run(() => {
+        const slug = data.url.split("wantic.io").pop();
+        if (slug) {
+          this.router.navigateByUrl(slug);
+        }
+      });
+    });
   }
-
 
 }
