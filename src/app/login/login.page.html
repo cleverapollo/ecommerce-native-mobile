@@ -4,7 +4,7 @@
 
 <ion-content>
   <h1 class="ion-text-center registration">Login</h1>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     
     <ion-item lines="none">
       <ion-input id="login-input-email" inputmode="email" name="email" type="email" autocomplete="email" placeholder="E-Mail" formControlName="email" autofocus="true" enterkeyhint="next" required="true"></ion-input>

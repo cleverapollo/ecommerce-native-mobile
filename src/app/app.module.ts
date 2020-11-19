@@ -32,6 +32,8 @@ import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-n
 import { NativeHttpInterceptor } from './_interceptors/native-http.interceptor';
 import { NativeTokenInterceptor } from './_interceptors/native-token.interceptor';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -62,7 +64,8 @@ export function jwtOptionsFactory(storageService: StorageService) {
         deps: [StorageService]
       },
     }),
-    NativeHttpModule
+    NativeHttpModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     InAppBrowser,

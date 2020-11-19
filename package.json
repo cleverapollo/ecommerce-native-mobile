@@ -9,6 +9,8 @@
     "dev-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=beta",
     "beta-ios": "npx cap sync ios && ionic capacitor run ios --configuration=beta",
     "build": "ng build",
+    "build-web-prod": "ionic build --prod",
+    "deploy-web": "ionic build --prod && firebase deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -21,6 +23,7 @@
     "@angular/platform-browser": "~9.1.12",
     "@angular/platform-browser-dynamic": "~9.1.12",
     "@angular/router": "~9.1.12",
+    "@angular/service-worker": "~9.1.12",
     "@auth0/angular-jwt": "^3.0.1",
     "@capacitor/android": "^2.4.2",
     "@capacitor/core": "2.4.2",

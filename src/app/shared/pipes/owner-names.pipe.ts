@@ -5,7 +5,7 @@ import { UserDto } from '@core/models/user.model';
 })
 export class OwnerNamesPipe implements PipeTransform {
 
-  transform(owners: [UserDto]): String {
+  transform(owners: UserDto[]): String {
     return owners?.map(o => o.firstName).join(" & ");
   }
 

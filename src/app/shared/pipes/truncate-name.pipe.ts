@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TruncateNamePipe implements PipeTransform {
 
-  transform(name: string): any {
+  transform(name: string | String): any {
     const limit = 30
     return name.length > limit ? `${name.substring(0, limit)} ...` : name;
   }

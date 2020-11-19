@@ -25,7 +25,7 @@ export class WishListDto {
     id: number;
     name: string;
     date: Date;
-    wishes: [WishDto];
+    wishes: WishDto[];
     creatorEmail: string;
     owners: UserWishListDto[];
 }
