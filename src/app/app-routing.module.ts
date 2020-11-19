@@ -5,6 +5,7 @@ import { EmailVerificationTokenGuard } from '@registration/email-confirmation/em
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { SharedWishListPageGuard } from '@wishLists/shared-wish-list/shared-wish-list-page.guard';
 import { AutoLoginGuard } from '@guards/auto-login.guard';
+import { AccessGuard } from '@guards/access.guard';
 
 const routes: Routes = [
   { 
@@ -14,29 +15,34 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [AccessGuard],
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'registration',
+    canActivate: [AccessGuard],
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
   {
     path: 'start',
+    canActivate: [AccessGuard],
     loadChildren: () => import('./start/start.module').then( m => m.StartPageModule),
     canLoad: [AutoLoginGuard]
   },
   {
     path: 'email-confirmation',
-    canActivate: [EmailVerificationTokenGuard],
+    canActivate: [AccessGuard, EmailVerificationTokenGuard],
     resolve: { emailVerificationResponse: EmailVerificationResolver },
     loadChildren: () => import('@registration/email-confirmation/email-confirmation.module').then( m => m.EmailConfirmationPageModule)
   },
   {
     path: 'forgot-password',
+    canActivate: [AccessGuard],
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordModule)
   },
   {
     path: 'secure',
+    canActivate: [AccessGuard],
     loadChildren: () => import('./tab-bar/tab-bar.module').then( m => m.TabBarPageModule)
   },
   {
