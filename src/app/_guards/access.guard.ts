@@ -14,9 +14,12 @@ export class AccessGuard implements CanActivate  {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
      if (this.platform.is('hybrid') && environment.production) {
        return true;
+     } else if (!environment.production) {
+       return true;
+     } else {
+      window.location.href = "https://www.wantic.io/";
+      return false;
      }
-     window.location.href = "https://www.wantic.io/";
-     return false;
   }
   
 }
