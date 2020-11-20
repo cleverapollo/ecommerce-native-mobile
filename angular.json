@@ -30,6 +30,16 @@
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               },
+              {
+                "glob": "apple-app-site-association",
+                "input": ".well-known",
+                "output": "./.well-known"
+              },
+              {
+                "glob": "robots.txt",
+                "input": "./",
+                "output": "./"
+              },
               "src/manifest.webmanifest"
             ],
             "styles": [
