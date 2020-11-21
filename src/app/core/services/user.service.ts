@@ -45,10 +45,12 @@ export class UserService {
   }
 
   get userSettings(): Promise<UserSettings> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.storageService.get<UserSettings>(StorageKeys.USER_SETTINGS).then( settings => {
         resolve(settings);
-      }, reject);
+      }, () => {
+        resolve({});
+      });
     });
   }
 
