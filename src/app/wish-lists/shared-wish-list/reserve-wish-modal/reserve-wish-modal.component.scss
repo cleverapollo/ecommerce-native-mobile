@@ -1,0 +1,50 @@
+:host {
+    background-color: var(--wantic-background-color);
+}
+
+p {
+    margin-right: 30px;
+    margin-left: 30px;
+    font-size: 15px;
+}
+
+ion-item {
+    border-radius: 50px;
+    border: 1px solid white;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+ion-button {
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-bottom: 0;
+}
+
+.small-text {
+    font-size: 12.5px;
+}
+
+ion-grid {
+    margin-right: 30px;
+    margin-left: 30px;
+    ion-col {
+        padding: 0;
+    }
+    ion-col > p {
+        margin-right: 0;
+        margin-left: 0;
+        color: #BCBABC;
+    }
+    ion-col > ion-toggle {
+        float: right;
+    }
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.auto-margin {
+    margin: auto;
+}

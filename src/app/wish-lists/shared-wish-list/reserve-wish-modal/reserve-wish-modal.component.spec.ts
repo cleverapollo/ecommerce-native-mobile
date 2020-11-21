@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { GiveSharedWishModalComponent } from './give-shared-wish-modal.component';
+import { ReserveWishModalComponent } from './reserve-wish-modal.component';
 
 describe('GiveSharedWishModalComponent', () => {
-  let component: GiveSharedWishModalComponent;
-  let fixture: ComponentFixture<GiveSharedWishModalComponent>;
+  let component: ReserveWishModalComponent;
+  let fixture: ComponentFixture<ReserveWishModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GiveSharedWishModalComponent ],
+      declarations: [ ReserveWishModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GiveSharedWishModalComponent);
+    fixture = TestBed.createComponent(ReserveWishModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -75,7 +75,13 @@ export class WishListApiService {
     );
   }
 
-  registerAndSatisfyWish(data: RegisterAndSatisfyWishRequest): Observable<FriendWishList> {
+  cancelWishReservation(data: RegisterAndSatisfyWishRequest): Observable<FriendWishList> {
+    return this.apiService.post<FriendWishList>('shared-wish-list', data).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
+  }
+
+  reserveWish(data: RegisterAndSatisfyWishRequest): Observable<FriendWishList> {
     return this.apiService.post<FriendWishList>('shared-wish-list', data).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );

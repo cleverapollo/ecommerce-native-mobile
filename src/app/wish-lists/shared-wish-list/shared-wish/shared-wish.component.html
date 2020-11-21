@@ -6,7 +6,8 @@
   <ion-card-content>
     <div class="wish-name">{{ wish.name }}</div>
     <div class="wish-price">{{ wish.price }}</div>
-    <ion-button class="give-button" *ngIf="!wish.bought && !wish.reservedByFriend" expand="block" fill="outline"
+    <div *ngIf="!readonly">
+      <ion-button class="give-button" *ngIf="!wish.bought && !wish.reservedByFriend" expand="block" fill="outline"
       color="tertiary" (click)="reserve()">
       SCHENKEN
     </ion-button>
@@ -14,6 +15,7 @@
       (click)="reserve()">
       NICHT <br> MEHR SCHENKEN
     </ion-button>
+    </div>
   </ion-card-content>
 </ion-card>
 <div *ngIf="wish.reservedByFriend" class="wish-reserved-image-container">

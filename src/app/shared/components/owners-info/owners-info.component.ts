@@ -8,8 +8,8 @@ import { UserDto } from '@core/models/user.model';
 })
 export class OwnersInfoComponent implements OnInit {
 
-  @Input()
-  owners: Array<UserDto> = new Array<UserDto>();
+  @Input() owners: Array<UserDto> = new Array<UserDto>();
+  @Input() showOnlyInitials: boolean = false;
 
   get wishListOwnerCount(): number {
     return this.owners.length;

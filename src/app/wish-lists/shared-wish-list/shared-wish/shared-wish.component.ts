@@ -10,6 +10,7 @@ import { BrowserService } from '@core/services/browser.service';
 export class SharedWishComponent implements OnInit {
 
   @Input() wish: FriendWish;
+  @Input() readonly: boolean = false;
   @Output() onButtonClicked: EventEmitter<FriendWish> = new EventEmitter<FriendWish>();
 
   constructor(private browserService: BrowserService) { }
