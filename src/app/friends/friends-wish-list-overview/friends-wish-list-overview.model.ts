@@ -21,13 +21,6 @@ export class FriendWish {
     bought: Boolean;
 }
 
-export class SharedWishListDto {
-    name: String;
-    date: Date;
-    wishes: Array<FriendWish>;
-    inviterName: String;
-}
-
 export interface RegisterAndSatisfyWishRequest {
     identifier: String;
     email: String;

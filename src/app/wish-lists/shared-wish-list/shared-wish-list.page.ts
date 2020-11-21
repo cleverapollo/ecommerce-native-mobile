@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedWishListDto, FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { GiveSharedWishModalComponent } from './give-shared-wish-modal/give-shared-wish-modal.component';
@@ -14,7 +14,7 @@ import { BrowserService } from '@core/services/browser.service';
 })
 export class SharedWishListPage implements OnInit {
 
-  wishList: SharedWishListDto;
+  wishList: FriendWishList;
   
   private email?: string;
 

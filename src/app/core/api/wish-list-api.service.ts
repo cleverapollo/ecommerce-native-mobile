@@ -4,7 +4,7 @@ import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-li
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { WishListDto, WishDto, SharedWishListLink } from '@core/models/wish-list.model';
-import { SharedWishListDto, RegisterAndSatisfyWishRequest, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWishList, RegisterAndSatisfyWishRequest } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
 
@@ -68,15 +68,15 @@ export class WishListApiService {
 
   // shared wish list 
 
-  getSharedWishList(identifier: string): Observable<SharedWishListDto> {
+  getSharedWishList(identifier: string): Observable<FriendWishList> {
     const params = new HttpParams().set('identifier', identifier);
-    return this.apiService.get<SharedWishListDto>('shared-wish-list', params).pipe(
+    return this.apiService.get<FriendWishList>('shared-wish-list', params).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
-  registerAndSatisfyWish(data: RegisterAndSatisfyWishRequest): Observable<SharedWishListDto> {
-    return this.apiService.post<SharedWishListDto>('shared-wish-list', data).pipe(
+  registerAndSatisfyWish(data: RegisterAndSatisfyWishRequest): Observable<FriendWishList> {
+    return this.apiService.post<FriendWishList>('shared-wish-list', data).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
