@@ -71,8 +71,7 @@ export class AuthenticationService {
   }
 
   async logout() {
-    await this.storageService.remove(StorageKeys.AUTH_TOKEN, true);
-    await this.storageService.remove(StorageKeys.LOGIN_PASSWORD, true);
+    await this.storageService.clear();
     await this.cache.clearAll();
     this.authenticationState.next(false);
   }
@@ -120,7 +119,7 @@ export class AuthenticationService {
     this.userService.userSettings.then( settings => {
       const settingsToSave: UserSettings = settings ? settings : {};
       settingsToSave.credentialsSaved = true;
-      this.storageService.set(StorageKeys.USER_SETTINGS, settings);
+      this.storageService.set(StorageKeys.USER_SETTINGS, settingsToSave);
     });
   }
 
