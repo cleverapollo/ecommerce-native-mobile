@@ -6,6 +6,7 @@ import { ReserveWishModalComponent } from './reserve-wish-modal/reserve-wish-mod
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { BrowserService } from '@core/services/browser.service';
 import { CancelWishReservationModalComponent } from './cancel-wish-reservation-modal/cancel-wish-reservation-modal.component';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-shared-wish-list',
@@ -14,14 +15,20 @@ import { CancelWishReservationModalComponent } from './cancel-wish-reservation-m
 })
 export class SharedWishListPage implements OnInit {
 
-  wishList: FriendWishList;
-  
-  get readonly(): boolean {
-    if (this.inviterEmail && this.email) {
-      return this.email === this.inviterEmail;
+  data: { wishList: FriendWishList, email?: string };
+  wishList: FriendWishList
+
+  async currentEmail(): Promise<string> {
+    if (this.data.email) {
+      return Promise.resolve(this.data.email);
+    } else {
+      return this.storageService.get(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
     }
-    return false;
   }
+
+  readonly: boolean = false;
+  
+
 
   get inviterEmail(): string {
     const idComponents = this.identifier?.split('_') ?? [];
@@ -31,8 +38,6 @@ export class SharedWishListPage implements OnInit {
     }
     return null
   }
-  
-  private email?: string;
 
   private get identifier(): string {
     return this.route.snapshot.queryParams.identifier;
@@ -46,21 +51,23 @@ export class SharedWishListPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.wishList = this.route.snapshot.data.wishList;
-    this.initEmailIfExists();
+    this.data = this.route.snapshot.data.data;
+    this.wishList = this.data.wishList;
+    this.initReadOnly();
   }
 
-  private async initEmailIfExists() {
-    const idComponents = this.identifier?.split('_') ?? [];
-    if (idComponents.length >= 3) {
-      this.email = idComponents[2];
+  async initReadOnly() {
+    const currentEmail = await this.currentEmail();
+    if (this.inviterEmail && currentEmail) {
+      this.readonly = currentEmail === this.inviterEmail;
     } else {
-      this.email = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL);
+      this.readonly = false;
     }
   }
 
-  toggleWishReservation(wish: FriendWish) {
-    const canCancelReservation = this.email && wish.bought && !wish.reservedByFriend;
+  async toggleWishReservation(wish: FriendWish) {
+    const currentEmail = await this.currentEmail();
+    const canCancelReservation = currentEmail && wish.bought && !wish.reservedByFriend;
     if (canCancelReservation) {
       this.openCancelReservationModal(wish);
     } else {
@@ -84,13 +91,14 @@ export class SharedWishListPage implements OnInit {
   }
 
   private async createModal(component, wish: FriendWish, onWillDismiss: (data: any) => void) {
+    const currentEmail = await this.currentEmail();
     const modal = await this.modalController.create({
       component: component,
       componentProps: {
         wish: wish,
         wishList: this.wishList,
         identifier: this.identifier,
-        email: this.email
+        email: currentEmail
       },
       cssClass: 'wantic-modal',
     });

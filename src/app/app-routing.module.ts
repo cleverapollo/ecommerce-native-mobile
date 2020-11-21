@@ -48,7 +48,7 @@ const routes: Routes = [
   {
     path: 'shared-wish-list',
     canActivate: [SharedWishListPageGuard],
-    resolve: { wishList: SharedWishListResolver },
+    resolve: { data: SharedWishListResolver },
     loadChildren: () => import('@wishLists/shared-wish-list/shared-wish-list.module').then( m => m.SharedWishListPageModule)
   },
 ];
