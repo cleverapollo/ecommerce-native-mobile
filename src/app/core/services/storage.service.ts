@@ -25,7 +25,7 @@ export class StorageService {
     return new Promise((resolve, reject) => {
       this.platformReady().then(() => {
         if (secure) {  
-          SecureStoragePlugin.get({storageKey}).then((cachedObject: { value: string }) => {
+          SecureStoragePlugin.get({key: storageKey}).then((cachedObject: { value: string }) => {
             resolve(JSON.parse(cachedObject.value));
           }, error => {
             console.log(storageKey, error);
@@ -47,7 +47,7 @@ export class StorageService {
     value = JSON.stringify(value);
     await this.platformReady().then(() => {
       if (secure) {
-        SecureStoragePlugin.set({storageKey, value}).then(console.log, console.error);
+        SecureStoragePlugin.set({key: storageKey, value: value}).then(console.log, console.error);
       } else {
         Storage.set({ key: storageKey, value: value })
       }
