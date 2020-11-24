@@ -4,8 +4,10 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:app.beta.wantic.io</string>
 		<string>applinks:wantic-dev.web.app</string>
+		<string>applinks:beta-wantic-landingpage.web.app</string>
+		<string>applinks:app.beta.wantic.io</string>
+		<string>applinks:www.app.beta.wantic.io</string>
 	</array>
 </dict>
 </plist>
