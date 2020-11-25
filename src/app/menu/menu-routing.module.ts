@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MenuPage } from './menu.page';
 import { UserProfileResolver } from '@shared/user-profile.resolver';
+import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy.page';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyPage
+  }
 ];
 
 @NgModule({
