@@ -36,6 +36,11 @@
                 "output": "./.well-known"
               },
               {
+                "glob": "apple-app-site-association",
+                "input": ".well-known",
+                "output": "./"
+              },
+              {
                 "glob": "robots.txt",
                 "input": "./",
                 "output": "./"
