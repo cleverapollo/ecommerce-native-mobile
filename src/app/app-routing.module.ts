@@ -50,7 +50,11 @@ const routes: Routes = [
     canActivate: [SharedWishListPageGuard],
     resolve: { data: SharedWishListResolver },
     loadChildren: () => import('@wishLists/shared-wish-list/shared-wish-list.module').then( m => m.SharedWishListPageModule)
+  },  {
+    path: 'privacy-policy',
+    loadChildren: () => import('./privacy-policy/privacy-policy.module').then( m => m.PrivacyPolicyPageModule)
   },
+
 ];
 
 @NgModule({

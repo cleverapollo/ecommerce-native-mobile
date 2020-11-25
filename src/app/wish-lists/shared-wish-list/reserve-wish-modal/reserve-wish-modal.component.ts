@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 
@@ -31,7 +31,8 @@ export class ReserveWishModalComponent implements OnInit {
     private storageService: StorageService,
     private formBuilder: FormBuilder, 
     private modalController: ModalController, 
-    private wishListApiService: WishListApiService
+    private wishListApiService: WishListApiService,
+    private navController: NavController
   ) { }
 
   ngOnInit() {
@@ -58,6 +59,12 @@ export class ReserveWishModalComponent implements OnInit {
 
   closeModal() {
     this.modalController.dismiss(this.wishList);
+  }
+
+  navToPrivacyPolicyPage() {
+    this.modalController.dismiss().then(() => {
+      this.navController.navigateForward('/privacy-policy');
+    })
   }
 
 }
