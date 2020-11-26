@@ -6,6 +6,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { BrowserService } from '@core/services/browser.service';
+import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 
 @Component({
   selector: 'app-reserve-wish-modal',
@@ -33,8 +34,7 @@ export class ReserveWishModalComponent implements OnInit {
     private formBuilder: FormBuilder, 
     private modalController: ModalController, 
     private wishListApiService: WishListApiService,
-    private navController: NavController,
-    private browserService: BrowserService
+    public privacyPolicyService: PrivacyPolicyService
   ) { }
 
   ngOnInit() {
@@ -61,10 +61,6 @@ export class ReserveWishModalComponent implements OnInit {
 
   closeModal() {
     this.modalController.dismiss(this.wishList);
-  }
-
-  openPrivacyPolicyPage() {
-    this.browserService.openInAppBrowser("https://www.wantic.io/datenschutz/");
   }
 
 }
