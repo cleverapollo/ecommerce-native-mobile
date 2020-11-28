@@ -2,8 +2,13 @@ export class UserProfile {
     firstName: String;
     lastName: String;
     birthday: Date;
-    email: string;
+    email: EmailDto;
     profileImageInfo: ProfileImageDto;
+}
+
+export class EmailDto {
+    value: string;
+    status: EmailVerificationStatus;
 }
 
 export enum InvitationStatus {

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserApiService } from '@core/api/user-api.service';
 import { UserProfileStore } from '../../user-profile-store.service';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
+import { UserService } from '@core/services/user.service';
 
 @Component({
   selector: 'app-email-update',
@@ -27,14 +28,14 @@ export class EmailUpdatePage implements OnInit {
   }
 
   constructor(
-    private route: ActivatedRoute, 
+    private userService: UserService, 
     private formBuilder: FormBuilder, 
     private api: UserApiService,
     private userProfileStore: UserProfileStore) 
     { }
 
   ngOnInit() {
-    const email = history.state.data.profile.email;
+    const email = history.state.data.profile.email.value;
     this.form = this.formBuilder.group({
       email: this.formBuilder.control(email, [Validators.required, Validators.email])
     });
@@ -43,6 +44,7 @@ export class EmailUpdatePage implements OnInit {
   saveChanges() {
     this.api.partialUpdateEmail(this.form.controls.email.value).toPromise()
       .then(updatedProfile => {
+        this.userService.updateEmailVerificationStatus(updatedProfile.email.status);
         this.userProfileStore.updateCachedUserProfile(updatedProfile);
         this.hintConfig = hintConfigForSuccessResponse;
       })

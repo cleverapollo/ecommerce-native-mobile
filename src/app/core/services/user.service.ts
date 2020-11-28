@@ -4,6 +4,7 @@ import { StorageService, StorageKeys } from './storage.service';
 import { EmailVerificationStatus, UserState } from '@core/models/user.model';
 import { WanticJwtToken } from '@core/models/login.model';
 import { BehaviorSubject } from 'rxjs';
+import { isString } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -43,10 +44,18 @@ export class UserService {
     });
   }
 
-  updateEmailVerificationStatus(status: string) {
-    this._emailVerificationStatus.next(EmailVerificationStatus[status]);
-    return this.storageService.set(StorageKeys.EMAIL_VERIFICATION_STATUS, status)
+  updateEmailVerificationStatus(status: string | EmailVerificationStatus) {
+    if (typeof status == 'string') {
+      status = status as string;
+      this._emailVerificationStatus.next(EmailVerificationStatus[status]);
+      this.storageService.set(StorageKeys.EMAIL_VERIFICATION_STATUS, status);
+    } else {
+      status = status as EmailVerificationStatus;
+      this._emailVerificationStatus.next(status);
+      this.storageService.set(StorageKeys.EMAIL_VERIFICATION_STATUS, status.toString());
+    }
   }
+
 
   get userSettings(): Promise<UserSettings> {
     return new Promise((resolve) => {

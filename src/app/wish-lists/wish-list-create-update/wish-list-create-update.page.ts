@@ -5,13 +5,12 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { Subscription } from 'rxjs';
 import { AlertService } from '@core/services/alert.service';
 import { ToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { UserProfile, UserWishListDto } from '@core/models/user.model';
+import { UserWishListDto } from '@core/models/user.model';
 
 @Component({
   selector: 'app-wish-list-create-update',
@@ -81,7 +80,7 @@ export class WishListCreateUpdatePage implements OnInit {
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
     this.userProfileStore.loadUserProfile().subscribe(userProfile => {
-      this.userEmail = userProfile.email;
+      this.userEmail = userProfile.email.value;
     });
     this.initFormIfNotPresent();
   }

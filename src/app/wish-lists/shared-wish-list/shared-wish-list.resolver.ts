@@ -73,12 +73,12 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
     }
   }
 
-  private async getEmail() {
+  private async getEmail(): Promise<string> {
     let isAuthenticated = await this.authService.isAuthenticated.toPromise();
     if (isAuthenticated) {
       let userProfile = await this.userProfileStore.loadUserProfile().toPromise();
-      await this.storageService.set(StorageKeys.SHARED_WISH_LIST_EMAIL, userProfile.email, true);
-      return userProfile.email;
+      await this.storageService.set(StorageKeys.SHARED_WISH_LIST_EMAIL, userProfile.email.value, true);
+      return userProfile.email.value;
     } 
     return await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
   }
