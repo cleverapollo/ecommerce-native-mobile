@@ -44,9 +44,8 @@ export class EmailUnverifiedHintComponent implements OnInit {
 
   resendVerificationLink() {
     this.disableButton = true;
-    this.registrationApiService.requestEmailVerificationLink().subscribe({
-      next: () => { this.emailVerificationStatus = EmailVerificationStatus.VERIFICATION_EMAIL_SENT },
-      complete: () => { this.disableButton = false; }
+    this.registrationApiService.requestEmailVerificationLink().finally(() => {
+      this.disableButton = false;
     })
   }
 
