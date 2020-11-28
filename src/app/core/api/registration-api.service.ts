@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { EmailVerificationResponse } from '@core/models/email-verification.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
+import { LoginResponse } from '@core/models/login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,9 @@ export class RegistrationApiService {
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
-  confirmRegistration(emailVerficationToken: string) : Observable<EmailVerificationResponse> {
+  confirmRegistration(emailVerficationToken: string) : Observable<LoginResponse> {
     const params = new HttpParams().set('token', emailVerficationToken);
-    return this.apiService.get<EmailVerificationResponse>(`${RegistrationApiService.REST_END_POINT}/confirmation`, params).pipe(
+    return this.apiService.get<LoginResponse>(`${RegistrationApiService.REST_END_POINT}/confirmation`, params).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

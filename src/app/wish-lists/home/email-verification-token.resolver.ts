@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RegistrationApiService } from '@core/api/registration-api.service';
-import { EmailVerificationResponse } from '@core/models/email-verification.model';
+import { LoginResponse } from '@core/models/login.model';
 
 @Injectable()
-export class EmailVerificationTokenResolver implements Resolve<Observable<EmailVerificationResponse>> {
+export class EmailVerificationTokenResolver implements Resolve<Observable<LoginResponse>> {
   constructor(private registrationApiService: RegistrationApiService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

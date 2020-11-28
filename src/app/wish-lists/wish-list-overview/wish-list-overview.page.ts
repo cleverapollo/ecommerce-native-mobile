@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { EmailVerificationResponse } from '@core/models/email-verification.model';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { Location } from '@angular/common';
+import { LoginResponse, WanticJwtToken } from '@core/models/login.model';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -15,7 +15,7 @@ import { Location } from '@angular/common';
 export class WishListOverviewPage implements OnInit {
 
   wishLists: Array<WishListDto> = new Array();
-  emailVerificationResponse?: EmailVerificationResponse;
+  emailVerificationResponse?: LoginResponse;
   refreshData: boolean = false
 
   get title(): string {
@@ -43,7 +43,7 @@ export class WishListOverviewPage implements OnInit {
 
   handleEmailVerfificationResponseIfNeeded() {
     if (this.emailVerificationResponse) {
-      const jwToken = this.emailVerificationResponse.jwToken;
+      const jwToken = this.emailVerificationResponse.token;
       if (jwToken) {
         this.authService.saveToken(jwToken);
       }
