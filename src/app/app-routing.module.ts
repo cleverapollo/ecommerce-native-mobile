@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { EmailVerificationResolver } from '@registration/email-confirmation/email-verification.resolver';
-import { EmailVerificationTokenGuard } from '@registration/email-confirmation/email-verification-token.guard';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { SharedWishListPageGuard } from '@wishLists/shared-wish-list/shared-wish-list-page.guard';
 import { AutoLoginGuard } from '@guards/auto-login.guard';
@@ -28,12 +26,6 @@ const routes: Routes = [
     canActivate: [AccessGuard],
     loadChildren: () => import('./start/start.module').then( m => m.StartPageModule),
     canLoad: [AutoLoginGuard]
-  },
-  {
-    path: 'email-confirmation',
-    canActivate: [AccessGuard, EmailVerificationTokenGuard],
-    resolve: { emailVerificationResponse: EmailVerificationResolver },
-    loadChildren: () => import('@registration/email-confirmation/email-confirmation.module').then( m => m.EmailConfirmationPageModule)
   },
   {
     path: 'forgot-password',

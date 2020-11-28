@@ -7,6 +7,6 @@ export enum EmailVerificationTokenStatus {
 
 export interface EmailVerificationResponse {
     status: EmailVerificationTokenStatus;
-    jwToken: String;
+    jwToken: string;
     email: String;
 }

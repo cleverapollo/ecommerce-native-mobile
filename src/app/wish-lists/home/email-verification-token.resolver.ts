@@ -5,11 +5,13 @@ import { RegistrationApiService } from '@core/api/registration-api.service';
 import { EmailVerificationResponse } from '@core/models/email-verification.model';
 
 @Injectable()
-export class EmailVerificationResolver implements Resolve<Observable<EmailVerificationResponse>> {
+export class EmailVerificationTokenResolver implements Resolve<Observable<EmailVerificationResponse>> {
   constructor(private registrationApiService: RegistrationApiService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const token = route.queryParamMap.get('token');
-    return this.registrationApiService.confirmRegistration(token);
+    const token = route.queryParamMap.get('emailVerificationToken');
+    if (token !== null) {
+        return this.registrationApiService.confirmRegistration(token);
+    }
   }
 }
