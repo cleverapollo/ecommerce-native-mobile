@@ -18,10 +18,6 @@ export class WishListOverviewPage implements OnInit {
   emailVerificationResponse?: LoginResponse;
   refreshData: boolean = false
 
-  get title(): string {
-    return this.wishLists.length > 1 ? 'Meine Wunschlisten' : 'Meine Wunschliste';
-  } 
-
   constructor(
     private route: ActivatedRoute, 
     private wishListStore: WishListStoreService,
