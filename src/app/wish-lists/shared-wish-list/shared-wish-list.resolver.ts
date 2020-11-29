@@ -6,7 +6,6 @@ import { FriendWishListStoreService } from '@core/services/friend-wish-list-stor
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
-import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 
 @Injectable()
 export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList, email?: string }>> {
@@ -14,7 +13,6 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
     private wishListApi: WishListApiService, 
     private storageService: StorageService,
     private authService: AuthenticationService,
-    private userProfileStore: UserProfileStore,
     private friendWishListStore: FriendWishListStoreService,
     private wishListStore: WishListStoreService,
     private router: Router
@@ -25,12 +23,18 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
       let identifier = route.queryParams.identifier;
       try {
         const wishListId = Number(identifier.split('_')[0]);
-        if (await this.isFriendWishList(wishListId)) {
-          this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`)
-        } else if (await this.isOwnWishList(wishListId)) {
-          this.router.navigateByUrl(`/secure/home/wish-list/${wishListId}`)
+        if (await this.authService.isAuthenticated.toPromise()) {
+          if (await this.isFriendWishList(wishListId)) {
+            this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`)
+          } else if (await this.isOwnWishList(wishListId)) {
+            this.router.navigateByUrl(`/secure/home/wish-list/${wishListId}`)
+          } else {
+            await this.wishListApi.acceptInvitation(wishListId);
+            await this.friendWishListStore.removeCachedWishLists();
+            this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`)
+          }
         } else {
-          const currentEmail = await this.getEmail();
+          const currentEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
           if (currentEmail) {
             identifier += `_${currentEmail}`;
           }
@@ -43,44 +47,24 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
     });
   }
 
-  private async isFriendWishList(wishListId: Number) {
+  private async isFriendWishList(wishListId: number) {
     try {
-      const isAuthenticated = await this.authService.isAuthenticated.toPromise();
-      if (isAuthenticated) {
-        const wishLists = await this.friendWishListStore.loadWishLists().toPromise();
-        const wishList = wishLists.find((wishList) => wishList.id === wishListId);
-        return wishList !== undefined;
-      } else {
-        return false;
-      }
+      const wishLists = await this.friendWishListStore.loadWishLists().toPromise();
+      const wishList = wishLists.find((wishList) => wishList.id === wishListId);
+      return wishList !== undefined;
     } catch (error) {
       return false;
     }
   }
 
-  private async isOwnWishList(wishListId: Number) {
+  private async isOwnWishList(wishListId: number) {
     try {
-      const isAuthenticated = await this.authService.isAuthenticated.toPromise();
-      if (isAuthenticated) {
-        const wishLists = await this.wishListStore.loadWishLists().toPromise();
-        const wishList = wishLists.find((wishList) => wishList.id === wishListId);
-        return wishList !== undefined;
-      } else {
-        return false;
-      }
+      const wishLists = await this.wishListStore.loadWishLists().toPromise();
+      const wishList = wishLists.find((wishList) => wishList.id === wishListId);
+      return wishList !== undefined;
     } catch (error) {
       return false;
     }
-  }
-
-  private async getEmail(): Promise<string> {
-    let isAuthenticated = await this.authService.isAuthenticated.toPromise();
-    if (isAuthenticated) {
-      let userProfile = await this.userProfileStore.loadUserProfile().toPromise();
-      await this.storageService.set(StorageKeys.SHARED_WISH_LIST_EMAIL, userProfile.email.value, true);
-      return userProfile.email.value;
-    } 
-    return await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
   }
 
 }
