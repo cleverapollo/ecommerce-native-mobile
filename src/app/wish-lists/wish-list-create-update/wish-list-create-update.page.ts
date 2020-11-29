@@ -117,6 +117,7 @@ export class WishListCreateUpdatePage implements OnInit {
   private create(request: WishListCreateOrUpdateRequest) {
     this.apiService.create(request as WishListCreateRequest).subscribe( createdWishList => {
       this.wishListStore.saveWishListToCache(createdWishList);
+      this.wishList = createdWishList;
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
       this.router.navigateByUrl(`/secure/home/wish-list/${createdWishList.id}`);
     });
@@ -127,6 +128,7 @@ export class WishListCreateUpdatePage implements OnInit {
     updateRequest.id = this.wishList.id;
     this.apiService.update(updateRequest).subscribe( updatedWishList => {
       this.wishListStore.updatedCachedWishList(updatedWishList);
+      this.wishList = updatedWishList;
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
     });
   }
