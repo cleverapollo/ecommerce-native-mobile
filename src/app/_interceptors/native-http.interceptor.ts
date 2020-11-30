@@ -9,7 +9,7 @@ import {
 } from "@angular/common/http";
 import { Observable, from } from "rxjs";
 import { Platform } from "@ionic/angular";
-import { HTTP } from "@ionic-native/http/ngx";
+import { HTTP, HTTPResponse } from "@ionic-native/http/ngx";
 
 type HttpMethod =
   | "get"
@@ -21,6 +21,24 @@ type HttpMethod =
   | "upload"
   | "download";
 
+type NativeHttpRequestOptions = {
+  method: 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete' | 'options' | 'upload' | 'download';
+  data?: {
+      [index: string]: any;
+  };
+  params?: {
+      [index: string]: string | number;
+  };
+  serializer?: 'json' | 'urlencoded' | 'utf8' | 'multipart';
+  timeout?: number;
+  headers?: {
+      [index: string]: string;
+  };
+  filePath?: string | string[];
+  name?: string | string[];
+  responseType?: 'text' | 'arraybuffer' | 'blob' | 'json';
+}
+
 @Injectable()
 export class NativeHttpInterceptor implements HttpInterceptor {
   constructor(private nativeHttp: HTTP, private platform: Platform) {}
@@ -29,7 +47,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!this.platform.is("cordova")) {
+    if (!this.platform.is("capacitor")) {
       return next.handle(request);
     }
 
@@ -65,31 +83,37 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     return headers;
   }
 
-  private async sendRequest(request: HttpRequest<any>, headers: {}) {
+  private async sendRequest(request: HttpRequest<any>, headers: {}): Promise<HTTPResponse> {
     const method = <HttpMethod>request.method.toLowerCase();
     const url = this.createEncodedUrlFromRequest(request);
     this.logRequestBody(request);
-    const nativeHttpResponse = await this.nativeHttp.sendRequest(url, {
+    
+    let options: NativeHttpRequestOptions = {
       method: method,
-      data: request.body,
       headers: headers,
-      serializer: "json"
-    });
-    return nativeHttpResponse;
+      serializer: "json",
+      data: request.body 
+    }
+    if (request.body === null) {
+      options.serializer = "utf8";
+      options.data = 'null' as any;
+    }
+    console.log("options", options);
+
+    return await this.nativeHttp.sendRequest(url, options);
   }
 
   private createEncodedUrlFromRequest(request: HttpRequest<any>) {
-    const queryParams = request.params;
-    const invalidQueryParams = !queryParams || (Object.keys(queryParams).length === 0 && queryParams.constructor === Object);
+    const queryParams = request.params?.toString();
     let url = request.url;
-    if (!invalidQueryParams) {
+    if (queryParams && queryParams.length > 0) {
       url = `${url}?${queryParams.toString()}`;
     }
     this.logUrl(url);
     return encodeURI(url);
   }
 
-  private createResponse(nativeHttpResponse) {
+  private createResponse(nativeHttpResponse: HTTPResponse) {
     const body = this.parseBodyFromResponseAsJson(nativeHttpResponse);
     const responseHeaders = this.createResponseHeaders(nativeHttpResponse);
     const response = new HttpResponse({
@@ -102,12 +126,14 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     return response;
   }
 
-  private parseBodyFromResponseAsJson(nativeHttpResponse) {
-    let body;
-    try {
-      body = JSON.parse(nativeHttpResponse.data);
-    } catch (error) {
-      body = { response: nativeHttpResponse.data };
+  private parseBodyFromResponseAsJson(nativeHttpResponse: HTTPResponse) {
+    let body = { response: null };
+    if (nativeHttpResponse.data) {
+      try {
+        body = JSON.parse(nativeHttpResponse.data);
+      } catch (error) {
+        body = { response: nativeHttpResponse.data };
+      }
     }
     return body;
   }
