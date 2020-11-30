@@ -42,9 +42,17 @@ export class AppComponent {
   private initDeeplinks() {
     App.addListener('appUrlOpen', (data: any) => {
       this.zone.run(() => {
-        const slug = data.url.split("wantic.io").pop();
-        if (slug) {
-          this.router.navigateByUrl(slug);
+        const wanticDomain = "wantic.io";
+        const firebaseDevDomain = "web.app";
+        let pageUrl = null;
+        if (data.url.includes(wanticDomain)) {
+          pageUrl = data.url.split(wanticDomain).pop();
+        } else if (data.url.includes(firebaseDevDomain)) {
+          pageUrl = data.url.split(firebaseDevDomain).pop();
+        }
+        console.info('universal link routes to: ', pageUrl);
+        if (pageUrl) {
+          this.router.navigateByUrl(pageUrl);
         }
       });
     });
