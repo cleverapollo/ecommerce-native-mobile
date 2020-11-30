@@ -87,18 +87,18 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     const method = <HttpMethod>request.method.toLowerCase();
     const url = this.createEncodedUrlFromRequest(request);
     this.logRequestBody(request);
-    
+
     let options: NativeHttpRequestOptions = {
       method: method,
       headers: headers,
-      serializer: "json",
-      data: request.body 
+      serializer: 'json',
+      data: request.body,
+      responseType: request.responseType
     }
     if (request.body === null) {
-      options.serializer = "utf8";
+      options.serializer = 'utf8';
       options.data = 'null' as any;
     }
-    console.log("options", options);
 
     return await this.nativeHttp.sendRequest(url, options);
   }
