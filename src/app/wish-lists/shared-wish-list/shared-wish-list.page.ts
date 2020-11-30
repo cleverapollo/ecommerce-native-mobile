@@ -77,15 +77,18 @@ export class SharedWishListPage implements OnInit {
 
   private async openReserveWishModal(wish: FriendWish) {
     const modal = await this.createModal(ReserveWishModalComponent, wish, (data: any) => {
-      this.wishList = data['data'];
-      // this.openWishInAppBrowserAfterThreeSeconds(wish);
+      if (data && data['data']) {
+        this.wishList = data['data'];
+      }
     });
     modal.present();
   } 
 
   private async openCancelReservationModal(wish: FriendWish) {
     const modal = await this.createModal(CancelWishReservationModalComponent, wish, (data: any) => {
-      this.wishList = data['data'];
+      if (data && data['data']) {
+        this.wishList = data['data'];
+      }
     });
     modal.present();
   }

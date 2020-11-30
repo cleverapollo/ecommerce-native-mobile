@@ -16,7 +16,6 @@ import localeDeExtra from '@angular/common/locales/extra/de';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FriendsWishListResolver } from '@friends/friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from '@shared/user-profile.resolver';
-import { EmailVerificationResolver } from '@registration/email-confirmation/email-verification.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { HttpRequestLoadingInterceptor } from './_interceptors/http-loading.interceptor';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
@@ -33,6 +32,7 @@ import { NativeHttpInterceptor } from './_interceptors/native-http.interceptor';
 import { NativeTokenInterceptor } from './_interceptors/native-token.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { EmailVerificationTokenResolver } from '@wishLists/home/email-verification-token.resolver';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -69,7 +69,7 @@ export function jwtOptionsFactory(storageService: StorageService) {
   providers: [
     InAppBrowser,
     HTTP,
-    EmailVerificationResolver,
+    EmailVerificationTokenResolver,
     File,
     FriendsWishListResolver,
     FriendsWishListDetailResolver,

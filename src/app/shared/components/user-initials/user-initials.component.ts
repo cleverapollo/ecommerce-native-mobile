@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserProfile } from '@core/models/user.model';
 
 @Component({
   selector: 'app-user-initials',

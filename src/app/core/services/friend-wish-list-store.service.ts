@@ -30,8 +30,8 @@ export class FriendWishListStoreService {
     return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY)
   }
 
-  removeCachedWishLists() {
-    this.cache.removeItem(this.CACHE_KEY_WISH_LISTS);
+  removeCachedWishLists(): Promise<void> {
+    return this.cache.removeItem(this.CACHE_KEY_WISH_LISTS);
   }
 
   loadWishList(id: Number, forceRefresh: boolean = false): Observable<FriendWishList> {

@@ -15,6 +15,12 @@ export class UserApiService {
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
+  deleteUser(): Observable<void> {
+    return this.apiService.delete<void>(`${UserApiService.REST_END_POINT}`).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    )
+  }
+
   getProfile(): Observable<UserProfile> {
     return this.apiService.get<UserProfile>(`${UserApiService.REST_END_POINT}/profile`).pipe(
       catchError(error => this.errorHandler.handleError(error))

@@ -4,9 +4,3 @@ export enum EmailVerificationTokenStatus {
     TOKEN_NOT_FOUND,
     TECHNICAL_ERROR
 }
-
-export interface EmailVerificationResponse {
-    status: EmailVerificationTokenStatus;
-    jwToken: String;
-    email: String;
-}

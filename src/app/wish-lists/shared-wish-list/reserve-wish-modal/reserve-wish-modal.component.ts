@@ -2,9 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
+import { BrowserService } from '@core/services/browser.service';
+import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 
 @Component({
   selector: 'app-reserve-wish-modal',
@@ -31,7 +33,8 @@ export class ReserveWishModalComponent implements OnInit {
     private storageService: StorageService,
     private formBuilder: FormBuilder, 
     private modalController: ModalController, 
-    private wishListApiService: WishListApiService
+    private wishListApiService: WishListApiService,
+    public privacyPolicyService: PrivacyPolicyService
   ) { }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { IonRouterOutlet, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-nav-toolbar',
@@ -13,14 +13,14 @@ export class NavToolbarComponent implements OnInit {
   @Input() rootPath: string | any[] | UrlTree;
 
   get canGoBack(): boolean {
-    return this.rootPath && this.router.url !== this.rootPath
+    return (this.rootPath && this.router.url !== this.rootPath) || this.routerOutlet.canGoBack();
   };
   
   get canSkip(): boolean {
     return this.skipToPath ? true : false;
   }
 
-  constructor(private navController: NavController, private router: Router) { }
+  constructor(private navController: NavController, private router: Router, private routerOutlet: IonRouterOutlet) { }
 
   ngOnInit() { }
 

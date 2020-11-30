@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { Location } from '@angular/common';
+import { LoginResponse, WanticJwtToken } from '@core/models/login.model';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -12,20 +15,36 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 export class WishListOverviewPage implements OnInit {
 
   wishLists: Array<WishListDto> = new Array();
+  emailVerificationResponse?: LoginResponse;
   refreshData: boolean = false
-
-  get title(): string {
-    return this.wishLists.length > 1 ? 'Meine Wunschlisten' : 'Meine Wunschliste';
-  } 
 
   constructor(
     private route: ActivatedRoute, 
     private wishListStore: WishListStoreService,
-    private navController: NavController
+    private navController: NavController,
+    private authService: AuthenticationService,
+    private location: Location
   ) { }
 
   ngOnInit() {
-    this.wishLists = this.route.snapshot.data.wishLists;
+    this.initData();
+    this.handleEmailVerfificationResponseIfNeeded();
+  }
+
+  initData() {
+    const resolvedData = this.route.snapshot.data;
+    this.wishLists = resolvedData.wishLists;
+    this.emailVerificationResponse = resolvedData.emailVerificationResponse;
+  }
+
+  handleEmailVerfificationResponseIfNeeded() {
+    if (this.emailVerificationResponse) {
+      const jwToken = this.emailVerificationResponse.token;
+      if (jwToken) {
+        this.authService.saveToken(jwToken);
+      }
+      this.location.replaceState('secure/home/wish-list-overview')
+    }
   }
 
   ionViewWillEnter() {

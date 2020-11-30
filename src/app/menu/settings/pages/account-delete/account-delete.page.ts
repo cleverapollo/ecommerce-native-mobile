@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UserApiService } from '@core/api/user-api.service';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-account-delete',
@@ -7,13 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountDeletePage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private userApiService: UserApiService, 
+    private authService: AuthenticationService,
+    private navController: NavController
+  ) { }
 
   ngOnInit() {
   }
 
   deleteAccount() {
-    console.log('account deleted');
+    this.userApiService.deleteUser().toPromise().then(() => {
+      this.authService.logout().finally(() => {
+        this.navController.navigateRoot('start');
+      });
+    });
   }
 
 }
