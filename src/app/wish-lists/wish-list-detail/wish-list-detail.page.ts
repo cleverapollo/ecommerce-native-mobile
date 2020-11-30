@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 import { Plugins } from '@capacitor/core';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 const { Share } = Plugins;
 
 @Component({
@@ -34,7 +35,8 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     private navController: NavController,
     private wishListApiService: WishListApiService,
     private route: ActivatedRoute,
-    private wishListStore: WishListStoreService
+    private wishListStore: WishListStoreService,
+    private userProfileStore: UserProfileStore
   ) { }
 
   ngOnInit() {
@@ -67,8 +69,9 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     this.navController.navigateForward('secure/home/wish-search-selection');
   }
 
-  shareWishList() {
-    const message = 'Hey, Caro hat sich zur Wunschliste Baby Geburt eingeladen. Schau doch einfach mal vorbei, ob du einen Wunsch erfüllen kannst. Eine Anmeldung ist hierfür nicht notwendig.';
+  async shareWishList() {
+    const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
+    const message = `Hey, ${userProfile.firstName} hat sich zur Wunschliste ${this.wishList.name} eingeladen. Schau doch einfach mal vorbei, ob du einen Wunsch erfüllen kannst. Eine Anmeldung ist hierfür nicht notwendig.`;
     const subject = 'Einladung zur Wunschliste';
     this.wishListApiService.getLinkForSocialSharing(this.wishList.id).toPromise().then( link => {
       Share.share({
