@@ -17,8 +17,8 @@ export class WishListApiService {
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
-  acceptInvitation(id: number) {
-    return this.apiService.patch(`${WishListApiService.REST_END_POINT}/${id}/accept-invitation`).pipe(
+  acceptInvitation(id: number): Promise<void> {
+    return this.apiService.patch<void>(`${WishListApiService.REST_END_POINT}/${id}/accept-invitation`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     ).toPromise();
   }
