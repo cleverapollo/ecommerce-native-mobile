@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SearchResultItem } from '@core/models/search-result-item';
-import { ModalController } from '@ionic/angular';
-import { SearchResultDetailModalComponent } from '@shared/components/search-result-detail-modal/search-result-detail-modal.component';
+import { BrowserService } from '@core/services/browser.service';
 
 @Component({
   selector: 'app-search-result',
@@ -13,7 +12,7 @@ export class SearchResultComponent implements OnInit {
   @Input() wish: SearchResultItem
   @Output() onSelectWish = new EventEmitter<SearchResultItem>();
 
-  constructor(private modalController: ModalController) { }
+  constructor(private browserService: BrowserService) { }
 
   ngOnInit() {}
 
@@ -21,22 +20,9 @@ export class SearchResultComponent implements OnInit {
     this.onSelectWish.emit(this.wish);
   }
 
-  async showDetails() {
-    const modal = await this.modalController.create({
-      component: SearchResultDetailModalComponent,
-      componentProps: {
-        searchResultItem: this.wish
-      },
-      cssClass: 'wantic-modal'
-    });
-    
-    modal.onDidDismiss().then(result => {
-      if (result.data && result.data.selectWish) {
-        this.selectWish();
-      }
-    });
-
-    return await modal.present()
+  openProductURL() {
+    const url = this.wish.productUrl;
+    this.browserService.openInAppBrowser(url);
   }
 
 }

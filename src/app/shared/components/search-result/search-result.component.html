@@ -1,10 +1,10 @@
 <ion-card>
-  <div class="image-container" (click)="showDetails()">
+  <div class="image-container" (click)="openProductURL()">
     <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" />
   </div>
   <ion-card-content>
-    <div class="wish-name" (click)="showDetails()">{{ wish?.name | slice:0:15 }}</div>
-    <div class="wish-price" (click)="showDetails()">{{ wish.price }}</div>
+    <div class="wish-name" (click)="openProductURL()">{{ wish?.name | slice:0:15 }}</div>
+    <div class="wish-price" (click)="openProductURL()">{{ wish.price }}</div>
     <ion-button expand="block" fill="outline" color="tertiary" (click)="selectWish()">Hinzufügen</ion-button>
   </ion-card-content>
 </ion-card>
