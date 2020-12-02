@@ -13,4 +13,8 @@ export class PrivacyPolicyService {
     this.browserService.openInAppBrowser("https://www.wantic.io/datenschutz/");
   }
 
+  showImprint() {
+    this.browserService.openInAppBrowser("https://www.wantic.io/impressum/");
+  }
+
 }

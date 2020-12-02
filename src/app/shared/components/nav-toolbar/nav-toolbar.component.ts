@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router, UrlTree } from '@angular/router';
-import { IonRouterOutlet, NavController } from '@ionic/angular';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { UrlTree } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-nav-toolbar',
@@ -9,23 +9,25 @@ import { IonRouterOutlet, NavController } from '@ionic/angular';
 })
 export class NavToolbarComponent implements OnInit {
 
-  @Input() skipToPath: string | any[] | UrlTree;
-  @Input() rootPath: string | any[] | UrlTree;
+  @Input() skipToPath?: string | any[] | UrlTree;
+  @Input() backNavigationPath?: string | any[] | UrlTree;
+  @Input() showBackButton: boolean = true;
 
-  get canGoBack(): boolean {
-    return (this.rootPath && this.router.url !== this.rootPath) || this.routerOutlet.canGoBack();
-  };
-  
   get canSkip(): boolean {
     return this.skipToPath ? true : false;
   }
 
-  constructor(private navController: NavController, private router: Router, private routerOutlet: IonRouterOutlet) { }
+  constructor(private navController: NavController) { }
 
   ngOnInit() { }
 
   goBack() {
-    this.navController.back();
+    if (this.backNavigationPath) {
+      this.navController.navigateBack(this.backNavigationPath);
+    } else {
+      this.navController.back();
+    }
+    this.showBackButton = false;
   }
 
   skip() {

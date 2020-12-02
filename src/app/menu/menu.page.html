@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border safe-area-inset-top">
-  <app-nav-toolbar rootPath="/secure/menu"></app-nav-toolbar>
+  <app-nav-toolbar [showBackButton]="false"></app-nav-toolbar>
   <app-email-unverified-hint></app-email-unverified-hint>
 </ion-header>
 
@@ -7,19 +7,20 @@
   <h1 class="ion-text-center wantic-page-header">Einstellungen</h1>
 
   <ion-list>
-    <ion-item [routerLink]="['settings']">
+    <ion-item [routerLink]="['settings']" detail="false">
+      <ion-icon slot="end" name="arrow-forward"></ion-icon>
       <ion-label>Profil bearbeiten</ion-label>
     </ion-item>
-    <ion-item>
-      <ion-label>AGB</ion-label>
-    </ion-item>
-    <ion-item (click)="privacyPolicyService.showPrivacyPolicy()">
+    <ion-item (click)="privacyPolicyService.showPrivacyPolicy()" detail="false">
+      <ion-icon slot="end" name="arrow-forward"></ion-icon>
       <ion-label >Datenschutz</ion-label>
     </ion-item>
-    <ion-item>
+    <ion-item (click)="privacyPolicyService.showImprint()" detail="false">
+      <ion-icon slot="end" name="arrow-forward"></ion-icon>
       <ion-label>Impressum</ion-label>
     </ion-item>
-    <ion-item (click)="logout()">
+    <ion-item (click)="logout()" detail="false">
+      <ion-icon slot="end" name="arrow-forward"></ion-icon>
       <ion-label>Abmelden</ion-label>
     </ion-item>
   </ion-list>

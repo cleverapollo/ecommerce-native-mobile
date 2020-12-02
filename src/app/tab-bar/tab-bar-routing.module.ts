@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TabBarPage } from './tab-bar.page';
 import { AuthGuard } from '@guards/auth.guard';
+import { getTaBarPath, TabBarRoute } from './tab-bar-routes';
+
 
 const routes: Routes = [
   {
@@ -15,22 +17,22 @@ const routes: Routes = [
     component: TabBarPage, 
     children: [
       {
-        path: 'home',
+        path: getTaBarPath(TabBarRoute.HOME, false),
         canActivate: [AuthGuard],
         loadChildren: () => import('@wishLists/home/home.module').then(m => m.HomePageModule)
       },
       {
-        path: 'friends-home',
+        path: getTaBarPath(TabBarRoute.FRIENDS_HOME, false),
         canActivate: [AuthGuard],
         loadChildren: () => import('@friends/friends-home//friends-home.module').then( m => m.FriendsHomePageModule)
       },
       {
-        path: 'wish-search',
+        path: getTaBarPath(TabBarRoute.WISH_SEARCH, false),
         canActivate: [AuthGuard],
-        loadChildren: () => import('@wishLists/wish-search/wish-search.module').then( m => m.WishSearchPageModule)
+        loadChildren: () => import('@wishLists/wish-search-results/wish-search-results.module').then( m => m.WishSearchResultsPageModule)
       },
       {
-        path: 'menu',
+        path: getTaBarPath(TabBarRoute.MENU, false),
         loadChildren: () => import('../menu/menu.module').then( m => m.MenuPageModule)
       }
     ]

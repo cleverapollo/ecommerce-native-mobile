@@ -18,6 +18,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   wishList: WishListDto;
   refreshWishListData: boolean = false
+  showBackButton: boolean = true
 
   get wishListOwnerCount(): number {
     return this.wishList?.owners?.length || 0;

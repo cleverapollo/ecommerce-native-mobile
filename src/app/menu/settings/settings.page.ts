@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UserProfile } from '@core/models/user.model';
+import { UserProfileStore } from './user-profile-store.service';
 
 @Component({
   selector: 'app-settings',
@@ -7,8 +10,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
-  constructor() { }
+  refreshData: boolean = false;
+  profile: UserProfile
 
-  ngOnInit() {}
+  get dataForChildRoutes() {
+    return {
+      data: {
+        profile: this.profile
+      }
+    }
+  }
+
+  constructor(private route: ActivatedRoute, private userProfileStore: UserProfileStore) { }
+
+  ngOnInit() {
+    this.profile = this.route.snapshot.data.profile;
+  }
+
+  ionViewWillEnter() {
+    if (this.refreshData) {
+      this.userProfileStore.loadUserProfile(false).subscribe(profile => {
+        this.profile = profile;
+      })
+    }
+  }
+
+  ionViewDidLeave() {
+    this.refreshData = true;
+  }
+
+  forceRefresh(event) {
+    this.userProfileStore.loadUserProfile(true).subscribe(profile => {
+      this.profile = profile;
+    }, console.error, () => {
+      event.target.complete();
+    })
+  }
 
 }

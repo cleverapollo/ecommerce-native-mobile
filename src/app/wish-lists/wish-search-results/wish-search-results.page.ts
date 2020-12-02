@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { SearchResultDataService, SearchType } from '@core/services/search-result-data.service';
 import { SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
 import { ProductSearchService } from '@core/services/product-search.service';
-import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishDto } from '@core/models/wish-list.model';
 import { Platform } from '@ionic/angular';
@@ -37,6 +36,10 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
 
   get showKeywordsForm(): boolean {
     return this.searchType === SearchType.AMAZON_API;
+  }
+
+  get showBackButton(): boolean {
+    return this.router.url !== '/secure/wish-search';
   }
 
   constructor(

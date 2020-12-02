@@ -141,10 +141,10 @@ export class WishListStoreService {
       this.updatedCachedWishList(wishList);
       Promise.resolve();
     } catch(error) {
+      console.debug(error);
       this.removeCachedWishList(wish.wishListId);
-      Promise.reject(error);
+      Promise.resolve();
     }
-
   }
 
 }
