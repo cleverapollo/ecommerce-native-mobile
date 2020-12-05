@@ -11,6 +11,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { UserWishListDto } from '@core/models/user.model';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-wish-list-create-update',
@@ -94,7 +95,7 @@ export class WishListCreateUpdatePage implements OnInit {
         'name': this.formBuilder.control(name, [Validators.required]),
         'date': this.formBuilder.control(date, []),
         'partner': this.formBuilder.group({
-          'email': this.formBuilder.control(null, [Validators.email]),
+          'email': this.formBuilder.control(null, [CustomValidation.email]),
           'name': this.formBuilder.control(null, []),
         })
       });

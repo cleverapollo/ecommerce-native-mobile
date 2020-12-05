@@ -12,12 +12,12 @@
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveChanges()">
 
     <ion-item lines="none">
-      <ion-label position="stacked">Nachname</ion-label>
+      <ion-label position="stacked">E-Mail Adresse</ion-label>
       <ion-input type="text" formControlName="email"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
 
-    <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block" [disabled]="!form.valid">
+    <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block" [disabled]="form.invalid || form.pristine || unchanged()">
       ÄNDERUNGEN SPEICHERN
     </ion-button>
   </form>

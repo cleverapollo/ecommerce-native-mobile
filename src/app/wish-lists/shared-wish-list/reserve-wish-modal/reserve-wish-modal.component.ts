@@ -7,6 +7,7 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { BrowserService } from '@core/services/browser.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-reserve-wish-modal',
@@ -39,7 +40,7 @@ export class ReserveWishModalComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      email: this.formBuilder.control(this.email, [Validators.required, Validators.email]),
+      email: this.formBuilder.control(this.email, [Validators.required, CustomValidation.email]),
       acceptPrivacyPolicy: this.formBuilder.control(false, [Validators.requiredTrue])
     })
   }

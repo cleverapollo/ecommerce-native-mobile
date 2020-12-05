@@ -52,7 +52,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
       this.registrationDto = registrationDto;
       this.form = this.formBuilder.group({
-        email: [this.registrationDto.userEmail, [Validators.required, Validators.email]],
+        email: [this.registrationDto.userEmail, [Validators.required, CustomValidation.email]],
         password: this.formBuilder.group({
           value: [null, Validators.compose([
             Validators.required,

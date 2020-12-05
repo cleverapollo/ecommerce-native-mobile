@@ -8,6 +8,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { UserService } from '@core/services/user.service';
 import { StorageService, StorageKeys } from '@core/services/storage.service';
 import { CacheService } from 'ionic-cache';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,7 @@ export class LoginPage implements OnInit {
 
   private createForm() {
     this.loginForm = this.formBuilder.group({
-      email: this.formBuilder.control('', [Validators.required, Validators.email]),
+      email: this.formBuilder.control('', [Validators.required, CustomValidation.email]),
       password: this.formBuilder.control('', [Validators.required]),
       saveCredentials: this.formBuilder.control(false)
     })

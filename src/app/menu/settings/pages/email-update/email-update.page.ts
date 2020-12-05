@@ -6,6 +6,7 @@ import { UserApiService } from '@core/api/user-api.service';
 import { UserProfileStore } from '../../user-profile-store.service';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 import { UserService } from '@core/services/user.service';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-email-update',
@@ -17,6 +18,7 @@ export class EmailUpdatePage implements OnInit {
   form: FormGroup;
   showHint: Boolean;
   hintConfig: HintConfig;
+  initialValue: string;
   
   get validationMessages(): ValidationMessages {
     return {
@@ -36,9 +38,14 @@ export class EmailUpdatePage implements OnInit {
 
   ngOnInit() {
     const email = history.state.data.profile.email.value;
+    this.initialValue = email;
     this.form = this.formBuilder.group({
-      email: this.formBuilder.control(email, [Validators.required, Validators.email])
+      email: this.formBuilder.control(email, [Validators.required, CustomValidation.email])
     });
+  }
+
+  unchanged(): boolean {
+    return this.initialValue == this.form.controls['email'].value;
   }
 
   saveChanges() {

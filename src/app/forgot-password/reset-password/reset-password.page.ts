@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-reset-password',
@@ -25,7 +26,7 @@ export class ResetPasswordPage implements OnInit {
   ngOnInit() {
     this.passwordResetRequestSuccessful = false;
     this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, CustomValidation.email]]
     })
   }
 

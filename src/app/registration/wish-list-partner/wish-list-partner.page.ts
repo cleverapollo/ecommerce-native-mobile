@@ -7,6 +7,7 @@ import { RegistrationFormService } from '../registration-form.service';
 import { NavController } from '@ionic/angular';
 import { UserApiService } from '@core/api/user-api.service';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-wish-list-partner',
@@ -42,7 +43,7 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
       this.registrationDto = (registrationDto as RegistrationDto);
       const invitePartnerRequest = (registrationDto as RegistrationDto).invitePartnerRequest;
       this.form = this.formBuilder.group({
-        'email': this.formBuilder.control(invitePartnerRequest?.email, [Validators.email, Validators.required]),
+        'email': this.formBuilder.control(invitePartnerRequest?.email, [CustomValidation.email, Validators.required]),
         'name': this.formBuilder.control(invitePartnerRequest?.name, [Validators.minLength(2), Validators.required])
       });
     });
