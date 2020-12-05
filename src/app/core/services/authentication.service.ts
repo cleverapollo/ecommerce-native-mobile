@@ -76,7 +76,7 @@ export class AuthenticationService {
     this.authenticationState.next(false);
   }
 
-  private async reloginIfPossible(): Promise<void> {
+  async reloginIfPossible(): Promise<void> {
     try {
       const userSettings = await this.userService.userSettings;
       if (userSettings && userSettings.credentialsSaved) {
