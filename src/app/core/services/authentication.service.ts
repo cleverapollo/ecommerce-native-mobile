@@ -124,7 +124,6 @@ export class AuthenticationService {
   }
 
   private validTokenExists() : Promise<boolean> {
-    console.log('AuthenticationService validTokenExists');
     return new Promise((resolve) => {
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then((token) => {
         if (token) {
@@ -134,7 +133,6 @@ export class AuthenticationService {
           resolve(false);
         }
       }, e => {
-        console.info('no auth token found');
         resolve(false);
       })
     });
