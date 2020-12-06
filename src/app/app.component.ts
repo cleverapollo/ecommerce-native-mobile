@@ -32,7 +32,7 @@ export class AppComponent {
         this.initDeeplinks();
       }
       this.initCache();
-      this.logger.log(environment.debugMessage);
+      this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
     });
   }
 

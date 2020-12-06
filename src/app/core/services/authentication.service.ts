@@ -42,7 +42,7 @@ export class AuthenticationService {
 
   private init() {
     this.platform.ready().then(() => {
-      this.logger.log('AuthenticationService init');
+      this.logger.debug('AuthenticationService init');
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then((token) => {
         if (token) {
           if (!this.jwtHelper.isTokenExpired(token)) {

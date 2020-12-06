@@ -67,7 +67,7 @@ export function jwtOptionsFactory(storageService: StorageService) {
     LoggerModule.forRoot({ 
       level: NgxLoggerLevel.DEBUG,
                     //TRACE     DEBUG       INFO      LOG         WARN       ERROR    FATAL
-      colorScheme: ['#7D3C98', '#17A589', '#1F618D', '#5D6D7E', '#F39C12', '#E74C3C', '#E74C3C']
+      colorScheme: ['#7D3C98', '#17A589', '#1F618D', '#797D7F', '#F39C12', '#E74C3C', '#E74C3C']
     }),
     NativeHttpModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

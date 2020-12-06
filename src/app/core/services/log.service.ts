@@ -6,33 +6,37 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class LogService {
 
-  constructor(private logger: NGXLogger) { }
+  constructor(private ngxLogger: NGXLogger) { }
+
+  get logger(): NGXLogger | Console {
+    return this.ngxLogger ? this.ngxLogger : console;
+  }
 
   trace(message: any, ...additional: any[]): void {
-    this.logger ? this.logger.trace(message, additional) : console.trace(message, additional);
+    additional?.length > 0 ? this.logger.trace(message, additional) : this.logger.trace(message);
   }
 
   debug(message: any, ...additional: any[]): void {
-    this.logger ? this.logger.debug(message, additional) : console.debug(message, additional);
+    additional?.length > 0 ? this.logger.debug(message, additional) : this.logger.debug(message);
   }
 
   info(message: any, ...additional: any[]): void {
-    this.logger ? this.logger.info(message, additional) : console.info(message, additional);
+    additional?.length > 0 ? this.logger.info(message, additional) : this.logger.info(message);
   }
 
   log(message: any, ...additional: any[]): void {
-    this.logger ? this.logger.log(message, additional) : console.log(message, additional);
+    additional?.length > 0 ? this.logger.log(message, additional) : this.logger.log(message);
   }
 
   warn(message: any, ...additional: any[]): void {
-    this.logger ? this.logger.warn(message, additional) : console.warn(message, additional);
+    additional?.length > 0 ? this.logger.warn(message, additional) : this.logger.warn(message);
   }
 
   error(message: any, ...additional: any[]): void {
-    this.logger ? this.logger.error(message, additional) : console.error(message, additional);
+    additional?.length > 0 ? this.logger.error(message, additional) : this.logger.error(message);
   }
 
   fatal(message: any, ...additional: any[]): void {
-    this.logger ? this.logger.fatal(message, additional) : console.error(message, additional);
+    this.ngxLogger ? this.ngxLogger.fatal(message, additional) : console.error(message, additional);
   }
 }
