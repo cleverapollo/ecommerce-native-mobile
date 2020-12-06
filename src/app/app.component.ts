@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { CacheService } from 'ionic-cache';
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { Router } from '@angular/router';
+import { LogService } from '@core/services/log.service';
 const { SplashScreen, StatusBar, App } = Plugins;
 
 @Component({
@@ -17,7 +18,8 @@ export class AppComponent {
     private platform: Platform,
     private cache: CacheService,
     private zone: NgZone,
-    private router: Router
+    private router: Router,
+    private logger: LogService
   ) {
     this.initializeApp();
   }
@@ -30,7 +32,7 @@ export class AppComponent {
         this.initDeeplinks();
       }
       this.initCache();
-      console.log(environment.debugMessage);
+      this.logger.log(environment.debugMessage);
     });
   }
 
@@ -50,7 +52,7 @@ export class AppComponent {
         } else if (data.url.includes(firebaseDevDomain)) {
           pageUrl = data.url.split(firebaseDevDomain).pop();
         }
-        console.info('universal link routes to: ', pageUrl);
+        this.logger.info('universal link routes to: ', pageUrl);
         if (pageUrl) {
           this.router.navigateByUrl(pageUrl);
         }

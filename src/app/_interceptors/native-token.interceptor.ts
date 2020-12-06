@@ -8,10 +8,15 @@ import {
 import { Observable, from } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { StorageService, StorageKeys } from '@core/services/storage.service';
+import { LogService } from '@core/services/log.service';
 
 @Injectable()
 export class NativeTokenInterceptor implements HttpInterceptor {
-    constructor(private platform: Platform, private storageService: StorageService) { }
+    constructor(
+        private platform: Platform, 
+        private storageService: StorageService, 
+        private logger: LogService
+    ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!this.platform.is('capacitor')) {
@@ -23,7 +28,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     private async handle(req: HttpRequest<any>, next: HttpHandler) {
         try {
-            console.log('NativeTokenInterceptor');
+            this.logger.log('NativeTokenInterceptor');
             const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
             if (token) {
                 const authRequest = req.clone({

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
 import { CustomValidation } from '@shared/custom-validation';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -21,7 +22,11 @@ export class ResetPasswordPage implements OnInit {
     ]
   }
 
-  constructor(private formBuilder: FormBuilder, private api: UserApiService) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private api: UserApiService,
+    private logger: LogService
+  ) { }
 
   ngOnInit() {
     this.passwordResetRequestSuccessful = false;
@@ -31,7 +36,7 @@ export class ResetPasswordPage implements OnInit {
   }
 
   resetPassword() {
-    console.log(this.form.controls.email.value)
+    this.logger.log(this.form.controls.email.value)
     this.api.resetPassword(this.form.controls.email.value).toPromise().then(() => {
       this.passwordResetRequestSuccessful = true;
     });

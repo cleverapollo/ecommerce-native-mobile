@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 
 import 'capacitor-secure-storage-plugin';
 import { Plugins } from "@capacitor/core";
+import { LogService } from './log.service';
 const { Storage, SecureStoragePlugin } = Plugins;
 
 export enum StorageKeys {
@@ -19,7 +20,7 @@ export enum StorageKeys {
 })
 export class StorageService {
 
-  constructor(private platform: Platform) { }
+  constructor(private platform: Platform, private logger: LogService) { }
 
   async get<T>(storageKey: string, secure: boolean = false) : Promise<T> {
     return new Promise((resolve, reject) => {
@@ -28,14 +29,14 @@ export class StorageService {
           SecureStoragePlugin.get({key: storageKey}).then((cachedObject: { value: string }) => {
             resolve(JSON.parse(cachedObject.value));
           }, error => {
-            console.log(storageKey, error);
+            this.logger.log(storageKey, error);
             resolve(null);
           });
         } else {
           Storage.get({ key: storageKey }).then(object => {
             resolve(JSON.parse(object.value));
           }, error => {
-            console.log(storageKey, error);
+            this.logger.log(storageKey, error);
             resolve(null);
           })
         }
@@ -47,18 +48,18 @@ export class StorageService {
     value = JSON.stringify(value);
     await this.platformReady().then(() => {
       if (secure) {
-        SecureStoragePlugin.set({key: storageKey, value: value}).then(console.log, console.error);
+        SecureStoragePlugin.set({key: storageKey, value: value}).then(this.logger.log, this.logger.error);
       } else {
         Storage.set({ key: storageKey, value: value })
       }
-    }, console.error);
+    }, this.logger.error);
   }
 
   async remove(storageKey: string, secure: boolean = false) {
     await this.platformReady().then(() => {
       const storage = secure ? SecureStoragePlugin : Storage;
       storage.remove({ key: storageKey });
-    }, console.error);
+    }, this.logger.error);
   }
 
   async clear() {

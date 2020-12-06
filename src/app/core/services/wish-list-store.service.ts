@@ -4,6 +4,7 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { CacheService } from 'ionic-cache';
 import { WishApiService } from '@core/api/wish-api.service';
 import { Observable } from 'rxjs';
+import { LogService } from './log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class WishListStoreService {
   constructor(
     private wishListApiService: WishListApiService, 
     private wishApiService: WishApiService,
-    private cache: CacheService
+    private cache: CacheService,
+    private logger: LogService
   ) { }
 
   // WISH LISTS
@@ -141,7 +143,7 @@ export class WishListStoreService {
       this.updatedCachedWishList(wishList);
       Promise.resolve();
     } catch(error) {
-      console.debug(error);
+      this.logger.debug(error);
       this.removeCachedWishList(wish.wishListId);
       Promise.resolve();
     }

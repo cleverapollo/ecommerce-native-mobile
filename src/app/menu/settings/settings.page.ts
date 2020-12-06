@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfile } from '@core/models/user.model';
+import { LogService } from '@core/services/log.service';
 import { UserProfileStore } from './user-profile-store.service';
 
 @Component({
@@ -21,7 +22,11 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private userProfileStore: UserProfileStore) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private userProfileStore: UserProfileStore,
+    private logger: LogService
+  ) { }
 
   ngOnInit() {
     this.profile = this.route.snapshot.data.profile;
@@ -42,7 +47,7 @@ export class SettingsPage implements OnInit {
   forceRefresh(event) {
     this.userProfileStore.loadUserProfile(true).subscribe(profile => {
       this.profile = profile;
-    }, console.error, () => {
+    }, this.logger.error, () => {
       event.target.complete();
     })
   }

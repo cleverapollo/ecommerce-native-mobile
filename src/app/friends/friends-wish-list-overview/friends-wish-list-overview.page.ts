@@ -3,6 +3,7 @@ import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-friends-wish-list-overview',
@@ -16,7 +17,8 @@ export class FriendsWishListOverviewPage implements OnInit {
   constructor(
     private navContoller: NavController, 
     private route: ActivatedRoute,
-    private friendWishListStore: FriendWishListStoreService
+    private friendWishListStore: FriendWishListStoreService,
+    private logger: LogService
   ) {}
 
   ngOnInit() {
@@ -30,7 +32,7 @@ export class FriendsWishListOverviewPage implements OnInit {
   forceRefresh(event) {
     this.friendWishListStore.loadWishLists(true).subscribe(wishLists => {
       this.wishLists = wishLists;
-    }, console.error, () => {
+    }, this.logger.error, () => {
       event.target.complete();
     })
   }

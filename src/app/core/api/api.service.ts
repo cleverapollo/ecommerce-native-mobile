@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SERVER_URL } from 'src/environments/environment';
+import { LogService } from '@core/services/log.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private logger: LogService) { }
 
   post<T>(url: string, body: any) : Observable<T> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
-    console.log(`${SERVER_URL}/${url}`);
+    this.logger.log(`${SERVER_URL}/${url}`);
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
       headers: headers,
       responseType: 'json'

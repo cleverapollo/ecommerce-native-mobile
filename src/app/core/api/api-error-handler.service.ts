@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LogService } from '@core/services/log.service';
 import { ToastService } from '@core/services/toast.service';
 import { throwError } from 'rxjs';
 
@@ -10,15 +11,15 @@ export class ApiErrorHandlerService {
 
   private generalErrorMessage = 'Ein allgemeiner Fehler ist aufgetreten, bitte versuche es später noch einmal.';
 
-  constructor(private toastService: ToastService) { }
+  constructor(private toastService: ToastService,private logger: LogService) { }
 
   handleError(error: any, getSpecificServerError?: (error: HttpErrorResponse) => string) {
     let errorMessage = this.generalErrorMessage;
     if (error instanceof HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
-        console.log(`Error: ${error.error.message}`);
+        this.logger.log(`Error: ${error.error.message}`);
       } else {
-        console.log(`error status : ${error.status} ${error.statusText}`);
+        this.logger.log(`error status : ${error.status} ${error.statusText}`);
         if (getSpecificServerError) {
           let specificErrorMessage = getSpecificServerError(error);
           if (specificErrorMessage) {

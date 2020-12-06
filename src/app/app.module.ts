@@ -33,6 +33,7 @@ import { NativeTokenInterceptor } from './_interceptors/native-token.interceptor
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { EmailVerificationTokenResolver } from '@wishLists/home/email-verification-token.resolver';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -63,6 +64,7 @@ export function jwtOptionsFactory(storageService: StorageService) {
         deps: [StorageService]
       },
     }),
+    LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
     NativeHttpModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

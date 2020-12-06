@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file/ngx';
+import { LogService } from './log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class FileService {
 
   private readonly assetPath = 'www/assets';
 
-  constructor(private file: File) { }
+  constructor(private file: File, private logger: LogService) { }
 
   get applicationDirectoryPath(): string {
     return this.file.applicationDirectory;
@@ -18,15 +19,15 @@ export class FileService {
     let filePath = this.createFilePath(fileName, subDir);
     try {
       const dirExists = await this.file.checkDir(this.applicationDirectoryPath, this.assetPath);
-      console.info('asset path exists');
+      this.logger.info('asset path exists');
       if (dirExists) {
         const fileExists = await this.file.checkFile(`${this.applicationDirectoryPath}${this.assetPath}/`, filePath);
-        console.info('file in asset path exists');
+        this.logger.info('file in asset path exists');
         if (fileExists) {
           const directoryUrl = this.createDirectoryUrlForAssetsFolder(subDir);
           const dir = await this.file.resolveDirectoryUrl(directoryUrl);
           const fileEntry = await this.file.getFile(dir, fileName, { create: false, exclusive: false });
-          console.info('resolve file entry successfull');
+          this.logger.info('resolve file entry successfull');
           return this.readFileContent(fileEntry);
         } else {
           return Promise.reject();
@@ -44,7 +45,7 @@ export class FileService {
     if (subDir) {
       filePath = `${subDir}/${fileName}`;
     }
-    console.log('file path to resolve ', filePath);
+    this.logger.log('file path to resolve ', filePath);
     return filePath;
   }
 
@@ -53,7 +54,7 @@ export class FileService {
     if (subDir) {
       directoryUrl += `/${subDir}`;
     }
-    console.info('directory url to resolve  ', directoryUrl);
+    this.logger.info('directory url to resolve  ', directoryUrl);
     return directoryUrl;
   }
 
@@ -64,10 +65,10 @@ export class FileService {
         reader.onloadend = (e) => {
           const result = reader.result;
           if (result instanceof ArrayBuffer) {
-            console.log('result is array buffer');
+            this.logger.log('result is array buffer');
             reject();
           }
-          console.info("Successful file read: " + result);
+          this.logger.info("Successful file read: " + result);
           resolve(result as string);
         };
         reader.onerror = (error) => {
@@ -86,7 +87,7 @@ export class FileService {
         resolve(file);
       };
       reader.onerror = (error) => {
-        console.error(error);
+        this.logger.error(error);
         reject(error);
       };
     });

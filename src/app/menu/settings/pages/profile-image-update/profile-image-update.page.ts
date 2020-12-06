@@ -4,6 +4,7 @@ import { UserProfile } from '@core/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfileStore } from '../../user-profile-store.service';
 import { FileService } from '@core/services/file.service';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-profile-image-update',
@@ -33,12 +34,13 @@ export class ProfileImageUpdatePage implements OnInit {
   constructor(
     private userApiService: UserApiService, 
     private userProfileStore: UserProfileStore,
-    private fileService: FileService
+    private fileService: FileService,
+    private logger: LogService
   ) { }
 
   ngOnInit() {
     this.profile = history.state.data?.profile;
-    console.log(this.profile);
+    this.logger.log(this.profile);
   }
 
   uploadImage(event) {
@@ -46,7 +48,7 @@ export class ProfileImageUpdatePage implements OnInit {
     this.readFileContentAsFormData(file).then(formData => {
       this.imageIsUploading = true;
       this.userApiService.partialUpdateProfileImage(formData).toPromise().then(updatedProfile => {
-        console.log('updated profile ', updatedProfile);
+        this.logger.log('updated profile ', updatedProfile);
         this.userProfileStore.updateCachedUserProfile(updatedProfile).finally(() => {
           this.userProfileStore.refreshUserProfileImage();
         });

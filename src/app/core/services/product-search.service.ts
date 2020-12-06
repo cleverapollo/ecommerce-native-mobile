@@ -9,6 +9,7 @@ import { SearchService } from '@core/api/search.service';
 import { from, Observable } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { FileService } from './file.service';
+import { LogService } from './log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class ProductSearchService {
     private loadingService: LoadingService,
     private searchResultDataService: SearchResultDataService,
     private searchService: SearchService,
-    private fileService: FileService
+    private fileService: FileService,
+    private logger: LogService
   ) { }
 
   async searchByUrl(url: string): Promise<SearchResultItem[]> {
@@ -52,13 +54,13 @@ export class ProductSearchService {
   }
 
   private async onLoadComplete(browser: InAppBrowserObject, url) {
-    console.log('loading finished ...');
+    this.logger.log('loading finished ...');
     this.loadingService.dismissLoadingSpinner();
     try {
       const code = await (await this.getCodeToExecute(url)).toPromise();
-      console.log('code to excecute', code);
+      this.logger.log('code to excecute', code);
       const results: [any] = await browser.executeScript({ code: code });
-      console.log('result after execution', results);
+      this.logger.log('result after execution', results);
       this.searchResults = [];
       this.mapSearchResultArray(results, url);
 
@@ -70,7 +72,7 @@ export class ProductSearchService {
 
       return Promise.resolve(results)
     } catch (e) {
-      console.error('browser onLoadComplete', e);
+      this.logger.error('browser onLoadComplete', e);
       return Promise.reject(e);
     }
   }
@@ -83,29 +85,29 @@ export class ProductSearchService {
   }
 
   private onLoadError() {
-    console.log('loading error');
+    this.logger.log('loading error');
     this.loadingService.dismissLoadingSpinner();
   }
 
   private onLoadStart() {
-    console.log('start loading ...');
+    this.logger.log('start loading ...');
     this.loadingService.showLoadingSpinner();
   }
 
   private onBrowserExit() {
-    console.log('exit browser ...');
+    this.logger.log('exit browser ...');
     this.loadingService.dismissLoadingSpinner();
   }
 
   private handleGeneralError(error) {
-    console.log('general error ...', error);
+    this.logger.log('general error ...', error);
     this.loadingService.dismissLoadingSpinner();
   }
 
   private scriptFilePath(url: string) {
     let assetPath = './assets/scripts';
     if (url.indexOf('otto.de') !== -1) {
-      console.log(assetPath);
+      this.logger.log(assetPath);
       return `${assetPath}/parse-articles-from-otto.js`;
     } else {
       return `${assetPath}/parse-imgs-from-website.js`;

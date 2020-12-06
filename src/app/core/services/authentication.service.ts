@@ -10,6 +10,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { resolve } from 'url';
 import { Router } from '@angular/router';
 import { WanticJwtToken } from '@core/models/login.model';
+import { LogService } from './log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,14 +34,15 @@ export class AuthenticationService {
     private authService: AuthService,
     private cache: CacheService,
     private nativeHttpClient: HTTP,
-    private router: Router
+    private router: Router,
+    private logger: LogService
   ) { 
     this.init();
   }
 
   private init() {
     this.platform.ready().then(() => {
-      console.log('AuthenticationService init');
+      this.logger.log('AuthenticationService init');
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then((token) => {
         if (token) {
           if (!this.jwtHelper.isTokenExpired(token)) {
@@ -59,7 +61,7 @@ export class AuthenticationService {
   login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
     return new Promise((resolve, reject) => {
       this.authService.login(email, password).subscribe(response => {
-        console.info('login successful', response)
+        this.logger.info('login successful', response)
         if (saveCredentials) {
           this.saveCredentialsAndUserSettings(email, password);
         }
@@ -89,7 +91,7 @@ export class AuthenticationService {
         return Promise.reject();
       }
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
       this.storageService.remove(StorageKeys.AUTH_TOKEN);
       return Promise.reject();
     }
@@ -102,20 +104,20 @@ export class AuthenticationService {
       try {
         await this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
         const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(token);
-        console.log(decodedToken.emailVerificationStatus);
+        this.logger.log(decodedToken.emailVerificationStatus);
         await this.userService.updateEmailVerificationStatus(decodedToken.emailVerificationStatus);
         this.authenticationState.next(true);
         return Promise.resolve();
       } catch(error) {
-        console.error('could not save token ', error)
+        this.logger.error('could not save token ', error)
         this.authenticationState.next(false);
         return Promise.reject(error);
       }
   }
 
   private saveCredentialsAndUserSettings(email: string, password: string) {
-    this.storageService.set(StorageKeys.LOGIN_EMAIL, email, true).catch(console.error);
-    this.storageService.set(StorageKeys.LOGIN_PASSWORD, password, true).catch(console.error);
+    this.storageService.set(StorageKeys.LOGIN_EMAIL, email, true).catch(this.logger.error);
+    this.storageService.set(StorageKeys.LOGIN_PASSWORD, password, true).catch(this.logger.error);
     this.userService.userSettings.then( settings => {
       const settingsToSave: UserSettings = settings ? settings : {};
       settingsToSave.credentialsSaved = true;

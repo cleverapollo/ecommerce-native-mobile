@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WishListApiService } from '@core/api/wish-list-api.service';
+import { LogService } from '@core/services/log.service';
 import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ModalController } from '@ionic/angular';
 
@@ -19,7 +20,8 @@ export class CancelWishReservationModalComponent implements OnInit {
 
   constructor(
     private wishListApiService: WishListApiService, 
-    private modalController: ModalController
+    private modalController: ModalController,
+    private logger: LogService
   ) { }
 
   ngOnInit() {}
@@ -32,7 +34,7 @@ export class CancelWishReservationModalComponent implements OnInit {
     }).toPromise().then( wishList => {
       this.wishList = wishList;
       this.reservationCanceled = true;
-    }, console.error)
+    }, this.logger.error)
   }
 
   closeModal() {

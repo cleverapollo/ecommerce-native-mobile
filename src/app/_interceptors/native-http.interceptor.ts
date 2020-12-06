@@ -10,6 +10,7 @@ import {
 import { Observable, from } from "rxjs";
 import { Platform } from "@ionic/angular";
 import { HTTP, HTTPResponse } from "@ionic-native/http/ngx";
+import { LogService } from '@core/services/log.service';
 
 type HttpMethod =
   | "get"
@@ -41,7 +42,12 @@ type NativeHttpRequestOptions = {
 
 @Injectable()
 export class NativeHttpInterceptor implements HttpInterceptor {
-  constructor(private nativeHttp: HTTP, private platform: Platform) {}
+  
+  constructor(
+    private nativeHttp: HTTP, 
+    private platform: Platform,
+    private logger: LogService
+  ) {}
 
   public intercept(
     request: HttpRequest<any>,
@@ -162,27 +168,27 @@ export class NativeHttpInterceptor implements HttpInterceptor {
   // logging
 
   private logUrl(url: string) {
-    console.info("— Request url");
-    console.info(url);
+    this.logger.info("— Request url");
+    this.logger.info(url);
   }
 
   private logRequestBody(request: HttpRequest<any>) {
-    console.info("— Request body");
-    console.info(request.body);
+    this.logger.info("— Request body");
+    this.logger.info(request.body);
   }
 
   private logRequestHeaders(request: HttpRequest<any>) {
-    console.info("— Request headers");
-    console.info(request.headers);
+    this.logger.info("— Request headers");
+    this.logger.info(request.headers);
   }
 
   private logResponse(response: HttpResponse<any>) {
-    console.info("— Response success");
-    console.info(response);
+    this.logger.info("— Response success");
+    this.logger.info(response);
   }
 
   private logError(error: any) {
-    console.error("— Response error");
-    console.error(error);
+    this.logger.error("— Response error");
+    this.logger.error(error);
   }
 }

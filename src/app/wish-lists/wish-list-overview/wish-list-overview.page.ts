@@ -6,6 +6,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { Location } from '@angular/common';
 import { LoginResponse, WanticJwtToken } from '@core/models/login.model';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -23,7 +24,8 @@ export class WishListOverviewPage implements OnInit {
     private wishListStore: WishListStoreService,
     private navController: NavController,
     private authService: AuthenticationService,
-    private location: Location
+    private location: Location,
+    private logger: LogService
   ) { }
 
   ngOnInit() {
@@ -66,7 +68,7 @@ export class WishListOverviewPage implements OnInit {
   forceRefresh(event) {
     this.wishListStore.loadWishLists(true).subscribe(wishLists => {
       this.wishLists = wishLists;
-    }, console.error, () => {
+    }, this.logger.error, () => {
       event.target.complete();
     })
   }

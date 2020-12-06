@@ -6,6 +6,7 @@ import { ProductSearchService } from '@core/services/product-search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishDto } from '@core/models/wish-list.model';
 import { Platform } from '@ionic/angular';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-wish-search-results',
@@ -48,7 +49,8 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
     private searchResultDataService: SearchResultDataService,
     private router: Router,
     private route: ActivatedRoute,
-    public platform: Platform
+    public platform: Platform,
+    private logger: LogService
   ) { }
 
   ngOnDestroy(): void {}
@@ -56,11 +58,11 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.loading = true;
     this.searchResultDataService.$lastSearchQuery.subscribe( query => {
-      console.log('search query', query);
+      this.logger.log('search query', query);
       this.searchType = query.type;
       this.createForm(query.searchTerm);
       this.results = query.results;
-    }, console.error);
+    }, this.logger.error);
   }
 
   ionViewDidEnter() {
@@ -76,13 +78,13 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
   private createForm(value: String) {
     switch (this.searchType) {
       case SearchType.AMAZON_API:
-        console.log('amazon api form');
+        this.logger.log('amazon api form');
         this.searchByAmazonApiForm = this.formBuilder.group({
           keywords: value
         });
         break;
       case SearchType.URL: 
-      console.log('url form');
+      this.logger.log('url form');
         this.searchByUrlForm = this.formBuilder.group({
           url: value
         });
@@ -93,7 +95,7 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
   searchByUrl() {
     const url = this.searchByUrlForm.controls.url.value;
     this.productSearchService.searchByUrl(url).then(searchResults => {
-    }, console.error);
+    }, this.logger.error);
   }
 
   searchByAmazonApi() {
@@ -101,7 +103,7 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
     this.loading = true;
     this.productSearchService.searchByAmazonApi(keywords).then( results => {
       this.results = results;
-    }, console.error).finally(() => {
+    }, this.logger.error).finally(() => {
       this.loading = false;
     })
   }

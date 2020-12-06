@@ -7,6 +7,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 import { Plugins } from '@capacitor/core';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { LogService } from '@core/services/log.service';
 const { Share } = Plugins;
 
 @Component({
@@ -37,7 +38,8 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     private wishListApiService: WishListApiService,
     private route: ActivatedRoute,
     private wishListStore: WishListStoreService,
-    private userProfileStore: UserProfileStore
+    private userProfileStore: UserProfileStore,
+    private logger: LogService
   ) { }
 
   ngOnInit() {
@@ -80,8 +82,8 @@ export class WishListDetailPage implements OnInit, OnDestroy {
         text: message,
         url: link.value
       }).catch(reason => {
-        console.error(reason);
-        console.log(link);
+        this.logger.error(reason);
+        this.logger.log(link);
       });
     });
   }
@@ -89,7 +91,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   forceRefresh(event) {
     this.wishListStore.loadWishList(this.wishList.id, true).subscribe(wishList => {
       this.wishList = wishList;
-    }, console.error, () => {
+    }, this.logger.error, () => {
       event.target.complete();
     })
   }

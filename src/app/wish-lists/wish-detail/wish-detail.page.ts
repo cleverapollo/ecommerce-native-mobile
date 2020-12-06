@@ -7,6 +7,7 @@ import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BrowserService } from '@core/services/browser.service';
 import { ProfileImageDto } from '@core/models/user.model';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-wish-detail',
@@ -35,7 +36,8 @@ export class WishDetailPage implements OnInit, OnDestroy {
     public alertService: AlertService,
     private navController: NavController,
     private route: ActivatedRoute,
-    private wishListStore: WishListStoreService
+    private wishListStore: WishListStoreService,
+    private logger: LogService
     ) { }
 
   ngOnInit() {
@@ -57,7 +59,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   forceRefresh(event) {
     this.wishListStore.loadWish(this.wish.id, true).subscribe(wish => {
       this.wish = wish;
-    }, console.error, () => {
+    }, this.logger.error, () => {
       event.target.complete();
     })
   }
