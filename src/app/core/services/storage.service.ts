@@ -27,16 +27,24 @@ export class StorageService {
       this.platformReady().then(() => {
         if (secure) {  
           SecureStoragePlugin.get({key: storageKey}).then((cachedObject: { value: string }) => {
-            resolve(JSON.parse(cachedObject.value));
+            if (cachedObject.value.length > 0) {
+              resolve(JSON.parse(cachedObject.value));
+            } else {
+              resolve(null);
+            }
           }, error => {
-            this.logger.log(storageKey, error);
+            this.logger.error(storageKey, error);
             resolve(null);
           });
         } else {
           Storage.get({ key: storageKey }).then(object => {
-            resolve(JSON.parse(object.value));
+            if (object?.value.length > 0) {
+              resolve(JSON.parse(object.value));
+            } else {
+              resolve(null);
+            }
           }, error => {
-            this.logger.log(storageKey, error);
+            this.logger.error(storageKey, error);
             resolve(null);
           })
         }
