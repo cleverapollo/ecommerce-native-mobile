@@ -98,8 +98,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
       method: method,
       headers: headers,
       serializer: 'json',
-      data: request.body,
-      responseType: request.responseType
+      data: request.body
     }
     if (request.body === null) {
       options.serializer = 'utf8';
