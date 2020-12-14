@@ -52,7 +52,7 @@ export class UserApiService {
   }
 
   partialUpdateProfileImage(formData: FormData): Observable<UserProfile> {
-    return this.apiService.post<UserProfile>(`${UserApiService.REST_END_POINT}/profile-image`, formData).pipe(
+    return this.apiService.uploadFile<UserProfile>(`${UserApiService.REST_END_POINT}/profile-image`, formData).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

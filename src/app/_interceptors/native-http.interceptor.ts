@@ -103,6 +103,8 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     if (request.body === null) {
       options.serializer = 'utf8';
       options.data = 'null' as any;
+    } else if (request.body instanceof FormData) {
+      options.serializer = 'multipart';
     }
 
     return await this.nativeHttp.sendRequest(url, options);
