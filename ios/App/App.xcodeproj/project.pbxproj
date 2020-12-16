@@ -22,6 +22,10 @@
 		B1A80F9C258A143300F0917F /* SelectImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80F9B258A143300F0917F /* SelectImageViewController.swift */; };
 		B1A80FA0258A281600F0917F /* ProductInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80F9F258A281600F0917F /* ProductInfo.swift */; };
 		B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */; };
+		B1A80FA8258A705100F0917F /* CreateWishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA7258A705100F0917F /* CreateWishViewController.swift */; };
+		B1A80FAE258A770100F0917F /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FAD258A770100F0917F /* WishList.swift */; };
+		B1A80FB8258A7F1400F0917F /* WishListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FB7258A7F1400F0917F /* WishListTableView.swift */; };
+		B1A80FBC258A8A7900F0917F /* checkmark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B1A80FBB258A8A7900F0917F /* checkmark.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +74,10 @@
 		B1A80F9B258A143300F0917F /* SelectImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageViewController.swift; sourceTree = "<group>"; };
 		B1A80F9F258A281600F0917F /* ProductInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfo.swift; sourceTree = "<group>"; };
 		B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
+		B1A80FA7258A705100F0917F /* CreateWishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWishViewController.swift; sourceTree = "<group>"; };
+		B1A80FAD258A770100F0917F /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
+		B1A80FB7258A7F1400F0917F /* WishListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListTableView.swift; sourceTree = "<group>"; };
+		B1A80FBB258A8A7900F0917F /* checkmark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkmark.jpg; sourceTree = "<group>"; };
 		C97BED73FFF1D804E0CD9DA7 /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,6 +159,8 @@
 		B1A80F852589F59800F0917F /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				B1A80FBB258A8A7900F0917F /* checkmark.jpg */,
+				B1A80FA7258A705100F0917F /* CreateWishViewController.swift */,
 				B1A80F97258A0F5D00F0917F /* ExtensionClass.js */,
 				B1A80F862589F59800F0917F /* ShareViewController.swift */,
 				B1A80F882589F59800F0917F /* MainInterface.storyboard */,
@@ -158,6 +168,8 @@
 				B1A80F9B258A143300F0917F /* SelectImageViewController.swift */,
 				B1A80F9F258A281600F0917F /* ProductInfo.swift */,
 				B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */,
+				B1A80FAD258A770100F0917F /* WishList.swift */,
+				B1A80FB7258A7F1400F0917F /* WishListTableView.swift */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -262,6 +274,7 @@
 			files = (
 				B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */,
 				B1A80F98258A0F5D00F0917F /* ExtensionClass.js in Resources */,
+				B1A80FBC258A8A7900F0917F /* checkmark.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,8 +331,11 @@
 			files = (
 				B1A80FA0258A281600F0917F /* ProductInfo.swift in Sources */,
 				B1A80F9C258A143300F0917F /* SelectImageViewController.swift in Sources */,
+				B1A80FAE258A770100F0917F /* WishList.swift in Sources */,
 				B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */,
+				B1A80FA8258A705100F0917F /* CreateWishViewController.swift in Sources */,
 				B1A80F872589F59800F0917F /* ShareViewController.swift in Sources */,
+				B1A80FB8258A7F1400F0917F /* WishListTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,7 +19,7 @@ class ProductInfoCell: UICollectionViewCell {
 
 class SelectImageViewController: UICollectionViewController {
     
-    @IBOutlet weak var selectProductInfoButton: UIButton!
+    @IBOutlet weak var selectProductInfoButton: UIBarButtonItem!
     
     var productInfos: [ProductInfo] = []
     var selectedCell: ProductInfoCell? = nil
@@ -40,15 +40,18 @@ class SelectImageViewController: UICollectionViewController {
         selectProductInfoButton.isEnabled = selectedCell == nil ? false : true
     }
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        if let viewController = segue.destination as? CreateWishViewController {
+            let indexPath = collectionView.indexPath(for: selectedCell!)!
+            viewController.productInfo = productInfos[indexPath.row]
+        }
     }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -136,13 +139,14 @@ class SelectImageViewController: UICollectionViewController {
                         let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary,
                         let title = results["title"] as? String,
                         let hostname = results["hostname"] as? String,
+                        let url = results["url"] as? String,
                         let productInfosDict = results["productInfos"] as? [NSDictionary]  else {
                             return
                     }
 
                     // Fallback to the favicon.ico file, if JavaScript returns nil
                     let favicon = results["favicon"] as? String ?? "\(hostname)/favicon.ico"
-                    print("title: \(title), hostname: \(hostname), favicon: \(favicon), image count: \(productInfosDict.count)")
+                    print("url: \(url), title: \(title), hostname: \(hostname), favicon: \(favicon), image count: \(productInfosDict.count)")
                     
                     self.productInfos = productInfosDict.compactMap { (dict: NSDictionary) in
                         guard let imageUrl = dict["imageUrl"] as? String else { return nil }
@@ -150,7 +154,7 @@ class SelectImageViewController: UICollectionViewController {
                         if let name = dict["name"] as? String, !name.isEmpty {
                             displayName = name
                         }
-                        return ProductInfo(imageUrl: imageUrl, name: displayName)
+                        return ProductInfo(productUrl: url, imageUrl: imageUrl, name: displayName)
                     }
                     self.collectionView.reloadData()
                 }

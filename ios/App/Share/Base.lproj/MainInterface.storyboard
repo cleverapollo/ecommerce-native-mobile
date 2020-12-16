@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Wantic-->
+        <!--Bild auswählen-->
         <scene sceneID="wsR-dZ-Bxj">
             <objects>
                 <collectionViewController id="qpy-DT-UGZ" customClass="SelectImageViewController" customModule="Share" customModuleProvider="target" sceneMemberID="viewController">
@@ -66,23 +66,153 @@
                             <outlet property="delegate" destination="qpy-DT-UGZ" id="VF5-tS-f4T"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Wantic" id="n2h-HZ-Viy">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="G0x-qM-yCf">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="HnO-hl-CDz">
-                                <rect key="frame" x="302" y="7" width="92" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="Auswählen"/>
-                                <state key="normal" title="Auswählen"/>
-                            </button>
+                    <navigationItem key="navigationItem" title="Bild auswählen" id="n2h-HZ-Viy">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="G0x-qM-yCf">
+                            <connections>
+                                <segue destination="EKi-er-d0Y" kind="show" id="I9V-4E-xcU"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="selectProductInfoButton" destination="HnO-hl-CDz" id="sVP-4n-csK"/>
+                        <outlet property="selectProductInfoButton" destination="G0x-qM-yCf" id="F8b-Gi-YjF"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qgb-2L-6Su" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1453.6231884057972" y="31.473214285714285"/>
+        </scene>
+        <!--Add Wish-->
+        <scene sceneID="MUg-O1-9Br">
+            <objects>
+                <tableViewController title="Add Wish" id="EKi-er-d0Y" customClass="CreateWishViewController" customModule="Share" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="zf6-SS-5q8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="Bild" id="Cbf-3j-ugw">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="177" id="ZkP-ms-ZCS">
+                                        <rect key="frame" x="0.0" y="55.5" width="414" height="177"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZkP-ms-ZCS" id="XRV-Es-bLA">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="177"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iFf-Je-Lqw">
+                                                    <rect key="frame" x="20" y="11" width="374" height="155"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Name" id="FhU-mc-Zlz">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="baL-25-jbU">
+                                        <rect key="frame" x="0.0" y="288.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="baL-25-jbU" id="cGP-fn-9PG">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="X9n-sR-ICk">
+                                                    <rect key="frame" x="20" y="4" width="374" height="34"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Preis" id="5gC-ho-57y">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="aKg-C0-1NB">
+                                        <rect key="frame" x="0.0" y="388" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aKg-C0-1NB" id="efx-zH-mvF">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YGX-hW-dzL">
+                                                    <rect key="frame" x="20" y="5" width="374" height="34"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Wunschliste auswählen" id="pgX-dZ-HQb">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="274" id="zPr-Ek-9FZ">
+                                        <rect key="frame" x="0.0" y="487.5" width="414" height="274"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zPr-Ek-9FZ" id="JAR-Ny-yim">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="274"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VS8-e6-CIf" customClass="WishListTableView" customModule="Share" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="33" width="374" height="230"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <prototypes>
+                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WishListCell" rowHeight="29" id="NER-hL-1zy" customClass="WishListCell" customModule="Share" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="28" width="374" height="29"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NER-hL-1zy" id="kTG-rx-PtQ">
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="29"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4vf-bb-cRe">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="29"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="4vf-bb-cRe" firstAttribute="centerY" secondItem="kTG-rx-PtQ" secondAttribute="centerY" id="11R-6b-1K8"/>
+                                                                    <constraint firstItem="4vf-bb-cRe" firstAttribute="top" secondItem="kTG-rx-PtQ" secondAttribute="top" id="Yhl-ab-oBA"/>
+                                                                    <constraint firstItem="4vf-bb-cRe" firstAttribute="leading" secondItem="kTG-rx-PtQ" secondAttribute="leading" id="iiN-bf-RpQ"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="4vf-bb-cRe" secondAttribute="trailing" id="qKZ-Z6-2k4"/>
+                                                                </constraints>
+                                                            </tableViewCellContentView>
+                                                            <connections>
+                                                                <outlet property="wishListName" destination="4vf-bb-cRe" id="Qb7-4g-VUH"/>
+                                                            </connections>
+                                                        </tableViewCell>
+                                                    </prototypes>
+                                                </tableView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="EKi-er-d0Y" id="Z5e-1w-75f"/>
+                            <outlet property="delegate" destination="EKi-er-d0Y" id="eq0-wJ-yeq"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Wunsch hinzufügen" id="XDw-DH-06H">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="eRB-0g-UgC"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="productImage" destination="iFf-Je-Lqw" id="ADT-PN-Gzi"/>
+                        <outlet property="productName" destination="X9n-sR-ICk" id="5oz-P3-JbI"/>
+                        <outlet property="productPrice" destination="YGX-hW-dzL" id="t5j-QM-j10"/>
+                        <outlet property="wishListTableView" destination="VS8-e6-CIf" id="nzK-iw-FQ5"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ahX-uH-ui5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2239.130434782609" y="32.8125"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pA8-hs-lW6">

@@ -8,6 +8,7 @@
 import Foundation
 
 struct ProductInfo {
+    let productUrl: String
     let imageUrl: String
     let name: String?
 }

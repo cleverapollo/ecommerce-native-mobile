@@ -6,7 +6,8 @@ ExtensionClass.prototype = {
             "title": document.title,
             "hostname": document.location.hostname,
             "favicon": this.fetchFavicon(),
-            "productInfos": this.fetchProductInfos()
+            "productInfos": this.fetchProductInfos(),
+            "url": document.URL
         });
     },
     fetchFavicon: function() {
