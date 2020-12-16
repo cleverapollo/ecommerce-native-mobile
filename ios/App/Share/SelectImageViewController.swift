@@ -20,6 +20,7 @@ class ProductInfoCell: UICollectionViewCell {
 class SelectImageViewController: UICollectionViewController {
     
     var productInfos: [ProductInfo] = []
+    var selectedCell: ProductInfoCell? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +67,24 @@ class SelectImageViewController: UICollectionViewController {
         cell.name.text = productInfo.name
     
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! ProductInfoCell
+        cell.layer.borderWidth = 2.0
+        if selectedCell == cell {
+            cell.layer.borderColor = UIColor.white.cgColor
+            selectedCell = nil
+        } else {
+            cell.layer.borderColor = UIColor.red.cgColor
+            selectedCell = cell
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderWidth = 2.0
+        cell?.layer.borderColor = UIColor.white.cgColor
     }
 
     // MARK: UICollectionViewDelegate
