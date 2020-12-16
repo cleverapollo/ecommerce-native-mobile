@@ -19,6 +19,8 @@ class ProductInfoCell: UICollectionViewCell {
 
 class SelectImageViewController: UICollectionViewController {
     
+    @IBOutlet weak var selectProductInfoButton: UIButton!
+    
     var productInfos: [ProductInfo] = []
     var selectedCell: ProductInfoCell? = nil
 
@@ -35,6 +37,7 @@ class SelectImageViewController: UICollectionViewController {
         if let item = extensionContext?.inputItems.first as? NSExtensionItem {
             accessWebpageProperties(extensionItem: item)
         }
+        selectProductInfoButton.isEnabled = selectedCell == nil ? false : true
     }
 
     /*
@@ -75,9 +78,11 @@ class SelectImageViewController: UICollectionViewController {
         if selectedCell == cell {
             cell.layer.borderColor = UIColor.white.cgColor
             selectedCell = nil
+            selectProductInfoButton.isEnabled = false
         } else {
             cell.layer.borderColor = UIColor.red.cgColor
             selectedCell = cell
+            selectProductInfoButton.isEnabled = true
         }
     }
     
