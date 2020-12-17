@@ -18,13 +18,17 @@ struct WishListService {
             return
         }
         
-        let url = URL(string: "https://wantic-rest-api-fddlidpl2q-ew.a.run.app/wish-list")!
-        let request = createRequest(url, authToken: authToken)
+        let request = createRequest(authToken: authToken)
         let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
                 completionHandler(.failure(error))
-            } else if let data = data {
+            } else if let response = response as? HTTPURLResponse {
+                guard let data = data, response.statusCode == 200 else {
+                    let error = NSError(domain: "app.wantic.io", code: 910, userInfo: [ "statusCode": response.statusCode ])
+                    completionHandler(.failure(error))
+                    return
+                }
                 do {
                     let wishLists = try JSONDecoder().decode([WishList].self, from: data)
                     completionHandler(.success(wishLists))
@@ -32,13 +36,16 @@ struct WishListService {
                     print(error.localizedDescription)
                     completionHandler(.failure(error))
                 }
+            } else {
+                completionHandler(.failure(NSError(domain: "app.wantic.io", code: 920, userInfo: nil)))
             }
             
         })
         task.resume()
     }
     
-    private func createRequest(_ url: URL, authToken: String) -> URLRequest {
+    private func createRequest(authToken: String) -> URLRequest {
+        let url = URL(string: "https://wantic-rest-api-fddlidpl2q-ew.a.run.app/wish-list")!
         var request = URLRequest(url: url)
         request.setValue("*", forHTTPHeaderField: "Access-Control-Allow-Origin")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
