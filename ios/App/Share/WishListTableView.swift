@@ -17,12 +17,34 @@ class WishListCell: UITableViewCell {
 
 class WishListTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
 
-    var wishLists: [WishList] = [
-        WishList(id: 1, name: "30. Geburtstag"),
-        WishList(id: 2, name: "Weihnachten"),
-        WishList(id: 3, name: "Ostern 2021"),
-    ]
+    var wishLists: [WishList] = []
     var selectedCell: WishListCell? = nil
+    
+    init() {
+        super.init(frame: .zero, style: .plain)
+        self.loadWishLists()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.loadWishLists()
+    }
+    
+    override init(frame: CGRect, style: UITableView.Style) {
+        super.init(frame: frame, style: style)
+        self.loadWishLists()
+    }
+    
+    func loadWishLists() {
+        WishListService.shared.getWishLists(completionHandler: { result in
+            switch result {
+            case .success(let wishLists):
+                self.wishLists = wishLists
+            case .failure(_):
+                self.wishLists = []
+            }
+        })
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return wishLists.count

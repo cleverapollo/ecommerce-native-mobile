@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,6 +26,9 @@
 		B1A80FAE258A770100F0917F /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FAD258A770100F0917F /* WishList.swift */; };
 		B1A80FB8258A7F1400F0917F /* WishListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FB7258A7F1400F0917F /* WishListTableView.swift */; };
 		B1A80FBC258A8A7900F0917F /* checkmark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B1A80FBB258A8A7900F0917F /* checkmark.jpg */; };
+		B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */; };
+		B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
+		B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +81,9 @@
 		B1A80FAD258A770100F0917F /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
 		B1A80FB7258A7F1400F0917F /* WishListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListTableView.swift; sourceTree = "<group>"; };
 		B1A80FBB258A8A7900F0917F /* checkmark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkmark.jpg; sourceTree = "<group>"; };
+		B1A80FC4258B3F9B00F0917F /* WishListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListService.swift; sourceTree = "<group>"; };
+		B1A80FC8258B40D900F0917F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		B1A80FCE258B508B00F0917F /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
 		C97BED73FFF1D804E0CD9DA7 /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +166,8 @@
 		B1A80F852589F59800F0917F /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				B1A80FCE258B508B00F0917F /* Share.entitlements */,
+				B1A80FC8258B40D900F0917F /* AuthService.swift */,
 				B1A80FBB258A8A7900F0917F /* checkmark.jpg */,
 				B1A80FA7258A705100F0917F /* CreateWishViewController.swift */,
 				B1A80F97258A0F5D00F0917F /* ExtensionClass.js */,
@@ -170,6 +179,7 @@
 				B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */,
 				B1A80FAD258A770100F0917F /* WishList.swift */,
 				B1A80FB7258A7F1400F0917F /* WishListTableView.swift */,
+				B1A80FC4258B3F9B00F0917F /* WishListService.swift */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -211,6 +221,9 @@
 			dependencies = (
 			);
 			name = Share;
+			packageProductDependencies = (
+				B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */,
+			);
 			productName = Share;
 			productReference = B1A80F842589F59800F0917F /* Share.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -244,6 +257,9 @@
 				Base,
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
+			packageReferences = (
+				B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -329,8 +345,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */,
 				B1A80FA0258A281600F0917F /* ProductInfo.swift in Sources */,
 				B1A80F9C258A143300F0917F /* SelectImageViewController.swift in Sources */,
+				B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */,
 				B1A80FAE258A770100F0917F /* WishList.swift in Sources */,
 				B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */,
 				B1A80FA8258A705100F0917F /* CreateWishViewController.swift in Sources */,
@@ -479,7 +497,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -496,7 +515,10 @@
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app;
@@ -519,7 +541,10 @@
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -536,11 +561,16 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -559,11 +589,16 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app.share;
@@ -605,6 +640,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 504EC2FC1FED79650016851F /* Project object */;
 }

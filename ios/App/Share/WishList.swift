@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WishList {
+struct WishList: Codable {
     let id: Int
     let name: String
 }
