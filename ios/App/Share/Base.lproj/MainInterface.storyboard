@@ -141,7 +141,7 @@
                                                     <rect key="frame" x="20" y="5" width="374" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -157,14 +157,18 @@
                     <navigationItem key="navigationItem" title="Details bearbeiten" id="XDw-DH-06H">
                         <barButtonItem key="rightBarButtonItem" title="Weiter" id="1Y7-hM-0w3">
                             <connections>
+                                <action selector="onNextButtonTap:" destination="EKi-er-d0Y" id="cM1-gZ-Fls"/>
                                 <segue destination="hwQ-OK-BYQ" kind="show" id="9FU-7Q-41j"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="nextButton" destination="1Y7-hM-0w3" id="z8v-9R-Z9S"/>
                         <outlet property="productImage" destination="iFf-Je-Lqw" id="ADT-PN-Gzi"/>
                         <outlet property="productName" destination="X9n-sR-ICk" id="5oz-P3-JbI"/>
                         <outlet property="productPrice" destination="YGX-hW-dzL" id="t5j-QM-j10"/>
+                        <outletCollection property="textFields" destination="X9n-sR-ICk" collectionClass="NSMutableArray" id="WQr-fu-hCS"/>
+                        <outletCollection property="textFields" destination="YGX-hW-dzL" collectionClass="NSMutableArray" id="KPL-B9-7L0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahX-uH-ui5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -181,14 +185,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WishListTableViewCell" id="RNq-QX-Q9R" customClass="WishListTableViewCell" customModule="Share" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="45.5"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RNq-QX-Q9R" id="npI-vc-p1K">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="45"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fd8-oe-Bbw">
-                                            <rect key="frame" x="20" y="12" width="374" height="21.5"/>
+                                            <rect key="frame" x="20" y="12" width="374" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -212,7 +216,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Wunschliste auswählen" id="Clo-xm-5EV">
-                        <barButtonItem key="rightBarButtonItem" title="Speichern" style="done" id="LJr-on-KOh"/>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Speichern" style="done" id="LJr-on-KOh">
+                            <connections>
+                                <action selector="onButtonTap" destination="hwQ-OK-BYQ" id="ll4-dZ-wLJ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="saveButton" destination="LJr-on-KOh" id="e6B-aw-8zr"/>

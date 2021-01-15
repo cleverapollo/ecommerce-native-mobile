@@ -17,8 +17,17 @@ class WishListTableViewController: UITableViewController {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
+    @IBAction func onButtonTap() {
+        print("Button tapped!")
+    }
+    
     var wishLists: [WishList] = []
-    var selectedCell: WishListTableViewCell? = nil
+    var wishListId: Int? {
+        didSet {
+            WishDataStore.shared.wish.wishListId = wishListId
+            saveButton.isEnabled = WishDataStore.shared.wish.isValid()
+        }
+    }
     
     let reuseIdentifier = "WishListTableViewCell"
     
@@ -63,12 +72,9 @@ class WishListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WishListTableViewCell
-        if cell == selectedCell {
-            selectedCell = nil
-        } else {
-            selectedCell = cell
-        }
+        //let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WishListTableViewCell
+        let wishList = wishLists[indexPath.row]
+        wishListId = wishList.id
     }
 
 }

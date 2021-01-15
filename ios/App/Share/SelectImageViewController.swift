@@ -70,6 +70,8 @@ class SelectImageViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ProductInfoCell
+        let productInfo = productInfos[indexPath.row]
+        
         cell.layer.borderWidth = 2.0
         if selectedCell == cell {
             cell.layer.borderColor = UIColor.white.cgColor
@@ -79,6 +81,7 @@ class SelectImageViewController: UICollectionViewController {
             cell.layer.borderColor = UIColor.red.cgColor
             selectedCell = cell
             selectProductInfoButton.isEnabled = true
+            WishDataStore.shared.wish.addProductInfo(productInfo)
         }
     }
     

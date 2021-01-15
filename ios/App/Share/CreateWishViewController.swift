@@ -7,19 +7,23 @@
 
 import UIKit
 
-class CreateWishViewController: UITableViewController {
+class CreateWishViewController: UITableViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var nextButton: UIBarButtonItem!
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var productName: UITextField!
     @IBOutlet weak var productPrice: UITextField!
+    
+    @IBOutlet var textFields: [UITextField]!
     
     var productInfo: ProductInfo!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        productImage.setImageFromURl(ImageUrl: productInfo.imageUrl)
-        productName.text = productInfo.name
+        setupView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)), name: UITextField.textDidChangeNotification, object: nil)
     }
 
     // MARK: - Table view data source
@@ -31,60 +35,50 @@ class CreateWishViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
+    
+    // MARK: UITextFieldDelegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == productName {
+            productPrice.becomeFirstResponder()
+        }
         return true
     }
-    */
+    
+    @objc private func textDidChange(_ notification: Notification) {
+        var formIsValid = true
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        for textField in textFields {
+            if textField == productName {
+                WishDataStore.shared.wish.name = textField.text
+            } else if textField == productPrice {
+                WishDataStore.shared.wish.price = textField.text
+            }
+            
+            guard validate(textField) else {
+                formIsValid = false
+                break
+            }
+        }
+
+        // Update Save Button
+        nextButton.isEnabled = formIsValid
     }
-    */
+    
+    fileprivate func validate(_ textField: UITextField) -> Bool {
+        guard let text = textField.text else {
+            return false
+        }
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        return text.count > 0
     }
-    */
+    
+    // MARK: - View Methods
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    func setupView() {
+        productImage.setImageFromURl(ImageUrl: productInfo.imageUrl)
+        productName.text = productInfo.name
+        
+        nextButton.isEnabled = false
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
