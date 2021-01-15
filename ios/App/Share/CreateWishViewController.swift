@@ -12,8 +12,6 @@ class CreateWishViewController: UITableViewController {
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var productName: UITextField!
     @IBOutlet weak var productPrice: UITextField!
-    @IBOutlet weak var wishListTableView: WishListTableView!
-    var dataSource = WishListTableView()
     
     var productInfo: ProductInfo!
     
@@ -22,14 +20,12 @@ class CreateWishViewController: UITableViewController {
 
         productImage.setImageFromURl(ImageUrl: productInfo.imageUrl)
         productName.text = productInfo.name
-        wishListTableView.dataSource = dataSource
-        wishListTableView.delegate = dataSource
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

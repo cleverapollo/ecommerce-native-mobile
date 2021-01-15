@@ -14,6 +14,9 @@
 		504EC30F1FED79650016851F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
+		B148806825AE0D9500D0106B /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806725AE0D9500D0106B /* LoginResponse.swift */; };
+		B148806E25AE129500D0106B /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806D25AE129500D0106B /* LoginRequest.swift */; };
+		B148809C25B202CE00D0106B /* WishListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148809B25B202CE00D0106B /* WishListTableViewController.swift */; };
 		B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		B1A80F872589F59800F0917F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80F862589F59800F0917F /* ShareViewController.swift */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
@@ -24,7 +27,6 @@
 		B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */; };
 		B1A80FA8258A705100F0917F /* CreateWishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA7258A705100F0917F /* CreateWishViewController.swift */; };
 		B1A80FAE258A770100F0917F /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FAD258A770100F0917F /* WishList.swift */; };
-		B1A80FB8258A7F1400F0917F /* WishListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FB7258A7F1400F0917F /* WishListTableView.swift */; };
 		B1A80FBC258A8A7900F0917F /* checkmark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B1A80FBB258A8A7900F0917F /* checkmark.jpg */; };
 		B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */; };
 		B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
@@ -68,6 +70,9 @@
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = SOURCE_ROOT; };
 		A0F80432FF2FC51BAC14E157 /* Pods-Wantic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wantic/Pods-Wantic.release.xcconfig"; sourceTree = "<group>"; };
 		AF51FD2D460BCFE21FA515B2 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
+		B148806725AE0D9500D0106B /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		B148806D25AE129500D0106B /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		B148809B25B202CE00D0106B /* WishListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListTableViewController.swift; sourceTree = "<group>"; };
 		B17635ED256AD3EC00AAEBB8 /* App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		B1A80F842589F59800F0917F /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A80F862589F59800F0917F /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -79,7 +84,6 @@
 		B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		B1A80FA7258A705100F0917F /* CreateWishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWishViewController.swift; sourceTree = "<group>"; };
 		B1A80FAD258A770100F0917F /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
-		B1A80FB7258A7F1400F0917F /* WishListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListTableView.swift; sourceTree = "<group>"; };
 		B1A80FBB258A8A7900F0917F /* checkmark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkmark.jpg; sourceTree = "<group>"; };
 		B1A80FC4258B3F9B00F0917F /* WishListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListService.swift; sourceTree = "<group>"; };
 		B1A80FC8258B40D900F0917F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -174,12 +178,14 @@
 				B1A80F862589F59800F0917F /* ShareViewController.swift */,
 				B1A80F882589F59800F0917F /* MainInterface.storyboard */,
 				B1A80F8B2589F59800F0917F /* Info.plist */,
+				B148806D25AE129500D0106B /* LoginRequest.swift */,
+				B148806725AE0D9500D0106B /* LoginResponse.swift */,
 				B1A80F9B258A143300F0917F /* SelectImageViewController.swift */,
 				B1A80F9F258A281600F0917F /* ProductInfo.swift */,
 				B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */,
 				B1A80FAD258A770100F0917F /* WishList.swift */,
-				B1A80FB7258A7F1400F0917F /* WishListTableView.swift */,
 				B1A80FC4258B3F9B00F0917F /* WishListService.swift */,
+				B148809B25B202CE00D0106B /* WishListTableViewController.swift */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -349,11 +355,13 @@
 				B1A80FA0258A281600F0917F /* ProductInfo.swift in Sources */,
 				B1A80F9C258A143300F0917F /* SelectImageViewController.swift in Sources */,
 				B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */,
+				B148806825AE0D9500D0106B /* LoginResponse.swift in Sources */,
 				B1A80FAE258A770100F0917F /* WishList.swift in Sources */,
+				B148809C25B202CE00D0106B /* WishListTableViewController.swift in Sources */,
 				B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */,
 				B1A80FA8258A705100F0917F /* CreateWishViewController.swift in Sources */,
 				B1A80F872589F59800F0917F /* ShareViewController.swift in Sources */,
-				B1A80FB8258A7F1400F0917F /* WishListTableView.swift in Sources */,
+				B148806E25AE129500D0106B /* LoginRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -148,71 +148,79 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Wunschliste auswählen" id="pgX-dZ-HQb">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="274" id="zPr-Ek-9FZ">
-                                        <rect key="frame" x="0.0" y="487.5" width="414" height="274"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zPr-Ek-9FZ" id="JAR-Ny-yim">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="274"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VS8-e6-CIf" customClass="WishListTableView" customModule="Share" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="33" width="374" height="230"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <prototypes>
-                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WishListCell" rowHeight="29" id="NER-hL-1zy" customClass="WishListCell" customModule="Share" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="28" width="374" height="29"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NER-hL-1zy" id="kTG-rx-PtQ">
-                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="29"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4vf-bb-cRe">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="29"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="4vf-bb-cRe" firstAttribute="centerY" secondItem="kTG-rx-PtQ" secondAttribute="centerY" id="11R-6b-1K8"/>
-                                                                    <constraint firstItem="4vf-bb-cRe" firstAttribute="top" secondItem="kTG-rx-PtQ" secondAttribute="top" id="Yhl-ab-oBA"/>
-                                                                    <constraint firstItem="4vf-bb-cRe" firstAttribute="leading" secondItem="kTG-rx-PtQ" secondAttribute="leading" id="iiN-bf-RpQ"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="4vf-bb-cRe" secondAttribute="trailing" id="qKZ-Z6-2k4"/>
-                                                                </constraints>
-                                                            </tableViewCellContentView>
-                                                            <connections>
-                                                                <outlet property="wishListName" destination="4vf-bb-cRe" id="Qb7-4g-VUH"/>
-                                                            </connections>
-                                                        </tableViewCell>
-                                                    </prototypes>
-                                                </tableView>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="EKi-er-d0Y" id="Z5e-1w-75f"/>
                             <outlet property="delegate" destination="EKi-er-d0Y" id="eq0-wJ-yeq"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Wunsch hinzufügen" id="XDw-DH-06H">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="eRB-0g-UgC"/>
+                    <navigationItem key="navigationItem" title="Details bearbeiten" id="XDw-DH-06H">
+                        <barButtonItem key="rightBarButtonItem" title="Weiter" id="1Y7-hM-0w3">
+                            <connections>
+                                <segue destination="hwQ-OK-BYQ" kind="show" id="9FU-7Q-41j"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="productImage" destination="iFf-Je-Lqw" id="ADT-PN-Gzi"/>
                         <outlet property="productName" destination="X9n-sR-ICk" id="5oz-P3-JbI"/>
                         <outlet property="productPrice" destination="YGX-hW-dzL" id="t5j-QM-j10"/>
-                        <outlet property="wishListTableView" destination="VS8-e6-CIf" id="nzK-iw-FQ5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahX-uH-ui5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2239.130434782609" y="32.8125"/>
+            <point key="canvasLocation" x="2255" y="31"/>
+        </scene>
+        <!--Select Wish List-->
+        <scene sceneID="0gk-1J-McY">
+            <objects>
+                <tableViewController title="Select Wish List" id="hwQ-OK-BYQ" customClass="WishListTableViewController" customModule="Share" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qob-la-tJ6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WishListTableViewCell" id="RNq-QX-Q9R" customClass="WishListTableViewCell" customModule="Share" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="45.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RNq-QX-Q9R" id="npI-vc-p1K">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="45.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fd8-oe-Bbw">
+                                            <rect key="frame" x="20" y="12" width="374" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="fd8-oe-Bbw" firstAttribute="centerY" secondItem="npI-vc-p1K" secondAttribute="centerY" id="2vN-bc-m9Q"/>
+                                        <constraint firstItem="fd8-oe-Bbw" firstAttribute="top" secondItem="npI-vc-p1K" secondAttribute="topMargin" constant="1" id="6HI-jd-iCS"/>
+                                        <constraint firstItem="fd8-oe-Bbw" firstAttribute="leading" secondItem="npI-vc-p1K" secondAttribute="leadingMargin" id="O2x-fg-Ukq"/>
+                                        <constraint firstItem="fd8-oe-Bbw" firstAttribute="trailing" secondItem="npI-vc-p1K" secondAttribute="trailingMargin" id="gAD-Nf-hTP"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="fd8-oe-Bbw" id="793-Pz-k3M"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="hwQ-OK-BYQ" id="xN1-9n-5BY"/>
+                            <outlet property="delegate" destination="hwQ-OK-BYQ" id="dhb-wx-ok6"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Wunschliste auswählen" id="Clo-xm-5EV">
+                        <barButtonItem key="rightBarButtonItem" title="Speichern" style="done" id="LJr-on-KOh"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="saveButton" destination="LJr-on-KOh" id="e6B-aw-8zr"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p42-pB-TC6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3017.3913043478265" y="30.803571428571427"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pA8-hs-lW6">

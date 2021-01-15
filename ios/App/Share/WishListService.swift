@@ -45,11 +45,12 @@ struct WishListService {
     }
     
     private func createRequest(authToken: String) -> URLRequest {
-        let url = URL(string: "https://wantic-rest-api-fddlidpl2q-ew.a.run.app/wish-list")!
+        let url = URL(string: "https://rest-dev.wantic.io/wish-list")!
         var request = URLRequest(url: url)
         request.setValue("*", forHTTPHeaderField: "Access-Control-Allow-Origin")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + authToken, forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         return request
     }
     
