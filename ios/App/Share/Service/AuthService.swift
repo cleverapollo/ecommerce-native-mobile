@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftKeychainWrapper
+import JWTDecode
 
 struct AuthService {
     
@@ -64,8 +65,19 @@ struct AuthService {
     }
     
     func getAuthToken() -> String? {
-        let token = keychainwrapper.string(forKey: "auth-token")?.replacingOccurrences(of: "\"", with: "")
-        print("token: \(token ?? "")")
-        return token
+        guard let encodedToken = keychainwrapper.string(forKey: "auth-token")?.replacingOccurrences(of: "\"", with: "") else {
+            return nil
+        }
+        var tokenExpired = false
+        
+        do {
+            let jwt = try decode(jwt: encodedToken)
+            tokenExpired = jwt.expired
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        print("token: \(encodedToken)")
+        return tokenExpired ? nil : encodedToken
     }
 }
