@@ -30,7 +30,7 @@ struct ToastService {
     }
     
     func redirectToHostApp(controller: UIViewController, extensionContext: NSExtensionContext, wishListId: Int) {
-        let url = URL(string: "http://app.beta.wantic.io/home/wish-list/\(wishListId)")
+        let url = URL(string: "http://app.beta.wantic.io/secure/home/wish-list/\(wishListId)")
         var responder = controller as UIResponder?
         let selectorOpenURL = sel_registerName("openURL:")
         
