@@ -21,14 +21,25 @@ class SelectImageViewController: UICollectionViewController {
     
     @IBOutlet weak var selectProductInfoButton: UIBarButtonItem!
     
+    let authService = AuthService.shared
+    let toastService = ToastService.shared
+    
     var productInfos: [ProductInfo] = []
     var selectedCell: ProductInfoCell? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let item = extensionContext?.inputItems.first as? NSExtensionItem {
-            accessWebpageProperties(extensionItem: item)
+        setupView()
+    }
+    
+    private func setupView() {
+        if let _ = authService.getAuthToken() {
+            if let item = extensionContext?.inputItems.first as? NSExtensionItem {
+                accessWebpageProperties(extensionItem: item)
+            }
+        } else {
+            toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
         }
         selectProductInfoButton.isEnabled = selectedCell == nil ? false : true
     }

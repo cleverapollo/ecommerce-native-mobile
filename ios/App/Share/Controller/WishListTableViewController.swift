@@ -46,6 +46,11 @@ class WishListTableViewController: UITableViewController {
     }
     
     private func loadWishLists() {
+        guard let _ = AuthService.shared.getAuthToken() else {
+            ToastService.shared.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+            return
+        }
+        
         WishListService.shared.getWishLists(completionHandler: { result in
             switch result {
             case .success(let wishLists):
