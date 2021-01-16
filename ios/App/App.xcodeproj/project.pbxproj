@@ -22,6 +22,7 @@
 		B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880BD25B2143700D0106B /* WishDataStore.swift */; };
 		B14880C425B2E8B700D0106B /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
 		B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
+		B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* JWTDecode */; };
 		B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		B1A80F872589F59800F0917F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80F862589F59800F0917F /* ShareViewController.swift */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
@@ -115,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */,
 				B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +270,7 @@
 			name = Share;
 			packageProductDependencies = (
 				B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */,
+				B14880D525B30A6E00D0106B /* JWTDecode */,
 			);
 			productName = Share;
 			productReference = B1A80F842589F59800F0917F /* Share.appex */;
@@ -304,6 +307,7 @@
 			mainGroup = 504EC2FB1FED79650016851F;
 			packageReferences = (
 				B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
@@ -694,6 +698,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.0;
+			};
+		};
 		B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
@@ -705,6 +717,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B14880D525B30A6E00D0106B /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
+			productName = JWTDecode;
+		};
 		B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
