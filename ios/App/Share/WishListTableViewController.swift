@@ -18,7 +18,15 @@ class WishListTableViewController: UITableViewController {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     @IBAction func onButtonTap() {
-        print("Button tapped!")
+        let wish = WishDataStore.shared.wish
+        WishService.shared.saveWish(wish, completionHandler: { result in
+            switch result {
+            case .success(_):
+                ToastService.shared.showToast(controller: self, message: "Dein Wunsch wurde erfolgreich deiner Liste hinzugefügt.", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
+            case .failure(_):
+                ToastService.shared.showToast(controller: self, message: "Beim Speichern deines Wunsches ist ein Fehler aufgetreten", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
+            }
+        })
     }
     
     var wishLists: [WishList] = []

@@ -20,6 +20,7 @@
 		B14880B225B20F2000D0106B /* Wish.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880B125B20F2000D0106B /* Wish.swift */; };
 		B14880B825B20FE800D0106B /* WishService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880B725B20FE800D0106B /* WishService.swift */; };
 		B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880BD25B2143700D0106B /* WishDataStore.swift */; };
+		B14880C425B2E8B700D0106B /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
 		B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		B1A80F872589F59800F0917F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80F862589F59800F0917F /* ShareViewController.swift */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
@@ -79,6 +80,7 @@
 		B14880B125B20F2000D0106B /* Wish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wish.swift; sourceTree = "<group>"; };
 		B14880B725B20FE800D0106B /* WishService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishService.swift; sourceTree = "<group>"; };
 		B14880BD25B2143700D0106B /* WishDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishDataStore.swift; sourceTree = "<group>"; };
+		B14880C325B2E8B700D0106B /* ToastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastService.swift; sourceTree = "<group>"; };
 		B17635ED256AD3EC00AAEBB8 /* App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		B1A80F842589F59800F0917F /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A80F862589F59800F0917F /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				B148806725AE0D9500D0106B /* LoginResponse.swift */,
 				B1A80F9B258A143300F0917F /* SelectImageViewController.swift */,
 				B1A80F9F258A281600F0917F /* ProductInfo.swift */,
+				B14880C325B2E8B700D0106B /* ToastService.swift */,
 				B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */,
 				B14880B125B20F2000D0106B /* Wish.swift */,
 				B14880BD25B2143700D0106B /* WishDataStore.swift */,
@@ -362,6 +365,7 @@
 			files = (
 				B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */,
 				B1A80FA0258A281600F0917F /* ProductInfo.swift in Sources */,
+				B14880C425B2E8B700D0106B /* ToastService.swift in Sources */,
 				B1A80F9C258A143300F0917F /* SelectImageViewController.swift in Sources */,
 				B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */,
 				B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */,

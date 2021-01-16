@@ -26,7 +26,7 @@ class WishService {
                 print(error.localizedDescription)
                 completionHandler(.failure(error))
             } else if let response = response as? HTTPURLResponse {
-                guard let data = data, response.statusCode == 201 else {
+                guard let data = data, response.statusCode == 200 else {
                     let error = NSError(domain: "app.wantic.io", code: 910, userInfo: [ "statusCode": response.statusCode ])
                     completionHandler(.failure(error))
                     return
