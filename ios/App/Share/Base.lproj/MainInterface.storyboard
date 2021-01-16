@@ -138,10 +138,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YGX-hW-dzL">
-                                                    <rect key="frame" x="20" y="5" width="374" height="34"/>
+                                                    <rect key="frame" x="20" y="5" width="328" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="€" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uhQ-OV-IRe">
+                                                    <rect key="frame" x="356" y="5" width="38" height="34"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -167,13 +173,15 @@
                         <outlet property="productImage" destination="iFf-Je-Lqw" id="ADT-PN-Gzi"/>
                         <outlet property="productName" destination="X9n-sR-ICk" id="5oz-P3-JbI"/>
                         <outlet property="productPrice" destination="YGX-hW-dzL" id="t5j-QM-j10"/>
+                        <outlet property="productPriceCurrency" destination="uhQ-OV-IRe" id="kaw-eu-mhF"/>
                         <outletCollection property="textFields" destination="X9n-sR-ICk" collectionClass="NSMutableArray" id="WQr-fu-hCS"/>
                         <outletCollection property="textFields" destination="YGX-hW-dzL" collectionClass="NSMutableArray" id="KPL-B9-7L0"/>
+                        <outletCollection property="textFields" destination="uhQ-OV-IRe" collectionClass="NSMutableArray" id="qYS-2Y-Iy9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahX-uH-ui5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2255" y="31"/>
+            <point key="canvasLocation" x="2253.6231884057975" y="30.803571428571427"/>
         </scene>
         <!--Select Wish List-->
         <scene sceneID="0gk-1J-McY">
@@ -185,14 +193,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WishListTableViewCell" id="RNq-QX-Q9R" customClass="WishListTableViewCell" customModule="Share" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="45"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="45.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RNq-QX-Q9R" id="npI-vc-p1K">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="45"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="45.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fd8-oe-Bbw">
-                                            <rect key="frame" x="20" y="12" width="374" height="21"/>
+                                            <rect key="frame" x="20" y="12" width="374" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>

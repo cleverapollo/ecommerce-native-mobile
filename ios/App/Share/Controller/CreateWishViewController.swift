@@ -13,6 +13,7 @@ class CreateWishViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var productName: UITextField!
     @IBOutlet weak var productPrice: UITextField!
+    @IBOutlet weak var productPriceCurrency: UITextField!
     
     @IBOutlet var textFields: [UITextField]!
     
@@ -52,7 +53,12 @@ class CreateWishViewController: UITableViewController, UITextFieldDelegate {
             if textField == productName {
                 WishDataStore.shared.wish.name = textField.text
             } else if textField == productPrice {
-                WishDataStore.shared.wish.price = textField.text
+                updatePrice()
+            } else if textField == productPriceCurrency {
+                if let text = textField.text, text.count > 1 {
+                    textField.deleteBackward()
+                }
+                updatePrice()
             }
             
             guard validate(textField) else {
@@ -63,6 +69,11 @@ class CreateWishViewController: UITableViewController, UITextFieldDelegate {
 
         // Update Save Button
         nextButton.isEnabled = formIsValid
+    }
+    
+    func updatePrice() {
+        guard let value = productPrice.text, let currency = productPriceCurrency.text else { return }
+        WishDataStore.shared.wish.price = "\(value) \(currency)"
     }
     
     fileprivate func validate(_ textField: UITextField) -> Bool {
