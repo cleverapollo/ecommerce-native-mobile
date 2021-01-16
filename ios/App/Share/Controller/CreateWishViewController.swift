@@ -7,15 +7,15 @@
 
 import UIKit
 
-class CreateWishViewController: UITableViewController, UITextFieldDelegate {
+class CreateWishViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet weak var nextButton: UIBarButtonItem!
     @IBOutlet weak var productImage: UIImageView!
-    @IBOutlet weak var productName: UITextField!
     @IBOutlet weak var productPrice: UITextField!
     @IBOutlet weak var productPriceCurrency: UITextField!
+    @IBOutlet weak var productName: UITextView!
     
-    @IBOutlet var textFields: [UITextField]!
+    @IBOutlet var textFields: [UITextInput]!
     
     var productInfo: ProductInfo!
     
@@ -49,19 +49,23 @@ class CreateWishViewController: UITableViewController, UITextFieldDelegate {
     @objc private func textDidChange(_ notification: Notification) {
         var formIsValid = true
 
-        for textField in textFields {
-            if textField == productName {
-                WishDataStore.shared.wish.name = textField.text
-            } else if textField == productPrice {
-                updatePrice()
-            } else if textField == productPriceCurrency {
-                if let text = textField.text, text.count > 1 {
-                    textField.deleteBackward()
+        for textInput in textFields {
+            if let textField = textInput as? UITextField {
+                if textField == productPrice {
+                    updatePrice()
+                } else if textField == productPriceCurrency {
+                    if let text = textField.text, text.count > 1 {
+                        textInput.deleteBackward()
+                    }
+                    updatePrice()
                 }
-                updatePrice()
+            } else if let textView = textInput as? UITextView {
+                if textView == productName {
+                    WishDataStore.shared.wish.name = textView.text
+                }
             }
             
-            guard validate(textField) else {
+            guard validate(textInput) else {
                 formIsValid = false
                 break
             }
@@ -76,9 +80,13 @@ class CreateWishViewController: UITableViewController, UITextFieldDelegate {
         WishDataStore.shared.wish.price = "\(value) \(currency)"
     }
     
-    fileprivate func validate(_ textField: UITextField) -> Bool {
-        guard let text = textField.text else {
-            return false
+    fileprivate func validate(_ textInput: UITextInput) -> Bool {
+        var text = ""
+        
+        if let textField = textInput as? UITextField {
+            text = textField.text != nil ? textField.text! : text
+        } else if let textView = textInput as? UITextView {
+            text = textView.text != nil ? textView.text! : text
         }
 
         return text.count > 0
