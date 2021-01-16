@@ -175,29 +175,53 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B14880CB25B2FEDD00D0106B /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B1A80FC8258B40D900F0917F /* AuthService.swift */,
+				B14880C325B2E8B700D0106B /* ToastService.swift */,
+				B14880BD25B2143700D0106B /* WishDataStore.swift */,
+				B1A80FC4258B3F9B00F0917F /* WishListService.swift */,
+				B14880B725B20FE800D0106B /* WishService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		B14880CC25B2FF0000D0106B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B1A80FA7258A705100F0917F /* CreateWishViewController.swift */,
+				B1A80F862589F59800F0917F /* ShareViewController.swift */,
+				B1A80F9B258A143300F0917F /* SelectImageViewController.swift */,
+				B148809B25B202CE00D0106B /* WishListTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B14880CD25B2FF2000D0106B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B148806D25AE129500D0106B /* LoginRequest.swift */,
+				B148806725AE0D9500D0106B /* LoginResponse.swift */,
+				B1A80F9F258A281600F0917F /* ProductInfo.swift */,
+				B14880B125B20F2000D0106B /* Wish.swift */,
+				B1A80FAD258A770100F0917F /* WishList.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		B1A80F852589F59800F0917F /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				B14880CC25B2FF0000D0106B /* Controller */,
+				B14880CD25B2FF2000D0106B /* Model */,
+				B14880CB25B2FEDD00D0106B /* Service */,
 				B1A80FCE258B508B00F0917F /* Share.entitlements */,
-				B1A80FC8258B40D900F0917F /* AuthService.swift */,
 				B1A80FBB258A8A7900F0917F /* checkmark.jpg */,
-				B1A80FA7258A705100F0917F /* CreateWishViewController.swift */,
 				B1A80F97258A0F5D00F0917F /* ExtensionClass.js */,
-				B1A80F862589F59800F0917F /* ShareViewController.swift */,
 				B1A80F882589F59800F0917F /* MainInterface.storyboard */,
 				B1A80F8B2589F59800F0917F /* Info.plist */,
-				B148806D25AE129500D0106B /* LoginRequest.swift */,
-				B148806725AE0D9500D0106B /* LoginResponse.swift */,
-				B1A80F9B258A143300F0917F /* SelectImageViewController.swift */,
-				B1A80F9F258A281600F0917F /* ProductInfo.swift */,
-				B14880C325B2E8B700D0106B /* ToastService.swift */,
 				B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */,
-				B14880B125B20F2000D0106B /* Wish.swift */,
-				B14880BD25B2143700D0106B /* WishDataStore.swift */,
-				B1A80FAD258A770100F0917F /* WishList.swift */,
-				B1A80FC4258B3F9B00F0917F /* WishListService.swift */,
-				B148809B25B202CE00D0106B /* WishListTableViewController.swift */,
-				B14880B725B20FE800D0106B /* WishService.swift */,
 			);
 			path = Share;
 			sourceTree = "<group>";
