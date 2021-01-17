@@ -22,7 +22,7 @@
 		B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880BD25B2143700D0106B /* WishDataStore.swift */; };
 		B14880C425B2E8B700D0106B /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
 		B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
-		B14880D625B30A6E00D0106B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */; };
+		B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* JWTDecode */; };
 		B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		B1A80F872589F59800F0917F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80F862589F59800F0917F /* ShareViewController.swift */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
@@ -34,7 +34,7 @@
 		B1A80FA8258A705100F0917F /* CreateWishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA7258A705100F0917F /* CreateWishViewController.swift */; };
 		B1A80FAE258A770100F0917F /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FAD258A770100F0917F /* WishList.swift */; };
 		B1A80FBC258A8A7900F0917F /* checkmark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B1A80FBB258A8A7900F0917F /* checkmark.jpg */; };
-		B1A80FC1258B3F6E00F0917F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */; };
+		B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */; };
 		B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
 		B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
 /* End PBXBuildFile section */
@@ -116,8 +116,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B14880D625B30A6E00D0106B /* BuildFile in Frameworks */,
-				B1A80FC1258B3F6E00F0917F /* BuildFile in Frameworks */,
+				B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */,
+				B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,8 +269,8 @@
 			);
 			name = Share;
 			packageProductDependencies = (
-				B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */,
-				B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */,
+				B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */,
+				B14880D525B30A6E00D0106B /* JWTDecode */,
 			);
 			productName = Share;
 			productReference = B1A80F842589F59800F0917F /* Share.appex */;
@@ -306,8 +306,8 @@
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
 			packageReferences = (
-				B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */,
-				B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */,
+				B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
@@ -621,7 +621,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -649,7 +649,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -698,7 +698,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */ = {
+		B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
@@ -706,7 +706,7 @@
 				minimumVersion = 2.5.0;
 			};
 		};
-		B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */ = {
+		B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
 			requirement = {
@@ -717,14 +717,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */ = {
+		B14880D525B30A6E00D0106B /* JWTDecode */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */;
+			package = B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
 			productName = JWTDecode;
 		};
-		B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */ = {
+		B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */;
+			package = B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
 		};
 /* End XCSwiftPackageProductDependency section */
