@@ -2,13 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>com.apple.developer.associated-domains</key>
-	<array>
-		<string>applinks:wantic-dev.web.app</string>
-		<string>applinks:beta-wantic-landingpage.web.app</string>
-		<string>applinks:app.beta.wantic.io</string>
-		<string>applinks:www.app.beta.wantic.io</string>
-	</array>
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)io.wantic.app</string>
