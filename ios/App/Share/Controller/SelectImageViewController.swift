@@ -31,6 +31,11 @@ class SelectImageViewController: UICollectionViewController {
         super.viewDidLoad()
 
         setupView()
+        
+        if #available(iOS 13, *) {
+            let appearance = navigationController?.navigationBar.standardAppearance.copy()
+            navigationItem.standardAppearance = appearance
+        }
     }
     
     private func setupView() {
@@ -70,9 +75,8 @@ class SelectImageViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        guard let cell = collectionViewCell as? ProductInfoCell else {
-            return collectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProductInfoCell else {
+            return UICollectionViewCell()
         }
     
         let productInfo = productInfos[indexPath.row]
