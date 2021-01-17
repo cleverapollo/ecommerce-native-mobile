@@ -70,7 +70,10 @@ class SelectImageViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProductInfoCell
+        let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        guard let cell = collectionViewCell as? ProductInfoCell else {
+            return collectionViewCell
+        }
     
         let productInfo = productInfos[indexPath.row]
         cell.image.setImageFromURl(ImageUrl: productInfo.imageUrl)

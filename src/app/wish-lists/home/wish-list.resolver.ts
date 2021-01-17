@@ -16,7 +16,8 @@ export class WishListResolver implements Resolve<Observable<WishListDto>> {
     if (acceptInvitation) {
       return this.acceptInvitationAndLoadWishLists(wishListId);
     } else {
-      return this.wishListStore.loadWishList(wishListId);
+      const forceRefresh = Boolean(route.queryParamMap.get('forceRefresh')) ?? false;
+      return this.wishListStore.loadWishList(wishListId, forceRefresh);
     }
   }
 

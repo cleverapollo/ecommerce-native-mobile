@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 import { Plugins } from '@capacitor/core';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { LogService } from '@core/services/log.service';
+import { NavigationService } from '@core/services/navigation.service';
 const { Share } = Plugins;
 
 @Component({
@@ -37,6 +38,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     private navController: NavController,
     private wishListApiService: WishListApiService,
     private route: ActivatedRoute,
+    private navigationService: NavigationService,
     private wishListStore: WishListStoreService,
     private userProfileStore: UserProfileStore,
     private logger: LogService
@@ -44,6 +46,14 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
+    this.route.queryParamMap.subscribe(queryParamMap => {
+      if (Boolean(queryParamMap.get('forceRefresh'))) {
+        this.wishListStore.loadWishList(this.wishList.id, true).subscribe({
+          next: wishList => this.wishList = wishList,
+          complete: () => this.navigationService.removeQueryParamFromCurrentRoute('forceRefresh')
+        })
+      }
+    })
   }
 
   ionViewWillEnter() { 

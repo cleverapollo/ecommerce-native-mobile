@@ -20,7 +20,7 @@ struct ToastService {
         
         DispatchQueue.main.async {
             alert.addAction(UIAlertAction(title: "Wunsch anzeigen", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "http://app.beta.wantic.io/secure/home/wish-list/\(wishListId)") {
+                if let url = URL(string: "http://app.beta.wantic.io/secure/home/wish-list/\(wishListId)?forceRefresh=true") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
