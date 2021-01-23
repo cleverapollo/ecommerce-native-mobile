@@ -30,7 +30,7 @@ class CreateWishViewController: UITableViewController, UITextFieldDelegate, UITe
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,6 +90,21 @@ class CreateWishViewController: UITableViewController, UITextFieldDelegate, UITe
         }
 
         return text.count > 0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section == 2 || section == 3 else { return nil }
+        
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 30))
+        headerView.backgroundColor = UIColor(named: "backgroundColor")
+        
+        let label = SectionHeaderLabel()
+        label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: 18)
+        label.text = section == 2 ? "Name" : "Preis"
+
+        headerView.addSubview(label)
+
+        return headerView
     }
     
     // MARK: - View Methods

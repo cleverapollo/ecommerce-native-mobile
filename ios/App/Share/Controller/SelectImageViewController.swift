@@ -9,17 +9,26 @@ import UIKit
 import MobileCoreServices
 
 private let reuseIdentifier = "ProductInfoCell"
+private let reuseIdentifierHeaderCell = "HeaderCell"
+private let reuseIdentifierFooterCell = "FooterCell"
 
 class ProductInfoCell: UICollectionViewCell {
     
     @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var name: UILabel!
     
 }
 
-class SelectImageViewController: UICollectionViewController {
+class HeaderCell: UICollectionReusableView {
+    @IBOutlet weak var label: UILabel!
+}
+
+class FooterCell: UICollectionReusableView {
+    @IBOutlet weak var nextButton: UIButton!
+}
+
+class SelectImageViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    @IBOutlet weak var selectProductInfoButton: UIBarButtonItem!
+    @IBOutlet weak var closeShareSheetButton: UIBarButtonItem!
     
     let authService = AuthService.shared
     let toastService = ToastService.shared
@@ -46,7 +55,6 @@ class SelectImageViewController: UICollectionViewController {
         } else {
             toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
         }
-        selectProductInfoButton.isEnabled = selectedCell == nil ? false : true
     }
 
 
@@ -65,7 +73,6 @@ class SelectImageViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -81,7 +88,6 @@ class SelectImageViewController: UICollectionViewController {
     
         let productInfo = productInfos[indexPath.row]
         cell.image.setImageFromURl(ImageUrl: productInfo.imageUrl)
-        cell.name.text = productInfo.name
     
         return cell
     }
@@ -90,17 +96,17 @@ class SelectImageViewController: UICollectionViewController {
         let cell = collectionView.cellForItem(at: indexPath) as! ProductInfoCell
         let productInfo = productInfos[indexPath.row]
         
-        cell.layer.borderWidth = 2.0
         if selectedCell == cell {
-            cell.layer.borderColor = UIColor.white.cgColor
+            cell.layer.borderWidth = 0.0
             selectedCell = nil
-            selectProductInfoButton.isEnabled = false
         } else {
-            cell.layer.borderColor = UIColor.red.cgColor
+            cell.layer.borderWidth = 2.0
+            cell.layer.borderColor = UIColor(hex: "#3E3E3E")?.cgColor
             selectedCell = cell
-            selectProductInfoButton.isEnabled = true
             WishDataStore.shared.wish.addProductInfo(productInfo)
         }
+        
+        collectionView.reloadData()
     }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -143,6 +149,34 @@ class SelectImageViewController: UICollectionViewController {
                 }
             )
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter, let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifierFooterCell, for: indexPath) as? FooterCell {
+            footerView.nextButton.isEnabled = selectedCell == nil ? false : true
+            
+            if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                layout.sectionFootersPinToVisibleBounds = true
+            }
+            
+            return footerView
+        } else if kind == UICollectionView.elementKindSectionHeader, let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifierHeaderCell, for: indexPath) as? HeaderCell {
+            return headerView
+        } else {
+            return UICollectionReusableView()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.size.width, height: 52)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.size.width, height: 35)
     }
 
 }
