@@ -9,13 +9,21 @@ import UIKit
 
 class WishListTableViewCell: UITableViewCell {
 
+    static let identifier = "WishListTableViewCell"
+    
     @IBOutlet weak var nameLabel: UILabel!
-
+    @IBOutlet weak var checkMarkImageView: UIImageView!
+    
 }
 
-class WishListTableViewController: UITableViewController {
+class WishListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
-    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var tableView: SelfSizedTableView!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var selectedWishImageView: UIImageView!
+    // ToDo @IBOutlet weak var newWishListNameTextField: UITextField!
+    @IBOutlet weak var footerView: UIView!
+    
     
     @IBAction func onButtonTap() {
         let wish = WishDataStore.shared.wish
@@ -36,13 +44,22 @@ class WishListTableViewController: UITableViewController {
             saveButton.isEnabled = WishDataStore.shared.wish.isValid()
         }
     }
-    
-    let reuseIdentifier = "WishListTableViewCell"
+    var selectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
         loadWishLists()
+    }
+    
+    private func setupViews() {
+        if let imageUrl = WishDataStore.shared.wish.imageUrl {
+            self.selectedWishImageView.setImageFromURl(ImageUrl: imageUrl)
+        }
+        saveButton.isEnabled = WishDataStore.shared.wish.isValid()
+        wishListId = WishDataStore.shared.wish.wishListId
+        tableView.tableFooterView = UIView()
     }
     
     private func loadWishLists() {
@@ -66,28 +83,71 @@ class WishListTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return wishLists.count
     }
 
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WishListTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: WishListTableViewCell.identifier, for: indexPath) as? WishListTableViewCell else {
+            return UITableViewCell()
+        }
         
-        let wishList = wishLists[indexPath.row]
-        cell.nameLabel.text = wishList.name
+        if !wishLists.isEmpty {
+            let wishList = wishLists[indexPath.row]
+            cell.nameLabel.text = wishList.name
+            cell.checkMarkImageView.isHidden = wishListId != wishList.id
+        }
         
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WishListTableViewCell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let wishList = wishLists[indexPath.row]
-        wishListId = wishList.id
+        
+        var indexPathsToReload = [indexPath]
+        if selectedIndexPath != nil {
+            indexPathsToReload.append(selectedIndexPath!)
+        }
+        
+        selectedIndexPath = wishList.id == wishListId ? nil : indexPath
+        wishListId = wishList.id == wishListId ? nil : wishList.id
+        tableView.reloadRows(at: indexPathsToReload, with: .automatic)
     }
+    
+    @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
+        extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+    }
+    
+    // MARK: UITextFieldDelegate
+    
+    /*func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let text = textField.text, !text.isEmpty else {
+            return true
+        }
+        createNewWishList(text)
+        return false
+    }
+    
+    private func createNewWishList(_ wishListName: String) {
+        WishListService.shared.createNewWishList(wishListName, completionHandler: { result in
+            switch result {
+            case .success(let wishList):
+                self.wishLists.insert(wishList, at: 0)
+                DispatchQueue.main.async {
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+                    self.tableView.endUpdates()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        })
+    }*/
+
 
 }
