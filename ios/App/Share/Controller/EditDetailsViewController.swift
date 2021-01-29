@@ -70,8 +70,24 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         
         setupView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)), name: UITextField.textDidChangeNotification, object: nil)
-        self.hideKeyboardWhenTappedAround() 
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(textDidChange(_:)), name: UITextField.textDidChangeNotification, object: nil)
+        self.hideKeyboardWhenTappedAround()
+    }
+    
+    
+    @objc func keyboardWillShow(notification:NSNotification) {
+        if let keyboardBeginSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardBeginSize.height, right: 0)
+         }
+    }
+
+    @objc func keyboardWillHide(notification:NSNotification) {
+        if let _ = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
     }
 
     // MARK: - Table view data source
@@ -123,8 +139,8 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == productName, let productPrice = self.productPrice {
-            productPrice.becomeFirstResponder()
+        if textField == productPrice {
+            dismissKeyboard()
         }
         return true
     }
@@ -150,12 +166,6 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         for textInput in textFields {
             if let textField = textInput as? UITextField {
                 if textField == productPrice {
-                    if var text = textField.text {
-                        text = text.replacingOccurrences(of: " €", with: "")
-                        text = text.replacingOccurrences(of: " ", with: "")
-                        text += " €"
-                        textField.text = text
-                    }
                     WishDataStore.shared.wish.price = textField.text
                 }
             } else if let textView = textInput as? UITextView {
