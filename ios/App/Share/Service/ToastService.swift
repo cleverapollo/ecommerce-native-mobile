@@ -14,7 +14,7 @@ struct ToastService {
 
     func showToast(controller: UIViewController, message : String, wishListId: Int, extensionContext: NSExtensionContext) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.view.backgroundColor = .black
+        alert.view.backgroundColor = .white
         alert.view.alpha = 0.5
         alert.view.layer.cornerRadius = 15
         
