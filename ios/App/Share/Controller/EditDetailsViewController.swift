@@ -166,7 +166,7 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         for textInput in textFields {
             if let textField = textInput as? UITextField {
                 if textField == productPrice {
-                    WishDataStore.shared.wish.price = textField.text
+                    WishDataStore.shared.wish.price = textField.text != nil ? textField.text! + " €" : nil
                 }
             } else if let textView = textInput as? UITextView {
                 /*textView.translatesAutoresizingMaskIntoConstraints = true
