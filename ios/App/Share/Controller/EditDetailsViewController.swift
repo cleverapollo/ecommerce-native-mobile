@@ -71,6 +71,7 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         setupView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)), name: UITextField.textDidChangeNotification, object: nil)
+        self.hideKeyboardWhenTappedAround() 
     }
 
     // MARK: - Table view data source
