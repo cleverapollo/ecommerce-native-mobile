@@ -38,7 +38,7 @@ export class StorageService {
           });
         } else {
           Storage.get({ key: storageKey }).then(object => {
-            if (object?.value.length > 0) {
+            if (object?.value?.length > 0) {
               resolve(JSON.parse(object.value));
             } else {
               resolve(null);
