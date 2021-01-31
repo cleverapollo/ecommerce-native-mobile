@@ -4,7 +4,7 @@
     <img *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg">
   </div>
   <ion-card-content>
-    <div class="wish-name">{{ wish.name }}</div>
+    <div class="wish-name">{{ wish.name | truncateName }}</div>
     <div class="wish-price">{{ wish.price }}</div>
     <ion-button class="give-button" *ngIf="!wish.bought && !wish.reservedByFriend" expand="block" fill="outline"
       color="tertiary" (click)="reserve()">
