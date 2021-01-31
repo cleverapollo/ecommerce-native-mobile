@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser/ngx';
-import { isArray, isObject } from 'util';
-import { SearchResultItem } from '@core/models/search-result-item';
+import { SearchResult, SearchResultItem } from '@core/models/search-result-item';
 import { LoadingService } from './loading.service';
 import { HttpClient } from '@angular/common/http';
 import { SearchQuery, SearchResultDataService, SearchType } from './search-result-data.service';
@@ -32,13 +31,13 @@ export class ProductSearchService {
   async searchByUrl(url: string): Promise<SearchResultItem[]> {
     return new Promise((resolve, reject) => {
       const browser = this.inAppBrowser.create(url, '_blank', { location: 'no', clearcache: 'yes', toolbar: 'no', hidden: 'yes' });
-      browser.on('loadstart').subscribe(event => {
+      browser.on('loadstart')?.subscribe(event => {
         this.onLoadStart();
       }, this.handleGeneralError); 
-      browser.on('exit').subscribe(event => {
+      browser.on('exit')?.subscribe(event => {
         this.onBrowserExit();
       }, this.handleGeneralError);
-      browser.on('loadstop').subscribe(event => {
+      browser.on('loadstop')?.subscribe(event => {
         this.onLoadComplete(browser, url).then(results => {
           resolve(results);
         }, error => {
@@ -46,7 +45,7 @@ export class ProductSearchService {
           reject();
         });
       }, this.handleGeneralError);
-      browser.on('loaderror').subscribe(event => {
+      browser.on('loaderror')?.subscribe(event => {
         this.onLoadError();
         reject();
       });
@@ -116,23 +115,25 @@ export class ProductSearchService {
 
   private mapSearchResultArray(results: [any], url: string) {
     results.forEach(result => {
-      if (isObject(result) && result.hasOwnProperty('name') && result.hasOwnProperty('imageUrl')) {
+      if (result !== null && typeof result === 'object' && result.hasOwnProperty('name') && result.hasOwnProperty('imageUrl')) {
         this.searchResults.push(new SearchResultItem(result.name, result.imageUrl, result.productUrl ? result.productUrl : url, result.price));
-      } else if (isArray(result)) {
+      } else if (Array.isArray(result)) {
         this.mapSearchResultArray(result as [any], url);
       }
     });
   }
 
-  searchByAmazonApi(keywords: string): Promise<SearchResultItem[]> {
+  searchByAmazonApi(keywords: string, page: number): Promise<SearchResult> {
     return new Promise((resolve, reject) => {
-      this.searchService.searchForItems(keywords).toPromise().then( results => {
+      this.searchService.searchForItems(keywords, page).toPromise().then( searchResult => {
         const searchQuery = new SearchQuery();
         searchQuery.searchTerm = keywords;
         searchQuery.type = SearchType.AMAZON_API;
-        searchQuery.results = results;
+        searchQuery.results = searchResult.items;
+        searchQuery.totalResultCount = searchResult.totalResultCount;
+        searchQuery.pageCount = page;
         this.searchResultDataService.update(searchQuery);
-        resolve(results);
+        resolve(searchResult);
       }, reject);
     });
   }

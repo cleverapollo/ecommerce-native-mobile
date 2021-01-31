@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 
@@ -21,7 +20,6 @@ export class WishListWishPage implements OnInit {
   constructor(
     private router: Router, 
     private activatedRoute: ActivatedRoute, 
-    private navController: NavController,
     private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -33,7 +31,7 @@ export class WishListWishPage implements OnInit {
   search() {
     this.router.navigate(['../search-results'], { 
       relativeTo: this.activatedRoute, 
-      queryParams: { keywords: this.form.get('keywords').value } 
+      queryParams: { keywords: this.form.get('keywords').value, page: 1 } 
     });
   }
 

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ProductSearchService } from '@core/services/product-search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-wish-search-selection',
@@ -22,7 +23,8 @@ export class WishSearchSelectionPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private logger: LogService
+    private logger: LogService,
+    public platform: Platform
   ) { }
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class WishSearchSelectionPage implements OnInit {
   }
 
   searchByAmazonApi() {
-    this.productSearchService.searchByAmazonApi(this.keywords.value).then(searchResults => {
+    this.productSearchService.searchByAmazonApi(this.keywords.value, 1).then(searchResults => {
       this.navigateToSearchResultPage();
     }, this.logger.error);
   }

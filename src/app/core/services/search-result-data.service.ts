@@ -10,6 +10,8 @@ export class SearchQuery {
   results: SearchResultItem[] = [];
   searchTerm: string = '';
   type: SearchType = SearchType.AMAZON_API;
+  pageCount: number = 1;
+  totalResultCount: number = 0;
 }
 
 @Injectable({

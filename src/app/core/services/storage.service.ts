@@ -33,18 +33,18 @@ export class StorageService {
               resolve(null);
             }
           }, error => {
-            this.logger.error(storageKey, error);
+            this.logger.debug(storageKey, error);
             resolve(null);
           });
         } else {
           Storage.get({ key: storageKey }).then(object => {
-            if (object?.value.length > 0) {
+            if (object?.value?.length > 0) {
               resolve(JSON.parse(object.value));
             } else {
               resolve(null);
             }
           }, error => {
-            this.logger.error(storageKey, error);
+            this.logger.debug(storageKey, error);
             resolve(null);
           })
         }

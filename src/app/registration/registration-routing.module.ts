@@ -34,7 +34,7 @@ const routes: Routes = [
       {
         path: 'search-results',
         component: SearchResultsPage,
-        resolve: { products: SearchResultsResolver }
+        resolve: { searchResult: SearchResultsResolver }
       },
       {
         path: 'first-name',

@@ -1,11 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RegistrationFormService } from '../registration-form.service';
-import { NavController } from '@ionic/angular';
+import { IonInfiniteScroll, NavController } from '@ionic/angular';
 import { RegistrationDto } from '../registration-form';
 import { WishDto } from '@core/models/wish-list.model';
+import { SearchService } from '@core/api/search.service';
+import { PagingService } from '@core/services/paging.service';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-search-results',
@@ -14,7 +17,13 @@ import { WishDto } from '@core/models/wish-list.model';
 })
 export class SearchResultsPage implements OnInit, OnDestroy {
 
-  wishes: Array<SearchResultItem> = new Array();
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+
+  keywords: string;
+  page: number = 1;
+  maxPageCount: number = 1;
+  searchResult: SearchResult;
+  searchResultItems: Array<SearchResultItem> = [];
 
   private registrationDto: RegistrationDto
   private formSubscription: Subscription;
@@ -23,12 +32,25 @@ export class SearchResultsPage implements OnInit, OnDestroy {
     private route: ActivatedRoute, 
     private router: Router,
     private formService: RegistrationFormService,
-    private navController: NavController) {}
+    private searchService: SearchService,
+    private pagingService: PagingService,
+    private logger: LogService) {}
 
   ngOnInit() {
-    this.wishes = this.route.snapshot.data.products;
+    this.searchResult = this.route.snapshot.data.searchResult;
+    this.searchResultItems = this.searchResult.items;
+    this.maxPageCount = this.pagingService.calcMaxPageCount(this.searchResult.totalResultCount); 
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
       this.registrationDto = registrationDto as RegistrationDto;
+    });
+    this.route.queryParamMap.subscribe(paramMap => {
+      this.page = Number(paramMap.get('page')) ?? 1;
+      this.keywords = paramMap.get('keywords') ?? '';
+
+      if (this.page === this.maxPageCount && this.infiniteScroll) {
+        // disable infinite scroll
+        this.infiniteScroll.disabled = true;
+      }
     });
   }
 
@@ -40,6 +62,27 @@ export class SearchResultsPage implements OnInit, OnDestroy {
     this.registrationDto.wishListWish = SearchResultItemMapper.map(item, new WishDto());
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../first-name'], { relativeTo: this.route });
+  }
+
+  loadMoreSearchResults(event) {
+    this.page++;
+    this.searchService.searchForItems(this.keywords, this.page).subscribe({
+      next: searchResult => {
+        this.searchResultItems = this.searchResultItems.concat(searchResult.items);
+        this.maxPageCount = this.pagingService.calcMaxPageCount(searchResult.totalResultCount);
+        if (this.page === this.maxPageCount) {
+          // disable infinite scroll
+          event.target.disabled = true;
+        }
+      },
+      error: error => {
+        this.logger.error(error);
+        this.page--;
+      },
+      complete: () => {
+        event.target.complete();
+      }
+    });
   }
 
 }

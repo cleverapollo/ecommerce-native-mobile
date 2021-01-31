@@ -41,8 +41,11 @@
     </ion-row>
   </ion-grid>
 
-</ion-content>
+  <ion-infinite-scroll (ionInfinite)="loadMoreSearchResults($event)" threshold="25%">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Weitere Suchergebnisse werden geladen ...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
-<ion-footer class="ion-no-border" *ngIf="!platform.is('capacitor')">
-  <ion-button class="wantic-save-button" expand="block" (click)="searchByAmazonApi()" [disabled]="!searchByAmazonApiForm.valid">Suchen</ion-button>
-</ion-footer>
+</ion-content>

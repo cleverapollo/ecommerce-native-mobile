@@ -81,7 +81,7 @@ export class AuthenticationService {
   async reloginIfPossible(): Promise<void> {
     try {
       const userSettings = await this.userService.userSettings;
-      if (userSettings && userSettings.credentialsSaved) {
+      if (userSettings?.credentialsSaved) {
         const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
         const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
         const loginResponse = await this.authService.login(email, password).toPromise();

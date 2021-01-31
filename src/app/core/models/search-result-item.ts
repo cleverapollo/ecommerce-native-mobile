@@ -1,5 +1,9 @@
 import { WishDto } from '@core/models/wish-list.model';
 
+export class SearchResult {
+    totalResultCount: number;
+    items: Array<SearchResultItem>;
+}
 export class SearchResultItem {
     name: String;
     price: String;
