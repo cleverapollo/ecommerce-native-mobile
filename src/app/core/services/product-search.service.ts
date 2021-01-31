@@ -31,13 +31,13 @@ export class ProductSearchService {
   async searchByUrl(url: string): Promise<SearchResultItem[]> {
     return new Promise((resolve, reject) => {
       const browser = this.inAppBrowser.create(url, '_blank', { location: 'no', clearcache: 'yes', toolbar: 'no', hidden: 'yes' });
-      browser.on('loadstart').subscribe(event => {
+      browser.on('loadstart')?.subscribe(event => {
         this.onLoadStart();
       }, this.handleGeneralError); 
-      browser.on('exit').subscribe(event => {
+      browser.on('exit')?.subscribe(event => {
         this.onBrowserExit();
       }, this.handleGeneralError);
-      browser.on('loadstop').subscribe(event => {
+      browser.on('loadstop')?.subscribe(event => {
         this.onLoadComplete(browser, url).then(results => {
           resolve(results);
         }, error => {
@@ -45,7 +45,7 @@ export class ProductSearchService {
           reject();
         });
       }, this.handleGeneralError);
-      browser.on('loaderror').subscribe(event => {
+      browser.on('loaderror')?.subscribe(event => {
         this.onLoadError();
         reject();
       });
