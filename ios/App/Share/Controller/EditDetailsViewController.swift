@@ -74,6 +74,7 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(textDidChange(_:)), name: UITextField.textDidChangeNotification, object: nil)
+        
         self.hideKeyboardWhenTappedAround()
     }
     
@@ -103,7 +104,7 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: ProductImageTableViewCell.reuseIdentifier, for: indexPath) as? ProductImageTableViewCell {
-                cell.productImageView.setImageFromURl(ImageUrl: productInfo.imageUrl)
+                cell.productImageView.setImageFromURl(imageUrlString: productInfo.imageUrl)
                 return cell
             }
         } else if indexPath.section == 1 {
@@ -207,7 +208,9 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
-        extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+        extensionContext?.completeRequest(returningItems: nil, completionHandler: { _ in
+            WishDataStore.shared.reset()
+        })
     }
     
 }

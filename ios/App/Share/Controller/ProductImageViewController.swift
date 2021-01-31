@@ -30,6 +30,18 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var closeButton: UIBarButtonItem!
     @IBOutlet weak var footerView: UIView!
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let _ = authService.getAuthToken() {
+            if let item = extensionContext?.inputItems.first as? NSExtensionItem {
+                accessWebpageProperties(extensionItem: item)
+            }
+        } else {
+            toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+        }
+        WishDataStore.shared.reset()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,14 +52,6 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func setupView() {
-        if let _ = authService.getAuthToken() {
-            if let item = extensionContext?.inputItems.first as? NSExtensionItem {
-                accessWebpageProperties(extensionItem: item)
-            }
-        } else {
-            toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
-        }
-        
         nextButton.isEnabled = selectedCell != nil
     }
     
@@ -71,7 +75,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         }
     
         let productInfo = productInfos[indexPath.row]
-        cell.image.setImageFromURl(ImageUrl: productInfo.imageUrl)
+        cell.image.setImageFromURl(imageUrlString: productInfo.imageUrl)
     
         return cell
     }
@@ -159,7 +163,9 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
 
     
     @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
-        extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+        extensionContext?.completeRequest(returningItems: nil, completionHandler: {_ in
+            WishDataStore.shared.reset()
+        })
     }
     
 }
