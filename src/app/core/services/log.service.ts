@@ -13,30 +13,56 @@ export class LogService {
   }
 
   trace(message: any, ...additional: any[]): void {
-    this?.logger && additional?.length > 0 ? this.logger.trace(message, additional) : this.logger.trace(message);
+    let logger: NGXLogger | Console = console;
+    if (this) {
+      logger = this.logger;
+    }
+    logger && additional?.length > 0 ? logger.trace(message, additional) : logger.trace(message);
   }
 
   debug(message: any, ...additional: any[]): void {
-    this?.logger && additional?.length > 0 ? this.logger.debug(message, additional) : this.logger.debug(message);
+    let logger: NGXLogger | Console = console;
+    if (this) {
+      logger = this.logger;
+    }
+    logger && additional?.length > 0 ? logger.debug(message, additional) : logger.debug(message);
   }
 
   info(message: any, ...additional: any[]): void {
-    this?.logger && additional?.length > 0 ? this.logger.info(message, additional) : this.logger.info(message);
+    let logger: NGXLogger | Console = console;
+    if (this) {
+      logger = this.logger;
+    }
+    logger && additional?.length > 0 ? logger.info(message, additional) : logger.info(message);
   }
 
   log(message: any, ...additional: any[]): void {
-    this?.logger && additional?.length > 0 ? this.logger.log(message, additional) : this.logger.log(message);
+    let logger: NGXLogger | Console = console;
+    if (this) {
+      logger = this.logger;
+    }
+    logger && additional?.length > 0 ? logger.log(message, additional) : logger.log(message);
   }
 
   warn(message: any, ...additional: any[]): void {
-    this?.logger && additional?.length > 0 ? this.logger.warn(message, additional) : this.logger.warn(message);
+    let logger: NGXLogger | Console = console;
+    if (this) {
+      logger = this.logger;
+    }
+    logger && additional?.length > 0 ? logger.warn(message, additional) : logger.warn(message);
   }
 
   error(message: any, ...additional: any[]): void {
-    this?.logger && additional?.length > 0 ? this.logger.error(message, additional) : this.logger.error(message);
+    let logger: NGXLogger | Console = console;
+    if (this) {
+      logger = this.logger;
+    }
+    logger && additional?.length > 0 ? logger.error(message, additional) : logger.error(message);
   }
 
   fatal(message: any, ...additional: any[]): void {
-    this?.ngxLogger ? this.ngxLogger.fatal(message, additional) : console.error(message, additional);
+    if (this) {
+      this.ngxLogger ? this.ngxLogger.fatal(message, additional) : console.error(message, additional);
+    }
   }
 }
