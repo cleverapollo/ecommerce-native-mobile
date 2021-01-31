@@ -8,12 +8,20 @@
       <ion-col size-lg="6">
         <ion-grid>
           <ion-row>
-            <ion-col size="6" *ngFor="let wish of wishes; let i = index">
-              <app-search-result [wish]="wish" (onSelectWish)="updateValue($event)"></app-search-result>
+            <ion-col size="6" *ngFor="let item of searchResultItems; let i = index">
+              <app-search-result [wish]="item" (onSelectWish)="updateValue($event)"></app-search-result>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-infinite-scroll (ionInfinite)="loadMoreSearchResults($event)" threshold="25%">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Weitere Suchergebnisse werden geladen ...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>

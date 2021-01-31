@@ -35,7 +35,7 @@ export class WishSearchSelectionPage implements OnInit {
   }
 
   searchByAmazonApi() {
-    this.productSearchService.searchByAmazonApi(this.keywords.value).then(searchResults => {
+    this.productSearchService.searchByAmazonApi(this.keywords.value, 1).then(searchResults => {
       this.navigateToSearchResultPage();
     }, this.logger.error);
   }

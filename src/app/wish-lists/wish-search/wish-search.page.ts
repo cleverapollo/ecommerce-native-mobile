@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { SearchService } from '@core/api/search.service';
 import { SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
 import { WishDto, WishListDto } from '@core/models/wish-list.model';
-import { Platform } from '@ionic/angular';
+import { IonInfiniteScroll, Platform } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -14,10 +14,13 @@ export class WishSearchPage implements OnInit, OnDestroy {
 
   private selectedWishList: WishListDto = null
 
-  keywords: String
+  keywords: string
+  page: number = 1;
   loading: Boolean
 
   products: Array<SearchResultItem>
+
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor(
     private searchService: SearchService, 
@@ -29,14 +32,16 @@ export class WishSearchPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.products = [];
     this.selectedWishList = this.route.snapshot.data.wishList;
+    this.infiniteScroll.disabled = true
+    console.log(this.infiniteScroll);
   }
 
   ngOnDestroy(): void {}
 
   search() {
     this.loading = true;
-    this.searchService.searchForItems(this.keywords).subscribe({
-      next: results => { this.products = results; },
+    this.searchService.searchForItems(this.keywords, this.page).subscribe({
+      next: searchResult => { this.products = searchResult.items; },
       complete: () => { this.loading = false; }
     });
   }
