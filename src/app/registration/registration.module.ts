@@ -14,6 +14,9 @@ import { AccountFirstNamePage } from './account-first-name/account-first-name.pa
 import { AccountEmailPasswordPage } from './account-email-password/account-email-password.page';
 import { RegistrationCompletedPage } from './registration-completed/registration-completed.page';
 import { SharedModule } from '@shared/shared.module';
+import { BirthdayPage } from './birthday/birthday.page';
+import { Gender } from './registration-form';
+import { GenderPage } from './gender/gender.page';
 
 @NgModule({
   imports: [
@@ -25,6 +28,8 @@ import { SharedModule } from '@shared/shared.module';
   declarations: [
     AccountFirstNamePage,
     AccountEmailPasswordPage,
+    BirthdayPage,
+    GenderPage,
     WishListNamePage, 
     WishListDatePage,
     WishListPartnerPage,

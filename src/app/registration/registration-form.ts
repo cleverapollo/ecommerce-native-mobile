@@ -2,9 +2,11 @@ import { WishDto } from '@core/models/wish-list.model';
 import { InvitePartnerRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
 
 export class RegistrationRequest {
-    userFirstName: String
-    userEmail: String
-    userPassword: String
+    userFirstName: String;
+    userEmail: String;
+    userPassword: String;
+    userBirthday: Date;
+    userGender: Gender;
 }
 
 export class RegistrationDto extends RegistrationRequest {
@@ -16,4 +18,10 @@ export class RegistrationDto extends RegistrationRequest {
 
 export class RegistrationPartnerDto extends RegistrationRequest {
     userId: String;
+}
+
+export enum Gender {
+    MALE = 'MALE',
+    FEMALE = 'FEMALE', 
+    DIVERSE = 'DIVERSE'
 }

@@ -1,0 +1,18 @@
+ion-item {
+    height: 32pt;
+    ion-radio {
+        margin-right: 11px;
+        width: 24pt;
+        height: 24pt;
+    }
+}
+
+ion-radio::part(container) {
+    border-color: white;
+    background-color: white;
+
+}
+
+h1 {
+    padding-bottom: 29px;
+}

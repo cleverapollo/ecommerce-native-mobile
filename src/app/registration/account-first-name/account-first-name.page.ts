@@ -67,7 +67,7 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
     }
     this.registrationDto.userFirstName = this.form.controls['firstName'].value;
     this.formService.updateDto(this.registrationDto);
-    this.router.navigate(['../credentials'], { relativeTo: this.route })
+    this.router.navigate(['../birthday'], { relativeTo: this.route })
   }
 
 }
