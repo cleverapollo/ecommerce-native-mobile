@@ -36,7 +36,14 @@ export class WishListOverviewPage implements OnInit {
   initData() {
     const resolvedData = this.route.snapshot.data;
     this.wishLists = resolvedData.wishLists;
+    this.wishLists.sort((wishListA, wishListB) => {
+      return this.getTime(wishListA.date) - this.getTime(wishListB.date);
+    })
     this.emailVerificationResponse = resolvedData.emailVerificationResponse;
+  }
+
+  private getTime(date?: Date) {
+    return date != null ? new Date(date).getTime() : new Date(3000, 1).getTime();
   }
 
   handleEmailVerfificationResponseIfNeeded() {
