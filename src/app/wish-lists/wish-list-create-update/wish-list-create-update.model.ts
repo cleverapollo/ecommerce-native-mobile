@@ -1,7 +1,6 @@
 export class WishListCreateOrUpdateRequest {
-    name: string
-    date: Date
-    partner: InvitePartnerRequest
+    name: string;
+    date?: Date;
 }
 
 export class WishListCreateRequest extends WishListCreateOrUpdateRequest {

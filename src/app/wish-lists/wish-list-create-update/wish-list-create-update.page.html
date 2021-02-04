@@ -19,34 +19,6 @@
     </ion-item>
     <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
 
-    <div formGroupName="partner" *ngIf="!partner">
-
-      <p class="form-group-label">Partner hinzufügen</p>
-
-      <ion-item lines="none">
-        <ion-input type="text" placeholder="Name deines Partners" formControlName="name" clearInput="true"></ion-input>
-      </ion-item>
-      <app-validation-messages [control]="form.get('partner.name')" [validationMessages]="validationMessages.partnerName"></app-validation-messages>
-
-      <ion-item lines="none">
-        <ion-input type="email" placeholder="E-Mail Adresse eingeben" formControlName="email" clearInput="true"></ion-input>
-      </ion-item>
-      <app-validation-messages [control]="form.get('partner.email')" [validationMessages]="validationMessages.partnerEmail"></app-validation-messages>
-
-    </div>
-
-    <div *ngIf="partner" class="wantic-margin-right-left partner-infos">
-      <p>Partner</p>
-      <div class="info-container">
-        <app-user-initials class="partner-initials" *ngIf="!partner.profileImageInfo" [firstName]="partner.firstName"></app-user-initials>
-        <ion-avatar class="creator-image partner-image" *ngIf="partner.profileImageInfo">
-          <img [src]="partner.profileImageInfo | cacheImage | async" alt="Bild vom Freund" />
-        </ion-avatar>
-        <span class="partner-name">{{ partner.firstName }}</span>
-      </div>
-      <em *ngIf="partner?.invitationStatus == 'INVITED'" >Dein Partner hat die Einladung noch nicht angenommen.</em>
-    </div>
-
     <ion-button *ngIf="form" (click)="createOrUpdateWishList()" expand="block" [disabled]="!form.valid" class="wantic-margin-right-left wantic-save-button no-margin-bottom">
       {{ buttonTitle }}
     </ion-button>
