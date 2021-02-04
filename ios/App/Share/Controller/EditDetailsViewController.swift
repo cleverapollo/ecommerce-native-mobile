@@ -79,7 +79,7 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @objc func keyboardWillShow(notification:NSNotification) {
-        if let keyboardBeginSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardBeginSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardBeginSize.height, right: 0)
          }
     }
