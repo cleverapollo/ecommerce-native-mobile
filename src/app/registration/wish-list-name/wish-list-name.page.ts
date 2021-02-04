@@ -2,10 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
-import { Observable, Subscription } from 'rxjs';
-import { NavController } from '@ionic/angular';
-import { RegistrationDto } from '../registration-form';
-import { ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { Subscription } from 'rxjs';
+import { RegistrationRequest } from '@core/models/registration.model';
 
 @Component({
   selector: 'app-wish-list-name',
@@ -22,27 +20,34 @@ export class WishListNamePage implements OnInit, OnDestroy {
     ]
   }
 
-  private registrationDto: RegistrationDto
+  private registrationDto: RegistrationRequest
   private formSubscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router, 
     private route: ActivatedRoute,
-    private formService: RegistrationFormService,
-    private navController: NavController) {}
+    private formService: RegistrationFormService
+  ) {}
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
       if (registrationDto) {
-        this.registrationDto = registrationDto as RegistrationDto
+        this.registrationDto = registrationDto;
       } else {
-        this.formService.updateDto(new RegistrationDto());
+        this.registrationDto = new RegistrationRequest();
+        this.formService.updateDto(this.registrationDto);
       }
+
+      let value = '';
+      if (this.registrationDto?.wishList?.name) {
+        value = this.registrationDto.wishList.name;
+      }
+      this.form = this.formBuilder.group({
+        'name': this.formBuilder.control(value, [Validators.required])
+      });
     });
-    this.form = this.formBuilder.group({
-      'name': this.formBuilder.control(this.registrationDto.wishListName, [Validators.required])
-    });
+
   }
 
   ngOnDestroy() {
@@ -50,7 +55,7 @@ export class WishListNamePage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.registrationDto.wishListName = this.form.controls['name'].value;
+    this.registrationDto.wishList.name = this.form.controls['name'].value;
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-date'], { relativeTo: this.route })
   }

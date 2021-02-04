@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Gender, RegistrationDto } from '@registration/registration-form';
+import { RegistrationRequest } from '@core/models/registration.model';
+import { Gender } from '@core/models/user.model';
 import { RegistrationFormService } from '@registration/registration-form.service';
 import { Subscription } from 'rxjs';
 
@@ -13,7 +14,7 @@ export class GenderPage implements OnInit, OnDestroy {
 
   gender?: Gender
 
-  private registrationDto: RegistrationDto;
+  private registrationDto: RegistrationRequest;
   private formSubscription: Subscription;
 
   constructor(    
@@ -24,8 +25,8 @@ export class GenderPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto as RegistrationDto;
-      this.gender = this.registrationDto?.userGender;
+      this.registrationDto = registrationDto;
+      this.gender = this.registrationDto?.user?.gender;
     });
   }
 
@@ -39,7 +40,7 @@ export class GenderPage implements OnInit, OnDestroy {
 
   next() {
     this.formSubscription.unsubscribe();
-    this.registrationDto.userGender = this.gender;
+    this.registrationDto.user.gender = this.gender;
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../credentials'], { relativeTo: this.route })
   }

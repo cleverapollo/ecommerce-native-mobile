@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { RegistrationDto } from '@registration/registration-form';
+import { RegistrationRequest } from '@core/models/registration.model';
 import { RegistrationFormService } from '@registration/registration-form.service';
 import { Subscription } from 'rxjs';
 
@@ -22,7 +21,7 @@ export class BirthdayPage implements OnInit {
 
   get maxDate(): number { return new Date().getFullYear(); } 
 
-  private registrationDto: RegistrationDto;
+  private registrationDto: RegistrationRequest;
   private formSubscription: Subscription;
 
   constructor(    
@@ -34,11 +33,11 @@ export class BirthdayPage implements OnInit {
 
   ngOnInit() {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto as RegistrationDto;
+      this.registrationDto = registrationDto;
       
       let value = '';
-      if (this.registrationDto?.userBirthday) {
-        value = this.registrationDto.userBirthday.toDateString();
+      if (this.registrationDto?.user?.birthday) {
+        value = this.registrationDto.user.birthday.toDateString();
       }
 
       this.form = this.formBuilder.group({
@@ -53,7 +52,7 @@ export class BirthdayPage implements OnInit {
 
   next() {
     this.formSubscription.unsubscribe();
-    this.registrationDto.userBirthday = this.form.controls['date'].value;
+    this.registrationDto.user.birthday = this.form.controls['date'].value;
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../gender'], { relativeTo: this.route })
   }

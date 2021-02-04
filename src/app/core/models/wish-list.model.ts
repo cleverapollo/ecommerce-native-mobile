@@ -30,6 +30,12 @@ export class WishListDto {
     owners: UserWishListDto[];
 }
 
+export class WishListRegistration {
+    name: string;
+    date?: Date;
+    wish: WishDto;
+}
+
 export class SharedWishListLink {
     value: string;
 }

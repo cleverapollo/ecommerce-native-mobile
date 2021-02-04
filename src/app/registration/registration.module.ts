@@ -15,7 +15,6 @@ import { AccountEmailPasswordPage } from './account-email-password/account-email
 import { RegistrationCompletedPage } from './registration-completed/registration-completed.page';
 import { SharedModule } from '@shared/shared.module';
 import { BirthdayPage } from './birthday/birthday.page';
-import { Gender } from './registration-form';
 import { GenderPage } from './gender/gender.page';
 
 @NgModule({
