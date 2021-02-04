@@ -10,9 +10,11 @@ div.wantic-radio-group-container {
         display: block;
         position: relative;
         border-bottom: 1px dashed #f7f6f1;
+        margin-left: 10px;
+        margin-right: 10px;
     
         label {
-          padding: 12px 19px;
+          padding: 10px 9px;
           width: 100%;
           display: block;
           text-align: left;
@@ -85,9 +87,11 @@ div.wantic-radio-group-container {
     background-color: white;
     padding-top: 12px;
     padding-bottom: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
     img {
-        margin-right: 13px;
-        margin-left: 22px;
+        margin-right: 3px;
+        margin-left: 12px;
     }
     label, img {
         display: inline-block;
