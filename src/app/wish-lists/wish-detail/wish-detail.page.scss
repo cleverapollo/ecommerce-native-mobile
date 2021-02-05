@@ -16,5 +16,24 @@ ion-card {
     margin-bottom: 20px;
     ion-card-content {
         border-top: 1px dashed #F0EDE3;
+        div.edit-wish-button {
+            height: 100%;
+            img {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+            }
+        }
     }
+}
+
+div.wish-name {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+div.wish-price {
+    margin-top: 4px;
 }
