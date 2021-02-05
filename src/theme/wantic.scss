@@ -237,7 +237,6 @@ ion-header {
 
 // 
 .wish-list-detail-container {
-    margin-bottom: 30px;
     ion-avatar {
         display: inline-block;
         margin-left: 0;
@@ -257,6 +256,15 @@ ion-header {
             color: var(--ion-color-secondary);
         }
     }
+}
+
+div.divide {
+    border: 1px dashed var(--ion-color-secondary);
+    margin-right: 25%;
+    margin-left: 25%;
+    opacity: 0.3;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .profile-image {
