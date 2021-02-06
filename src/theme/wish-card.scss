@@ -34,6 +34,10 @@ ion-button.give-button {
     --margin-top: 9px;
 }
 
+ion-button.give-button::part(native) {
+    border-width: 2px;
+}
+
 ion-img {
     width: 50%;
     margin: auto;
