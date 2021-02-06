@@ -12,8 +12,8 @@
   </p>
   <form [formGroup]="form" *ngIf="form">
     <ion-item lines="none">
-      <ion-datetime [min]="minDate" [max]="maxDate" formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
-      <ion-icon name="calendar" slot="end" color="primary"></ion-icon>
+      <ion-datetime [min]="minDate" [max]="maxDate" formControlName="date" displayFormat="DD.MM.YYYY" placeholder="z.B. 20.07.2021"></ion-datetime>
+      <ion-icon name="calendar" slot="end" color="secondary" class="calendar-icon"></ion-icon>
     </ion-item>
     <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
   </form>

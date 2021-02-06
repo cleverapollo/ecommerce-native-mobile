@@ -69,7 +69,7 @@ h1.wantic-page-header {
     line-height: 25px;
     color: var(--ion-color-tertiary);
     margin-top: 4px;
-    margin-bottom: 6px;
+    margin-bottom: 20px;
 }
 
 // toolbar 
@@ -118,10 +118,10 @@ ion-input, ion-datetime, ion-select, ion-textarea {
     --placeholder-color: #FFA571 !important;
     --placeholder-font-style: italic !important;
     --padding-start: 19px !important;
-    --padding-top: 12px !important;
-    --padding-bottom: 12px !important;
-    font-family: Arial !important;
-    font-size: 14px;
+    --padding-top: 16px !important;
+    --padding-bottom: 16px !important;
+    font-family: 'Roboto' !important;
+    font-size: 14px !important;
 }
 
 .toggleContainer {
@@ -137,7 +137,17 @@ ion-input, ion-datetime, ion-select, ion-textarea {
 }
 
 ion-datetime::part(placeholder) {
-    --placeholder-font-style: italic !important;
+    font-style: italic;
+    color: var(--ion-color-secondary);
+    margin: auto;
+    font-family: 'Roboto';
+}
+
+ion-item {   
+    .calendar-icon {
+        height: 20px;
+        width: 20px;
+    }
 }
 
 ion-input > button.input-clear-icon {
@@ -168,7 +178,7 @@ form {
             border-color: var(--ion-color-danger);
         }
         ion-label.label-stacked {
-            font-size: 15pt !important;
+            font-size: 15px !important;
             margin-bottom: 10px !important;
         }
     }
