@@ -100,7 +100,7 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.infiniteScroll.disabled = true
+    this.infiniteScroll.disabled = this._results.length === 0;
   }
 
   ionViewDidEnter() {

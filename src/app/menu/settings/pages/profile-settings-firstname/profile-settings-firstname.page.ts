@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 import { UserProfileStore } from '../../user-profile-store.service';
+import { LoadingService } from '@core/services/loading.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-profile-settings-firstname',
@@ -14,8 +15,6 @@ import { UserProfileStore } from '../../user-profile-store.service';
 export class ProfileSettingsFirstnamePage implements OnInit {
 
   form: FormGroup;
-  showHint: Boolean;
-  hintConfig: HintConfig
   
   get validationMessages(): ValidationMessages {
     return {
@@ -27,10 +26,11 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   }
 
   constructor(
-    private route: ActivatedRoute, 
+    private loadingService: LoadingService, 
     private formBuilder: FormBuilder, 
     private api: UserApiService,
-    private userProfileStore: UserProfileStore) 
+    private userProfileStore: UserProfileStore,
+    private toastService: ToastService) 
   { }
 
   ngOnInit() {
@@ -41,19 +41,17 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   }
 
   saveChanges() {
+    this.loadingService.showLoadingSpinner();
     this.api.partialUpdateFirstName(this.form.controls.firstName.value).toPromise()
       .then(updatedProfile => {
         this.userProfileStore.updateCachedUserProfile(updatedProfile);
-        this.hintConfig = hintConfigForSuccessResponse;
+        this.toastService.presentSuccessToast('Dein Vorname wurde erfolgreich aktualisiert.')
       })
-      .catch(e => {
-        this.hintConfig = hintConfigForErrorResponse;
+      .catch(error => {
+        this.toastService.presentErrorToast('Dein Vorname konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.')
       })
       .finally(() => {
-        this.showHint = true;
-        setTimeout(() => {
-          this.showHint = false;
-        }, 3000);
+        this.loadingService.dismissLoadingSpinner();
       })
   }
 
