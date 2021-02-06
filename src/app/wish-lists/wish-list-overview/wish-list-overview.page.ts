@@ -81,7 +81,17 @@ export class WishListOverviewPage implements OnInit {
   }
 
   private getTime(date?: Date) {
-    return date != null ? new Date(date).getTime() : new Date(3000, 1).getTime();
+    if (date != null) {
+      return !this.dateIsInPast(date) ? new Date(date).getTime() : new Date(3000, 1).getTime();
+    }
+    return new Date(4000, 1).getTime();
+  }
+
+  private dateIsInPast(date: Date): boolean {
+    const isoDate = new Date(date);
+    const now = new Date();
+    now.setHours(0,0,0,0);
+    return isoDate < now;
   }
 
 }
