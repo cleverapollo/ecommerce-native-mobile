@@ -38,6 +38,10 @@ ion-button.wantic-save-button {
     --box-shadow: none;
 }
 
+ion-button.wantic-save-button.button-outline {
+    --border-width: 2px;
+}
+
 ion-button.wantic-save-button:disabled, ion-button.wantic-save-button[disabled], ion-button.button-disabled {
     --background: #ffbc95;
     --opacity: 1;
