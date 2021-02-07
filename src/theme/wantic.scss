@@ -129,6 +129,10 @@ ion-input, ion-datetime, ion-select, ion-textarea {
 }
 
 .toggleContainer {
+    font-size: 12px;
+    ion-label {
+        text-align: right;
+    }
     ion-label.toggle-unchecked {
         --color: #BCBABC;
     }
