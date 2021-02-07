@@ -7,6 +7,9 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { Location } from '@angular/common';
 import { LoginResponse, WanticJwtToken } from '@core/models/login.model';
 import { LogService } from '@core/services/log.service';
+import { RegistrationApiService } from '@core/api/registration-api.service';
+import { LoadingService } from '@core/services/loading.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -25,18 +28,42 @@ export class WishListOverviewPage implements OnInit {
     private navController: NavController,
     private authService: AuthenticationService,
     private location: Location,
-    private logger: LogService
+    private logger: LogService,
+    private registrationApiService: RegistrationApiService,
+    private loadingService: LoadingService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
     this.initData();
     this.handleEmailVerfificationResponseIfNeeded();
+    this.confirmRegistration();
   }
 
   initData() {
     const resolvedData = this.route.snapshot.data;
-    this.updateWishLists(resolvedData.wishLists)
-    this.emailVerificationResponse = resolvedData.emailVerificationResponse;
+    this.updateWishLists(resolvedData.wishLists);
+    if (resolvedData.emailVerificationResponse) {
+      this.emailVerificationResponse = resolvedData.emailVerificationResponse;
+    }
+  }
+
+  private confirmRegistration() {
+    this.route.queryParamMap.subscribe({
+      next: params => {
+        const token = params.get('emailVerificationToken');
+        if (token !== null) {
+          this.loadingService.showLoadingSpinner();
+          this.registrationApiService.confirmRegistration(token).toPromise().then(response => {
+            this.emailVerificationResponse = response;
+            this.handleEmailVerfificationResponseIfNeeded();
+            this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt!');
+          }).finally(() => {
+            this.loadingService.dismissLoadingSpinner();
+          });
+        }
+      }
+    });
   }
 
   handleEmailVerfificationResponseIfNeeded() {
