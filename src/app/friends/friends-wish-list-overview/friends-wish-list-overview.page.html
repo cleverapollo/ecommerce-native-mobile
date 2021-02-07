@@ -9,8 +9,13 @@
   </ion-refresher> 
   
   <ion-text>
-    <h1 class="wantic-page-header ion-text-center">Meine Familie & Freunde</h1>
+    <h1 class="wantic-page-header ion-text-center">Meine Familie & meine Freunde</h1>
   </ion-text>
+  <p *ngIf="!wishLists.length" class="wantic-margin-right-left no-shared-wish-lists-text">
+    Hier erscheinen die Wunschlisten deiner Familie oder deiner Freunde, sobald sie sie mit dir geteilt haben. 
+    <br><br>
+    Deine Liebsten kennen unsere App noch nicht? Erzähle ihnen von uns.
+  </p>
   <ion-grid class="wantic-container">
     <ion-row>
       <ion-col *ngFor="let wishList of wishLists" size="6" (click)="selectWishList(wishList)">
