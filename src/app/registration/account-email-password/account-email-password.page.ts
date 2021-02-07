@@ -3,11 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
-import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
 import { AuthService } from '@core/api/auth.service';
 import { AuthenticationService } from '@core/services/authentication.service';
+import { RegistrationRequest } from '@core/models/registration.model';
 
 @Component({
   selector: 'app-account-email-password',
@@ -52,7 +52,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
       this.registrationDto = registrationDto;
       this.form = this.formBuilder.group({
-        email: [this.registrationDto.userEmail, [Validators.required, CustomValidation.email]],
+        email: [this.registrationDto.user.email, [Validators.required, CustomValidation.email]],
         password: this.formBuilder.group({
           value: [null, Validators.compose([
             Validators.required,
@@ -73,24 +73,14 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.registrationDto.userEmail = this.form.controls['email'].value;
-    this.registrationDto.userPassword = this.form.controls['password']['value'].value;
+    this.registrationDto.user.email = this.form.controls['email'].value;
+    this.registrationDto.user.password = this.form.controls['password']['value'].value;
     this.formService.updateDto(this.registrationDto);
 
-    if ((this.registrationDto as RegistrationPartnerDto).userId) {
-      this.authApiService.registerPartner(this.registrationDto as RegistrationPartnerDto).subscribe(() => {
-        this.navigateToRegistrationCompletePage();
-      })
-    } else {
-      this.authApiService.register(this.registrationDto as RegistrationDto).subscribe(response => {
-        this.authService.saveToken(response.token);
-        this.navigateToRegistrationCompletePage();
-      })
-    }
+    this.authApiService.register(this.registrationDto).subscribe(response => {
+      this.authService.saveToken(response.token);
+      this.router.navigate(['../registration-complete'], { relativeTo: this.route });
+    })
   }
-
-
-  private navigateToRegistrationCompletePage() {
-    this.router.navigate(['../registration-complete'], { relativeTo: this.route });
-  }
+  
 }

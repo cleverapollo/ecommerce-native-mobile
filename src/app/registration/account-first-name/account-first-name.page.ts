@@ -3,9 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
-import { NavController } from '@ionic/angular';
-import { RegistrationDto, RegistrationRequest, RegistrationPartnerDto } from '../registration-form';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { RegistrationRequest } from '@core/models/registration.model';
 
 @Component({
   selector: 'app-account-first-name',
@@ -14,18 +13,12 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 })
 export class AccountFirstNamePage implements OnInit, OnDestroy {
 
-  form: FormGroup
-  pageViewViaEmail: Boolean;
+  form: FormGroup;
   validationMessages: ValidationMessages = {
     firstName: [
       new ValidationMessage('required', 'Gib bitte deinen Namen an.')
     ]
   }
-
-  // only when invited by mail available
-  userId: String = null;
-  inviterName: String = null;
-  wishListName: String = null;
 
   private registrationDto: RegistrationRequest;
   private formSubscription: Subscription;
@@ -34,26 +27,16 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router, 
     private route: ActivatedRoute,
-    private formService: RegistrationFormService,
-    private navController: NavController) {}
+    private formService: RegistrationFormService
+  ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      if (params['id']) {
-        this.pageViewViaEmail = true;
-        this.userId = params['id'];
-        this.inviterName = params['invitedBy'];
-        this.wishListName = params['wishListName'];
-      };
-    })
-
     this.formSubscription = this.formService.form$.subscribe( dto => {
       this.registrationDto = dto;
       this.form = this.formBuilder.group({
-        'firstName': this.formBuilder.control(this.registrationDto.userFirstName, [Validators.required])
+        'firstName': this.formBuilder.control(this.registrationDto.user.firstName, [Validators.required])
       });
     });
-
   }
 
   ngOnDestroy() {
@@ -61,13 +44,9 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
   }
 
   next() {
-    if (this.userId) {
-      this.registrationDto = new RegistrationPartnerDto();
-      (this.registrationDto as RegistrationPartnerDto).userId = this.userId;
-    }
-    this.registrationDto.userFirstName = this.form.controls['firstName'].value;
+    this.registrationDto.user.firstName = this.form.controls['firstName'].value;
     this.formService.updateDto(this.registrationDto);
-    this.router.navigate(['../credentials'], { relativeTo: this.route })
+    this.router.navigate(['../birthday'], { relativeTo: this.route })
   }
 
 }

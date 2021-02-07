@@ -3,8 +3,6 @@
   <app-email-unverified-hint></app-email-unverified-hint>
 </ion-header>
 
-<app-hint *ngIf="showHint" [config]="hintConfig"></app-hint>
-
 <ion-content>
 
   <h1 class="ion-text-center wantic-page-header">Profil bearbeiten</h1>
@@ -13,7 +11,7 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">Geburtstag</ion-label>
-      <ion-datetime formControlName="birthday" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
+      <ion-datetime doneText="Fertig" cancelText="Abbrechen" formControlName="birthday" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
     </ion-item>
     <app-validation-messages [control]="form.get('birthday')" [validationMessages]="validationMessages.birthday"></app-validation-messages>
 

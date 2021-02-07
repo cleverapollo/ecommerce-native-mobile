@@ -1,8 +1,9 @@
 .friend-name {
     font-family: 'Roboto';
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--ion-color-dark);
+    margin-top: 10px;
 }
 
 .centered-user-initials {
@@ -30,13 +31,20 @@
 .wish-list-name {
     font-size: 14px;
     font-weight: 400;
-    color: var(--ion-color-primary);
 }
+
+
 
 .wish-list-description {
     border-top: 1px dashed #F0EDE3;
     padding-left: 11px;
     background: white;
+    > div {
+        margin-bottom: 2px;
+    }
+    .wish-list-date {
+        margin-bottom: 8px;
+    }
 }
 
 img {

@@ -9,6 +9,8 @@ import { AlertService } from '@core/services/alert.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
+import { LoadingService } from '@core/services/loading.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-wish-create-update',
@@ -51,7 +53,9 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     private wishApiService: WishApiService,
     private alertService: AlertService,
     private wishListStore: WishListStoreService,
-    private searchResultDataService: SearchResultDataService
+    private searchResultDataService: SearchResultDataService,
+    private loadingService: LoadingService,
+    private toastService: ToastService
     ) { }
 
   ngOnInit() {
@@ -99,11 +103,17 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   }
 
   private onDeleteConfirmation = () => {
+    this.loadingService.showLoadingSpinner();
     this.wishListApiService.removeWish(this.wish).toPromise().then(() => {
+      this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich gelöscht.');
       this.wishListStore.removeWishFromCache(this.wish).then(() => {
         this.router.navigate([`secure/home/wish-list/${this.wish.wishListId}`]);
       });
-    });
+    }, error => {
+      this.toastService.presentErrorToast('Beim Löschen deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.');
+    }).finally(() => {
+      this.loadingService.dismissLoadingSpinner();
+    });;
   }
 
   private createWish() {
@@ -111,11 +121,17 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     this.wish.wishListId = wishListId;
     this.wish.name = this.form.controls.name.value;
     this.wish.price = this.form.controls.price.value;
+    this.loadingService.showLoadingSpinner();
     this.wishApiService.createWish(this.wish).toPromise().then(createdWish => {
       this.searchResultDataService.clear();
+      this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
       this.wishListStore.saveWishToCache(createdWish).then(() => {
         this.navigateToWishListDetailPage(wishListId);
       });
+    }, error => {
+      this.toastService.presentErrorToast('Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.');
+    }).finally(() => {
+      this.loadingService.dismissLoadingSpinner();
     });
   }
 
@@ -135,8 +151,14 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   private updateWish() {
     this.wish.name = this.form.controls.name.value;
     this.wish.price = this.form.controls.price.value; 
+    this.loadingService.showLoadingSpinner();
     this.wishApiService.update(this.wish).toPromise().then(updatedWish => { 
         this.wishListStore.updateCachedWish(updatedWish);
+        this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich aktualisiert.')
+    }, error => {
+      this.toastService.presentErrorToast('Bei der Aktualisierung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.')
+    }).finally(() => {
+      this.loadingService.dismissLoadingSpinner();
     });
   }
 

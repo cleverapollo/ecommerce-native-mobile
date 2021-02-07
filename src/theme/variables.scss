@@ -75,10 +75,12 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
+  --ion-border-color: var(--ion-color-secondary);
+
   // wantic
 
-  --wantic-background-color: #F8F5F5;
-  --wantic-background-color-rgb: 248,245,245;
+  --wantic-background-color: #F4F4F4;
+  --wantic-background-color-rgb: 244,244,244;
   --wantic-margin: 55px;
   --wantic-container-spacing: 10px;
 }

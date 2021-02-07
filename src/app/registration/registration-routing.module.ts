@@ -10,6 +10,8 @@ import { SearchResultsResolver } from './search-results.resolver';
 import { AccountFirstNamePage } from './account-first-name/account-first-name.page';
 import { AccountEmailPasswordPage } from './account-email-password/account-email-password.page';
 import { RegistrationCompletedPage } from './registration-completed/registration-completed.page';
+import { BirthdayPage } from './birthday/birthday.page';
+import { GenderPage } from './gender/gender.page';
 
 const routes: Routes = [
   {
@@ -39,6 +41,14 @@ const routes: Routes = [
       {
         path: 'first-name',
         component: AccountFirstNamePage
+      },
+      {
+        path: 'birthday',
+        component: BirthdayPage
+      },
+      {
+        path: 'gender',
+        component: GenderPage
       },
       {
         path: 'credentials',

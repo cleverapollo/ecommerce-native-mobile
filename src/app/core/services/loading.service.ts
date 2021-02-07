@@ -20,10 +20,8 @@ export class LoadingService {
   }
 
   dismissLoadingSpinner() {
-    this.loadingController.getTop().then(hasLoading => {
-      if (hasLoading) {
-        this.loadingController.dismiss();
-      }
+    this.loadingController.getTop().then(() => {
+      this.loadingController.dismiss();
     })
   }
 }

@@ -17,7 +17,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FriendsWishListResolver } from '@friends/friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from '@shared/user-profile.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
-import { HttpRequestLoadingInterceptor } from './_interceptors/http-loading.interceptor';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { CoreModule } from '@core/core.module';
@@ -87,7 +86,6 @@ export function jwtOptionsFactory(storageService: StorageService) {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'de' },
     { provide: HTTP_INTERCEPTORS, useClass: NativeTokenInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestLoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: NativeHttpInterceptor, multi: true },
     { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend]},
   ],

@@ -35,7 +35,7 @@ export class WishListOverviewPage implements OnInit {
 
   initData() {
     const resolvedData = this.route.snapshot.data;
-    this.wishLists = resolvedData.wishLists;
+    this.updateWishLists(resolvedData.wishLists)
     this.emailVerificationResponse = resolvedData.emailVerificationResponse;
   }
 
@@ -52,7 +52,7 @@ export class WishListOverviewPage implements OnInit {
   ionViewWillEnter() {
     if (this.refreshData) {
       this.wishListStore.loadWishLists(false).subscribe( wishLists => {
-        this.wishLists = wishLists;
+        this.updateWishLists(wishLists)
       })
     }
   }
@@ -67,10 +67,31 @@ export class WishListOverviewPage implements OnInit {
 
   forceRefresh(event) {
     this.wishListStore.loadWishLists(true).subscribe(wishLists => {
-      this.wishLists = wishLists;
+      this.updateWishLists(wishLists);
     }, this.logger.error, () => {
       event.target.complete();
     })
+  }
+
+  private updateWishLists(wishLists: Array<WishListDto>) {
+    this.wishLists = wishLists;
+    this.wishLists.sort((wishListA, wishListB) => {
+      return this.getTime(wishListA.date) - this.getTime(wishListB.date);
+    })
+  }
+
+  private getTime(date?: Date) {
+    if (date != null) {
+      return !this.dateIsInPast(date) ? new Date(date).getTime() : new Date(3000, 1).getTime();
+    }
+    return new Date(4000, 1).getTime();
+  }
+
+  private dateIsInPast(date: Date): boolean {
+    const isoDate = new Date(date);
+    const now = new Date();
+    now.setHours(0,0,0,0);
+    return isoDate < now;
   }
 
 }

@@ -62,3 +62,16 @@ export class ProfileImageDto {
     fileName: string;
     isFromLoggedInUser: boolean;
 }
+
+export enum Gender {
+    MALE = 'MALE',
+    FEMALE = 'FEMALE', 
+    DIVERSE = 'DIVERSE'
+}
+export class UserRegistration {
+    firstName: string;
+    email: string;
+    password: string;
+    birthday?: Date;
+    gender?: Gender;
+}

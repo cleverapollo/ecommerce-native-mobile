@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { ActivatedRoute } from '@angular/router';
 import { UserApiService } from '@core/api/user-api.service';
 import { UserProfileStore } from '../../user-profile-store.service';
-import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 import { UserService } from '@core/services/user.service';
 import { CustomValidation } from '@shared/custom-validation';
+import { LoadingService } from '@core/services/loading.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-email-update',
@@ -16,8 +16,6 @@ import { CustomValidation } from '@shared/custom-validation';
 export class EmailUpdatePage implements OnInit {
 
   form: FormGroup;
-  showHint: Boolean;
-  hintConfig: HintConfig;
   initialValue: string;
   
   get validationMessages(): ValidationMessages {
@@ -33,7 +31,9 @@ export class EmailUpdatePage implements OnInit {
     private userService: UserService, 
     private formBuilder: FormBuilder, 
     private api: UserApiService,
-    private userProfileStore: UserProfileStore) 
+    private userProfileStore: UserProfileStore,
+    private loadingService: LoadingService,
+    private toastService: ToastService) 
     { }
 
   ngOnInit() {
@@ -49,20 +49,17 @@ export class EmailUpdatePage implements OnInit {
   }
 
   saveChanges() {
+    this.loadingService.showLoadingSpinner();
     this.api.partialUpdateEmail(this.form.controls.email.value).toPromise()
       .then(updatedProfile => {
         this.userService.updateEmailVerificationStatus(updatedProfile.email.status);
         this.userProfileStore.updateCachedUserProfile(updatedProfile);
-        this.hintConfig = hintConfigForSuccessResponse;
       })
       .catch(e => {
-        this.hintConfig = hintConfigForErrorResponse;
+        this.toastService.presentErrorToast('Deine E-Mail-Adresse konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.');
       })
       .finally(() => {
-        this.showHint = true;
-        setTimeout(() => {
-          this.showHint = false;
-        }, 3000);
+        this.loadingService.dismissLoadingSpinner();
       });
   }
 

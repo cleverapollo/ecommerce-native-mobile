@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SearchQuery, SearchResultDataService, SearchType } from '@core/services/search-result-data.service';
 import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
@@ -15,7 +15,7 @@ import { PagingService } from '@core/services/paging.service';
   templateUrl: './wish-search-results.page.html',
   styleUrls: ['./wish-search-results.page.scss'],
 })
-export class WishSearchResultsPage implements OnInit, OnDestroy {
+export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
 
   private _results: SearchResultItem[] = [];
 
@@ -28,6 +28,18 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
   };
 
   loading: Boolean;
+  searchSuggestions = [
+    "Spiegel Bestseller 2020",
+    "Baby Geschenk",
+    "Reiseführer",
+    "Holzspielzeug",
+    "Puzzle Spiele",
+    "Hundespielzeug",
+    "Bio Tee",
+    "Kinderbuch ab 2 Jahre",
+    "Nachtlicht Kinder",
+    "Kugelbahn Holz"
+  ]
 
   page: number = 1;
   maxPageCount: number = 1;
@@ -51,6 +63,10 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
 
   get keywords(): string {
     return this.searchByAmazonApiForm.controls.keywords.value;
+  }
+
+  set keywords(keywords: string) {
+    this.searchByAmazonApiForm.controls.keywords.setValue(keywords);
   }
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
@@ -81,6 +97,10 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
       this.logger.error(error);
       this.createForm('');
     });
+  }
+
+  ngAfterViewInit() {
+    this.infiniteScroll.disabled = this._results.length === 0;
   }
 
   ionViewDidEnter() {
@@ -144,6 +164,10 @@ export class WishSearchResultsPage implements OnInit, OnDestroy {
     }
     this.removeSearchResultsAfterLeavingPage = false;
     this.router.navigate(['wish-new'], {relativeTo: this.route, state: { searchResult: wish }});
+  }
+
+  onSearchSuggestionClick(suggestion: string) {
+    this.keywords = suggestion;
   }
 
   private disableInfitineScrollIfNeeded() {

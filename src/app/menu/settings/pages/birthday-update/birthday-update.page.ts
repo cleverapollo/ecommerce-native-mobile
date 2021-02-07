@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { UserApiService } from '@core/api/user-api.service';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 import { UserProfileStore } from '../../user-profile-store.service';
+import { LoadingService } from '@core/services/loading.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-birthday-update',
@@ -13,9 +15,8 @@ import { UserProfileStore } from '../../user-profile-store.service';
 })
 export class BirthdayUpdatePage implements OnInit {
 
-  showHint: Boolean;
-  hintConfig: HintConfig;
   form: FormGroup;
+
   get validationMessages(): ValidationMessages {
     return {
       birthday: [
@@ -25,14 +26,14 @@ export class BirthdayUpdatePage implements OnInit {
   }
 
   constructor(
-    private route: ActivatedRoute, 
+    private loadingService: LoadingService, 
+    private toastService: ToastService,
     private formBuilder: FormBuilder, 
     private api: UserApiService, 
     private userProfileStore: UserProfileStore) 
   { }
 
   ngOnInit() {
-    this.showHint = false;
     const birthday = history.state.data.profile.birthday;
     this.form = this.formBuilder.group({
       birthday: this.formBuilder.control(birthday, [Validators.required])
@@ -40,19 +41,17 @@ export class BirthdayUpdatePage implements OnInit {
   }
 
   saveChanges() {
+    this.loadingService.showLoadingSpinner();
     this.api.partialUpdateBirthday(this.form.controls.birthday.value).toPromise()
       .then(updatedProfile => {
         this.userProfileStore.updateCachedUserProfile(updatedProfile);
-        this.hintConfig = hintConfigForSuccessResponse;
+        this.toastService.presentSuccessToast('Dein Geburtsdatum wurde erfolgreich aktualisiert.');
       })
       .catch(e => {
-        this.hintConfig = hintConfigForErrorResponse;
+        this.toastService.presentErrorToast('Dein Geburtsdatum konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.');
       })
       .finally(() => {
-        this.showHint = true;
-        setTimeout(() => {
-          this.showHint = false;
-        }, 3000);
+        this.loadingService.dismissLoadingSpinner();
       });
   }
 

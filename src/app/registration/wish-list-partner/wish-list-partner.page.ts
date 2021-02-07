@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RegistrationDto } from '../registration-form';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
@@ -8,6 +7,7 @@ import { NavController } from '@ionic/angular';
 import { UserApiService } from '@core/api/user-api.service';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
+import { RegistrationRequest } from '@core/models/registration.model';
 
 @Component({
   selector: 'app-wish-list-partner',
@@ -28,7 +28,7 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
     ]
   }
 
-  private registrationDto: RegistrationDto;
+  private registrationDto: RegistrationRequest;
   private formSubscription: Subscription;
 
   constructor(
@@ -39,20 +39,20 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
     private navController: NavController) { }
 
   ngOnInit() {
-    this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = (registrationDto as RegistrationDto);
-      const invitePartnerRequest = (registrationDto as RegistrationDto).invitePartnerRequest;
+    /*this.formSubscription = this.formService.form$.subscribe( registrationDto => {
+      this.registrationDto = registrationDto;
+      // const invitePartnerRequest = registrationDto.invitePartnerRequest;
       this.form = this.formBuilder.group({
         'email': this.formBuilder.control(invitePartnerRequest?.email, [CustomValidation.email, Validators.required]),
         'name': this.formBuilder.control(invitePartnerRequest?.name, [Validators.minLength(2), Validators.required])
       });
-    });
+    });*/
   }
 
   ngOnDestroy() {
     this.formSubscription.unsubscribe();
   }
-
+/*
   next() {
     this.registrationDto.invitePartnerRequest = {
       email: this.form.controls['email'].value,
@@ -60,5 +60,5 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
     };
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-wish'], { relativeTo: this.route })
-  }
+  }*/
 }

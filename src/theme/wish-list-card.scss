@@ -1,11 +1,24 @@
 ion-row.wish-images-container-top {
     border-bottom: 1px solid #F7F7F7;
 }
+
+.display-inline-block {
+    display: inline-block;
+}
+
 ion-col.wish-image-container {
     height: 100px;
     padding: 0;
+    padding-top: 5px;
+    text-align: center !important;
+    vertical-align: middle;
+    display: table-cell;
     img {
-        height: 95px;
+        height: auto;
+        max-height: 100%;
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
     }
     img.placeholder-image {
         max-height: 95px;
@@ -28,5 +41,5 @@ ion-col.wish-image-container {
 .wish-list-date {
     font-size: 14px;
     font-weight: 400;
-    color: var(--ion-color-secondary);
+    color: #A0A0A0;
 }

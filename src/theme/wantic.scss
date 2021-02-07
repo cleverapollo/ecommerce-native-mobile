@@ -38,6 +38,10 @@ ion-button.wantic-save-button {
     --box-shadow: none;
 }
 
+ion-button.wantic-save-button.button-outline {
+    --border-width: 2px;
+}
+
 ion-button.wantic-save-button:disabled, ion-button.wantic-save-button[disabled], ion-button.button-disabled {
     --background: #ffbc95;
     --opacity: 1;
@@ -69,7 +73,7 @@ h1.wantic-page-header {
     line-height: 25px;
     color: var(--ion-color-tertiary);
     margin-top: 4px;
-    margin-bottom: 6px;
+    margin-bottom: 20px;
 }
 
 // toolbar 
@@ -118,13 +122,17 @@ ion-input, ion-datetime, ion-select, ion-textarea {
     --placeholder-color: #FFA571 !important;
     --placeholder-font-style: italic !important;
     --padding-start: 19px !important;
-    --padding-top: 12px !important;
-    --padding-bottom: 12px !important;
-    font-family: Arial !important;
-    font-size: 14px;
+    --padding-top: 16px !important;
+    --padding-bottom: 16px !important;
+    font-family: 'Roboto' !important;
+    font-size: 14px !important;
 }
 
 .toggleContainer {
+    font-size: 12px;
+    ion-label {
+        text-align: right;
+    }
     ion-label.toggle-unchecked {
         --color: #BCBABC;
     }
@@ -137,7 +145,17 @@ ion-input, ion-datetime, ion-select, ion-textarea {
 }
 
 ion-datetime::part(placeholder) {
-    --placeholder-font-style: italic !important;
+    font-style: italic;
+    color: var(--ion-color-secondary);
+    margin: auto;
+    font-family: 'Roboto';
+}
+
+ion-item {   
+    .calendar-icon {
+        height: 20px;
+        width: 20px;
+    }
 }
 
 ion-input > button.input-clear-icon {
@@ -168,7 +186,7 @@ form {
             border-color: var(--ion-color-danger);
         }
         ion-label.label-stacked {
-            font-size: 15pt !important;
+            font-size: 15px !important;
             margin-bottom: 10px !important;
         }
     }
@@ -201,7 +219,12 @@ h1.registration {
     font-weight: bold;
     font-size: 38px;
     padding-top: 10px;
-    padding-bottom: 57px;
+    padding-bottom: 29px;
+}
+
+div.registration-step-counter {
+    margin-top: 17px;
+    font-size: 12px;
 }
 
 ion-header {
@@ -232,7 +255,6 @@ ion-header {
 
 // 
 .wish-list-detail-container {
-    margin-bottom: 30px;
     ion-avatar {
         display: inline-block;
         margin-left: 0;
@@ -249,9 +271,18 @@ ion-header {
         .wish-list-date {
             margin: 0;
             font-size: 14px;
-            color: var(--ion-color-secondary);
+            color: #A0A0A0;
         }
     }
+}
+
+div.divide {
+    border: 1px dashed var(--ion-color-secondary);
+    margin-right: 25%;
+    margin-left: 25%;
+    opacity: 0.3;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .profile-image {
@@ -278,6 +309,7 @@ ion-header {
     font-size: 14px;
     color: #3E3E3E;
     line-height: 20px;
+    font-weight: 500;
 }
 
 .wish-price {
@@ -303,4 +335,17 @@ ion-grid.wantic-container {
 app-owners-info {
     display: inline-block;
     vertical-align: top;
+}
+
+ion-tab-button.tab-selected {
+    border-top: 2px solid;
+    padding-bottom: 2px;
+}
+
+ion-card {
+    box-shadow: none;
+}
+
+.arrow-right {
+    max-height: 13px;
 }

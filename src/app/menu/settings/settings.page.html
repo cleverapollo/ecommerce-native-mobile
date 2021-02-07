@@ -8,27 +8,12 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> 
 
-  <h1 class="ion-text-center wantic-page-header">Einstellungen</h1>
+  <h1 class="ion-text-center wantic-page-header">Profil bearbeiten</h1>
 
   <ion-list>
 
-    <ion-list-header>
-      Profil
-    </ion-list-header>
-
-    <ion-item routerLink="../profile-image-update"  [state]="dataForChildRoutes" detail="false">
-      <ion-icon slot="end" name="arrow-forward"></ion-icon>
-      <ion-label>
-        <h2>Profilbild</h2>
-        <ion-avatar class="profile-image">
-          <img *ngIf="profile?.profileImageInfo" [src]="profile.profileImageInfo | cacheImage | async" alt="profile image"/>
-          <img *ngIf="!profile?.profileImageInfo" src="assets/images/avatar-placeholder-small.svg" alt="placeholder image"/>
-        </ion-avatar>
-      </ion-label>
-    </ion-item>
-
     <ion-item routerLink="/secure/menu/settings/profile-settings-firstname" [state]="dataForChildRoutes" detail="false">
-      <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label>
         <h2>Vorname</h2>
         <h3 *ngIf="profile.firstName">{{ profile.firstName }}</h3>
@@ -37,7 +22,7 @@
     </ion-item>
 
     <ion-item routerLink="/secure/menu/settings/last-name-update" [state]="dataForChildRoutes" detail="false">
-      <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label>
         <h2>Nachname</h2>
         <h3 *ngIf="profile.lastName">{{ profile.lastName }}</h3>
@@ -46,7 +31,7 @@
     </ion-item>
 
     <ion-item routerLink="/secure/menu/settings/birthday-update" [state]="dataForChildRoutes" detail="false">
-      <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label>
         <h2>Geburtsdatum</h2>
         <h3 *ngIf="profile.birthday">{{ profile.birthday | date:'dd.MM.yyyy' }}</h3>
@@ -54,37 +39,24 @@
       </ion-label>
     </ion-item>
 
-  </ion-list>
-
-  <ion-list>
-
-    <ion-list-header>
-      Login
-    </ion-list-header>
-
     <ion-item routerLink="/secure/menu/settings/email-update" [state]="dataForChildRoutes" detail="false">
-      <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label>
-        <h2>Email</h2>
+        <h2>E-Mail Adresse</h2>
         <h3>{{ profile.email.value }}</h3>
       </ion-label>
     </ion-item>
 
     <ion-item routerLink="/secure/menu/settings/password-update" detail="false">
-      <ion-icon slot="end" name="arrow-forward"></ion-icon>
-      <ion-label>
+      <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
+      <ion-label class="action-item-without-header">
         Passwort ändern
       </ion-label>
     </ion-item>
-  </ion-list>
 
-  <ion-list>
-    <ion-list-header>
-      Account
-    </ion-list-header>
     <ion-item routerLink="/secure/menu/settings/account-delete" detail="false">
-      <ion-icon slot="end" name="arrow-forward"></ion-icon>
-      <ion-label>
+      <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
+      <ion-label class="action-item-without-header">
         Account löschen
       </ion-label>
     </ion-item>

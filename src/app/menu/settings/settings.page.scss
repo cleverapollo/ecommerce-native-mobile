@@ -13,16 +13,23 @@ ion-list {
         --border-style: dashed;
         --border-color: var(--ion-color-primary);
         ion-label {
+            margin-top: 19px;
+            margin-bottom: 19px;
             h2 {
-                size: 14px;
+                font-size: 14px;
                 font-weight: 500;
                 font-style: normal;
             }
             h3 {
-                size: 14px;
+                font-size: 14px;
                 font-weight: 400;
                 font-style: normal;
             }
         }
     }
+}
+
+.action-item-without-header {
+    font-size: 14px;
+    font-weight: 500;
 }

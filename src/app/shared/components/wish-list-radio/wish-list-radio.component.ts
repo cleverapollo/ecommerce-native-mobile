@@ -54,7 +54,9 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
 
   private initWishListSelectOptions() {
     this.subscription = this.wishListStore.loadWishLists().subscribe(wishLists => {
-      this.wishListSelectOptions = wishLists.map(wishList => WishListSelectOptionDto.forWishList(wishList))
+      this.wishListSelectOptions = wishLists
+        .map(wishList => WishListSelectOptionDto.forWishList(wishList))
+        .sort((wishListA, wishListB) => wishListA.name.localeCompare(wishListB.name.toString()))
       if (this.initialValue) {
         this.wishListId = this.initialValue;
       }

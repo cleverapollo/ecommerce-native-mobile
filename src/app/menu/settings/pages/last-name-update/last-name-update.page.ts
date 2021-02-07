@@ -5,6 +5,8 @@ import { UserApiService } from '@core/api/user-api.service';
 import { UserProfileStore } from '../../user-profile-store.service';
 import { Subscription } from 'rxjs';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
+import { LoadingService } from '@core/services/loading.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-last-name-update',
@@ -16,8 +18,6 @@ export class LastNameUpdatePage implements OnInit, OnDestroy {
   private subscription: Subscription
 
   form: FormGroup;
-  showHint: Boolean;
-  hintConfig: HintConfig
 
   get validationMessages(): ValidationMessages {
     return {
@@ -31,11 +31,12 @@ export class LastNameUpdatePage implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder, 
     private api: UserApiService,
-    private userProfileStore: UserProfileStore
+    private userProfileStore: UserProfileStore,
+    private loadingService: LoadingService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
-    this.showHint = false;
     this.subscription = this.userProfileStore.loadUserProfile().subscribe( userProfile => {
       const lastName = userProfile.lastName ? userProfile.lastName : "";
       this.form = this.formBuilder.group({
@@ -49,19 +50,17 @@ export class LastNameUpdatePage implements OnInit, OnDestroy {
   }
 
   saveChanges() {
+    this.loadingService.showLoadingSpinner();
     this.api.partialUpdateLastName(this.form.controls.lastName.value).toPromise()
       .then( updatedProfile => {
         this.userProfileStore.updateCachedUserProfile(updatedProfile);
-        this.hintConfig = hintConfigForSuccessResponse;
+        this.toastService.presentSuccessToast('Dein Nachname wurde erfolgreich aktualisiert.');
       })
-      .catch( e => {
-        this.hintConfig = hintConfigForErrorResponse;
+      .catch( error => {
+        this.toastService.presentErrorToast('Dein Nachname konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.');
       })
       .finally(() => {
-        this.showHint = true;
-        setTimeout(() => {
-          this.showHint = false;
-        }, 3000);
+        this.loadingService.dismissLoadingSpinner();
       })
   }
 

@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RegistrationFormService } from '../registration-form.service';
 import { IonInfiniteScroll, NavController } from '@ionic/angular';
-import { RegistrationDto } from '../registration-form';
 import { WishDto } from '@core/models/wish-list.model';
 import { SearchService } from '@core/api/search.service';
 import { PagingService } from '@core/services/paging.service';
 import { LogService } from '@core/services/log.service';
+import { RegistrationRequest } from '@core/models/registration.model';
 
 @Component({
   selector: 'app-search-results',
@@ -25,7 +25,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
   searchResult: SearchResult;
   searchResultItems: Array<SearchResultItem> = [];
 
-  private registrationDto: RegistrationDto
+  private registrationDto: RegistrationRequest;
   private formSubscription: Subscription;
 
   constructor(
@@ -41,7 +41,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
     this.searchResultItems = this.searchResult.items;
     this.maxPageCount = this.pagingService.calcMaxPageCount(this.searchResult.totalResultCount); 
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
-      this.registrationDto = registrationDto as RegistrationDto;
+      this.registrationDto = registrationDto;
     });
     this.route.queryParamMap.subscribe(paramMap => {
       this.page = Number(paramMap.get('page')) ?? 1;
@@ -59,7 +59,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
   }
 
   updateValue(item: SearchResultItem) {
-    this.registrationDto.wishListWish = SearchResultItemMapper.map(item, new WishDto());
+    this.registrationDto.wishList.wish = SearchResultItemMapper.map(item, new WishDto());
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../first-name'], { relativeTo: this.route });
   }
