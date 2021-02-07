@@ -30,7 +30,10 @@ struct WishListService {
                     return
                 }
                 do {
-                    let wishLists = try JSONDecoder().decode([WishList].self, from: data)
+                    var wishLists = try JSONDecoder().decode([WishList].self, from: data)
+                    wishLists = wishLists.sorted(by: { (wishListA, wishListB) in
+                        wishListA.name.compare(wishListB.name) == .orderedAscending
+                    })
                     completionHandler(.success(wishLists))
                 } catch let error {
                     print(error.localizedDescription)
