@@ -30,7 +30,7 @@ class ProductPriceTableViewCell: UITableViewCell {
     static let reuseIdentifier = "ProductPriceTableViewCell"
     
     @IBOutlet weak var headerLabel: UILabel!
-    @IBOutlet weak var productPriceView: UITextField!
+    @IBOutlet weak var productPriceView: CurrencyField!
 }
 
 class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
@@ -146,28 +146,13 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         return true
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == productPrice, textField.text != "" && string != "" {
-            if var text = textField.text {
-                text = text.replacingOccurrences(of: " €", with: "")
-                
-                var res = text + string
-                res = res.replacingOccurrences(of: ",", with: ".")
-                res = res.replacingOccurrences(of: " ", with: "")
-                
-                return Double(res) != nil
-            }
-        }
-        return true
-    }
-    
     @objc private func textDidChange(_ notification: Notification) {
         var formIsValid = true
 
         for textInput in textFields {
             if let textField = textInput as? UITextField {
-                if textField == productPrice {
-                    WishDataStore.shared.wish.price = textField.text != nil ? textField.text! + " €" : nil
+                if textField == productPrice, let amountCurrency = textField.text {
+                    WishDataStore.shared.wish.price = amountCurrency
                 }
             } else if let textView = textInput as? UITextView {
                 /*textView.translatesAutoresizingMaskIntoConstraints = true
