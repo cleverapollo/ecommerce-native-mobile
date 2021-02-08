@@ -45,7 +45,7 @@
           </ion-row>
         </ion-grid>
       </ion-col>
-      <ion-col  [ngClass]="{ 'wish-list-right': i % 2 == 0 , 'wish-list-left': i % 2 == 1 }" 
+      <ion-col  [ngClass]="{ 'wish-list-right': i % 2 == 0 , 'wish-list-left': i % 2 == 1, 'wish-list-first': i === 0 }" 
                 class="wish-list" size="6" size-lg="2"
                 *ngFor="let wishList of wishLists; let i = index;" 
                 (click)="selectWishList(wishList)">
