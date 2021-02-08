@@ -33,6 +33,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { EmailVerificationTokenResolver } from '@wishLists/home/email-verification-token.resolver';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -74,6 +75,7 @@ export function jwtOptionsFactory(storageService: StorageService) {
   providers: [
     InAppBrowser,
     HTTP,
+    EmailVerificationStatusResolver,
     EmailVerificationTokenResolver,
     File,
     FriendsWishListResolver,
