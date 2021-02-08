@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { UserProfile, UploadFileResponse, UserSearchResult } from '@core/models/user.model';
+import { UserProfile, PublicEmailVerificationStatus } from '@core/models/user.model';
 import { UpdatePasswordRequest, ChangePasswordRequest } from '@core/models/login.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
+import { LogService } from '@core/services/log.service';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,11 @@ export class UserApiService {
 
   private static REST_END_POINT = 'user';
 
-  constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
+  constructor(
+    private apiService: ApiService, 
+    private errorHandler: ApiErrorHandlerService,
+    private logger: LogService
+  ) { }
 
   deleteUser(): Observable<void> {
     return this.apiService.delete<void>(`${UserApiService.REST_END_POINT}`).pipe(
@@ -85,6 +91,26 @@ export class UserApiService {
     return this.apiService.delete(`${UserApiService.REST_END_POINT}/profile-image/${fileName}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
+  }
+
+  verifyEmail(emailVerficationToken: string): Promise<PublicEmailVerificationStatus> {
+    return new Promise((resolve) => {
+      return this.apiService.patch<void>(`${UserApiService.REST_END_POINT}/email-verification`, { emailVerficationToken: emailVerficationToken }).toPromise().then(() => {
+        resolve(PublicEmailVerificationStatus.VERIFIED);
+      }, error => {
+        if (error.error instanceof ErrorEvent) {
+          this.logger.log(`Error: ${error.error.message}`);
+          resolve(PublicEmailVerificationStatus.ERROR);
+        } else {
+          this.logger.log(`error status : ${error.status} ${error.statusText}`);
+          if (error.status === HttpStatusCodes.UNAUTHORIZED) {
+            resolve(PublicEmailVerificationStatus.TOKEN_EXPIRED);
+          } else {
+            resolve(PublicEmailVerificationStatus.ERROR);
+          }
+        }
+      })
+    });
   }
 
 }

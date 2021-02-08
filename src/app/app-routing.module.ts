@@ -4,6 +4,7 @@ import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-
 import { SharedWishListPageGuard } from '@wishLists/shared-wish-list/shared-wish-list-page.guard';
 import { AutoLoginGuard } from '@guards/auto-login.guard';
 import { AccessGuard } from '@guards/access.guard';
+import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 
 const routes: Routes = [
   { 
@@ -42,6 +43,11 @@ const routes: Routes = [
     canActivate: [SharedWishListPageGuard],
     resolve: { data: SharedWishListResolver },
     loadChildren: () => import('@wishLists/shared-wish-list/shared-wish-list.module').then( m => m.SharedWishListPageModule)
+  },
+  {
+    path: 'email-verification',
+    resolve: { emailVerificationStatus: EmailVerificationStatusResolver },
+    loadChildren: () => import('./email-verification/email-verification.module').then( m => m.EmailVerificationPageModule)
   }
 
 ];

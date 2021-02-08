@@ -50,6 +50,10 @@ export enum EmailVerificationStatus {
     UNVERIFIED, VERIFICATION_EMAIL_SENT, VERIFIED
 }
 
+export enum PublicEmailVerificationStatus {
+    ERROR, TOKEN_EXPIRED, VERIFIED
+}
+
 export class UploadFileResponse {
     fileName: String;
     fileDownloadUri: String;

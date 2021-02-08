@@ -12,12 +12,21 @@ export class AccessGuard implements CanActivate  {
   constructor(private platform: Platform, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-     if (this.platform.is('hybrid') && environment.production) {
+    if (!environment.production) {
+      return true;
+    }  
+    
+    if (this.platform.is('hybrid')) {
        return true;
-     } else if (!environment.production) {
-       return true;
-     } else {
-      window.location.href = "https://www.wantic.io/";
+    } else {
+      const token = route.queryParamMap.get('emailVerificationToken'); 
+      if (token !== null) {
+        this.router.navigateByUrl('/email-verification', { queryParams: {
+          emailVerificationToken: token
+        }});
+      } else {
+        window.location.href = "https://www.wantic.io/";
+      }
       return false;
      }
   }
