@@ -6,14 +6,18 @@
 //
 
 import UIKit
+import SVGKit
 
 extension UIImageView{
 
-     func setImageFromURl(ImageUrl: String){
-
-         if let url = NSURL(string: ImageUrl) {
+     func setImageFromURl(imageUrlString: String){
+         if let url = NSURL(string: imageUrlString) {
              if let imagedata = NSData(contentsOf: url as URL) {
-                 self.image = UIImage(data: imagedata as Data)
+                if imageUrlString.contains(".svg") {
+                    self.image = SVGKImage(data: imagedata as Data)?.uiImage
+                } else {
+                    self.image = UIImage(data: imagedata as Data)
+                }
              }
          }
      }

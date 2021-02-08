@@ -55,7 +55,7 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     private func setupViews() {
         if let imageUrl = WishDataStore.shared.wish.imageUrl {
-            self.selectedWishImageView.setImageFromURl(ImageUrl: imageUrl)
+            self.selectedWishImageView.setImageFromURl(imageUrlString: imageUrl)
         }
         saveButton.isEnabled = WishDataStore.shared.wish.isValid()
         wishListId = WishDataStore.shared.wish.wishListId
@@ -120,7 +120,9 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
-        extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+        extensionContext?.completeRequest(returningItems: nil, completionHandler: {_ in
+            WishDataStore.shared.reset()
+        })
     }
     
     // MARK: UITextFieldDelegate

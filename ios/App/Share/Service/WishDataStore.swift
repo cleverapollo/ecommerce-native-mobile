@@ -14,4 +14,8 @@ class WishDataStore {
 
     var wish = Wish()
     
+    public func reset() {
+        wish = Wish()
+    }
+    
 }

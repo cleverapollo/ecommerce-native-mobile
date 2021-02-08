@@ -8,6 +8,7 @@ import { CustomValidation } from '@shared/custom-validation';
 import { AuthService } from '@core/api/auth.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { RegistrationRequest } from '@core/models/registration.model';
+import { LoadingService } from '@core/services/loading.service';
 
 @Component({
   selector: 'app-account-email-password',
@@ -45,7 +46,8 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formService: RegistrationFormService,
     private authApiService: AuthService,
-    private authService: AuthenticationService) { 
+    private authService: AuthenticationService,
+    private loadingService: LoadingService) { 
   }
 
   ngOnInit() {
@@ -77,9 +79,15 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     this.registrationDto.user.password = this.form.controls['password']['value'].value;
     this.formService.updateDto(this.registrationDto);
 
-    this.authApiService.register(this.registrationDto).subscribe(response => {
-      this.authService.saveToken(response.token);
-      this.router.navigate(['../registration-complete'], { relativeTo: this.route });
+    this.loadingService.showLoadingSpinner();
+    this.authApiService.register(this.registrationDto).subscribe({
+      next: response => {
+        this.authService.saveToken(response.token);
+        this.router.navigate(['../registration-complete'], { relativeTo: this.route });
+      },
+      complete: () => {
+        this.loadingService.dismissLoadingSpinner();
+      }
     })
   }
   

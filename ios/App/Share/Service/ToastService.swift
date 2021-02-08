@@ -26,7 +26,7 @@ struct ToastService {
                     closeShareExtension(extensionContext: extensionContext)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: { (action: UIAlertAction!) in
+            alert.addAction(UIAlertAction(title: "Fertig", style: .cancel, handler: { (action: UIAlertAction!) in
                 closeShareExtension(extensionContext: extensionContext)
             }))
             controller.present(alert, animated: true)
