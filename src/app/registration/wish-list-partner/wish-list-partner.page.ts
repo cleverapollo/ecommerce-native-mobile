@@ -52,6 +52,11 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.formSubscription.unsubscribe();
   }
+
+  next() {
+    this.router.navigate(['../wish-list-wish'], { relativeTo: this.route })
+  }
+  
 /*
   next() {
     this.registrationDto.invitePartnerRequest = {
