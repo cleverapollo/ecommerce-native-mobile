@@ -10,6 +10,7 @@ import { PublicEmailVerificationStatus } from '@core/models/user.model';
 export class EmailVerificationPage implements OnInit {
 
   emailVerificationStatus: PublicEmailVerificationStatus;
+  mailToString = "mailto:support@wantic.io?subject=Fehler%20bei%20der%20E-Mail%20Bestätigung"
 
   get verified() {
     return this.emailVerificationStatus === PublicEmailVerificationStatus.VERIFIED;

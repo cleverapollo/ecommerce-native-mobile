@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border safe-area-inset-top">
-  <app-nav-toolbar></app-nav-toolbar>
+  <app-nav-toolbar [showBackButton]="false"></app-nav-toolbar>
 </ion-header>
 
 <ion-content>
@@ -29,7 +29,7 @@
         Wir schicken dir in diesem Fall gerne einen neuen. <br>
         Dazu musst du einfach in unserer App einen neuen beantragen.<br>
 
-        Sollte das nicht funktionieren, dann sende uns gerne eine E-Mail an support@wantic.io und wir <br>
+        Sollte das nicht funktionieren, dann sende uns gerne eine E-Mail an <a [href]="mailToString" target="_top">support@wantic.io</a> und wir <br>
         kümmern uns schnellstmöglich um das Problem.
       </p>
 
@@ -41,7 +41,7 @@
         Zurzeit gibt es technische Probleme auf unserern Servern oder in unserer App. <br>
         In diesem Fall kannst du einfach später noch einmal auf den Link in unserer E-Mail klicken.<br>
         Wenn es auch dann nicht geklappt hat, <br>
-        dann sende uns gerne eine E-Mail an support@wantic.io und wir <br>
+        dann sende uns gerne eine E-Mail an <a [href]="mailToString" target="_top">support@wantic.io</a> und wir <br>
         kümmern uns schnellstmöglich um das Problem.
       </p>
 
