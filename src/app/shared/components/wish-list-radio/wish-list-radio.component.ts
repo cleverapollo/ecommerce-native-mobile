@@ -1,9 +1,7 @@
 import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { WishListApiService } from '@core/api/wish-list-api.service';
-import { WishListDto, WishListSelectOptionDto } from '@core/models/wish-list.model';
+import { WishListSelectOptionDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { WishListCreateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -36,15 +34,12 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
   }
 
   wishListSelectOptions: Array<WishListSelectOptionDto> = [];
-  newWishListName: string = '';
-  showAddNewWishListInput: boolean = false;
   subscription: Subscription;
 
   propagateChange = (_: any) => {};
   onTouched: any = (_: any) => { };
 
   constructor(
-    private wishListApiService: WishListApiService,
     private wishListStore: WishListStoreService
   ) { }
 
@@ -86,27 +81,5 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
     // no needed at this time
   }
 
-  toggleShowAddNewWishListInput() {
-    this.showAddNewWishListInput = !this.showAddNewWishListInput;
-  }
 
-  createNewWishList() {
-    const requestData = new WishListCreateRequest(this.newWishListName);
-    this.wishListApiService.create(requestData).subscribe(createdWishList => {
-      this.wishListStore.saveWishListToCache(createdWishList);
-      this.handleNewCreatedWishList(createdWishList);
-      this.resetNewWishListForm();
-    });
-  }
-
-  private handleNewCreatedWishList(createdWishList: WishListDto) {
-    const newWishListSelectOption = WishListSelectOptionDto.forWishList(createdWishList);
-    this.wishListSelectOptions.push(newWishListSelectOption);
-    this.writeValue(newWishListSelectOption);
-  }
-
-  private resetNewWishListForm() {
-    this.newWishListName = '';
-    this.showAddNewWishListInput = false;
-  }
 }
