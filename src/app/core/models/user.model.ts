@@ -49,6 +49,9 @@ export enum UserState {
 export enum EmailVerificationStatus {
     UNVERIFIED, VERIFICATION_EMAIL_SENT, VERIFIED
 }
+export class EmailVerificationDto {
+    status: EmailVerificationStatus;
+}
 
 export enum PublicEmailVerificationStatus {
     ERROR, TOKEN_EXPIRED, VERIFIED

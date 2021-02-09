@@ -1,26 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { Location } from '@angular/common';
-import { LoginResponse, WanticJwtToken } from '@core/models/login.model';
+import { LoginResponse } from '@core/models/login.model';
 import { LogService } from '@core/services/log.service';
 import { RegistrationApiService } from '@core/api/registration-api.service';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
+import { EmailVerificationService } from '@core/services/email-verification.service';
+import { EmailVerificationStatus } from '@core/models/user.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wish-list-overview',
   templateUrl: './wish-list-overview.page.html',
   styleUrls: ['./wish-list-overview.page.scss'],
 })
-export class WishListOverviewPage implements OnInit {
+export class WishListOverviewPage implements OnInit, OnDestroy {
 
   wishLists: Array<WishListDto> = new Array();
   emailVerificationResponse?: LoginResponse;
   refreshData: boolean = false
+
+  disableAddButtons: boolean = false;
+  private emilVerificationSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute, 
@@ -31,7 +37,8 @@ export class WishListOverviewPage implements OnInit {
     private logger: LogService,
     private registrationApiService: RegistrationApiService,
     private loadingService: LoadingService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private emilVerificationService: EmailVerificationService
   ) { }
 
   ngOnInit() {
@@ -40,12 +47,21 @@ export class WishListOverviewPage implements OnInit {
     this.confirmRegistration();
   }
 
+  ngOnDestroy(): void {
+    this.emilVerificationSubscription.unsubscribe();
+  }
+
   initData() {
     const resolvedData = this.route.snapshot.data;
     this.updateWishLists(resolvedData.wishLists);
     if (resolvedData.emailVerificationResponse) {
       this.emailVerificationResponse = resolvedData.emailVerificationResponse;
     }
+    this.emilVerificationSubscription = this.emilVerificationService.emailVerificationStatus.subscribe({
+      next: status => {
+        this.disableAddButtons = status !== EmailVerificationStatus.VERIFIED;
+      }
+    })
   }
 
   private confirmRegistration() {
@@ -97,7 +113,8 @@ export class WishListOverviewPage implements OnInit {
       this.updateWishLists(wishLists);
     }, this.logger.error, () => {
       event.target.complete();
-    })
+    });
+    this.emilVerificationService.updateEmailVerificationStatusIfNeeded();
   }
 
   private updateWishLists(wishLists: Array<WishListDto>) {

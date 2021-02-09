@@ -59,6 +59,9 @@
     padding-bottom: 5px;
     border-radius: 10px 10px 0 0;
   }
+  .add-wish-list-button.disabled, .add-wish-button.disabled {
+    pointer-events: none;
+  } 
   .add-button-label {
     font-size: 15px;
     line-height: 18px;

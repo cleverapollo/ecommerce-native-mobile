@@ -3,10 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
 import { UserProfileStore } from '../../user-profile-store.service';
-import { UserService } from '@core/services/user.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
+import { EmailVerificationService } from '@core/services/email-verification.service';
 
 @Component({
   selector: 'app-email-update',
@@ -28,12 +28,12 @@ export class EmailUpdatePage implements OnInit {
   }
 
   constructor(
-    private userService: UserService, 
     private formBuilder: FormBuilder, 
     private api: UserApiService,
     private userProfileStore: UserProfileStore,
     private loadingService: LoadingService,
-    private toastService: ToastService) 
+    private toastService: ToastService,
+    private emailVerificationService: EmailVerificationService) 
     { }
 
   ngOnInit() {
@@ -52,7 +52,7 @@ export class EmailUpdatePage implements OnInit {
     this.loadingService.showLoadingSpinner();
     this.api.partialUpdateEmail(this.form.controls.email.value).toPromise()
       .then(updatedProfile => {
-        this.userService.updateEmailVerificationStatus(updatedProfile.email.status);
+        this.emailVerificationService.updateEmailVerificationStatus(updatedProfile.email.status);
         this.userProfileStore.updateCachedUserProfile(updatedProfile);
       })
       .catch(e => {

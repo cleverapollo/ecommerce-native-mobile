@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmailVerificationStatus } from '@core/models/user.model';
 import { RegistrationApiService } from '@core/api/registration-api.service';
 import { UserService } from '@core/services/user.service';
+import { EmailVerificationService } from '@core/services/email-verification.service';
 
 @Component({
   selector: 'app-email-unverified-hint',
@@ -16,10 +17,10 @@ export class EmailUnverifiedHintComponent implements OnInit {
 
   constructor(
     private registrationApiService: RegistrationApiService, 
-    private userService: UserService) { }
+    private emilVerificationService: EmailVerificationService) { }
 
   ngOnInit() {
-    this.userService.emailVerificationStatus.subscribe({
+    this.emilVerificationService.emailVerificationStatus.subscribe({
       next: emailVerificationStatus => { this.emailVerificationStatus = emailVerificationStatus }
     })
   }

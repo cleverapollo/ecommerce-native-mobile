@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService, StorageKeys } from './storage.service';
-import { EmailVerificationStatus, UserState } from '@core/models/user.model';
+import { UserState } from '@core/models/user.model';
 import { WanticJwtToken } from '@core/models/login.model';
-import { BehaviorSubject } from 'rxjs';
 import { LogService } from './log.service';
 
 @Injectable({
@@ -11,16 +10,11 @@ import { LogService } from './log.service';
 })
 export class UserService {
 
-  private _emailVerificationStatus = new BehaviorSubject<EmailVerificationStatus>(null);
-  emailVerificationStatus = this._emailVerificationStatus.asObservable();
-
   constructor(
     private storageService: StorageService,  
     private jwtHelper: JwtHelperService,
     private logger: LogService
-  ) { 
-    this.initEmailVerificationStatus();
-  }
+  ) {}
 
   get email() : Promise<string> {
     this.logger.log('UserService email');
@@ -41,25 +35,6 @@ export class UserService {
       }, reject);
     });
   }
-
-  initEmailVerificationStatus() {
-    this.storageService.get<string>(StorageKeys.EMAIL_VERIFICATION_STATUS).then( status => {
-      this._emailVerificationStatus.next(EmailVerificationStatus[status]);
-    });
-  }
-
-  updateEmailVerificationStatus(status: string | EmailVerificationStatus) {
-    if (typeof status == 'string') {
-      status = status as string;
-      this._emailVerificationStatus.next(EmailVerificationStatus[status]);
-      this.storageService.set(StorageKeys.EMAIL_VERIFICATION_STATUS, status);
-    } else {
-      status = status as EmailVerificationStatus;
-      this._emailVerificationStatus.next(status);
-      this.storageService.set(StorageKeys.EMAIL_VERIFICATION_STATUS, status.toString());
-    }
-  }
-
 
   get userSettings(): Promise<UserSettings> {
     return new Promise((resolve) => {

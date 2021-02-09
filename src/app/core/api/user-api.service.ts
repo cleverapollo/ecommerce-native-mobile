@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { UserProfile, PublicEmailVerificationStatus } from '@core/models/user.model';
+import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto } from '@core/models/user.model';
 import { UpdatePasswordRequest, ChangePasswordRequest } from '@core/models/login.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
@@ -111,6 +111,10 @@ export class UserApiService {
         }
       })
     });
+  }
+
+  getEmailVerificationStatus(): Observable<EmailVerificationDto> {
+    return this.apiService.get<EmailVerificationDto>(`${UserApiService.REST_END_POINT}/email-verification`);
   }
 
 }
