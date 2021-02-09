@@ -35,7 +35,7 @@
 
   </form>
 
-  <ion-button *ngIf="form" class="wantic-save-button" (click)="createOrUpdateWish()" color="primary" expand="block" [disabled]="!form.valid">
+  <ion-button *ngIf="form" class="wantic-save-button save-wish-button" (click)="createOrUpdateWish()" color="primary" expand="block" [disabled]="!form.valid">
     WUNSCH SPEICHERN
   </ion-button>
   <ion-button *ngIf="form && isUpdatePage" class="wantic-save-button" (click)="deleteWish()" color="primary" expand="block" fill="outline">

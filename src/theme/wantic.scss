@@ -175,7 +175,7 @@ form {
         --background-activated-opacity: 0;
         margin-left: var(--wantic-margin);
         margin-right: var(--wantic-margin);
-        margin-bottom: 18px;
+        margin-bottom: 15px;
         ion-input, ion-datetime, ion-textarea, ion-select {
             height: 48px; 
             border-radius: 50pt;
@@ -321,6 +321,7 @@ div.divide {
 .image-container {
     margin-right: 10px;
     margin-left: 10px;
+    margin-bottom: 15px;
     ion-img {
         width: 50%;
         margin: auto;
