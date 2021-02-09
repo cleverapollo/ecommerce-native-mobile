@@ -70,10 +70,13 @@ export class StorageService {
     }, this.logger.error);
   }
 
-  async clear() {
-    await this.platformReady().then(() => {
-      Storage.clear();
-      SecureStoragePlugin.clear();
+  clear(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      Storage.clear().finally(() => {
+        SecureStoragePlugin.clear().finally(() => {
+          resolve();
+        });
+      });
     });
   }
 
