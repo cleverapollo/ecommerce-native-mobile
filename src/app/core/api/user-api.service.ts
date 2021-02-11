@@ -22,9 +22,7 @@ export class UserApiService {
   ) { }
 
   deleteUser(requestBody: DeleteAccountRequest): Observable<void> {
-    return this.apiService.delete<void>(`${UserApiService.REST_END_POINT}`, requestBody).pipe(
-      catchError(error => this.errorHandler.handleError(error))
-    )
+    return this.apiService.delete<void>(`${UserApiService.REST_END_POINT}`, requestBody);
   }
 
   getProfile(): Observable<UserProfile> {
