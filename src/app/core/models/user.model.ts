@@ -1,3 +1,5 @@
+import { AbstractControl } from "@angular/forms";
+
 export class UserProfile {
     firstName: String;
     lastName: String;
@@ -81,4 +83,21 @@ export class UserRegistration {
     password: string;
     birthday?: Date;
     gender?: Gender;
+}
+export class UpdateEmailRequest {
+    email: string;
+    password: string;
+
+    constructor(controls: { [key: string]: AbstractControl }) {
+        this.email = controls.email.value;
+        this.password = controls.password.value;
+    }
+}
+
+export class DeleteAccountRequest {
+    password: string;
+
+    constructor(controls: { [key: string]: AbstractControl }) {
+        this.password = controls.password.value;
+    }
 }

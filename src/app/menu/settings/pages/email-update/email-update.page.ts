@@ -7,6 +7,7 @@ import { CustomValidation } from '@shared/custom-validation';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
 import { EmailVerificationService } from '@core/services/email-verification.service';
+import { UpdateEmailRequest } from '@core/models/user.model';
 
 @Component({
   selector: 'app-email-update',
@@ -23,6 +24,9 @@ export class EmailUpdatePage implements OnInit {
       email: [
         new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
         new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.'),
+      ],
+      password: [
+        new ValidationMessage('required', 'Gib bitte deine Passwort an.'),
       ]
     }
   }
@@ -40,7 +44,8 @@ export class EmailUpdatePage implements OnInit {
     const email = history.state.data.profile.email.value;
     this.initialValue = email;
     this.form = this.formBuilder.group({
-      email: this.formBuilder.control(email, [Validators.required, CustomValidation.email])
+      email: this.formBuilder.control(email, [Validators.required, CustomValidation.email]),
+      password: this.formBuilder.control('', [Validators.required])
     });
   }
 
@@ -50,7 +55,8 @@ export class EmailUpdatePage implements OnInit {
 
   saveChanges() {
     this.loadingService.showLoadingSpinner();
-    this.api.partialUpdateEmail(this.form.controls.email.value).toPromise()
+    const requestBody = new UpdateEmailRequest(this.form.controls);
+    this.api.partialUpdateEmail(requestBody).toPromise()
       .then(updatedProfile => {
         this.emailVerificationService.updateEmailVerificationStatus(updatedProfile.email.status);
         this.userProfileStore.updateCachedUserProfile(updatedProfile);
