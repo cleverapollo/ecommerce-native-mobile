@@ -1,12 +1,24 @@
 ion-card {
-    img {
-        width: 50%;
-        margin: auto;
-    }
-    img.placeholder {
-        width: 70%;
-        padding-top: 10px;
-        padding-bottom: 10px;
+    div.product-image-container {
+        min-height: 300px;
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        img {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            max-height: 100%;
+            max-width: 100%;
+        }
+        img.placeholder {
+            width: 70%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
     }
     background-color: white;
     height: auto;
@@ -16,6 +28,7 @@ ion-card {
     margin-bottom: 20px;
     ion-card-content {
         border-top: 1px dashed #F0EDE3;
+        padding: 7px;
         a.edit-wish-button {
             height: 100%;
             img {
