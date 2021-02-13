@@ -51,7 +51,7 @@ export class ReserveWishModalComponent implements OnInit {
       identifier: this.identifier, 
       email: email, 
       wishId: this.wish.id,
-      acceptPrivacyPolicy: this.form.controls.acceptPrivacyPolicy.value
+      agreedToPrivacyPolicyAt: new Date()
     };
     this.wishListApiService.reserveWish(requestData).toPromise().then( wishList => {
       this.wishList = wishList;

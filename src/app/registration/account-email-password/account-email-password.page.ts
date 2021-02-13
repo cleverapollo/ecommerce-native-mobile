@@ -36,9 +36,12 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     ]
   }
 
-
   private registrationDto: RegistrationRequest
   private formSubscription: Subscription;
+
+  get acceptPrivacyPolicy(): boolean {
+    return this.form?.controls['acceptPrivacyPolicy']?.value ?? false;
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -65,7 +68,8 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
           confirm: [null, Validators.compose([Validators.required])]
         }, { 
           validator: CustomValidation.passwordMatchValidator
-        })
+        }),
+        acceptPrivacyPolicy: this.formBuilder.control(false, [Validators.requiredTrue])
       })
     });
   }
@@ -77,6 +81,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
   next() {
     this.registrationDto.user.email = this.form.controls['email'].value;
     this.registrationDto.user.password = this.form.controls['password']['value'].value;
+    this.registrationDto.agreedToPrivacyPolicyAt = new Date();
     this.formService.updateDto(this.registrationDto);
 
     this.loadingService.showLoadingSpinner();
@@ -84,8 +89,6 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
       next: response => {
         this.authService.saveToken(response.token);
         this.router.navigate(['../registration-complete'], { relativeTo: this.route });
-      },
-      complete: () => {
         this.loadingService.dismissLoadingSpinner();
       }
     })
