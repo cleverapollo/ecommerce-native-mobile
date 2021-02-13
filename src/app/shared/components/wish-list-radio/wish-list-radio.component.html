@@ -1,6 +1,12 @@
-<div class="wantic-radio-group-container wantic-margin-right-left">
-  <div class="inputGroup"  *ngFor="let option of wishListSelectOptions;">
-    <input [id]="option.id" type="radio" [value]="option.id" [(ngModel)]="wishListId" />
-    <label [for]="option.id">{{ option.name }}</label>
-  </div>
-</div>
+<ion-list>
+  <ion-item *ngFor="let option of wishListSelectOptions; let isFirst = first; let isLast = last;" 
+            (click)="wishListId = option.id;"
+            [ngClass]=" {'first-item': isFirst, 'last-item': isLast } " lines="none"
+  >
+    <ion-label>{{ option.name }}</ion-label>
+    <ion-avatar slot="end">
+      <img *ngIf="wishListId == option.id" src="assets/icon/checked.svg" alt="checked icon" />
+      <img *ngIf="wishListId != option.id" src="assets/icon/unchecked.svg" alt="unchecked icon" />
+    </ion-avatar>
+  </ion-item>
+</ion-list>
