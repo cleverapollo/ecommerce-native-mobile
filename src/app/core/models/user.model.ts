@@ -84,7 +84,7 @@ export class UserRegistration {
     birthday?: Date;
     gender?: Gender;
 }
-export class UpdateEmailRequest {
+export class UpdateEmailChangeRequest {
     email: string;
     password: string;
 

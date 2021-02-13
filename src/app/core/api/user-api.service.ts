@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto, UpdateEmailRequest, DeleteAccountRequest } from '@core/models/user.model';
-import { UpdatePasswordRequest, ChangePasswordRequest } from '@core/models/login.model';
+import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto, DeleteAccountRequest, UpdateEmailChangeRequest } from '@core/models/user.model';
+import { UpdatePasswordRequest, ChangePasswordRequest, LoginResponse } from '@core/models/login.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
 import { LogService } from '@core/services/log.service';
@@ -49,8 +49,12 @@ export class UserApiService {
     );
   }
 
-  partialUpdateEmail(requestBody: UpdateEmailRequest): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${UserApiService.REST_END_POINT}/profiles/email`, requestBody).pipe(
+  partialUpdateEmail(emailVerficationToken: string): Observable<LoginResponse> {
+    return this.apiService.patch<LoginResponse>(`${UserApiService.REST_END_POINT}/profiles/email`,  { emailVerficationToken: emailVerficationToken });
+  }
+
+  updateEmailChangeRequest(requestBody: UpdateEmailChangeRequest): Observable<void> {
+    return this.apiService.put<void>(`${UserApiService.REST_END_POINT}/profiles/email`, requestBody).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

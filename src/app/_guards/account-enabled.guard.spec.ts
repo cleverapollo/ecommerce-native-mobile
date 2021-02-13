@@ -1,15 +1,15 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 
-import { RoleGuard } from './role.guard';
+import { AccountEnabledGuard } from './account-enabled.guard';
 
 describe('RoleGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RoleGuard]
+      providers: [AccountEnabledGuard]
     });
   });
 
-  xit('should ...', inject([RoleGuard], (guard: RoleGuard) => {
+  xit('should ...', inject([AccountEnabledGuard], (guard: AccountEnabledGuard) => {
     expect(guard).toBeTruthy();
   }));
 });

@@ -26,9 +26,9 @@
           <div class="wish-price">{{ wish.price }}</div>
         </ion-col>
         <ion-col size="2" class="ion-text-right ">
-          <div [routerLink]="['../edit']" class="edit-wish-button">
+          <a  [ngClass]=" { 'disabled': accountIsNotActivated }" [routerLink]="['../edit']" class="edit-wish-button">
             <img src="assets/icon/pencil.svg" alt="Icon - Bild bearbeiten"/>
-          </div>
+          </a>
         </ion-col>
       </ion-row>
     </ion-card-content>

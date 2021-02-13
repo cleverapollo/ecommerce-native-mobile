@@ -13,6 +13,8 @@ import { ToastService } from '@core/services/toast.service';
 import { EmailVerificationService } from '@core/services/email-verification.service';
 import { EmailVerificationStatus } from '@core/models/user.model';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -27,6 +29,8 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
 
   disableAddButtons: boolean = false;
   private emilVerificationSubscription: Subscription;
+  private queryParamSubscription: Subscription;
+  private confirmRegistrationSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute, 
@@ -47,8 +51,9 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
     this.confirmRegistration();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.emilVerificationSubscription.unsubscribe();
+    this.queryParamSubscription.unsubscribe();
   }
 
   initData() {
@@ -65,18 +70,33 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   }
 
   private confirmRegistration() {
-    this.route.queryParamMap.subscribe({
+    this.queryParamSubscription = this.route.queryParamMap.subscribe({
       next: params => {
         const token = params.get('emailVerificationToken');
         if (token !== null) {
           this.loadingService.showLoadingSpinner();
-          this.registrationApiService.confirmRegistration(token).toPromise().then(response => {
-            this.emailVerificationResponse = response;
-            this.handleEmailVerfificationResponseIfNeeded();
-            this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt!');
-          }).finally(() => {
-            this.loadingService.dismissLoadingSpinner();
-          });
+          this.registrationApiService.confirmRegistration(token).subscribe({
+            next: response => {
+              this.logger.debug('next');
+              this.emailVerificationResponse = response;
+              this.handleEmailVerfificationResponseIfNeeded();
+              this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt!');
+            },
+            error: errorResponse => {
+              this.logger.debug('error');
+              if (errorResponse instanceof HttpErrorResponse) {
+                if (errorResponse.error instanceof ErrorEvent) {
+                  this.logger.log(`Error: ${errorResponse.error.message}`);
+                } else if (errorResponse.status === HttpStatusCodes.NOT_FOUND) {
+                  this.toastService.presentInfoToast('Du hast deine E-Mail Adresse bereits erfolgreich bestätigt.');
+                }
+              }
+            },
+            complete: () => {
+              this.logger.debug('complete');
+              this.loadingService.dismissLoadingSpinner();
+            }
+          })
         }
       }
     });

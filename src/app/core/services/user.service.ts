@@ -4,17 +4,38 @@ import { StorageService, StorageKeys } from './storage.service';
 import { UserState } from '@core/models/user.model';
 import { WanticJwtToken } from '@core/models/login.model';
 import { LogService } from './log.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  private _accountIsEnabled: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  $accountIsEnabled: Observable<boolean> = this._accountIsEnabled.asObservable();
+
   constructor(
     private storageService: StorageService,  
     private jwtHelper: JwtHelperService,
     private logger: LogService
-  ) {}
+  ) {
+    this.init();
+  }
+
+  init() {
+    this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then(rawToken => {
+      if (rawToken) {
+        const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(rawToken);
+        if (decodedToken) {
+          this._accountIsEnabled.next(decodedToken.userState === UserState.ACTIVE);
+        }
+      }
+    });
+  }
+
+  set accountIsEnabled(isEnabled: boolean) {
+    this._accountIsEnabled.next(isEnabled);
+  }
 
   get email() : Promise<string> {
     this.logger.log('UserService email');

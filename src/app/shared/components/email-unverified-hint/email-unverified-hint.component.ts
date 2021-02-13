@@ -33,6 +33,14 @@ export class EmailUnverifiedHintComponent implements OnInit {
     return this.emailVerificationStatus !== EmailVerificationStatus.VERIFIED;
   }
 
+  get showUnverifiedHint(): boolean {
+    return this.emailVerificationStatus === EmailVerificationStatus.UNVERIFIED;
+  }
+
+  get showEmailSentHint(): boolean {
+    return this.emailVerificationStatus === EmailVerificationStatus.VERIFICATION_EMAIL_SENT;
+  }
+
   get subText(): String {
     switch(this.emailVerificationStatus) {
       case EmailVerificationStatus.UNVERIFIED:

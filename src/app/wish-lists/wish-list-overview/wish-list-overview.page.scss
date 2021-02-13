@@ -61,6 +61,7 @@
   }
   .add-wish-list-button.disabled, .add-wish-button.disabled {
     pointer-events: none;
+    opacity: 0.45;
   } 
   .add-button-label {
     font-size: 15px;

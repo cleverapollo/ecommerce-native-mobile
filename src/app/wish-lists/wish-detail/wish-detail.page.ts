@@ -8,6 +8,8 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BrowserService } from '@core/services/browser.service';
 import { ProfileImageDto } from '@core/models/user.model';
 import { LogService } from '@core/services/log.service';
+import { UserService } from '@core/services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wish-detail',
@@ -16,8 +18,11 @@ import { LogService } from '@core/services/log.service';
 })
 export class WishDetailPage implements OnInit, OnDestroy {
 
+  private subscriptionAccountEnabled: Subscription;
+
   wishList: WishListDto
   wish: WishDto
+  accountIsNotActivated: boolean;
 
   get wishListOwnerCount(): number {
     return this.wishList?.owners?.length || 0;
@@ -37,15 +42,24 @@ export class WishDetailPage implements OnInit, OnDestroy {
     private navController: NavController,
     private route: ActivatedRoute,
     private wishListStore: WishListStoreService,
-    private logger: LogService
+    private logger: LogService,
+    private userService: UserService
     ) { }
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
     this.wish = this.route.snapshot.data.wish;
+    this.subscriptionAccountEnabled = this.userService.$accountIsEnabled.subscribe({
+      next: accountIsEnabled => {
+        this.logger.debug('enabled', accountIsEnabled);
+        this.accountIsNotActivated = !accountIsEnabled;
+      }
+    })
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscriptionAccountEnabled.unsubscribe();
+  }
 
   openProductURL() {
     const url = this.wish.productUrl;

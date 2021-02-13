@@ -9,6 +9,8 @@ import { Plugins } from '@capacitor/core';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { LogService } from '@core/services/log.service';
 import { NavigationService } from '@core/services/navigation.service';
+import { Subscription } from 'rxjs';
+import { UserService } from '@core/services/user.service';
 const { Share } = Plugins;
 
 @Component({
@@ -18,9 +20,13 @@ const { Share } = Plugins;
 })
 export class WishListDetailPage implements OnInit, OnDestroy {
 
+  private subscriptionAccountEnabled: Subscription;
+  private queryParamSubscription: Subscription;
+
   wishList: WishListDto;
   refreshWishListData: boolean = false
-  showBackButton: boolean = true
+  showBackButton: boolean = true;
+  accountIsNotActivated: boolean;
 
   get wishListOwnerCount(): number {
     return this.wishList?.owners?.length || 0;
@@ -41,17 +47,25 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     private navigationService: NavigationService,
     private wishListStore: WishListStoreService,
     private userProfileStore: UserProfileStore,
-    private logger: LogService
+    private logger: LogService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
-    this.route.queryParamMap.subscribe(queryParamMap => {
+    this.queryParamSubscription = this.route.queryParamMap.subscribe(queryParamMap => {
       if (Boolean(queryParamMap.get('forceRefresh'))) {
         this.wishListStore.loadWishList(this.wishList.id, true).subscribe({
           next: wishList => this.wishList = wishList,
           complete: () => this.navigationService.removeQueryParamFromCurrentRoute('forceRefresh')
         })
+      }
+    })
+
+    this.subscriptionAccountEnabled = this.userService.$accountIsEnabled.subscribe({
+      next: accountIsEnabled => {
+        this.logger.debug('enabled', accountIsEnabled);
+        this.accountIsNotActivated = !accountIsEnabled;
       }
     })
   }
@@ -68,7 +82,10 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     this.refreshWishListData = true;
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.queryParamSubscription.unsubscribe();
+    this.subscriptionAccountEnabled.unsubscribe();
+  }
 
   selectWish(wish: WishDto) {
     this.navController.navigateForward(`secure/home/wish-list/${this.wishList.id}/wish/${wish.id}`);
