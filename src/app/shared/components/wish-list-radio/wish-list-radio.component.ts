@@ -54,6 +54,8 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
         .sort((wishListA, wishListB) => wishListA.name.localeCompare(wishListB.name.toString()))
       if (this.initialValue) {
         this.wishListId = this.initialValue;
+      } else {
+        this.wishListId = this.wishListSelectOptions[0].id;
       }
     });
   }
