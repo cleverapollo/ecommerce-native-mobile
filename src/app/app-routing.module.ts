@@ -30,7 +30,6 @@ const routes: Routes = [
   },
   {
     path: 'forgot-password',
-    canActivate: [AccessGuard],
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordModule)
   },
   {
