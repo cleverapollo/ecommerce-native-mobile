@@ -41,7 +41,9 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     var wishListId: Int? {
         didSet {
             WishDataStore.shared.wish.wishListId = wishListId
-            saveButton.isEnabled = WishDataStore.shared.wish.isValid()
+            DispatchQueue.main.async {
+                self.saveButton.isEnabled = WishDataStore.shared.wish.isValid()
+            }
         }
     }
     var selectedIndexPath: IndexPath?
@@ -60,6 +62,7 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
         saveButton.isEnabled = WishDataStore.shared.wish.isValid()
         wishListId = WishDataStore.shared.wish.wishListId
         tableView.tableFooterView = UIView()
+        tableView.separatorColor = UIColor(hex: "#F1EEE4")
     }
     
     private func loadWishLists() {
@@ -72,6 +75,8 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
             switch result {
             case .success(let wishLists):
                 self.wishLists = wishLists
+                self.wishListId = self.wishLists.first?.id
+                self.selectedIndexPath = IndexPath(row: 0, section: 0)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -98,9 +103,30 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         if !wishLists.isEmpty {
+            
+            if indexPath.section == 0 {
+                let cornerRadius: CGFloat = 25
+                if indexPath.row == 0 {
+                    cell.layer.cornerRadius = cornerRadius
+                    cell.clipsToBounds = true
+                    cell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+                } else if indexPath.row == wishLists.count - 1 {
+                    cell.layer.cornerRadius = cornerRadius
+                    cell.clipsToBounds = true
+                    cell.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+                } else {
+                    cell.layer.cornerRadius = 0
+                    cell.clipsToBounds = false
+                }
+            }
+            
             let wishList = wishLists[indexPath.row]
             cell.nameLabel.text = wishList.name
-            cell.checkMarkImageView.isHidden = wishListId != wishList.id
+            if wishList.id == wishListId {
+                cell.checkMarkImageView.image = UIImage(named: "checkMark")
+            } else {
+                cell.checkMarkImageView.image = UIImage(named: "unchecked")
+            }
         }
         
         return cell
