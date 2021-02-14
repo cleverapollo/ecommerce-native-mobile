@@ -9,8 +9,15 @@
 
   <p class="wantic-margin-right-left ion-text-center">Möchtest du deinen Account wirklich löschen?</p>
 
-  <ion-button class="wantic-save-button" color="primary" expand="block" (click)="deleteAccount()">
-    ACCOUNT LÖSCHEN
-  </ion-button>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveChanges()">
+
+    <p class="wantic-margin-right-left password-label">Passwort</p>
+    <app-show-hide-password formControlName="password" [initialValue]="form.get('password').value"></app-show-hide-password>
+    <app-validation-messages [control]="form.get('password')" [validationMessages]="validationMessages.password"></app-validation-messages>
+
+    <ion-button class="wantic-save-button" color="primary" expand="block" (click)="deleteAccount()" [disabled]="form.invalid || form.pristine">
+      ACCOUNT LÖSCHEN
+    </ion-button>
+  </form>
 
 </ion-content>

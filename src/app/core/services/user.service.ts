@@ -1,25 +1,40 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService, StorageKeys } from './storage.service';
-import { EmailVerificationStatus, UserState } from '@core/models/user.model';
+import { UserState } from '@core/models/user.model';
 import { WanticJwtToken } from '@core/models/login.model';
-import { BehaviorSubject } from 'rxjs';
 import { LogService } from './log.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private _emailVerificationStatus = new BehaviorSubject<EmailVerificationStatus>(null);
-  emailVerificationStatus = this._emailVerificationStatus.asObservable();
+  private _accountIsEnabled: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  $accountIsEnabled: Observable<boolean> = this._accountIsEnabled.asObservable();
 
   constructor(
     private storageService: StorageService,  
     private jwtHelper: JwtHelperService,
     private logger: LogService
-  ) { 
-    this.initEmailVerificationStatus();
+  ) {
+    this.init();
+  }
+
+  init() {
+    this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then(rawToken => {
+      if (rawToken) {
+        const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(rawToken);
+        if (decodedToken) {
+          this._accountIsEnabled.next(decodedToken.userState === UserState.ACTIVE);
+        }
+      }
+    });
+  }
+
+  set accountIsEnabled(isEnabled: boolean) {
+    this._accountIsEnabled.next(isEnabled);
   }
 
   get email() : Promise<string> {
@@ -41,25 +56,6 @@ export class UserService {
       }, reject);
     });
   }
-
-  initEmailVerificationStatus() {
-    this.storageService.get<string>(StorageKeys.EMAIL_VERIFICATION_STATUS).then( status => {
-      this._emailVerificationStatus.next(EmailVerificationStatus[status]);
-    });
-  }
-
-  updateEmailVerificationStatus(status: string | EmailVerificationStatus) {
-    if (typeof status == 'string') {
-      status = status as string;
-      this._emailVerificationStatus.next(EmailVerificationStatus[status]);
-      this.storageService.set(StorageKeys.EMAIL_VERIFICATION_STATUS, status);
-    } else {
-      status = status as EmailVerificationStatus;
-      this._emailVerificationStatus.next(status);
-      this.storageService.set(StorageKeys.EMAIL_VERIFICATION_STATUS, status.toString());
-    }
-  }
-
 
   get userSettings(): Promise<UserSettings> {
     return new Promise((resolve) => {

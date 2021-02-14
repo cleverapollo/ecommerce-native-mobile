@@ -1,3 +1,5 @@
+import { AbstractControl } from "@angular/forms";
+
 export class UserProfile {
     firstName: String;
     lastName: String;
@@ -49,6 +51,13 @@ export enum UserState {
 export enum EmailVerificationStatus {
     UNVERIFIED, VERIFICATION_EMAIL_SENT, VERIFIED
 }
+export class EmailVerificationDto {
+    status: EmailVerificationStatus;
+}
+
+export enum PublicEmailVerificationStatus {
+    ERROR, TOKEN_EXPIRED, VERIFIED
+}
 
 export class UploadFileResponse {
     fileName: String;
@@ -74,4 +83,21 @@ export class UserRegistration {
     password: string;
     birthday?: Date;
     gender?: Gender;
+}
+export class UpdateEmailChangeRequest {
+    email: string;
+    password: string;
+
+    constructor(controls: { [key: string]: AbstractControl }) {
+        this.email = controls.email.value;
+        this.password = controls.password.value;
+    }
+}
+
+export class DeleteAccountRequest {
+    password: string;
+
+    constructor(controls: { [key: string]: AbstractControl }) {
+        this.password = controls.password.value;
+    }
 }

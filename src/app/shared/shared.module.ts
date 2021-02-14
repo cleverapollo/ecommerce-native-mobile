@@ -14,6 +14,7 @@ import { WishListRadioComponent } from './components/wish-list-radio/wish-list-r
 import { UserInitialsComponent } from './components/user-initials/user-initials.component';
 import { OwnersInfoComponent } from './components/owners-info/owners-info.component';
 import { TruncateNamePipe } from './pipes/truncate-name.pipe';
+import { ShowHidePasswordComponent } from './components/show-hide-password/show-hide-password.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
     HintComponent,
     NavToolbarComponent,
     SearchResultComponent,
+    ShowHidePasswordComponent,
     UserInitialsComponent,
     WishListRadioComponent,
     TruncateNamePipe
@@ -48,6 +50,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
     FormsModule,
     ReactiveFormsModule,
     SearchResultComponent,
+    ShowHidePasswordComponent,
     TruncateNamePipe,
     UserInitialsComponent,
     WishListRadioComponent

@@ -168,6 +168,7 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
 
   onSearchSuggestionClick(suggestion: string) {
     this.keywords = suggestion;
+    this.searchByAmazonApi();
   }
 
   private disableInfitineScrollIfNeeded() {

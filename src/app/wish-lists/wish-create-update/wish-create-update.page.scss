@@ -1,11 +1,28 @@
 h1 {
     margin: 0;
+    margin-bottom: 10px;
 }
 
 ion-button.wantic-save-button {
   margin-bottom: 12px;
 }
 
+ion-button.save-wish-button {
+  margin-top: 42px;
+}
+
 ion-textarea {
   height: auto; // auto-grow does not work on ios
+  border-radius: 25px;
+}
+
+.image-container {
+  background: white;
+  margin-left: var(--wantic-margin);
+  margin-right: var(--wantic-margin);
+  border-radius: 25px;
+  ion-img {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }

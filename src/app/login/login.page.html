@@ -11,9 +11,7 @@
     </ion-item>
     <app-validation-messages [control]="loginForm.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
 
-    <ion-item lines="none">
-      <ion-input id="input-password" name="password" type="password" placeholder="Passwort" formControlName="password"></ion-input>
-    </ion-item>
+    <app-show-hide-password formControlName="password" [initialValue]="loginForm.get('password').value"></app-show-hide-password>
     <app-validation-messages [control]="loginForm.get('password')" [validationMessages]="validationMessages.password"></app-validation-messages>
 
     <ion-item lines="none" class="toggleContainer">

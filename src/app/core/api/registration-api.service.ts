@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiErrorHandlerService } from './api-error-handler.service';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, first, tap } from 'rxjs/operators';
 import { LoginResponse } from '@core/models/login.model';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { resolve } from 'url';
@@ -22,9 +22,7 @@ export class RegistrationApiService {
   confirmRegistration(emailVerficationToken: string): Observable<LoginResponse> {
     const params = new HttpParams().set('token', emailVerficationToken);
     const uri = this.createUri('confirmation');
-    return this.apiService.get<LoginResponse>(uri, params).pipe(
-      catchError(error => this.errorHandler.handleError(error))
-    );
+    return this.apiService.get<LoginResponse>(uri, params);
   }
 
   requestEmailVerificationLink(): Promise<void> {

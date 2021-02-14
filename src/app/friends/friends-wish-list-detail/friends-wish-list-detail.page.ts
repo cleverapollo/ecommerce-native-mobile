@@ -3,8 +3,8 @@ import { FriendWishList, FriendWish } from '@friends/friends-wish-list-overview/
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
-import { ProfileImageDto } from '@core/models/user.model';
 import { LogService } from '@core/services/log.service';
+import { EmailVerificationService } from '@core/services/email-verification.service';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
@@ -19,7 +19,8 @@ export class FriendsWishListDetailPage implements OnInit {
     private navController: NavController, 
     private route: ActivatedRoute,
     private friendWishListStore: FriendWishListStoreService,
-    private logger: LogService
+    private logger: LogService,
+    private emailVerificationService: EmailVerificationService
   ) { }
 
   ngOnInit() {
@@ -43,6 +44,7 @@ export class FriendsWishListDetailPage implements OnInit {
       this.wishList = wishList;
     }, this.logger.error, () => {
       event.target.complete();
-    })
+    });
+    this.emailVerificationService.updateEmailVerificationStatusIfNeeded();
   }
 }

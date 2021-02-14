@@ -11,6 +11,8 @@ import { resolve } from 'url';
 import { Router } from '@angular/router';
 import { WanticJwtToken } from '@core/models/login.model';
 import { LogService } from './log.service';
+import { EmailVerificationService } from './email-verification.service';
+import { UserState } from '@core/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +37,8 @@ export class AuthenticationService {
     private cache: CacheService,
     private nativeHttpClient: HTTP,
     private router: Router,
-    private logger: LogService
+    private logger: LogService,
+    private emailVerificationService: EmailVerificationService
   ) { 
     this.init();
   }
@@ -105,7 +108,8 @@ export class AuthenticationService {
         await this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
         const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(token);
         this.logger.log(decodedToken.emailVerificationStatus);
-        await this.userService.updateEmailVerificationStatus(decodedToken.emailVerificationStatus);
+        this.emailVerificationService.updateEmailVerificationStatus(decodedToken.emailVerificationStatus);
+        this.userService.accountIsEnabled = decodedToken.userState === UserState.ACTIVE;
         this.authenticationState.next(true);
         return Promise.resolve();
       } catch(error) {

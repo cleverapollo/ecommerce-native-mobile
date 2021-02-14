@@ -18,6 +18,10 @@ export class ToastService {
     this.presentToast(message, 'danger');
   }
 
+  async presentInfoToast(message: string) {
+    this.presentToast(message, 'primary');
+  }
+
   private async presentToast(message: string, color: string) {
     const toast = await this.toastController.create({
       message: message,

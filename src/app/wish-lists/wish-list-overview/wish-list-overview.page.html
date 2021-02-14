@@ -14,9 +14,9 @@
   <ion-grid class="wantic-container">
     <ion-row>
       <ion-col size="6" size-lg="2" class="button-container">
-        <ion-grid style="margin-right: 6px; padding: 0">
+        <ion-grid style="padding: 0">
           <ion-row>
-            <ion-col class="add-wish-button" routerLink="/secure/home/wish-search-selection" size="12">
+            <ion-col class="add-wish-button" routerLink="/secure/home/wish-search-selection" size="12" [ngClass]="{ 'disabled': disableAddButtons }" >
               <div class="ion-text-center">
                 <div class="add-button-padding">
                   <div>
@@ -29,7 +29,7 @@
                 </div>
               </div>
             </ion-col>
-            <ion-col class="add-wish-list-button" routerLink="/secure/home/wish-list-new" size="12" >
+            <ion-col class="add-wish-list-button" routerLink="/secure/home/wish-list-new" size="12" [ngClass]="{ 'disabled': disableAddButtons }" >
               <div class="ion-text-center">
                 <div class="add-button-padding">
                   <div>
@@ -45,7 +45,7 @@
           </ion-row>
         </ion-grid>
       </ion-col>
-      <ion-col  [ngClass]="{ 'wish-list-right': i % 2 == 0 , 'wish-list-left': i % 2 == 1 }" 
+      <ion-col  [ngClass]="{ 'wish-list-right': i % 2 == 0 , 'wish-list-left': i % 2 == 1, 'wish-list-first': i === 0 }" 
                 class="wish-list" size="6" size-lg="2"
                 *ngFor="let wishList of wishLists; let i = index;" 
                 (click)="selectWishList(wishList)">

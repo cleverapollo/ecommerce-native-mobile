@@ -12,7 +12,7 @@
 
   <ion-list>
 
-    <ion-item routerLink="/secure/menu/settings/profile-settings-firstname" [state]="dataForChildRoutes" detail="false">
+    <ion-item routerLink="/secure/menu/settings/profile-settings-firstname" [state]="dataForChildRoutes" detail="false" [disabled]="accountIsNotActivated">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label>
         <h2>Vorname</h2>
@@ -21,7 +21,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item routerLink="/secure/menu/settings/last-name-update" [state]="dataForChildRoutes" detail="false">
+    <ion-item routerLink="/secure/menu/settings/last-name-update" [state]="dataForChildRoutes" detail="false" [disabled]="accountIsNotActivated">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label>
         <h2>Nachname</h2>
@@ -30,7 +30,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item routerLink="/secure/menu/settings/birthday-update" [state]="dataForChildRoutes" detail="false">
+    <ion-item routerLink="/secure/menu/settings/birthday-update" [state]="dataForChildRoutes" detail="false" [disabled]="accountIsNotActivated">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label>
         <h2>Geburtsdatum</h2>
@@ -39,7 +39,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item routerLink="/secure/menu/settings/email-update" [state]="dataForChildRoutes" detail="false">
+    <ion-item routerLink="/secure/menu/settings/email-update" [state]="dataForChildRoutes" detail="false" [disabled]="accountIsNotActivated">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label>
         <h2>E-Mail Adresse</h2>
@@ -47,7 +47,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item routerLink="/secure/menu/settings/password-update" detail="false">
+    <ion-item routerLink="/secure/menu/settings/password-update" detail="false" [disabled]="accountIsNotActivated">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label class="action-item-without-header">
         Passwort ändern

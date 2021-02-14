@@ -1,112 +1,24 @@
-div.wantic-radio-group-container {
-    padding-top: 9px;
-    padding-bottom: 9px;
-    padding-left: 6px;
-    padding-right: 6px;
-    background-color: white;
-    border-radius: 10%;
-    .inputGroup {
-        background-color: #fff;
-        display: block;
-        position: relative;
-        border-bottom: 1px dashed #f7f6f1;
-        margin-left: 10px;
-        margin-right: 10px;
-    
-        label {
-          padding: 10px 9px;
-          width: 100%;
-          display: block;
-          text-align: left;
-          color: #3C454C;
-          cursor: pointer;
-          position: relative;
-          z-index: 2;
-          transition: color 200ms ease-in;
-          overflow: hidden;
-    
-          &:before {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) scale3d(1, 1, 1);
-            transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
-            opacity: 0;
-            z-index: -1;
-          }
-    
-          &:after {
-            width: 32px;
-            height: 32px;
-            content: '';
-            background-color: #fff;
-            background-repeat: no-repeat;
-            background-position: 2px 3px;
-            border-radius: 50%;
-            z-index: 2;
-            position: absolute;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            transition: all 200ms ease-in;
-          }
-        }
-    
-        input:checked ~ label {
-          &:before {
-            transform: translate(-50%, -50%) scale3d(56, 56, 1);
-            opacity: 1;
-          }
-    
-          &:after {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cdefs%3E%3Cstyle%3E.a%7Bfill:%23ff704f;%7D.b%7Bfill:none;stroke:%23fff;stroke-linecap:round;stroke-width:2px;%7D%3C/style%3E%3C/defs%3E%3Ccircle class='a' cx='12' cy='12' r='12'/%3E%3Cpath class='b' d='M0,6.178l4.018,3.04L8.5,0' transform='translate(9.021 6.57) rotate(11)'/%3E%3C/svg%3E");
-          }
-        }
-    
-        input {
-          width: 32px;
-          height: 32px;
-          order: 1;
-          z-index: 2;
-          position: absolute;
-          right: 30px;
-          top: 50%;
-          transform: translateY(-50%);
-          cursor: pointer;
-          visibility: hidden;
-        }
-      }
-}
-
-.container-add-new-wish-list {
-    background-color: white;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    margin-left: 10px;
-    margin-right: 10px;
-    img {
-        margin-right: 3px;
-        margin-left: 12px;
+ion-list {
+  ion-item {
+    --background: white;
+    margin-bottom: 0;
+    font-size: 14px;
+    --inner-padding-start: 20px;
+    --inner-padding-end: 20px;
+    --border-style: dashed;
+    --border-color: #f1eee4;
+    ion-avatar {
+      height: 24px;
+      width: 24px;
     }
-    label, img {
-        display: inline-block;
-        vertical-align: middle;
-        color: var(--ion-color-dark);
-    }
-    ion-input {
-      border-radius: 0 0 20pt 20pt;
-      padding-left: 30px !important;
-      --padding-start: 0 !important;
-      --padding-end: 0 !important;
-      --padding-bottom: 0 !important;
-      --padding-top: 0 !important;
-      button.input-clear-icon {
-        margin-right: 30px !important;
-      }
-    }
+  }
+  ion-item.first-item {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+  }
+  ion-item.last-item {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    --border-style: none;
+  }
 }

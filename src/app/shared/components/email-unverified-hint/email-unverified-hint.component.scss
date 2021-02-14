@@ -1,6 +1,23 @@
 .wantic-info-box {
     padding: var(--wantic-container-spacing);
     background-color: var(--ion-color-primary);
+    margin-bottom: 10px;
+    box-shadow: 0 3px 6px #00000029;
+    p {
+        font-size: 12px;
+        line-height: 17px;
+        margin: 0;
+    }
+    ion-button {
+        margin-bottom: 0;
+        font-size: 10px;
+        height: 35px;
+        color: var(--ion-color-dark);
+        font-weight: 700;
+        line-height: 11px;
+        letter-spacing: 1px;
+        --background: white;
+    }
 }
 
 .white-text {

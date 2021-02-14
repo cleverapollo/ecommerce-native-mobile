@@ -7,7 +7,15 @@ const routes: Routes = [
   {
     path: '',
     component: ForgotPasswordPage
-  }
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./../reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./../change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
 ];
 
 @NgModule({

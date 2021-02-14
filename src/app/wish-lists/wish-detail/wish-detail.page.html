@@ -17,8 +17,10 @@
   </section>
 
   <ion-card>
-    <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" (click)="openProductURL()" alt="Produktbild">
-    <img class="placeholder" *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg" (click)="openProductURL()" alt="Platzhalterbild">
+    <div class="product-image-container">
+      <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" (click)="openProductURL()" alt="Produktbild">
+      <img class="placeholder" *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg" (click)="openProductURL()" alt="Platzhalterbild">
+    </div>
     <ion-card-content>
       <ion-row>
         <ion-col size="10" class="no-padding-bottom ion-text-left">
@@ -26,9 +28,9 @@
           <div class="wish-price">{{ wish.price }}</div>
         </ion-col>
         <ion-col size="2" class="ion-text-right ">
-          <div [routerLink]="['../edit']" class="edit-wish-button">
+          <a  [ngClass]=" { 'disabled': accountIsNotActivated }" [routerLink]="['../edit']" class="edit-wish-button">
             <img src="assets/icon/pencil.svg" alt="Icon - Bild bearbeiten"/>
-          </div>
+          </a>
         </ion-col>
       </ion-row>
     </ion-card-content>

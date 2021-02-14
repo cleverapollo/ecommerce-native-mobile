@@ -47,14 +47,15 @@ export class ApiService {
     });
   }
 
-  delete<T>(url: string) : Observable<T> {
+  delete<T>(url: string, body?: any | null) : Observable<T> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
-    return this.httpClient.delete<T>(`${SERVER_URL}/${url}`, {
+    return this.httpClient.request<T>('delete', `${SERVER_URL}/${url}`, {
       headers: headers,
+      body: body,
       responseType: 'json'
     });
   }

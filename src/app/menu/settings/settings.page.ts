@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfile } from '@core/models/user.model';
 import { LogService } from '@core/services/log.service';
+import { UserService } from '@core/services/user.service';
+import { Subscription } from 'rxjs';
 import { UserProfileStore } from './user-profile-store.service';
 
 @Component({
@@ -9,10 +11,13 @@ import { UserProfileStore } from './user-profile-store.service';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage implements OnInit, OnDestroy {
+
+  private subscription: Subscription;
 
   refreshData: boolean = false;
   profile: UserProfile
+  accountIsNotActivated: boolean;
 
   get dataForChildRoutes() {
     return {
@@ -25,11 +30,21 @@ export class SettingsPage implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private userProfileStore: UserProfileStore,
-    private logger: LogService
+    private logger: LogService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
     this.profile = this.route.snapshot.data.profile;
+    this.subscription = this.userService.$accountIsEnabled.subscribe({
+      next: accountIsEnabled => {
+        this.accountIsNotActivated = !accountIsEnabled;
+      }
+    })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   ionViewWillEnter() {
