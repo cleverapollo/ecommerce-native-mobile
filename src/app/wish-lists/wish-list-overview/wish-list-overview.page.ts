@@ -81,6 +81,7 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
               this.emailVerificationResponse = response;
               this.handleEmailVerfificationResponseIfNeeded();
               this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt!');
+              this.loadingService.dismissLoadingSpinner();
             },
             error: errorResponse => {
               this.logger.debug('error');
@@ -89,12 +90,9 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
                   this.logger.log(`Error: ${errorResponse.error.message}`);
                 } else if (errorResponse.status === HttpStatusCodes.NOT_FOUND) {
                   this.toastService.presentInfoToast('Du hast deine E-Mail Adresse bereits erfolgreich bestätigt.');
+                  this.loadingService.dismissLoadingSpinner();
                 }
               }
-            },
-            complete: () => {
-              this.logger.debug('complete');
-              this.loadingService.dismissLoadingSpinner();
             }
           })
         }
