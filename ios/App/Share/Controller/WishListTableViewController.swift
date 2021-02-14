@@ -109,7 +109,13 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
                 if indexPath.row == 0 {
                     cell.layer.cornerRadius = cornerRadius
                     cell.clipsToBounds = true
-                    cell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+                    var maskedCorners: CACornerMask = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+                    if  wishLists.count == 1 {
+                        maskedCorners.insert(.layerMinXMaxYCorner)
+                        maskedCorners.insert(.layerMaxXMaxYCorner)
+                        cell.layer.cornerRadius = 20
+                    }
+                    cell.layer.maskedCorners = maskedCorners
                 } else if indexPath.row == wishLists.count - 1 {
                     cell.layer.cornerRadius = cornerRadius
                     cell.clipsToBounds = true
