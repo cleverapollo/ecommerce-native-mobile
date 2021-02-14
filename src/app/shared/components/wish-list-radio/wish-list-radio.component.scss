@@ -5,6 +5,8 @@ ion-list {
     font-size: 14px;
     --inner-padding-start: 20px;
     --inner-padding-end: 20px;
+    --border-style: dashed;
+    --border-color: #f1eee4;
     ion-avatar {
       height: 24px;
       width: 24px;
@@ -17,5 +19,6 @@ ion-list {
   ion-item.last-item {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
+    --border-style: none;
   }
 }

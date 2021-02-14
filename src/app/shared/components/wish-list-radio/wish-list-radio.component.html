@@ -1,7 +1,7 @@
 <ion-list>
   <ion-item *ngFor="let option of wishListSelectOptions; let isFirst = first; let isLast = last;" 
             (click)="wishListId = option.id;"
-            [ngClass]=" {'first-item': isFirst, 'last-item': isLast } " lines="none"
+            [ngClass]=" {'first-item': isFirst, 'last-item': isLast } "
   >
     <ion-label>{{ option.name }}</ion-label>
     <ion-avatar slot="end">
