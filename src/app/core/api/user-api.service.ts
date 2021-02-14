@@ -22,7 +22,7 @@ export class UserApiService {
   ) { }
 
   deleteUser(requestBody: DeleteAccountRequest): Observable<void> {
-    return this.apiService.delete<void>(`${UserApiService.REST_END_POINT}`, requestBody);
+    return this.apiService.patch<void>(`${UserApiService.REST_END_POINT}/delete-account`, requestBody);
   }
 
   getProfile(): Observable<UserProfile> {

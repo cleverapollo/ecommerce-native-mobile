@@ -9,6 +9,7 @@ import { UserService } from '@core/services/user.service';
 import { StorageService, StorageKeys } from '@core/services/storage.service';
 import { CacheService } from 'ionic-cache';
 import { CustomValidation } from '@shared/custom-validation';
+import { LoadingService } from '@core/services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,8 @@ export class LoginPage implements OnInit {
     private authService: AuthenticationService,
     private userService: UserService,
     private storageService: StorageService,
-    private cache: CacheService) { 
+    private cache: CacheService,
+    private loadingService: LoadingService) { 
 
   }
 
@@ -63,11 +65,14 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit() {
+    this.loadingService.showLoadingSpinner();
     const input = this.loginForm.value as LoginForm;
     this.authService.login(input.email, input.password, input.saveCredentials).then(() => {
       this.loginForm.reset();
       this.cache.clearAll();
       this.navToHome();
+    }).finally(() => {
+      this.loadingService.dismissLoadingSpinner();
     });
   }
 
