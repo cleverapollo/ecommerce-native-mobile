@@ -32,12 +32,12 @@
               },
               {
                 "glob": "apple-app-site-association",
-                "input": ".well-known",
+                "input": "src/.well-known",
                 "output": "./.well-known"
               },
               {
                 "glob": "apple-app-site-association",
-                "input": ".well-known",
+                "input": "src/.well-known",
                 "output": "./"
               },
               {
