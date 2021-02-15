@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { SharedModule } from '@shared/shared.module';
 import { HomePageRoutingModule } from './home-routing.module';
+import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { HomePageRoutingModule } from './home-routing.module';
     HomePageRoutingModule,
     SharedModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, OnboardingSlidesComponent]
 })
 export class HomePageModule {}

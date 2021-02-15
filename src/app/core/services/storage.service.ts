@@ -12,7 +12,8 @@ export enum StorageKeys {
   LOGIN_PASSWORD = 'loginPassword',
   AUTH_TOKEN = 'auth-token',
   EMAIL_VERIFICATION_STATUS = 'emailVerificationStatus',
-  SHARED_WISH_LIST_EMAIL = 'memberEmail'
+  SHARED_WISH_LIST_EMAIL = 'memberEmail',
+  SHOW_ONBOARDING_SLIDES = 'showOnboardingSlides'
 }
 
 @Injectable({

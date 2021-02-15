@@ -21,9 +21,7 @@ export class AccessGuard implements CanActivate  {
     } else {
       const token = route.queryParamMap.get('emailVerificationToken'); 
       if (token !== null) {
-        this.router.navigateByUrl('/email-verification', { queryParams: {
-          emailVerificationToken: token
-        }});
+        this.router.navigateByUrl(`/email-verification?emailVerificationToken=${token}`);
       } else {
         window.location.href = "https://www.wantic.io/";
       }

@@ -35,8 +35,7 @@ export class LoginPage implements OnInit {
     private authService: AuthenticationService,
     private userService: UserService,
     private storageService: StorageService,
-    private cache: CacheService,
-    private loadingService: LoadingService) { 
+    private cache: CacheService) { 
 
   }
 
@@ -65,14 +64,11 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit() {
-    this.loadingService.showLoadingSpinner();
     const input = this.loginForm.value as LoginForm;
     this.authService.login(input.email, input.password, input.saveCredentials).then(() => {
       this.loginForm.reset();
       this.cache.clearAll();
       this.navToHome();
-    }).finally(() => {
-      this.loadingService.dismissLoadingSpinner();
     });
   }
 

@@ -9,6 +9,7 @@ import { AuthService } from '@core/api/auth.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { LoadingService } from '@core/services/loading.service';
+import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 
 @Component({
   selector: 'app-account-email-password',
@@ -50,7 +51,8 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     private formService: RegistrationFormService,
     private authApiService: AuthService,
     private authService: AuthenticationService,
-    private loadingService: LoadingService) { 
+    private loadingService: LoadingService,
+    public privacyPolicyService: PrivacyPolicyService) { 
   }
 
   ngOnInit() {
@@ -89,6 +91,9 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
       next: response => {
         this.authService.saveToken(response.token);
         this.router.navigate(['../registration-complete'], { relativeTo: this.route });
+        this.loadingService.dismissLoadingSpinner();
+      },
+      error: errorResponse => {
         this.loadingService.dismissLoadingSpinner();
       }
     })
