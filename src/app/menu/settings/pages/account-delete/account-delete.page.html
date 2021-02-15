@@ -9,7 +9,7 @@
 
   <p class="wantic-margin-right-left ion-text-center">Möchtest du deinen Account wirklich löschen?</p>
 
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveChanges()">
+  <form *ngIf="form" [formGroup]="form">
 
     <p class="wantic-margin-right-left password-label">Passwort</p>
     <app-show-hide-password formControlName="password" [initialValue]="form.get('password').value"></app-show-hide-password>
