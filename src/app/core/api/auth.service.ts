@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '@core/services/toast.service';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { RegistrationRequest } from '@core/models/registration.model';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
 
 @Injectable({
   providedIn: 'root'
@@ -36,11 +37,14 @@ export class AuthService {
   private errorMessageForLoginServerError(error: HttpErrorResponse): string {
     let errorMessage: string
     switch (error.status) {
-      case 401:
+      case HttpStatusCodes.UNAUTHORIZED:
         errorMessage = 'Dein Passwort stimmt nicht mit deiner E-Mail-Adresse überein.';
         break;
-      case 403:
+      case HttpStatusCodes.FORBIDDEN:
         errorMessage = 'Dein Account ist leider noch nicht freigeschaltet.';
+        break;
+      case HttpStatusCodes.NOT_FOUND:
+        errorMessage = 'Es existiert kein Benutzer mit der angegbenen E-Mail-Adresse.'
         break;
       case 423:
         errorMessage = 'Dein Account ist zurzeit gesperrt und kann nicht verwendet werden.';
