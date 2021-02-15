@@ -57,7 +57,7 @@ export class AuthService {
     let errorMessage: string
     switch (error.status) {
       case 409:
-        errorMessage = 'Ein Benutzer mit der eingegeben E-Mail-Adresse existiert bereits!';
+        errorMessage = 'Ein Benutzer mit der eingegebenen E-Mail-Adresse existiert bereits!';
         break;
     }
     return errorMessage;
