@@ -92,6 +92,9 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
         this.authService.saveToken(response.token);
         this.router.navigate(['../registration-complete'], { relativeTo: this.route });
         this.loadingService.dismissLoadingSpinner();
+      },
+      error: errorResponse => {
+        this.loadingService.dismissLoadingSpinner();
       }
     })
   }
