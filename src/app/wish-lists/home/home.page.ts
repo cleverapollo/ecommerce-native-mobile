@@ -28,6 +28,7 @@ export class HomePage implements OnInit {
     const modal = await this.modalController.create({
       component: OnboardingSlidesComponent,
       cssClass: 'wantic-modal wantic-modal-large',
+      backdropDismiss: false
     });
     modal.present();
   }
