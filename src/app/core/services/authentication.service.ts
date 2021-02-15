@@ -13,6 +13,7 @@ import { WanticJwtToken } from '@core/models/login.model';
 import { LogService } from './log.service';
 import { EmailVerificationService } from './email-verification.service';
 import { UserState } from '@core/models/user.model';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,8 @@ export class AuthenticationService {
     private nativeHttpClient: HTTP,
     private router: Router,
     private logger: LogService,
-    private emailVerificationService: EmailVerificationService
+    private emailVerificationService: EmailVerificationService,
+    private loadingService: LoadingService
   ) { 
     this.init();
   }

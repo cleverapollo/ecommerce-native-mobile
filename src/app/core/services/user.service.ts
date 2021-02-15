@@ -67,6 +67,24 @@ export class UserService {
     });
   }
 
+  get showOnboardingSlides(): Promise<Boolean> {
+    return new Promise((resolve) => {
+      this.storageService.get<boolean>(StorageKeys.SHOW_ONBOARDING_SLIDES).then(show => {
+        if (show === null) {
+          resolve(true);
+        } else {
+          resolve(show);
+        }
+      }, () => {
+        resolve(false);
+      });
+    })
+  }
+
+  updateShowOnboardingSlidesState(): Promise<void> {
+    return this.storageService.set(StorageKeys.SHOW_ONBOARDING_SLIDES, false)
+  }
+
 }
 
 export interface UserSettings {
