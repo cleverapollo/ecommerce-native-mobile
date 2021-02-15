@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '@core/services/user.service';
 import { ModalController } from '@ionic/angular';
 import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
 
@@ -10,18 +11,18 @@ import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides
 })
 export class HomePage implements OnInit {
 
-  showOnboardingSlides: boolean;
+  constructor(
+    private modalController: ModalController, 
+    private userService: UserService) {}
 
-  constructor(private modalController: ModalController, private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.showOnboardingSlides = this.route.snapshot.data.showOnboardingSlides;
-  }
+  ngOnInit() {}
 
   ionViewDidEnter() {
-    if (this.showOnboardingSlides) {
-      this.openOnboardingSlidesModal();
-    }
+    this.userService.showOnboardingSlides.then(show => {
+      if (show) {
+        this.openOnboardingSlidesModal();
+      }
+    });
   }
 
   private async openOnboardingSlidesModal() {
