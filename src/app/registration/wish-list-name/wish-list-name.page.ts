@@ -4,6 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { Subscription } from 'rxjs';
 import { RegistrationRequest } from '@core/models/registration.model';
+import { Plugins } from '@capacitor/core';
+
+const { Keyboard } = Plugins;
 
 @Component({
   selector: 'app-wish-list-name',
@@ -50,6 +53,10 @@ export class WishListNamePage implements OnInit, OnDestroy {
 
   }
 
+  ionViewWillLeave() {
+    Keyboard.hide();
+  }
+
   ngOnDestroy() {
     this.formSubscription.unsubscribe();
   }
@@ -58,6 +65,12 @@ export class WishListNamePage implements OnInit, OnDestroy {
     this.registrationDto.wishList.name = this.form.controls['name'].value;
     this.formService.updateDto(this.registrationDto);
     this.router.navigate(['../wish-list-date'], { relativeTo: this.route })
+  }
+
+  onKeyboardNextAction() {
+    if (this.form.valid) {
+      this.next();
+    }
   }
 
 }

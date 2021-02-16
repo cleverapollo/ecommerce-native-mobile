@@ -11,11 +11,11 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">Nachname</ion-label>
-      <ion-input type="text" formControlName="lastName"></ion-input>
+      <ion-input type="text" formControlName="lastName" autocomplete="family-name" clearInput="true" required="true" spellcheck="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('lastName')" [validationMessages]="validationMessages.lastName"></app-validation-messages>
 
-    <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block" [disabled]="!form.valid">
+    <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block" [disabled]="!form.valid || form.pristine">
       ÄNDERUNGEN SPEICHERN
     </ion-button>
   </form>

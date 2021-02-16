@@ -11,9 +11,9 @@
   
     Sag uns noch deinen Namen: 
   </p>
-  <form [formGroup]="form" *ngIf="form">
+  <form [formGroup]="form" *ngIf="form" (ngSubmit)="onKeyboardNextAction()">
     <ion-item lines="none">
-      <ion-input formControlName="firstName" type="text" placeholder="Vorname"></ion-input>
+      <ion-input formControlName="firstName" type="text" placeholder="Vorname" autocapitalize="on" autocomplete="name" autofocus="true" clearInput="true" enterkeyhint="next" inputmode="text" required="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('firstName')" [validationMessages]="validationMessages.firstName"></app-validation-messages>
   </form>

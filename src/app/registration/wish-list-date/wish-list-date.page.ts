@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
@@ -66,6 +66,12 @@ export class WishListDatePage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.formService.date = this.form.controls['date'].value;
     this.router.navigate(['../wish-list-wish'], { relativeTo: this.route })
+  }
+
+  onKeyboardNextAction() {
+    if (this.form.valid) {
+      this.next();
+    }
   }
 
 }

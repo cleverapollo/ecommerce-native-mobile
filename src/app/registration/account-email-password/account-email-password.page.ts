@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChildren } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,13 +10,18 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { LoadingService } from '@core/services/loading.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
+import { IonInput } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
 
+const { Keyboard } = Plugins;
 @Component({
   selector: 'app-account-email-password',
   templateUrl: './account-email-password.page.html',
   styleUrls: ['./account-email-password.page.scss']
 })
 export class AccountEmailPasswordPage implements OnInit, OnDestroy {
+
+  @ViewChildren(IonInput) inputs: Array<IonInput>;
 
   form: FormGroup;
   validationMessages: ValidationMessages = {
@@ -98,5 +103,27 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
       }
     })
   }
+
+ handleKeyboardEventOnEmailInput(keyCode: number) {
+  if (keyCode == 13) {
+    this.inputs.find((input) => { 
+      return input.name === 'password';
+     }).setFocus();
+  }
+ }
+
+ handleKeyboardEventOnPasswordInput(keyCode: number) {
+  if (keyCode == 13) {
+    this.inputs.find((input) => { 
+      return input.name === 'passwordConfirm';
+     }).setFocus();
+  }
+ }
+
+ handleKeyboardEventOnPasswordConfirmInput(keyCode: number) {
+   if (keyCode == 13) {
+    Keyboard.hide();
+   }
+ }
   
 }

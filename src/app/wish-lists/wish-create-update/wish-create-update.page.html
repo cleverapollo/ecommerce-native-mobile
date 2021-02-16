@@ -22,7 +22,7 @@
     <!--price-->
     <ion-item lines="none">
       <ion-label position="stacked">Preis</ion-label>
-      <ion-input type="text" formControlName="price"></ion-input>
+      <ion-input type="text" formControlName="price" clearInput="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('price')" [validationMessages]="validationMessages.price"></app-validation-messages>
 
@@ -35,7 +35,7 @@
 
   </form>
 
-  <ion-button *ngIf="form" class="wantic-save-button save-wish-button" (click)="createOrUpdateWish()" color="primary" expand="block" [disabled]="!form.valid">
+  <ion-button *ngIf="form" class="wantic-save-button save-wish-button" (click)="createOrUpdateWish()" color="primary" expand="block" [disabled]="!form.valid || form.pristine">
     WUNSCH SPEICHERN
   </ion-button>
   <ion-button *ngIf="form && isUpdatePage" class="wantic-save-button" (click)="deleteWish()" color="primary" expand="block" fill="outline">

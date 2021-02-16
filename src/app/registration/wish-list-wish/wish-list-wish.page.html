@@ -9,9 +9,9 @@
     Trage deinen Wunsch in die Suche ein und <br>
     wähle das passende Produkt aus.
   </p>
-  <form *ngIf="form" [formGroup]="form">
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="onKeyboardNextAction()">
     <ion-item lines="none">
-      <ion-searchbar formControlName="keywords" placeholder="z.B. Fjällraven Kanken"></ion-searchbar>
+      <ion-searchbar formControlName="keywords" placeholder="z.B. Fjällraven Kanken" inputmode="search" clearIcon="true"></ion-searchbar>
     </ion-item>
     <app-validation-messages [control]="form.get('keywords')" [validationMessages]="validationMessages.keywords"></app-validation-messages>
   </form>

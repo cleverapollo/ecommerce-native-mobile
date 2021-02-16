@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListCreateRequest, WishListCreateOrUpdateRequest, WishListUpdateRequest } from './wish-list-create-update.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { NavController } from '@ionic/angular';
+import { IonDatetime, NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { AlertService } from '@core/services/alert.service';
