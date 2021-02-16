@@ -5,7 +5,8 @@ import {
   HttpHandler,
   HttpEvent,
   HttpResponse,
-  HttpHeaders
+  HttpHeaders,
+  HttpErrorResponse
 } from "@angular/common/http";
 import { Observable, from } from "rxjs";
 import { Platform } from "@ionic/angular";
@@ -158,8 +159,8 @@ export class NativeHttpInterceptor implements HttpInterceptor {
 
   private createErrorResponse(error: any) {
     this.logError(error);
-    return new HttpResponse({
-      body: JSON.parse(error.error),
+    return new HttpErrorResponse({
+      error: error.error,
       status: error.status,
       headers: error.headers,
       url: error.url
