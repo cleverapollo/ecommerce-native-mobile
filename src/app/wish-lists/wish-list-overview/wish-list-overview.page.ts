@@ -138,6 +138,9 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   private updateWishLists(wishLists: Array<WishListDto>) {
     this.wishLists = wishLists;
     this.wishLists.sort((wishListA, wishListB) => {
+      if (wishListA.date === null && wishListB.date === null) {
+        return wishListA.name.localeCompare(wishListB.name);
+      }
       return this.getTime(wishListA.date) - this.getTime(wishListB.date);
     })
   }
