@@ -6,6 +6,7 @@ import { RegistrationFormService } from '../registration-form.service';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { Plugins } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 
 const { Keyboard } = Plugins;
 @Component({
@@ -27,6 +28,7 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
+    private platform: Platform,
     private router: Router, 
     private route: ActivatedRoute,
     private formService: RegistrationFormService
@@ -42,7 +44,9 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
   }
 
   ionViewWillLeave() {
-    Keyboard.hide();
+    if (this.platform.is('hybrid')) {
+      Keyboard.hide();
+    }
   }
 
   ngOnDestroy() {

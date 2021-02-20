@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { IonSearchbar } from '@ionic/angular';
+import { IonSearchbar, Platform } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
 
 const { Keyboard } = Plugins;
@@ -24,6 +24,7 @@ export class WishListWishPage implements OnInit {
 
   constructor(
     private router: Router, 
+    private platform: Platform,
     private activatedRoute: ActivatedRoute, 
     private formBuilder: FormBuilder) { }
 
@@ -38,7 +39,9 @@ export class WishListWishPage implements OnInit {
   }
 
   ionViewWillLeave() {
-    Keyboard.hide();
+    if (this.platform.is('hybrid')) {
+      Keyboard.hide();
+    }
   }
 
   search() {

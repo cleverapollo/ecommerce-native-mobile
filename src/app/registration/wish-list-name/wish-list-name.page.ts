@@ -5,6 +5,7 @@ import { RegistrationFormService } from '../registration-form.service';
 import { Subscription } from 'rxjs';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { Plugins } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 
 const { Keyboard } = Plugins;
 
@@ -30,7 +31,8 @@ export class WishListNamePage implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router, 
     private route: ActivatedRoute,
-    private formService: RegistrationFormService
+    private formService: RegistrationFormService,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
@@ -54,7 +56,9 @@ export class WishListNamePage implements OnInit, OnDestroy {
   }
 
   ionViewWillLeave() {
-    Keyboard.hide();
+    if (this.platform.is('hybrid')) {
+      Keyboard.hide();
+    }
   }
 
   ngOnDestroy() {
