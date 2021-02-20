@@ -28,7 +28,6 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var closeButton: UIBarButtonItem!
-    @IBOutlet weak var footerView: UIView!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

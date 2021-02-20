@@ -30,6 +30,9 @@ export class AppComponent {
         StatusBar.setStyle({ style: StatusBarStyle.Light })
         SplashScreen.hide();
         this.initDeeplinks();
+        this.platform.resume.subscribe(() => {
+          this.cache.clearGroup('wishList');
+        });
       }
       this.initCache();
       this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
