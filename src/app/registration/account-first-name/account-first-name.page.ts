@@ -54,14 +54,10 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.registrationDto.user.firstName = this.form.controls['firstName'].value;
-    this.formService.updateDto(this.registrationDto);
-    this.router.navigate(['../birthday'], { relativeTo: this.route })
-  }
-
-  onKeyboardNextAction() {
     if (this.form.valid) {
-      this.next();
+      this.registrationDto.user.firstName = this.form.controls['firstName'].value;
+      this.formService.updateDto(this.registrationDto);
+      this.router.navigate(['../birthday'], { relativeTo: this.route });
     }
   }
 

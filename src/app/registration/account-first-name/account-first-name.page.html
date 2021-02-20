@@ -11,14 +11,11 @@
   
     Sag uns noch deinen Namen: 
   </p>
-  <form [formGroup]="form" *ngIf="form" (ngSubmit)="onKeyboardNextAction()">
+  <form [formGroup]="form" *ngIf="form" (ngSubmit)="next()">
     <ion-item lines="none">
       <ion-input formControlName="firstName" type="text" placeholder="Vorname" autocapitalize="on" autocomplete="name" autofocus="true" clearInput="true" enterkeyhint="next" inputmode="text" required="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('firstName')" [validationMessages]="validationMessages.firstName"></app-validation-messages>
+    <ion-button type="submit" class="wantic-save-button" expand="block" [disabled]="!form.valid">Weiter</ion-button>
   </form>
 </ion-content>
-
-<ion-footer class="ion-no-border">
-  <ion-button *ngIf="form" class="wantic-save-button" expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
-</ion-footer>

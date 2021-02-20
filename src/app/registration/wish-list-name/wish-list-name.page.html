@@ -5,14 +5,11 @@
 <ion-content>
   <div class="ion-text-center registration-step-counter">1 / 3</div>
   <h1 class="registration ion-text-center">Lege deine erste Wunschliste an</h1>
-  <form [formGroup]="form" *ngIf="form" (ngSubmit)="onKeyboardNextAction()">
+  <form [formGroup]="form" *ngIf="form" (ngSubmit)="next()">
     <ion-item lines="none">
       <ion-input formControlName="name" type="text" placeholder="Trage einen Namen ein" autocapitalize="on" autofocus="true" clearInput="true" enterkeyhint="next" inputmode="text" required="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
+    <ion-button type="submit" class="wantic-save-button" expand="block" [disabled]="!form.valid">Weiter</ion-button>
   </form>
 </ion-content>
-
-<ion-footer class="ion-no-border">
-  <ion-button *ngIf="form" class="wantic-save-button" expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
-</ion-footer>

@@ -9,15 +9,12 @@
     Gib dein Geburtsdatum ein, damit wir deine Freunde <br>
     an deinem Geburtstag erinnern können.
   </p>
-  <form [formGroup]="form" *ngIf="form">
+  <form [formGroup]="form" *ngIf="form" (ngSubmit)="next()">
     <ion-item lines="none">
       <ion-datetime doneText="Fertig" cancelText="Abbrechen" value="1990-01-01" [max]="maxDate" formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
       <ion-icon name="calendar" slot="end" color="primary"></ion-icon>
     </ion-item>
     <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
+    <ion-button type="submit" class="wantic-save-button" expand="block" [disabled]="!form.valid">Weiter</ion-button>
   </form>
 </ion-content>
-
-<ion-footer class="ion-no-border">
-  <ion-button *ngIf="form" class="wantic-save-button" expand="block" (click)="next()" [disabled]="!form.valid">Weiter</ion-button>
-</ion-footer>

@@ -66,14 +66,10 @@ export class WishListNamePage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.registrationDto.wishList.name = this.form.controls['name'].value;
-    this.formService.updateDto(this.registrationDto);
-    this.router.navigate(['../wish-list-date'], { relativeTo: this.route })
-  }
-
-  onKeyboardNextAction() {
-    if (this.form.valid) {
-      this.next();
+    if (this.form.valid) { 
+      this.registrationDto.wishList.name = this.form.controls['name'].value;
+      this.formService.updateDto(this.registrationDto);
+      this.router.navigate(['../wish-list-date'], { relativeTo: this.route })
     }
   }
 

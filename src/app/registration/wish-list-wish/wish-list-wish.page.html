@@ -4,19 +4,16 @@
 
 <ion-content>
   <div class="ion-text-center registration-step-counter">3 / 3</div>
-  <h1 class="registration ion-text-center">Füge deinen <br> ersten <br> Wunsch hinzu.</h1>
+  <h1 class="registration ion-text-center">Füge deinen <br> ersten <br> Wunsch hinzu</h1>
   <p class="subtext ion-text-center">
     Trage deinen Wunsch in die Suche ein und <br>
     wähle das passende Produkt aus.
   </p>
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="onKeyboardNextAction()">
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="search()">
     <ion-item lines="none">
       <ion-searchbar formControlName="keywords" placeholder="z.B. Fjällraven Kanken" inputmode="search" clearIcon="true"></ion-searchbar>
     </ion-item>
     <app-validation-messages [control]="form.get('keywords')" [validationMessages]="validationMessages.keywords"></app-validation-messages>
+    <ion-button class="wantic-save-button" type="submit" expand="block" [disabled]="!form.valid">Suchen</ion-button>
   </form>
 </ion-content>
-
-<ion-footer class="ion-no-border">
-  <ion-button *ngIf="form" class="wantic-save-button" expand="block" (click)="search()" [disabled]="!form.valid">Suchen</ion-button>
-</ion-footer>
