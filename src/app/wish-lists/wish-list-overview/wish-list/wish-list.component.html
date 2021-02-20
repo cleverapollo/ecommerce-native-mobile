@@ -19,7 +19,7 @@
 
   <ion-row class="wish-list-description">
     <ion-col size="12">
-      <div class="wish-list-name">{{ wishList.name }}</div>
+      <div class="wish-list-name">{{ wishList.name | truncateName:22 }}</div>
     </ion-col>
     <ion-col size="12" class="no-padding-top">
       <div class="wish-list-date">{{ wishList.date ? (wishList.date | date) : 'kein Datum festgelegt' }}</div>
