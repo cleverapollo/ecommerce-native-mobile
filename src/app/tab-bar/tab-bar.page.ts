@@ -50,9 +50,7 @@ export class TabBarPage implements OnInit, OnDestroy {
     } else {
       this.navController.navigateRoot(`secure/${selectedTab}`);
     }
-    if (selectedTab !== getTaBarPath(TabBarRoute.WISH_SEARCH, false)) {
-      this.searchResultDataService.clear();
-    }
+    this.searchResultDataService.clear();
   }
 
 }
