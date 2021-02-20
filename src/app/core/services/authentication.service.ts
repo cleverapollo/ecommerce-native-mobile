@@ -66,13 +66,11 @@ export class AuthenticationService {
   login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
     return new Promise((resolve, reject) => {
       this.authService.login(email, password).subscribe(response => {
-        this.logger.info('login successful', response)
+        this.logger.info('login successful')
         if (saveCredentials) {
           this.saveCredentialsAndUserSettings(email, password);
         }
-        this.saveToken(response.token)
-          .then(resolve)
-          .catch(reject);
+        this.saveToken(response.token).then(resolve).catch(reject);
       }, reject);
     })
   }

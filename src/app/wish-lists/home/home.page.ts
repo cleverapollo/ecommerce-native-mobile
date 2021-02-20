@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   ngOnInit() {}
 
   ionViewDidEnter() {
-    this.userService.showOnboardingSlides.then(show => {
+    this.userService.showOnboardingSlides().then(show => {
       if (show) {
         this.openOnboardingSlidesModal();
       }

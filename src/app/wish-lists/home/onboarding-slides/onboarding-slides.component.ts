@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { UserApiService } from '@core/api/user-api.service';
+import { LogService } from '@core/services/log.service';
+import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { UserService } from '@core/services/user.service';
 import { ModalController } from '@ionic/angular';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-onboarding-slides',
@@ -13,7 +17,9 @@ export class OnboardingSlidesComponent implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private userService: UserService
+    private storageService: StorageService,
+    private userApiService: UserApiService,
+    private logger: LogService
   ) { }
 
   ngOnInit() {}
@@ -27,8 +33,14 @@ export class OnboardingSlidesComponent implements OnInit {
   }
 
   completeOnboarding() {
-    this.userService.updateShowOnboardingSlidesState().then(() => {
-      this.modalController.dismiss();
+    this.userApiService.updateShowOnboardingSlidesIosState(false).pipe(first()).subscribe({
+      next: () => {
+        this.storageService.set(StorageKeys.SHOW_ONBOARDING_SLIDES, false);
+      },
+      error: this.logger.error,
+      complete: () => {
+        this.modalController.dismiss();
+      }
     })
   }
 

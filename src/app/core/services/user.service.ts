@@ -48,7 +48,6 @@ export class UserService {
   }
 
   get userState() : Promise<UserState> {
-    this.logger.log('UserService userState');
     return new Promise((resolve, reject) => {
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then( rawToken => {
         const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(rawToken);
@@ -67,22 +66,23 @@ export class UserService {
     });
   }
 
-  get showOnboardingSlides(): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.storageService.get<boolean>(StorageKeys.SHOW_ONBOARDING_SLIDES).then(show => {
-        if (show === null) {
-          resolve(true);
-        } else {
-          resolve(Boolean(show));
-        }
-      }, () => {
-        resolve(false);
-      });
-    })
+  async showOnboardingSlides(): Promise<boolean> {
+    let show: Boolean = await this.storageService.get<boolean>(StorageKeys.SHOW_ONBOARDING_SLIDES);
+    if (show === null) {
+      const decodedJwToken = await this.getDecodesToken();
+      if (decodedJwToken) {
+        show = decodedJwToken.showOnboardingSlidesIos;
+        await this.storageService.set(StorageKeys.SHOW_ONBOARDING_SLIDES, show);
+      } else {
+        show = true;
+      }
+    } 
+    return Boolean(show);
   }
 
-  updateShowOnboardingSlidesState(): Promise<void> {
-    return this.storageService.set(StorageKeys.SHOW_ONBOARDING_SLIDES, false)
+  private async getDecodesToken(): Promise<WanticJwtToken> {
+    const rawToken = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
+    return this.jwtHelper.decodeToken(rawToken);
   }
 
 }

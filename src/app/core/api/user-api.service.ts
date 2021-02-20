@@ -119,4 +119,10 @@ export class UserApiService {
     return this.apiService.get<EmailVerificationDto>(`${UserApiService.REST_END_POINT}/email-verification`);
   }
 
+  updateShowOnboardingSlidesIosState(state: boolean): Observable<void> {
+    return this.apiService.patch<void>(`${UserApiService.REST_END_POINT}/user-settings/show-onboarding-slides-ios`, { 
+      show: state 
+    });
+  }
+
 }

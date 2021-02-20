@@ -8,6 +8,7 @@ export interface WanticJwtToken {
     sub: string;
     userState: UserState;
     emailVerificationStatus: string;
+    showOnboardingSlidesIos: boolean;
     exp: Number;
     iat: Number;
 }

@@ -8,6 +8,6 @@ export class ShowOnboardingSlidesResolver implements Resolve<Promise<Boolean>> {
   constructor(private userService: UserService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.userService.showOnboardingSlides;
+    return this.userService.showOnboardingSlides();
   }
 }
