@@ -16,7 +16,9 @@
     <app-validation-messages [control]="form.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
 
     <p class="wantic-margin-right-left password-label">Passwort</p>
-    <app-show-hide-password formControlName="password" [initialValue]="form.get('password').value"></app-show-hide-password>
+    <app-show-hide-password>
+      <ion-input name="password" formControlName="password" type="password" placeholder="Passwort"  autocomplete="current-password"></ion-input>
+    </app-show-hide-password>
     <app-validation-messages [control]="form.get('password')" [validationMessages]="validationMessages.password"></app-validation-messages>
 
     <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block" [disabled]="form.invalid || form.pristine">

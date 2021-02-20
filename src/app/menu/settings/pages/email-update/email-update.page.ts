@@ -44,7 +44,7 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
         new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.'),
       ],
       password: [
-        new ValidationMessage('required', 'Gib bitte deine Passwort an.'),
+        new ValidationMessage('required', 'Gib bitte dein Passwort an.'),
       ]
     }
   }

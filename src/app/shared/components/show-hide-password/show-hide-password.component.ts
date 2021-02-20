@@ -1,5 +1,5 @@
-import { Component, ContentChild, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, RequiredValidator, ValidationErrors } from '@angular/forms';
+import { Component, ContentChild, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 
 @Component({
@@ -16,10 +16,7 @@ import { IonInput } from '@ionic/angular';
 })
 export class ShowHidePasswordComponent implements OnInit, ControlValueAccessor {
 
-  @ViewChild(IonInput) input: IonInput;
-
-  @Input()
-  initialValue: string;
+  @ContentChild(IonInput) input: IonInput;
 
   _password: string;
 
@@ -42,7 +39,6 @@ export class ShowHidePasswordComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {}
 
   toggleShow() {
-    console.log('toggle');
     this.showPassword = !this.showPassword;
     this.input.type = this.showPassword ? 'text' : 'password';
   }
