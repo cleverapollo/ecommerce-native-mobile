@@ -32,6 +32,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.showActivityIndicator("Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
         if let _ = authService.getAuthToken() {
             if let item = extensionContext?.inputItems.first as? NSExtensionItem {
                 accessWebpageProperties(extensionItem: item)
@@ -142,6 +143,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                     }
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
+                        self.removeActivityIndicator()
                     }
                 }
             )
