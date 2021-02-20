@@ -9,6 +9,10 @@ import { IonInfiniteScroll, Platform } from '@ionic/angular';
 import { LogService } from '@core/services/log.service';
 import { SearchService } from '@core/api/search.service';
 import { PagingService } from '@core/services/paging.service';
+import { first } from 'rxjs/operators';
+import { Plugins } from '@capacitor/core';
+
+const { Keyboard } = Plugins;
 
 @Component({
   selector: 'app-wish-search-results',
@@ -123,14 +127,18 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
     this.page = 1;
     this.infiniteScroll.disabled = false;
     this.loading = true;
-    this.searchService.searchForItems(this.keywords, this.page).subscribe({
+    this.searchService.searchForItems(this.keywords, this.page).pipe(first()).subscribe({
       next: searchResult => {
         this.results = [];
         this.updateDisplayedSearchResults(searchResult)
         this.disableInfitineScrollIfNeeded();
+        if (this.platform.is('hybrid')) {
+          Keyboard.hide();
+        }
       },
       error: this.logger.error,
       complete: () => {
+        this.logger.debug('searchByAmazonApi complete');
         this.loading = false;
       }
     });
