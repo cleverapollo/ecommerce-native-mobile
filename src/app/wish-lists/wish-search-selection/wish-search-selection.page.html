@@ -8,19 +8,40 @@
     <h1 class="wantic-page-header ion-text-center">Wunsch hinzufügen</h1>
   </ion-text>
 
+  <p class="wantic-margin-right-left">
+    Gib deinen Wunsch in dieses Suchfeld ein <br>
+    ODER ...
+  </p>
+
   <form [formGroup]="searchByAmazonApiForm" (ngSubmit)="searchByAmazonApi()">
     <ion-item lines="none">
-      <ion-label position="stacked">Was wünschst du dir?</ion-label>
       <ion-input type="text" enterkeyhint="search" placeholder="z.B. Fjällräven Kånken" [formControl]="keywords" autocapitalize="on" autofocus="true" clearInput="true" inputmode="search"></ion-input>
     </ion-item>
   </form>
 
-  <!--
-  <form *ngIf="platform.is('capacitor')" [formGroup]="searchByUrlForm" (ngSubmit)="searchByUrl()">
-    <ion-item lines="none">
-      <ion-label position="stacked">URL deines Wunsches einfügen</ion-label>
-      <ion-input type="url" inputmode="url" enterkeyhint="search" placeholder="z.B. www.zalando.de/fjällrävenkå" [formControl]="url"></ion-input>
-    </ion-item>
-  </form>--->
+ <p class="wantic-margin-right-left">
+   ... füge Wünsche aus deinem liebsten <br>
+   Onlineshop über dieses Icon <ion-icon class="share-icon" name="share-outline"></ion-icon> hinzu.
+ </p>
+
+ <div class="wantic-margin-right-left ion-text-center">
+   <img src="assets/images/onboarding-slide-2.png" alt="Erklärungsbild" />
+ </div>
+
+ <p class="wantic-margin-right-left info-text">
+  <strong>Info:</strong> Solltest du unser App-Icon <img class="appstore-icon" src="assets/icon/appstore-icon.png" /> <br>
+  nicht sehen, liegt dies an einem bekannten temporären iOS Problem.<br><br>
+  
+  Diese zwei Dinge kannst du probieren:
+ </p>
+
+ <ol class="wantic-margin-right-left">
+  <li>
+    Drücke erneut auf das Share-Icon <ion-icon class="share-icon" name="share-outline"></ion-icon> in Safari, oft taucht unser App-Icon beim Zweiten Anlauf auf.
+  </li>
+  <li>
+    Starte dein iPhone neu.
+  </li>
+</ol>
 
 </ion-content>

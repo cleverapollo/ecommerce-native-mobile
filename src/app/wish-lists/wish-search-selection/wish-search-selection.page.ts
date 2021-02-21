@@ -16,9 +16,6 @@ export class WishSearchSelectionPage implements OnInit {
   searchByAmazonApiForm: FormGroup;
   keywords = new FormControl('');
   
-  searchByUrlForm: FormGroup;
-  url = new FormControl('https://www.otto.de/p/mcw-tv-rack-mcw-a27-t-2-staufaecher-mit-tuer-und-einlegeboden-in-3-positionen-S090801K/#variationId=S090801K4KU2');
-
   constructor(
     private productSearchService: ProductSearchService, 
     private formBuilder: FormBuilder,
@@ -33,9 +30,6 @@ export class WishSearchSelectionPage implements OnInit {
     this.searchByAmazonApiForm = this.formBuilder.group({
       keywords: this.keywords
     });
-    this.searchByUrlForm = this.formBuilder.group({
-      url: this.url
-    });
   }
 
   searchByAmazonApi() {
@@ -45,12 +39,6 @@ export class WishSearchSelectionPage implements OnInit {
     }, this.logger.error).finally(() => {
       this.loadingService.dismissLoadingSpinner();
     });
-  }
-
-  searchByUrl() {
-    this.productSearchService.searchByUrl(this.url.value).then(searchResults => {
-      this.navigateToSearchResultPage();
-    }, this.logger.error);
   }
 
   private navigateToSearchResultPage() {
