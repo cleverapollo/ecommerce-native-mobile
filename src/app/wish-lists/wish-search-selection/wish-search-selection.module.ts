@@ -7,6 +7,7 @@ import { WishSearchSelectionPageRoutingModule } from './wish-search-selection-ro
 
 import { WishSearchSelectionPage } from './wish-search-selection.page';
 import { SharedModule } from '@shared/shared.module';
+import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { SharedModule } from '@shared/shared.module';
     WishSearchSelectionPageRoutingModule,
     SharedModule
   ],
-  declarations: [WishSearchSelectionPage]
+  declarations: [WishSearchSelectionPage, OnboardingSlidesComponent]
 })
 export class WishSearchSelectionPageModule {}

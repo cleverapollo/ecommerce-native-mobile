@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountEnabledGuard } from '@guards/account-enabled.guard';
 import { AuthGuard } from '@guards/auth.guard';
-import { ShowOnboardingSlidesResolver } from '@wishLists/home/show-onboarding-slides.resolver';
 import { EmailVerificationTokenResolver } from './email-verification-token.resolver';
 import { HomePage } from './home.page';
 import { WishListResolver } from './wish-list.resolver';
@@ -18,7 +17,6 @@ const routes: Routes = [
   {
     path: '',
     component: HomePage,
-    resolve: { showOnboardingSlides: ShowOnboardingSlidesResolver },
     children: [
       {
         path: 'wish-list-overview',

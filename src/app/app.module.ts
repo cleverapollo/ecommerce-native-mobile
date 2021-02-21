@@ -34,7 +34,6 @@ import { environment } from '../environments/environment';
 import { EmailVerificationTokenResolver } from '@wishLists/home/email-verification-token.resolver';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
-import { ShowOnboardingSlidesResolver } from '@wishLists/home/show-onboarding-slides.resolver';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -82,7 +81,6 @@ export function jwtOptionsFactory(storageService: StorageService) {
     FriendsWishListResolver,
     FriendsWishListDetailResolver,
     SharedWishListResolver,
-    ShowOnboardingSlidesResolver,
     UserProfileResolver,
     WishResolver,
     WishListsResolver,
