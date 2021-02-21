@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountEnabledGuard } from '@guards/account-enabled.guard';
 import { AuthGuard } from '@guards/auth.guard';
-import { EmailVerificationTokenResolver } from './email-verification-token.resolver';
 import { HomePage } from './home.page';
 import { WishListResolver } from './wish-list.resolver';
 import { WishListsResolver } from './wish-lists.resolver';
@@ -21,7 +20,7 @@ const routes: Routes = [
       {
         path: 'wish-list-overview',
         canActivate: [AuthGuard],
-        resolve: { wishLists: WishListsResolver, emailVerificationResponse: EmailVerificationTokenResolver },
+        resolve: { wishLists: WishListsResolver },
         loadChildren: () => import('@wishLists/wish-list-overview/wish-list-overview.module').then( m => m.WishListOverviewPageModule)
       },
       {

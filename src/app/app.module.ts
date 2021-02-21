@@ -31,7 +31,6 @@ import { NativeHttpInterceptor } from './_interceptors/native-http.interceptor';
 import { NativeTokenInterceptor } from './_interceptors/native-token.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { EmailVerificationTokenResolver } from '@wishLists/home/email-verification-token.resolver';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 
@@ -76,7 +75,6 @@ export function jwtOptionsFactory(storageService: StorageService) {
     InAppBrowser,
     HTTP,
     EmailVerificationStatusResolver,
-    EmailVerificationTokenResolver,
     File,
     FriendsWishListResolver,
     FriendsWishListDetailResolver,

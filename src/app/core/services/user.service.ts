@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { StorageService, StorageKeys } from './storage.service';
-import { UserState } from '@core/models/user.model';
 import { WanticJwtToken } from '@core/models/login.model';
-import { LogService } from './log.service';
+import { UserState } from '@core/models/user.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { LogService } from './log.service';
+import { StorageKeys, StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +27,14 @@ export class UserService {
       if (rawToken) {
         const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(rawToken);
         if (decodedToken) {
-          this._accountIsEnabled.next(decodedToken.userState === UserState.ACTIVE);
+          this._accountIsEnabled.next(decodedToken.accountEnabled);
         }
       }
     });
+  }
+
+  get accountIsEnabled(): boolean {
+    return this._accountIsEnabled.getValue();
   }
 
   set accountIsEnabled(isEnabled: boolean) {

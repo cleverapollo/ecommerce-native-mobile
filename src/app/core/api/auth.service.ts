@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '@core/services/toast.service';
 import { ApiErrorHandlerService } from './api-error-handler.service';
-import { RegistrationRequest } from '@core/models/registration.model';
+import { RegistrationRequest, RegistrationResponse } from '@core/models/registration.model';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 
 @Injectable({
@@ -28,8 +28,8 @@ export class AuthService {
     );
   }
 
-  register(dto: RegistrationRequest) : Observable<LoginResponse> {
-    return this.apiService.post<LoginResponse>(`${AuthService.REST_END_POINT}/register`, dto).pipe(
+  register(dto: RegistrationRequest) : Observable<RegistrationResponse> {
+    return this.apiService.post<RegistrationResponse>(`${AuthService.REST_END_POINT}/register`, dto).pipe(
       catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))
     );
   }
