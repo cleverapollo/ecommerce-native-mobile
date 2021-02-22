@@ -105,8 +105,9 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
             this.router.navigate(['../registration-complete'], { relativeTo: this.route });
           });
         })
+        this.loadingService.dismissLoadingSpinner();
       },
-      complete: () => {
+      error: errorResponse => {
         this.loadingService.dismissLoadingSpinner();
       }
     })
