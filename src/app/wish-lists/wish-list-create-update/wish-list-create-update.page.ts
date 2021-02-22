@@ -117,14 +117,13 @@ export class WishListCreateUpdatePage implements OnInit {
       next: createdWishList => {
         this.wishListStore.saveWishListToCache(createdWishList);
         this.wishList = createdWishList;
+        this.loadingService.dismissLoadingSpinner();
         this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
         this.router.navigateByUrl(`/secure/home/wish-list/${createdWishList.id}`);
       },
       error: error => {
-        this.toastService.presentErrorToast('Bei der Erstellung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
-      },
-      complete: () => {
         this.loadingService.dismissLoadingSpinner();
+        this.toastService.presentErrorToast('Bei der Erstellung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
       }
     });
   }
@@ -137,13 +136,12 @@ export class WishListCreateUpdatePage implements OnInit {
       next: updatedWishList => {
         this.wishListStore.updatedCachedWishList(updatedWishList);
         this.wishList = updatedWishList;
+        this.loadingService.dismissLoadingSpinner();
         this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
       },
       error: error => {
-        this.toastService.presentErrorToast('Bei der Aktualisierung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
-      },
-      complete: () => {
         this.loadingService.dismissLoadingSpinner();
+        this.toastService.presentErrorToast('Bei der Aktualisierung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
       }
     });
   }

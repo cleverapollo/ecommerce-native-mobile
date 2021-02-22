@@ -129,14 +129,20 @@ export class WishListStoreService {
     });
   }
 
-  saveWishListToCache(wishList: WishListDto) {
-    this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
-    this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: WishListDto[]) => {
-      wishLists.push(wishList);
-      this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
-    }, () => {
-      this.cache.removeItem(this.CACHE_KEY_WISH_LISTS);
-    });
+  saveWishListToCache(wishList: WishListDto): Promise<void> {
+    return new Promise((resolve) => {
+      this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL).finally(() => {
+        this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: WishListDto[]) => {
+          wishLists.push(wishList);
+          this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
+        }, () => {
+          this.cache.removeItem(this.CACHE_KEY_WISH_LISTS);
+        }).finally(() => {
+          resolve();
+        });
+      });
+    })
+
   }
 
   // WISH
