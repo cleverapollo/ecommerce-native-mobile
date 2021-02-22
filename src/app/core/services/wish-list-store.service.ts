@@ -56,7 +56,7 @@ export class WishListStoreService {
   private loadWishListsForDisabledAccount(): Observable<Array<WishListDto>> {
     return from(new Promise<Array<WishListDto>>((resolve) => {
       this.storageService.get<RegistrationResponse>(StorageKeys.REGISTRATION_RESPONSE).then((responseBody) => {
-        resolve(responseBody.wishLists);
+        resolve(responseBody?.wishLists ?? []);
       }, error => {
         this.logger.error(error);
         resolve([]);

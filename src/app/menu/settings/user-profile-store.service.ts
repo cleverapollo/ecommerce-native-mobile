@@ -48,7 +48,7 @@ export class UserProfileStore {
   private loadUserProfileForDeactivatedAccount(): Observable<UserProfile> {
     return from(new Promise<UserProfile>((resolve) => {
       this.storageService.get<RegistrationResponse>(StorageKeys.REGISTRATION_RESPONSE).then((responseBody) => {
-        resolve(responseBody.user)
+        resolve(responseBody?.user)
       }, error => {
         this.logger.error(error);
         resolve(null);
