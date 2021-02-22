@@ -46,7 +46,7 @@ export class WishListCreateUpdatePage implements OnInit {
         new ValidationMessage('required', 'Vergib bitte einen Namen für deine Wunschliste.')
       ],
       partnerEmail: [
-        new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.')
+        new ValidationMessage('email', 'Bitte gib eine gültige E-Mail Adresse ein.')
       ],
     }
   };

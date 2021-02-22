@@ -24,7 +24,7 @@ export class WishListPartnerPage implements OnInit, OnDestroy {
     ],
     email: [
       new ValidationMessage('required', 'Gib bitte die E-Mail Adresse deines Partners an.'),
-      new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.'),
+      new ValidationMessage('email', 'Bitte gib eine gültige E-Mail Adresse ein.'),
     ]
   }
 

@@ -26,7 +26,7 @@ export class ReserveWishModalComponent implements OnInit {
   validationMessages: ValidationMessages = {
     email: [
       new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
-      new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.'),
+      new ValidationMessage('email', 'Bitte gib eine gültige E-Mail Adresse ein.'),
     ]
   }
 
