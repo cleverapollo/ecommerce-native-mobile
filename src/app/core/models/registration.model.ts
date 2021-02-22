@@ -1,5 +1,6 @@
-import { UserRegistration } from "./user.model";
-import { WishListRegistration } from "./wish-list.model";
+import { LoginResponse } from "./login.model";
+import { UserProfile, UserRegistration } from "./user.model";
+import { WishListDto, WishListRegistration } from "./wish-list.model";
 
 export class RegistrationRequest {
     wishList: WishListRegistration;
@@ -13,4 +14,10 @@ export class RegistrationRequest {
 }
 export class RegistrationPartnerDto extends RegistrationRequest {
     userId: String;
+}
+
+export class RegistrationResponse {
+    jwToken: LoginResponse;
+    wishLists: Array<WishListDto>;
+    user: UserProfile;
 }

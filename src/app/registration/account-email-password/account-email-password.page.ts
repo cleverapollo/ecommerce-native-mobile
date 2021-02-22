@@ -7,11 +7,13 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { CustomValidation } from '@shared/custom-validation';
 import { AuthService } from '@core/api/auth.service';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { RegistrationRequest } from '@core/models/registration.model';
+import { RegistrationRequest, RegistrationResponse } from '@core/models/registration.model';
 import { LoadingService } from '@core/services/loading.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { IonInput } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
+import { first } from 'rxjs/operators';
+import { StorageKeys, StorageService } from '@core/services/storage.service';
 
 const { Keyboard } = Plugins;
 @Component({
@@ -57,6 +59,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     private authApiService: AuthService,
     private authService: AuthenticationService,
     private loadingService: LoadingService,
+    private storageService: StorageService,
     public privacyPolicyService: PrivacyPolicyService) { 
   }
 
@@ -90,15 +93,16 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     this.registrationDto.user.password = this.form.controls['password']['value'].value;
     this.registrationDto.agreedToPrivacyPolicyAt = new Date();
     this.formService.updateDto(this.registrationDto);
-
     this.loadingService.showLoadingSpinner();
-    this.authApiService.register(this.registrationDto).subscribe({
+    this.authApiService.register(this.registrationDto).pipe(first()).subscribe({
       next: response => {
-        this.authService.saveToken(response.token);
-        this.router.navigate(['../registration-complete'], { relativeTo: this.route });
-        this.loadingService.dismissLoadingSpinner();
+        this.authService.saveToken(response.jwToken.token).then(() => {
+          this.storageService.set(StorageKeys.REGISTRATION_RESPONSE, response).then(() => {
+            this.router.navigate(['../registration-complete'], { relativeTo: this.route });
+          });
+        })
       },
-      error: errorResponse => {
+      complete: () => {
         this.loadingService.dismissLoadingSpinner();
       }
     })

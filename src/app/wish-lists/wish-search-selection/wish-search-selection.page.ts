@@ -3,8 +3,10 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ProductSearchService } from '@core/services/product-search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
-import { Platform } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { LoadingService } from '@core/services/loading.service';
+import { UserService } from '@core/services/user.service';
+import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
 
 @Component({
   selector: 'app-wish-search-selection',
@@ -16,9 +18,6 @@ export class WishSearchSelectionPage implements OnInit {
   searchByAmazonApiForm: FormGroup;
   keywords = new FormControl('');
   
-  searchByUrlForm: FormGroup;
-  url = new FormControl('https://www.otto.de/p/mcw-tv-rack-mcw-a27-t-2-staufaecher-mit-tuer-und-einlegeboden-in-3-positionen-S090801K/#variationId=S090801K4KU2');
-
   constructor(
     private productSearchService: ProductSearchService, 
     private formBuilder: FormBuilder,
@@ -26,16 +25,32 @@ export class WishSearchSelectionPage implements OnInit {
     private route: ActivatedRoute,
     private logger: LogService,
     public platform: Platform,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private userService: UserService,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
     this.searchByAmazonApiForm = this.formBuilder.group({
       keywords: this.keywords
     });
-    this.searchByUrlForm = this.formBuilder.group({
-      url: this.url
+  }
+
+  ionViewDidEnter() {
+    this.userService.showOnboardingSlides().then(show => {
+      if (show) {
+        this.openOnboardingSlidesModal();
+      }
     });
+  }
+
+  private async openOnboardingSlidesModal() {
+    const modal = await this.modalController.create({
+      component: OnboardingSlidesComponent,
+      cssClass: 'wantic-modal wantic-modal-large',
+      backdropDismiss: false
+    });
+    modal.present();
   }
 
   searchByAmazonApi() {
@@ -45,12 +60,6 @@ export class WishSearchSelectionPage implements OnInit {
     }, this.logger.error).finally(() => {
       this.loadingService.dismissLoadingSpinner();
     });
-  }
-
-  searchByUrl() {
-    this.productSearchService.searchByUrl(this.url.value).then(searchResults => {
-      this.navigateToSearchResultPage();
-    }, this.logger.error);
   }
 
   private navigateToSearchResultPage() {

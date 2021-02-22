@@ -1,20 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { Location } from '@angular/common';
-import { LoginResponse } from '@core/models/login.model';
 import { LogService } from '@core/services/log.service';
 import { RegistrationApiService } from '@core/api/registration-api.service';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
 import { EmailVerificationService } from '@core/services/email-verification.service';
-import { EmailVerificationStatus } from '@core/models/user.model';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
+import { UserService } from '@core/services/user.service';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -24,90 +22,70 @@ import { HttpStatusCodes } from '@core/models/http-status-codes';
 export class WishListOverviewPage implements OnInit, OnDestroy {
 
   wishLists: Array<WishListDto> = new Array();
-  emailVerificationResponse?: LoginResponse;
   refreshData: boolean = false
 
-  disableAddButtons: boolean = false;
-  private emilVerificationSubscription: Subscription;
+  get disableAddButtons(): boolean {
+    return !this.userService.accountIsEnabled;
+  };
+
   private queryParamSubscription: Subscription;
-  private confirmRegistrationSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute, 
+    private router: Router,
     private wishListStore: WishListStoreService,
     private navController: NavController,
     private authService: AuthenticationService,
-    private location: Location,
     private logger: LogService,
     private registrationApiService: RegistrationApiService,
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private emilVerificationService: EmailVerificationService
+    private emilVerificationService: EmailVerificationService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
-    this.initData();
-    this.handleEmailVerfificationResponseIfNeeded();
-    this.confirmRegistration();
-  }
-
-  ngOnDestroy() {
-    this.emilVerificationSubscription.unsubscribe();
-    this.queryParamSubscription.unsubscribe();
-  }
-
-  initData() {
     const resolvedData = this.route.snapshot.data;
     this.updateWishLists(resolvedData.wishLists);
-    if (resolvedData.emailVerificationResponse) {
-      this.emailVerificationResponse = resolvedData.emailVerificationResponse;
-    }
-    this.emilVerificationSubscription = this.emilVerificationService.emailVerificationStatus.subscribe({
-      next: status => {
-        this.disableAddButtons = status !== EmailVerificationStatus.VERIFIED;
-      }
-    })
-  }
 
-  private confirmRegistration() {
-    this.queryParamSubscription = this.route.queryParamMap.subscribe({
-      next: params => {
-        const token = params.get('emailVerificationToken');
-        if (token !== null) {
-          this.loadingService.showLoadingSpinner();
-          this.registrationApiService.confirmRegistration(token).subscribe({
-            next: response => {
-              this.logger.debug('next');
-              this.emailVerificationResponse = response;
-              this.handleEmailVerfificationResponseIfNeeded();
-              this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt!');
-              this.loadingService.dismissLoadingSpinner();
-            },
-            error: errorResponse => {
-              this.logger.debug('error');
-              if (errorResponse instanceof HttpErrorResponse) {
-                if (errorResponse.error instanceof ErrorEvent) {
-                  this.logger.log(`Error: ${errorResponse.error.message}`);
-                } else if (errorResponse.status === HttpStatusCodes.NOT_FOUND) {
-                  this.toastService.presentInfoToast('Du hast deine E-Mail Adresse bereits erfolgreich bestätigt.');
-                  this.loadingService.dismissLoadingSpinner();
-                }
-              }
-            }
-          })
+    this.queryParamSubscription = this.route.queryParamMap.pipe().subscribe({
+      next: queryParams => {
+        const token = queryParams.get('emailVerificationToken');
+        if (token) {
+          this.confirmRegistration(token);
         }
       }
     });
   }
 
-  handleEmailVerfificationResponseIfNeeded() {
-    if (this.emailVerificationResponse) {
-      const jwToken = this.emailVerificationResponse.token;
-      if (jwToken) {
-        this.authService.saveToken(jwToken);
+  ngOnDestroy() {
+    this.queryParamSubscription.unsubscribe();
+  }
+
+  private confirmRegistration(emailVerificationToken: string) {
+    this.loadingService.showLoadingSpinner();
+    this.registrationApiService.confirmRegistration(emailVerificationToken).subscribe({
+      next: response => {
+        const jwToken = response.token;
+        if (jwToken) {
+          this.authService.saveToken(jwToken);
+        }
+        this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt!');
+        this.loadingService.dismissLoadingSpinner();
+        this.router.navigate(['.'], { relativeTo: this.route, queryParams: {}});
+      },
+      error: errorResponse => {
+        if (errorResponse instanceof HttpErrorResponse) {
+          if (errorResponse.error instanceof ErrorEvent) {
+            this.logger.log(`Error: ${errorResponse.error.message}`);
+          } else if (errorResponse.status === HttpStatusCodes.NOT_FOUND) {
+            this.toastService.presentErrorToast('Du hast deine E-Mail Adresse bereits erfolgreich bestätigt.');
+          }
+        }
+        this.loadingService.dismissLoadingSpinner();
+        this.router.navigate(['.'], { relativeTo: this.route, queryParams: {}});
       }
-      this.location.replaceState('secure/home/wish-list-overview')
-    }
+    })
   }
 
   ionViewWillEnter() {

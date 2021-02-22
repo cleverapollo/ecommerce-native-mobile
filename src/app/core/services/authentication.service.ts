@@ -107,9 +107,9 @@ export class AuthenticationService {
       try {
         await this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
         const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(token);
-        this.logger.log(decodedToken.emailVerificationStatus);
+        this.logger.debug("decodedToken", decodedToken);
         this.emailVerificationService.updateEmailVerificationStatus(decodedToken.emailVerificationStatus);
-        this.userService.accountIsEnabled = decodedToken.userState === UserState.ACTIVE;
+        this.userService.accountIsEnabled = decodedToken.accountEnabled;
         this.authenticationState.next(true);
         return Promise.resolve();
       } catch(error) {
