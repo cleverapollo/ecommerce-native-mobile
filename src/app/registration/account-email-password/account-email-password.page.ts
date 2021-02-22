@@ -29,10 +29,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
   validationMessages: ValidationMessages = {
     email: [
       new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
-      new ValidationMessage('email', 'Das Format der E-Mail Adresse ist ungültig.'),
-    ],
-    password: [
-      new ValidationMessage('passwordDoesNotMatch', 'Die Passwört stimmen nicht überein.'),
+      new ValidationMessage('email', 'Bitte gib eine gültige E-Mail Adresse ein.'),
     ],
     passwordValue: [
       new ValidationMessage('required', 'Gib bitte ein Passwort ein.'),
@@ -41,6 +38,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     ],
     passwordConfirm: [
       new ValidationMessage('required', 'Bestätige bitte dein Passwort.'),
+      new ValidationMessage('passwordDoesNotMatch', 'Die Passwörter stimmen nicht überein.'),
     ]
   }
 
@@ -67,15 +65,21 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
       this.registrationDto = registrationDto;
       this.form = this.formBuilder.group({
-        email: [this.registrationDto.user.email, [Validators.required, CustomValidation.email]],
+        email: [this.registrationDto.user.email, { 
+          validators: [Validators.required, CustomValidation.email], 
+          updateOn: 'blur' 
+        }],
         password: this.formBuilder.group({
-          value: [null, Validators.compose([
+          value: [null, { validators: Validators.compose([
             Validators.required,
             CustomValidation.passwordValidator({ passwordTooWeak: true }),
             Validators.minLength(8)
-          ])
+          ]), updateOn: 'blur' }
           ],
-          confirm: [null, Validators.compose([Validators.required])]
+          confirm: [null, { 
+            validators: Validators.compose([Validators.required]),
+            updateOn: 'blur'
+          }]
         }, { 
           validator: CustomValidation.passwordMatchValidator
         }),

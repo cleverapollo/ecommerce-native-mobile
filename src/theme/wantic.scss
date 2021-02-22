@@ -187,13 +187,16 @@ form {
             background: white;
             --padding-end: 21.8px !important;
         }
-        .ion-invalid.ion-touched, .ion-invalid.ion-dirty {
-            border-color: var(--ion-color-danger);
+        ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty {
+            border: 2px solid var(--ion-color-danger);
         }
         ion-label.label-stacked {
             font-size: 15px !important;
             margin-bottom: 10px !important;
         }
+    }
+    ion-item.ion-invalid.ion-touched, ion-item.ion-invalid.ion-dirty {
+        margin-bottom: 0;
     }
 }
 
