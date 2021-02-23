@@ -41,13 +41,6 @@ export class UserSearchResult {
     public userExists: boolean;
 }
 
-export enum UserState {
-    UNKNOWN = "UNKNOWN",
-    ACTIVE = "ACTIVE",
-    UNVERIFIED = "UNVERIFIED",
-    PREACTIVE = "PREACTIVE"
-}
-
 export enum EmailVerificationStatus {
     UNVERIFIED, VERIFICATION_EMAIL_SENT, VERIFIED
 }

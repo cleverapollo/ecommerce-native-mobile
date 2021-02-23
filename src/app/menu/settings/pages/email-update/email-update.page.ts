@@ -6,7 +6,7 @@ import { CustomValidation } from '@shared/custom-validation';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
 import { EmailVerificationService } from '@core/services/email-verification.service';
-import { EmailVerificationStatus, UpdateEmailChangeRequest, UserProfile, UserState } from '@core/models/user.model';
+import { EmailVerificationStatus, UpdateEmailChangeRequest, UserProfile } from '@core/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { LogService } from '@core/services/log.service';
