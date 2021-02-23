@@ -5,6 +5,12 @@ import { CacheService } from 'ionic-cache';
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
+import { UserService } from '@core/services/user.service';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { AuthService } from '@core/api/auth.service';
+import { UserApiService } from '@core/api/user-api.service';
+import { LoadingService } from '@core/services/loading.service';
+import { first } from 'rxjs/operators';
 const { SplashScreen, StatusBar, App } = Plugins;
 
 @Component({
@@ -19,24 +25,74 @@ export class AppComponent {
     private cache: CacheService,
     private zone: NgZone,
     private router: Router,
-    private logger: LogService
+    private logger: LogService,
+    private userService: UserService,
+    private userApiService: UserApiService,
+    private authService: AuthenticationService,
+    private authApiService: AuthService,
+    private loadingService: LoadingService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      if (this.platform.is('capacitor')) {
-        StatusBar.setStyle({ style: StatusBarStyle.Light })
-        SplashScreen.hide();
-        this.initDeeplinks();
-        this.platform.resume.subscribe(() => {
-          this.cache.clearGroup('wishList');
+      if (this.platform.is('hybrid')) {
+        StatusBar.setStyle({ 
+          style: StatusBarStyle.Light 
         });
+        SplashScreen.hide();
+        this.handleUniversalLinks();
+        this.onAppResume();
+      } else {
+        this.handlePossibleAccountActivation();
       }
       this.initCache();
       this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
     });
+  }
+
+  private onAppResume() {
+    this.platform.resume.subscribe(() => {
+      this.logger.debug('App on resume');
+      this.cache.clearGroup('wishList');
+      this.handlePossibleAccountActivation();
+    });
+  }
+
+  private async handlePossibleAccountActivation() {
+    const isAuthenticated = await this.authService.isAuthenticated.toPromise();
+    if (isAuthenticated && !this.userService.accountIsEnabled) {
+      this.logger.debug(isAuthenticated, this.userService.accountIsEnabled)
+      this.activateAccount();
+    }
+  }
+
+  private activateAccount() {
+    this.loadingService.showLoadingSpinner();
+    this.userApiService.getAccount().pipe(first()).subscribe({
+      next: account => {
+        if (account.isEnabled) {
+          this.authApiService.refreshToken().pipe(first()).subscribe({
+            next: jwtResponse => {
+              this.authService.saveToken(jwtResponse.token).finally(() => {
+                this.loadingService.dismissLoadingSpinner();
+              });
+            },
+            error: errorResponse => {
+              this.logger.error(errorResponse);
+              this.loadingService.dismissLoadingSpinner();
+            }
+          })
+        } else {
+          this.loadingService.dismissLoadingSpinner();
+        }
+      }, 
+      error: errorResponse => {
+        this.logger.error(errorResponse);
+        this.loadingService.dismissLoadingSpinner();
+      }
+    })
   }
 
   private initCache() {
@@ -44,7 +100,7 @@ export class AppComponent {
     this.cache.setOfflineInvalidate(false);
   }
 
-  private initDeeplinks() {
+  private handleUniversalLinks() {
     App.addListener('appUrlOpen', (data: any) => {
       this.zone.run(() => {
         const wanticDomain = "wantic.io";

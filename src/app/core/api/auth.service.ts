@@ -34,6 +34,10 @@ export class AuthService {
     );
   }
 
+  refreshToken(): Observable<LoginResponse> {
+    return this.apiService.get<LoginResponse>(`${AuthService.REST_END_POINT}/refresh-token`)
+  }
+
   private errorMessageForLoginServerError(error: HttpErrorResponse): string {
     let errorMessage: string
     switch (error.status) {

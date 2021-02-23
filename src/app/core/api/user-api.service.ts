@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto, DeleteAccountRequest, UpdateEmailChangeRequest } from '@core/models/user.model';
+import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto, DeleteAccountRequest, UpdateEmailChangeRequest, AccountDto } from '@core/models/user.model';
 import { UpdatePasswordRequest, ChangePasswordRequest, LoginResponse } from '@core/models/login.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
@@ -123,6 +123,10 @@ export class UserApiService {
     return this.apiService.patch<void>(`${UserApiService.REST_END_POINT}/user-settings/show-onboarding-slides-ios`, { 
       show: state 
     });
+  }
+
+  getAccount(): Observable<AccountDto> {
+    return this.apiService.get<AccountDto>(`${UserApiService.REST_END_POINT}/accounts`);
   }
 
 }

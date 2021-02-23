@@ -101,3 +101,6 @@ export class DeleteAccountRequest {
         this.password = controls.password.value;
     }
 }
+export class AccountDto {
+    isEnabled: boolean;
+}
