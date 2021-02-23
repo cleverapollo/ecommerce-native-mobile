@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'wish-new',
-    canActivate: [AuthGuard],  // RoleGuard
+    canActivate: [AuthGuard],
     loadChildren: () => import('@wishLists/wish-create-update/wish-create-update.module').then( m => m.WishCreateUpdatePageModule)
   },
 ];
