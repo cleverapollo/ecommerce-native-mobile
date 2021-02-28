@@ -7,7 +7,7 @@
   <h1 class="registration ion-text-center">Lege deine erste Wunschliste an</h1>
   <form [formGroup]="form" *ngIf="form" (ngSubmit)="next()">
     <ion-item lines="none">
-      <ion-input formControlName="name" type="text" placeholder="Trage einen Namen ein" autocapitalize="on" autofocus="true" clearInput="true" enterkeyhint="next" inputmode="text" required="true"></ion-input>
+      <ion-input formControlName="name" type="text" placeholder="z.B.: Geburtstag" autocapitalize="on" autofocus="true" clearInput="true" enterkeyhint="next" inputmode="text" required="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
     <ion-button type="submit" class="wantic-save-button" expand="block" [disabled]="!form.valid">Weiter</ion-button>
