@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { LogService } from '@core/services/log.service';
 import { EmailVerificationService } from '@core/services/email-verification.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
@@ -40,10 +41,14 @@ export class FriendsWishListDetailPage implements OnInit {
   } 
 
   forceRefresh(event) {
-    this.friendWishListStore.loadWishList(this.wishList.id, true).subscribe(wishList => {
-      this.wishList = wishList;
-    }, this.logger.error, () => {
-      event.target.complete();
+    this.friendWishListStore.loadWishList(this.wishList.id, true).pipe(first()).subscribe({
+      next: wishList => {
+        this.wishList = wishList;
+        event.target.complete();
+      },
+      error: error => {
+        event.target.complete();
+      }
     });
     this.emailVerificationService.updateEmailVerificationStatusIfNeeded();
   }

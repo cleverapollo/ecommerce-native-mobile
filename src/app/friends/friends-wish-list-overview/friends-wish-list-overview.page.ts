@@ -61,11 +61,15 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.friendWishListStore.loadWishLists(true).pipe(first()).subscribe(wishLists => {
-      this.wishLists = wishLists;
-    }, this.logger.error, () => {
-      event.target.complete();
-    })
+    this.friendWishListStore.loadWishLists(true).pipe(first()).subscribe({
+      next: wishLists => {
+        this.wishLists = wishLists;
+        event.target.complete();
+      },
+      error: error => {
+        event.target.complete();
+      }
+    });
   }
 
 }

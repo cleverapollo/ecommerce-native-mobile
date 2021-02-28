@@ -4,6 +4,7 @@ import { UserProfile } from '@core/models/user.model';
 import { LogService } from '@core/services/log.service';
 import { UserService } from '@core/services/user.service';
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { UserProfileStore } from './user-profile-store.service';
 
 @Component({
@@ -60,11 +61,15 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.userProfileStore.loadUserProfile(true).subscribe(profile => {
-      this.profile = profile;
-    }, this.logger.error, () => {
-      event.target.complete();
-    })
+    this.userProfileStore.loadUserProfile(true).pipe(first()).subscribe({
+      next: profile => {
+        this.profile = profile;
+        event.target.complete();
+      },
+      error: error => {
+        event.target.complete();
+      }
+    });
   }
 
 }
