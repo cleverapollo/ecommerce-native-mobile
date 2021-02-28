@@ -6,13 +6,14 @@ import { FriendWishListStoreService } from '@core/services/friend-wish-list-stor
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { Platform } from '@ionic/angular';
 
 @Injectable()
 export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList, email?: string }>> {
   constructor(
     private wishListApi: WishListApiService, 
     private storageService: StorageService,
-    private authService: AuthenticationService,
+    private platform: Platform,
     private friendWishListStore: FriendWishListStoreService,
     private wishListStore: WishListStoreService,
     private router: Router
@@ -23,15 +24,15 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
       let identifier = route.queryParams.identifier;
       try {
         const wishListId = Number(identifier.split('_')[0]);
-        if (await this.authService.isAuthenticated.toPromise()) {
+        if (this.platform.is('hybrid')) {
           if (await this.isFriendWishList(wishListId)) {
             this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`)
           } else if (await this.isOwnWishList(wishListId)) {
             this.router.navigateByUrl(`/secure/home/wish-list/${wishListId}`)
           } else {
-            await this.wishListApi.acceptInvitation(wishListId);
-            await this.friendWishListStore.removeCachedWishLists();
-            this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`)
+            this.wishListApi.acceptInvitation(wishListId).finally(() => {
+              this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}?forceRefresh=true`);
+            });
           }
         } else {
           const currentEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);

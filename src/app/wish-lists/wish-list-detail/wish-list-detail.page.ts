@@ -11,6 +11,7 @@ import { LogService } from '@core/services/log.service';
 import { NavigationService } from '@core/services/navigation.service';
 import { Subscription } from 'rxjs';
 import { UserService } from '@core/services/user.service';
+import { first } from 'rxjs/operators';
 const { Share } = Plugins;
 
 @Component({
@@ -101,7 +102,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   async shareWishList() {
     const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
-    const message = `Hurra, ${userProfile.firstName} möchte feiern. 🥳 Sie dir die Wunschliste ${this.wishList.name} an und finde ein Geschenk.🎁🤩`;
+    const message = `Hurra, ${userProfile.firstName} möchte feiern. 🥳 Sie dir die Wunschliste „${this.wishList.name}“ an und finde ein Geschenk.🎁🤩`;
     const subject = 'Einladung zur Wunschliste';
     this.wishListApiService.getLinkForSocialSharing(this.wishList.id).toPromise().then( link => {
       Share.share({
@@ -116,11 +117,15 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.wishListStore.loadWishList(this.wishList.id, true).subscribe(wishList => {
-      this.wishList = wishList;
-    }, this.logger.error, () => {
-      event.target.complete();
-    })
+    this.wishListStore.loadWishList(this.wishList.id, true).pipe(first()).subscribe({
+      next: wishList => {
+        this.wishList = wishList;
+        event.target.complete();
+      },
+      error: error => {
+        event.target.complete();
+      }
+    });
   }
 
 }

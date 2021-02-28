@@ -41,13 +41,6 @@ export class UserSearchResult {
     public userExists: boolean;
 }
 
-export enum UserState {
-    UNKNOWN = "UNKNOWN",
-    ACTIVE = "ACTIVE",
-    UNVERIFIED = "UNVERIFIED",
-    PREACTIVE = "PREACTIVE"
-}
-
 export enum EmailVerificationStatus {
     UNVERIFIED, VERIFICATION_EMAIL_SENT, VERIFIED
 }
@@ -100,4 +93,7 @@ export class DeleteAccountRequest {
     constructor(controls: { [key: string]: AbstractControl }) {
         this.password = controls.password.value;
     }
+}
+export class AccountDto {
+    isEnabled: boolean;
 }

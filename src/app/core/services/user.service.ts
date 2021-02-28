@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { WanticJwtToken } from '@core/models/login.model';
-import { UserState } from '@core/models/user.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LogService } from './log.service';
 import { StorageKeys, StorageService } from './storage.service';
@@ -47,15 +46,6 @@ export class UserService {
       this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then( rawToken => {
         const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(rawToken);
         resolve(decodedToken.sub);
-      }, reject);
-    });
-  }
-
-  get userState() : Promise<UserState> {
-    return new Promise((resolve, reject) => {
-      this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then( rawToken => {
-        const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(rawToken);
-        resolve(decodedToken.userState);
       }, reject);
     });
   }

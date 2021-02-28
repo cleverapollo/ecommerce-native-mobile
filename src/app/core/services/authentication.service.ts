@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 import { WanticJwtToken } from '@core/models/login.model';
 import { LogService } from './log.service';
 import { EmailVerificationService } from './email-verification.service';
-import { UserState } from '@core/models/user.model';
 import { LoadingService } from './loading.service';
 
 @Injectable({

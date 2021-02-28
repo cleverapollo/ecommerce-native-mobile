@@ -19,4 +19,7 @@ ion-content {
         margin-right: 40px;
         margin-left: 40px;
     }
+    ion-button.login-button {
+        --ion-color-base: #ffaf81 !important;
+    }
 }

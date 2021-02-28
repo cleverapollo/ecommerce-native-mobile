@@ -10,6 +10,7 @@ import { ProfileImageDto } from '@core/models/user.model';
 import { LogService } from '@core/services/log.service';
 import { UserService } from '@core/services/user.service';
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wish-detail',
@@ -71,11 +72,15 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.wishListStore.loadWish(this.wish.id, true).subscribe(wish => {
-      this.wish = wish;
-    }, this.logger.error, () => {
-      event.target.complete();
-    })
+    this.wishListStore.loadWish(this.wish.id, true).pipe(first()).subscribe({
+      next: wish => {
+        this.wish = wish;
+        event.target.complete();
+      },
+      error: error => {
+        event.target.complete();
+      }
+    });
   }
 
 }

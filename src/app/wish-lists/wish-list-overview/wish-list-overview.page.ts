@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { UserService } from '@core/services/user.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -48,7 +49,7 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
     const resolvedData = this.route.snapshot.data;
     this.updateWishLists(resolvedData.wishLists);
 
-    this.queryParamSubscription = this.route.queryParamMap.pipe().subscribe({
+    this.queryParamSubscription = this.route.queryParamMap.subscribe({
       next: queryParams => {
         const token = queryParams.get('emailVerificationToken');
         if (token) {
@@ -105,10 +106,14 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.wishListStore.loadWishLists(true).subscribe(wishLists => {
-      this.updateWishLists(wishLists);
-    }, this.logger.error, () => {
-      event.target.complete();
+    this.wishListStore.loadWishLists(true).pipe(first()).subscribe({
+      next: wishLists => {
+        this.updateWishLists(wishLists);
+        event.target.complete();
+      },
+      error: error => {
+        event.target.complete();
+      }
     });
     this.emilVerificationService.updateEmailVerificationStatusIfNeeded();
   }
