@@ -39,6 +39,9 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     passwordConfirm: [
       new ValidationMessage('required', 'Bestätige bitte dein Passwort.'),
       new ValidationMessage('passwordDoesNotMatch', 'Die Passwörter stimmen nicht überein.'),
+    ],
+    acceptPrivacyPolicy: [
+      new ValidationMessage('required', 'Bitte der Datenschutzerklärung zustimmen.')
     ]
   }
 
@@ -93,23 +96,42 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
   }
 
   next() {
-    this.registrationDto.user.email = this.form.controls['email'].value;
-    this.registrationDto.user.password = this.form.controls['password']['value'].value;
-    this.registrationDto.agreedToPrivacyPolicyAt = new Date();
-    this.formService.updateDto(this.registrationDto);
-    this.loadingService.showLoadingSpinner();
-    this.authApiService.register(this.registrationDto).pipe(first()).subscribe({
-      next: response => {
-        this.authService.saveToken(response.jwToken.token).then(() => {
-          this.storageService.set(StorageKeys.REGISTRATION_RESPONSE, response).then(() => {
-            this.router.navigate(['../registration-complete'], { relativeTo: this.route });
-          });
-        })
-      },
-      complete: () => {
-        this.loadingService.dismissLoadingSpinner();
+    if (this.form.valid) {
+      this.registrationDto.user.email = this.form.controls['email'].value;
+      this.registrationDto.user.password = this.form.controls['password']['value'].value;
+      this.registrationDto.agreedToPrivacyPolicyAt = new Date();
+      this.formService.updateDto(this.registrationDto);
+      this.loadingService.showLoadingSpinner();
+      this.authApiService.register(this.registrationDto).pipe(first()).subscribe({
+        next: response => {
+          this.authService.saveToken(response.jwToken.token).then(() => {
+            this.storageService.set(StorageKeys.REGISTRATION_RESPONSE, response).then(() => {
+              this.router.navigate(['../registration-complete'], { relativeTo: this.route });
+            });
+          })
+          this.loadingService.dismissLoadingSpinner();
+        },
+        error: error => {
+          this.loadingService.dismissLoadingSpinner();
+        }
+      })
+    } else {
+      this.validateAllFormFields();
+    }
+  }
+
+  private validateAllFormFields() {
+    this.validateFormGroup(this.form);
+  }
+
+  private validateFormGroup(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => { 
+      const control = formGroup.get(field);   
+      if (control instanceof FormGroup) { 
+        this.validateFormGroup(control);
       }
-    })
+      control.markAsTouched({ onlySelf: true });      
+    });
   }
 
  handleKeyboardEventOnEmailInput(keyCode: number) {
