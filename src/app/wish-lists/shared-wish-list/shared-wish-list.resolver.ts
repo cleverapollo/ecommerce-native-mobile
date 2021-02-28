@@ -30,9 +30,9 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
           } else if (await this.isOwnWishList(wishListId)) {
             this.router.navigateByUrl(`/secure/home/wish-list/${wishListId}`)
           } else {
-            await this.wishListApi.acceptInvitation(wishListId);
-            await this.friendWishListStore.removeCachedWishLists();
-            this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`)
+            this.wishListApi.acceptInvitation(wishListId).finally(() => {
+              this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}?forceRefresh=true`);
+            });
           }
         } else {
           const currentEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
