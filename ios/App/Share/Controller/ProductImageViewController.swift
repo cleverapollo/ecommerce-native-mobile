@@ -118,19 +118,15 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                 forTypeIdentifier: propertyList,
                 options: nil,
                 completionHandler: { (item, error) -> Void in
+                    guard let dictionary = item as? NSDictionary, let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else { return }
 
-                    guard let dictionary = item as? NSDictionary,
-                        let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary,
-                        let title = results["title"] as? String,
-                        let hostname = results["hostname"] as? String,
-                        let url = results["url"] as? String,
-                        let productInfosDict = results["productInfos"] as? [NSDictionary]  else {
+                    guard let title = results["title"] as? String,
+                          let url = results["url"] as? String,
+                          let productInfosDict = results["productInfos"] as? [NSDictionary]  else {
                             return
                     }
-
-                    // Fallback to the favicon.ico file, if JavaScript returns nil
-                    let favicon = results["favicon"] as? String ?? "\(hostname)/favicon.ico"
-                    print("url: \(url), title: \(title), hostname: \(hostname), favicon: \(favicon), image count: \(productInfosDict.count)")
+                    
+                    let price = results["price"] as? String ?? "0,00 €"
                     
                     self.productInfos = productInfosDict.compactMap { (dict: NSDictionary) in
                         guard let imageUrl = dict["imageUrl"] as? String else { return nil }
@@ -138,7 +134,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                         if let name = dict["name"] as? String, !name.isEmpty {
                             displayName = name
                         }
-                        return ProductInfo(productUrl: url, imageUrl: imageUrl, name: displayName)
+                        return ProductInfo(productUrl: url, imageUrl: imageUrl, name: displayName, price: price)
                     }
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()

@@ -30,14 +30,13 @@ class ProductPriceTableViewCell: UITableViewCell {
     static let reuseIdentifier = "ProductPriceTableViewCell"
     
     @IBOutlet weak var headerLabel: UILabel!
-    @IBOutlet weak var productPriceView: CurrencyField!
+    @IBOutlet weak var productPriceView: TextFieldInnerPadding!
 }
 
 class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var tableView: SelfSizedTableView!
-    @IBOutlet weak var footerView: UIView!
     
     var productImage: UIImageView? {
         get {
@@ -119,7 +118,7 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         } else if indexPath.section == 2 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: ProductPriceTableViewCell.reuseIdentifier, for: indexPath) as? ProductPriceTableViewCell {
                 textFields.append(cell.productPriceView)
-                cell.productPriceView.text = WishDataStore.shared.wish.price
+                cell.productPriceView.text = productInfo.price
                 return cell
             }
         }
@@ -147,8 +146,11 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     @objc private func textDidChange(_ notification: Notification) {
+        validateTextFields()
+    }
+    
+    func validateTextFields() {
         var formIsValid = true
-
         for textInput in textFields {
             if let textField = textInput as? UITextField {
                 if textField == productPrice, let amountCurrency = textField.text {
@@ -185,11 +187,51 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         return text.count > 0
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard textField == productPrice else { return true }
+        
+        switch string {
+         case "0","1","2","3","4","5","6","7","8","9":
+             return true
+        case "€":
+            let currencyCount = textField.text?.filter { $0 == "€" }.count ?? 0
+            if currencyCount >= 1 {
+                return false
+            } else {
+                return true
+            }
+         case ",":
+             let decimalCount = textField.text?.filter { $0 == "," }.count ?? 0
+             if decimalCount == 1 {
+                 return false
+             } else {
+                 return true
+             }
+         default:
+             let array = Array(string)
+             if array.count == 0 {
+                 return true
+             }
+             return false
+         }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == productPrice, let text = textField.text {
+            if text.filter({ $0 == "€" }).count < 1 {
+                textField.text! += "€"
+            }
+        }
+    }
+    
+    func countCharacterInString(string: String, char: String.Element) -> Int {
+        return string.filter { $0 == char }.count
+    }
+    
     // MARK: - View Methods
 
     func setupView() {
-        nextButton.isEnabled = false
-        //productName?.sizeToFit()
+        validateTextFields()
     }
     
     @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {

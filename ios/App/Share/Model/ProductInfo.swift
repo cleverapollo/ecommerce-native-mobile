@@ -11,4 +11,5 @@ struct ProductInfo {
     let productUrl: String
     let imageUrl: String
     let name: String?
+    let price: String
 }

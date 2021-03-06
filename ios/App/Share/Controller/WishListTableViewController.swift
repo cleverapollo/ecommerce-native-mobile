@@ -77,6 +77,7 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
                 self.wishLists = wishLists
                 self.wishListId = self.wishLists.first?.id
                 self.selectedIndexPath = IndexPath(row: 0, section: 0)
+                WishDataStore.shared.wish.wishListId = self.wishListId
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }

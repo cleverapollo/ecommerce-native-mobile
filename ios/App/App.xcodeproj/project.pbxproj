@@ -62,7 +62,6 @@
 		B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		B17B403C25C4717F003363E9 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B403B25C4717E003363E9 /* FooterView.swift */; };
 		B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B404125C482E6003363E9 /* WanticTextView.swift */; };
-		B18CCAEE25D0586600D7F27C /* CurrencyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18CCAED25D0586600D7F27C /* CurrencyField.swift */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B1A80F8E2589F59800F0917F /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B1A80F842589F59800F0917F /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1A80F98258A0F5D00F0917F /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F97258A0F5D00F0917F /* ExtensionClass.js */; };
@@ -175,7 +174,6 @@
 		B17635ED256AD3EC00AAEBB8 /* App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		B17B403B25C4717E003363E9 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		B17B404125C482E6003363E9 /* WanticTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanticTextView.swift; sourceTree = "<group>"; };
-		B18CCAED25D0586600D7F27C /* CurrencyField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyField.swift; sourceTree = "<group>"; };
 		B1A80F842589F59800F0917F /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A80F892589F59800F0917F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B1A80F8B2589F59800F0917F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -400,7 +398,6 @@
 				B14880D025B3057300D0106B /* UIViewControllerExtension.swift */,
 				B1750DF325B468300023A9C9 /* UIViewExtension.swift */,
 				B17B404125C482E6003363E9 /* WanticTextView.swift */,
-				B18CCAED25D0586600D7F27C /* CurrencyField.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -653,7 +650,6 @@
 				B1A80FAE258A770100F0917F /* WishList.swift in Sources */,
 				B14880B825B20FE800D0106B /* WishService.swift in Sources */,
 				B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */,
-				B18CCAEE25D0586600D7F27C /* CurrencyField.swift in Sources */,
 				B148809C25B202CE00D0106B /* WishListTableViewController.swift in Sources */,
 				B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */,
 				B17B403C25C4717F003363E9 /* FooterView.swift in Sources */,
@@ -818,7 +814,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210220.1;
+				CURRENT_PROJECT_VERSION = 20210228.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -844,7 +840,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210220.1;
+				CURRENT_PROJECT_VERSION = 20210228.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -871,7 +867,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210220.1;
+				CURRENT_PROJECT_VERSION = 20210228.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -901,7 +897,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210220.1;
+				CURRENT_PROJECT_VERSION = 20210228.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

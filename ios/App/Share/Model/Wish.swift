@@ -19,6 +19,7 @@ struct Wish: Codable {
         name = productInfo.name
         productUrl = productInfo.productUrl
         imageUrl = productInfo.imageUrl
+        price = productInfo.price
     }
     
     func isValid() -> Bool {
