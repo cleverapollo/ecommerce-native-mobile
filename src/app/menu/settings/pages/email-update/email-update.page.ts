@@ -142,7 +142,7 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
     this.updateEmailSubscription = this.api.partialUpdateEmail(emailVerificationToken).subscribe({
       next: jwtResponse => {
         const jwToken = jwtResponse.token;
-        this.authService.saveToken(jwToken);
+        this.authService.updateToken(jwToken);
         
         const decodedToken = this.jwtHelper.decodeToken(jwToken) as WanticJwtToken;
         this.userProfile.email.value = decodedToken.sub;

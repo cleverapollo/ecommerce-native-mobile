@@ -10,8 +10,8 @@ import { StorageKeys, StorageService } from './storage.service';
 })
 export class UserService {
 
-  private _accountIsEnabled: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  $accountIsEnabled: Observable<boolean> = this._accountIsEnabled.asObservable();
+  private _accountIsEnabled: BehaviorSubject<Boolean> = new BehaviorSubject(null);
+  $accountIsEnabled: Observable<Boolean> = this._accountIsEnabled.asObservable();
 
   constructor(
     private storageService: StorageService,  
@@ -32,11 +32,11 @@ export class UserService {
     });
   }
 
-  get accountIsEnabled(): boolean {
+  get accountIsEnabled(): Boolean {
     return this._accountIsEnabled.getValue();
   }
 
-  set accountIsEnabled(isEnabled: boolean) {
+  set accountIsEnabled(isEnabled: Boolean) {
     this._accountIsEnabled.next(isEnabled);
   }
 
@@ -47,16 +47,6 @@ export class UserService {
         const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(rawToken);
         resolve(decodedToken.sub);
       }, reject);
-    });
-  }
-
-  get userSettings(): Promise<UserSettings> {
-    return new Promise((resolve) => {
-      this.storageService.get<UserSettings>(StorageKeys.USER_SETTINGS).then( settings => {
-        resolve(settings);
-      }, () => {
-        resolve({});
-      });
     });
   }
 
@@ -79,8 +69,4 @@ export class UserService {
     return this.jwtHelper.decodeToken(rawToken);
   }
 
-}
-
-export interface UserSettings {
-  credentialsSaved?: boolean
 }

@@ -62,7 +62,7 @@ export class AppComponent {
 
   private async handlePossibleAccountActivation() {
     const isAuthenticated = await this.authService.isAuthenticated.toPromise();
-    if (isAuthenticated && !this.userService.accountIsEnabled) {
+    if (isAuthenticated && this.userService.accountIsEnabled === false) {
       this.logger.debug(isAuthenticated, this.userService.accountIsEnabled)
       this.activateAccount();
     }
@@ -75,7 +75,7 @@ export class AppComponent {
         if (account.isEnabled) {
           this.authApiService.refreshToken().pipe(first()).subscribe({
             next: jwtResponse => {
-              this.authService.saveToken(jwtResponse.token).finally(() => {
+              this.authService.updateToken(jwtResponse.token).finally(() => {
                 this.loadingService.dismissLoadingSpinner();
               });
             },

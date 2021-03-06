@@ -1,5 +1,5 @@
 <ion-grid [ngClass]="side">
-  <ion-row class="wish-images-container-top"  [ngClass]="{ 'display-inline-block': wishList.wishes.length > 1 }">
+  <ion-row class="wish-images-container-top" >
     <ion-col size="6" class="wish-image-container wish-one">
       <img *ngIf="wishList.wishes.length > 0 && wishList.wishes[0].imageUrl" [src]="wishList.wishes[0].imageUrl" alt="Wunsch eins">
     </ion-col>
@@ -8,7 +8,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row [ngClass]="{ 'display-inline-block': wishList.wishes.length > 3 }">
+  <ion-row>
     <ion-col size="6" class="wish-image-container wish-three">
       <img *ngIf="wishList.wishes.length > 2 && wishList.wishes[2].imageUrl" [src]="wishList.wishes[2].imageUrl" alt="Wunsch drei">
     </ion-col>

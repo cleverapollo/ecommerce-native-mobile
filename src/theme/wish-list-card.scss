@@ -2,14 +2,11 @@ ion-row.wish-images-container-top {
     border-bottom: 1px solid #F7F7F7;
 }
 
-.display-inline-block {
-    display: inline-block;
-}
-
 ion-col.wish-image-container {
     height: 100px;
     padding: 0;
     padding-top: 5px;
+    padding-bottom: 5px;
     text-align: center !important;
     vertical-align: middle;
     display: table-cell;

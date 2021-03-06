@@ -69,7 +69,7 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
       next: response => {
         const jwToken = response.token;
         if (jwToken) {
-          this.authService.saveToken(jwToken);
+          this.authService.updateToken(jwToken);
         }
         this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt!');
         this.loadingService.dismissLoadingSpinner();

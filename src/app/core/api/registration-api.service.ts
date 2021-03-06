@@ -30,7 +30,7 @@ export class RegistrationApiService {
       const uri = this.createUri('request-email-verification-link');
       this.apiService.get<LoginResponse>(uri).subscribe({
         next: response => {
-          this.authService.saveToken(response.token);
+          this.authService.updateToken(response.token);
           resolve()
         },
         error: reason => {
