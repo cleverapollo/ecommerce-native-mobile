@@ -21,7 +21,7 @@ export class MenuPage implements OnInit {
 
   logout() {
     this.authenticationService.logout().then(() => {
-      this.router.navigate(['start']);
+      this.router.navigate(['start'], { replaceUrl: true });
     })
   }
 

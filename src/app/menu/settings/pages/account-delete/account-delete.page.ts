@@ -59,7 +59,7 @@ export class AccountDeletePage implements OnInit, OnDestroy {
         this.toastService.presentSuccessToast('Dein Account wurde erfolgreich gelöscht!');
         this.loadingService.dismissLoadingSpinner();
         this.authService.logout().finally(() => {
-          this.navController.navigateRoot('start');
+          this.navController.navigateRoot('start', { replaceUrl: true });
         });
       },
       error: errorResponse => {
