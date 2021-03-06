@@ -11,7 +11,7 @@
   </p>
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="search()">
     <ion-item lines="none">
-      <ion-searchbar formControlName="keywords" placeholder="z.B. Fjällraven Kanken" inputmode="search" clearIcon="true"></ion-searchbar>
+      <ion-searchbar formControlName="keywords" placeholder="z.B. Holzspielzeug" inputmode="search" clearIcon="true"></ion-searchbar>
     </ion-item>
     <app-validation-messages [control]="form.get('keywords')" [validationMessages]="validationMessages.keywords"></app-validation-messages>
     <ion-button class="wantic-save-button" type="submit" expand="block" [disabled]="!form.valid">Suchen</ion-button>
