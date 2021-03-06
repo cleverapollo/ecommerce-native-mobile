@@ -3,14 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginForm } from './login-form';
 import { NavController } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { UserService } from '@core/services/user.service';
 import { StorageService, StorageKeys } from '@core/services/storage.service';
-import { CacheService } from 'ionic-cache';
 import { CustomValidation } from '@shared/custom-validation';
-import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -34,11 +31,10 @@ export class LoginPage implements OnInit {
     private navController: NavController,
     private formBuilder: FormBuilder, 
     private authService: AuthenticationService,
-    private userService: UserService,
     private storageService: StorageService,
-    private logger: LogService) { 
-
-  }
+    private logger: LogService,
+    private toastService: ToastService
+  ) { }
 
   ngOnInit() {
     this.createForm();
@@ -54,19 +50,15 @@ export class LoginPage implements OnInit {
   }
 
   private patchValuesIfNeeded() {
-    this.userService.userSettings.then( settings => {
-      if (settings && settings.credentialsSaved) {
-        this.loginForm.controls['saveCredentials'].patchValue(settings.credentialsSaved);
-        this.storageService.get(StorageKeys.LOGIN_EMAIL).then(email => {
-          this.loginForm.controls['email'].patchValue(email);
-        });
-      }
-    })
+    this.storageService.get(StorageKeys.LOGIN_EMAIL).then(email => {
+      this.loginForm.controls['email'].patchValue(email);
+    });
   }
 
   onSubmit() {
     const input = this.loginForm.value as LoginForm;
     this.authService.login(input.email, input.password, input.saveCredentials).then(() => {
+      this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');
       this.navToHome();
     }, errorReason => {
       this.logger.error(errorReason);
@@ -78,7 +70,7 @@ export class LoginPage implements OnInit {
   }
 
   navToHome() {
-    this.navController.navigateRoot('secure');
+    this.navController.navigateRoot('secure', { replaceUrl: true });
   }
 
   goBack() {

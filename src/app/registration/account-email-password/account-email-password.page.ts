@@ -104,7 +104,7 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
       this.loadingService.showLoadingSpinner();
       this.authApiService.register(this.registrationDto).pipe(first()).subscribe({
         next: response => {
-          this.authService.saveToken(response.jwToken.token).then(() => {
+          this.authService.updateToken(response.jwToken.token).then(() => {
             this.storageService.set(StorageKeys.REGISTRATION_RESPONSE, response).then(() => {
               this.router.navigate(['../registration-complete'], { relativeTo: this.route });
             });

@@ -39,7 +39,6 @@ registerLocaleData(localeDe, 'de', localeDeExtra)
 export function jwtOptionsFactory(storageService: StorageService) {
   return {
     tokenGetter: () => {
-      console.log('jwtOptionsFactory tokenGetter');
       return storageService.get(StorageKeys.AUTH_TOKEN, true);
     },
     whitelistedDomains: WHITELISTED_DOMAINS,

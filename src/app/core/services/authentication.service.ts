@@ -1,32 +1,25 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, from, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService, StorageKeys } from './storage.service';
-import { UserService, UserSettings } from './user.service';
+import { UserService } from './user.service';
 import { AuthService } from '../api/auth.service';
 import { CacheService } from 'ionic-cache';
 import { HTTP } from '@ionic-native/http/ngx';
-import { resolve } from 'url';
-import { Router } from '@angular/router';
 import { WanticJwtToken } from '@core/models/login.model';
 import { LogService } from './log.service';
 import { EmailVerificationService } from './email-verification.service';
 import { LoadingService } from './loading.service';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  authenticationState = new BehaviorSubject(null);
-  get isAuthenticated() : Observable<boolean> {
-    let state = this.authenticationState.value;
-    if (state === null) {
-      return from(this.validTokenExists());
-    }
-    return of(state);
-  }
+  token: string;
+  isAuthenticated = new BehaviorSubject<boolean>(null);
 
   constructor(
     private storageService: StorageService, 
@@ -36,111 +29,145 @@ export class AuthenticationService {
     private authService: AuthService,
     private cache: CacheService,
     private nativeHttpClient: HTTP,
-    private router: Router,
     private logger: LogService,
     private emailVerificationService: EmailVerificationService,
     private loadingService: LoadingService
   ) { 
-    this.init();
+    this.initToken();
   }
 
-  private init() {
-    this.platform.ready().then(() => {
-      this.logger.debug('AuthenticationService init');
-      this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then((token) => {
-        if (token) {
-          if (!this.jwtHelper.isTokenExpired(token)) {
-            this.authenticationState.next(true);
-          } else {
-            this.reloginIfPossible().then(() => {
-              this.authenticationState.next(true);
-              this.router.navigateByUrl('/secure/home');
-            });
-          }
-        }
-      })
-    })
+  async initToken() {
+    await this.loadToken();
+    if (this.token && this.jwtHelper.isTokenExpired(this.token)) {
+      await this.refreshExpiredToken();
+    }
   }
 
   login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
     return new Promise((resolve, reject) => {
-      this.authService.login(email, password).subscribe(response => {
-        this.logger.info('login successful')
-        if (saveCredentials) {
-          this.saveCredentialsAndUserSettings(email, password);
+      this.loadingService.showLoadingSpinner();
+      this.authService.login(email, password).pipe(first()).subscribe({
+        next: response => {
+          if (saveCredentials) {
+            this.saveCredentials(email, password);
+          }
+          this.updateToken(response.token).then(() => {
+            this.handleLoginSucessResponse();
+            resolve();
+          }, error => {
+            this.logger.error(error);
+            reject();
+          }).finally(() => {
+            this.loadingService.dismissLoadingSpinner();
+          });
+        },
+        error: errorResponse => {
+          this.logger.error(errorResponse);
+          this.handleLoginErrorResponse();
+          this.loadingService.dismissLoadingSpinner();
+          reject();
         }
-        this.saveToken(response.token).then(resolve).catch(reject);
-      }, reject);
+      })
     })
   }
 
   async logout() {
     await this.storageService.clear();
     await this.cache.clearAll();
-    this.authenticationState.next(false);
+    if (this.platform.is('capacitor')) {
+      this.nativeHttpClient.setHeader('*', 'Authorization', undefined);
+    }
+    this.isAuthenticated.next(false);
   }
 
-  async reloginIfPossible(): Promise<void> {
-    try {
-      const userSettings = await this.userService.userSettings;
-      if (userSettings?.credentialsSaved) {
-        const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
-        const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
-        const loginResponse = await this.authService.login(email, password).toPromise();
-        return this.saveToken(loginResponse.token);
-      } else {
-        this.storageService.remove(StorageKeys.AUTH_TOKEN);
-        return Promise.reject();
-      }
-    } catch (error) {
-      this.logger.error(error);
-      this.storageService.remove(StorageKeys.AUTH_TOKEN);
-      return Promise.reject();
+   async refreshExpiredToken() {
+    const credentials = await this.loadCredentials();
+    if (credentials) {
+      this.refreshToken(credentials);
+    } else {
+      this.isAuthenticated.next(false);
+      this.token = null;
     }
   }
 
-  async saveToken(token: string) : Promise<void> {
-      if (this.platform.is('capacitor')) {
-        this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`);
+  private refreshToken(credentials: { email: string, password: string }) {
+    this.loadingService.showLoadingSpinner();
+    this.authService.login(credentials.email, credentials.password).pipe(first()).subscribe({
+      next: response => {
+        this.updateToken(response.token).then(() => {
+          this.handleLoginSucessResponse();
+        }, this.logger.error).finally(() => {
+          this.loadingService.dismissLoadingSpinner();
+        });
+      }, 
+      error: errorRespone => {
+        this.logger.error(errorRespone);
+        this.removeToken().then(() => {
+          this.handleLoginErrorResponse();
+        }, this.logger.error).finally(() => {
+          this.loadingService.dismissLoadingSpinner();
+        });
       }
-      try {
-        await this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
-        const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(token);
-        this.logger.debug("decodedToken", decodedToken);
-        this.emailVerificationService.updateEmailVerificationStatus(decodedToken.emailVerificationStatus);
-        this.userService.accountIsEnabled = decodedToken.accountEnabled;
-        this.authenticationState.next(true);
-        return Promise.resolve();
-      } catch(error) {
-        this.logger.error('could not save token ', error)
-        this.authenticationState.next(false);
-        return Promise.reject(error);
-      }
+    })
   }
 
-  private saveCredentialsAndUserSettings(email: string, password: string) {
-    this.storageService.set(StorageKeys.LOGIN_EMAIL, email, true).catch(this.logger.error);
-    this.storageService.set(StorageKeys.LOGIN_PASSWORD, password, true).catch(this.logger.error);
-    this.userService.userSettings.then( settings => {
-      const settingsToSave: UserSettings = settings ? settings : {};
-      settingsToSave.credentialsSaved = true;
-      this.storageService.set(StorageKeys.USER_SETTINGS, settingsToSave);
-    });
+  private handleLoginErrorResponse() {
+    this.isAuthenticated.next(false);
   }
 
-  private validTokenExists() : Promise<boolean> {
-    return new Promise((resolve) => {
-      this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true).then((token) => {
-        if (token) {
-          const isExpired = this.jwtHelper.isTokenExpired(token);
-          resolve(!isExpired);
-        } else {
-          resolve(false);
-        }
-      }, e => {
-        resolve(false);
-      })
-    });
+  private handleLoginSucessResponse() {
+    this.isAuthenticated.next(true);
+  }
+
+  private async loadCredentials() {
+    const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
+    const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
+    if (email && password) {
+      return { email: email, password: password }
+    } else {
+      return null;
+    }
+  }
+
+  private async loadToken() {
+    const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      this.token = token;
+      this.isAuthenticated.next(true);
+    } else {
+      this.isAuthenticated.next(false);
+    }
+  }
+
+  updateToken(token: string) {
+    this.token = token;
+    this.updateUserProperties(token);
+    this.updateAuthorizationHeaderForNativeHttpClient(token);
+    return this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
+  }
+
+  private removeToken() {
+    return this.storageService.remove(StorageKeys.AUTH_TOKEN);
+  }
+
+  private updateUserProperties(encodedToken: string) {
+    const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(encodedToken);
+    this.emailVerificationService.updateEmailVerificationStatus(decodedToken.emailVerificationStatus);
+    this.userService.accountIsEnabled = decodedToken.accountEnabled;
+  }
+
+  private updateAuthorizationHeaderForNativeHttpClient(token: string) {
+    if (this.platform.is('capacitor')) {
+      this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`);
+    }
+  }
+
+  private saveCredentials(email: string, password: string) {
+    this.storageService.set(StorageKeys.LOGIN_EMAIL, email, true).then(() => {
+      this.storageService.set(StorageKeys.LOGIN_PASSWORD, password, true).then(() => {
+        this.logger.debug('email and password saved sucessfully');
+      }, this.logger.error)
+    }, this.logger.error);
   }
 
 }
