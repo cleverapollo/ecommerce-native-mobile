@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { UserWishListDto } from '@core/models/user.model';
 import { LoadingService } from '@core/services/loading.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wish-list-create-update',
@@ -113,19 +114,18 @@ export class WishListCreateUpdatePage implements OnInit {
 
   private create(request: WishListCreateOrUpdateRequest) {
     this.loadingService.showLoadingSpinner();
-    this.apiService.create(request as WishListCreateRequest).subscribe({
+    this.apiService.create(request as WishListCreateRequest).pipe(first()).subscribe({
       next: createdWishList => {
         this.wishListStore.saveWishListToCache(createdWishList);
         this.wishList = createdWishList;
         this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
+        this.loadingService.dismissLoadingSpinner();
         this.router.navigateByUrl(`/secure/home/wish-list/${createdWishList.id}`);
       },
       error: error => {
         this.toastService.presentErrorToast('Bei der Erstellung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
-      },
-      complete: () => {
         this.loadingService.dismissLoadingSpinner();
-      }
+      },
     });
   }
 
@@ -133,18 +133,17 @@ export class WishListCreateUpdatePage implements OnInit {
     const updateRequest = request as WishListUpdateRequest;
     updateRequest.id = this.wishList.id;
     this.loadingService.showLoadingSpinner();
-    this.apiService.update(updateRequest).subscribe({
+    this.apiService.update(updateRequest).pipe(first()).subscribe({
       next: updatedWishList => {
         this.wishListStore.updatedCachedWishList(updatedWishList);
         this.wishList = updatedWishList;
         this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
+        this.loadingService.dismissLoadingSpinner();
       },
       error: error => {
         this.toastService.presentErrorToast('Bei der Aktualisierung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
-      },
-      complete: () => {
         this.loadingService.dismissLoadingSpinner();
-      }
+      },
     });
   }
 
