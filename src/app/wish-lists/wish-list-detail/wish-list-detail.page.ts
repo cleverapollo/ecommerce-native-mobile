@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
-import { WishListApiService } from '@core/api/wish-list-api.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 import { Plugins } from '@capacitor/core';
@@ -44,7 +43,6 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   constructor(
     private navController: NavController,
-    private wishListApiService: WishListApiService,
     private route: ActivatedRoute,
     private navigationService: NavigationService,
     private wishListStore: WishListStoreService,
@@ -115,7 +113,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   }
 
   private createLinkForSocialSharing(appUrl: string = APP_URL, wishListId: number = this.wishList.id) {
-    return `${appUrl}/shared-wish-list/${wishListId}`
+    return `${appUrl}/meine-wunschliste/${wishListId}`
   }
 
   forceRefresh(event) {
