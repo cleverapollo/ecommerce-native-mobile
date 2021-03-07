@@ -21,7 +21,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<{ wishList: FriendWishList, email?: string }> {
     return new Promise<{ wishList: FriendWishList, email?: string }>(async (resolve, reject) => {
-      let identifier = route.queryParams.identifier;
+      let identifier = route.paramMap.get('identifier');
       try {
         const wishListId = Number(identifier.split('_')[0]);
         if (this.platform.is('hybrid')) {
