@@ -59,13 +59,6 @@ export class WishListApiService {
     );
   }
 
-
-  getLinkForSocialSharing(id: Number): Observable<SharedWishListLink> {
-    return this.apiService.get<SharedWishListLink>(`${WishListApiService.REST_END_POINT}/${id}/create-social-sharing-link`).pipe(
-      catchError(error => this.errorHandler.handleError(error))
-    );
-  }
-
   // shared wish list 
 
   getSharedWishList(identifier: string): Observable<FriendWishList> {
