@@ -2,10 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
-import { BrowserService } from '@core/services/browser.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { CustomValidation } from '@shared/custom-validation';
 
@@ -48,12 +47,12 @@ export class ReserveWishModalComponent implements OnInit {
   reserveWish() {
     const email = this.form.controls.email.value;
     const requestData = {
-      identifier: this.identifier, 
+      wishListId: this.wishList.id, 
       email: email, 
       wishId: this.wish.id,
       agreedToPrivacyPolicyAt: new Date()
     };
-    this.wishListApiService.reserveWish(requestData).toPromise().then( wishList => {
+    this.wishListApiService.registerUserAndReserveWish(requestData).toPromise().then( wishList => {
       this.wishList = wishList;
       this.storageService.set(StorageKeys.SHARED_WISH_LIST_EMAIL, email, true);
       this.wishReserved = true;

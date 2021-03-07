@@ -3,6 +3,7 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { LogService } from '@core/services/log.service';
 import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ModalController } from '@ionic/angular';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cancel-wish-reservation-modal',
@@ -27,14 +28,13 @@ export class CancelWishReservationModalComponent implements OnInit {
   ngOnInit() {}
 
   cancelWishReservation() {
-    this.wishListApiService.cancelWishReservation({ 
-      identifier: this.identifier, 
-      email: this.email, 
-      wishId: this.wish.id 
-    }).toPromise().then( wishList => {
-      this.wishList = wishList;
-      this.reservationCanceled = true;
-    }, this.logger.error)
+    this.wishListApiService.toggleWishReservation(this.wishList.id, this.wish.id, this.email).pipe(first()).subscribe({
+      next: wishList => {
+        this.wishList = wishList;
+        this.reservationCanceled = true;
+      },
+      error: this.logger.error
+    })
   }
 
   closeModal() {

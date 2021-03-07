@@ -27,9 +27,8 @@
   <ion-button class="wantic-save-button" type="submit" [disabled]="!form.valid" expand="block">Schenken</ion-button>
 </form>
 
-<div *ngIf="wishReserved">
-  <p>
-    Toll, dass du {{ wishList.owners | ownerNames:'und':'s' }} Wunsch erfüllst.<br>
+<div *ngIf="wishReserved" class="ion-text-center">
+  <p> Toll, dass du {{ wishList.owners | ownerNames:'und':'s' }} Wunsch erfüllst.
     {{ wishList.owners | ownerNames:'und' }}
     <span [ngPlural]="wishList.owners.length">
       <ng-template ngPluralCase="=1">wird</ng-template>

@@ -11,17 +11,24 @@ export class LoadingService {
   showLoadingSpinner() {
     this.loadingController.getTop().then(hasLoading => {
       if (!hasLoading) {
-        this.loadingController.create({
-          spinner: 'circles',
-          translucent: true
-        }).then(loading => loading.present());
+        this.createLoadingSpinner().then(loading => 
+          loading.present()
+        );
       }
     })
   }
 
-  dismissLoadingSpinner() {
-    this.loadingController.getTop().then(() => {
-      this.loadingController.dismiss();
+  private createLoadingSpinner() {
+    return this.loadingController.create({
+      spinner: 'circles',
+      translucent: true
     })
   }
+
+  dismissLoadingSpinner() {
+    this.loadingController.getTop().then((loading) => {
+      loading.dismiss();
+    })
+  }
+
 }
