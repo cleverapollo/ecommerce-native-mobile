@@ -22,7 +22,7 @@ export class FriendWish {
 }
 
 export interface RegisterAndSatisfyWishRequest {
-    identifier: String;
+    wishListId: Number;
     email: String;
     wishId: Number;
 }

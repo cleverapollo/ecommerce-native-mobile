@@ -59,13 +59,6 @@ export class WishListApiService {
     );
   }
 
-
-  getLinkForSocialSharing(id: Number): Observable<SharedWishListLink> {
-    return this.apiService.get<SharedWishListLink>(`${WishListApiService.REST_END_POINT}/${id}/create-social-sharing-link`).pipe(
-      catchError(error => this.errorHandler.handleError(error))
-    );
-  }
-
   // shared wish list 
 
   getSharedWishList(identifier: string): Observable<FriendWishList> {
@@ -75,14 +68,14 @@ export class WishListApiService {
     );
   }
 
-  cancelWishReservation(data: RegisterAndSatisfyWishRequest): Observable<FriendWishList> {
+  registerUserAndReserveWish(data: RegisterAndSatisfyWishRequest): Observable<FriendWishList> {
     return this.apiService.post<FriendWishList>('shared-wish-list', data).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
-  reserveWish(data: RegisterAndSatisfyWishRequest): Observable<FriendWishList> {
-    return this.apiService.post<FriendWishList>('shared-wish-list', data).pipe(
+  toggleWishReservation(wishListId: Number, wishId: Number, email: string): Observable<FriendWishList> {
+    return this.apiService.patch<FriendWishList>(`shared-wish-list/${wishListId}/wish/${wishId}?userEmail=${email}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

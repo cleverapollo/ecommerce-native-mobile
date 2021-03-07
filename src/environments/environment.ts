@@ -12,8 +12,9 @@ export const environment: EnvironmentConfig = {
 }
 };
 
-export const SERVER_URL = ''; // will be replaced by specific environment file
-export const WHITELISTED_DOMAINS = []; // will be replaced by specific environment file
+export const SERVER_URL = ''; 
+export const APP_URL = '';
+export const WHITELISTED_DOMAINS = []; 
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -1,12 +1,15 @@
-import { Component, ComponentRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ReserveWishModalComponent } from './reserve-wish-modal/reserve-wish-modal.component';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
-import { BrowserService } from '@core/services/browser.service';
 import { CancelWishReservationModalComponent } from './cancel-wish-reservation-modal/cancel-wish-reservation-modal.component';
-import { async } from '@angular/core/testing';
+import { QueryEmailModalComponent } from './query-email-modal/query-email-modal.component';
+import { WishListApiService } from '@core/api/wish-list-api.service';
+import { first } from 'rxjs/operators';
+import { LoadingService } from '@core/services/loading.service';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-shared-wish-list',
@@ -16,29 +19,9 @@ import { async } from '@angular/core/testing';
 export class SharedWishListPage implements OnInit {
 
   data: { wishList: FriendWishList, email?: string };
-  wishList: FriendWishList
-
-  async currentEmail(): Promise<string> {
-    if (this.data.email) {
-      return Promise.resolve(this.data.email);
-    } else {
-      return this.storageService.get(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
-    }
-  }
-
-  readonly: boolean = false;
+  wishList: FriendWishList;
+  email?: string;
   
-
-
-  get inviterEmail(): string {
-    const idComponents = this.identifier?.split('_') ?? [];
-    if (idComponents.length >= 2) {
-      const inviterEmail = idComponents[1];
-      return inviterEmail;
-    }
-    return null
-  }
-
   private get identifier(): string {
     return this.route.snapshot.queryParams.identifier;
   }
@@ -47,32 +30,63 @@ export class SharedWishListPage implements OnInit {
     private route: ActivatedRoute, 
     private storageService: StorageService,
     private modalController: ModalController,
-    private browserService: BrowserService
+    private wishListApiService: WishListApiService,
+    private loadingService: LoadingService,
+    private logger: LogService
   ) { }
 
   ngOnInit() {
     this.data = this.route.snapshot.data.data;
     this.wishList = this.data.wishList;
-    this.initReadOnly();
+    this.getEmail();
   }
 
-  async initReadOnly() {
-    const currentEmail = await this.currentEmail();
-    if (this.inviterEmail && currentEmail) {
-      this.readonly = currentEmail === this.inviterEmail;
+  private async getEmail() {
+    if (this.data.email) {
+      this.email = this.data.email;
     } else {
-      this.readonly = false;
+      const savedEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
+      this.email = savedEmail;
+    }
+
+    if (this.email === null) {
+      this.openQueryEmailModal();
     }
   }
 
   async toggleWishReservation(wish: FriendWish) {
-    const currentEmail = await this.currentEmail();
-    const canCancelReservation = currentEmail && wish.bought && !wish.reservedByFriend;
+    const canCancelReservation = this.email && wish.bought && !wish.reservedByFriend;
     if (canCancelReservation) {
       this.openCancelReservationModal(wish);
     } else {
       this.openReserveWishModal(wish);
     }
+  }
+
+  private async openQueryEmailModal() {
+    const modal = await this.modalController.create({
+      component: QueryEmailModalComponent,
+      cssClass: 'wantic-modal wantic-modal-small',
+    });
+    modal.onWillDismiss().then((data) => {
+      if (data && data['data']) {
+        const email = data['data'];
+        const identifier = `${this.wishList.id}_${email}`;
+        this.email = email;
+        this.loadingService.showLoadingSpinner();
+        this.wishListApiService.getSharedWishList(identifier).pipe((first())).subscribe({
+          next: wishList => {
+            this.wishList = wishList;
+            this.loadingService.dismissLoadingSpinner();
+          },
+          error: errorResponse => {
+            this.logger.error(errorResponse);
+            this.loadingService.dismissLoadingSpinner();
+          }
+        })
+      }
+    });
+    modal.present();
   }
 
   private async openReserveWishModal(wish: FriendWish) {
@@ -94,26 +108,18 @@ export class SharedWishListPage implements OnInit {
   }
 
   private async createModal(component, wish: FriendWish, onWillDismiss: (data: any) => void) {
-    const currentEmail = await this.currentEmail();
     const modal = await this.modalController.create({
       component: component,
       componentProps: {
         wish: wish,
         wishList: this.wishList,
         identifier: this.identifier,
-        email: currentEmail
+        email: this.email
       },
       cssClass: 'wantic-modal',
     });
     modal.onWillDismiss().then(onWillDismiss);
     return modal;
-  }
-
-  private openWishInAppBrowserAfterThreeSeconds(wish: FriendWish) {
-    setTimeout(() => {
-      const url = wish.productUrl
-      this.browserService.openInAppBrowser(url);
-    }, 3000);
   }
 
 }

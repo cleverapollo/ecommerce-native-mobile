@@ -21,9 +21,9 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<{ wishList: FriendWishList, email?: string }> {
     return new Promise<{ wishList: FriendWishList, email?: string }>(async (resolve, reject) => {
-      let identifier = route.queryParams.identifier;
+      const wishListIdString = route.paramMap.get('wishListId');
+      const wishListId = Number(wishListIdString);
       try {
-        const wishListId = Number(identifier.split('_')[0]);
         if (this.platform.is('hybrid')) {
           if (await this.isFriendWishList(wishListId)) {
             this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`)
@@ -36,9 +36,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
           }
         } else {
           const currentEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
-          if (currentEmail) {
-            identifier += `_${currentEmail}`;
-          }
+          const identifier = this.createIdentifier(wishListIdString, currentEmail);
           const wishList = await this.wishListApi.getSharedWishList(identifier).toPromise();
           resolve({ wishList: wishList, email: currentEmail });
         }
@@ -46,6 +44,14 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
         reject(error)
       }
     });
+  }
+
+  private createIdentifier(wishListIdString: string, currentEmail: string) {
+    let identifier = wishListIdString;
+    if (currentEmail) {
+      identifier += `_${currentEmail}`;
+    }
+    return identifier;
   }
 
   private async isFriendWishList(wishListId: number) {

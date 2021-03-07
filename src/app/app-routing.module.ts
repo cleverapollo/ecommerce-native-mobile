@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
-import { SharedWishListPageGuard } from '@wishLists/shared-wish-list/shared-wish-list-page.guard';
 import { AutoLoginGuard } from '@guards/auto-login.guard';
 import { AccessGuard } from '@guards/access.guard';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
@@ -38,8 +37,7 @@ const routes: Routes = [
     loadChildren: () => import('./tab-bar/tab-bar.module').then( m => m.TabBarPageModule)
   },
   {
-    path: 'shared-wish-list',
-    canActivate: [SharedWishListPageGuard],
+    path: 'meine-wunschliste/:wishListId',
     resolve: { data: SharedWishListResolver },
     loadChildren: () => import('@wishLists/shared-wish-list/shared-wish-list.module').then( m => m.SharedWishListPageModule)
   },

@@ -22,8 +22,7 @@ export class CustomValidation {
         const hasNumber = /\d/.test(control.value);
         const hasCapitalCase = /[A-Z]/.test(control.value);
         const hasSmallCase = /[a-z]/.test(control.value);
-        const hasSpecialCharacters = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(control.value);
-        const isValid = hasNumber && hasCapitalCase && hasSmallCase && hasSpecialCharacters;
+        const isValid = hasNumber && hasCapitalCase && hasSmallCase;
     
         return isValid ? null : error;
       };

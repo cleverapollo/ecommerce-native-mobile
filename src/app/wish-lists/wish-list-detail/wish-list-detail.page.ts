@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
-import { WishListApiService } from '@core/api/wish-list-api.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 import { Plugins } from '@capacitor/core';
@@ -12,6 +11,7 @@ import { NavigationService } from '@core/services/navigation.service';
 import { Subscription } from 'rxjs';
 import { UserService } from '@core/services/user.service';
 import { first } from 'rxjs/operators';
+import { APP_URL } from 'src/environments/environment';
 const { Share } = Plugins;
 
 @Component({
@@ -43,7 +43,6 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   constructor(
     private navController: NavController,
-    private wishListApiService: WishListApiService,
     private route: ActivatedRoute,
     private navigationService: NavigationService,
     private wishListStore: WishListStoreService,
@@ -103,17 +102,18 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   async shareWishList() {
     const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
     const message = `Hurra, ${userProfile.firstName} möchte feiern. 🥳 Sie dir die Wunschliste „${this.wishList.name}“ an und finde ein Geschenk.🎁🤩`;
-    const subject = 'Einladung zur Wunschliste';
-    this.wishListApiService.getLinkForSocialSharing(this.wishList.id).toPromise().then( link => {
-      Share.share({
-        title: subject,
-        text: message,
-        url: link.value
-      }).catch(reason => {
-        this.logger.error(reason);
-        this.logger.log(link);
-      });
+    const link = this.createLinkForSocialSharing();
+    Share.share({
+      title: 'Einladung zur Wunschliste',
+      text: message,
+      url: this.createLinkForSocialSharing()
+    }).catch(reason => {
+      this.logger.debug(link, reason);
     });
+  }
+
+  private createLinkForSocialSharing(appUrl: string = APP_URL, wishListId: number = this.wishList.id) {
+    return `${appUrl}/meine-wunschliste/${wishListId}`
   }
 
   forceRefresh(event) {

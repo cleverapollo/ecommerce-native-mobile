@@ -106,7 +106,7 @@ ion-button.wantic-logo {
 
 
 ion-item.ion-invalid.ion-touched, ion-item.ion-invalid.ion-dirty {
-    border-color: var(--ion-color-danger);
+    border-color: var(--ion-color-primary);
 }
 
 ion-searchbar {
@@ -188,7 +188,7 @@ form {
             --padding-end: 21.8px !important;
         }
         ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty {
-            border: 2px solid var(--ion-color-danger);
+            border: 2px solid var(--ion-color-primary);
         }
         ion-label.label-stacked {
             font-size: 15px !important;
@@ -212,6 +212,10 @@ ion-button.wantic-margin-right-left {
 }
 .wantic-modal.wantic-modal-large {
     --height:80%;
+}
+.wantic-modal.wantic-modal-small {
+    --height:50%;
+    --width: 90%;
 }
 
 // registration 

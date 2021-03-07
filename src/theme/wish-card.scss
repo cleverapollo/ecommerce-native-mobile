@@ -1,10 +1,14 @@
-.wish-bought {
+.wish-border.wish-bought {
     border: 2px solid var(--ion-color-tertiary);
-    border-radius: 10pt;
 }
 
 .wish-reserved {
     opacity: 0.3;
+}
+
+.wish-border {
+    border: 2px solid white;
+    border-radius: 10pt;
 }
 
 .wish-reserved-image-container {
