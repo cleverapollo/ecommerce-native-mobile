@@ -37,7 +37,7 @@ const routes: Routes = [
     loadChildren: () => import('./tab-bar/tab-bar.module').then( m => m.TabBarPageModule)
   },
   {
-    path: 'shared-wish-list/:identifier',
+    path: 'shared-wish-list/:wishListId',
     resolve: { data: SharedWishListResolver },
     loadChildren: () => import('@wishLists/shared-wish-list/shared-wish-list.module').then( m => m.SharedWishListPageModule)
   },
