@@ -25,7 +25,7 @@ export class ChangePasswordPage implements OnInit {
     password: [
       new ValidationMessage('required', 'Gib bitte ein Passwort ein.'),
       new ValidationMessage('minlength', 'Kurze Passwörter sind leicht zu erraten. Verwende ein Passwort mit mindestens 7 Zeichen.'),
-      new ValidationMessage('passwordTooWeak', 'Dein Passwort muss mindestens eine Zahl, einen Großbuchstaben, einen Kleinbuchstaben und ein Sonderzeichen enthalten.'),
+      new ValidationMessage('passwordTooWeak', 'Dein Passwort muss mindestens eine Zahl, einen Großbuchstaben und einen Kleinbuchstaben enthalten.'),
     ],
     passwordConfirm: [
       new ValidationMessage('required', 'Bestätige bitte dein Passwort.'),
