@@ -8,27 +8,32 @@ export class LoadingService {
 
   constructor(private loadingController: LoadingController) { }
 
-  showLoadingSpinner() {
-    this.loadingController.getTop().then(hasLoading => {
-      if (!hasLoading) {
-        this.createLoadingSpinner().then(loading => 
-          loading.present()
-        );
-      }
-    })
+  async showLoadingSpinner() {
+    let loading = await this.loadingController.getTop();
+    if (!loading) {
+      loading = await this.createLoadingSpinner();
+      await loading.present();
+    }
   }
 
-  private createLoadingSpinner() {
+  async createLoadingSpinner() {
     return this.loadingController.create({
       spinner: 'circles',
       translucent: true
     })
   }
 
-  dismissLoadingSpinner() {
-    this.loadingController.getTop().then((loading) => {
-      loading.dismiss();
-    })
+  async dismissLoadingSpinner(loading?: HTMLIonLoadingElement) {
+    if (loading) {
+      await loading.dismiss()
+    } else {
+      const topLoadingElement = await this.loadingController.getTop();
+      if (topLoadingElement) {
+        await topLoadingElement.dismiss();
+      } else {
+        await this.loadingController.dismiss();
+      }
+    }
   }
 
 }
