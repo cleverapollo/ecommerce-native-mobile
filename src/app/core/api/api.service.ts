@@ -14,7 +14,6 @@ export class ApiService {
   post<T>(url: string, body: any) : Observable<T> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
     this.logger.log(`${SERVER_URL}/${url}`);
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
@@ -26,7 +25,6 @@ export class ApiService {
   put<T>(url: string, body: any) : Observable<T> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
     return this.httpClient.put<T>(`${SERVER_URL}/${url}`, body, {
@@ -38,7 +36,6 @@ export class ApiService {
   patch<T>(url: string, body?: any | null) : Observable<T> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
     return this.httpClient.patch<T>(`${SERVER_URL}/${url}`, body, {
@@ -50,7 +47,6 @@ export class ApiService {
   delete<T>(url: string) : Observable<T> {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
 
     return this.httpClient.delete<T>(`${SERVER_URL}/${url}`, {
@@ -62,7 +58,6 @@ export class ApiService {
   get<T>(url: string, queryParams?: HttpParams) : Observable<T> {
     const headers = new HttpHeaders()
       .set('Accept', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
       .set('Content-Type', 'application/json')
 
     return this.httpClient.get<T>(`${SERVER_URL}/${url}`, {
@@ -75,7 +70,6 @@ export class ApiService {
   uploadFile<T>(url: string, formData: FormData) {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'multipart/form-data');
 
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, formData, {
@@ -85,11 +79,7 @@ export class ApiService {
   }
 
   downloadFile(url: string): Observable<Blob> {
-    const headers = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*')
-
     return this.httpClient.get(url, {
-      headers: headers,
       responseType: 'blob'
     });
   }
