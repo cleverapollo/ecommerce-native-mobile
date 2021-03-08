@@ -4,10 +4,10 @@ import { EMPTY, Observable, throwError } from 'rxjs';
 import { LoginResponse } from '@core/models/login.model';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastService } from '@core/services/toast.service';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { RegistrationRequest, RegistrationResponse } from '@core/models/registration.model';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
+import { ApiVersion } from './api-version';
 
 @Injectable({
   providedIn: 'root'
@@ -23,19 +23,19 @@ export class AuthService {
       username: email,
       password: password
     };
-    return this.apiService.post<LoginResponse>(`${AuthService.REST_END_POINT}/login`, requestData).pipe(
+    return this.apiService.post<LoginResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/login`, requestData).pipe(
       catchError( error => this.errorHandler.handleError(error, this.errorMessageForLoginServerError))
     );
   }
 
   register(dto: RegistrationRequest) : Observable<RegistrationResponse> {
-    return this.apiService.post<RegistrationResponse>(`${AuthService.REST_END_POINT}/register`, dto).pipe(
+    return this.apiService.post<RegistrationResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/register`, dto).pipe(
       catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))
     );
   }
 
   refreshToken(): Observable<LoginResponse> {
-    return this.apiService.get<LoginResponse>(`${AuthService.REST_END_POINT}/refresh-token`)
+    return this.apiService.get<LoginResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/refresh-token`)
   }
 
   private errorMessageForLoginServerError(error: HttpErrorResponse): string {
