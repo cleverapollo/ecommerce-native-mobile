@@ -21,6 +21,14 @@ export class AuthenticationService {
   token: string;
   isAuthenticated = new BehaviorSubject<boolean>(null);
 
+  get tokenIsExpired(): boolean {
+    if (this.token) {
+      return this.jwtHelper.isTokenExpired(this.token);
+    } else {
+      return null;
+    }
+  }
+
   constructor(
     private storageService: StorageService, 
     private platform: Platform,
@@ -38,7 +46,7 @@ export class AuthenticationService {
 
   async initToken() {
     await this.loadToken();
-    if (this.token && this.jwtHelper.isTokenExpired(this.token)) {
+    if (this.tokenIsExpired) {
       await this.refreshExpiredToken();
     }
   }
@@ -78,37 +86,49 @@ export class AuthenticationService {
       this.nativeHttpClient.setHeader('*', 'Authorization', undefined);
     }
     this.isAuthenticated.next(false);
+    return Promise.resolve();
   }
 
-   async refreshExpiredToken() {
+   async refreshExpiredToken(): Promise<void> {
     const credentials = await this.loadCredentials();
     if (credentials) {
-      this.refreshToken(credentials);
+      return this.refreshToken(credentials);
     } else {
       this.isAuthenticated.next(false);
       this.token = null;
+      return Promise.reject();
     }
   }
 
-  private refreshToken(credentials: { email: string, password: string }) {
-    this.loadingService.showLoadingSpinner();
-    this.authService.login(credentials.email, credentials.password).pipe(first()).subscribe({
-      next: response => {
-        this.updateToken(response.token).then(() => {
-          this.handleLoginSucessResponse();
-        }, this.logger.error).finally(() => {
-          this.loadingService.dismissLoadingSpinner();
-        });
-      }, 
-      error: errorRespone => {
-        this.logger.error(errorRespone);
-        this.removeToken().then(() => {
-          this.handleLoginErrorResponse();
-        }, this.logger.error).finally(() => {
-          this.loadingService.dismissLoadingSpinner();
-        });
-      }
-    })
+  private async refreshToken(credentials: { email: string, password: string }): Promise<void> {
+    await this.loadingService.showLoadingSpinner();
+    return new Promise<void>((resolve, reject) => {
+      this.authService.login(credentials.email, credentials.password).pipe(first()).subscribe({
+        next: response => {
+          this.updateToken(response.token).then(() => {
+            this.handleLoginSucessResponse();
+            this.loadingService.dismissLoadingSpinner().finally(() => {
+              resolve();
+            })
+          }, error => {
+            this.logger.error(error);
+            this.loadingService.dismissLoadingSpinner().finally(() => {
+              reject();
+            })
+          });
+        }, 
+        error: errorRespone => {
+          this.logger.error(errorRespone);
+          this.removeToken().then(() => {
+            this.handleLoginErrorResponse();
+          }, this.logger.error).finally(() => {
+            this.loadingService.dismissLoadingSpinner().finally(() => {
+              reject();
+            });
+          });
+        }
+      })
+    });
   }
 
   private handleLoginErrorResponse() {
