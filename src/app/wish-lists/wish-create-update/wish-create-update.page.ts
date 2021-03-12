@@ -76,7 +76,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
       wishListId = this.wishList.id;
     }
     const name = this.wish.name ? this.wish.name : '';
-    const price = this.wish.price ? this.wish.price : '';
+    const price = this.wish.price.amount ? this.wish.price.amount : 0.00;
     this.form = this.formBuilder.group({
       'wishListId': this.formBuilder.control(wishListId, [Validators.required]),
       'name': this.formBuilder.control(name, [Validators.required]),
