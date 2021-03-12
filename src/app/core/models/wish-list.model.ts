@@ -2,6 +2,7 @@ import { UserDto, UserWishListDto } from './user.model';
 
 export class WishDto {
     id: Number;
+    asin?: string;
     wishListId: Number;
     name: String;
     price: String;
