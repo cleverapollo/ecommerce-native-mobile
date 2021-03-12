@@ -12,6 +12,7 @@ export class FriendWishList {
 
 export class FriendWish {
     id: Number;
+    asin?: string;
     wishListId: Number;
     name: String;
     price: String;
