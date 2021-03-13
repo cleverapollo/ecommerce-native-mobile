@@ -58,6 +58,10 @@ export class WishDetailPage implements OnInit, OnDestroy {
     })
   }
 
+  ionViewWillEnter() {
+    this.loadWish();
+  }
+
   ngOnDestroy() {
     this.subscriptionAccountEnabled.unsubscribe();
   }
@@ -81,6 +85,11 @@ export class WishDetailPage implements OnInit, OnDestroy {
         event.target.complete();
       }
     });
+  }
+
+  private async loadWish() {
+    const wish = await this.wishListStore.loadWish(this.wish.id).toPromise();
+    this.wish = wish;
   }
 
 }
