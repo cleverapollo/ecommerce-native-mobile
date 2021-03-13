@@ -82,20 +82,21 @@ export class ApiService {
   }
 
   private createDefaultHeaders(): HttpHeaders {
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
-
     if (this.clientInfoHeader) {
-      headers.append('Wantic-Client-Info', this.clientInfoHeader);
+      return (new HttpHeaders())
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .set('Wantic-Client-Info', this.clientInfoHeader);
+    } else {
+      return (new HttpHeaders())
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json');
     }
-    
-    return headers;
   }
 
   private async createClientInfoHeader() {
     const deviceInfo = await Device.getInfo();
-    const languageCode = await Device.getLanguageCode();
+    const languageCode = (await Device.getLanguageCode()).value;
     return `platform=${deviceInfo.platform}; osVersion=${deviceInfo.osVersion}; appVersion=${deviceInfo.appVersion}; locale=${languageCode};`;
   }
 
