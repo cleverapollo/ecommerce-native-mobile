@@ -7,6 +7,7 @@ import { catchError, first, tap } from 'rxjs/operators';
 import { LoginResponse } from '@core/models/login.model';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { resolve } from 'url';
+import { ApiVersion } from './api-version';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class RegistrationApiService {
   }
 
   private createUri(subUri: string): string {
-    return `${RegistrationApiService.URI}/${subUri}`
+    return `${ApiVersion.v1}/${RegistrationApiService.URI}/${subUri}`
   }
 
 }

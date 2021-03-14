@@ -15,14 +15,14 @@
     <!--name-->
     <ion-item lines="none">
       <ion-label position="stacked">Name</ion-label>
-      <ion-textarea formControlName="name" auto-grow="true"></ion-textarea>
+      <ion-textarea formControlName="name" auto-grow="true" required="true"></ion-textarea>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 
     <!--price-->
     <ion-item lines="none">
-      <ion-label position="stacked">Preis</ion-label>
-      <ion-input type="text" formControlName="price" clearInput="true"></ion-input>
+      <ion-label position="stacked">Preis (in €)</ion-label>
+      <ion-input type="number" inputmode="decimal" min="0" formControlName="price" clearInput="true" required="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('price')" [validationMessages]="validationMessages.price"></app-validation-messages>
 

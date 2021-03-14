@@ -41,9 +41,14 @@ export class AppComponent {
         StatusBar.setStyle({ 
           style: StatusBarStyle.Light 
         });
-        SplashScreen.hide();
-        this.handleUniversalLinks();
-        this.onAppResume();
+        // handle universal links
+        App.addListener('appUrlOpen', (data: any) => {
+          this.onAppUrlOpen(data);
+        });
+        // app did become active
+        this.platform.resume.subscribe(() => { 
+          this.onAppResume();
+        })
       } else {
         this.handlePossibleAccountActivation();
       }
@@ -52,11 +57,29 @@ export class AppComponent {
     });
   }
 
-  private onAppResume() {
-    this.platform.resume.subscribe(() => {
-      this.logger.debug('App on resume');
-      this.cache.clearGroup('wishList');
-      this.handlePossibleAccountActivation();
+  private async onAppResume() {
+    this.logger.debug('App on resume');
+    await SplashScreen.show();
+    await this.handleAuthState();
+    await this.cache.clearGroup('wishList');
+    await this.handlePossibleAccountActivation();
+    await SplashScreen.hide();
+  }
+
+  private async handleAuthState(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      const tokenIsExpired = this.authService.tokenIsExpired;
+      if (tokenIsExpired) {
+        this.authService.refreshExpiredToken().then(() => {
+          resolve();
+        }, () => {
+          this.router.navigateByUrl('/login').finally(() => {
+            resolve();
+          });
+        })
+      } else {
+        resolve();
+      }
     });
   }
 
@@ -100,22 +123,20 @@ export class AppComponent {
     this.cache.setOfflineInvalidate(false);
   }
 
-  private handleUniversalLinks() {
-    App.addListener('appUrlOpen', (data: any) => {
-      this.zone.run(() => {
-        const wanticDomain = "wantic.io";
-        const firebaseDevDomain = "web.app";
-        let pageUrl = null;
-        if (data.url.includes(wanticDomain)) {
-          pageUrl = data.url.split(wanticDomain).pop();
-        } else if (data.url.includes(firebaseDevDomain)) {
-          pageUrl = data.url.split(firebaseDevDomain).pop();
-        }
-        this.logger.info('universal link routes to: ', pageUrl);
-        if (pageUrl) {
-          this.router.navigateByUrl(pageUrl);
-        }
-      });
+  private onAppUrlOpen(data: any) {
+    this.zone.run(() => {
+      const wanticDomain = "wantic.io";
+      const firebaseDevDomain = "web.app";
+      let pageUrl = null;
+      if (data.url.includes(wanticDomain)) {
+        pageUrl = data.url.split(wanticDomain).pop();
+      } else if (data.url.includes(firebaseDevDomain)) {
+        pageUrl = data.url.split(firebaseDevDomain).pop();
+      }
+      this.logger.info('universal link routes to: ', pageUrl);
+      if (pageUrl) {
+        this.router.navigateByUrl(pageUrl);
+      }
     });
   }
 

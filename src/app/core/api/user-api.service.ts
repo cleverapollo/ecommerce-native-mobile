@@ -7,6 +7,7 @@ import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
 import { LogService } from '@core/services/log.service';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
+import { ApiVersion } from './api-version';
 
 @Injectable({
   providedIn: 'root'
@@ -22,63 +23,63 @@ export class UserApiService {
   ) { }
 
   deleteUser(requestBody: DeleteAccountRequest): Observable<void> {
-    return this.apiService.patch<void>(`${UserApiService.REST_END_POINT}/delete-account`, requestBody);
+    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/delete-account`, requestBody);
   }
 
   getProfile(): Observable<UserProfile> {
-    return this.apiService.get<UserProfile>(`${UserApiService.REST_END_POINT}/profile`).pipe(
+    return this.apiService.get<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   partialUpdateFirstName(firstName: string): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${UserApiService.REST_END_POINT}/profiles/firstname`, { firstName: firstName }).pipe(
+    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/firstname`, { firstName: firstName }).pipe(
       catchError(error => this.errorHandler.handleError(error))
     ); 
   }
 
   partialUpdateLastName(lastName: string): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${UserApiService.REST_END_POINT}/profiles/lastname`, { lastName: lastName }).pipe(
+    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/lastname`, { lastName: lastName }).pipe(
       catchError(error => this.errorHandler.handleError(error))
     ); 
   }
 
   partialUpdateBirthday(birthday: Date): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${UserApiService.REST_END_POINT}/profiles/birthday`, { birthday: birthday }).pipe(
+    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/birthday`, { birthday: birthday }).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   partialUpdateEmail(emailVerficationToken: string): Observable<LoginResponse> {
-    return this.apiService.patch<LoginResponse>(`${UserApiService.REST_END_POINT}/profiles/email`,  { emailVerficationToken: emailVerficationToken });
+    return this.apiService.patch<LoginResponse>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/email`,  { emailVerficationToken: emailVerficationToken });
   }
 
   updateEmailChangeRequest(requestBody: UpdateEmailChangeRequest): Observable<void> {
-    return this.apiService.put<void>(`${UserApiService.REST_END_POINT}/profiles/email`, requestBody).pipe(
+    return this.apiService.put<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/email`, requestBody).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   partialUpdateProfileImage(formData: FormData): Observable<UserProfile> {
-    return this.apiService.uploadFile<UserProfile>(`${UserApiService.REST_END_POINT}/profile-image`, formData).pipe(
+    return this.apiService.uploadFile<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile-image`, formData).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   resetPassword(email: string) {
-    return this.apiService.post(`${UserApiService.REST_END_POINT}/reset-password`, { email: email}).pipe(
+    return this.apiService.post(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/reset-password`, { email: email}).pipe(
       catchError(error => this.errorHandler.handleError(error))
     ); 
   }
 
   updatePassword(updatePasswordRequest: UpdatePasswordRequest): Observable<Object> {
-    return this.apiService.put(`${UserApiService.REST_END_POINT}/update-password`, updatePasswordRequest).pipe(
+    return this.apiService.put(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/update-password`, updatePasswordRequest).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   changePassword(changewPasswordRequest: ChangePasswordRequest): Observable<Object> {
-    return this.apiService.post(`${UserApiService.REST_END_POINT}/change-password`, changewPasswordRequest).pipe(
+    return this.apiService.post(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/change-password`, changewPasswordRequest).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
@@ -90,14 +91,14 @@ export class UserApiService {
   }
 
   deleteProfileImage(fileName: string) {
-    return this.apiService.delete(`${UserApiService.REST_END_POINT}/profile-image/${fileName}`).pipe(
+    return this.apiService.delete(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile-image/${fileName}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   verifyEmail(emailVerficationToken: string): Promise<PublicEmailVerificationStatus> {
     return new Promise((resolve) => {
-      return this.apiService.patch<void>(`${UserApiService.REST_END_POINT}/email-verification`, { emailVerficationToken: emailVerficationToken }).toPromise().then(() => {
+      return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/email-verification`, { emailVerficationToken: emailVerficationToken }).toPromise().then(() => {
         resolve(PublicEmailVerificationStatus.VERIFIED);
       }, error => {
         if (error.error instanceof ErrorEvent) {
@@ -116,17 +117,17 @@ export class UserApiService {
   }
 
   getEmailVerificationStatus(): Observable<EmailVerificationDto> {
-    return this.apiService.get<EmailVerificationDto>(`${UserApiService.REST_END_POINT}/email-verification`);
+    return this.apiService.get<EmailVerificationDto>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/email-verification`);
   }
 
   updateShowOnboardingSlidesIosState(state: boolean): Observable<void> {
-    return this.apiService.patch<void>(`${UserApiService.REST_END_POINT}/user-settings/show-onboarding-slides-ios`, { 
+    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/user-settings/show-onboarding-slides-ios`, { 
       show: state 
     });
   }
 
   getAccount(): Observable<AccountDto> {
-    return this.apiService.get<AccountDto>(`${UserApiService.REST_END_POINT}/accounts`);
+    return this.apiService.get<AccountDto>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/accounts`);
   }
 
 }

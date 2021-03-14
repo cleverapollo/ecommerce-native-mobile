@@ -1,4 +1,5 @@
 import { ProfileImageDto, UserDto } from '@core/models/user.model';
+import { PriceDto } from '@core/models/wish-list.model';
 
 export class FriendWishList {
     id: Number;
@@ -12,9 +13,10 @@ export class FriendWishList {
 
 export class FriendWish {
     id: Number;
+    asin?: string;
     wishListId: Number;
     name: String;
-    price: String;
+    price: PriceDto;
     productUrl: string;
     imageUrl: String;
     reservedByFriend: Boolean;

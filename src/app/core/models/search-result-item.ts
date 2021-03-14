@@ -1,4 +1,4 @@
-import { WishDto } from '@core/models/wish-list.model';
+import { PriceDto, WishDto } from '@core/models/wish-list.model';
 
 export class SearchResult {
     totalResultCount: number;
@@ -6,11 +6,11 @@ export class SearchResult {
 }
 export class SearchResultItem {
     name: String;
-    price: String;
+    price: PriceDto;
     imageUrl: String;
     productUrl: string;
 
-    constructor(name: String, imageUrl: String, productUrl: string, price: String) {
+    constructor(name: String, imageUrl: String, productUrl: string, price: PriceDto) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.productUrl = productUrl;

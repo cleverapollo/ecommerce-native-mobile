@@ -3,20 +3,28 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SERVER_URL } from 'src/environments/environment';
 import { LogService } from '@core/services/log.service';
+import { Plugins } from '@capacitor/core';
+
+const { Device } = Plugins;
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private httpClient: HttpClient, private logger: LogService) { }
+  private clientInfoHeader?: string;
+
+  constructor(private httpClient: HttpClient, private logger: LogService) { 
+    this.initClientInfoHeader();
+  }
+
+  private async initClientInfoHeader() {
+    const clientInfoHeader = await this.createClientInfoHeader();
+    this.clientInfoHeader = clientInfoHeader;
+  }
 
   post<T>(url: string, body: any) : Observable<T> {
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/json');
-    this.logger.log(`${SERVER_URL}/${url}`);
+    const headers = this.createDefaultHeaders();
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
       headers: headers,
       responseType: 'json'
@@ -24,11 +32,7 @@ export class ApiService {
   }
 
   put<T>(url: string, body: any) : Observable<T> {
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/json');
-
+    const headers = this.createDefaultHeaders();
     return this.httpClient.put<T>(`${SERVER_URL}/${url}`, body, {
       headers: headers,
       responseType: 'json'
@@ -36,11 +40,7 @@ export class ApiService {
   }
 
   patch<T>(url: string, body?: any | null) : Observable<T> {
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/json');
-
+    const headers = this.createDefaultHeaders();
     return this.httpClient.patch<T>(`${SERVER_URL}/${url}`, body, {
       headers: headers,
       responseType: 'json'
@@ -48,11 +48,7 @@ export class ApiService {
   }
 
   delete<T>(url: string) : Observable<T> {
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/json');
-
+    const headers = this.createDefaultHeaders();
     return this.httpClient.delete<T>(`${SERVER_URL}/${url}`, {
       headers: headers,
       responseType: 'json'
@@ -60,11 +56,7 @@ export class ApiService {
   }
 
   get<T>(url: string, queryParams?: HttpParams) : Observable<T> {
-    const headers = new HttpHeaders()
-      .set('Accept', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
-      .set('Content-Type', 'application/json')
-
+    const headers = this.createDefaultHeaders();
     return this.httpClient.get<T>(`${SERVER_URL}/${url}`, {
       headers: headers,
       responseType: 'json',
@@ -75,7 +67,6 @@ export class ApiService {
   uploadFile<T>(url: string, formData: FormData) {
     let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'multipart/form-data');
 
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, formData, {
@@ -85,12 +76,28 @@ export class ApiService {
   }
 
   downloadFile(url: string): Observable<Blob> {
-    const headers = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*')
-
     return this.httpClient.get(url, {
-      headers: headers,
       responseType: 'blob'
     });
   }
+
+  private createDefaultHeaders(): HttpHeaders {
+    if (this.clientInfoHeader) {
+      return (new HttpHeaders())
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .set('Wantic-Client-Info', this.clientInfoHeader);
+    } else {
+      return (new HttpHeaders())
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json');
+    }
+  }
+
+  private async createClientInfoHeader() {
+    const deviceInfo = await Device.getInfo();
+    const languageCode = (await Device.getLanguageCode()).value;
+    return `platform=${deviceInfo.platform}; osVersion=${deviceInfo.osVersion}; appVersion=${deviceInfo.appVersion}; locale=${languageCode};`;
+  }
+
 }

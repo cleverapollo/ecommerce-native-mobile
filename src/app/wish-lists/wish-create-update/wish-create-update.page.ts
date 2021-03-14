@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { WishListDto, WishDto } from '@core/models/wish-list.model';
+import { WishListDto, WishDto, PriceDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { WishApiService } from '@core/api/wish-api.service';
 import { AlertService } from '@core/services/alert.service';
@@ -76,11 +76,12 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
       wishListId = this.wishList.id;
     }
     const name = this.wish.name ? this.wish.name : '';
-    const price = this.wish.price ? this.wish.price : '';
+    const price = this.wish.price.amount ? this.wish.price.amount : 0.00;
+    const formattedPrice = this.formatAmount(price);
     this.form = this.formBuilder.group({
       'wishListId': this.formBuilder.control(wishListId, [Validators.required]),
       'name': this.formBuilder.control(name, [Validators.required]),
-      'price': this.formBuilder.control(price, [Validators.required]),
+      'price': this.formBuilder.control(formattedPrice, [Validators.required]),
     });
   }
 
@@ -120,7 +121,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     const wishListId = this.form.controls.wishListId.value;
     this.wish.wishListId = wishListId;
     this.wish.name = this.form.controls.name.value;
-    this.wish.price = this.form.controls.price.value;
+    this.wish.price = this.createPrice(this.form.controls.price.value);
     this.loadingService.showLoadingSpinner();
     this.wishApiService.createWish(this.wish).toPromise().then(createdWish => {
       this.searchResultDataService.clear();
@@ -135,6 +136,16 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     });
   }
 
+  private formatAmount(amount: number) {
+    return (Math.round(amount * 100) / 100).toFixed(2);
+  }
+
+  private createPrice(amount: number) {
+    let price = new PriceDto();
+    price.amount = amount;
+    price.currency = '€'
+    return price;
+  }
   
   private navigateToWishListDetailPage(wishListId: number) {
     const wishSearchTabPath = getTaBarPath(TabBarRoute.WISH_SEARCH, true);
@@ -150,7 +161,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
 
   private updateWish() {
     this.wish.name = this.form.controls.name.value;
-    this.wish.price = this.form.controls.price.value; 
+    this.wish.price = this.createPrice(this.form.controls.price.value);
     this.loadingService.showLoadingSpinner();
     this.wishApiService.update(this.wish).toPromise().then(updatedWish => { 
         this.wishListStore.updateCachedWish(updatedWish);

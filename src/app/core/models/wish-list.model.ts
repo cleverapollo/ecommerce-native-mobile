@@ -1,10 +1,16 @@
-import { UserDto, UserWishListDto } from './user.model';
+import { UserWishListDto } from './user.model';
 
+export class PriceDto {
+    amount: number;
+    currency: string;
+    displayString: string;
+}
 export class WishDto {
     id: Number;
+    asin?: string;
     wishListId: Number;
     name: String;
-    price: String;
+    price: PriceDto;
     productUrl: string;
     imageUrl: String;
 }
