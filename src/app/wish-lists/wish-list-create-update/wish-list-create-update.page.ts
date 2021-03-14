@@ -118,6 +118,7 @@ export class WishListCreateUpdatePage implements OnInit {
       next: createdWishList => {
         this.wishListStore.saveWishListToCache(createdWishList);
         this.wishList = createdWishList;
+        this.loadingService.dismissLoadingSpinner();
         this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
         this.loadingService.dismissLoadingSpinner();
         this.router.navigateByUrl(`/secure/home/wish-list/${createdWishList.id}`);
@@ -137,6 +138,7 @@ export class WishListCreateUpdatePage implements OnInit {
       next: updatedWishList => {
         this.wishListStore.updatedCachedWishList(updatedWishList);
         this.wishList = updatedWishList;
+        this.loadingService.dismissLoadingSpinner();
         this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
         this.loadingService.dismissLoadingSpinner();
       },

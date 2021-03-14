@@ -21,7 +21,7 @@ struct AuthService {
     func login(completionHandler: @escaping (Result<String, Error>) -> Void) {
         guard let email = keychainwrapper.string(forKey: "loginEmail"),
         let password = keychainwrapper.string(forKey: "loginPassword"),
-        let url = URL(string: "https://rest-dev.wantic.io/login") else {
+        let url = URL(string: "https://rest-dev.wantic.io/v1/auth/login") else {
             completionHandler(.failure(NSError(domain: "app.wantic.io", code: 930, userInfo: nil)))
             return
         }
@@ -35,7 +35,6 @@ struct AuthService {
             print(error.localizedDescription)
         }
         
-        request.setValue("*", forHTTPHeaderField: "Access-Control-Allow-Origin")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         

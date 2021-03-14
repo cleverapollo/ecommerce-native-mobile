@@ -83,7 +83,7 @@ export class AuthenticationService {
     await this.storageService.clear();
     await this.cache.clearAll();
     if (this.platform.is('capacitor')) {
-      this.nativeHttpClient.setHeader('*', 'Authorization', undefined);
+      this.nativeHttpClient.setHeader('*', 'Authorization', null);
     }
     this.isAuthenticated.next(false);
     return Promise.resolve();
