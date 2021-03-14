@@ -51,7 +51,8 @@ ExtensionClass.prototype = {
                 }
             } 
         });
-        return mode(prices);
+        const resultPrice = mode(prices);
+        return parseFloat(resultPrice.replace('€', '').replace(',', '.').trim());
     }
 };
 

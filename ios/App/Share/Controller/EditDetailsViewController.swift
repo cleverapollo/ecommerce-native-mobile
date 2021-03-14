@@ -118,7 +118,7 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         } else if indexPath.section == 2 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: ProductPriceTableViewCell.reuseIdentifier, for: indexPath) as? ProductPriceTableViewCell {
                 textFields.append(cell.productPriceView)
-                cell.productPriceView.text = productInfo.price
+                cell.productPriceView.text = productInfo.price.amount.formattedAmount
                 return cell
             }
         }
@@ -153,8 +153,8 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         var formIsValid = true
         for textInput in textFields {
             if let textField = textInput as? UITextField {
-                if textField == productPrice, let amountCurrency = textField.text {
-                    WishDataStore.shared.wish.price = amountCurrency
+                if textField == productPrice, let amount = textField.text {
+                    WishDataStore.shared.wish.price.amount = Decimal(string: amount) ?? 0.00
                 }
             } else if let textView = textInput as? UITextView {
                 /*textView.translatesAutoresizingMaskIntoConstraints = true
@@ -214,14 +214,6 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
              }
              return false
          }
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == productPrice, let text = textField.text {
-            if text.filter({ $0 == "€" }).count < 1 {
-                textField.text! += "€"
-            }
-        }
     }
     
     func countCharacterInString(string: String, char: String.Element) -> Int {

@@ -56,6 +56,8 @@
 		B14880C425B2E8B700D0106B /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
 		B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
 		B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* JWTDecode */; };
+		B16360D025FE13DA00D19F73 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360CF25FE13DA00D19F73 /* Price.swift */; };
+		B16360D525FE1BF400D19F73 /* Decimal+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360D425FE1BF400D19F73 /* Decimal+Format.swift */; };
 		B16E1FB325BF3290009EEFDE /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */; };
 		B16E1FCB25C0770A009EEFDE /* TextFieldInnerPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */; };
 		B1750DF425B468300023A9C9 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750DF325B468300023A9C9 /* UIViewExtension.swift */; };
@@ -168,6 +170,8 @@
 		B14880BD25B2143700D0106B /* WishDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishDataStore.swift; sourceTree = "<group>"; };
 		B14880C325B2E8B700D0106B /* ToastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastService.swift; sourceTree = "<group>"; };
 		B14880D025B3057300D0106B /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		B16360CF25FE13DA00D19F73 /* Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Price.swift; sourceTree = "<group>"; };
+		B16360D425FE1BF400D19F73 /* Decimal+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Format.swift"; sourceTree = "<group>"; };
 		B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldInnerPadding.swift; sourceTree = "<group>"; };
 		B1750DF325B468300023A9C9 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
@@ -383,8 +387,17 @@
 				B1A80F9F258A281600F0917F /* ProductInfo.swift */,
 				B14880B125B20F2000D0106B /* Wish.swift */,
 				B1A80FAD258A770100F0917F /* WishList.swift */,
+				B16360CF25FE13DA00D19F73 /* Price.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B16360D325FE1BDA00D19F73 /* Formatter */ = {
+			isa = PBXGroup;
+			children = (
+				B16360D425FE1BF400D19F73 /* Decimal+Format.swift */,
+			);
+			path = Formatter;
 			sourceTree = "<group>";
 		};
 		B16E1FC925C076E1009EEFDE /* UI */ = {
@@ -405,6 +418,7 @@
 		B1A80F852589F59800F0917F /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				B16360D325FE1BDA00D19F73 /* Formatter */,
 				B114E14425BC389000F92599 /* Fonts */,
 				B14880CC25B2FF0000D0106B /* Controller */,
 				B14880CD25B2FF2000D0106B /* Model */,
@@ -645,6 +659,7 @@
 				B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */,
 				B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */,
 				B14880B225B20F2000D0106B /* Wish.swift in Sources */,
+				B16360D525FE1BF400D19F73 /* Decimal+Format.swift in Sources */,
 				B1750DF425B468300023A9C9 /* UIViewExtension.swift in Sources */,
 				B148806825AE0D9500D0106B /* LoginResponse.swift in Sources */,
 				B1A80FAE258A770100F0917F /* WishList.swift in Sources */,
@@ -655,6 +670,7 @@
 				B17B403C25C4717F003363E9 /* FooterView.swift in Sources */,
 				B1247FAF25BC612C009CEF57 /* ProductImageViewController.swift in Sources */,
 				B1A80FA8258A705100F0917F /* EditDetailsViewController.swift in Sources */,
+				B16360D025FE13DA00D19F73 /* Price.swift in Sources */,
 				B148806E25AE129500D0106B /* LoginRequest.swift in Sources */,
 				B16E1FCB25C0770A009EEFDE /* TextFieldInnerPadding.swift in Sources */,
 			);
@@ -814,7 +830,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210228.1;
+				CURRENT_PROJECT_VERSION = 20210307.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -840,7 +856,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210228.1;
+				CURRENT_PROJECT_VERSION = 20210307.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -867,7 +883,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210228.1;
+				CURRENT_PROJECT_VERSION = 20210307.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -897,7 +913,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210228.1;
+				CURRENT_PROJECT_VERSION = 20210307.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
