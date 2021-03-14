@@ -51,9 +51,10 @@ export class AuthenticationService {
     }
   }
 
-  login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
+  async login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
+    const spinner = await this.loadingService.createLoadingSpinner();
     return new Promise((resolve, reject) => {
-      this.loadingService.showLoadingSpinner();
+      this.loadingService.createLoadingSpinner();
       this.authService.login(email, password).pipe(first()).subscribe({
         next: response => {
           if (saveCredentials) {
@@ -66,13 +67,13 @@ export class AuthenticationService {
             this.logger.error(error);
             reject();
           }).finally(() => {
-            this.loadingService.dismissLoadingSpinner();
+            this.loadingService.dismissLoadingSpinner(spinner);
           });
         },
         error: errorResponse => {
           this.logger.error(errorResponse);
           this.handleLoginErrorResponse();
-          this.loadingService.dismissLoadingSpinner();
+          this.loadingService.dismissLoadingSpinner(spinner);
           reject();
         }
       })
