@@ -11,7 +11,7 @@ export class WishListCreateRequest extends WishListCreateOrUpdateRequest {
 }
 
 export class WishListUpdateRequest extends WishListCreateOrUpdateRequest {
-    id: Number
+    id: string
 }
 
 export class InvitePartnerRequest {

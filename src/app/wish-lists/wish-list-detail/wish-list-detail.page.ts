@@ -112,7 +112,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     });
   }
 
-  private createLinkForSocialSharing(appUrl: string = APP_URL, wishListId: number = this.wishList.id) {
+  private createLinkForSocialSharing(appUrl: string = APP_URL, wishListId: string = this.wishList.id) {
     return `${appUrl}/meine-wunschliste/${wishListId}`
   }
 

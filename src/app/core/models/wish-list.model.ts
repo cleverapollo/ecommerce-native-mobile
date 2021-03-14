@@ -8,7 +8,7 @@ export class PriceDto {
 export class WishDto {
     id: Number;
     asin?: string;
-    wishListId: Number;
+    wishListId: string;
     name: String;
     price: PriceDto;
     productUrl: string;
@@ -16,7 +16,7 @@ export class WishDto {
 }
 
 export class WishListSelectOptionDto {
-    id: Number;
+    id: string;
     name: String;
 
     static forWishList(wishList: WishListDto): WishListSelectOptionDto {
@@ -28,7 +28,7 @@ export class WishListSelectOptionDto {
 }
 
 export class WishListDto {
-    id: number;
+    id: string;
     name: string;
     date: Date;
     wishes: WishDto[];

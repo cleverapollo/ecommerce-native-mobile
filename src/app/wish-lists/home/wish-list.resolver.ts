@@ -12,7 +12,7 @@ export class WishListResolver implements Resolve<Observable<WishListDto>> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const acceptInvitation = Boolean(route.queryParamMap.get('acceptInvitation'));
-    const wishListId = Number(route.paramMap.get('wishListId'));
+    const wishListId = route.paramMap.get('wishListId');
     if (acceptInvitation) {
       return this.acceptInvitationAndLoadWishLists(wishListId);
     } else {
@@ -21,7 +21,7 @@ export class WishListResolver implements Resolve<Observable<WishListDto>> {
     }
   }
 
-  private acceptInvitationAndLoadWishLists(wishListId: number): Observable<WishListDto> {
+  private acceptInvitationAndLoadWishLists(wishListId: string): Observable<WishListDto> {
     return from(new Promise<WishListDto>((resolve, reject) => {
       this.wishListApiService.acceptInvitation(wishListId).finally(() => {
          this.wishListStore.loadWishList(wishListId).toPromise().then(wishList => {

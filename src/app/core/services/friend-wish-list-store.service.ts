@@ -13,7 +13,7 @@ export class FriendWishListStoreService {
   private readonly CACHE_GROUP_KEY = 'friendWishList';
   private readonly CACHE_KEY_WISH_LISTS = 'friendWishLists'
 
-  private cacheKeyWishList(id: Number): string {
+  private cacheKeyWishList(id: string): string {
     return `getFriendWishList${id}`
   }
 
@@ -34,7 +34,7 @@ export class FriendWishListStoreService {
     return this.cache.removeItem(this.CACHE_KEY_WISH_LISTS);
   }
 
-  loadWishList(id: Number, forceRefresh: boolean = false): Observable<FriendWishList> {
+  loadWishList(id: string, forceRefresh: boolean = false): Observable<FriendWishList> {
     let request = this.friendApiService.getWishListById(id);
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')

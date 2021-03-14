@@ -21,7 +21,7 @@ export class FriendApiService {
     );
   }
 
-  getWishListById(id: Number): Observable<FriendWishList> {
+  getWishListById(id: string): Observable<FriendWishList> {
     return this.apiService.get<FriendWishList>(`${ApiVersion.v1}/${FriendApiService.REST_END_POINT}/wish-lists/${id}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );

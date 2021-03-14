@@ -18,7 +18,7 @@ export class WishListApiService {
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
-  acceptInvitation(id: number): Promise<void> {
+  acceptInvitation(id: string): Promise<void> {
     return this.apiService.patch<void>(`${ApiVersion.v1}/${WishListApiService.REST_END_POINT}/${id}/accept-invitation`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     ).toPromise();
@@ -36,7 +36,7 @@ export class WishListApiService {
     );
   }
 
-  getWishList(id: Number): Observable<WishListDto> {
+  getWishList(id: string): Observable<WishListDto> {
     return this.apiService.get<WishListDto>(`${ApiVersion.v1}/${WishListApiService.REST_END_POINT}/${id}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
@@ -48,7 +48,7 @@ export class WishListApiService {
     );
   }
 
-  delete(id: Number): Observable<Object> {
+  delete(id: string): Observable<Object> {
     return this.apiService.delete(`${ApiVersion.v1}/${WishListApiService.REST_END_POINT}/${id}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
@@ -75,7 +75,7 @@ export class WishListApiService {
     );
   }
 
-  toggleWishReservation(wishListId: Number, wishId: Number, email: string): Observable<FriendWishList> {
+  toggleWishReservation(wishListId: string, wishId: Number, email: string): Observable<FriendWishList> {
     return this.apiService.patch<FriendWishList>(`${ApiVersion.v1}/shared-wish-list/${wishListId}/wish/${wishId}?userEmail=${email}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );

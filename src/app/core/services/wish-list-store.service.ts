@@ -19,7 +19,7 @@ export class WishListStoreService {
   private readonly CACHE_GROUP_KEY = 'wishList';
   private readonly CACHE_KEY_WISH_LISTS = 'getWishLists'
 
-  private cacheKeyWishList(id: Number): string {
+  private cacheKeyWishList(id: string): string {
     return `getWishList${id}`
   }
 
@@ -70,14 +70,14 @@ export class WishListStoreService {
 
   // WISH LIST
 
-  loadWishList(id: Number, forceRefresh: boolean = false): Observable<WishListDto> {
+  loadWishList(id: string, forceRefresh: boolean = false): Observable<WishListDto> {
     if (this.userService.accountIsEnabled) {
       return this.loadWishListForEnabledAccount(id, forceRefresh);
     }
     return this.loadWishListForDisabledAccount(id);
   }
 
-  private loadWishListForEnabledAccount(id: Number, forceRefresh: boolean = false): Observable<WishListDto> {
+  private loadWishListForEnabledAccount(id: string, forceRefresh: boolean = false): Observable<WishListDto> {
     let request = this.wishListApiService.getWishList(id);
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
@@ -85,7 +85,7 @@ export class WishListStoreService {
     return this.cache.loadFromObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY)
   }
 
-  private loadWishListForDisabledAccount(id: Number): Observable<WishListDto> {
+  private loadWishListForDisabledAccount(id: string): Observable<WishListDto> {
     return from(new Promise<WishListDto>((resolve) => {
       this.storageService.get<RegistrationResponse>(StorageKeys.REGISTRATION_RESPONSE).then((responseBody) => {
         const wishLists = responseBody.wishLists;
@@ -101,7 +101,7 @@ export class WishListStoreService {
     }))
   }
 
-  removeCachedWishList(id: Number) {
+  removeCachedWishList(id: string) {
     this.cache.removeItem(this.cacheKeyWishList(id));
     this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: WishListDto[]) => {
       const wishListIndex = wishLists.findIndex( w => w.id == id);

@@ -10,7 +10,7 @@ export class FriendsWishListDetailResolver implements Resolve<Observable<FriendW
   constructor(private friendWishListStore: FriendWishListStoreService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const wishListId = Number(route.paramMap.get('wishListId'));
+    const wishListId = route.paramMap.get('wishListId');
     return this.friendWishListStore.loadWishList(wishListId);
   }
 }

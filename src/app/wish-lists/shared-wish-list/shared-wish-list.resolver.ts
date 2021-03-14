@@ -21,8 +21,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<{ wishList: FriendWishList, email?: string }> {
     return new Promise<{ wishList: FriendWishList, email?: string }>(async (resolve, reject) => {
-      const wishListIdString = route.paramMap.get('wishListId');
-      const wishListId = Number(wishListIdString);
+      const wishListId = route.paramMap.get('wishListId');
       try {
         if (this.platform.is('hybrid')) {
           if (await this.isFriendWishList(wishListId)) {
@@ -36,7 +35,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
           }
         } else {
           const currentEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
-          const identifier = this.createIdentifier(wishListIdString, currentEmail);
+          const identifier = this.createIdentifier(wishListId, currentEmail);
           const wishList = await this.wishListApi.getSharedWishList(identifier).toPromise();
           resolve({ wishList: wishList, email: currentEmail });
         }
@@ -54,7 +53,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
     return identifier;
   }
 
-  private async isFriendWishList(wishListId: number) {
+  private async isFriendWishList(wishListId: string) {
     try {
       const wishLists = await this.friendWishListStore.loadWishLists().toPromise();
       const wishList = wishLists.find((wishList) => wishList.id === wishListId);
@@ -64,7 +63,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
     }
   }
 
-  private async isOwnWishList(wishListId: number) {
+  private async isOwnWishList(wishListId: string) {
     try {
       const wishLists = await this.wishListStore.loadWishLists().toPromise();
       const wishList = wishLists.find((wishList) => wishList.id === wishListId);

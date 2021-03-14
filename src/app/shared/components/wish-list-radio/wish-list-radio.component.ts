@@ -19,16 +19,16 @@ import { Subscription } from 'rxjs';
 export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   @Input()
-  _wishListId: Number;
+  _wishListId: string;
 
   @Input()
-  initialValue: Number;
+  initialValue: string;
 
-  get wishListId(): Number {
+  get wishListId(): string {
     return this._wishListId;
   }
 
-  set wishListId(wishListId: Number) {
+  set wishListId(wishListId: string) {
     this._wishListId = wishListId;
     this.propagateChange(this._wishListId);
   }
@@ -64,12 +64,12 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
     this.subscription.unsubscribe();
   }
 
-  writeValue(selectedOption: WishListSelectOptionDto | Number): void {
+  writeValue(selectedOption: WishListSelectOptionDto | String): void {
     if (selectedOption !== undefined) {
       if (selectedOption instanceof WishListSelectOptionDto) {
         this.wishListId = selectedOption.id;
-      } else if (selectedOption instanceof Number) {
-        this.wishListId = selectedOption;
+      } else if (selectedOption instanceof String) {
+        this.wishListId = String(selectedOption);
       }
     }
   }
