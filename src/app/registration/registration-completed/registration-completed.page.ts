@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration-completed',
@@ -7,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationCompletedPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {}
+
+  navToWishListOverview() {
+    console.log('click')
+    this.router.navigateByUrl('/secure/home/wish-list-overview', { replaceUrl: true });
+  }
 
 }

@@ -82,9 +82,7 @@ export class AuthenticationService {
   async logout() {
     await this.storageService.clear();
     await this.cache.clearAll();
-    if (this.platform.is('capacitor')) {
-      this.nativeHttpClient.setHeader('*', 'Authorization', null);
-    }
+    this.removeAuthorizationHeaderForNativeHttpClient();
     this.isAuthenticated.next(false);
     return Promise.resolve();
   }
@@ -151,19 +149,27 @@ export class AuthenticationService {
 
   private async loadToken() {
     const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
+    this.updateAuthState(token)
+  }
+
+  private updateAuthState(token: string) {
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       this.token = token;
       this.isAuthenticated.next(true);
+      this.updateAuthorizationHeaderForNativeHttpClient(token);
     } else {
       this.isAuthenticated.next(false);
+      this.removeAuthorizationHeaderForNativeHttpClient();
     }
   }
 
-  updateToken(token: string) {
-    this.token = token;
+  async updateToken(token: string) {
+    await this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
+
     this.updateUserProperties(token);
-    this.updateAuthorizationHeaderForNativeHttpClient(token);
-    return this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
+    this.updateAuthState(token);
+
+    return Promise.resolve();
   }
 
   private removeToken() {
@@ -179,6 +185,12 @@ export class AuthenticationService {
   private updateAuthorizationHeaderForNativeHttpClient(token: string) {
     if (this.platform.is('capacitor')) {
       this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`);
+    }
+  }
+
+  private removeAuthorizationHeaderForNativeHttpClient() {
+    if (this.platform.is('capacitor')) {
+      this.nativeHttpClient.setHeader('*', 'Authorization', null);
     }
   }
 
