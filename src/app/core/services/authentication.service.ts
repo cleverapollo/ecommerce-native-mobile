@@ -53,6 +53,7 @@ export class AuthenticationService {
 
   async login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
     const spinner = await this.loadingService.createLoadingSpinner();
+    await spinner.present();
     return new Promise((resolve, reject) => {
       this.loadingService.createLoadingSpinner();
       this.authService.login(email, password).pipe(first()).subscribe({
