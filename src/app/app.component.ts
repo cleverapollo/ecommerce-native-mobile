@@ -75,7 +75,10 @@ export class AppComponent {
       if (tokenIsExpired) {
         SplashScreen.show().then(() => {
           this.authService.refreshExpiredToken().then(() => {
-            resolve();
+            this.router.navigateByUrl('/secure/home/wish-list-overview').finally(() => {
+              SplashScreen.hide();
+              resolve();
+            });
           }, () => {
             this.router.navigateByUrl('/login').finally(() => {
               SplashScreen.hide();
