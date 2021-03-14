@@ -9,7 +9,7 @@ import Foundation
 
 struct Wish: Codable {
     var id: Int?
-    var wishListId: Int?
+    var wishListId: UUID?
     var name: String?
     var price: Price
     var productUrl: String?

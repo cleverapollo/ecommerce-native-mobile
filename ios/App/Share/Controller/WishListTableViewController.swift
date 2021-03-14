@@ -38,7 +38,7 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     var wishLists: [WishList] = []
-    var wishListId: Int? {
+    var wishListId: UUID? {
         didSet {
             WishDataStore.shared.wish.wishListId = wishListId
             DispatchQueue.main.async {

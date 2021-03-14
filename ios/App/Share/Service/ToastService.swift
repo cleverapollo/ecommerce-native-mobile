@@ -12,7 +12,7 @@ struct ToastService {
     static let shared = ToastService()
     
 
-    func showToast(controller: UIViewController, message : String, wishListId: Int, extensionContext: NSExtensionContext) {
+    func showToast(controller: UIViewController, message : String, wishListId: UUID, extensionContext: NSExtensionContext) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.view.backgroundColor = .white
         alert.view.alpha = 0.5

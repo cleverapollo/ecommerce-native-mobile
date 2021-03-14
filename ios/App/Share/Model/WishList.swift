@@ -8,6 +8,6 @@
 import Foundation
 
 struct WishList: Codable {
-    let id: Int
+    let id: UUID
     let name: String
 }
