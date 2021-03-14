@@ -45,6 +45,7 @@ export class AppComponent {
         App.addListener('appUrlOpen', (data: any) => {
           this.onAppUrlOpen(data);
         });
+        this.onAppStart()
         // app did become active
         this.platform.resume.subscribe(() => { 
           this.onAppResume();
@@ -57,27 +58,33 @@ export class AppComponent {
     });
   }
 
+  private async onAppStart() {
+    await this.handleAuthState();
+  }
+
   private async onAppResume() {
     this.logger.debug('App on resume');
-    await SplashScreen.show();
     await this.handleAuthState();
     await this.cache.clearGroup('wishList');
     await this.handlePossibleAccountActivation();
-    await SplashScreen.hide();
   }
 
-  private async handleAuthState(): Promise<void> {
+  private handleAuthState(): Promise<void> {
     return new Promise<void>((resolve) => {
       const tokenIsExpired = this.authService.tokenIsExpired;
       if (tokenIsExpired) {
-        this.authService.refreshExpiredToken().then(() => {
-          resolve();
-        }, () => {
-          this.router.navigateByUrl('/login').finally(() => {
+        SplashScreen.show().then(() => {
+          this.authService.refreshExpiredToken().then(() => {
             resolve();
-          });
+          }, () => {
+            this.router.navigateByUrl('/login').finally(() => {
+              SplashScreen.hide();
+              resolve();
+            });
+          })
         })
       } else {
+        SplashScreen.hide();
         resolve();
       }
     });
