@@ -32,6 +32,12 @@ ion-header {
 }
 
 ion-content {
+    ion-slides {
+        height: 100%;
+        ion-slide {
+            display: block;
+        }
+    }
     p {
         font-size: 15px;
         margin-top: 0;
@@ -49,6 +55,11 @@ ion-footer {
 @media (max-height: 568px) {
     img {
         height: 240px;
+    }
+    ion-header {
+        ion-title {
+            font-size: 17px !important;
+        }
     }
     ion-content {
         p {
