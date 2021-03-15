@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductSearchService } from '@core/services/product-search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
@@ -7,6 +7,7 @@ import { ModalController, Platform } from '@ionic/angular';
 import { LoadingService } from '@core/services/loading.service';
 import { UserService } from '@core/services/user.service';
 import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
+import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 
 @Component({
   selector: 'app-wish-search-selection',
@@ -15,8 +16,20 @@ import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides
 })
 export class WishSearchSelectionPage implements OnInit {
   
+  get validationMessages(): ValidationMessages {
+    return {
+      keywords: [
+        new ValidationMessage('required', 'Bitte gib einen Suchbegriff ein.'),
+        new ValidationMessage('minlength', 'Bitte gib min. 2 Zeichen an.')
+      ]
+    }
+  };
+
+  get keywords(): string {
+    return this.searchByAmazonApiForm?.controls.keywords.value ?? null;
+  }
+
   searchByAmazonApiForm: FormGroup;
-  keywords = new FormControl('');
   
   constructor(
     private productSearchService: ProductSearchService, 
@@ -32,7 +45,10 @@ export class WishSearchSelectionPage implements OnInit {
 
   ngOnInit() {
     this.searchByAmazonApiForm = this.formBuilder.group({
-      keywords: this.keywords
+      keywords: [null, { 
+        validators: [Validators.required, Validators.minLength(2)],
+        updateOn: 'submit'
+       }]
     });
   }
 
@@ -54,8 +70,11 @@ export class WishSearchSelectionPage implements OnInit {
   }
 
   searchByAmazonApi() {
+    if (this.searchByAmazonApiForm.invalid) {
+      return;
+    }
     this.loadingService.showLoadingSpinner();
-    this.productSearchService.searchByAmazonApi(this.keywords.value, 1).then(searchResults => {
+    this.productSearchService.searchByAmazonApi(this.keywords, 1).then(searchResults => {
       this.navigateToSearchResultPage();
     }, this.logger.error).finally(() => {
       this.loadingService.dismissLoadingSpinner();
