@@ -50,6 +50,7 @@ export class AppComponent {
           this.onAppResume();
         })
       } else {
+        this.handleAuthState();
         this.handlePossibleAccountActivation();
       }
       this.initCache();
@@ -67,8 +68,8 @@ export class AppComponent {
   }
 
   private async handleAuthState(): Promise<void> {
+    const tokenIsExpired = await this.authService.tokenIsExpired();
     return new Promise<void>((resolve) => {
-      const tokenIsExpired = this.authService.tokenIsExpired;
       if (tokenIsExpired) {
         this.authService.refreshExpiredToken().then(() => {
           resolve();
