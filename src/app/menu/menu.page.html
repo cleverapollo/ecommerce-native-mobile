@@ -11,6 +11,10 @@
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label class="action-item-without-header">Profil bearbeiten</ion-label>
     </ion-item>
+    <ion-item (click)="showFaqPage()" detail="false">
+      <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
+      <ion-label class="action-item-without-header">FAQ</ion-label>
+    </ion-item>
     <ion-item (click)="privacyPolicyService.showPrivacyPolicy()" detail="false">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label class="action-item-without-header">Datenschutz</ion-label>
