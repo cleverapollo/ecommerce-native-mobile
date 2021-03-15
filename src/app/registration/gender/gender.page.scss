@@ -13,6 +13,8 @@ ion-radio::part(container) {
 
 }
 
-h1 {
-    padding-bottom: 29px;
+.list-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 29px;
 }
