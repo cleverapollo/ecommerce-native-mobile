@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfile } from '@core/models/user.model';
-import { LogService } from '@core/services/log.service';
 import { UserService } from '@core/services/user.service';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -16,7 +15,6 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  refreshData: boolean = false;
   profile: UserProfile
   accountIsNotActivated: boolean;
 
@@ -31,7 +29,6 @@ export class SettingsPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute, 
     private userProfileStore: UserProfileStore,
-    private logger: LogService,
     private userService: UserService
   ) { }
 
@@ -49,15 +46,9 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    if (this.refreshData) {
-      this.userProfileStore.loadUserProfile(false).subscribe(profile => {
-        this.profile = profile;
-      })
-    }
-  }
-
-  ionViewDidLeave() {
-    this.refreshData = true;
+    this.userProfileStore.loadUserProfile(false).pipe(first()).subscribe(profile => {
+      this.profile = profile;
+    })
   }
 
   forceRefresh(event) {
