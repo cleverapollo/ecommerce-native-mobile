@@ -341,6 +341,11 @@ div.divide {
     line-height: 20px;
     font-weight: 500;
 }
+.truncate-name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
 
 .wish-price {
     font-family: 'Roboto';

@@ -31,6 +31,9 @@
 .wish-list-name {
     font-size: 14px;
     font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 

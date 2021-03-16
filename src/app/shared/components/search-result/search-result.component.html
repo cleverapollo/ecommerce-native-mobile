@@ -3,7 +3,7 @@
     <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" />
   </div>
   <ion-card-content>
-    <div class="wish-name" (click)="openProductURL()">{{ wish?.name | slice:0:15 }}</div>
+    <div class="wish-name truncate-name" (click)="openProductURL()">{{ wish?.name }}</div>
     <div class="wish-price" (click)="openProductURL()">{{ wish.price.displayString }}</div>
     <ion-button expand="block" fill="outline" color="tertiary" (click)="selectWish()">Hinzufügen</ion-button>
   </ion-card-content>
