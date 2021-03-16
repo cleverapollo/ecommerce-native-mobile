@@ -47,6 +47,14 @@ export class CustomValidation {
     return null;
   }
 
+  static valueHasChanged(control: AbstractControl): ValidationErrors | null { 
+    console.log('value has changed ', control);
+    return control.dirty ? null : {
+      valueHasNotChanged: true
+    }
+  }
+
+
   static validateFormGroup(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => { 
       const control = formGroup.get(field);   
