@@ -6,6 +6,7 @@ import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } 
 import { UserProfileStore } from '../../user-profile-store.service';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-profile-settings-firstname',
@@ -15,12 +16,13 @@ import { ToastService } from '@core/services/toast.service';
 export class ProfileSettingsFirstnamePage implements OnInit {
 
   form: FormGroup;
-  
+
   get validationMessages(): ValidationMessages {
     return {
       firstName: [
         new ValidationMessage('required', 'Gib bitte deinen Vornamen an.'),
-        new ValidationMessage('minlength', 'Dein Vorname muss aus mindestens zwei Zeichen bestehen.')
+        new ValidationMessage('minlength', 'Dein Vorname muss aus mindestens zwei Zeichen bestehen.'),
+        new ValidationMessage('valueHasNotChanged', 'Dein Vorname hat sich nicht geändert.')
       ],
     }
   }
@@ -36,14 +38,23 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   ngOnInit() {
     const firstName = history.state.data.profile.firstName;
     this.form = this.formBuilder.group({
-      firstName: this.formBuilder.control(firstName, [Validators.required, Validators.min(2)])
+      firstName: this.formBuilder.control(firstName, {
+        validators: [Validators.required, Validators.min(2), CustomValidation.valueHasChanged],
+        updateOn: 'submit'
+      })
     });
   }
 
   saveChanges() {
+    if (this.form.invalid) {
+      CustomValidation.validateFormGroup(this.form);
+      return;
+    }
+
     this.loadingService.showLoadingSpinner();
     this.api.partialUpdateFirstName(this.form.controls.firstName.value).toPromise()
       .then(updatedProfile => {
+        this.form.controls.firstName.reset(updatedProfile.firstName);
         this.userProfileStore.updateCachedUserProfile(updatedProfile);
         this.toastService.presentSuccessToast('Dein Vorname wurde erfolgreich aktualisiert.')
       })
