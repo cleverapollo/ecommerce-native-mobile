@@ -13,9 +13,7 @@ import { LogService } from '@core/services/log.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { Location } from '@angular/common';
-import { RegistrationApiService } from '@core/api/registration-api.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { UserService } from '@core/services/user.service';
 import { Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { WanticJwtToken } from '@core/models/login.model';
@@ -34,7 +32,6 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
   private getUserProfileSubscription: Subscription;
 
   form: FormGroup;
-  initialValue: string;
   userProfile: UserProfile;
   
   get validationMessages(): ValidationMessages {
@@ -42,6 +39,7 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
       email: [
         new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
         new ValidationMessage('email', 'Bitte gib eine gültige E-Mail Adresse ein.'),
+        new ValidationMessage('valueHasNotChanged', 'Deine E-Mail Adresse hat sich nicht geändert.')
       ],
       password: [
         new ValidationMessage('required', 'Gib bitte dein Passwort an.'),
@@ -59,7 +57,6 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private userProfileStore: UserProfileStore,
     private location: Location,
-    private registrationApiService: RegistrationApiService,
     private jwtHelper: JwtHelperService,
     private authService: AuthenticationService) 
     { }
@@ -70,7 +67,6 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
         this.userProfile = userProfile;
         const email = userProfile.email.value;
         if (!this.form) {
-          this.initialValue = email;
           this.createForm(email);
         }
       },
@@ -92,8 +88,14 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
 
   private createForm(email: string) {
     this.form = this.formBuilder.group({
-      email: this.formBuilder.control(email, [Validators.required, CustomValidation.email]),
-      password: this.formBuilder.control('', [Validators.required])
+      email: this.formBuilder.control(email, {
+        validators: [Validators.required, CustomValidation.email, CustomValidation.valueHasChanged],
+        updateOn: 'blur'
+      }),
+      password: this.formBuilder.control('', {
+        validators: [Validators.required],
+        updateOn: 'blur'
+      })
     });
   }
 
@@ -105,15 +107,17 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
     this.getUserProfileSubscription?.unsubscribe();
   }
 
-  unchanged(): boolean {
-    return this.initialValue == this.form.controls['email'].value;
-  }
-
   saveChanges() {
+    if (this.form.invalid) {
+      CustomValidation.validateFormGroup(this.form);
+      return;
+    }
     this.loadingService.showLoadingSpinner();
     const requestBody = new UpdateEmailChangeRequest(this.form.controls);
+    const email = this.form.controls.email.value;
     this.updateEmailChangeRequestSubscription = this.api.updateEmailChangeRequest(requestBody).subscribe({
       next: () => {
+        this.form.controls.email.reset(email);
         this.emailVerificationService.updateEmailVerificationStatus(EmailVerificationStatus.VERIFICATION_EMAIL_SENT);
         this.loadingService.dismissLoadingSpinner();
       }, 

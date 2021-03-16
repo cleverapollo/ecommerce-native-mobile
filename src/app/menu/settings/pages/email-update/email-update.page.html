@@ -21,7 +21,7 @@
     </app-show-hide-password>
     <app-validation-messages [control]="form.get('password')" [validationMessages]="validationMessages.password"></app-validation-messages>
 
-    <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block" [disabled]="form.invalid || form.pristine">
+    <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block">
       ÄNDERUNGEN SPEICHERN
     </ion-button>
   </form>
