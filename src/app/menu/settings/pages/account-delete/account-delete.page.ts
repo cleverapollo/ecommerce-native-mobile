@@ -10,6 +10,7 @@ import { LogService } from '@core/services/log.service';
 import { ToastService } from '@core/services/toast.service';
 import { NavController } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { CustomValidation } from '@shared/custom-validation';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -43,15 +44,22 @@ export class AccountDeletePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      password: this.formBuilder.control('', [Validators.required])
+      password: this.formBuilder.control('', { 
+        validators: [Validators.required],
+        updateOn: 'submit'
+      })
     });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   deleteAccount() {
+    if (this.form.invalid) {
+      CustomValidation.validateFormGroup(this.form);
+      return;
+    }
     const requestBody = new DeleteAccountRequest(this.form.controls);
     this.loadingService.showLoadingSpinner();
     this.subscription = this.userApiService.deleteUser(requestBody).subscribe({
