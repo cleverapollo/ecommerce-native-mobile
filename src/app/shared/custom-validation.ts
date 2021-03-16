@@ -48,7 +48,6 @@ export class CustomValidation {
   }
 
   static valueHasChanged(control: AbstractControl): ValidationErrors | null { 
-    console.log('value has changed ', control);
     return control.dirty ? null : {
       valueHasNotChanged: true
     }

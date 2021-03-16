@@ -91,9 +91,8 @@ export class WishListCreateUpdatePage implements OnInit {
 
   initFormIfNotPresent() {
     if (!this.form) {
-      const name = this.wishList && this.wishList.name ? this.wishList.name : '';
-      const date = this.wishList && this.wishList.date ? this.wishList.date : '';
-
+      const name = this.wishList?.name ? this.wishList.name : '';
+      const date = this.wishList?.date ? new Date(this.wishList.date).toISOString() : '';
       this.form = this.formBuilder.group({
         'name': this.formBuilder.control(name, {
           validators: [Validators.required],
