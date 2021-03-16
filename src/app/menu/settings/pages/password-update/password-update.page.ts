@@ -29,7 +29,7 @@ export class PasswordUpdatePage implements OnInit {
       ],
       confirm: [
         new ValidationMessage('required', 'Bestätige bitte dein Passwort.'),
-        new ValidationMessage('passwordDoesNotMatch', 'Die Passwört stimmen nicht überein.')
+        new ValidationMessage('passwordDoesNotMatch', 'Die Passwörter stimmen nicht überein.')
       ]
     }
   }
@@ -38,25 +38,37 @@ export class PasswordUpdatePage implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      currentPassword: this.formBuilder.control('', [
-        Validators.required,
-      ]),
-      value: this.formBuilder.control('', [
-        Validators.required, 
-        CustomValidation.passwordValidator({ passwordTooWeak: true }),
-        Validators.minLength(8)
-      ]),
-      confirm: this.formBuilder.control('', [
-        Validators.required, 
-        CustomValidation.passwordValidator({ passwordTooWeak: true }),
-        Validators.minLength(8)
-      ]),
-    }, { 
+      currentPassword: this.formBuilder.control('', {
+        validators: [Validators.required],
+        updateOn: 'blur'
+      }),
+      value: this.formBuilder.control('', {
+        validators: [
+          Validators.required,
+          CustomValidation.passwordValidator({ passwordTooWeak: true }),
+          Validators.minLength(8)
+        ],
+        updateOn: 'blur'
+      }),
+      confirm: this.formBuilder.control('', {
+        validators: [
+          Validators.required,
+          CustomValidation.passwordValidator({ passwordTooWeak: true }),
+          Validators.minLength(8)
+        ],
+        updateOn: 'blur'
+      }),
+    }, {
       validator: CustomValidation.passwordMatchValidator
     });
   }
 
   saveChanges() {
+    if (this.form.invalid) {
+      CustomValidation.validateFormGroup(this.form);
+      return;
+    }
+
     const request: UpdatePasswordRequest = {
       currentPassword: this.form.controls.currentPassword.value,
       newPassword: this.form.controls.value.value,
