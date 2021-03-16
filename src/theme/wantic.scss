@@ -196,7 +196,9 @@ form {
             background: white;
             --padding-end: 21.8px !important;
         }
-        ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty, ion-searchbar.ion-invalid.ion-touched, ion-searchbar.ion-invalid.ion-dirty {
+        ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty, 
+        ion-textarea.ion-invalid.ion-touched, ion-textarea.ion-invalid.ion-dirty,
+        ion-searchbar.ion-invalid.ion-touched, ion-searchbar.ion-invalid.ion-dirty {
             border: 2px solid var(--ion-color-primary);
         }
         ion-label.label-stacked {
