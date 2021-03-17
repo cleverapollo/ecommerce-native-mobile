@@ -45,7 +45,9 @@ export class BirthdayUpdatePage implements OnInit {
 
   async loadInitialValue() {
     const user = await this.userProfileStore.loadUserProfile().toPromise();
-    this.form.controls.birthday.setValue(new Date(user.birthday).toISOString());
+    if (user.birthday) {
+      this.form.controls.birthday.setValue(new Date(user.birthday).toISOString());
+    }
   }
 
   saveChanges() {
