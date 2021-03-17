@@ -120,6 +120,10 @@ ion-searchbar {
     border-radius: 50pt !important;
     height: 48px !important;
     line-height: 19px !important;
+    input.searchbar-input {
+        font-family: 'Roboto' !important;
+        font-size: 14px !important;
+    }
 }
 
 ion-input, ion-datetime, ion-select, ion-textarea {
@@ -170,6 +174,11 @@ ion-input > button.input-clear-icon {
     background-size: 7pt !important;
 }
 
+ion-searchbar > div > button > ion-icon.searchbar-clear-icon {
+    width: 9.9px !important;
+    height: 9.9px !important;
+}
+
 form {
     ion-item {
         --inner-padding-start: 0;
@@ -187,7 +196,10 @@ form {
             background: white;
             --padding-end: 21.8px !important;
         }
-        ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty {
+        ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty, 
+        ion-textarea.ion-invalid.ion-touched, ion-textarea.ion-invalid.ion-dirty,
+        ion-searchbar.ion-invalid.ion-touched, ion-searchbar.ion-invalid.ion-dirty,
+        ion-datetime.ion-invalid.ion-touched, ion-datetime.ion-invalid.ion-dirty {
             border: 2px solid var(--ion-color-primary);
         }
         ion-label.label-stacked {
@@ -328,6 +340,11 @@ div.divide {
     color: #3E3E3E;
     line-height: 20px;
     font-weight: 500;
+}
+.truncate-name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .wish-price {

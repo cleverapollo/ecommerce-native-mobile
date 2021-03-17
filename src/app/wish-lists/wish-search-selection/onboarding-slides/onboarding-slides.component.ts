@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserApiService } from '@core/api/user-api.service';
 import { LogService } from '@core/services/log.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { UserService } from '@core/services/user.service';
-import { ModalController } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -13,7 +13,10 @@ import { first } from 'rxjs/operators';
 })
 export class OnboardingSlidesComponent implements OnInit {
 
-  counter: number = 0;
+  @ViewChild(IonSlides) slides: IonSlides;
+
+  showBackButton: boolean = false;
+  showCompleteButton: boolean = false;
 
   constructor(
     private modalController: ModalController,
@@ -24,12 +27,30 @@ export class OnboardingSlidesComponent implements OnInit {
 
   ngOnInit() {}
 
-  countUp() {
-    this.counter++;
+  slideNext() {
+    this.showBackButton = true;
+    this.slides.slideNext();
   }
 
-  countDown() {
-    this.counter--;
+  slidePrev() {
+    this.showCompleteButton = false;
+    this.slides.slidePrev();
+  }
+
+  onSlideNextEnd() {
+    this.showBackButton = true;
+  }
+
+  onSlidePrevEnd() {
+    this.showCompleteButton = false;
+  }
+
+  onSlideReachEnd() {
+    this.showCompleteButton = true;
+  }
+
+  onSlideReachStart() {
+    this.showBackButton = false;
   }
 
   completeOnboarding() {

@@ -15,8 +15,9 @@
 
   <form [formGroup]="searchByAmazonApiForm" (ngSubmit)="searchByAmazonApi()">
     <ion-item lines="none">
-      <ion-input type="text" enterkeyhint="search" placeholder="z.B. Holzspielzeug" [formControl]="keywords" autocapitalize="on" autofocus="true" clearInput="true" inputmode="search"></ion-input>
+      <ion-input type="text" enterkeyhint="search" placeholder="z.B. Holzspielzeug" formControlName="keywords" autocapitalize="on" autofocus="true" clearInput="true" inputmode="search"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="searchByAmazonApiForm.get('keywords')" [validationMessages]="validationMessages.keywords"></app-validation-messages>
   </form>
 
  <p class="wantic-margin-right-left">

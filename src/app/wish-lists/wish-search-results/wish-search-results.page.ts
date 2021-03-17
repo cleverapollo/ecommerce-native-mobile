@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchQuery, SearchResultDataService, SearchType } from '@core/services/search-result-data.service';
 import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
 import { ProductSearchService } from '@core/services/product-search.service';
@@ -11,6 +11,8 @@ import { SearchService } from '@core/api/search.service';
 import { PagingService } from '@core/services/paging.service';
 import { first } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
+import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { CustomValidation } from '@shared/custom-validation';
 
 const { Keyboard } = Plugins;
 
@@ -44,6 +46,15 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
     "Nachtlicht Kinder",
     "Kugelbahn Holz"
   ]
+
+  get validationMessages(): ValidationMessages {
+    return {
+      keywords: [
+        new ValidationMessage('required', 'Bitte gib einen Suchbegriff ein.'),
+        new ValidationMessage('minlength', 'Bitte gib min. 2 Zeichen an.')
+      ]
+    }
+  };
 
   page: number = 1;
   maxPageCount: number = 1;
@@ -124,6 +135,11 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   searchByAmazonApi() {
+    if (this.searchByAmazonApiForm.invalid) {
+      CustomValidation.validateFormGroup(this.searchByAmazonApiForm);
+      return;
+    }
+
     this.page = 1;
     this.infiniteScroll.disabled = false;
     this.loading = true;
@@ -205,13 +221,14 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
   private createForm(value: String) {
     switch (this.searchType) {
       case SearchType.AMAZON_API:
-        this.logger.log('amazon api form');
         this.searchByAmazonApiForm = this.formBuilder.group({
-          keywords: value
+          keywords: [value, {
+            validators: [Validators.required, Validators.minLength(2)],
+            updateOn: 'submit'
+          }]
         });
         break;
       case SearchType.URL: 
-      this.logger.log('url form');
         this.searchByUrlForm = this.formBuilder.group({
           url: value
         });

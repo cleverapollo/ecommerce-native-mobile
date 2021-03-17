@@ -17,7 +17,7 @@
     </app-show-hide-password>
     <app-validation-messages [control]="form.get('password')" [validationMessages]="validationMessages.password"></app-validation-messages>
 
-    <ion-button class="wantic-save-button" color="primary" expand="block" (click)="deleteAccount()" [disabled]="form.invalid || form.pristine">
+    <ion-button class="wantic-save-button" color="primary" expand="block" (click)="deleteAccount()">
       ACCOUNT LÖSCHEN
     </ion-button>
   </form>

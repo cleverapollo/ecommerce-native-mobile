@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 export class CustomValidation {
 
@@ -45,6 +45,23 @@ export class CustomValidation {
       return validEmailAdress ? null : { email: control.value };
     }
     return null;
+  }
+
+  static valueHasChanged(control: AbstractControl): ValidationErrors | null { 
+    return control.dirty ? null : {
+      valueHasNotChanged: true
+    }
+  }
+
+
+  static validateFormGroup(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => { 
+      const control = formGroup.get(field);   
+      if (control instanceof FormGroup) { 
+        this.validateFormGroup(control);
+      }
+      control.markAsTouched({ onlySelf: true });      
+    });
   }
 
 }

@@ -14,10 +14,15 @@ export class MenuPage implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
+    private browserService: BrowserService,
     public privacyPolicyService: PrivacyPolicyService
   ) { }
 
   ngOnInit() {}
+
+  showFaqPage() {
+    this.browserService.openInAppBrowser("https://www.wantic.io/faq");
+  }
 
   logout() {
     this.authenticationService.logout().then(() => {

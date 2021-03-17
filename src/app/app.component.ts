@@ -51,6 +51,7 @@ export class AppComponent {
           this.onAppResume();
         })
       } else {
+        this.handleAuthState();
         this.handlePossibleAccountActivation();
       }
       this.initCache();
@@ -69,9 +70,9 @@ export class AppComponent {
     await this.handlePossibleAccountActivation();
   }
 
-  private handleAuthState(): Promise<void> {
+  private async handleAuthState(): Promise<void> {
+    const tokenIsExpired = await this.authService.tokenIsExpired();
     return new Promise<void>((resolve) => {
-      const tokenIsExpired = this.authService.tokenIsExpired;
       if (tokenIsExpired) {
         SplashScreen.show().then(() => {
           this.authService.refreshExpiredToken().then(() => {

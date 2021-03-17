@@ -16,6 +16,7 @@
     <ion-item lines="none">
       <ion-input type="search" inputmode="search" enterkeyhint="search" placeholder="z.B. Holzspielzeug" formControlName="keywords" clearInput="true"></ion-input>
     </ion-item>
+    <app-validation-messages [control]="searchByAmazonApiForm.get('keywords')" [validationMessages]="validationMessages.keywords"></app-validation-messages>
   </form>
 
   <ion-grid class="ion-center" *ngIf="!loading && results.length">

@@ -11,6 +11,7 @@ import { SearchResultDataService } from '@core/services/search-result-data.servi
 import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-wish-create-update',
@@ -79,15 +80,29 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     const price = this.wish.price.amount ? this.wish.price.amount : 0.00;
     const formattedPrice = this.formatAmount(price);
     this.form = this.formBuilder.group({
-      'wishListId': this.formBuilder.control(wishListId, [Validators.required]),
-      'name': this.formBuilder.control(name, [Validators.required]),
-      'price': this.formBuilder.control(formattedPrice, [Validators.required]),
+      'wishListId': this.formBuilder.control(wishListId, {
+        validators: [Validators.required],
+        updateOn: 'blur'
+      }),
+      'name': this.formBuilder.control(name, {
+        validators: [Validators.required],
+        updateOn: 'blur'
+      }),
+      'price': this.formBuilder.control(formattedPrice, {
+        validators: [Validators.required],
+        updateOn: 'blur'
+      }),
     });
   }
 
   ngOnDestroy(): void {}
 
   createOrUpdateWish() {
+    if (this.form.invalid) {
+      CustomValidation.validateFormGroup(this.form);
+      return;
+    }
+
     if (this.isUpdatePage) {
       this.updateWish();
     } else {

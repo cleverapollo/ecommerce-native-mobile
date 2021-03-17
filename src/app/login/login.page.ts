@@ -43,9 +43,15 @@ export class LoginPage implements OnInit {
 
   private createForm() {
     this.loginForm = this.formBuilder.group({
-      email: this.formBuilder.control('', [Validators.required, CustomValidation.email]),
-      password: this.formBuilder.control('', [Validators.required]),
-      saveCredentials: this.formBuilder.control(false)
+      email: this.formBuilder.control('', {
+        validators: [Validators.required, CustomValidation.email],
+        updateOn: 'blur' 
+      }),
+      password: this.formBuilder.control('', {
+        validators: [Validators.required],
+        updateOn: 'blur' 
+      }),
+      saveCredentials: this.formBuilder.control(true)
     })
   }
 
@@ -56,6 +62,10 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit() {
+    if (this.loginForm.invalid) {
+      CustomValidation.validateFormGroup(this.loginForm);
+      return;
+    }
     const input = this.loginForm.value as LoginForm;
     this.authService.login(input.email, input.password, input.saveCredentials).then(() => {
       this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');

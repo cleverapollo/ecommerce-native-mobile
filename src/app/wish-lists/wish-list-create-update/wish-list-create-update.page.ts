@@ -13,6 +13,7 @@ import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { UserWishListDto } from '@core/models/user.model';
 import { LoadingService } from '@core/services/loading.service';
 import { first } from 'rxjs/operators';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-wish-list-create-update',
@@ -90,12 +91,16 @@ export class WishListCreateUpdatePage implements OnInit {
 
   initFormIfNotPresent() {
     if (!this.form) {
-      const name = this.wishList && this.wishList.name ? this.wishList.name : '';
-      const date = this.wishList && this.wishList.date ? this.wishList.date : '';
-
+      const name = this.wishList?.name ? this.wishList.name : '';
+      const date = this.wishList?.date ? new Date(this.wishList.date).toISOString() : '';
       this.form = this.formBuilder.group({
-        'name': this.formBuilder.control(name, [Validators.required]),
-        'date': this.formBuilder.control(date, []),
+        'name': this.formBuilder.control(name, {
+          validators: [Validators.required],
+          updateOn: 'blur'
+        }),
+        'date': this.formBuilder.control(date, {
+          updateOn: 'blur'
+        }),
       });
     }
   }
@@ -105,6 +110,10 @@ export class WishListCreateUpdatePage implements OnInit {
   }
 
   createOrUpdateWishList() {
+    if (this.form.invalid) {
+      CustomValidation.validateFormGroup(this.form);
+      return;
+    }
     let request = new WishListCreateOrUpdateRequest();
     request.name = this.form.controls.name.value;
     request.date = this.form.controls.date.value;

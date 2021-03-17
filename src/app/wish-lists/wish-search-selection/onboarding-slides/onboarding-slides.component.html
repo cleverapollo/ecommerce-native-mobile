@@ -3,57 +3,44 @@
     <ion-title>
       Wunsch hinzufügen
     </ion-title>
-    <ion-buttons slot="start" *ngIf="counter > 0">
-      <ion-button (click)="countDown();" size="small">
+    <ion-buttons slot="start" *ngIf="showBackButton">
+      <ion-button (click)="slidePrev();" size="small">
         <ion-icon slot="icon-only" src="assets/icon/arrow-left.svg"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-text-center" slots="fixed" scrollY="false">
-  <div *ngIf="counter === 0">
-    <p class="ion-text-center">
-      Springe in deinen Browser und <br>
-      füge Wünsche aus deinem liebsten <br>
-      Onlineshop über dieses Icon <ion-icon class="share-icon" name="share-outline"></ion-icon> hinzu.
-    </p>
-    <img src="assets/images/onboarding-slide-1.png" alt="Onboarding Slide 1" />
-    <div class="ion-text-center progress-indicator">
-      <div class="circle active"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
-    </div>
-  </div>
-  <div *ngIf="counter === 1">
-    <p class="ion-text-center"> 
-      Wische bei den App-Favoriten nach rechts <br>
-      und füge unter "Mehr" Wantic hinzu.<br><br>
-    </p>
-    <img  src="assets/images/onboarding-slide-2.png" alt="Onboarding Slide 2" />
-    <div class="ion-text-center progress-indicator">
-      <div class="circle"></div>
-      <div class="circle active"></div>
-      <div class="circle"></div>
-    </div>
-  </div>
-  <div *ngIf="counter === 2" >
-    <p class="ion-text-center">
-      Klicke auf das Wantic-Symbol und füge<br>
-      deinen Wunsch zu deiner Liste hinzu.<br><br>
-    </p>
-    <img src="assets/images/onboarding-slide-3.png" alt="Onboarding Slide 3" />
-    <div class="ion-text-center progress-indicator">
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle active"></div>
-    </div>
-  </div>
+  <ion-slides pager="true" (ionSlideNextEnd)="onSlideNextEnd()" (ionSlidePrevEnd)="onSlidePrevEnd()" (ionSlideReachStart)="onSlideReachStart()" (ionSlideReachEnd)="onSlideReachEnd()">
+    <ion-slide>
+      <p class="ion-text-center">
+        Springe in deinen Browser und <br>
+        füge Wünsche aus deinem liebsten <br>
+        Onlineshop über dieses Icon <ion-icon class="share-icon" name="share-outline"></ion-icon> hinzu.
+      </p>
+      <img src="assets/images/onboarding-slide-1.png" alt="Onboarding Slide 1" />
+    </ion-slide>
+    <ion-slide>
+      <p class="ion-text-center"> 
+        Wische bei den App-Favoriten nach rechts <br>
+        und füge unter "Mehr" Wantic hinzu.<br><br>
+      </p>
+      <img  src="assets/images/onboarding-slide-2.png" alt="Onboarding Slide 2" />
+    </ion-slide>
+    <ion-slide>
+      <p class="ion-text-center">
+        Klicke auf das Wantic-Symbol und füge<br>
+        deinen Wunsch zu deiner Liste hinzu.<br><br>
+      </p>
+      <img src="assets/images/onboarding-slide-3.png" alt="Onboarding Slide 3" />
+    </ion-slide>
+  </ion-slides>
 </ion-content>
 <ion-footer>
-  <ion-button *ngIf="counter < 2" class="wantic-save-button" color="primary" expand="block" (click)="countUp();">
+  <ion-button *ngIf="!showCompleteButton" class="wantic-save-button" color="primary" expand="block" (click)="slideNext();">
     WEITER
   </ion-button>
-  <ion-button  *ngIf="counter === 2" class="wantic-save-button" color="primary" expand="block" (click)="completeOnboarding()">
+  <ion-button  *ngIf="showCompleteButton" class="wantic-save-button" color="primary" expand="block" (click)="completeOnboarding()">
     Verstanden
   </ion-button>
 </ion-footer>

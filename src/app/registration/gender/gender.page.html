@@ -10,23 +10,26 @@
     fühlst du dich<br>
     zugehörig?
   </h1>
-  <ion-list class="wantic-margin-right-left" mode="md">
-    <ion-radio-group name="gender" (ionChange)="updateGender($event)">    
-      <ion-item lines="none">
-        <ion-label>Weiblich</ion-label>
-        <ion-radio slot="start" value="FEMALE"></ion-radio>
-      </ion-item>
-  
-      <ion-item lines="none">
-        <ion-label>Männlich</ion-label>
-        <ion-radio slot="start" value="MALE"></ion-radio>
-      </ion-item>
-  
-      <ion-item lines="none">
-        <ion-label>Divers</ion-label>
-        <ion-radio slot="start" value="DIVERSE"></ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
+  <div class="list-container">
+    <ion-list class="wantic-margin-right-left" mode="md">
+      <ion-radio-group name="gender" (ionChange)="updateGender($event)">    
+        <ion-item lines="none">
+          <ion-label>Weiblich</ion-label>
+          <ion-radio slot="start" value="FEMALE"></ion-radio>
+        </ion-item>
+    
+        <ion-item lines="none">
+          <ion-label>Männlich</ion-label>
+          <ion-radio slot="start" value="MALE"></ion-radio>
+        </ion-item>
+    
+        <ion-item lines="none">
+          <ion-label>Divers</ion-label>
+          <ion-radio slot="start" value="DIVERSE"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </div>
+
   <ion-button class="wantic-save-button" expand="block" (click)="next()" [disabled]="!gender">Weiter</ion-button>
 </ion-content>

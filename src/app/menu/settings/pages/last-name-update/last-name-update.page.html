@@ -15,7 +15,7 @@
     </ion-item>
     <app-validation-messages [control]="form.get('lastName')" [validationMessages]="validationMessages.lastName"></app-validation-messages>
 
-    <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block" [disabled]="!form.valid || form.pristine">
+    <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block">
       ÄNDERUNGEN SPEICHERN
     </ion-button>
   </form>

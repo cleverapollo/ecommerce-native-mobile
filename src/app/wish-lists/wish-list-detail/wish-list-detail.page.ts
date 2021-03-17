@@ -25,7 +25,6 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   private queryParamSubscription: Subscription;
 
   wishList: WishListDto;
-  refreshWishListData: boolean = false
   showBackButton: boolean = true;
   accountIsNotActivated: boolean;
 
@@ -71,16 +70,11 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() { 
-    if (this.refreshWishListData) {
-      this.wishListStore.loadWishList(this.wishList.id).subscribe( wishList => {
-        this.wishList = wishList;
-      })
-    }
+    this.wishListStore.loadWishList(this.wishList.id).subscribe( wishList => {
+      this.wishList = wishList;
+    })
   }
 
-  ionViewDidLeave() {
-    this.refreshWishListData = true;
-  }
 
   ngOnDestroy() {
     this.queryParamSubscription.unsubscribe();

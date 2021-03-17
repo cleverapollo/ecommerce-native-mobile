@@ -4,7 +4,7 @@
     <img class="placeholder" *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg">
   </div>
   <ion-card-content>
-    <div class="wish-name">{{ wish.name | truncateName }}</div>
+    <div class="wish-name truncate-name">{{ wish.name }}</div>
     <div class="wish-price">{{ wish.price.displayString }}</div>
   </ion-card-content>
 </ion-card>

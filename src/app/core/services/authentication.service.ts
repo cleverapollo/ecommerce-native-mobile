@@ -18,14 +18,19 @@ import { first } from 'rxjs/operators';
 })
 export class AuthenticationService {
 
-  token: string;
+  token = new BehaviorSubject<string>(null);
   isAuthenticated = new BehaviorSubject<boolean>(null);
 
-  get tokenIsExpired(): boolean {
-    if (this.token) {
-      return this.jwtHelper.isTokenExpired(this.token);
+  async tokenIsExpired(): Promise<boolean> {
+    if (this.token.value !== null) {
+      return this.jwtHelper.isTokenExpired(this.token.value);
     } else {
-      return null;
+      await this.loadToken();
+      if (this.token.value !== null) {
+        return this.jwtHelper.isTokenExpired(this.token.value);
+      } else {
+        return null;
+      }
     }
   }
 
@@ -95,7 +100,7 @@ export class AuthenticationService {
       return this.refreshToken(credentials);
     } else {
       this.isAuthenticated.next(false);
-      this.token = null;
+      this.token.next(null);
       return Promise.reject();
     }
   }
@@ -151,12 +156,12 @@ export class AuthenticationService {
 
   private async loadToken() {
     const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
-    this.updateAuthState(token)
+    this.token.next(token);
+    this.updateAuthState(token);
   }
 
   private updateAuthState(token: string) {
     if (token && !this.jwtHelper.isTokenExpired(token)) {
-      this.token = token;
       this.isAuthenticated.next(true);
       this.updateAuthorizationHeaderForNativeHttpClient(token);
     } else {
@@ -170,6 +175,7 @@ export class AuthenticationService {
 
     this.updateUserProperties(token);
     this.updateAuthState(token);
+    this.token.next(token);
 
     return Promise.resolve();
   }

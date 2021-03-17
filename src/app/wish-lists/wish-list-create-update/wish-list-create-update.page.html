@@ -19,7 +19,7 @@
     </ion-item>
     <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
 
-    <ion-button *ngIf="form" (click)="createOrUpdateWishList()" expand="block" [disabled]="!form.valid || form.pristine" class="wantic-margin-right-left wantic-save-button no-margin-bottom button-save-changes">
+    <ion-button *ngIf="form" (click)="createOrUpdateWishList()" expand="block" class="wantic-margin-right-left wantic-save-button no-margin-bottom button-save-changes">
       {{ buttonTitle }}
     </ion-button>
     <ion-button *ngIf="isUpdatePage && isCreator" class="wantic-save-button" (click)="deleteWishList()" color="primary" fill="outline" expand="block">
