@@ -60,35 +60,37 @@ export class AppComponent {
   }
 
   private async onAppStart() {
-    await this.handleAuthState();
+    this.handleAuthState().then(() => {
+      SplashScreen.hide();
+    })
   }
 
   private async onAppResume() {
-    this.logger.debug('App on resume');
-    await this.handleAuthState();
+    SplashScreen.show().finally(() => {
+      this.handleAuthState().then(() => {
+        SplashScreen.hide();
+      });
+    });
     await this.cache.clearGroup('wishList');
     await this.handlePossibleAccountActivation();
   }
 
   private async handleAuthState(): Promise<void> {
+    
     const tokenIsExpired = await this.authService.tokenIsExpired();
+    this.logger.info('tokenIsExpired ', tokenIsExpired);
     return new Promise<void>((resolve) => {
       if (tokenIsExpired) {
-        SplashScreen.show().then(() => {
-          this.authService.refreshExpiredToken().then(() => {
-            this.router.navigateByUrl('/secure/home/wish-list-overview').finally(() => {
-              SplashScreen.hide();
-              resolve();
-            });
-          }, () => {
-            this.router.navigateByUrl('/login').finally(() => {
-              SplashScreen.hide();
-              resolve();
-            });
-          })
+        this.authService.refreshExpiredToken().then(() => {
+          this.router.navigateByUrl('/secure/home/wish-list-overview').finally(() => {
+            resolve();
+          });
+        }, () => {
+          this.router.navigateByUrl('/login').finally(() => {
+            resolve();
+          });
         })
       } else {
-        SplashScreen.hide();
         resolve();
       }
     });

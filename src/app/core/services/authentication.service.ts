@@ -25,9 +25,9 @@ export class AuthenticationService {
     if (this.token.value !== null) {
       return this.jwtHelper.isTokenExpired(this.token.value);
     } else {
-      await this.loadToken();
-      if (this.token.value !== null) {
-        return this.jwtHelper.isTokenExpired(this.token.value);
+      const token = await this.loadToken();
+      if (token !== null) {
+        return this.jwtHelper.isTokenExpired(token);
       } else {
         return null;
       }
@@ -46,14 +46,11 @@ export class AuthenticationService {
     private emailVerificationService: EmailVerificationService,
     private loadingService: LoadingService
   ) { 
-    this.initToken();
-  }
-
-  async initToken() {
-    await this.loadToken();
-    if (this.tokenIsExpired) {
-      await this.refreshExpiredToken();
-    }
+    this.loadToken().then(token => {
+      if (token !== null && this.jwtHelper.isTokenExpired(token)) {
+        this.refreshExpiredToken();
+      }
+    })
   }
 
   async login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
@@ -154,10 +151,11 @@ export class AuthenticationService {
     }
   }
 
-  private async loadToken() {
+  private async loadToken(): Promise<string> {
     const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
     this.token.next(token);
     this.updateAuthState(token);
+    return Promise.resolve(token);
   }
 
   private updateAuthState(token: string) {
