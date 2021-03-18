@@ -75,31 +75,5 @@ export class UserProfileStore {
     return this.cache.loadFromObservable(keyForCaching, request, this.CACHE_GROUP_KEY, ttl);
   }
 
-  loadUserProfileImage(forceRefresh: boolean = false): Observable<Blob> {
-    const cacheKey = 'profileImage';
-    return from(new Promise((resolve, reject) => {
-      this.loadUserProfile().subscribe({
-        next: userProfile => {
-          const profileImageUrl = userProfile.profileImageInfo?.urlString;
-          if (profileImageUrl) {
-            resolve(this.loadImage(profileImageUrl, forceRefresh, cacheKey));
-          }
-          resolve(null);
-        },
-        error: error => {
-          reject(error);
-        }
-      });
-    })) as Observable<Blob>;
-  }
-
-  refreshUserProfileImage(): Observable<Blob> {
-    return this.loadUserProfileImage(true);
-  }
-
-  removeUserProfileImage() {
-    const cacheKey = 'profileImage';
-    return this.cache.removeItem(cacheKey);
-  }
 
 }
