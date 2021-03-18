@@ -15,12 +15,6 @@
       <p class="wish-list-name">{{ wishList.name }}</p>
       <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
     </div>
-    <div class="friends-images" *ngIf="wishList.memberProfieImageInfos && wishList.memberProfieImageInfos.length">
-      <ion-avatar *ngFor="let imageInfo of wishList.memberProfieImageInfos">
-        <img
-          [src]="imageInfo ? (imageInfo | cacheImage | async) : 'assets/images/avatar-placeholder-small.svg'" alt="">
-      </ion-avatar>
-    </div>
   </section>
  
   <div class="divide"></div>

@@ -5,7 +5,6 @@ export class UserProfile {
     lastName: String;
     birthday: Date;
     email: EmailDto;
-    profileImageInfo: ProfileImageDto;
 }
 
 export class EmailDto {
@@ -21,7 +20,6 @@ export enum InvitationStatus {
 export class UserDto {
     firstName: String;
     lastName: String;
-    profileImageInfo: ProfileImageDto;
     emailVerificationStatus: EmailVerificationStatus;
 }
 
@@ -29,7 +27,6 @@ export class UserWishListDto {
     firstName: string;
     lastName?: string;
     email: string;
-    profileImageInfo?: ProfileImageDto;
     emailVerificationStatus: EmailVerificationStatus;
     invitationStatus: InvitationStatus;
 }
@@ -57,12 +54,6 @@ export class UploadFileResponse {
     fileDownloadUri: String;
     fileType: String;
     size: Number;
-}
-
-export class ProfileImageDto {
-    urlString: string;
-    fileName: string;
-    isFromLoggedInUser: boolean;
 }
 
 export enum Gender {

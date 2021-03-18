@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from '@core/services/alert.service';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BrowserService } from '@core/services/browser.service';
-import { ProfileImageDto } from '@core/models/user.model';
 import { LogService } from '@core/services/log.service';
 import { UserService } from '@core/services/user.service';
 import { Subscription } from 'rxjs';
