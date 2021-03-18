@@ -23,7 +23,7 @@ export class WishListStoreService {
     return `getWishList${id}`
   }
 
-  private cacheKeyWish(id: Number): string {
+  private cacheKeyWish(id: string): string {
    return `getWish${id}` 
   }
 
@@ -147,14 +147,14 @@ export class WishListStoreService {
 
   // WISH
 
-  loadWish(id: Number, forceRefresh: boolean = false): Observable<WishDto> {
+  loadWish(id: string, forceRefresh: boolean = false): Observable<WishDto> {
     if (this.userService.accountIsEnabled) {
       return this.loadWishForEnabledAccount(id, forceRefresh);
     }
     return this.loadWishForDisabledAccount(id);
   }
 
-  private loadWishForEnabledAccount(id: Number, forceRefresh: boolean = false): Observable<WishDto> {
+  private loadWishForEnabledAccount(id: string, forceRefresh: boolean = false): Observable<WishDto> {
     let request = this.wishApiService.getWishById(id);
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWish(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
@@ -162,7 +162,7 @@ export class WishListStoreService {
     return this.cache.loadFromObservable(this.cacheKeyWish(id), request, this.CACHE_GROUP_KEY)
   }
 
-  private loadWishForDisabledAccount(id: Number): Observable<WishDto> {
+  private loadWishForDisabledAccount(id: string): Observable<WishDto> {
     return from(new Promise<WishDto>((resolve) => {
       this.storageService.get<RegistrationResponse>(StorageKeys.REGISTRATION_RESPONSE).then((responseBody) => {
         const wishList = responseBody.wishLists?.[0];

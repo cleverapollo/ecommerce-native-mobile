@@ -1,4 +1,4 @@
-import { ProfileImageDto, UserDto } from '@core/models/user.model';
+import { UserDto } from '@core/models/user.model';
 import { PriceDto } from '@core/models/wish-list.model';
 
 export class FriendWishList {
@@ -7,12 +7,10 @@ export class FriendWishList {
     date: String;
     wishes: Array<FriendWish>;
     owners: Array<UserDto>;
-
-    memberProfieImageInfos: Array<ProfileImageDto>;
 }
 
 export class FriendWish {
-    id: Number;
+    id: string;
     asin?: string;
     wishListId: string;
     name: String;
@@ -26,5 +24,5 @@ export class FriendWish {
 export interface RegisterAndSatisfyWishRequest {
     wishListId: string;
     email: String;
-    wishId: Number;
+    wishId: string;
 }

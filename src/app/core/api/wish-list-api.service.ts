@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { WishListDto, WishDto, SharedWishListLink } from '@core/models/wish-list.model';
+import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { FriendWishList, RegisterAndSatisfyWishRequest } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
@@ -75,7 +75,7 @@ export class WishListApiService {
     );
   }
 
-  toggleWishReservation(wishListId: string, wishId: Number, email: string): Observable<FriendWishList> {
+  toggleWishReservation(wishListId: string, wishId: string, email: string): Observable<FriendWishList> {
     return this.apiService.patch<FriendWishList>(`${ApiVersion.v1}/shared-wish-list/${wishListId}/wish/${wishId}?userEmail=${email}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );

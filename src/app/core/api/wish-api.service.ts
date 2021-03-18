@@ -21,13 +21,13 @@ export class WishApiService {
     );
   }
 
-  getWishById(wishId: Number) : Observable<WishDto> {
+  getWishById(wishId: string) : Observable<WishDto> {
     return this.apiService.get<WishDto>(`${ApiVersion.v1}/${WishApiService.REST_END_POINT}/${wishId}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
-  purchase(wishId: Number) : Observable<Object> {
+  purchase(wishId: string) : Observable<Object> {
     return this.apiService.patch(`${ApiVersion.v1}/${WishApiService.REST_END_POINT}/${wishId}/purchase`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );

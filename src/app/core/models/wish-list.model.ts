@@ -6,7 +6,7 @@ export class PriceDto {
     displayString: string;
 }
 export class WishDto {
-    id: Number;
+    id: string;
     asin?: string;
     wishListId: string;
     name: String;
