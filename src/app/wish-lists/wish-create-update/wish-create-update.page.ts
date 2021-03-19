@@ -81,8 +81,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     const formattedPrice = this.formatAmount(price);
     this.form = this.formBuilder.group({
       'wishListId': this.formBuilder.control(wishListId, {
-        validators: [Validators.required],
-        updateOn: 'blur'
+        validators: [Validators.required]
       }),
       'name': this.formBuilder.control(name, {
         validators: [Validators.required],
