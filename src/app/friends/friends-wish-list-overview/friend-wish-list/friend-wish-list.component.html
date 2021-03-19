@@ -1,15 +1,14 @@
 <ion-grid class="friend-avatar-container">
 
-  <div  *ngIf="wishList.owners?.length == 1 && !wishList.owners[0].profileImageInfo" class="centered-user-initials">
+  <div  *ngIf="wishList.owners?.length == 1" class="centered-user-initials">
     <app-user-initials [firstName]="wishList.owners[0].firstName" [lastName]="wishList.owners[0].lastName"></app-user-initials>
   </div>
-
 
   <!--2-->
   <ion-row *ngIf="wishList.owners?.length == 2">
     <ion-col size="6">
       <ion-avatar class="float-right">
-        <app-user-initials *ngIf="!wishList.owners[0].profileImageInfo"
+        <app-user-initials 
           [firstName]="wishList.owners[0].firstName" 
           [lastName]="wishList.owners[0].lastName">
         </app-user-initials>
@@ -17,7 +16,7 @@
     </ion-col>
     <ion-col size="6">
       <ion-avatar>
-        <app-user-initials *ngIf="!wishList.owners[1].profileImageInfo"
+        <app-user-initials
           [firstName]="wishList.owners[1].firstName" 
           [lastName]="wishList.owners[1].lastName">
         </app-user-initials>
