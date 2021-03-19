@@ -9,6 +9,7 @@
     "beta-web": "ionic serve --configuration=beta",
     "dev-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=beta",
     "beta-ios": "npx cap sync ios && ionic capacitor run ios --configuration=beta",
+    "prod-ios": "npx cap sync ios && ionic capacitor run ios --configuration=production",
     "build": "ng build",
     "build-web-prod": "ionic build --prod",
     "deploy-web": "npm run build-web-prod && firebase deploy",
