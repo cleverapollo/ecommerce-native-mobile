@@ -6,7 +6,8 @@ export const environment: EnvironmentConfig = {
     serverConfig: {
         networkProtocol: 'https',
         secondLevelDomain: 'wantic-rest-api-fddlidpl2q-ew.a.run.app',
-    }
+    },
+    analyticsConfigured: false
 };
 
 const serverConfig = environment.serverConfig;

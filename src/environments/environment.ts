@@ -9,7 +9,18 @@ export const environment: EnvironmentConfig = {
   serverConfig: {
     networkProtocol: '',
     secondLevelDomain: '',
-}
+  },
+  firebaseConfig: {
+    apiKey: '',
+    authDomain: '',
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+    appId: '',
+    measurementId: ''
+  },
+  analyticsConfigured: false
 };
 
 export const SERVER_URL = ''; 

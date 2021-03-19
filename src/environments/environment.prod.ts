@@ -6,7 +6,18 @@ export const environment : EnvironmentConfig = {
   serverConfig: {
     networkProtocol: 'https', 
     secondLevelDomain: 'wantic-rest-api-fddlidpl2q-ew.a.run.app', // ToDo: change to prod url
-  }
+  },
+  firebaseConfig: {
+    apiKey: 'AIzaSyBokQ5eUvMeNum-0XN06RxxE8eypufVDjg',
+    authDomain: 'wantic-prd.firebaseapp.com',
+    databaseURL: 'https://wantic-prd.firebaseio.com',
+    projectId: 'wantic-prd',
+    storageBucket: 'wantic-prd.appspot.com',
+    messagingSenderId: '553198243306',
+    appId: '1:553198243306:web:63be133f670f95908c3693',
+    measurementId: 'G-DZ99Y0YVF0'
+  },
+  analyticsConfigured: true
 };
 
 const serverConfig = environment.serverConfig;

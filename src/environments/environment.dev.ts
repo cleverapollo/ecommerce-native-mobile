@@ -8,7 +8,8 @@ export const environment: EnvironmentConfig = {
         thirdLevelDomain: '',
         secondLevelDomain: 'localhost', // for android and iOS simulators = 10.0.2.2
         port: 8080
-    }
+    },
+    analyticsConfigured: false
 };
 
 const serverConfig = environment.serverConfig;
