@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "wantic-dev"
+    "default": "wantic-dev",
+    "prod": "wantic-prd"
   }
 }
