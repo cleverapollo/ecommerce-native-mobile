@@ -16,6 +16,6 @@ export interface EnvironmentConfig {
         storageBucket: string,
         messagingSenderId: string,
         appId: string,
-        measurementId: string
+        measurementId?: string // only configured if analytics is enabled
       }
 }
