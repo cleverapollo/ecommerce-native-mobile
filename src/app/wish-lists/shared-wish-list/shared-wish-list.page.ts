@@ -6,10 +6,10 @@ import { ReserveWishModalComponent } from './reserve-wish-modal/reserve-wish-mod
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { CancelWishReservationModalComponent } from './cancel-wish-reservation-modal/cancel-wish-reservation-modal.component';
 import { QueryEmailModalComponent } from './query-email-modal/query-email-modal.component';
-import { WishListApiService } from '@core/api/wish-list-api.service';
 import { first } from 'rxjs/operators';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
+import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 
 @Component({
   selector: 'app-shared-wish-list',
@@ -30,7 +30,7 @@ export class SharedWishListPage implements OnInit {
     private route: ActivatedRoute, 
     private storageService: StorageService,
     private modalController: ModalController,
-    private wishListApiService: WishListApiService,
+    private publicResourceApiService: PublicResourceApiService,
     private loadingService: LoadingService,
     private logger: LogService
   ) { }
@@ -74,7 +74,7 @@ export class SharedWishListPage implements OnInit {
         const identifier = `${this.wishList.id}_${email}`;
         this.email = email;
         this.loadingService.showLoadingSpinner();
-        this.wishListApiService.getSharedWishList(identifier).pipe((first())).subscribe({
+        this.publicResourceApiService.getSharedWishList(identifier).pipe((first())).subscribe({
           next: wishList => {
             this.wishList = wishList;
             this.loadingService.dismissLoadingSpinner();

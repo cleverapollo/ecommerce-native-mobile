@@ -3,12 +3,12 @@ import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/mo
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RegistrationFormService } from '../registration-form.service';
-import { IonInfiniteScroll, NavController } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { WishDto } from '@core/models/wish-list.model';
-import { SearchService } from '@core/api/search.service';
 import { PagingService } from '@core/services/paging.service';
 import { LogService } from '@core/services/log.service';
 import { RegistrationRequest } from '@core/models/registration.model';
+import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 
 @Component({
   selector: 'app-search-results',
@@ -32,7 +32,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
     private route: ActivatedRoute, 
     private router: Router,
     private formService: RegistrationFormService,
-    private searchService: SearchService,
+    private publicResourceService: PublicResourceApiService,
     private pagingService: PagingService,
     private logger: LogService) {}
 
@@ -66,7 +66,7 @@ export class SearchResultsPage implements OnInit, OnDestroy {
 
   loadMoreSearchResults(event) {
     this.page++;
-    this.searchService.searchForItems(this.keywords, this.page).subscribe({
+    this.publicResourceService.searchForItems(this.keywords, this.page).subscribe({
       next: searchResult => {
         this.searchResultItems = this.searchResultItems.concat(searchResult.items);
         this.maxPageCount = this.pagingService.calcMaxPageCount(searchResult.totalResultCount);

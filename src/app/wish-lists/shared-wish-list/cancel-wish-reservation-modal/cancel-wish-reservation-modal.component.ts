@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { LogService } from '@core/services/log.service';
 import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
@@ -20,7 +21,7 @@ export class CancelWishReservationModalComponent implements OnInit {
   reservationCanceled: boolean = false;
 
   constructor(
-    private wishListApiService: WishListApiService, 
+    private publicResourceApiService: PublicResourceApiService, 
     private modalController: ModalController,
     private logger: LogService
   ) { }
@@ -28,7 +29,7 @@ export class CancelWishReservationModalComponent implements OnInit {
   ngOnInit() {}
 
   cancelWishReservation() {
-    this.wishListApiService.toggleWishReservation(this.wishList.id, this.wish.id, this.email).pipe(first()).subscribe({
+    this.publicResourceApiService.toggleWishReservation(this.wishList.id, this.wish.id, this.email).pipe(first()).subscribe({
       next: wishList => {
         this.wishList = wishList;
         this.reservationCanceled = true;

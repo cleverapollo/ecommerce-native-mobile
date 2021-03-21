@@ -12,7 +12,7 @@ import { ApiVersion } from './api-version';
 })
 export class SearchService {
 
-  private static REST_END_POINT = 'search';
+  private static REST_END_POINT = 'searches';
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 

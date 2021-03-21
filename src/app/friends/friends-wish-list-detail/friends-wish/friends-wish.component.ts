@@ -26,7 +26,7 @@ export class FriendsWishComponent implements OnInit {
   }
 
   reserve() {
-    this.wishApiService.purchase(this.wish.id).subscribe((response: FriendWish) => {
+    this.wishApiService.reserveWish(this.wish.id).subscribe((response: FriendWish) => {
       this.wish = response;
       this.onWishPurchased.emit(response);
     });

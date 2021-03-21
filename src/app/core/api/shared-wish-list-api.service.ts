@@ -9,20 +9,20 @@ import { ApiVersion } from './api-version';
 @Injectable({
   providedIn: 'root'
 })
-export class FriendApiService {
+export class SharedWishListApiService {
 
-  private static REST_END_POINT = 'friend';
+  private static REST_END_POINT = 'shared-wish-lists';
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
   getWishLists(): Observable<Array<FriendWishList>> {
-    return this.apiService.get<Array<FriendWishList>>(`${ApiVersion.v1}/${FriendApiService.REST_END_POINT}/wish-lists`).pipe(
+    return this.apiService.get<Array<FriendWishList>>(`${ApiVersion.v1}/${SharedWishListApiService.REST_END_POINT}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   getWishListById(id: string): Observable<FriendWishList> {
-    return this.apiService.get<FriendWishList>(`${ApiVersion.v1}/${FriendApiService.REST_END_POINT}/wish-lists/${id}`).pipe(
+    return this.apiService.get<FriendWishList>(`${ApiVersion.v1}/${SharedWishListApiService.REST_END_POINT}/${id}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

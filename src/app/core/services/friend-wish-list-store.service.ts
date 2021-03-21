@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FriendApiService } from '@core/api/friend-api.service';
+import { SharedWishListApiService } from '@core/api/shared-wish-list-api.service';
 import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { CacheService } from 'ionic-cache';
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ export class FriendWishListStoreService {
   }
 
   constructor(
-    private friendApiService: FriendApiService, 
+    private friendApiService: SharedWishListApiService, 
     private cache: CacheService
   ) { }
 

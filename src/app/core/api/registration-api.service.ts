@@ -14,7 +14,7 @@ import { ApiVersion } from './api-version';
 })
 export class RegistrationApiService {
 
-  private static URI = 'registration';
+  private static URI = 'registrations';
 
   constructor(private apiService: ApiService, 
     private errorHandler: ApiErrorHandlerService,
@@ -22,13 +22,13 @@ export class RegistrationApiService {
 
   confirmRegistration(emailVerficationToken: string): Observable<LoginResponse> {
     const params = new HttpParams().set('token', emailVerficationToken);
-    const uri = this.createUri('confirmation');
+    const uri = this.createUri('confirm-registration');
     return this.apiService.get<LoginResponse>(uri, params);
   }
 
   requestEmailVerificationLink(): Promise<void> {
     return new Promise((resolve, reject) => {
-      const uri = this.createUri('request-email-verification-link');
+      const uri = this.createUri('resend-registration-token');
       this.apiService.get<LoginResponse>(uri).subscribe({
         next: response => {
           this.authService.updateToken(response.token);

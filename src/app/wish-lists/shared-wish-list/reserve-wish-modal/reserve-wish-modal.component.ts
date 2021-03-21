@@ -7,6 +7,7 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { CustomValidation } from '@shared/custom-validation';
+import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 
 @Component({
   selector: 'app-reserve-wish-modal',
@@ -33,7 +34,7 @@ export class ReserveWishModalComponent implements OnInit {
     private storageService: StorageService,
     private formBuilder: FormBuilder, 
     private modalController: ModalController, 
-    private wishListApiService: WishListApiService,
+    private publicResourceApiService: PublicResourceApiService,
     public privacyPolicyService: PrivacyPolicyService
   ) { }
 
@@ -52,7 +53,7 @@ export class ReserveWishModalComponent implements OnInit {
       wishId: this.wish.id,
       agreedToPrivacyPolicyAt: new Date()
     };
-    this.wishListApiService.registerUserAndReserveWish(requestData).toPromise().then( wishList => {
+    this.publicResourceApiService.registerUserAndReserveWish(requestData).toPromise().then( wishList => {
       this.wishList = wishList;
       this.storageService.set(StorageKeys.SHARED_WISH_LIST_EMAIL, email, true);
       this.wishReserved = true;

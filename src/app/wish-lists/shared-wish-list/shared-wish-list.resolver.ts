@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { AuthenticationService } from '@core/services/authentication.service';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
@@ -12,6 +12,7 @@ import { Platform } from '@ionic/angular';
 export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList, email?: string }>> {
   constructor(
     private wishListApi: WishListApiService, 
+    private publicResourceApiService: PublicResourceApiService,
     private storageService: StorageService,
     private platform: Platform,
     private friendWishListStore: FriendWishListStoreService,
@@ -36,7 +37,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
         } else {
           const currentEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
           const identifier = this.createIdentifier(wishListId, currentEmail);
-          const wishList = await this.wishListApi.getSharedWishList(identifier).toPromise();
+          const wishList = await this.publicResourceApiService.getSharedWishList(identifier).toPromise();
           resolve({ wishList: wishList, email: currentEmail });
         }
       } catch (error) {

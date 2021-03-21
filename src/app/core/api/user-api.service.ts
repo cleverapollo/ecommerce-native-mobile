@@ -14,7 +14,7 @@ import { ApiVersion } from './api-version';
 })
 export class UserApiService {
 
-  private static REST_END_POINT = 'user';
+  private static REST_END_POINT = 'users';
 
   constructor(
     private apiService: ApiService, 
@@ -33,29 +33,29 @@ export class UserApiService {
   }
 
   partialUpdateFirstName(firstName: string): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/firstname`, { firstName: firstName }).pipe(
+    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/first-name`, { firstName: firstName }).pipe(
       catchError(error => this.errorHandler.handleError(error))
     ); 
   }
 
   partialUpdateLastName(lastName: string): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/lastname`, { lastName: lastName }).pipe(
+    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/last-name`, { lastName: lastName }).pipe(
       catchError(error => this.errorHandler.handleError(error))
     ); 
   }
 
   partialUpdateBirthday(birthday: Date): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/birthday`, { birthday: birthday }).pipe(
+    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/birthday`, { birthday: birthday }).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   partialUpdateEmail(emailVerficationToken: string): Observable<LoginResponse> {
-    return this.apiService.patch<LoginResponse>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/email`,  { emailVerficationToken: emailVerficationToken });
+    return this.apiService.patch<LoginResponse>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/email`,  { emailVerficationToken: emailVerficationToken });
   }
 
   updateEmailChangeRequest(requestBody: UpdateEmailChangeRequest): Observable<void> {
-    return this.apiService.put<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profiles/email`, requestBody).pipe(
+    return this.apiService.put<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/email`, requestBody).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

@@ -21,7 +21,7 @@ export class FriendWish {
     bought: Boolean;
 }
 
-export interface RegisterAndSatisfyWishRequest {
+export interface RegisterUserAndReserveWishRequest {
     wishListId: string;
     email: String;
     wishId: string;

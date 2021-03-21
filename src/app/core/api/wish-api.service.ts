@@ -11,7 +11,7 @@ import { ApiVersion } from './api-version';
 })
 export class WishApiService {
 
-  private static REST_END_POINT = 'wish';
+  private static REST_END_POINT = 'wishes';
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
@@ -27,8 +27,8 @@ export class WishApiService {
     );
   }
 
-  purchase(wishId: string) : Observable<Object> {
-    return this.apiService.patch(`${ApiVersion.v1}/${WishApiService.REST_END_POINT}/${wishId}/purchase`).pipe(
+  reserveWish(wishId: string) : Observable<Object> {
+    return this.apiService.patch(`${ApiVersion.v1}/${WishApiService.REST_END_POINT}/${wishId}/reserve`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
