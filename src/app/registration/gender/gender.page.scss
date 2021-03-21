@@ -15,6 +15,8 @@ ion-radio::part(container) {
 
 .list-container {
     display: flex;
-    justify-content: center;
     margin-bottom: 29px;
+    ion-list {
+        margin-left: var(--wantic-primary-button-margin-left);
+    }
 }

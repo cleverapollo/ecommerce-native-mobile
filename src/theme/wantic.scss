@@ -36,8 +36,8 @@ ion-button.wantic-save-button {
     text-transform: uppercase;
     height: 48px;
     --border-radius: 50pt;
-    margin-left: 95px;
-    margin-right: 95px;
+    margin-left: var(--wantic-primary-button-margin-left);
+    margin-right: var(--wantic-primary-button-margin-right);
     margin-bottom: 40pt;
     letter-spacing: 1pt;
     --background: var(--ion-color-primary);
@@ -165,6 +165,7 @@ ion-item {
     .calendar-icon {
         height: 20px;
         width: 20px;
+        margin-right: 16px;
     }
 }
 
