@@ -22,5 +22,5 @@ export const environment : EnvironmentConfig = {
 
 const serverConfig = environment.serverConfig;
 export const SERVER_URL = `${serverConfig.networkProtocol}://${serverConfig.secondLevelDomain}`;
-export const APP_URL = 'https://www.app.wantic.io';
+export const APP_URL = 'https://app.wantic.io';
 export const WHITELISTED_DOMAINS = [`${serverConfig.secondLevelDomain}`];
