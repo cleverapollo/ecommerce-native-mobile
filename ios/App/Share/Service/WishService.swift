@@ -47,7 +47,7 @@ class WishService {
     }
     
     private func createRequest(authToken: String) -> URLRequest {
-        let url = URL(string: "https://rest-prd.wantic.io/v1/wish")!
+        let url = URL(string: "https://rest-prd.wantic.io/v1/wishes")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("*", forHTTPHeaderField: "Access-Control-Allow-Origin")

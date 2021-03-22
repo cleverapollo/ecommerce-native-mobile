@@ -88,7 +88,7 @@ struct WishListService {
     }
     
     private func createPostRequest(_ jsonData: Data, _ authToken: String) -> URLRequest {
-        let url = URL(string: "https://rest-prd.wantic.io/v1/wish-list")!
+        let url = URL(string: "https://rest-prd.wantic.io/v1/wish-lists")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = jsonData
@@ -100,7 +100,7 @@ struct WishListService {
     }
     
     private func createRequest(authToken: String) -> URLRequest {
-        let url = URL(string: "https://rest-prd.wantic.io/v1/wish-list")!
+        let url = URL(string: "https://rest-prd.wantic.io/v1/wish-lists")!
         var request = URLRequest(url: url)
         
         request.setValue("application/json", forHTTPHeaderField: "Accept")
