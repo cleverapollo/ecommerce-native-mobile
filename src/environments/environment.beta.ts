@@ -5,7 +5,7 @@ export const environment: EnvironmentConfig = {
     debugMessage: 'running on beta environment',
     serverConfig: {
         networkProtocol: 'https',
-        secondLevelDomain: 'wantic-rest-api-fddlidpl2q-ew.a.run.app',
+        secondLevelDomain: 'rest-dev.wantic.io',
     },
     firebaseConfig: {
         apiKey: "AIzaSyDIpjCfUOk-BAs6D7P1UgwMxAUjAzjsHcc",
