@@ -20,7 +20,7 @@ struct ToastService {
         
         DispatchQueue.main.async {
             alert.addAction(UIAlertAction(title: "Wunsch anzeigen", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "http://app.beta.wantic.io/secure/home/wish-list/\(wishListId)?forceRefresh=true") {
+                if let url = URL(string: "http://app.wantic.io/secure/home/wish-list/\(wishListId)?forceRefresh=true") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
@@ -43,7 +43,7 @@ struct ToastService {
         
         DispatchQueue.main.async {
             alert.addAction(UIAlertAction(title: "Anmelden", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "http://app.beta.wantic.io/login") {
+                if let url = URL(string: "http://app.wantic.io/login") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
@@ -66,7 +66,7 @@ struct ToastService {
         
         DispatchQueue.main.async {
             alert.addAction(UIAlertAction(title: "Wantic öffnen", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "http://app.beta.wantic.io/secure/home") {
+                if let url = URL(string: "http://app.wantic.io/secure/home") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
