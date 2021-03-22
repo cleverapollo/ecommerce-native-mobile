@@ -4,10 +4,8 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:wantic-dev.web.app</string>
-		<string>applinks:beta-wantic-landingpage.web.app</string>
-		<string>applinks:app.beta.wantic.io</string>
-		<string>applinks:www.app.beta.wantic.io</string>
+		<string>applinks:app.wantic.io</string>
+		<string>applinks:www.app.wantic.io</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
