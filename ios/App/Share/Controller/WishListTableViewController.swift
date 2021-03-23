@@ -21,8 +21,6 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var tableView: SelfSizedTableView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var selectedWishImageView: UIImageView!
-    // ToDo @IBOutlet weak var newWishListNameTextField: UITextField!
-    @IBOutlet weak var footerView: UIView!
     
     
     @IBAction func onButtonTap() {
