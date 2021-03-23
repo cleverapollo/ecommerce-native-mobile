@@ -49,13 +49,6 @@ export enum PublicEmailVerificationStatus {
     ERROR, TOKEN_EXPIRED, VERIFIED
 }
 
-export class UploadFileResponse {
-    fileName: String;
-    fileDownloadUri: String;
-    fileType: String;
-    size: Number;
-}
-
 export enum Gender {
     MALE = 'MALE',
     FEMALE = 'FEMALE', 
