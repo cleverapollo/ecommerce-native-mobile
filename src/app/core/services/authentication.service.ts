@@ -103,18 +103,19 @@ export class AuthenticationService {
   }
 
   private async refreshToken(credentials: { email: string, password: string }): Promise<void> {
-    await this.loadingService.showLoadingSpinner();
+    let spinner = await this.loadingService.createLoadingSpinner();
+    await spinner.present();
     return new Promise<void>((resolve, reject) => {
       this.authService.login(credentials.email, credentials.password).pipe(first()).subscribe({
         next: response => {
           this.updateToken(response.token).then(() => {
             this.handleLoginSucessResponse();
-            this.loadingService.dismissLoadingSpinner().finally(() => {
+            this.loadingService.dismissLoadingSpinner(spinner).finally(() => {
               resolve();
             })
           }, error => {
             this.logger.error(error);
-            this.loadingService.dismissLoadingSpinner().finally(() => {
+            this.loadingService.dismissLoadingSpinner(spinner).finally(() => {
               reject();
             })
           });
@@ -124,7 +125,7 @@ export class AuthenticationService {
           this.removeToken().then(() => {
             this.handleLoginErrorResponse();
           }, this.logger.error).finally(() => {
-            this.loadingService.dismissLoadingSpinner().finally(() => {
+            this.loadingService.dismissLoadingSpinner(spinner).finally(() => {
               reject();
             });
           });
