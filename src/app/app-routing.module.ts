@@ -48,7 +48,7 @@ const routes: Routes = [
     resolve: { emailVerificationStatus: EmailVerificationStatusResolver },
     loadChildren: () => import('./email-verification/email-verification.module').then( m => m.EmailVerificationPageModule)
   }
-
+  // test
 ];
 
 @NgModule({
