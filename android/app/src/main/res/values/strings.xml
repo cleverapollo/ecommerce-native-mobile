@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Wantic</string>
-    <string name="title_activity_main">Wantic</string>
-    <string name="package_name">io.wantic.app</string>
-    <string name="custom_url_scheme">io.wantic.app</string>
+  <string name="app_name">Wantic</string>
+  <string name="title_activity_main">Wantic</string>
+  <string name="package_name">io.wantic.app</string>
+  <string name="custom_url_scheme">io.wantic.app</string>
+  <string name="ionic_app_id">c15b9952</string>
+  <string name="ionic_channel_name">Production</string>
+  <string name="ionic_update_method">auto</string>
 </resources>
