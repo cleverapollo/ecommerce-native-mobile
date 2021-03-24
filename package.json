@@ -96,7 +96,9 @@
         "CHANNEL_NAME": "Production",
         "UPDATE_METHOD": "background",
         "UPDATE_API": "https://build.appit-online.de",
-        "WARN_DEBUG": "false"
+        "WARN_DEBUG": "false",
+        "MAX_STORE": "2",
+        "MIN_BACKGROUND_DURATION": "30"
       }
     },
     "platforms": [

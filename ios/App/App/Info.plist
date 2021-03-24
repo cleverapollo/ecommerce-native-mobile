@@ -71,5 +71,17 @@
     </array>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <true />
+    <key>IonAppId</key>
+    <string>17865333448040008fa8769dee6c5200</string>
+    <key>IonChannelName</key>
+    <string>Production</string>
+    <key>IonUpdateMethod</key>
+    <string>background</string>
+    <key>IonApi</key>
+    <string>https://build.appit-online.de</string>
+    <key>IonMinBackgroundDuration</key>
+    <string>30</string>
+    <key>IonMaxVersions</key>
+    <string>2</string>
   </dict>
 </plist>
