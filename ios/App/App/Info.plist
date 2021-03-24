@@ -71,11 +71,5 @@
     </array>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <true />
-    <key>IonAppId</key>
-    <string>c15b9952</string>
-    <key>IonChannelName</key>
-    <string>Production</string>
-    <key>IonUpdateMethod</key>
-    <string>auto</string>
   </dict>
 </plist>
