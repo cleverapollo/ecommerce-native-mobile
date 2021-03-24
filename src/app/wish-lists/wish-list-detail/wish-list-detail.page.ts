@@ -95,7 +95,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   async shareWishList() {
     const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
-    const message = `Hurra, ${userProfile.firstName} möchte feiern. 🥳 Sieh dir die Wunschliste „${this.wishList.name}“ an und finde ein Geschenk.🎁🤩`;
+    const message = `Hurra, ${userProfile.firstName} möchte feiern. 🥳 Sie dir die Wunschliste „${this.wishList.name}“ an und finde ein Geschenk.🎁🤩`;
     const link = this.createLinkForSocialSharing();
     Share.share({
       title: 'Einladung zur Wunschliste',
