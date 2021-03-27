@@ -1,4 +1,4 @@
-<form [formGroup]="form" *ngIf="form && !wishReserved" (ngSubmit)="reserveWish()">
+<form [formGroup]="form" *ngIf="form" (ngSubmit)="reserveWish()">
   <div lines="none" class="ion-text-right">
     <ion-button (click)="closeModal()" class="ion-text-right no-margin" fill="clear">
       <ion-icon slot="icon-only" name="close-outline" color="dark"></ion-icon>
@@ -27,22 +27,3 @@
   <ion-button class="wantic-save-button" type="submit" [disabled]="!form.valid" expand="block">Schenken</ion-button>
 </form>
 
-<div *ngIf="wishReserved" class="ion-text-center">
-  <div class="ion-text-right">
-    <ion-button (click)="closeModal()" class="ion-text-right no-margin" fill="clear">
-      <ion-icon slot="icon-only" name="close-outline" color="dark"></ion-icon>
-    </ion-button>
-  </div>
-
-  <p> Toll, dass du {{ wishList.owners | ownerNames:'und':'s' }} Wunsch erfüllst.
-    {{ wishList.owners | ownerNames:'und' }}
-    <span [ngPlural]="wishList.owners.length">
-      <ng-template ngPluralCase="=1">wird</ng-template>
-      <ng-template ngPluralCase="=2">werden</ng-template>
-    </span>
-    sich sehr freuen. <br><br>
-    Dein Geschenk ist nun für dich reserviert.
-  </p>
-  <ion-button class="wantic-save-button" type="submit" expand="block" (click)="closeModal()">Fenster schließen
-  </ion-button>
-</div>
