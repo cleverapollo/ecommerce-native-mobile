@@ -67,7 +67,7 @@ export class SharedWishListPage implements OnInit {
   private async openQueryEmailModal() {
     const modal = await this.modalController.create({
       component: QueryEmailModalComponent,
-      cssClass: 'wantic-modal wantic-modal-small',
+      cssClass: 'query-email-modal',
     });
     modal.onWillDismiss().then((data) => {
       if (data && data['data']) {

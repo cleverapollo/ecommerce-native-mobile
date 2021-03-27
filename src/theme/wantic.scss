@@ -244,6 +244,11 @@ ion-modal.wantic-modal-auto-height {
         --height: 60%;
         --border-radius: 11pt;
     }
+    .query-email-modal {
+        --width: 85%;
+        --height: 44%;
+        --border-radius: 11pt;
+    }
 }
 @media (max-height: 568px) {
     .cancel-wish-reservation-modal {
@@ -259,6 +264,11 @@ ion-modal.wantic-modal-auto-height {
     .reserve-wish-modal {
         --width: 85%;
         --height: 70%;
+        --border-radius: 11pt;
+    }
+    .query-email-modal {
+        --width: 85%;
+        --height: 55%;
         --border-radius: 11pt;
     }
 }
@@ -278,6 +288,11 @@ ion-modal.wantic-modal-auto-height {
         --height: 53%;
         --border-radius: 11pt;
     }
+    .query-email-modal {
+        --width: 85%;
+        --height: 40%;
+        --border-radius: 11pt;
+    }
 }
 @media (min-height: 812px) {
     .cancel-wish-reservation-modal {
@@ -293,6 +308,11 @@ ion-modal.wantic-modal-auto-height {
     .reserve-wish-modal {
         --width: 85%;
         --height: 48%;
+        --border-radius: 11pt;
+    }
+    .query-email-modal {
+        --width: 85%;
+        --height: 36%;
         --border-radius: 11pt;
     }
 }
