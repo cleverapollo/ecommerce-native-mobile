@@ -90,7 +90,7 @@ export class SharedWishListPage implements OnInit {
   }
 
   private async openReserveWishModal(wish: FriendWish) {
-    const modal = await this.createModal(ReserveWishModalComponent, wish, (data: any) => {
+    const modal = await this.createModal(ReserveWishModalComponent, wish, 'wantic-modal', (data: any) => {
       if (data && data['data']) {
         this.wishList = data['data'];
       }
@@ -99,7 +99,7 @@ export class SharedWishListPage implements OnInit {
   } 
 
   private async openCancelReservationModal(wish: FriendWish) {
-    const modal = await this.createModal(CancelWishReservationModalComponent, wish, (data: any) => {
+    const modal = await this.createModal(CancelWishReservationModalComponent, wish, 'cancel-wish-reservation-modal', (data: any) => {
       if (data && data['data']) {
         this.wishList = data['data'];
       }
@@ -107,7 +107,7 @@ export class SharedWishListPage implements OnInit {
     modal.present();
   }
 
-  private async createModal(component, wish: FriendWish, onWillDismiss: (data: any) => void) {
+  private async createModal(component, wish: FriendWish, cssClass: string, onWillDismiss: (data: any) => void) {
     const modal = await this.modalController.create({
       component: component,
       componentProps: {
@@ -116,7 +116,7 @@ export class SharedWishListPage implements OnInit {
         identifier: this.identifier,
         email: this.email
       },
-      cssClass: 'wantic-modal',
+      cssClass: cssClass,
     });
     modal.onWillDismiss().then(onWillDismiss);
     return modal;

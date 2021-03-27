@@ -28,6 +28,12 @@
 </form>
 
 <div *ngIf="wishReserved" class="ion-text-center">
+  <div class="ion-text-right">
+    <ion-button (click)="closeModal()" class="ion-text-right no-margin" fill="clear">
+      <ion-icon slot="icon-only" name="close-outline" color="dark"></ion-icon>
+    </ion-button>
+  </div>
+
   <p> Toll, dass du {{ wishList.owners | ownerNames:'und':'s' }} Wunsch erfüllst.
     {{ wishList.owners | ownerNames:'und' }}
     <span [ngPlural]="wishList.owners.length">
