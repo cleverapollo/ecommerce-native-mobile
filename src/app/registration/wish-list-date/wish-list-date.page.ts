@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationFormService } from '../registration-form.service';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { Subscription } from 'rxjs';
+import { CustomValidation } from '@shared/custom-validation';
 
 @Component({
   selector: 'app-wish-list-date',
@@ -15,7 +16,7 @@ export class WishListDatePage implements OnInit, OnDestroy {
   form: FormGroup
   validationMessages = {
     date: [
-      { type: 'required', message: 'Gib bitte ein Datum an, an welches deine Wunschliste gebunden ist.' }
+      { type: 'required', message: 'Gib bitte ein Datum an, an welches deine Wunschliste gebunden ist oder überspringe diesen Schritt.' }
     ]
   }
 
@@ -58,11 +59,18 @@ export class WishListDatePage implements OnInit, OnDestroy {
 
   private createForm(dateString: string) {
     this.form = this.formBuilder.group({
-      'date': this.formBuilder.control(dateString, [Validators.required])
+      'date': this.formBuilder.control(dateString, {
+        validators: [Validators.required],
+        updateOn: 'submit'
+      })
     });
   }
 
   next() {
+    if (this.form.invalid) {
+      CustomValidation.validateFormGroup(this.form);
+      return
+    }
     this.subscription.unsubscribe();
     this.formService.date = this.form.controls['date'].value;
     this.router.navigate(['../wish-list-wish'], { relativeTo: this.route })
