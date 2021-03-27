@@ -10,7 +10,7 @@
     "build-dev-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=beta",
     "build-beta-ios": "npx cap sync ios && ionic capacitor run ios --configuration=beta",
     "build-prod-ios": "npx cap sync ios && ionic capacitor run ios --configuration=production",
-    "build-prod-ios-fix-update": "npm run build-prod-ios && cd ios/App/public && zip -r ../wantic.zip ./* -x \"*.DS_Store\"",
+    "build-prod-and": "npx cap sync android && ionic capacitor run android --configuration=production",
     "build": "ng build",
     "deploy-web-beta": "ionic build --configuration=beta && firebase deploy",
     "deploy-web-prod": "ionic build --prod && firebase deploy -P prod",
