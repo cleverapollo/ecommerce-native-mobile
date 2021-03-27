@@ -16,8 +16,12 @@ export class WishReservedModalComponent implements OnInit {
   ngOnInit() {
   }
 
+  dismissModal(wishList?: FriendWishList) {
+    this.modalController.dismiss(wishList);
+  }
+
   closeModal() {
-    this.modalController.dismiss(this.wishList);
+    this.dismissModal(this.wishList);
   }
 
 }

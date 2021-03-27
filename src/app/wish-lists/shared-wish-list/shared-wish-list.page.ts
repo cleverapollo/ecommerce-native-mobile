@@ -94,8 +94,10 @@ export class SharedWishListPage implements OnInit {
     const modal = await this.createModal(ReserveWishModalComponent, wish, 'reserve-wish-modal', (data: any) => {
       if (data && data['data']) {
         this.wishList = data['data'];
-        this.createModal(WishReservedModalComponent, wish, 'wish-reserved-modal', () => {
-          window.open(wish.productUrl)
+        this.createModal(WishReservedModalComponent, wish, 'wish-reserved-modal', (data: any) => {
+          if (data && data['data']) { 
+            window.open(wish.productUrl);
+          }
         }).then(modal => {
           modal.present();
         })
