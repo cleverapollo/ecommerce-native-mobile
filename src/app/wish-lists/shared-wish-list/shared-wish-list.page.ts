@@ -10,6 +10,7 @@ import { first } from 'rxjs/operators';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
+import { WishReservedModalComponent } from './wish-reserved-modal/wish-reserved-modal.component';
 
 @Component({
   selector: 'app-shared-wish-list',
@@ -66,7 +67,7 @@ export class SharedWishListPage implements OnInit {
   private async openQueryEmailModal() {
     const modal = await this.modalController.create({
       component: QueryEmailModalComponent,
-      cssClass: 'wantic-modal wantic-modal-small',
+      cssClass: 'query-email-modal',
     });
     modal.onWillDismiss().then((data) => {
       if (data && data['data']) {
@@ -90,16 +91,23 @@ export class SharedWishListPage implements OnInit {
   }
 
   private async openReserveWishModal(wish: FriendWish) {
-    const modal = await this.createModal(ReserveWishModalComponent, wish, (data: any) => {
+    const modal = await this.createModal(ReserveWishModalComponent, wish, 'reserve-wish-modal', (data: any) => {
       if (data && data['data']) {
         this.wishList = data['data'];
+        this.createModal(WishReservedModalComponent, wish, 'wish-reserved-modal', (data: any) => {
+          if (data && data['data']) { 
+            window.open(wish.productUrl);
+          }
+        }).then(modal => {
+          modal.present();
+        })
       }
     });
     modal.present();
   } 
 
   private async openCancelReservationModal(wish: FriendWish) {
-    const modal = await this.createModal(CancelWishReservationModalComponent, wish, (data: any) => {
+    const modal = await this.createModal(CancelWishReservationModalComponent, wish, 'cancel-wish-reservation-modal', (data: any) => {
       if (data && data['data']) {
         this.wishList = data['data'];
       }
@@ -107,7 +115,7 @@ export class SharedWishListPage implements OnInit {
     modal.present();
   }
 
-  private async createModal(component, wish: FriendWish, onWillDismiss: (data: any) => void) {
+  private async createModal(component, wish: FriendWish, cssClass: string, onWillDismiss: (data: any) => void) {
     const modal = await this.modalController.create({
       component: component,
       componentProps: {
@@ -116,7 +124,7 @@ export class SharedWishListPage implements OnInit {
         identifier: this.identifier,
         email: this.email
       },
-      cssClass: 'wantic-modal',
+      cssClass: cssClass,
     });
     modal.onWillDismiss().then(onWillDismiss);
     return modal;

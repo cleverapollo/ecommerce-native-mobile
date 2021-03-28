@@ -7,4 +7,7 @@ form {
         border-radius: 50pt;
         --background: white !important;
     }
+    ion-item.ion-invalid.ion-touched, ion-item.ion-invalid.ion-dirty {
+        border: 2px solid var(--ion-color-primary);
+    }
 }

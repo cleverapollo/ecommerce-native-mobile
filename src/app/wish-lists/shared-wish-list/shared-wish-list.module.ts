@@ -11,6 +11,7 @@ import { SharedWishComponent } from './shared-wish/shared-wish.component';
 import { ReserveWishModalComponent } from './reserve-wish-modal/reserve-wish-modal.component';
 import { CancelWishReservationModalComponent } from './cancel-wish-reservation-modal/cancel-wish-reservation-modal.component';
 import { QueryEmailModalComponent } from './query-email-modal/query-email-modal.component';
+import { WishReservedModalComponent } from './wish-reserved-modal/wish-reserved-modal.component';
 
 @NgModule({
   imports: [
@@ -24,8 +25,9 @@ import { QueryEmailModalComponent } from './query-email-modal/query-email-modal.
     SharedWishComponent, 
     QueryEmailModalComponent,
     ReserveWishModalComponent,
-    CancelWishReservationModalComponent
+    CancelWishReservationModalComponent,
+    WishReservedModalComponent
   ],
-  entryComponents: [ReserveWishModalComponent, CancelWishReservationModalComponent, QueryEmailModalComponent]
+  entryComponents: [ReserveWishModalComponent, CancelWishReservationModalComponent, QueryEmailModalComponent, WishReservedModalComponent]
 })
 export class SharedWishListPageModule {}

@@ -30,9 +30,18 @@ form {
         margin-right: 19px;
         margin-left: 19px;
     }
-    ion-button.wantic-save-button {
-        margin-bottom: 10px;
-        margin-right: 80px;
-        margin-left: 80px;
+    @media (max-height: 568px) {
+        ion-button.wantic-save-button {
+            margin-bottom: 10px;
+            margin-right: 40px;
+            margin-left: 40px;
+        }
+    }
+    @media (min-height: 569px) {
+        ion-button.wantic-save-button {
+            margin-bottom: 10px;
+            margin-right: 80px;
+            margin-left: 80px;
+        }
     }
 }

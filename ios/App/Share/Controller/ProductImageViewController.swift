@@ -118,11 +118,15 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                 forTypeIdentifier: propertyList,
                 options: nil,
                 completionHandler: { (item, error) -> Void in
-                    guard let dictionary = item as? NSDictionary, let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else { return }
+                    guard let dictionary = item as? NSDictionary, let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else {
+                        self.reloadViewRemoveActivityIndicator()
+                        return
+                    }
 
                     guard let title = results["title"] as? String,
                           let url = results["url"] as? String,
                           let productInfosDict = results["productInfos"] as? [NSDictionary]  else {
+                            self.reloadViewRemoveActivityIndicator()
                             return
                     }
                     
@@ -136,12 +140,16 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                         }
                         return ProductInfo(productUrl: url, imageUrl: imageUrl, name: displayName, price: Price(amount: Decimal(price)))
                     }
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                        self.removeActivityIndicator()
-                    }
+                    self.reloadViewRemoveActivityIndicator()
                 }
             )
+        }
+    }
+    
+    fileprivate func reloadViewRemoveActivityIndicator() {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+            self.removeActivityIndicator()
         }
     }
     
