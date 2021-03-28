@@ -8,7 +8,7 @@
     "start": "ionic serve --configuration=dev",
     "beta-web": "ionic serve --configuration=beta",
     "build-dev-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=beta",
-    "build-beta-ios": "npx cap sync ios && ionic capacitor run ios --configuration=beta",
+    "build-beta-ios": "ionic build --configuration=beta && npx cap sync ios && ionic capacitor run ios --configuration=beta",
     "build-prod-ios": "npx cap sync ios && ionic capacitor run ios --configuration=production",
     "build-prod-and": "npx cap sync android && ionic capacitor run android --configuration=production",
     "build": "ionic build --prod",
