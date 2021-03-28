@@ -5,6 +5,7 @@
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)io.wantic.app</string>
+		<string>$(AppIdentifierPrefix)io.wantic.app-beta</string>
 	</array>
 </dict>
 </plist>

@@ -65,6 +65,76 @@
 		B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		B17B403C25C4717F003363E9 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B403B25C4717E003363E9 /* FooterView.swift */; };
 		B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B404125C482E6003363E9 /* WanticTextView.swift */; };
+		B19A51CE2610CD8E00984207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
+		B19A51D02610CD8E00984207 /* Pods_Wantic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BED73FFF1D804E0CD9DA7 /* Pods_Wantic.framework */; };
+		B19A51D22610CD8E00984207 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
+		B19A51D32610CD8E00984207 /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
+		B19A51D42610CD8E00984207 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
+		B19A51D52610CD8E00984207 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
+		B19A51D62610CD8E00984207 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
+		B19A51D72610CD8E00984207 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
+		B19A51EE2610CE8000984207 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114E13425B8A56A00F92599 /* UIColorExtension.swift */; };
+		B19A51EF2610CE8000984207 /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
+		B19A51F02610CE8000984207 /* ProductInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80F9F258A281600F0917F /* ProductInfo.swift */; };
+		B19A51F12610CE8000984207 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */; };
+		B19A51F22610CE8000984207 /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
+		B19A51F32610CE8000984207 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
+		B19A51F42610CE8000984207 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
+		B19A51F52610CE8000984207 /* WishDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880BD25B2143700D0106B /* WishDataStore.swift */; };
+		B19A51F62610CE8000984207 /* Wish.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880B125B20F2000D0106B /* Wish.swift */; };
+		B19A51F72610CE8000984207 /* Decimal+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360D425FE1BF400D19F73 /* Decimal+Format.swift */; };
+		B19A51F82610CE8000984207 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750DF325B468300023A9C9 /* UIViewExtension.swift */; };
+		B19A51F92610CE8000984207 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806725AE0D9500D0106B /* LoginResponse.swift */; };
+		B19A51FA2610CE8000984207 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FAD258A770100F0917F /* WishList.swift */; };
+		B19A51FB2610CE8000984207 /* WishService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880B725B20FE800D0106B /* WishService.swift */; };
+		B19A51FC2610CE8000984207 /* WanticTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B404125C482E6003363E9 /* WanticTextView.swift */; };
+		B19A51FD2610CE8000984207 /* WishListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148809B25B202CE00D0106B /* WishListTableViewController.swift */; };
+		B19A51FE2610CE8000984207 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */; };
+		B19A51FF2610CE8000984207 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B403B25C4717E003363E9 /* FooterView.swift */; };
+		B19A52002610CE8000984207 /* ProductImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1247FAE25BC612C009CEF57 /* ProductImageViewController.swift */; };
+		B19A52012610CE8000984207 /* EditDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA7258A705100F0917F /* EditDetailsViewController.swift */; };
+		B19A52022610CE8000984207 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360CF25FE13DA00D19F73 /* Price.swift */; };
+		B19A52032610CE8000984207 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806D25AE129500D0106B /* LoginRequest.swift */; };
+		B19A52042610CE8000984207 /* TextFieldInnerPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */; };
+		B19A52062610CE8000984207 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51EA2610CE8000984207 /* JWTDecode */; };
+		B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51E82610CE8000984207 /* SwiftKeychainWrapper */; };
+		B19A52082610CE8000984207 /* Pods_Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D454F7F7E1CEC3B60ABD153 /* Pods_Share.framework */; };
+		B19A520A2610CE8000984207 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
+		B19A520B2610CE8000984207 /* PlayfairDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14F25BC38AA00F92599 /* PlayfairDisplay-Black.ttf */; };
+		B19A520C2610CE8000984207 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8425BC4A9C009CEF57 /* Roboto-LightItalic.ttf */; };
+		B19A520D2610CE8000984207 /* PlayfairDisplay-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E15025BC38AA00F92599 /* PlayfairDisplay-SemiBoldItalic.ttf */; };
+		B19A520E2610CE8000984207 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F7F25BC4A9C009CEF57 /* Roboto-Light.ttf */; };
+		B19A520F2610CE8000984207 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8A25BC4A9C009CEF57 /* Roboto-Black.ttf */; };
+		B19A52102610CE8000984207 /* PlayfairDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14825BC38AA00F92599 /* PlayfairDisplay-Bold.ttf */; };
+		B19A52112610CE8000984207 /* PlayfairDisplay-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14B25BC38AA00F92599 /* PlayfairDisplay-BoldItalic.ttf */; };
+		B19A52122610CE8000984207 /* PlayfairDisplay-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14D25BC38AA00F92599 /* PlayfairDisplay-Italic.ttf */; };
+		B19A52132610CE8000984207 /* PlayfairDisplay-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E15225BC38AA00F92599 /* PlayfairDisplay-BlackItalic.ttf */; };
+		B19A52142610CE8000984207 /* PlayfairDisplay-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14C25BC38AA00F92599 /* PlayfairDisplay-ExtraBoldItalic.ttf */; };
+		B19A52152610CE8000984207 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8525BC4A9C009CEF57 /* Roboto-Italic.ttf */; };
+		B19A52162610CE8000984207 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8325BC4A9C009CEF57 /* Roboto-BoldItalic.ttf */; };
+		B19A52172610CE8000984207 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F7E25BC4A9C009CEF57 /* Roboto-Medium.ttf */; };
+		B19A52182610CE8000984207 /* PlayfairDisplay-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14925BC38AA00F92599 /* PlayfairDisplay-SemiBold.ttf */; };
+		B19A52192610CE8000984207 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8825BC4A9C009CEF57 /* Roboto-Bold.ttf */; };
+		B19A521A2610CE8000984207 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = B114E15425BC38AA00F92599 /* OFL.txt */; };
+		B19A521B2610CE8000984207 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8225BC4A9C009CEF57 /* Roboto-ThinItalic.ttf */; };
+		B19A521C2610CE8000984207 /* PlayfairDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14E25BC38AA00F92599 /* PlayfairDisplay-Regular.ttf */; };
+		B19A521D2610CE8000984207 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B114E13C25BC33CF00F92599 /* Colors.xcassets */; };
+		B19A521E2610CE8000984207 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8625BC4A9C009CEF57 /* LICENSE.txt */; };
+		B19A521F2610CE8000984207 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8725BC4A9C009CEF57 /* Roboto-BlackItalic.ttf */; };
+		B19A52202610CE8000984207 /* PlayfairDisplay-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E15625BC38AA00F92599 /* PlayfairDisplay-Italic-VariableFont_wght.ttf */; };
+		B19A52212610CE8000984207 /* PlayfairDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14A25BC38AA00F92599 /* PlayfairDisplay-Medium.ttf */; };
+		B19A52222610CE8000984207 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8125BC4A9C009CEF57 /* Roboto-MediumItalic.ttf */; };
+		B19A52232610CE8000984207 /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F97258A0F5D00F0917F /* ExtensionClass.js */; };
+		B19A52242610CE8000984207 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = B114E15525BC38AA00F92599 /* README.txt */; };
+		B19A52252610CE8000984207 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8925BC4A9C009CEF57 /* Roboto-Thin.ttf */; };
+		B19A52262610CE8000984207 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8025BC4A9C009CEF57 /* Roboto-Regular.ttf */; };
+		B19A52272610CE8000984207 /* PlayfairDisplay-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E15325BC38AA00F92599 /* PlayfairDisplay-ExtraBold.ttf */; };
+		B19A52282610CE8000984207 /* PlayfairDisplay-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E15125BC38AA00F92599 /* PlayfairDisplay-MediumItalic.ttf */; };
+		B19A52292610CE8000984207 /* PlayfairDisplay-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14625BC38AA00F92599 /* PlayfairDisplay-VariableFont_wght.ttf */; };
+		B19A522A2610CE8000984207 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B114E14025BC34F700F92599 /* Icons.xcassets */; };
+		B19A523A2610D11400984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52392610D11400984207 /* AppConfig.swift */; };
+		B19A52482610D1A500984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52472610D1A500984207 /* AppConfig.swift */; };
+		B19A527D2610D7C800984207 /* Share Beta.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B19A522E2610CE8000984207 /* Share Beta.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B1A80F8E2589F59800F0917F /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B1A80F842589F59800F0917F /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1A80F98258A0F5D00F0917F /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F97258A0F5D00F0917F /* ExtensionClass.js */; };
@@ -79,6 +149,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B19A52562610D4BA00984207 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B19A51E72610CE8000984207;
+			remoteInfo = "Share Beta";
+		};
+		B19A527E2610D7C800984207 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B19A51E72610CE8000984207;
+			remoteInfo = "Share Beta";
+		};
 		B1A80F8C2589F59800F0917F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
@@ -89,6 +173,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B19A51DA2610CD8E00984207 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B19A527D2610D7C800984207 /* Share Beta.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B1A80F8F2589F59800F0917F /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -180,6 +275,12 @@
 		B17635ED256AD3EC00AAEBB8 /* App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		B17B403B25C4717E003363E9 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		B17B404125C482E6003363E9 /* WanticTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanticTextView.swift; sourceTree = "<group>"; };
+		B19A51DF2610CD8E00984207 /* Wantic Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wantic Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B19A51E02610CD8E00984207 /* Wantic copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Wantic copy-Info.plist"; path = "/Users/fischeti/Documents/develop/wantic-frontend/ios/App/Wantic copy-Info.plist"; sourceTree = "<absolute>"; };
+		B19A522E2610CE8000984207 /* Share Beta.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Share Beta.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B19A522F2610CE8100984207 /* Share copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Share copy-Info.plist"; path = "/Users/fischeti/Documents/develop/wantic-frontend/ios/App/Share copy-Info.plist"; sourceTree = "<absolute>"; };
+		B19A52392610D11400984207 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		B19A52472610D1A500984207 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		B1A80F842589F59800F0917F /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A80F892589F59800F0917F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B1A80F8B2589F59800F0917F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -202,6 +303,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DE7EDD385414433C7FCCD67 /* Pods_Wantic.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B19A51CF2610CD8E00984207 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B19A51D02610CD8E00984207 /* Pods_Wantic.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B19A52052610CE8000984207 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B19A52062610CE8000984207 /* JWTDecode in Frameworks */,
+				B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */,
+				B19A52082610CE8000984207 /* Pods_Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +354,8 @@
 				504EC3051FED79650016851F /* Products */,
 				7F8756D8B27F46E3366F6CEA /* Pods */,
 				27E2DDA53C4D2A4D1A88CE4A /* Frameworks */,
+				B19A51E02610CD8E00984207 /* Wantic copy-Info.plist */,
+				B19A522F2610CE8100984207 /* Share copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -243,6 +364,8 @@
 			children = (
 				504EC3041FED79650016851F /* Wantic.app */,
 				B1A80F842589F59800F0917F /* Share.appex */,
+				B19A51DF2610CD8E00984207 /* Wantic Beta.app */,
+				B19A522E2610CE8000984207 /* Share Beta.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -418,15 +541,25 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		B19A52382610D0B800984207 /* Share Beta */ = {
+			isa = PBXGroup;
+			children = (
+				B19A52392610D11400984207 /* AppConfig.swift */,
+			);
+			path = "Share Beta";
+			sourceTree = "<group>";
+		};
 		B1A80F852589F59800F0917F /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				B19A52382610D0B800984207 /* Share Beta */,
 				B16360D325FE1BDA00D19F73 /* Formatter */,
 				B114E14425BC389000F92599 /* Fonts */,
 				B14880CC25B2FF0000D0106B /* Controller */,
 				B14880CD25B2FF2000D0106B /* Model */,
 				B14880CB25B2FEDD00D0106B /* Service */,
 				B16E1FC925C076E1009EEFDE /* UI */,
+				B19A52472610D1A500984207 /* AppConfig.swift */,
 				B1A80FCE258B508B00F0917F /* Share.entitlements */,
 				B1A80F97258A0F5D00F0917F /* ExtensionClass.js */,
 				B1A80F882589F59800F0917F /* MainInterface.storyboard */,
@@ -460,6 +593,50 @@
 			productName = App;
 			productReference = 504EC3041FED79650016851F /* Wantic.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B19A51C92610CD8E00984207 /* Wantic Beta */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B19A51DC2610CD8E00984207 /* Build configuration list for PBXNativeTarget "Wantic Beta" */;
+			buildPhases = (
+				B19A51CC2610CD8E00984207 /* [CP] Check Pods Manifest.lock */,
+				B19A51CD2610CD8E00984207 /* Sources */,
+				B19A51CF2610CD8E00984207 /* Frameworks */,
+				B19A51D12610CD8E00984207 /* Resources */,
+				B19A51D92610CD8E00984207 /* [CP] Embed Pods Frameworks */,
+				B19A51DA2610CD8E00984207 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B19A52572610D4BA00984207 /* PBXTargetDependency */,
+				B19A527F2610D7C800984207 /* PBXTargetDependency */,
+			);
+			name = "Wantic Beta";
+			productName = App;
+			productReference = B19A51DF2610CD8E00984207 /* Wantic Beta.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B19A51E72610CE8000984207 /* Share Beta */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B19A522B2610CE8000984207 /* Build configuration list for PBXNativeTarget "Share Beta" */;
+			buildPhases = (
+				B19A51EC2610CE8000984207 /* [CP] Check Pods Manifest.lock */,
+				B19A51ED2610CE8000984207 /* Sources */,
+				B19A52052610CE8000984207 /* Frameworks */,
+				B19A52092610CE8000984207 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Share Beta";
+			packageProductDependencies = (
+				B19A51E82610CE8000984207 /* SwiftKeychainWrapper */,
+				B19A51EA2610CE8000984207 /* JWTDecode */,
+			);
+			productName = Share;
+			productReference = B19A522E2610CE8000984207 /* Share Beta.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		B1A80F832589F59800F0917F /* Share */ = {
 			isa = PBXNativeTarget;
@@ -521,7 +698,9 @@
 			projectRoot = "";
 			targets = (
 				504EC3031FED79650016851F /* Wantic */,
+				B19A51C92610CD8E00984207 /* Wantic Beta */,
 				B1A80F832589F59800F0917F /* Share */,
+				B19A51E72610CE8000984207 /* Share Beta */,
 			);
 		};
 /* End PBXProject section */
@@ -538,6 +717,59 @@
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
 				B17629A326051F4500B1FDB7 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B19A51D12610CD8E00984207 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B19A51D22610CD8E00984207 /* LaunchScreen.storyboard in Resources */,
+				B19A51D32610CD8E00984207 /* public in Resources */,
+				B19A51D42610CD8E00984207 /* Assets.xcassets in Resources */,
+				B19A51D52610CD8E00984207 /* capacitor.config.json in Resources */,
+				B19A51D62610CD8E00984207 /* Main.storyboard in Resources */,
+				B19A51D72610CD8E00984207 /* config.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B19A52092610CE8000984207 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B19A520A2610CE8000984207 /* MainInterface.storyboard in Resources */,
+				B19A520B2610CE8000984207 /* PlayfairDisplay-Black.ttf in Resources */,
+				B19A520C2610CE8000984207 /* Roboto-LightItalic.ttf in Resources */,
+				B19A520D2610CE8000984207 /* PlayfairDisplay-SemiBoldItalic.ttf in Resources */,
+				B19A520E2610CE8000984207 /* Roboto-Light.ttf in Resources */,
+				B19A520F2610CE8000984207 /* Roboto-Black.ttf in Resources */,
+				B19A52102610CE8000984207 /* PlayfairDisplay-Bold.ttf in Resources */,
+				B19A52112610CE8000984207 /* PlayfairDisplay-BoldItalic.ttf in Resources */,
+				B19A52122610CE8000984207 /* PlayfairDisplay-Italic.ttf in Resources */,
+				B19A52132610CE8000984207 /* PlayfairDisplay-BlackItalic.ttf in Resources */,
+				B19A52142610CE8000984207 /* PlayfairDisplay-ExtraBoldItalic.ttf in Resources */,
+				B19A52152610CE8000984207 /* Roboto-Italic.ttf in Resources */,
+				B19A52162610CE8000984207 /* Roboto-BoldItalic.ttf in Resources */,
+				B19A52172610CE8000984207 /* Roboto-Medium.ttf in Resources */,
+				B19A52182610CE8000984207 /* PlayfairDisplay-SemiBold.ttf in Resources */,
+				B19A52192610CE8000984207 /* Roboto-Bold.ttf in Resources */,
+				B19A521A2610CE8000984207 /* OFL.txt in Resources */,
+				B19A521B2610CE8000984207 /* Roboto-ThinItalic.ttf in Resources */,
+				B19A521C2610CE8000984207 /* PlayfairDisplay-Regular.ttf in Resources */,
+				B19A521D2610CE8000984207 /* Colors.xcassets in Resources */,
+				B19A521E2610CE8000984207 /* LICENSE.txt in Resources */,
+				B19A521F2610CE8000984207 /* Roboto-BlackItalic.ttf in Resources */,
+				B19A52202610CE8000984207 /* PlayfairDisplay-Italic-VariableFont_wght.ttf in Resources */,
+				B19A52212610CE8000984207 /* PlayfairDisplay-Medium.ttf in Resources */,
+				B19A52222610CE8000984207 /* Roboto-MediumItalic.ttf in Resources */,
+				B19A52232610CE8000984207 /* ExtensionClass.js in Resources */,
+				B19A52242610CE8000984207 /* README.txt in Resources */,
+				B19A52252610CE8000984207 /* Roboto-Thin.ttf in Resources */,
+				B19A52262610CE8000984207 /* Roboto-Regular.ttf in Resources */,
+				B19A52272610CE8000984207 /* PlayfairDisplay-ExtraBold.ttf in Resources */,
+				B19A52282610CE8000984207 /* PlayfairDisplay-MediumItalic.ttf in Resources */,
+				B19A52292610CE8000984207 /* PlayfairDisplay-VariableFont_wght.ttf in Resources */,
+				B19A522A2610CE8000984207 /* Icons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,6 +849,61 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic/Pods-Wantic-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B19A51CC2610CD8E00984207 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Wantic-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B19A51D92610CD8E00984207 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic/Pods-Wantic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B19A51EC2610CE8000984207 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Share-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CF51BEA2805EDC1B8F55E58A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -650,6 +937,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B19A51CD2610CD8E00984207 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B19A51CE2610CD8E00984207 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B19A51ED2610CE8000984207 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B19A51EE2610CE8000984207 /* UIColorExtension.swift in Sources */,
+				B19A51EF2610CE8000984207 /* WishListService.swift in Sources */,
+				B19A51F02610CE8000984207 /* ProductInfo.swift in Sources */,
+				B19A51F12610CE8000984207 /* SelfSizedTableView.swift in Sources */,
+				B19A51F22610CE8000984207 /* ToastService.swift in Sources */,
+				B19A51F32610CE8000984207 /* UIViewControllerExtension.swift in Sources */,
+				B19A51F42610CE8000984207 /* AuthService.swift in Sources */,
+				B19A51F52610CE8000984207 /* WishDataStore.swift in Sources */,
+				B19A51F62610CE8000984207 /* Wish.swift in Sources */,
+				B19A51F72610CE8000984207 /* Decimal+Format.swift in Sources */,
+				B19A51F82610CE8000984207 /* UIViewExtension.swift in Sources */,
+				B19A51F92610CE8000984207 /* LoginResponse.swift in Sources */,
+				B19A51FA2610CE8000984207 /* WishList.swift in Sources */,
+				B19A51FB2610CE8000984207 /* WishService.swift in Sources */,
+				B19A51FC2610CE8000984207 /* WanticTextView.swift in Sources */,
+				B19A523A2610D11400984207 /* AppConfig.swift in Sources */,
+				B19A51FD2610CE8000984207 /* WishListTableViewController.swift in Sources */,
+				B19A51FE2610CE8000984207 /* UIImageViewExtension.swift in Sources */,
+				B19A51FF2610CE8000984207 /* FooterView.swift in Sources */,
+				B19A52002610CE8000984207 /* ProductImageViewController.swift in Sources */,
+				B19A52012610CE8000984207 /* EditDetailsViewController.swift in Sources */,
+				B19A52022610CE8000984207 /* Price.swift in Sources */,
+				B19A52032610CE8000984207 /* LoginRequest.swift in Sources */,
+				B19A52042610CE8000984207 /* TextFieldInnerPadding.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B1A80F802589F59800F0917F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -663,6 +989,7 @@
 				B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */,
 				B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */,
 				B14880B225B20F2000D0106B /* Wish.swift in Sources */,
+				B19A52482610D1A500984207 /* AppConfig.swift in Sources */,
 				B16360D525FE1BF400D19F73 /* Decimal+Format.swift in Sources */,
 				B1750DF425B468300023A9C9 /* UIViewExtension.swift in Sources */,
 				B148806825AE0D9500D0106B /* LoginResponse.swift in Sources */,
@@ -683,6 +1010,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B19A52572610D4BA00984207 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B19A51E72610CE8000984207 /* Share Beta */;
+			targetProxy = B19A52562610D4BA00984207 /* PBXContainerItemProxy */;
+		};
+		B19A527F2610D7C800984207 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B19A51E72610CE8000984207 /* Share Beta */;
+			targetProxy = B19A527E2610D7C800984207 /* PBXContainerItemProxy */;
+		};
 		B1A80F8D2589F59800F0917F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B1A80F832589F59800F0917F /* Share */;
@@ -834,7 +1171,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210324.2;
+				CURRENT_PROJECT_VERSION = 20210328.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -860,7 +1197,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210324.2;
+				CURRENT_PROJECT_VERSION = 20210328.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -877,6 +1214,116 @@
 			};
 			name = Release;
 		};
+		B19A51DD2610CD8E00984207 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 17D85D5CDA2B73E69A9F19BF /* Pods-Wantic.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20210328.1;
+				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG USE_PUSH";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B19A51DE2610CD8E00984207 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0F80432FF2FC51BAC14E157 /* Pods-Wantic.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20210328.1;
+				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = USE_PUSH;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		B19A522C2610CE8000984207 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DBBAB098D3BA122E538435CD /* Pods-Share.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20210328.1;
+				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta.share";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B19A522D2610CE8000984207 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0761D44F85D107A06778B032 /* Pods-Share.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20210328.1;
+				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta.share";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		B1A80F902589F59800F0917F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DBBAB098D3BA122E538435CD /* Pods-Share.debug.xcconfig */;
@@ -887,7 +1334,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210324.2;
+				CURRENT_PROJECT_VERSION = 20210328.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -917,7 +1364,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210324.2;
+				CURRENT_PROJECT_VERSION = 20210328.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -957,6 +1404,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B19A51DC2610CD8E00984207 /* Build configuration list for PBXNativeTarget "Wantic Beta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B19A51DD2610CD8E00984207 /* Debug */,
+				B19A51DE2610CD8E00984207 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B19A522B2610CE8000984207 /* Build configuration list for PBXNativeTarget "Share Beta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B19A522C2610CE8000984207 /* Debug */,
+				B19A522D2610CE8000984207 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B1A80F922589F59800F0917F /* Build configuration list for PBXNativeTarget "Share" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -970,6 +1435,22 @@
 
 /* Begin XCRemoteSwiftPackageReference section */
 		B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.0;
+			};
+		};
+		B19A51E92610CE8000984207 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
+		B19A51EB2610CE8000984207 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
@@ -991,6 +1472,16 @@
 		B14880D525B30A6E00D0106B /* JWTDecode */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
+			productName = JWTDecode;
+		};
+		B19A51E82610CE8000984207 /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B19A51E92610CE8000984207 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
+		};
+		B19A51EA2610CE8000984207 /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B19A51EB2610CE8000984207 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
 			productName = JWTDecode;
 		};
 		B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */ = {
