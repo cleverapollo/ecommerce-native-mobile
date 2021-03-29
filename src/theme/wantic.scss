@@ -199,8 +199,7 @@ form {
         }
         ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty, 
         ion-textarea.ion-invalid.ion-touched, ion-textarea.ion-invalid.ion-dirty,
-        ion-searchbar.ion-invalid.ion-touched, ion-searchbar.ion-invalid.ion-dirty,
-        ion-datetime.ion-invalid.ion-touched, ion-datetime.ion-invalid.ion-dirty {
+        ion-searchbar.ion-invalid.ion-touched, ion-searchbar.ion-invalid.ion-dirty {
             border: 2px solid var(--ion-color-primary);
         }
         ion-label.label-stacked {
@@ -217,6 +216,107 @@ ion-button.wantic-margin-right-left {
     --padding-start: 0;
     --padding-end: 0;
 }
+
+ion-modal.wantic-modal-auto-height {
+    .modal-wrapper {
+        min-height: 400px;
+        height: auto;
+        --height: auto;
+    }
+    --height: auto;
+    --width: 85%;
+    --border-radius: 11pt;
+}
+
+@media (min-height: 569px) and (max-height: 735px) {
+    .cancel-wish-reservation-modal {
+        --height: 31%;
+        --border-radius: 11pt;
+        --width: 85%;
+    }
+    .wish-reserved-modal {
+        --height: 39%;
+        --border-radius: 11pt;
+        --width: 85%;
+    }
+    .reserve-wish-modal {
+        --width: 85%;
+        --height: 60%;
+        --border-radius: 11pt;
+    }
+    .query-email-modal {
+        --width: 85%;
+        --height: 44%;
+        --border-radius: 11pt;
+    }
+}
+@media (max-height: 568px) {
+    .cancel-wish-reservation-modal {
+        --height: 36%;
+        --border-radius: 11pt;
+        --width: 85%;
+    }
+    .wish-reserved-modal {
+        --height: 50%;
+        --border-radius: 11pt;
+        --width: 85%;
+    }
+    .reserve-wish-modal {
+        --width: 85%;
+        --height: 70%;
+        --border-radius: 11pt;
+    }
+    .query-email-modal {
+        --width: 85%;
+        --height: 55%;
+        --border-radius: 11pt;
+    }
+}
+@media (min-height: 736px) and (max-height: 811px) {
+    .cancel-wish-reservation-modal {
+        --height: 31%;
+        --border-radius: 11pt;
+        --width: 75%;
+    }
+    .wish-reserved-modal {
+        --height: 35%;
+        --border-radius: 11pt;
+        --width: 75%;
+    }
+    .reserve-wish-modal {
+        --width: 85%;
+        --height: 53%;
+        --border-radius: 11pt;
+    }
+    .query-email-modal {
+        --width: 85%;
+        --height: 40%;
+        --border-radius: 11pt;
+    }
+}
+@media (min-height: 812px) {
+    .cancel-wish-reservation-modal {
+        --height: 27%;
+        --border-radius: 11pt;
+        --width: 75%;
+    }
+    .wish-reserved-modal {
+        --height: 32%;
+        --border-radius: 11pt;
+        --width: 75%;
+    }
+    .reserve-wish-modal {
+        --width: 85%;
+        --height: 48%;
+        --border-radius: 11pt;
+    }
+    .query-email-modal {
+        --width: 85%;
+        --height: 36%;
+        --border-radius: 11pt;
+    }
+}
+
 
 .wantic-modal {
     --width: 85%;

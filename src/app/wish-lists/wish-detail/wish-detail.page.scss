@@ -51,27 +51,30 @@ ion-card {
     margin-bottom: 20px;
     ion-card-content {
         border-top: 1px dashed #F0EDE3;
-        padding: 7px;
-        a.edit-wish-button {
-            height: 100%;
-            img {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: 0;
+        padding: 10px;
+        div.wish-description {
+            width: 85%;
+            display: inline-block;
+            div.wish-name {
+                font-size: 20px;
+                font-weight: 500;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            div.wish-price {
+                margin-top: 4px;
+            }
+        }
+        div.edit-wish-button-container {
+            width: 15%;
+            display: inline-block;
+            position: absolute;
+            a.edit-wish-button {
+                height: 100%;
             }
         }
     }
-}
-
-div.wish-name {
-    font-size: 20px;
-    font-weight: 500;
-}
-
-div.wish-price {
-    margin-top: 4px;
 }
 
 section.wish-list-detail-container {

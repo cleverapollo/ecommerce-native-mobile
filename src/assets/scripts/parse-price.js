@@ -12,7 +12,12 @@ function findProductPrice() {
                     substring = splitStringByLineBreaks(substring).find(v => v.indexOf('€') !== -1)
                     let price = substring.replace(/[^\d.,€ -]/g, '');
                     if (price.length > 2) {
-                        price = price.substring(0, price.indexOf("€")+1)
+                        let euroIndex2 = price.indexOf('€'); 
+                        if (euroIndex2 == 0) {
+                            price = price.substring(1);
+                        } else {
+                            price = price.substring(0, euroIndex2 + 1)
+                        }
                         if (price.length > 2) {
                             prices.push(price);
                         }
@@ -23,7 +28,7 @@ function findProductPrice() {
         } 
     });
     const resultPrice = mode(prices);
-    return parseFloat(resultPrice.replace('€', '').replace(',', '.').trim());
+    return parseFloat(resultPrice.replace('€', '').replace(',', '.').trim()) ?? 0.00;
 }
 
 function splitStringByLineBreaks(string) {

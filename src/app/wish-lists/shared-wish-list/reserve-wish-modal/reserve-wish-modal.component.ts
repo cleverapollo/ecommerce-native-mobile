@@ -22,7 +22,6 @@ export class ReserveWishModalComponent implements OnInit {
   @Input() email?: string;
 
   form: FormGroup;
-  wishReserved: boolean = false;
   validationMessages: ValidationMessages = {
     email: [
       new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
@@ -56,7 +55,7 @@ export class ReserveWishModalComponent implements OnInit {
     this.publicResourceApiService.registerUserAndReserveWish(requestData).toPromise().then( wishList => {
       this.wishList = wishList;
       this.storageService.set(StorageKeys.SHARED_WISH_LIST_EMAIL, email, true);
-      this.wishReserved = true;
+      this.modalController.dismiss(this.wishList);
     })
   }
 

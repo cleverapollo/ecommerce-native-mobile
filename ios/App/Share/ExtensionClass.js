@@ -19,9 +19,15 @@ ExtensionClass.prototype = {
     fetchProductInfos: function() {
         return Array.from(document.getElementsByTagName('img')).map(x => { 
             if (x.src) { 
-                return { name: x.alt, imageUrl: x.src };  
-            } else if(x.srcset) { 
-                return { name: x.alt, imageUrl: x.srcset.split(',')[0] }; 
+                let imageUrl = '';
+                if (x.src.match(/\.(jpeg|jpg|svg|png|tiff|tif|gif)$/) != null) {
+                    imageUrl = x.src;
+                }
+                return { name: x.alt, imageUrl: imageUrl };  
+            } else if(x.srcset) {
+                const imagesUrls = Array.from(x.srcset.split(','))
+                    .filter(url => url.match(/\.(jpeg|jpg|svg|png|tiff|tif|gif)$/) != null)
+                return { name: x.alt, imageUrl: imagesUrls[0] }; 
             } 
             return { name: '', imageUrl: ''  };  
         }).filter(x => x.imageUrl !== "" && x.imageUrl.startsWith('http'));
@@ -38,10 +44,14 @@ ExtensionClass.prototype = {
                     let substring = searchText.substring(euroIndex - 10, euroIndex + 10); 
                     if (substring) {
                         substring = splitStringByLineBreaks(substring).find(v => v.indexOf('€') !== -1)
-                        substring = substring.replace(/[^\d,€-]/g, '');
-                        let price = substring.trim();
+                        let price = substring.replace(/[^\d.,€ -]/g, '');
                         if (price.length > 2) {
-                            price = price.substring(0, price.indexOf("€")+1)
+                            let euroIndex2 = price.indexOf('€'); 
+                            if (euroIndex2 == 0) {
+                                price = price.substring(1);
+                            } else {
+                                price = price.substring(0, euroIndex2 + 1)
+                            }
                             if (price.length > 2) {
                                 prices.push(price);
                             }
@@ -52,7 +62,7 @@ ExtensionClass.prototype = {
             } 
         });
         const resultPrice = mode(prices);
-        return parseFloat(resultPrice.replace('€', '').replace(',', '.').trim());
+        return parseFloat(resultPrice.replace('€', '').replace(',', '.').trim()) ?? 0.00;
     }
 };
 

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { RegistrationFormService } from '@registration/registration-form.service';
+import { CustomValidation } from '@shared/custom-validation';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -15,7 +16,7 @@ export class BirthdayPage implements OnInit {
   form: FormGroup
   validationMessages = {
     date: [
-      { type: 'required', message: 'Gib bitte dein Geburtsdatum ein.' }
+      { type: 'required', message: 'Gib bitte dein Geburtsdatum ein oder überspringe diesen Schritt.' }
     ]
   }
 
@@ -51,6 +52,10 @@ export class BirthdayPage implements OnInit {
   }
 
   next() {
+    if (this.form.invalid) {
+      CustomValidation.validateFormGroup(this.form);
+      return
+    }
     this.formSubscription.unsubscribe();
     this.registrationDto.user.birthday = this.form.controls['date'].value;
     this.formService.updateDto(this.registrationDto);
