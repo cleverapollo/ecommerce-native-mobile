@@ -21,6 +21,15 @@ target 'Wantic' do
   # Add your Pods here
 end
 
+target 'Wantic Beta' do
+  capacitor_pods
+  # Add your Pods here
+end
+
 target 'Share' do
+  pod 'SVGKit', :git => 'https://github.com/SVGKit/SVGKit.git', :branch => '3.x'
+end
+
+target 'Share Beta' do
   pod 'SVGKit', :git => 'https://github.com/SVGKit/SVGKit.git', :branch => '3.x'
 end
