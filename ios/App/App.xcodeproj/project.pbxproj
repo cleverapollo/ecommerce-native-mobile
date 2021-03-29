@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DE7EDD385414433C7FCCD67 /* Pods_Wantic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BED73FFF1D804E0CD9DA7 /* Pods_Wantic.framework */; };
+		003A9E3E306AAB52BF46EB3D /* Pods_Wantic_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD378A84E54A56FACBC34BA8 /* Pods_Wantic_Beta.framework */; };
+		10BA66B1EBAB864088D4B4BE /* Pods_Wantic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BFBE982F4EC8FFD474C5C4 /* Pods_Wantic.framework */; };
+		11C72D66A0FED301CF16EEAF /* Pods_Share_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3E2C41340E5D83C0D38F5B /* Pods_Share_Beta.framework */; };
+		20512E6A463C3CDE0BF5ABDB /* Pods_Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6E221B07259A7F1915ACE8 /* Pods_Share.framework */; };
+		2DE7EDD385414433C7FCCD67 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		504EC3081FED79650016851F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
@@ -66,7 +70,6 @@
 		B17B403C25C4717F003363E9 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B403B25C4717E003363E9 /* FooterView.swift */; };
 		B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B404125C482E6003363E9 /* WanticTextView.swift */; };
 		B19A51CE2610CD8E00984207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
-		B19A51D02610CD8E00984207 /* Pods_Wantic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BED73FFF1D804E0CD9DA7 /* Pods_Wantic.framework */; };
 		B19A51D22610CD8E00984207 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		B19A51D32610CD8E00984207 /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		B19A51D42610CD8E00984207 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
@@ -98,7 +101,6 @@
 		B19A52042610CE8000984207 /* TextFieldInnerPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */; };
 		B19A52062610CE8000984207 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51EA2610CE8000984207 /* JWTDecode */; };
 		B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51E82610CE8000984207 /* SwiftKeychainWrapper */; };
-		B19A52082610CE8000984207 /* Pods_Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D454F7F7E1CEC3B60ABD153 /* Pods_Share.framework */; };
 		B19A520A2610CE8000984207 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B19A520B2610CE8000984207 /* PlayfairDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14F25BC38AA00F92599 /* PlayfairDisplay-Black.ttf */; };
 		B19A520C2610CE8000984207 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8425BC4A9C009CEF57 /* Roboto-LightItalic.ttf */; };
@@ -135,6 +137,7 @@
 		B19A523A2610D11400984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52392610D11400984207 /* AppConfig.swift */; };
 		B19A52482610D1A500984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52472610D1A500984207 /* AppConfig.swift */; };
 		B19A527D2610D7C800984207 /* Share Beta.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B19A522E2610CE8000984207 /* Share Beta.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B19A52B32610DA4E00984207 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B17629A226051F4500B1FDB7 /* GoogleService-Info.plist */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B1A80F8E2589F59800F0917F /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B1A80F842589F59800F0917F /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1A80F98258A0F5D00F0917F /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F97258A0F5D00F0917F /* ExtensionClass.js */; };
@@ -145,7 +148,7 @@
 		B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */; };
 		B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
 		B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
-		E90D3E995983D8E9DD78A2A5 /* Pods_Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D454F7F7E1CEC3B60ABD153 /* Pods_Share.framework */; };
+		E90D3E995983D8E9DD78A2A5 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,8 +203,9 @@
 /* Begin PBXFileReference section */
 		0761D44F85D107A06778B032 /* Pods-Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.release.xcconfig"; path = "Pods/Target Support Files/Pods-Share/Pods-Share.release.xcconfig"; sourceTree = "<group>"; };
 		17D85D5CDA2B73E69A9F19BF /* Pods-Wantic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wantic/Pods-Wantic.debug.xcconfig"; sourceTree = "<group>"; };
+		23B22BC62BB434C710A9A0B3 /* Pods-Wantic Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.debug.xcconfig"; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		4D454F7F7E1CEC3B60ABD153 /* Pods_Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F3D988D919940BA13FA8444 /* Pods-Wantic Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.release.xcconfig"; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* Wantic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wantic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504EC3071FED79650016851F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		504EC3131FED79650016851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = SOURCE_ROOT; };
+		723E533BE1FE628627AC713D /* Pods-Share Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Share Beta/Pods-Share Beta.release.xcconfig"; sourceTree = "<group>"; };
+		9402444991BA2E2008400329 /* Pods-Share Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Share Beta/Pods-Share Beta.debug.xcconfig"; sourceTree = "<group>"; };
 		A0F80432FF2FC51BAC14E157 /* Pods-Wantic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wantic/Pods-Wantic.release.xcconfig"; sourceTree = "<group>"; };
 		AF51FD2D460BCFE21FA515B2 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		B114E13425B8A56A00F92599 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -281,6 +287,8 @@
 		B19A522F2610CE8100984207 /* Share copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Share copy-Info.plist"; path = "/Users/fischeti/Documents/develop/wantic-frontend/ios/App/Share copy-Info.plist"; sourceTree = "<absolute>"; };
 		B19A52392610D11400984207 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		B19A52472610D1A500984207 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		B19A530926123C8D00984207 /* Wantic Beta-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Wantic Beta-Info.plist"; sourceTree = "<group>"; };
+		B19A531026123D3D00984207 /* Wantic Beta.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Wantic Beta.entitlements"; sourceTree = "<group>"; };
 		B1A80F842589F59800F0917F /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A80F892589F59800F0917F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B1A80F8B2589F59800F0917F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -292,8 +300,11 @@
 		B1A80FC4258B3F9B00F0917F /* WishListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListService.swift; sourceTree = "<group>"; };
 		B1A80FC8258B40D900F0917F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B1A80FCE258B508B00F0917F /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
-		C97BED73FFF1D804E0CD9DA7 /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA6E221B07259A7F1915ACE8 /* Pods_Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD378A84E54A56FACBC34BA8 /* Pods_Wantic_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF3E2C41340E5D83C0D38F5B /* Pods_Share_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBBAB098D3BA122E538435CD /* Pods-Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Share/Pods-Share.debug.xcconfig"; sourceTree = "<group>"; };
+		F8BFBE982F4EC8FFD474C5C4 /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -302,7 +313,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DE7EDD385414433C7FCCD67 /* Pods_Wantic.framework in Frameworks */,
+				2DE7EDD385414433C7FCCD67 /* (null) in Frameworks */,
+				10BA66B1EBAB864088D4B4BE /* Pods_Wantic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,7 +322,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B19A51D02610CD8E00984207 /* Pods_Wantic.framework in Frameworks */,
+				003A9E3E306AAB52BF46EB3D /* Pods_Wantic_Beta.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +332,7 @@
 			files = (
 				B19A52062610CE8000984207 /* JWTDecode in Frameworks */,
 				B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */,
-				B19A52082610CE8000984207 /* Pods_Share.framework in Frameworks */,
+				11C72D66A0FED301CF16EEAF /* Pods_Share_Beta.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,7 +342,8 @@
 			files = (
 				B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */,
 				B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */,
-				E90D3E995983D8E9DD78A2A5 /* Pods_Share.framework in Frameworks */,
+				E90D3E995983D8E9DD78A2A5 /* (null) in Frameworks */,
+				20512E6A463C3CDE0BF5ABDB /* Pods_Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,8 +353,10 @@
 		27E2DDA53C4D2A4D1A88CE4A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C97BED73FFF1D804E0CD9DA7 /* Pods_Wantic.framework */,
-				4D454F7F7E1CEC3B60ABD153 /* Pods_Share.framework */,
+				CF3E2C41340E5D83C0D38F5B /* Pods_Share_Beta.framework */,
+				CD378A84E54A56FACBC34BA8 /* Pods_Wantic_Beta.framework */,
+				BA6E221B07259A7F1915ACE8 /* Pods_Share.framework */,
+				F8BFBE982F4EC8FFD474C5C4 /* Pods_Wantic.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -373,6 +388,8 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				B19A531026123D3D00984207 /* Wantic Beta.entitlements */,
+				B19A530926123C8D00984207 /* Wantic Beta-Info.plist */,
 				B17635ED256AD3EC00AAEBB8 /* App.entitlements */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
@@ -396,6 +413,10 @@
 				A0F80432FF2FC51BAC14E157 /* Pods-Wantic.release.xcconfig */,
 				DBBAB098D3BA122E538435CD /* Pods-Share.debug.xcconfig */,
 				0761D44F85D107A06778B032 /* Pods-Share.release.xcconfig */,
+				9402444991BA2E2008400329 /* Pods-Share Beta.debug.xcconfig */,
+				723E533BE1FE628627AC713D /* Pods-Share Beta.release.xcconfig */,
+				23B22BC62BB434C710A9A0B3 /* Pods-Wantic Beta.debug.xcconfig */,
+				4F3D988D919940BA13FA8444 /* Pods-Wantic Beta.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -730,6 +751,7 @@
 				B19A51D52610CD8E00984207 /* capacitor.config.json in Resources */,
 				B19A51D62610CD8E00984207 /* Main.storyboard in Resources */,
 				B19A51D72610CD8E00984207 /* config.xml in Resources */,
+				B19A52B32610DA4E00984207 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -860,7 +882,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Wantic-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Wantic Beta-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -879,7 +901,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic/Pods-Wantic-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B19A51EC2610CE8000984207 /* [CP] Check Pods Manifest.lock */ = {
@@ -897,7 +919,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Share-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Share Beta-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1216,11 +1238,11 @@
 		};
 		B19A51DD2610CD8E00984207 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17D85D5CDA2B73E69A9F19BF /* Pods-Wantic.debug.xcconfig */;
+			baseConfigurationReference = 23B22BC62BB434C710A9A0B3 /* Pods-Wantic Beta.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20210328.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
@@ -1242,11 +1264,11 @@
 		};
 		B19A51DE2610CD8E00984207 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A0F80432FF2FC51BAC14E157 /* Pods-Wantic.release.xcconfig */;
+			baseConfigurationReference = 4F3D988D919940BA13FA8444 /* Pods-Wantic Beta.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20210328.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
@@ -1267,7 +1289,7 @@
 		};
 		B19A522C2610CE8000984207 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DBBAB098D3BA122E538435CD /* Pods-Share.debug.xcconfig */;
+			baseConfigurationReference = 9402444991BA2E2008400329 /* Pods-Share Beta.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1297,7 +1319,7 @@
 		};
 		B19A522D2610CE8000984207 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0761D44F85D107A06778B032 /* Pods-Share.release.xcconfig */;
+			baseConfigurationReference = 723E533BE1FE628627AC713D /* Pods-Share Beta.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;

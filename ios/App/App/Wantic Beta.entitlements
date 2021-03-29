@@ -4,12 +4,12 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:app.wantic.io</string>
-		<string>applinks:www.app.wantic.io</string>
+		<string>applinks:app.beta.wantic.io</string>
+		<string>applinks:www.app.beta.wantic.io</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)io.wantic.app</string>
+		<string>$(AppIdentifierPrefix)io.wantic.app-beta</string>
 	</array>
 </dict>
 </plist>
