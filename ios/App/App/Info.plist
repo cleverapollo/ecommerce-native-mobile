@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>FacebookAppID</key>
-    <string>494614765250156</string>
-    <key>FacebookDisplayName</key>
-    <string>wantic</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>de_DE</string>
 	<key>CFBundleDisplayName</key>
@@ -30,12 +26,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>capacitor</string>
-                <string>fb494614765250156</string>
+				<string>fb494614765250156</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>494614765250156</string>
+	<key>FacebookDisplayName</key>
+	<string>wantic</string>
 	<key>IonApi</key>
 	<string>https://api.ionicjs.com</string>
 	<key>IonAppId</key>
