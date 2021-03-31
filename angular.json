@@ -31,16 +31,6 @@
                 "output": "./svg"
               },
               {
-                "glob": "apple-app-site-association",
-                "input": "src/.well-known",
-                "output": "./.well-known"
-              },
-              {
-                "glob": "apple-app-site-association",
-                "input": "src/.well-known",
-                "output": "./"
-              },
-              {
                 "glob": "robots.txt",
                 "input": "./",
                 "output": "./"
@@ -82,13 +72,37 @@
                 }
               ],
               "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "ngsw-config.json",
+              "assets": [
+                {
+                  "glob": "apple-app-site-association",
+                  "input": "src/prod/.well-known",
+                  "output": "./.well-known"
+                },
+                {
+                  "glob": "apple-app-site-association",
+                  "input": "src/prod/.well-known",
+                  "output": "./"
+                }
+              ]
             },
             "beta": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.beta.ts"
+                }
+              ],
+              "assets": [
+                {
+                  "glob": "apple-app-site-association",
+                  "input": "src/beta/.well-known",
+                  "output": "./.well-known"
+                },
+                {
+                  "glob": "apple-app-site-association",
+                  "input": "src/beta/.well-known",
+                  "output": "./"
                 }
               ]
             },
@@ -97,6 +111,18 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.dev.ts"
+                }
+              ],
+              "assets": [
+                {
+                  "glob": "apple-app-site-association",
+                  "input": "src/beta/.well-known",
+                  "output": "./.well-known"
+                },
+                {
+                  "glob": "apple-app-site-association",
+                  "input": "src/beta/.well-known",
+                  "output": "./"
                 }
               ]
             },

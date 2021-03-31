@@ -5,10 +5,6 @@
          {
             "appID":"3LDV8B8SZ2.io.wantic.app",
             "paths":["*"]
-         },
-         {
-            "appID":"3LDV8B8SZ2.io.wantic.app-beta",
-            "paths":["*"]
          }
       ]
    }
