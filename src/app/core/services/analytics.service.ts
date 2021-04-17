@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { Plugins } from "@capacitor/core";
-import { Appsflyer } from '@ionic-native/appsflyer/ngx';
+import { Appsflyer, AppsflyerEvent } from '@ionic-native/appsflyer/ngx';
 import { LogService } from './log.service';
 
 const { FirebaseAnalytics, Device } = Plugins;
@@ -13,12 +13,21 @@ export class AnalyticsService {
 
   analyticsEnabled = true;
 
+  get appsflyerIsConfigured(): Boolean {
+    const appsflyerConfig = environment.appsflyerConfig;
+    return appsflyerConfig ? true : false;
+  }
+
+  get firebaseIsConfigured(): Boolean {
+    return environment.analyticsConfigured;
+  }
+
   constructor(private appsflyer: Appsflyer, private logger: LogService) { 
     this.initFirebaseSdk();
   }
 
   async initFirebaseSdk() {
-    if ((await Device.getInfo()).platform == 'web' && environment.analyticsConfigured) {
+    if ((await Device.getInfo()).platform == 'web' && this.firebaseIsConfigured) {
       FirebaseAnalytics.initializeFirebase(environment.firebaseConfig);
     }
   }
@@ -37,14 +46,20 @@ export class AnalyticsService {
     }
   }
 
-  logEvent(event: { [prop: string]: any }) {
-    if (environment.analyticsConfigured) {
+  logFirebaseEvent(event: { [prop: string]: any }) {
+    if (this.firebaseIsConfigured) {
       FirebaseAnalytics.logEvent(event);
     }
   }
 
+  logAppsflyerEvent(eventName: string, eventValues: AppsflyerEvent) {
+    if (this.appsflyerIsConfigured) {
+      this.appsflyer.logEvent(eventName, eventValues);
+    }
+  }
+
   setScreenName(screenName: string) {
-    if (environment.analyticsConfigured) { 
+    if (this.firebaseIsConfigured) { 
       FirebaseAnalytics.setScreenName({
         screenName
       });
@@ -52,11 +67,16 @@ export class AnalyticsService {
   }
 
   toggleAnalytics() {
-    if (environment.analyticsConfigured) { 
-      this.analyticsEnabled = !this.analyticsEnabled;
+    this.analyticsEnabled = !this.analyticsEnabled;
+
+    if (this.firebaseIsConfigured) {
       FirebaseAnalytics.setCollectionEnabled({
         enabled: this.analyticsEnabled,
-      });    
+      });
+    }
+
+    if (this.appsflyerIsConfigured) {
+      this.appsflyer.Stop(this.analyticsEnabled);
     }
   }
 }
