@@ -11,6 +11,7 @@ import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { WishReservedModalComponent } from './wish-reserved-modal/wish-reserved-modal.component';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-shared-wish-list',
@@ -33,8 +34,11 @@ export class SharedWishListPage implements OnInit {
     private modalController: ModalController,
     private publicResourceApiService: PublicResourceApiService,
     private loadingService: LoadingService,
-    private logger: LogService
-  ) { }
+    private logger: LogService,
+    private analyticsService: AnalyticsService
+  ) { 
+    this.analyticsService.setScreenName('shared-wishlist')
+  }
 
   ngOnInit() {
     this.data = this.route.snapshot.data.data;
