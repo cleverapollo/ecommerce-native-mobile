@@ -55,9 +55,11 @@ ion-card {
         div.wish-description {
             width: 85%;
             display: inline-block;
+            border: none;
             div.wish-name {
                 font-size: 20px;
                 font-weight: 500;
+                line-height: 21px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
