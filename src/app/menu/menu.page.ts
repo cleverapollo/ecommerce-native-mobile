@@ -3,6 +3,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { Router } from '@angular/router';
 import { BrowserService } from '@core/services/browser.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
+import { appVersion } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -10,6 +11,10 @@ import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage implements OnInit {
+
+  get appVersion(): string {
+    return appVersion
+  }
 
   constructor(
     private authenticationService: AuthenticationService,
