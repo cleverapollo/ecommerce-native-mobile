@@ -74,20 +74,29 @@ export class SharedWishListPage implements OnInit {
         const email = data['data'];
         const identifier = `${this.wishList.id}_${email}`;
         this.email = email;
-        this.loadingService.showLoadingSpinner();
-        this.publicResourceApiService.getSharedWishList(identifier).pipe((first())).subscribe({
-          next: wishList => {
-            this.wishList = wishList;
-            this.loadingService.dismissLoadingSpinner();
-          },
-          error: errorResponse => {
-            this.logger.error(errorResponse);
-            this.loadingService.dismissLoadingSpinner();
-          }
-        })
+        this.upateEnteredEmail(email);
+        this.loadSharedWishList(identifier);
       }
     });
     modal.present();
+  }
+
+  private async upateEnteredEmail(email: string) {
+    return await this.storageService.set(StorageKeys.SHARED_WISH_LIST_EMAIL, email, true);
+  }
+
+  private async loadSharedWishList(identifier: string) {
+    const loadingSpinner = await this.loadingService.createLoadingSpinner();
+    this.publicResourceApiService.getSharedWishList(identifier).pipe((first())).subscribe({
+      next: wishList => {
+        this.wishList = wishList;
+        this.loadingService.dismissLoadingSpinner(loadingSpinner);
+      },
+      error: errorResponse => {
+        this.logger.error(errorResponse);
+        this.loadingService.dismissLoadingSpinner(loadingSpinner);
+      }
+    });
   }
 
   private async openReserveWishModal(wish: FriendWish) {
