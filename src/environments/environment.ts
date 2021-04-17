@@ -26,6 +26,7 @@ export const environment: EnvironmentConfig = {
 export const SERVER_URL = ''; 
 export const APP_URL = '';
 export const WHITELISTED_DOMAINS = []; 
+export const appVersion = require('../../package.json').version;
 
 /*
  * For easier debugging in development mode, you can import the following file
