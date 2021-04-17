@@ -42,7 +42,10 @@ export class BirthdayPage implements OnInit {
       }
 
       this.form = this.formBuilder.group({
-        'date': this.formBuilder.control(value, [Validators.required])
+        'date': this.formBuilder.control(value, {
+          validators: [Validators.required],
+          updateOn: 'submit'
+        })
       });
     });
   }
