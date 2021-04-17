@@ -16,7 +16,11 @@ export const environment: EnvironmentConfig = {
         messagingSenderId: "165303834787",
         appId: "1:165303834787:web:6e136abc3e6200aa330716"
     },
-    analyticsConfigured: false
+    analyticsConfigured: false,
+    appsflyerConfig: {
+        devKey: "s8xKbYNUpxszQP8CWguA5L",
+        appId: "1560563821"
+    }
 };
 
 const serverConfig = environment.serverConfig;

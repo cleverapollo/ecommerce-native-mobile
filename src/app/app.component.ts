@@ -11,6 +11,7 @@ import { AuthService } from '@core/api/auth.service';
 import { UserApiService } from '@core/api/user-api.service';
 import { LoadingService } from '@core/services/loading.service';
 import { first } from 'rxjs/operators';
+import { AnalyticsService } from '@core/services/analytics.service';
 const { SplashScreen, StatusBar, App } = Plugins;
 
 @Component({
@@ -30,7 +31,8 @@ export class AppComponent {
     private userApiService: UserApiService,
     private authService: AuthenticationService,
     private authApiService: AuthService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private analyticsService: AnalyticsService
   ) {
     this.initializeApp();
   }
@@ -55,6 +57,7 @@ export class AppComponent {
         this.handlePossibleAccountActivation();
       }
       this.initCache();
+      this.analyticsService.initAppsflyerSdk();
       this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
     });
   }

@@ -17,7 +17,11 @@ export const environment : EnvironmentConfig = {
     appId: '1:553198243306:web:63be133f670f95908c3693',
     measurementId: 'G-DZ99Y0YVF0'
   },
-  analyticsConfigured: true
+  analyticsConfigured: true,
+  appsflyerConfig: {
+    devKey: "s8xKbYNUpxszQP8CWguA5L",
+    appId: "1536006626"
+  }
 };
 
 const serverConfig = environment.serverConfig;
