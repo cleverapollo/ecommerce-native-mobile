@@ -40,18 +40,14 @@ export class SharedWishListPage implements OnInit {
     this.data = this.route.snapshot.data.data;
     this.wishList = this.data.wishList;
     this.getEmail();
+    this.openQueryEmailModal();
   }
 
   private async getEmail() {
     if (this.data.email) {
       this.email = this.data.email;
     } else {
-      const savedEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
-      this.email = savedEmail;
-    }
-
-    if (this.email === null) {
-      this.openQueryEmailModal();
+      this.email = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
     }
   }
 
@@ -68,6 +64,9 @@ export class SharedWishListPage implements OnInit {
     const modal = await this.modalController.create({
       component: QueryEmailModalComponent,
       cssClass: 'query-email-modal',
+      componentProps: {
+        cachedEmail: this.email
+      },
     });
     modal.onWillDismiss().then((data) => {
       if (data && data['data']) {

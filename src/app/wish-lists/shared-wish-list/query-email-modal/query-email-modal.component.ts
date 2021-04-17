@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
@@ -11,6 +11,8 @@ import { CustomValidation } from '@shared/custom-validation';
 })
 export class QueryEmailModalComponent implements OnInit {
 
+  @Input() cachedEmail?: string;
+
   form: FormGroup;
   validationMessages: ValidationMessages = {
     email: [
@@ -19,7 +21,7 @@ export class QueryEmailModalComponent implements OnInit {
     ]
   }
 
-  get email(): string {
+  get enteredEmail(): string {
     return this.form?.controls.email.value ?? '';
   }
 
@@ -34,12 +36,12 @@ export class QueryEmailModalComponent implements OnInit {
 
   private createForm() {
     this.form = this.formBuilder.group({
-      email: this.formBuilder.control('', [Validators.required, CustomValidation.email]),
+      email: this.formBuilder.control(this.cachedEmail, [Validators.required, CustomValidation.email]),
     })
   }
 
   dismissModal() {
-    this.modalController.dismiss(this.email)
+    this.modalController.dismiss(this.enteredEmail)
   }
 
 }
