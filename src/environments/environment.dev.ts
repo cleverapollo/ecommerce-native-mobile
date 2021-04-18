@@ -16,3 +16,4 @@ const serverConfig = environment.serverConfig;
 export const SERVER_URL = `${serverConfig.networkProtocol}://${serverConfig.secondLevelDomain}:${serverConfig.port}`;
 export const APP_URL = 'http://localhost:8100';
 export const WHITELISTED_DOMAINS = [`${serverConfig.secondLevelDomain}:${serverConfig.port}`];
+export const appVersion = require('../../package.json').version;

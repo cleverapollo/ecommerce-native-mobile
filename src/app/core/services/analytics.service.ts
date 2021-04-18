@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { Plugins } from "@capacitor/core";
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { filter } from 'rxjs/operators';
-const { FirebaseAnalytics, Device } = Plugins;
 
+const { FirebaseAnalytics, Device } = Plugins;
 @Injectable({
   providedIn: 'root'
 })
@@ -13,14 +11,9 @@ export class AnalyticsService {
 
   analyticsEnabled = true;
 
-  constructor(private router: Router) { 
+  constructor() { 
     if (environment.analyticsConfigured) {
       this.initFb();
-      this.router.events.pipe(
-        filter((e: RouterEvent) => e instanceof NavigationEnd),
-      ).subscribe((e: RouterEvent) => {
-        this.setScreenName(e.url)
-      });
     }
   }
 
@@ -36,7 +29,7 @@ export class AnalyticsService {
     }
   }
 
-  setScreenName(screenName) {
+  setScreenName(screenName: string) {
     if (environment.analyticsConfigured) { 
       FirebaseAnalytics.setScreenName({
         screenName

@@ -24,3 +24,4 @@ const serverConfig = environment.serverConfig;
 export const SERVER_URL = `${serverConfig.networkProtocol}://${serverConfig.secondLevelDomain}`;
 export const APP_URL = 'https://app.wantic.io';
 export const WHITELISTED_DOMAINS = [`${serverConfig.secondLevelDomain}`];
+export const appVersion = require('../../package.json').version;

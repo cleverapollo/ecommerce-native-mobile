@@ -11,6 +11,7 @@ import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { WishReservedModalComponent } from './wish-reserved-modal/wish-reserved-modal.component';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-shared-wish-list',
@@ -33,25 +34,24 @@ export class SharedWishListPage implements OnInit {
     private modalController: ModalController,
     private publicResourceApiService: PublicResourceApiService,
     private loadingService: LoadingService,
-    private logger: LogService
-  ) { }
+    private logger: LogService,
+    private analyticsService: AnalyticsService
+  ) { 
+    this.analyticsService.setScreenName('shared-wishlist')
+  }
 
   ngOnInit() {
     this.data = this.route.snapshot.data.data;
     this.wishList = this.data.wishList;
     this.getEmail();
+    this.openQueryEmailModal();
   }
 
   private async getEmail() {
     if (this.data.email) {
       this.email = this.data.email;
     } else {
-      const savedEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
-      this.email = savedEmail;
-    }
-
-    if (this.email === null) {
-      this.openQueryEmailModal();
+      this.email = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
     }
   }
 
@@ -68,26 +68,38 @@ export class SharedWishListPage implements OnInit {
     const modal = await this.modalController.create({
       component: QueryEmailModalComponent,
       cssClass: 'query-email-modal',
+      componentProps: {
+        cachedEmail: this.email
+      },
     });
     modal.onWillDismiss().then((data) => {
       if (data && data['data']) {
         const email = data['data'];
         const identifier = `${this.wishList.id}_${email}`;
         this.email = email;
-        this.loadingService.showLoadingSpinner();
-        this.publicResourceApiService.getSharedWishList(identifier).pipe((first())).subscribe({
-          next: wishList => {
-            this.wishList = wishList;
-            this.loadingService.dismissLoadingSpinner();
-          },
-          error: errorResponse => {
-            this.logger.error(errorResponse);
-            this.loadingService.dismissLoadingSpinner();
-          }
-        })
+        this.upateEnteredEmail(email);
+        this.loadSharedWishList(identifier);
       }
     });
     modal.present();
+  }
+
+  private async upateEnteredEmail(email: string) {
+    return await this.storageService.set(StorageKeys.SHARED_WISH_LIST_EMAIL, email, true);
+  }
+
+  private async loadSharedWishList(identifier: string) {
+    const loadingSpinner = await this.loadingService.createLoadingSpinner();
+    this.publicResourceApiService.getSharedWishList(identifier).pipe((first())).subscribe({
+      next: wishList => {
+        this.wishList = wishList;
+        this.loadingService.dismissLoadingSpinner(loadingSpinner);
+      },
+      error: errorResponse => {
+        this.logger.error(errorResponse);
+        this.loadingService.dismissLoadingSpinner(loadingSpinner);
+      }
+    });
   }
 
   private async openReserveWishModal(wish: FriendWish) {

@@ -60,7 +60,7 @@ export class ReserveWishModalComponent implements OnInit {
   }
 
   closeModal() {
-    this.modalController.dismiss(this.wishList);
+    this.modalController.dismiss();
   }
 
 }
