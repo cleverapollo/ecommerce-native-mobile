@@ -17,5 +17,9 @@ export interface EnvironmentConfig {
         messagingSenderId: string,
         appId: string,
         measurementId?: string // only configured if analytics is enabled
-      }
+    },
+    appsflyerConfig?: {
+        devKey: string,
+        appId: string
+    }
 }

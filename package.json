@@ -1,6 +1,6 @@
 {
   "name": "wantic",
-  "version": "1.1.0",
+  "version": "1.0.1",
   "author": "Tim Fischer",
   "homepage": "https://www.wantic.io",
   "scripts": {
@@ -33,6 +33,7 @@
     "@capacitor/android": "^2.4.2",
     "@capacitor/core": "2.4.2",
     "@capacitor/ios": "^2.4.2",
+    "@ionic-native/appsflyer": "^5.32.1",
     "@ionic-native/core": "^5.28.0",
     "@ionic-native/facebook": "^5.31.1",
     "@ionic-native/file": "^5.29.0",
@@ -44,6 +45,7 @@
     "cordova-android": "^8.1.0",
     "cordova-ios": "^6.1.1",
     "cordova-plugin-advanced-http": "^3.0.1",
+    "cordova-plugin-appsflyer-sdk": "^6.2.42",
     "cordova-plugin-facebook-connect": "^2.1.0",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-inappbrowser": "^4.0.0",
