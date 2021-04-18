@@ -33,6 +33,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
+import { Appsflyer } from '@ionic-native/appsflyer/ngx';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -71,6 +72,7 @@ export function jwtOptionsFactory(storageService: StorageService) {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    Appsflyer,
     InAppBrowser,
     HTTP,
     EmailVerificationStatusResolver,

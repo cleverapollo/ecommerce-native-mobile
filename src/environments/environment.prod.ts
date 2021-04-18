@@ -1,4 +1,5 @@
 import { EnvironmentConfig } from './environment.d';
+import { version } from './../../package.json'
 
 export const environment : EnvironmentConfig = {
   production: true,
@@ -17,11 +18,15 @@ export const environment : EnvironmentConfig = {
     appId: '1:553198243306:web:63be133f670f95908c3693',
     measurementId: 'G-DZ99Y0YVF0'
   },
-  analyticsConfigured: true
+  analyticsConfigured: true,
+  appsflyerConfig: {
+    devKey: "s8xKbYNUpxszQP8CWguA5L",
+    appId: "1536006626"
+  }
 };
 
 const serverConfig = environment.serverConfig;
 export const SERVER_URL = `${serverConfig.networkProtocol}://${serverConfig.secondLevelDomain}`;
 export const APP_URL = 'https://app.wantic.io';
 export const WHITELISTED_DOMAINS = [`${serverConfig.secondLevelDomain}`];
-export const appVersion = require('../../package.json').version;
+export const appVersion = version;
