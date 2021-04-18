@@ -9,7 +9,7 @@
     "beta-web": "ionic serve --configuration=beta",
     "dev-beta-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=beta",
     "dev-prod-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=production",
-    "build-beta-ios": "ionic build --configuration=beta && npx cap sync ios && ionic capacitor run ios --configuration=beta",
+    "build-beta-ios": "ionic build --configuration=beta && npx cap copy ios &&  npx cap open ios",
     "build-prod-and": "npx cap sync android && ionic capacitor run android --configuration=production",
     "build-prod-ios": "ionic capacitor sync ios && ionic capacitor run ios --configuration=production",
     "build-prod-ios-fix-update": "npm run build-prod-ios && cd ios/App/public && zip -r ../wantic.zip ./* -x \"*.DS_Store\"",
