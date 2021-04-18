@@ -1,4 +1,5 @@
 import { EnvironmentConfig } from './environment.d';
+import { version } from './../../package.json'
 
 export const environment : EnvironmentConfig = {
   production: true,
@@ -28,4 +29,4 @@ const serverConfig = environment.serverConfig;
 export const SERVER_URL = `${serverConfig.networkProtocol}://${serverConfig.secondLevelDomain}`;
 export const APP_URL = 'https://app.wantic.io';
 export const WHITELISTED_DOMAINS = [`${serverConfig.secondLevelDomain}`];
-export const appVersion = require('../../package.json').version;
+export const appVersion = version;
