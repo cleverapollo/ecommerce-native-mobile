@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 const { Keyboard } = Plugins;
 
@@ -32,10 +33,12 @@ export class WishListNamePage implements OnInit, OnDestroy {
     private router: Router, 
     private route: ActivatedRoute,
     private formService: RegistrationFormService,
-    private platform: Platform
+    private platform: Platform,
+    private analyticsService: AnalyticsService
   ) {}
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('guided_onboarding-wishlist');
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
       if (registrationDto) {
         this.registrationDto = registrationDto;

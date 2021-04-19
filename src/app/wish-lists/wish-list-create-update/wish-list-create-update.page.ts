@@ -14,6 +14,7 @@ import { UserWishListDto } from '@core/models/user.model';
 import { LoadingService } from '@core/services/loading.service';
 import { first } from 'rxjs/operators';
 import { CustomValidation } from '@shared/custom-validation';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-wish-list-create-update',
@@ -36,6 +37,10 @@ export class WishListCreateUpdatePage implements OnInit {
 
   get buttonTitle(): string {
     return this.isUpdatePage ? 'Änderungen speichern' : 'Wunschliste anlegen' 
+  }
+
+  get screenName(): string {
+    return this.isUpdatePage ? 'wishlist_settings' : 'wishlist_add'
   }
 
   get isUpdatePage(): boolean {
@@ -78,10 +83,12 @@ export class WishListCreateUpdatePage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userProfileStore: UserProfileStore,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName(this.screenName);
     this.wishList = this.route.snapshot.data.wishList;
     this.userProfileStore.loadUserProfile().subscribe(userProfile => {
       this.userEmail = userProfile.email.value;

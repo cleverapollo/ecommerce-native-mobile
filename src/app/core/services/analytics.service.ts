@@ -58,7 +58,7 @@ export class AnalyticsService {
     }
   }
 
-  setScreenName(screenName: string) {
+  setFirebaseScreenName(screenName: string) {
     if (this.firebaseIsConfigured) { 
       FirebaseAnalytics.setScreenName({
         screenName

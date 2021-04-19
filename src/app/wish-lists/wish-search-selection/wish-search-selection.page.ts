@@ -8,6 +8,7 @@ import { LoadingService } from '@core/services/loading.service';
 import { UserService } from '@core/services/user.service';
 import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-wish-search-selection',
@@ -40,10 +41,12 @@ export class WishSearchSelectionPage implements OnInit {
     public platform: Platform,
     private loadingService: LoadingService,
     private userService: UserService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('wish_add');
     this.searchByAmazonApiForm = this.formBuilder.group({
       keywords: [null, { 
         validators: [Validators.required, Validators.minLength(2)],

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-start',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartPage implements OnInit {
 
-  constructor() { }
+  constructor(private analyticsService: AnalyticsService) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('logon');
   }
 
 }

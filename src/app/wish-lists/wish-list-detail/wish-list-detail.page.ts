@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { UserService } from '@core/services/user.service';
 import { first } from 'rxjs/operators';
 import { APP_URL } from 'src/environments/environment';
+import { AnalyticsService } from '@core/services/analytics.service';
 const { Share } = Plugins;
 
 @Component({
@@ -47,10 +48,12 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     private wishListStore: WishListStoreService,
     private userProfileStore: UserProfileStore,
     private logger: LogService,
-    private userService: UserService
+    private userService: UserService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('wishlist');
     this.wishList = this.route.snapshot.data.wishList;
     this.queryParamSubscription = this.route.queryParamMap.subscribe(queryParamMap => {
       if (Boolean(queryParamMap.get('forceRefresh'))) {

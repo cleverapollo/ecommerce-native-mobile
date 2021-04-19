@@ -8,6 +8,7 @@ import { StorageService, StorageKeys } from '@core/services/storage.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { LogService } from '@core/services/log.service';
 import { ToastService } from '@core/services/toast.service';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-login',
@@ -33,10 +34,12 @@ export class LoginPage implements OnInit {
     private authService: AuthenticationService,
     private storageService: StorageService,
     private logger: LogService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('login');
     this.createForm();
     this.patchValuesIfNeeded();
   }

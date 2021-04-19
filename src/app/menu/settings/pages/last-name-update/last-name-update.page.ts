@@ -8,6 +8,7 @@ import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } 
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-last-name-update',
@@ -33,10 +34,12 @@ export class LastNameUpdatePage implements OnInit {
     private api: UserApiService,
     private userProfileStore: UserProfileStore,
     private loadingService: LoadingService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-last_name');
     this.form = this.formBuilder.group({
       lastName: this.formBuilder.control('', {
         validators: [Validators.required, Validators.min(2), CustomValidation.valueHasChanged],
