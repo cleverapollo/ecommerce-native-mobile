@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { Gender } from '@core/models/user.model';
+import { AnalyticsService } from '@core/services/analytics.service';
 import { RegistrationFormService } from '@registration/registration-form.service';
 import { Subscription } from 'rxjs';
 
@@ -20,10 +21,12 @@ export class GenderPage implements OnInit, OnDestroy {
   constructor(    
     private router: Router, 
     private route: ActivatedRoute,
-    private formService: RegistrationFormService
+    private formService: RegistrationFormService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('guided_onboarding-gender');
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
       this.registrationDto = registrationDto;
       this.gender = this.registrationDto?.user?.gender;

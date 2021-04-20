@@ -7,6 +7,7 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { RegistrationRequest } from '@core/models/registration.model';
 import { Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 const { Keyboard } = Plugins;
 @Component({
@@ -31,10 +32,12 @@ export class AccountFirstNamePage implements OnInit, OnDestroy {
     private platform: Platform,
     private router: Router, 
     private route: ActivatedRoute,
-    private formService: RegistrationFormService
+    private formService: RegistrationFormService,
+    private analyticsService: AnalyticsService
   ) {}
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('guided_onboarding-name');
     this.formSubscription = this.formService.form$.subscribe( dto => {
       this.registrationDto = dto;
       this.form = this.formBuilder.group({

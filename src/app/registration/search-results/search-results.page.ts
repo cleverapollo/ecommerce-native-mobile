@@ -9,6 +9,7 @@ import { PagingService } from '@core/services/paging.service';
 import { LogService } from '@core/services/log.service';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-search-results',
@@ -34,9 +35,11 @@ export class SearchResultsPage implements OnInit, OnDestroy {
     private formService: RegistrationFormService,
     private publicResourceService: PublicResourceApiService,
     private pagingService: PagingService,
-    private logger: LogService) {}
+    private logger: LogService,
+    private analyticsService: AnalyticsService) {}
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('guided_onboarding-search_results');
     this.searchResult = this.route.snapshot.data.searchResult;
     this.searchResultItems = this.searchResult.items;
     this.maxPageCount = this.pagingService.calcMaxPageCount(this.searchResult.totalResultCount); 

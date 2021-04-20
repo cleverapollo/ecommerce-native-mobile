@@ -3,6 +3,8 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { Router } from '@angular/router';
 import { BrowserService } from '@core/services/browser.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
+import { appVersion } from 'src/environments/environment';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-menu',
@@ -11,14 +13,21 @@ import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 })
 export class MenuPage implements OnInit {
 
+  get appVersion(): string {
+    return appVersion
+  }
+
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
     private browserService: BrowserService,
+    private analyticsService: AnalyticsService,
     public privacyPolicyService: PrivacyPolicyService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('settings');
+  }
 
   showFaqPage() {
     this.browserService.openInAppBrowser("https://www.wantic.io/faq");

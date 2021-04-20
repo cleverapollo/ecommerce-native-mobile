@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegistrationRequest } from '@core/models/registration.model';
+import { AnalyticsService } from '@core/services/analytics.service';
 import { RegistrationFormService } from '@registration/registration-form.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { Subscription } from 'rxjs';
@@ -29,10 +30,12 @@ export class BirthdayPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router, 
     private route: ActivatedRoute,
-    private formService: RegistrationFormService
+    private formService: RegistrationFormService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('guided_onboarding-birthday');
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
       this.registrationDto = registrationDto;
       
@@ -42,7 +45,10 @@ export class BirthdayPage implements OnInit {
       }
 
       this.form = this.formBuilder.group({
-        'date': this.formBuilder.control(value, [Validators.required])
+        'date': this.formBuilder.control(value, {
+          validators: [Validators.required],
+          updateOn: 'submit'
+        })
       });
     });
   }

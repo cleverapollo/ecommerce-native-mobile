@@ -6,6 +6,7 @@ import { FriendWishListStoreService } from '@core/services/friend-wish-list-stor
 import { LogService } from '@core/services/log.service';
 import { EmailVerificationService } from '@core/services/email-verification.service';
 import { first } from 'rxjs/operators';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
@@ -21,10 +22,12 @@ export class FriendsWishListDetailPage implements OnInit {
     private route: ActivatedRoute,
     private friendWishListStore: FriendWishListStoreService,
     private logger: LogService,
-    private emailVerificationService: EmailVerificationService
+    private emailVerificationService: EmailVerificationService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('wishlist-family_friends');
     this.wishList = this.route.snapshot.data.wishList;
   }
 

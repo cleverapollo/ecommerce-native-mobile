@@ -9,6 +9,7 @@ import { LogService } from '@core/services/log.service';
 import { UserService } from '@core/services/user.service';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-wish-detail',
@@ -42,10 +43,12 @@ export class WishDetailPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private wishListStore: WishListStoreService,
     private logger: LogService,
-    private userService: UserService
+    private userService: UserService,
+    private analyticsService: AnalyticsService
     ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('wishlist-wish');
     this.wishList = this.route.snapshot.data.wishList;
     this.wish = this.route.snapshot.data.wish;
     this.subscriptionAccountEnabled = this.userService.$accountIsEnabled.subscribe({

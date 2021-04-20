@@ -14,6 +14,7 @@ import { IonInput } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
 import { first } from 'rxjs/operators';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 const { Keyboard } = Plugins;
 @Component({
@@ -61,10 +62,12 @@ export class AccountEmailPasswordPage implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private loadingService: LoadingService,
     private storageService: StorageService,
+    private analyticsService: AnalyticsService,
     public privacyPolicyService: PrivacyPolicyService) { 
   }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('guided_onboarding-email_password');
     this.formSubscription = this.formService.form$.subscribe( registrationDto => {
       this.registrationDto = registrationDto;
       this.form = this.formBuilder.group({

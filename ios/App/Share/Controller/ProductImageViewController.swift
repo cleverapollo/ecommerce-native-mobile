@@ -31,15 +31,31 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.showActivityIndicator("Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
-        if let _ = authService.getAuthToken() {
-            if let item = extensionContext?.inputItems.first as? NSExtensionItem {
-                accessWebpageProperties(extensionItem: item)
+        
+        if authService.tokenExists(), let encodedToken = authService.getAuthToken() {
+            if authService.isTokenExpired(encodedToken: encodedToken) {
+                self.authService.refreshToken(expiredAuthToken: encodedToken, completionHandler: { result in
+                    switch result {
+                    case .success(_):
+                        self.loadProductInfoFromWebPage()
+                    case .failure(_):
+                        self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+                    }
+                })
+            } else {
+                self.loadProductInfoFromWebPage()
             }
         } else {
-            toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+            self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
         }
         WishDataStore.shared.reset()
+    }
+    
+    func loadProductInfoFromWebPage() {
+        self.showActivityIndicator("Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
+        if let item = extensionContext?.inputItems.first as? NSExtensionItem {
+            accessWebpageProperties(extensionItem: item)
+        }
     }
     
     override func viewDidLoad() {

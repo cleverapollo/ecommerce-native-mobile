@@ -1,4 +1,5 @@
 import { EnvironmentConfig } from './environment.d';
+import { version } from './../../package.json'
 
 export const environment: EnvironmentConfig = {
     production: false,
@@ -16,3 +17,4 @@ const serverConfig = environment.serverConfig;
 export const SERVER_URL = `${serverConfig.networkProtocol}://${serverConfig.secondLevelDomain}:${serverConfig.port}`;
 export const APP_URL = 'http://localhost:8100';
 export const WHITELISTED_DOMAINS = [`${serverConfig.secondLevelDomain}:${serverConfig.port}`];
+export const appVersion = version;
