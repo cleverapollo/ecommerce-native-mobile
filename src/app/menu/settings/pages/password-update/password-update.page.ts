@@ -5,6 +5,7 @@ import { CustomValidation } from '@shared/custom-validation';
 import { UserApiService } from '@core/api/user-api.service';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 import { UpdatePasswordRequest } from '@core/models/login.model';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-password-update',
@@ -34,9 +35,15 @@ export class PasswordUpdatePage implements OnInit {
     }
   }
 
-  constructor(private formBuilder: FormBuilder, private api: UserApiService) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private api: UserApiService,
+    private analyticsService: AnalyticsService
+  ) { 
+  }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-password');
     this.form = this.formBuilder.group({
       currentPassword: this.formBuilder.control('', {
         validators: [Validators.required],

@@ -17,6 +17,7 @@ import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { WanticJwtToken } from '@core/models/login.model';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-email-update',
@@ -58,10 +59,13 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
     private userProfileStore: UserProfileStore,
     private location: Location,
     private jwtHelper: JwtHelperService,
-    private authService: AuthenticationService) 
+    private authService: AuthenticationService,
+    private analyticsService: AnalyticsService
+  ) 
     { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-email');
     this.getUserProfileSubscription = this.userProfileStore.loadUserProfile().subscribe({
       next: userProfile => {
         this.userProfile = userProfile;

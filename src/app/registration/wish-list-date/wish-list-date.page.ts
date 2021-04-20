@@ -5,6 +5,7 @@ import { RegistrationFormService } from '../registration-form.service';
 import { RegistrationRequest } from '@core/models/registration.model';
 import { Subscription } from 'rxjs';
 import { CustomValidation } from '@shared/custom-validation';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-wish-list-date',
@@ -30,10 +31,12 @@ export class WishListDatePage implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router, 
     private route: ActivatedRoute,
-    private formService: RegistrationFormService
+    private formService: RegistrationFormService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('guided_onboarding-date');
     this.initForm();
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-registration-completed',
@@ -8,12 +9,13 @@ import { Router } from '@angular/router';
 })
 export class RegistrationCompletedPage implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private analyticsService: AnalyticsService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('guided_onboarding-complete');
+  }
 
   navToWishListOverview() {
-    console.log('click')
     this.router.navigateByUrl('/secure/home/wish-list-overview', { replaceUrl: true });
   }
 

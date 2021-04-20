@@ -6,6 +6,7 @@ import { FriendWishListStoreService } from '@core/services/friend-wish-list-stor
 import { LogService } from '@core/services/log.service';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-friends-wish-list-overview',
@@ -23,10 +24,12 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private friendWishListStore: FriendWishListStoreService,
-    private logger: LogService
+    private logger: LogService,
+    private analyticsService: AnalyticsService
   ) {}
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('family_friends');
     this.wishLists = this.route.snapshot.data.wishLists;
 
     this.queryParamSubscription = this.route.queryParamMap.subscribe({

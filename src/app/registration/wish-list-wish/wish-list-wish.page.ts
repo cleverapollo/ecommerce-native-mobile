@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { IonSearchbar, Platform } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 const { Keyboard } = Plugins;
 @Component({
@@ -26,9 +27,11 @@ export class WishListWishPage implements OnInit {
     private router: Router, 
     private platform: Platform,
     private activatedRoute: ActivatedRoute, 
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private analyticsService: AnalyticsService) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('guided_onboarding-wish');
     this.form = this.formBuilder.group({
       'keywords': this.formBuilder.control(null, [Validators.required])
     });

@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { ChangePasswordRequest } from '@core/models/login.model';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-change-password',
@@ -36,10 +37,12 @@ export class ChangePasswordPage implements OnInit {
     private formBuilder: FormBuilder, 
     private api: UserApiService,
     private navController: NavController,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('login-password_reset-change_password');
     this.passwordChangedSuccessful = false;
     this.activatedRoute.queryParams.subscribe(params => {
       this.token = params['token'];

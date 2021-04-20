@@ -37,7 +37,7 @@ export class SharedWishListPage implements OnInit {
     private logger: LogService,
     private analyticsService: AnalyticsService
   ) { 
-    this.analyticsService.setScreenName('shared-wishlist')
+    this.analyticsService.setFirebaseScreenName('shared-wishlist')
   }
 
   ngOnInit() {

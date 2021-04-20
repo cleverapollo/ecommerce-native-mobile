@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { UserService } from '@core/services/user.service';
 import { first } from 'rxjs/operators';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -42,10 +43,12 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private toastService: ToastService,
     private emilVerificationService: EmailVerificationService,
-    private userService: UserService
+    private userService: UserService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('main');
     const resolvedData = this.route.snapshot.data;
     this.updateWishLists(resolvedData.wishLists);
 

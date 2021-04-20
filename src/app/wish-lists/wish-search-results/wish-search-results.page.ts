@@ -13,6 +13,7 @@ import { first } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 const { Keyboard } = Plugins;
 
@@ -95,12 +96,14 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     public platform: Platform,
     private logger: LogService,
-    private pagingService: PagingService
+    private pagingService: PagingService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnDestroy(): void {}
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('search');
     this.searchResultDataService.$lastSearchQuery.subscribe(query => {
       this.searchType = query.type;
       this.createForm(query.searchTerm);
