@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserApiService } from '@core/api/user-api.service';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { DeleteAccountRequest } from '@core/models/user.model';
+import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
@@ -39,10 +40,12 @@ export class AccountDeletePage implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private logger: LogService
+    private logger: LogService,
+    private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-delete_account');
     this.form = this.formBuilder.group({
       password: this.formBuilder.control('', { 
         validators: [Validators.required],

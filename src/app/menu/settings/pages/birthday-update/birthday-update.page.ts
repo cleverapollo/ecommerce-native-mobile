@@ -6,6 +6,7 @@ import { UserProfileStore } from '../../user-profile-store.service';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-birthday-update',
@@ -30,10 +31,13 @@ export class BirthdayUpdatePage implements OnInit {
     private toastService: ToastService,
     private formBuilder: FormBuilder, 
     private api: UserApiService, 
-    private userProfileStore: UserProfileStore) 
+    private userProfileStore: UserProfileStore,
+    private analyticsService: AnalyticsService
+  ) 
   { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-birthday');
     this.form = this.formBuilder.group({
       birthday: this.formBuilder.control('', {
         validators: [Validators.required, CustomValidation.valueHasChanged],

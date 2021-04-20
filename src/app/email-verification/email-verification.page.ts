@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PublicEmailVerificationStatus } from '@core/models/user.model';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-email-verification',
@@ -24,9 +25,10 @@ export class EmailVerificationPage implements OnInit {
     return this.emailVerificationStatus === PublicEmailVerificationStatus.ERROR;
   }
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private analyticsService: AnalyticsService) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('email_verification_result');
     this.emailVerificationStatus = this.route.snapshot.data.emailVerificationStatus;
   }
 

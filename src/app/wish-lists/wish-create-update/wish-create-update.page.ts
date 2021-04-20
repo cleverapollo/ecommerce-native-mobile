@@ -12,6 +12,7 @@ import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-wish-create-update',
@@ -42,6 +43,10 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     return  this.isUpdatePage ? 'Wunsch bearbeiten' : 'Wunsch hinzufügen';
   }
 
+  get screenName(): string {
+    return this.isUpdatePage ? 'wish_settings' : 'wish_add';
+  }
+
   get isUpdatePage(): boolean {
     return (this.wish && this.wish.id) ? true : false;
   }
@@ -56,10 +61,12 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     private wishListStore: WishListStoreService,
     private searchResultDataService: SearchResultDataService,
     private loadingService: LoadingService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private analyticsService: AnalyticsService
     ) { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName(this.screenName);
     this.initViewData();
     this.createForm();
   }

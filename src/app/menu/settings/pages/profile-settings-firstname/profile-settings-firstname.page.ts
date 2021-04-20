@@ -7,6 +7,7 @@ import { UserProfileStore } from '../../user-profile-store.service';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
+import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
   selector: 'app-profile-settings-firstname',
@@ -32,10 +33,13 @@ export class ProfileSettingsFirstnamePage implements OnInit {
     private formBuilder: FormBuilder, 
     private api: UserApiService,
     private userProfileStore: UserProfileStore,
-    private toastService: ToastService) 
+    private toastService: ToastService,
+    private analyticsService: AnalyticsService
+  ) 
   { }
 
   ngOnInit() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-first_name');
     const firstName = history.state.data.profile.firstName;
     this.form = this.formBuilder.group({
       firstName: this.formBuilder.control(firstName, {
