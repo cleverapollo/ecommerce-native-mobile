@@ -180,6 +180,12 @@ ion-searchbar > div > button > ion-icon.searchbar-clear-icon {
     height: 9.9px !important;
 }
 
+form.form-signup {
+    ion-item {
+        margin-bottom: 7px;
+    }
+}
+
 form {
     ion-item {
         --inner-padding-start: 0;

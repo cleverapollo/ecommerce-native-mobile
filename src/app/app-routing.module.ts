@@ -47,7 +47,12 @@ const routes: Routes = [
     path: 'email-verification',
     resolve: { emailVerificationStatus: EmailVerificationStatusResolver },
     loadChildren: () => import('./email-verification/email-verification.module').then( m => m.EmailVerificationPageModule)
+  },
+  {
+    path: 'signup-mail-one',
+    loadChildren: () => import('./signup/pages/signup-mail-one/signup-mail-one.module').then( m => m.SignupMailOnePageModule)
   }
+
   // test
 ];
 
