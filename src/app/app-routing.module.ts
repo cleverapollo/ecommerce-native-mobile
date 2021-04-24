@@ -18,11 +18,6 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'registration',
-    canActivate: [AccessGuard],
-    loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
-  },
-  {
     path: 'start',
     canActivate: [AccessGuard],
     loadChildren: () => import('./start/start.module').then( m => m.StartPageModule),
@@ -55,7 +50,8 @@ const routes: Routes = [
   {
     path: 'signup-mail-two',
     loadChildren: () => import('./signup/pages/signup-mail-two/signup-mail-two.module').then( m => m.SignupMailTwoPageModule)
-  },  {
+  },
+  {
     path: 'signup-completed',
     loadChildren: () => import('./signup/pages/signup-completed/signup-completed.module').then( m => m.SignupCompletedPageModule)
   }
