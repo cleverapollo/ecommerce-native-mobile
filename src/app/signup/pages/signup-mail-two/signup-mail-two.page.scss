@@ -1,0 +1,63 @@
+ion-item.ion-item-select-gender {
+    height: 38px;
+    margin-left: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    ion-radio {
+        margin-right: 11px;
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 24px;
+        height: 24px;
+    }
+    ion-label {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+ion-item.ion-item-select-date {
+    --background: white;
+    border-radius: 50px;
+    ion-icon {
+        margin-right: 20px;
+        margin-left: 0;
+    }
+}
+
+ion-radio::part(container) {
+    border-color: white;
+    background-color: white;
+
+}
+
+.list-container {
+    display: flex;
+    margin-bottom: 18px;
+    ion-list {
+        padding-top: 0;
+    }
+}
+
+ion-grid.consent-container {
+    font-size: 12.5px;
+    line-height: 15px;
+    padding-left: 0;
+    padding-top: 0;
+    ion-row.consent-item {
+        ion-col > ion-col  {
+            padding-left: 19px;
+            padding-right: 0;
+        }
+        ion-col > p {
+            margin: 0;
+        }
+    }
+    ion-row.consent-item.unchecked {
+        color: #BCBABC;
+        a {
+            color: #BCBABC;
+        }
+    }
+}
+

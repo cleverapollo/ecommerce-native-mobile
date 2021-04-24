@@ -9,6 +9,7 @@ import { SignupRequest } from '@core/models/signup.model';
 import { SignupStateService } from '../../signup-state.service';
 import { first } from 'rxjs/operators';
 import { LogService } from '@core/services/log.service';
+import { Router } from '@angular/router';
 
 const { Keyboard } = Plugins;
 
@@ -46,7 +47,8 @@ export class SignupMailOnePage implements OnInit {
     private formBuilder: FormBuilder,
     private analyticsService: AnalyticsService,
     private signupStateService: SignupStateService,
-    private logger: LogService
+    private logger: LogService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -91,6 +93,7 @@ export class SignupMailOnePage implements OnInit {
   next() {
     if (this.form.valid) { 
       this.updateSignupRequest();
+      this.router.navigateByUrl('/signup-mail-two');
     } else {
       CustomValidation.validateFormGroup(this.form);
     }

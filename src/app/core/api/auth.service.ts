@@ -8,6 +8,7 @@ import { ApiErrorHandlerService } from './api-error-handler.service';
 import { RegistrationRequest, RegistrationResponse } from '@core/models/registration.model';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { ApiVersion } from './api-version';
+import { SignupRequest } from '@core/models/signup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,12 @@ export class AuthService {
     };
     return this.apiService.post<LoginResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/login`, requestData).pipe(
       catchError( error => this.errorHandler.handleError(error, this.errorMessageForLoginServerError))
+    );
+  }
+
+  signup(signupRequest: SignupRequest): Observable<RegistrationResponse> {
+    return this.apiService.post<RegistrationResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signup`, signupRequest).pipe(
+      catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))
     );
   }
 

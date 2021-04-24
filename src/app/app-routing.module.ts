@@ -51,7 +51,12 @@ const routes: Routes = [
   {
     path: 'signup-mail-one',
     loadChildren: () => import('./signup/pages/signup-mail-one/signup-mail-one.module').then( m => m.SignupMailOnePageModule)
+  },
+  {
+    path: 'signup-mail-two',
+    loadChildren: () => import('./signup/pages/signup-mail-two/signup-mail-two.module').then( m => m.SignupMailTwoPageModule)
   }
+
 
   // test
 ];
