@@ -91,7 +91,7 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
         next: response => {
           this.authService.updateToken(response.jwToken.token).then(() => {
             this.storageService.set(StorageKeys.REGISTRATION_RESPONSE, response).then(() => {
-              this.router.navigateByUrl('/signup-completed');
+              this.router.navigateByUrl('signup/signup-completed');
             });
           })
           this.loadingService.dismissLoadingSpinner();

@@ -44,20 +44,23 @@ const routes: Routes = [
     loadChildren: () => import('./email-verification/email-verification.module').then( m => m.EmailVerificationPageModule)
   },
   {
-    path: 'signup-mail-one',
-    loadChildren: () => import('./signup/pages/signup-mail-one/signup-mail-one.module').then( m => m.SignupMailOnePageModule)
+    path: 'signup',
+    canActivate: [AccessGuard],
+    children: [
+      {
+        path: 'signup-mail-one',
+        loadChildren: () => import('./signup/pages/signup-mail-one/signup-mail-one.module').then( m => m.SignupMailOnePageModule)
+      },
+      {
+        path: 'signup-mail-two',
+        loadChildren: () => import('./signup/pages/signup-mail-two/signup-mail-two.module').then( m => m.SignupMailTwoPageModule)
+      },
+      {
+        path: 'signup-completed',
+        loadChildren: () => import('./signup/pages/signup-completed/signup-completed.module').then( m => m.SignupCompletedPageModule)
+      }
+    ]
   },
-  {
-    path: 'signup-mail-two',
-    loadChildren: () => import('./signup/pages/signup-mail-two/signup-mail-two.module').then( m => m.SignupMailTwoPageModule)
-  },
-  {
-    path: 'signup-completed',
-    loadChildren: () => import('./signup/pages/signup-completed/signup-completed.module').then( m => m.SignupCompletedPageModule)
-  }
-
-
-
   // test
 ];
 

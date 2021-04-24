@@ -93,7 +93,7 @@ export class SignupMailOnePage implements OnInit {
   next() {
     if (this.form.valid) { 
       this.updateSignupRequest();
-      this.router.navigateByUrl('/signup-mail-two');
+      this.router.navigateByUrl('signup/signup-mail-two');
     } else {
       CustomValidation.validateFormGroup(this.form);
     }
