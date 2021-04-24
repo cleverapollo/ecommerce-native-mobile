@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '@core/api/auth.service';
 import { SignupRequest } from '@core/models/signup.model';
 import { Gender } from '@core/models/user.model';
@@ -39,7 +39,6 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,
     private logger: LogService,
     private analyticsService: AnalyticsService,
     private signupStateService: SignupStateService,
@@ -82,11 +81,12 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
     this.signupRequest.gender = event.target.value as Gender;
   }
 
-  next() {
+  async next() {
     if (this.form.valid) {
       this.signupRequest.agreedToPrivacyPolicyAt = new Date();
       this.signupStateService.updateState(this.signupRequest);
-      this.loadingService.showLoadingSpinner();
+      const loadingSpinner = await this.loadingService.createLoadingSpinner();
+      loadingSpinner.present();
       this.authApiService.signup(this.signupRequest).pipe(first()).subscribe({
         next: response => {
           this.authService.updateToken(response.jwToken.token).then(() => {
@@ -94,10 +94,10 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
               this.router.navigateByUrl('signup/signup-completed');
             });
           })
-          this.loadingService.dismissLoadingSpinner();
+          this.loadingService.dismissLoadingSpinner(loadingSpinner);
         },
         error: error => {
-          this.loadingService.dismissLoadingSpinner();
+          this.loadingService.dismissLoadingSpinner(loadingSpinner);
         }
       })
     } else {
