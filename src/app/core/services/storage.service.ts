@@ -31,7 +31,13 @@ export class StorageService {
         if (secure) {  
           SecureStoragePlugin.get({key: storageKey}).then((cachedObject: { value: string }) => {
             if (cachedObject.value.length > 0) {
-              resolve(JSON.parse(cachedObject.value));
+               try {
+                 const jsonObject = JSON.parse(cachedObject.value);
+                 resolve(jsonObject);
+               } catch (error) {
+                 this.logger.error(`failed to parse object with key ${storageKey}`, error);
+                 resolve(null);
+               } 
             } else {
               resolve(null);
             }
