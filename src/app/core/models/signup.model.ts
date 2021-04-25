@@ -1,4 +1,5 @@
-import { Gender } from "./user.model";
+import { LoginResponse } from "./login.model";
+import { Gender, UserProfile } from "./user.model";
 
 export enum AuthProvider {
     apple = 'APPLE',
@@ -15,4 +16,9 @@ export class SignupRequest {
     gender?: Gender;
     agreedToPrivacyPolicyAt: Date;
     authProvider: AuthProvider;
+}
+
+export class SignupResponse {
+    user: UserProfile;
+    jwToken: LoginResponse;
 }

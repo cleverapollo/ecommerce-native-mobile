@@ -5,10 +5,8 @@ import { CacheService } from 'ionic-cache';
 import { WishApiService } from '@core/api/wish-api.service';
 import { from, Observable } from 'rxjs';
 import { LogService } from './log.service';
-import { StorageKeys, StorageService } from './storage.service';
+import { StorageService } from './storage.service';
 import { UserService } from './user.service';
-import { RegistrationResponse } from '@core/models/registration.model';
-import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +40,7 @@ export class WishListStoreService {
     if (this.userService.accountIsEnabled) {
       return this.loadWishListsForEnabledAccount(forceRefresh)
     }
-    return this.loadWishListsForDisabledAccount();
+    return from(Promise.resolve([]));
   }
 
   private loadWishListsForEnabledAccount(forceRefresh: boolean = false): Observable<Array<WishListDto>> {
@@ -51,17 +49,6 @@ export class WishListStoreService {
       return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
     } 
     return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY)
-  }
-
-  private loadWishListsForDisabledAccount(): Observable<Array<WishListDto>> {
-    return from(new Promise<Array<WishListDto>>((resolve) => {
-      this.storageService.get<RegistrationResponse>(StorageKeys.REGISTRATION_RESPONSE).then((responseBody) => {
-        resolve(responseBody?.wishLists ?? []);
-      }, error => {
-        this.logger.error(error);
-        resolve([]);
-      });
-    }))
   }
 
   removeCachedWishLists() {
@@ -74,7 +61,7 @@ export class WishListStoreService {
     if (this.userService.accountIsEnabled) {
       return this.loadWishListForEnabledAccount(id, forceRefresh);
     }
-    return this.loadWishListForDisabledAccount(id);
+    return from(Promise.resolve(null));
   }
 
   private loadWishListForEnabledAccount(id: string, forceRefresh: boolean = false): Observable<WishListDto> {
@@ -83,22 +70,6 @@ export class WishListStoreService {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
     } 
     return this.cache.loadFromObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY)
-  }
-
-  private loadWishListForDisabledAccount(id: string): Observable<WishListDto> {
-    return from(new Promise<WishListDto>((resolve) => {
-      this.storageService.get<RegistrationResponse>(StorageKeys.REGISTRATION_RESPONSE).then((responseBody) => {
-        const wishLists = responseBody.wishLists;
-        if (wishLists?.length && wishLists[0]?.id && wishLists[0].id === id) {
-          resolve(wishLists[0]);
-        } else {
-          resolve(null);
-        }
-      }, error => {
-        this.logger.error(error);
-        resolve(null);
-      });
-    }))
   }
 
   removeCachedWishList(id: string) {
@@ -151,7 +122,7 @@ export class WishListStoreService {
     if (this.userService.accountIsEnabled) {
       return this.loadWishForEnabledAccount(id, forceRefresh);
     }
-    return this.loadWishForDisabledAccount(id);
+    return from(Promise.resolve(null));
   }
 
   private loadWishForEnabledAccount(id: string, forceRefresh: boolean = false): Observable<WishDto> {
@@ -162,23 +133,6 @@ export class WishListStoreService {
     return this.cache.loadFromObservable(this.cacheKeyWish(id), request, this.CACHE_GROUP_KEY)
   }
 
-  private loadWishForDisabledAccount(id: string): Observable<WishDto> {
-    return from(new Promise<WishDto>((resolve) => {
-      this.storageService.get<RegistrationResponse>(StorageKeys.REGISTRATION_RESPONSE).then((responseBody) => {
-        const wishList = responseBody.wishLists?.[0];
-        if (wishList?.wishes?.length) {
-          const wish = wishList.wishes[0];
-          if (wish.id === id) {
-            resolve(wishList.wishes[0]);
-          }
-        }
-        resolve(null);
-      }, error => {
-        this.logger.error(error);
-        resolve(null);
-      });
-    }))
-  }
 
   updateCachedWish(wish: WishDto) {
     this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);

@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { EMPTY, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { LoginResponse } from '@core/models/login.model';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiErrorHandlerService } from './api-error-handler.service';
-import { RegistrationRequest, RegistrationResponse } from '@core/models/registration.model';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { ApiVersion } from './api-version';
-import { SignupRequest } from '@core/models/signup.model';
+import { SignupRequest, SignupResponse } from '@core/models/signup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +28,8 @@ export class AuthService {
     );
   }
 
-  signup(signupRequest: SignupRequest): Observable<RegistrationResponse> {
-    return this.apiService.post<RegistrationResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signup`, signupRequest).pipe(
-      catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))
-    );
-  }
-
-  register(dto: RegistrationRequest) : Observable<RegistrationResponse> {
-    return this.apiService.post<RegistrationResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/register`, dto).pipe(
+  signup(signupRequest: SignupRequest): Observable<SignupResponse> {
+    return this.apiService.post<SignupResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signup`, signupRequest).pipe(
       catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))
     );
   }

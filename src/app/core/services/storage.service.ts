@@ -15,7 +15,7 @@ export enum StorageKeys {
   SHARED_WISH_LIST_EMAIL = 'memberEmail',
   SHOW_ONBOARDING_SLIDES = 'showOnboardingSlides',
   SIGNUP_REQUEST = 'signupRequest',
-  REGISTRATION_RESPONSE = 'registrationResponse'
+  SIGNUP_RESPONSE = 'signupResponse',
 }
 
 @Injectable({

@@ -5,8 +5,8 @@ import { UserApiService } from '@core/api/user-api.service';
 import { CacheService } from 'ionic-cache';
 import { UserService } from '@core/services/user.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
-import { RegistrationResponse } from '@core/models/registration.model';
 import { LogService } from '@core/services/log.service';
+import { SignupResponse } from '@core/models/signup.model';
 
 export interface StoredUserProfile {
   item: UserProfile;
@@ -47,7 +47,7 @@ export class UserProfileStore {
 
   private loadUserProfileForDeactivatedAccount(): Observable<UserProfile> {
     return from(new Promise<UserProfile>((resolve) => {
-      this.storageService.get<RegistrationResponse>(StorageKeys.REGISTRATION_RESPONSE).then((responseBody) => {
+      this.storageService.get<SignupResponse>(StorageKeys.SIGNUP_RESPONSE).then((responseBody) => {
         resolve(responseBody?.user)
       }, error => {
         this.logger.error(error);
