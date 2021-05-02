@@ -133,6 +133,7 @@ export class AuthenticationService {
           this.updateToken(idToken).then(resolve, reject);
         }, reject)
       }, error => {
+        this.logger.error(error);
         const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
         this.toastService.presentErrorToast(errorMessage);
         this.isAuthenticated.next(false);
