@@ -7,17 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		003A9E3E306AAB52BF46EB3D /* Pods_Wantic_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD378A84E54A56FACBC34BA8 /* Pods_Wantic_Beta.framework */; };
-		10BA66B1EBAB864088D4B4BE /* Pods_Wantic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BFBE982F4EC8FFD474C5C4 /* Pods_Wantic.framework */; };
-		11C72D66A0FED301CF16EEAF /* Pods_Share_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3E2C41340E5D83C0D38F5B /* Pods_Share_Beta.framework */; };
-		20512E6A463C3CDE0BF5ABDB /* Pods_Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6E221B07259A7F1915ACE8 /* Pods_Share.framework */; };
-		2DE7EDD385414433C7FCCD67 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		504EC3081FED79650016851F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
 		504EC30F1FED79650016851F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
+		7D1D14D0E654162B80DE1E33 /* Pods_Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E07BD2AD1D1AFB4AC037F85 /* Pods_Share.framework */; };
+		A46ECE88DB4DD435142EDF74 /* Pods_Share_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E64593797BF139F1BC31FC49 /* Pods_Share_Beta.framework */; };
+		ACE37AB1352F87322B0E7D00 /* Pods_Wantic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BFF2DD7CB8230212A9F4AB /* Pods_Wantic.framework */; };
 		B114E13525B8A56A00F92599 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114E13425B8A56A00F92599 /* UIColorExtension.swift */; };
 		B114E13D25BC33CF00F92599 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B114E13C25BC33CF00F92599 /* Colors.xcassets */; };
 		B114E14125BC34F700F92599 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B114E14025BC34F700F92599 /* Icons.xcassets */; };
@@ -59,7 +57,7 @@
 		B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880BD25B2143700D0106B /* WishDataStore.swift */; };
 		B14880C425B2E8B700D0106B /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
 		B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
-		B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* JWTDecode */; };
+		B14880D625B30A6E00D0106B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */; };
 		B16360D025FE13DA00D19F73 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360CF25FE13DA00D19F73 /* Price.swift */; };
 		B16360D525FE1BF400D19F73 /* Decimal+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360D425FE1BF400D19F73 /* Decimal+Format.swift */; };
 		B16E1FB325BF3290009EEFDE /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */; };
@@ -99,8 +97,8 @@
 		B19A52022610CE8000984207 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360CF25FE13DA00D19F73 /* Price.swift */; };
 		B19A52032610CE8000984207 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806D25AE129500D0106B /* LoginRequest.swift */; };
 		B19A52042610CE8000984207 /* TextFieldInnerPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */; };
-		B19A52062610CE8000984207 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51EA2610CE8000984207 /* JWTDecode */; };
-		B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51E82610CE8000984207 /* SwiftKeychainWrapper */; };
+		B19A52062610CE8000984207 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51EA2610CE8000984207 /* SwiftPackageProductDependency */; };
+		B19A52072610CE8000984207 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51E82610CE8000984207 /* SwiftPackageProductDependency */; };
 		B19A520A2610CE8000984207 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B19A520B2610CE8000984207 /* PlayfairDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14F25BC38AA00F92599 /* PlayfairDisplay-Black.ttf */; };
 		B19A520C2610CE8000984207 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8425BC4A9C009CEF57 /* Roboto-LightItalic.ttf */; };
@@ -145,10 +143,10 @@
 		B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */; };
 		B1A80FA8258A705100F0917F /* EditDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA7258A705100F0917F /* EditDetailsViewController.swift */; };
 		B1A80FAE258A770100F0917F /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FAD258A770100F0917F /* WishList.swift */; };
-		B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */; };
+		B1A80FC1258B3F6E00F0917F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */; };
 		B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
 		B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
-		E90D3E995983D8E9DD78A2A5 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		D1244063BE45F0600004026D /* Pods_Wantic_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9DBF99F871BEB57181C64 /* Pods_Wantic_Beta.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,11 +199,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0761D44F85D107A06778B032 /* Pods-Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.release.xcconfig"; path = "Pods/Target Support Files/Pods-Share/Pods-Share.release.xcconfig"; sourceTree = "<group>"; };
-		17D85D5CDA2B73E69A9F19BF /* Pods-Wantic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wantic/Pods-Wantic.debug.xcconfig"; sourceTree = "<group>"; };
-		23B22BC62BB434C710A9A0B3 /* Pods-Wantic Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.debug.xcconfig"; sourceTree = "<group>"; };
+		05627ADCE0E39A9457EBF9E6 /* Pods-Wantic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.release.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.release.xcconfig"; sourceTree = "<group>"; };
+		1E07BD2AD1D1AFB4AC037F85 /* Pods_Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2356A4A7C8F7A29B14170DEC /* Pods-Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.release.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.release.xcconfig"; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		4F3D988D919940BA13FA8444 /* Pods-Wantic Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.release.xcconfig"; sourceTree = "<group>"; };
+		345A1651BF857102438AA5FB /* Pods-Wantic Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.debug.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.debug.xcconfig"; sourceTree = "<group>"; };
+		4DD8BFDA41A3D248D3A0FB84 /* Pods-Wantic Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.release.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.release.xcconfig"; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* Wantic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wantic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504EC3071FED79650016851F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -214,10 +213,11 @@
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		504EC3131FED79650016851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = SOURCE_ROOT; };
-		723E533BE1FE628627AC713D /* Pods-Share Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Share Beta/Pods-Share Beta.release.xcconfig"; sourceTree = "<group>"; };
-		9402444991BA2E2008400329 /* Pods-Share Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Share Beta/Pods-Share Beta.debug.xcconfig"; sourceTree = "<group>"; };
-		A0F80432FF2FC51BAC14E157 /* Pods-Wantic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wantic/Pods-Wantic.release.xcconfig"; sourceTree = "<group>"; };
-		AF51FD2D460BCFE21FA515B2 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
+		815CF28C4AD6E33EE90B2201 /* Pods-Share Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.release.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.release.xcconfig"; sourceTree = "<group>"; };
+		89BFF2DD7CB8230212A9F4AB /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C20935598E11EE109584979 /* Pods-Wantic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.debug.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.debug.xcconfig"; sourceTree = "<group>"; };
+		A24001275C94C2366CACEB4C /* Pods-Share Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.debug.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.debug.xcconfig"; sourceTree = "<group>"; };
+		AED9DBF99F871BEB57181C64 /* Pods_Wantic_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B114E13425B8A56A00F92599 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		B114E13C25BC33CF00F92599 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B114E14025BC34F700F92599 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
@@ -300,12 +300,8 @@
 		B1A80FC4258B3F9B00F0917F /* WishListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListService.swift; sourceTree = "<group>"; };
 		B1A80FC8258B40D900F0917F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B1A80FCE258B508B00F0917F /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
-		BA6E221B07259A7F1915ACE8 /* Pods_Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD378A84E54A56FACBC34BA8 /* Pods_Wantic_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF3E2C41340E5D83C0D38F5B /* Pods_Share_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DBBAB098D3BA122E538435CD /* Pods-Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Share/Pods-Share.debug.xcconfig"; sourceTree = "<group>"; };
-		F8BFBE982F4EC8FFD474C5C4 /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
+		D45E28A041CDA2DBE5AF5132 /* Pods-Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.debug.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.debug.xcconfig"; sourceTree = "<group>"; };
+		E64593797BF139F1BC31FC49 /* Pods_Share_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,8 +309,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DE7EDD385414433C7FCCD67 /* (null) in Frameworks */,
-				10BA66B1EBAB864088D4B4BE /* Pods_Wantic.framework in Frameworks */,
+				ACE37AB1352F87322B0E7D00 /* Pods_Wantic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,7 +317,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				003A9E3E306AAB52BF46EB3D /* Pods_Wantic_Beta.framework in Frameworks */,
+				D1244063BE45F0600004026D /* Pods_Wantic_Beta.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,9 +325,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B19A52062610CE8000984207 /* JWTDecode in Frameworks */,
-				B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */,
-				11C72D66A0FED301CF16EEAF /* Pods_Share_Beta.framework in Frameworks */,
+				B19A52062610CE8000984207 /* BuildFile in Frameworks */,
+				B19A52072610CE8000984207 /* BuildFile in Frameworks */,
+				A46ECE88DB4DD435142EDF74 /* Pods_Share_Beta.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,37 +335,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */,
-				B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */,
-				E90D3E995983D8E9DD78A2A5 /* (null) in Frameworks */,
-				20512E6A463C3CDE0BF5ABDB /* Pods_Share.framework in Frameworks */,
+				B14880D625B30A6E00D0106B /* BuildFile in Frameworks */,
+				B1A80FC1258B3F6E00F0917F /* BuildFile in Frameworks */,
+				7D1D14D0E654162B80DE1E33 /* Pods_Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		27E2DDA53C4D2A4D1A88CE4A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				CF3E2C41340E5D83C0D38F5B /* Pods_Share_Beta.framework */,
-				CD378A84E54A56FACBC34BA8 /* Pods_Wantic_Beta.framework */,
-				BA6E221B07259A7F1915ACE8 /* Pods_Share.framework */,
-				F8BFBE982F4EC8FFD474C5C4 /* Pods_Wantic.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		504EC2FB1FED79650016851F = {
 			isa = PBXGroup;
 			children = (
 				504EC3061FED79650016851F /* App */,
 				B1A80F852589F59800F0917F /* Share */,
 				504EC3051FED79650016851F /* Products */,
-				7F8756D8B27F46E3366F6CEA /* Pods */,
-				27E2DDA53C4D2A4D1A88CE4A /* Frameworks */,
 				B19A51E02610CD8E00984207 /* Wantic copy-Info.plist */,
 				B19A522F2610CE8100984207 /* Share copy-Info.plist */,
+				7CFF9FF8E9A94F76BFF001AF /* Pods */,
+				F6076F56EBE0610DFB5B8B7B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -404,21 +387,20 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		7F8756D8B27F46E3366F6CEA /* Pods */ = {
+		7CFF9FF8E9A94F76BFF001AF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */,
-				AF51FD2D460BCFE21FA515B2 /* Pods-App.release.xcconfig */,
-				17D85D5CDA2B73E69A9F19BF /* Pods-Wantic.debug.xcconfig */,
-				A0F80432FF2FC51BAC14E157 /* Pods-Wantic.release.xcconfig */,
-				DBBAB098D3BA122E538435CD /* Pods-Share.debug.xcconfig */,
-				0761D44F85D107A06778B032 /* Pods-Share.release.xcconfig */,
-				9402444991BA2E2008400329 /* Pods-Share Beta.debug.xcconfig */,
-				723E533BE1FE628627AC713D /* Pods-Share Beta.release.xcconfig */,
-				23B22BC62BB434C710A9A0B3 /* Pods-Wantic Beta.debug.xcconfig */,
-				4F3D988D919940BA13FA8444 /* Pods-Wantic Beta.release.xcconfig */,
+				D45E28A041CDA2DBE5AF5132 /* Pods-Share.debug.xcconfig */,
+				2356A4A7C8F7A29B14170DEC /* Pods-Share.release.xcconfig */,
+				A24001275C94C2366CACEB4C /* Pods-Share Beta.debug.xcconfig */,
+				815CF28C4AD6E33EE90B2201 /* Pods-Share Beta.release.xcconfig */,
+				9C20935598E11EE109584979 /* Pods-Wantic.debug.xcconfig */,
+				05627ADCE0E39A9457EBF9E6 /* Pods-Wantic.release.xcconfig */,
+				345A1651BF857102438AA5FB /* Pods-Wantic Beta.debug.xcconfig */,
+				4DD8BFDA41A3D248D3A0FB84 /* Pods-Wantic Beta.release.xcconfig */,
 			);
 			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		B114E14425BC389000F92599 /* Fonts */ = {
@@ -591,6 +573,17 @@
 			path = Share;
 			sourceTree = "<group>";
 		};
+		F6076F56EBE0610DFB5B8B7B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1E07BD2AD1D1AFB4AC037F85 /* Pods_Share.framework */,
+				E64593797BF139F1BC31FC49 /* Pods_Share_Beta.framework */,
+				89BFF2DD7CB8230212A9F4AB /* Pods_Wantic.framework */,
+				AED9DBF99F871BEB57181C64 /* Pods_Wantic_Beta.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -598,12 +591,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 504EC3161FED79650016851F /* Build configuration list for PBXNativeTarget "Wantic" */;
 			buildPhases = (
-				6634F4EFEBD30273BCE97C65 /* [CP] Check Pods Manifest.lock */,
+				6A409CAC4F827B08AFD431BD /* [CP] Check Pods Manifest.lock */,
 				504EC3001FED79650016851F /* Sources */,
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
-				9592DBEFFC6D2A0C8D5DEB22 /* [CP] Embed Pods Frameworks */,
 				B1A80F8F2589F59800F0917F /* Embed App Extensions */,
+				D263CC097CAF62490DD3539B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -619,12 +612,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B19A51DC2610CD8E00984207 /* Build configuration list for PBXNativeTarget "Wantic Beta" */;
 			buildPhases = (
-				B19A51CC2610CD8E00984207 /* [CP] Check Pods Manifest.lock */,
+				004604BD64B54E83DA41D681 /* [CP] Check Pods Manifest.lock */,
 				B19A51CD2610CD8E00984207 /* Sources */,
 				B19A51CF2610CD8E00984207 /* Frameworks */,
 				B19A51D12610CD8E00984207 /* Resources */,
-				B19A51D92610CD8E00984207 /* [CP] Embed Pods Frameworks */,
 				B19A51DA2610CD8E00984207 /* Embed App Extensions */,
+				2AC8B33D2D87CD396E3E6E34 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -641,7 +634,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B19A522B2610CE8000984207 /* Build configuration list for PBXNativeTarget "Share Beta" */;
 			buildPhases = (
-				B19A51EC2610CE8000984207 /* [CP] Check Pods Manifest.lock */,
+				E8F184FADEC3503E427DEEA7 /* [CP] Check Pods Manifest.lock */,
 				B19A51ED2610CE8000984207 /* Sources */,
 				B19A52052610CE8000984207 /* Frameworks */,
 				B19A52092610CE8000984207 /* Resources */,
@@ -652,8 +645,8 @@
 			);
 			name = "Share Beta";
 			packageProductDependencies = (
-				B19A51E82610CE8000984207 /* SwiftKeychainWrapper */,
-				B19A51EA2610CE8000984207 /* JWTDecode */,
+				B19A51E82610CE8000984207 /* SwiftPackageProductDependency */,
+				B19A51EA2610CE8000984207 /* SwiftPackageProductDependency */,
 			);
 			productName = Share;
 			productReference = B19A522E2610CE8000984207 /* Share Beta.appex */;
@@ -663,7 +656,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B1A80F922589F59800F0917F /* Build configuration list for PBXNativeTarget "Share" */;
 			buildPhases = (
-				CF51BEA2805EDC1B8F55E58A /* [CP] Check Pods Manifest.lock */,
+				DCDAC3A2008526D9C2A28284 /* [CP] Check Pods Manifest.lock */,
 				B1A80F802589F59800F0917F /* Sources */,
 				B1A80F812589F59800F0917F /* Frameworks */,
 				B1A80F822589F59800F0917F /* Resources */,
@@ -674,8 +667,8 @@
 			);
 			name = Share;
 			packageProductDependencies = (
-				B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */,
-				B14880D525B30A6E00D0106B /* JWTDecode */,
+				B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */,
+				B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */,
 			);
 			productName = Share;
 			productReference = B1A80F842589F59800F0917F /* Share.appex */;
@@ -711,8 +704,8 @@
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
 			packageReferences = (
-				B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
-				B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+				B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */,
+				B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
@@ -838,49 +831,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6634F4EFEBD30273BCE97C65 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Wantic-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9592DBEFFC6D2A0C8D5DEB22 /* [CP] Embed Pods Frameworks */ = {
+		004604BD64B54E83DA41D681 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic/Pods-Wantic-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B19A51CC2610CD8E00984207 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Wantic Beta-checkManifestLockResult.txt",
 			);
@@ -889,22 +853,22 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B19A51D92610CD8E00984207 /* [CP] Embed Pods Frameworks */ = {
+		2AC8B33D2D87CD396E3E6E34 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
+			inputPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B19A51EC2610CE8000984207 /* [CP] Check Pods Manifest.lock */ = {
+		6A409CAC4F827B08AFD431BD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -919,14 +883,29 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Share Beta-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Wantic-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CF51BEA2805EDC1B8F55E58A /* [CP] Check Pods Manifest.lock */ = {
+		D263CC097CAF62490DD3539B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic/Pods-Wantic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DCDAC3A2008526D9C2A28284 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -942,6 +921,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Share-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E8F184FADEC3503E427DEEA7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Share Beta-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1187,7 +1188,7 @@
 		};
 		504EC3171FED79650016851F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17D85D5CDA2B73E69A9F19BF /* Pods-Wantic.debug.xcconfig */;
+			baseConfigurationReference = 9C20935598E11EE109584979 /* Pods-Wantic.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1213,7 +1214,7 @@
 		};
 		504EC3181FED79650016851F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A0F80432FF2FC51BAC14E157 /* Pods-Wantic.release.xcconfig */;
+			baseConfigurationReference = 05627ADCE0E39A9457EBF9E6 /* Pods-Wantic.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1238,13 +1239,13 @@
 		};
 		B19A51DD2610CD8E00984207 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23B22BC62BB434C710A9A0B3 /* Pods-Wantic Beta.debug.xcconfig */;
+			baseConfigurationReference = 345A1651BF857102438AA5FB /* Pods-Wantic Beta.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210418.1;
+				CURRENT_PROJECT_VERSION = 20210425.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1252,7 +1253,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1264,13 +1265,13 @@
 		};
 		B19A51DE2610CD8E00984207 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F3D988D919940BA13FA8444 /* Pods-Wantic Beta.release.xcconfig */;
+			baseConfigurationReference = 4DD8BFDA41A3D248D3A0FB84 /* Pods-Wantic Beta.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210418.1;
+				CURRENT_PROJECT_VERSION = 20210425.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1278,7 +1279,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = USE_PUSH;
@@ -1289,7 +1290,7 @@
 		};
 		B19A522C2610CE8000984207 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9402444991BA2E2008400329 /* Pods-Share Beta.debug.xcconfig */;
+			baseConfigurationReference = A24001275C94C2366CACEB4C /* Pods-Share Beta.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1297,7 +1298,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210418.1;
+				CURRENT_PROJECT_VERSION = 20210425.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1306,7 +1307,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta.share";
@@ -1319,7 +1320,7 @@
 		};
 		B19A522D2610CE8000984207 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 723E533BE1FE628627AC713D /* Pods-Share Beta.release.xcconfig */;
+			baseConfigurationReference = 815CF28C4AD6E33EE90B2201 /* Pods-Share Beta.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1327,7 +1328,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210418.1;
+				CURRENT_PROJECT_VERSION = 20210425.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1336,7 +1337,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta.share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1348,7 +1349,7 @@
 		};
 		B1A80F902589F59800F0917F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DBBAB098D3BA122E538435CD /* Pods-Share.debug.xcconfig */;
+			baseConfigurationReference = D45E28A041CDA2DBE5AF5132 /* Pods-Share.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1378,7 +1379,7 @@
 		};
 		B1A80F912589F59800F0917F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0761D44F85D107A06778B032 /* Pods-Share.release.xcconfig */;
+			baseConfigurationReference = 2356A4A7C8F7A29B14170DEC /* Pods-Share.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1456,7 +1457,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
+		B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
@@ -1464,7 +1465,7 @@
 				minimumVersion = 2.5.0;
 			};
 		};
-		B19A51E92610CE8000984207 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+		B19A51E92610CE8000984207 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
 			requirement = {
@@ -1472,7 +1473,7 @@
 				minimumVersion = 4.0.1;
 			};
 		};
-		B19A51EB2610CE8000984207 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
+		B19A51EB2610CE8000984207 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
@@ -1480,7 +1481,7 @@
 				minimumVersion = 2.5.0;
 			};
 		};
-		B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+		B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
 			requirement = {
@@ -1491,24 +1492,24 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B14880D525B30A6E00D0106B /* JWTDecode */ = {
+		B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
+			package = B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */;
 			productName = JWTDecode;
 		};
-		B19A51E82610CE8000984207 /* SwiftKeychainWrapper */ = {
+		B19A51E82610CE8000984207 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B19A51E92610CE8000984207 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			package = B19A51E92610CE8000984207 /* RemoteSwiftPackageReference */;
 			productName = SwiftKeychainWrapper;
 		};
-		B19A51EA2610CE8000984207 /* JWTDecode */ = {
+		B19A51EA2610CE8000984207 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B19A51EB2610CE8000984207 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
+			package = B19A51EB2610CE8000984207 /* RemoteSwiftPackageReference */;
 			productName = JWTDecode;
 		};
-		B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */ = {
+		B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			package = B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */;
 			productName = SwiftKeychainWrapper;
 		};
 /* End XCSwiftPackageProductDependency section */
