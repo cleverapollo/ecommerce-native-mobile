@@ -77,7 +77,6 @@ export class AuthenticationService {
         this.saveCredentials(email, password);
         resolve();
       }, error => {
-        this.isAuthenticated.next(false);
         this.logger.error(error);
         reject();
       })
@@ -136,6 +135,7 @@ export class AuthenticationService {
       }, error => {
         const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
         this.toastService.presentErrorToast(errorMessage);
+        this.isAuthenticated.next(false);
         reject();
       })
     })
