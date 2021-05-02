@@ -1,24 +1,25 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SignupRequest } from '@core/models/signup.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { LogService } from '@core/services/log.service';
 import { IonInput } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
-import { Plugins } from '@capacitor/core';
-import { SignupRequest } from '@core/models/signup.model';
 import { SignupStateService } from '../../signup-state.service';
-import { first } from 'rxjs/operators';
-import { LogService } from '@core/services/log.service';
-import { Router } from '@angular/router';
 
+import { Plugins } from '@capacitor/core';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { LoadingService } from '@core/services/loading.service';
 const { Keyboard } = Plugins;
 
 @Component({
-  selector: 'app-signup-mail-one',
-  templateUrl: './signup-mail-one.page.html',
-  styleUrls: ['./signup-mail-one.page.scss'],
+  selector: 'app-signup-mail',
+  templateUrl: './signup-mail.page.html',
+  styleUrls: ['./signup-mail.page.scss'],
 })
-export class SignupMailOnePage implements OnInit {
+export class SignupMailPage implements OnInit {
 
   @ViewChildren(IonInput) inputs: Array<IonInput>;
 
@@ -48,11 +49,14 @@ export class SignupMailOnePage implements OnInit {
     private analyticsService: AnalyticsService,
     private signupStateService: SignupStateService,
     private logger: LogService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private authService: AuthenticationService,
+    private loadingService: LoadingService,
+  ) { 
+    this.analyticsService.setFirebaseScreenName('signup-mail');
+  }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('signup-mail-1');
     this.signupStateService.$signupRequest.subscribe(signupRequest => {
       this.signupRequest = signupRequest
       this.createForm(signupRequest)
@@ -68,7 +72,6 @@ export class SignupMailOnePage implements OnInit {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
-      lastName: this.formBuilder.control(signupRequest?.lastName ?? null),
       email: [signupRequest?.email ?? null, { 
         validators: [Validators.required, CustomValidation.email], 
         updateOn: 'blur' 
@@ -92,37 +95,24 @@ export class SignupMailOnePage implements OnInit {
 
   next() {
     if (this.form.valid) { 
-      this.updateSignupRequest();
-      this.router.navigateByUrl('signup/signup-mail-two');
+      this.signup();
     } else {
       CustomValidation.validateFormGroup(this.form);
     }
   }
 
-  private updateSignupRequest() {
-    this.signupRequest.firstName = this.getFormControlValue('firstName');
-    this.signupRequest.lastName = this.getFormControlValue('lastName');
-    this.signupRequest.email = this.getFormControlValue('email');
-    this.signupRequest.password = this.getFormControlValue('value', 'password');
-    this.signupStateService.updateState(this.signupRequest);
+  async signup() {
+    const loadingSpinner = await this.loadingService.createLoadingSpinner();
+    loadingSpinner.present();
+    this.authService.signupWithFirebaseEmailAndPassword(this.signupRequest).then(() => {
+      this.router.navigateByUrl('signup/signup-completed');
+    }).finally(() => {
+      this.loadingService.dismissLoadingSpinner(loadingSpinner);
+    })
   }
-
-  private getFormControlValue(formControlName: string, formGroupName?: string) {
-    const formControls = this.form.controls;
-    if (formGroupName) {
-      return formControls[formGroupName][formControlName].value;
-    }
-    return formControls[formControlName].value;
-  }
-
-
   // Keyboard event handling
 
   handleKeyboardEventOnFirstNameInput(keyCode: number) {
-    this.setFocusToNextInputFieldOnEnter(keyCode, 'lastName');
-   }
-
-   handleKeyboardEventOnLastNameInput(keyCode: number) {
     this.setFocusToNextInputFieldOnEnter(keyCode, 'email');
    }
 
@@ -147,6 +137,4 @@ export class SignupMailOnePage implements OnInit {
       Keyboard.hide();
      }
    }
-
-
 }

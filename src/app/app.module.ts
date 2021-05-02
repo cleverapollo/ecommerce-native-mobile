@@ -34,13 +34,14 @@ import { environment } from '../environments/environment';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 import { Appsflyer } from '@ionic-native/appsflyer/ngx';
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
 export function jwtOptionsFactory(storageService: StorageService) {
   return {
     tokenGetter: () => {
-      return storageService.get(StorageKeys.AUTH_TOKEN, true);
+      return storageService.get(StorageKeys.FIREBASE_ID_TOKEN, true);
     },
     whitelistedDomains: WHITELISTED_DOMAINS,
     blacklistedRoutes: [`${SERVER_URL}/auth*`]
@@ -77,6 +78,7 @@ export function jwtOptionsFactory(storageService: StorageService) {
     HTTP,
     EmailVerificationStatusResolver,
     File,
+    FirebaseAuthentication,
     FriendsWishListResolver,
     FriendsWishListDetailResolver,
     SharedWishListResolver,

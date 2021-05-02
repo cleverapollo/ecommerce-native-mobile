@@ -32,6 +32,12 @@ export class UserApiService {
     );
   }
 
+  partialUpdateFirebaseUid(uid: string): Observable<void> {
+    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/firebase-uid`, { uid: uid }).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    ); 
+  }
+
   partialUpdateFirstName(firstName: string): Observable<UserProfile> {
     return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/first-name`, { firstName: firstName }).pipe(
       catchError(error => this.errorHandler.handleError(error))
@@ -55,7 +61,7 @@ export class UserApiService {
   }
 
   updateEmailChangeRequest(requestBody: UpdateEmailChangeRequest): Observable<void> {
-    return this.apiService.put<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/email`, requestBody).pipe(
+    return this.apiService.put<void>(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/profile/email`, requestBody).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

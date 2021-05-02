@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Platform } from '@ionic/angular';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService, StorageKeys } from './storage.service';
-import { UserService } from './user.service';
-import { AuthService } from '../api/auth.service';
 import { CacheService } from 'ionic-cache';
 import { HTTP } from '@ionic-native/http/ngx';
-import { WanticJwtToken } from '@core/models/login.model';
 import { LogService } from './log.service';
-import { EmailVerificationService } from './email-verification.service';
-import { LoadingService } from './loading.service';
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
+import { ToastService } from './toast.service';
+import { AuthService } from '@core/api/auth.service';
+import { SignupRequest } from '@core/models/signup.model';
 import { first } from 'rxjs/operators';
 
 @Injectable({
@@ -20,67 +18,76 @@ export class AuthenticationService {
 
   token = new BehaviorSubject<string>(null);
   isAuthenticated = new BehaviorSubject<boolean>(null);
+  userInfo = new BehaviorSubject<any>(null);
 
-  async tokenIsExpired(): Promise<boolean> {
-    if (this.token.value !== null) {
-      return this.jwtHelper.isTokenExpired(this.token.value);
-    } else {
-      const token = await this.loadToken();
-      if (token !== null) {
-        return this.jwtHelper.isTokenExpired(token);
-      } else {
-        return null;
-      }
-    }
+  get isEmailVerified(): boolean {
+    const userInfo = this.userInfo.value;
+    return userInfo.emailVerified !== false ? true : false;
   }
 
   constructor(
     private storageService: StorageService, 
     private platform: Platform,
-    private jwtHelper: JwtHelperService,
-    private userService: UserService,
-    private authService: AuthService,
     private cache: CacheService,
     private nativeHttpClient: HTTP,
     private logger: LogService,
-    private emailVerificationService: EmailVerificationService,
-    private loadingService: LoadingService
+    private toastService: ToastService,
+    private firebaseAuthentication: FirebaseAuthentication,
+    private authApiService: AuthService
   ) { 
-    this.loadToken().then(token => {
-      if (token !== null && this.jwtHelper.isTokenExpired(token)) {
-        this.refreshExpiredToken();
+    if (this.platform.is('capacitor')) {
+      this.configFirebaseAuthentication();
+      this.loadToken();
+      this.loadUserData();
+    }
+  }
+
+  private configFirebaseAuthentication() {
+    this.firebaseAuthentication.setLanguageCode('de-DE');
+  }
+
+  private loadToken() {
+    this.storageService.get<string>(StorageKeys.FIREBASE_ID_TOKEN, true).then(idToken => {
+      this.logger.debug('firebase idToken ', idToken);
+      this.token.next(idToken);
+      this.isAuthenticated.next(true);
+      this.updateAuthorizationHeaderForNativeHttpClient(idToken);
+    }, error => {
+      this.logger.error(error);
+      this.isAuthenticated.next(false);
+      this.removeAuthorizationHeaderForNativeHttpClient();
+    });
+  }
+
+  private loadUserData() {
+    this.firebaseAuthentication.onAuthStateChanged().subscribe(userInfo => {
+      if (userInfo) {
+        this.storageService.set(StorageKeys.FIREBASE_USER_INFO, userInfo, true);
+        this.userInfo.next(userInfo);
+      } else {
+        this.userInfo.next(null);
+        this.storageService.set(StorageKeys.FIREBASE_USER_INFO, null, true);
       }
     })
   }
 
-  async login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
-    const spinner = await this.loadingService.createLoadingSpinner();
-    await spinner.present();
+  async login(email: string, password: string) : Promise<void> {
     return new Promise((resolve, reject) => {
-      this.loadingService.createLoadingSpinner();
-      this.authService.login(email, password).pipe(first()).subscribe({
-        next: response => {
-          if (saveCredentials) {
-            this.saveCredentials(email, password);
-          }
-          this.updateToken(response.token).then(() => {
-            this.handleLoginSucessResponse();
-            resolve();
-          }, error => {
-            this.logger.error(error);
-            reject();
-          }).finally(() => {
-            this.loadingService.dismissLoadingSpinner(spinner);
-          });
-        },
-        error: errorResponse => {
-          this.logger.error(errorResponse);
-          this.handleLoginErrorResponse();
-          this.loadingService.dismissLoadingSpinner(spinner);
-          reject();
-        }
+      this.signInWithFirebaseEmailAndPassword(email, password).then(() => {
+        this.saveCredentials(email, password);
+        resolve();
+      }, error => {
+        this.isAuthenticated.next(false);
+        this.logger.error(error);
+        reject();
       })
     })
+  }
+
+  private saveCredentials(email: string, password: string) {
+    this.storageService.set(StorageKeys.CREDENTIALS, { email: email, password: password }, true).then(() => {
+      this.logger.debug('email and password saved sucessfully');
+    }, this.logger.error);
   }
 
   async logout() {
@@ -88,105 +95,8 @@ export class AuthenticationService {
     await this.cache.clearAll();
     this.removeAuthorizationHeaderForNativeHttpClient();
     this.isAuthenticated.next(false);
+    await this.firebaseAuthentication.signOut();
     return Promise.resolve();
-  }
-
-   async refreshExpiredToken(): Promise<void> {
-    const credentials = await this.loadCredentials();
-    if (credentials) {
-      return this.refreshToken(credentials);
-    } else {
-      this.isAuthenticated.next(false);
-      this.token.next(null);
-      return Promise.reject();
-    }
-  }
-
-  private async refreshToken(credentials: { email: string, password: string }): Promise<void> {
-    let spinner = await this.loadingService.createLoadingSpinner();
-    await spinner.present();
-    return new Promise<void>((resolve, reject) => {
-      this.authService.login(credentials.email, credentials.password).pipe(first()).subscribe({
-        next: response => {
-          this.updateToken(response.token).then(() => {
-            this.handleLoginSucessResponse();
-            this.loadingService.dismissLoadingSpinner(spinner).finally(() => {
-              resolve();
-            })
-          }, error => {
-            this.logger.error(error);
-            this.loadingService.dismissLoadingSpinner(spinner).finally(() => {
-              reject();
-            })
-          });
-        }, 
-        error: errorRespone => {
-          this.logger.error(errorRespone);
-          this.removeToken().then(() => {
-            this.handleLoginErrorResponse();
-          }, this.logger.error).finally(() => {
-            this.loadingService.dismissLoadingSpinner(spinner).finally(() => {
-              reject();
-            });
-          });
-        }
-      })
-    });
-  }
-
-  private handleLoginErrorResponse() {
-    this.isAuthenticated.next(false);
-  }
-
-  private handleLoginSucessResponse() {
-    this.isAuthenticated.next(true);
-  }
-
-  private async loadCredentials() {
-    const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
-    const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
-    if (email && password) {
-      return { email: email, password: password }
-    } else {
-      return null;
-    }
-  }
-
-  private async loadToken(): Promise<string> {
-    const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
-    this.token.next(token);
-    this.updateAuthState(token);
-    return Promise.resolve(token);
-  }
-
-  private updateAuthState(token: string) {
-    if (token && !this.jwtHelper.isTokenExpired(token)) {
-      this.isAuthenticated.next(true);
-      this.updateAuthorizationHeaderForNativeHttpClient(token);
-    } else {
-      this.isAuthenticated.next(false);
-      this.removeAuthorizationHeaderForNativeHttpClient();
-    }
-  }
-
-  async updateToken(token: string) {
-    await this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
-
-    this.updateUserProperties(token);
-    this.updateAuthState(token);
-    this.token.next(token);
-
-    return Promise.resolve();
-  }
-
-  private removeToken() {
-    return this.storageService.remove(StorageKeys.AUTH_TOKEN);
-  }
-
-  private updateUserProperties(encodedToken: string) {
-    const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(encodedToken);
-    this.emailVerificationService.updateEmailVerificationStatus(decodedToken.emailVerificationStatus);
-    this.userService.accountIsEnabled = decodedToken.accountEnabled;
   }
 
   private updateAuthorizationHeaderForNativeHttpClient(token: string) {
@@ -201,12 +111,154 @@ export class AuthenticationService {
     }
   }
 
-  private saveCredentials(email: string, password: string) {
-    this.storageService.set(StorageKeys.LOGIN_EMAIL, email, true).then(() => {
-      this.storageService.set(StorageKeys.LOGIN_PASSWORD, password, true).then(() => {
-        this.logger.debug('email and password saved sucessfully');
-      }, this.logger.error)
-    }, this.logger.error);
+  // Firebase
+
+  signupWithFirebaseEmailAndPassword(signupRequest: SignupRequest): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.authApiService.signup(signupRequest).pipe(first()).subscribe(() => {
+        this.signInWithFirebaseEmailAndPassword(signupRequest.email, signupRequest.password).then(() => {
+          this.sendVerificationMail().then(resolve, reject);
+        }, reject)
+      }, error => {
+        const errorMessage = 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später noch einmal.';
+        this.toastService.presentErrorToast(errorMessage);
+        reject();
+      })
+    })
   }
 
+  signInWithFirebaseEmailAndPassword(email: string, password: string): Promise<void> {
+    return new Promise((resolve, reject) => { 
+      this.firebaseAuthentication.signInWithEmailAndPassword(email, password).then(() => {
+        this.getIdToken(true).then((idToken: string) => {
+          this.updateToken(idToken).then(resolve, reject);
+        }, reject)
+      }, error => {
+        const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
+        this.toastService.presentErrorToast(errorMessage);
+        reject();
+      })
+    })
+  }
+
+  async getIdToken(forceRefresh: boolean): Promise<string> {
+    try {
+      const idToken = await this.firebaseAuthentication.getIdToken(forceRefresh);
+      await this.updateToken(idToken);
+      return Promise.resolve(idToken);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  private updateToken(token: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, token, true).then(() => {
+        this.logger.debug('updateToken');
+        this.token.next(token);
+        this.isAuthenticated.next(true);
+        this.updateAuthorizationHeaderForNativeHttpClient(token);
+        resolve();
+      }, reject);
+    })
+  }
+
+  private getErrorMessageForFirebaseErrorCode(firebaseErrorMessage: string, errorCode: FirebaseAuthErrorCode): string {
+    let errorMessage: string = firebaseErrorMessage;
+    switch (errorCode) {
+      case FirebaseAuthErrorCode.userDisabled:
+        errorMessage = 'Dein Account ist deaktiviert.';
+        break;
+      case FirebaseAuthErrorCode.invalidEmail:
+        errorMessage = 'Deine E-Mail-Adresse scheint nicht richtig zu sein. Bitte überprüfe, ob du diese auch richtig eingegeben hast.';
+        break;
+      case FirebaseAuthErrorCode.userNotFound:
+        errorMessage = 'Der Benutzer mit der angegebenen E-Mail-Adresse wurde nicht gefunden';
+        break;
+      case FirebaseAuthErrorCode.wrongPassword:
+        errorMessage = 'Du hast dein Passwort falsch eingegeben.';
+        break;
+      case FirebaseAuthErrorCode.emailAlreadyInUse:
+        errorMessage = 'Ein Account mit der eingegebenen E-Mail-Adresse existiert bereits.';
+        break;
+      case FirebaseAuthErrorCode.weakPassword:
+        errorMessage = 'Dein Passwort ist zu schwach, es sollte min. aus 6 Zeichen bestehen.';
+        break;
+      default:
+        errorMessage = 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später noch einmal.';
+        break;
+    }
+    return errorMessage;
+  }
+
+  sendVerificationMail(): Promise<any> {
+    return this.firebaseAuthentication.sendEmailVerification();
+  }
+
+  async legacyJwTokenExists(): Promise<boolean> {
+    const authToken = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
+    if (authToken) {
+      return Promise.resolve(true);
+    } else {
+      return Promise.resolve(false);
+    }
+  }
+
+  async createFirebaseAccountForExistingUser(email: string, password: string): Promise<string> {
+    try {
+      await this.firebaseAuthentication.createUserWithEmailAndPassword(email, password);
+      await this.firebaseAuthentication.signInWithEmailAndPassword(email, password);
+      
+      const userInfo = await this.userInfo.value;
+      if (userInfo && userInfo.uid) {
+        return Promise.resolve(userInfo.uid);
+      } else {
+        this.logger.debug('no ui found ', userInfo);
+        return Promise.resolve(null);
+      }
+    } catch (error) {
+      this.logger.error(error);
+      return Promise.resolve(null);
+    }
+  }
+
+  async removeDeprecatedAuthToken(): Promise<void> {
+    try {
+      const authToken = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
+      if (authToken) {
+        this.storageService.remove(StorageKeys.AUTH_TOKEN, true);
+      }
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.resolve();
+    }
+  }
+
+  async migrateSavedCredentials(): Promise<{email: string, password: string}> {
+    try {
+        const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
+        const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
+        if (email && password) {
+          const credentials = {email: email, password: password};
+          this.storageService.set(StorageKeys.CREDENTIALS, credentials, true);
+          return Promise.resolve(credentials);
+        }
+        this.storageService.remove(StorageKeys.LOGIN_EMAIL, true);
+        this.storageService.remove(StorageKeys.LOGIN_PASSWORD, true);
+        return Promise.resolve(null);
+    } catch (error) {
+        return Promise.resolve(null);
+    }
+  }
+
+}
+
+enum FirebaseAuthErrorCode {
+  emailAlreadyInUse = 'auth/email-already-in-use',
+  invalidEmail = 'auth/invalid-email',
+  operationNotAllowed = 'auth/operation-not-allowed',
+  weakPassword = 'auth/weak-password',
+  userDisabled = 'auth/user-disabled',
+  userNotFound = 'auth/user-not-found',
+  wrongPassword = 'auth/wrong-password'
 }

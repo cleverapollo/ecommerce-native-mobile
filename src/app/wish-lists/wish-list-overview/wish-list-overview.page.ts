@@ -1,17 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { AuthenticationService } from '@core/services/authentication.service';
-import { LogService } from '@core/services/log.service';
-import { RegistrationApiService } from '@core/api/registration-api.service';
-import { LoadingService } from '@core/services/loading.service';
-import { ToastService } from '@core/services/toast.service';
-import { EmailVerificationService } from '@core/services/email-verification.service';
 import { Subscription } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { UserService } from '@core/services/user.service';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -34,15 +26,8 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute, 
-    private router: Router,
     private wishListStore: WishListStoreService,
     private navController: NavController,
-    private authService: AuthenticationService,
-    private logger: LogService,
-    private registrationApiService: RegistrationApiService,
-    private loadingService: LoadingService,
-    private toastService: ToastService,
-    private emilVerificationService: EmailVerificationService,
     private userService: UserService,
     private analyticsService: AnalyticsService
   ) { }
@@ -51,45 +36,10 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
     this.analyticsService.setFirebaseScreenName('main');
     const resolvedData = this.route.snapshot.data;
     this.updateWishLists(resolvedData.wishLists);
-
-    this.queryParamSubscription = this.route.queryParamMap.subscribe({
-      next: queryParams => {
-        const token = queryParams.get('emailVerificationToken');
-        if (token) {
-          this.confirmRegistration(token);
-        }
-      }
-    });
   }
 
   ngOnDestroy() {
     this.queryParamSubscription.unsubscribe();
-  }
-
-  private confirmRegistration(emailVerificationToken: string) {
-    this.loadingService.showLoadingSpinner();
-    this.registrationApiService.confirmRegistration(emailVerificationToken).subscribe({
-      next: response => {
-        const jwToken = response.token;
-        if (jwToken) {
-          this.authService.updateToken(jwToken);
-        }
-        this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt!');
-        this.loadingService.dismissLoadingSpinner();
-        this.router.navigate(['.'], { relativeTo: this.route, queryParams: {}});
-      },
-      error: errorResponse => {
-        if (errorResponse instanceof HttpErrorResponse) {
-          if (errorResponse.error instanceof ErrorEvent) {
-            this.logger.log(`Error: ${errorResponse.error.message}`);
-          } else if (errorResponse.status === HttpStatusCodes.NOT_FOUND) {
-            this.toastService.presentErrorToast('Du hast deine E-Mail Adresse bereits erfolgreich bestätigt.');
-          }
-        }
-        this.loadingService.dismissLoadingSpinner();
-        this.router.navigate(['.'], { relativeTo: this.route, queryParams: {}});
-      }
-    })
   }
 
   ionViewWillEnter() {
@@ -118,7 +68,6 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
         event.target.complete();
       }
     });
-    this.emilVerificationService.updateEmailVerificationStatusIfNeeded();
   }
 
   private updateWishLists(wishLists: Array<WishListDto>) {

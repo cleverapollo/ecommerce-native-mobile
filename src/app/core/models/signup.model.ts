@@ -9,11 +9,15 @@ export enum AuthProvider {
 }
 export class SignupRequest {
     firstName: string;
-    lastName?: string;
     email: string;
     password: string;
-    birthday?: Date;
-    gender?: Gender;
+    agreedToPrivacyPolicyAt: Date;
+}
+
+export class SignupRequestSocialLogin {
+    uid: string;
+    firstName: string;
+    email: string;
     agreedToPrivacyPolicyAt: Date;
     authProvider: AuthProvider;
 }

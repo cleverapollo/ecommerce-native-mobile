@@ -29,7 +29,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
     private async handle(req: HttpRequest<any>, next: HttpHandler) {
         try {
             this.logger.log('NativeTokenInterceptor');
-            const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
+            const token = await this.storageService.get<string>(StorageKeys.FIREBASE_ID_TOKEN, true);
             if (token) {
                 const authRequest = req.clone({
                     setHeaders: {

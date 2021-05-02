@@ -1,10 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthProvider } from '@core/models/signup.model';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
-import { SignupStateService } from '../signup/signup-state.service';
+import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 
 @Component({
   selector: 'app-start',
@@ -15,20 +12,17 @@ export class StartPage implements OnInit {
 
   constructor(
     private analyticsService: AnalyticsService, 
-    private signupStateService: SignupStateService,
-    private router: Router
-  ) { }
-
-  ngOnInit() {
+    private router: Router,
+    public privacyPolicyService: PrivacyPolicyService
+  ) { 
     this.analyticsService.setFirebaseScreenName('logon');
   }
 
+  ngOnInit() {
+  }
+
   signupWithMailAndPassword() {
-    this.signupStateService.$signupRequest.pipe(first()).subscribe(signupRequest => {
-      signupRequest.authProvider = AuthProvider.wantic;
-      this.signupStateService.updateState(signupRequest);
-      this.router.navigateByUrl('/signup/signup-mail-one');
-    })
+    this.router.navigateByUrl('/signup/signup-mail');
   }
 
   signupWithApple() {

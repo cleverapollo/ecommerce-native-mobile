@@ -3,8 +3,6 @@ import { FriendWishList, FriendWish } from '@friends/friends-wish-list-overview/
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
-import { LogService } from '@core/services/log.service';
-import { EmailVerificationService } from '@core/services/email-verification.service';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
 
@@ -21,8 +19,6 @@ export class FriendsWishListDetailPage implements OnInit {
     private navController: NavController, 
     private route: ActivatedRoute,
     private friendWishListStore: FriendWishListStoreService,
-    private logger: LogService,
-    private emailVerificationService: EmailVerificationService,
     private analyticsService: AnalyticsService
   ) { }
 
@@ -53,6 +49,5 @@ export class FriendsWishListDetailPage implements OnInit {
         event.target.complete();
       }
     });
-    this.emailVerificationService.updateEmailVerificationStatusIfNeeded();
   }
 }

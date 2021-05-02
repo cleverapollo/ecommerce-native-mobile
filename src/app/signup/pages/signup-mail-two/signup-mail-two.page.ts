@@ -9,7 +9,6 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
-import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
 import { Subscription } from 'rxjs';
@@ -23,7 +22,10 @@ import { SignupStateService } from '../../signup-state.service';
 })
 export class SignupMailTwoPage implements OnInit, OnDestroy {
 
-  signupRequest: SignupRequest;
+  birthday?: Date;
+  gender?: Gender;
+  agreedToPrivacyPolicyAt?: Date;
+
   form: FormGroup;
   validationMessages = {
     date: [
@@ -45,29 +47,23 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private authApiService: AuthService,
     private authService: AuthenticationService,
-    private storageService: StorageService,
     public privacyPolicyService: PrivacyPolicyService
-  ) { }
+  ) { 
+    this.analyticsService.setFirebaseScreenName('signup-mail-2');
+  }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('signup-mail-2');
-    this.signupStateSubscription = this.signupStateService.$signupRequest.subscribe(signupRequest => {
-      this.signupRequest = signupRequest;
-      this.createForm(signupRequest);
-    }, errorReason => {
-      this.logger.debug('failed to load signup request from cache. ', errorReason);
-      this.createForm();
-    });
+    this.createForm();
   }
 
   ngOnDestroy(): void {
     this.signupStateSubscription.unsubscribe();
   }
 
-  private createForm(signupRequest?: SignupRequest) {
+  private createForm() {
     let value = '';
-    if (signupRequest?.birthday) {
-      value = signupRequest.birthday.toDateString();
+    if (this.birthday) {
+      value = this.birthday.toDateString();
     }
     this.form = this.formBuilder.group({
       date: this.formBuilder.control(value, {
@@ -78,28 +74,12 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
   }
 
   updateGender(event) {
-    this.signupRequest.gender = event.target.value as Gender;
+    this.gender = event.target.value as Gender;
   }
 
-  async next() {
+  next() {
     if (this.form.valid) {
-      this.signupRequest.agreedToPrivacyPolicyAt = new Date();
-      this.signupStateService.updateState(this.signupRequest);
-      const loadingSpinner = await this.loadingService.createLoadingSpinner();
-      loadingSpinner.present();
-      this.authApiService.signup(this.signupRequest).pipe(first()).subscribe({
-        next: response => {
-          this.authService.updateToken(response.jwToken.token).then(() => {
-            this.storageService.set(StorageKeys.SIGNUP_RESPONSE, response).then(() => {
-              this.router.navigateByUrl('signup/signup-completed');
-            });
-          })
-          this.loadingService.dismissLoadingSpinner(loadingSpinner);
-        },
-        error: error => {
-          this.loadingService.dismissLoadingSpinner(loadingSpinner);
-        }
-      })
+      this.agreedToPrivacyPolicyAt = new Date();
     } else {
       CustomValidation.validateFormGroup(this.form);
     }

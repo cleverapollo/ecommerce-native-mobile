@@ -9,6 +9,7 @@ import { CustomValidation } from '@shared/custom-validation';
 import { LogService } from '@core/services/log.service';
 import { ToastService } from '@core/services/toast.service';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { LoadingService } from '@core/services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginPage implements OnInit {
     private storageService: StorageService,
     private logger: LogService,
     private toastService: ToastService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -64,17 +66,21 @@ export class LoginPage implements OnInit {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.loginForm.invalid) {
       CustomValidation.validateFormGroup(this.loginForm);
       return;
     }
+    const spinner = await this.loadingService.createLoadingSpinner();
+    await spinner.present();
     const input = this.loginForm.value as LoginForm;
-    this.authService.login(input.email, input.password, input.saveCredentials).then(() => {
+    this.authService.login(input.email, input.password).then(() => {
       this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');
       this.navToHome();
     }, errorReason => {
       this.logger.error(errorReason);
+    }).finally(() => {
+      this.loadingService.dismissLoadingSpinner(spinner);
     });
   }
 

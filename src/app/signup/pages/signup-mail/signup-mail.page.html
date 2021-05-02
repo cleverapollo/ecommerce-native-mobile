@@ -16,16 +16,13 @@
     </ion-item>
     <app-validation-messages [control]="form.get('firstName')" [validationMessages]="validationMessages.firstName"></app-validation-messages>
 
-    <ion-item lines="none">
-      <ion-input name="lastName" (keypress)="handleKeyboardEventOnLastNameInput($event.keyCode)" formControlName="lastName" type="text" placeholder="Nachname" autocapitalize="on" autocomplete="family-name" clearInput="true" enterkeyhint="next" inputmode="text"></ion-input>
-    </ion-item>
-
     <br>
 
     <ion-item lines="none">
       <ion-input name="email" (keypress)="handleKeyboardEventOnEmailInput($event.keyCode)" formControlName="email" type="email" placeholder="E-Mail Adresse" autocomplete="email" clearInput="true" enterkeyhint="next" inputmode="email" required="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
+
 
     <div formGroupName="password">
       <app-show-hide-password ionItemStyles="{ 'margin-bottom': 7px; }">
@@ -38,6 +35,6 @@
       <app-validation-messages [control]="form.get('password.confirm')" [validationMessages]="validationMessages.passwordConfirm"></app-validation-messages>
     </div>
 
-    <ion-button type="submit" class="wantic-save-button" expand="block" [disabled]="!form.valid">Weiter</ion-button>
+    <ion-button type="submit" class="wantic-save-button" expand="block" [disabled]="!form.valid">Anmelden</ion-button>
   </form>
 </ion-content>

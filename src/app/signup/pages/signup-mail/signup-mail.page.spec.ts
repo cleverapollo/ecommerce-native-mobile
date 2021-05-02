@@ -1,24 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { WishSearchPage } from './wish-search.page';
+import { SignupMailPage } from './signup-mail.page';
 
-describe('WishSearchPage', () => {
-  let component: WishSearchPage;
-  let fixture: ComponentFixture<WishSearchPage>;
+describe('SignupMailPage', () => {
+  let component: SignupMailPage;
+  let fixture: ComponentFixture<SignupMailPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishSearchPage ],
+      declarations: [ SignupMailPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WishSearchPage);
+    fixture = TestBed.createComponent(SignupMailPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

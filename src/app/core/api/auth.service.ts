@@ -28,8 +28,8 @@ export class AuthService {
     );
   }
 
-  signup(signupRequest: SignupRequest): Observable<SignupResponse> {
-    return this.apiService.post<SignupResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signup`, signupRequest).pipe(
+  signup(signupRequest: SignupRequest): Observable<void> {
+    return this.apiService.post<void>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signup`, signupRequest).pipe(
       catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))
     );
   }

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
-import { AutoLoginGuard } from '@guards/auto-login.guard';
 import { AccessGuard } from '@guards/access.guard';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 import { SharedWishListAccessGuard } from '@guards/shared-wish-list-access.guard';
+import { AuthGuard } from '@guards/auth.guard';
 
 const routes: Routes = [
   { 
@@ -20,8 +20,7 @@ const routes: Routes = [
   {
     path: 'start',
     canActivate: [AccessGuard],
-    loadChildren: () => import('./start/start.module').then( m => m.StartPageModule),
-    canLoad: [AutoLoginGuard]
+    loadChildren: () => import('./start/start.module').then( m => m.StartPageModule)
   },
   {
     path: 'forgot-password',
@@ -29,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'secure',
-    canActivate: [AccessGuard],
+    canActivate: [AccessGuard, AuthGuard],
     loadChildren: () => import('./tab-bar/tab-bar.module').then( m => m.TabBarPageModule)
   },
   {
@@ -48,12 +47,8 @@ const routes: Routes = [
     canActivate: [AccessGuard],
     children: [
       {
-        path: 'signup-mail-one',
-        loadChildren: () => import('./signup/pages/signup-mail-one/signup-mail-one.module').then( m => m.SignupMailOnePageModule)
-      },
-      {
-        path: 'signup-mail-two',
-        loadChildren: () => import('./signup/pages/signup-mail-two/signup-mail-two.module').then( m => m.SignupMailTwoPageModule)
+        path: 'signup-mail',
+        loadChildren: () => import('./signup/pages/signup-mail/signup-mail.module').then( m => m.SignupMailPageModule)
       },
       {
         path: 'signup-completed',
@@ -61,7 +56,6 @@ const routes: Routes = [
       }
     ]
   },
-  // test
 ];
 
 @NgModule({

@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { WishSearchPageRoutingModule } from './wish-search-routing.module';
+import { SignupMailPageRoutingModule } from './signup-mail-routing.module';
 
-import { WishSearchPage } from './wish-search.page';
+import { SignupMailPage } from './signup-mail.page';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { SharedModule } from '@shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    WishSearchPageRoutingModule,
+    SignupMailPageRoutingModule,
     SharedModule
   ],
-  declarations: [WishSearchPage]
+  declarations: [SignupMailPage]
 })
-export class WishSearchPageModule {}
+export class SignupMailPageModule {}
