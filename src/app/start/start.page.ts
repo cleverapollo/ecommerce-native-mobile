@@ -22,7 +22,7 @@ export class StartPage implements OnInit {
   }
 
   signupWithMailAndPassword() {
-    this.router.navigateByUrl('/signup/signup-mail');
+    this.router.navigateByUrl('/login');
   }
 
   signupWithApple() {
