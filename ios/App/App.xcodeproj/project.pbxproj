@@ -57,13 +57,13 @@
 		B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880BD25B2143700D0106B /* WishDataStore.swift */; };
 		B14880C425B2E8B700D0106B /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
 		B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
-		B14880D625B30A6E00D0106B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */; };
+		B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* JWTDecode */; };
 		B16360D025FE13DA00D19F73 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360CF25FE13DA00D19F73 /* Price.swift */; };
 		B16360D525FE1BF400D19F73 /* Decimal+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360D425FE1BF400D19F73 /* Decimal+Format.swift */; };
 		B16E1FB325BF3290009EEFDE /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */; };
 		B16E1FCB25C0770A009EEFDE /* TextFieldInnerPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */; };
 		B1750DF425B468300023A9C9 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750DF325B468300023A9C9 /* UIViewExtension.swift */; };
-		B17629A326051F4500B1FDB7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B17629A226051F4500B1FDB7 /* GoogleService-Info.plist */; };
+		B17629A326051F4500B1FDB7 /* GoogleService-Info-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */; };
 		B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		B17B403C25C4717F003363E9 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B403B25C4717E003363E9 /* FooterView.swift */; };
 		B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B404125C482E6003363E9 /* WanticTextView.swift */; };
@@ -97,8 +97,8 @@
 		B19A52022610CE8000984207 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360CF25FE13DA00D19F73 /* Price.swift */; };
 		B19A52032610CE8000984207 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806D25AE129500D0106B /* LoginRequest.swift */; };
 		B19A52042610CE8000984207 /* TextFieldInnerPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */; };
-		B19A52062610CE8000984207 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51EA2610CE8000984207 /* SwiftPackageProductDependency */; };
-		B19A52072610CE8000984207 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51E82610CE8000984207 /* SwiftPackageProductDependency */; };
+		B19A52062610CE8000984207 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51EA2610CE8000984207 /* JWTDecode */; };
+		B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51E82610CE8000984207 /* SwiftKeychainWrapper */; };
 		B19A520A2610CE8000984207 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B19A520B2610CE8000984207 /* PlayfairDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14F25BC38AA00F92599 /* PlayfairDisplay-Black.ttf */; };
 		B19A520C2610CE8000984207 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8425BC4A9C009CEF57 /* Roboto-LightItalic.ttf */; };
@@ -135,7 +135,7 @@
 		B19A523A2610D11400984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52392610D11400984207 /* AppConfig.swift */; };
 		B19A52482610D1A500984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52472610D1A500984207 /* AppConfig.swift */; };
 		B19A527D2610D7C800984207 /* Share Beta.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B19A522E2610CE8000984207 /* Share Beta.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B19A52B32610DA4E00984207 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B17629A226051F4500B1FDB7 /* GoogleService-Info.plist */; };
+		B19A52B32610DA4E00984207 /* GoogleService-Info-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B1A80F8E2589F59800F0917F /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B1A80F842589F59800F0917F /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1A80F98258A0F5D00F0917F /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F97258A0F5D00F0917F /* ExtensionClass.js */; };
@@ -143,9 +143,11 @@
 		B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */; };
 		B1A80FA8258A705100F0917F /* EditDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA7258A705100F0917F /* EditDetailsViewController.swift */; };
 		B1A80FAE258A770100F0917F /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FAD258A770100F0917F /* WishList.swift */; };
-		B1A80FC1258B3F6E00F0917F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */; };
+		B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */; };
 		B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
 		B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
+		B1F81EA1263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */; };
+		B1F81EA2263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */; };
 		D1244063BE45F0600004026D /* Pods_Wantic_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9DBF99F871BEB57181C64 /* Pods_Wantic_Beta.framework */; };
 /* End PBXBuildFile section */
 
@@ -277,7 +279,7 @@
 		B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldInnerPadding.swift; sourceTree = "<group>"; };
 		B1750DF325B468300023A9C9 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
-		B17629A226051F4500B1FDB7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-prod.plist"; sourceTree = "<group>"; };
 		B17635ED256AD3EC00AAEBB8 /* App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		B17B403B25C4717E003363E9 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		B17B404125C482E6003363E9 /* WanticTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanticTextView.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 		B1A80FC4258B3F9B00F0917F /* WishListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListService.swift; sourceTree = "<group>"; };
 		B1A80FC8258B40D900F0917F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B1A80FCE258B508B00F0917F /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
+		B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-beta.plist"; sourceTree = "<group>"; };
 		D45E28A041CDA2DBE5AF5132 /* Pods-Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.debug.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.debug.xcconfig"; sourceTree = "<group>"; };
 		E64593797BF139F1BC31FC49 /* Pods_Share_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -325,8 +328,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B19A52062610CE8000984207 /* BuildFile in Frameworks */,
-				B19A52072610CE8000984207 /* BuildFile in Frameworks */,
+				B19A52062610CE8000984207 /* JWTDecode in Frameworks */,
+				B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */,
 				A46ECE88DB4DD435142EDF74 /* Pods_Share_Beta.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,8 +338,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B14880D625B30A6E00D0106B /* BuildFile in Frameworks */,
-				B1A80FC1258B3F6E00F0917F /* BuildFile in Frameworks */,
+				B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */,
+				B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */,
 				7D1D14D0E654162B80DE1E33 /* Pods_Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,6 +374,7 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				B1F81E94263EF19500C277FB /* Firebase */,
 				B19A531026123D3D00984207 /* Wantic Beta.entitlements */,
 				B19A530926123C8D00984207 /* Wantic Beta-Info.plist */,
 				B17635ED256AD3EC00AAEBB8 /* App.entitlements */,
@@ -381,7 +385,6 @@
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,
 				2FAD9762203C412B000D30F8 /* config.xml */,
-				B17629A226051F4500B1FDB7 /* GoogleService-Info.plist */,
 				50B271D01FEDC1A000F3C39B /* public */,
 			);
 			path = App;
@@ -399,7 +402,6 @@
 				345A1651BF857102438AA5FB /* Pods-Wantic Beta.debug.xcconfig */,
 				4DD8BFDA41A3D248D3A0FB84 /* Pods-Wantic Beta.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -573,6 +575,15 @@
 			path = Share;
 			sourceTree = "<group>";
 		};
+		B1F81E94263EF19500C277FB /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */,
+				B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		F6076F56EBE0610DFB5B8B7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -597,6 +608,7 @@
 				504EC3021FED79650016851F /* Resources */,
 				B1A80F8F2589F59800F0917F /* Embed App Extensions */,
 				D263CC097CAF62490DD3539B /* [CP] Embed Pods Frameworks */,
+				B1F81EB0263EF3D400C277FB /* GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -618,6 +630,7 @@
 				B19A51D12610CD8E00984207 /* Resources */,
 				B19A51DA2610CD8E00984207 /* Embed App Extensions */,
 				2AC8B33D2D87CD396E3E6E34 /* [CP] Embed Pods Frameworks */,
+				B1F81EA7263EF29F00C277FB /* GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -645,8 +658,8 @@
 			);
 			name = "Share Beta";
 			packageProductDependencies = (
-				B19A51E82610CE8000984207 /* SwiftPackageProductDependency */,
-				B19A51EA2610CE8000984207 /* SwiftPackageProductDependency */,
+				B19A51E82610CE8000984207 /* SwiftKeychainWrapper */,
+				B19A51EA2610CE8000984207 /* JWTDecode */,
 			);
 			productName = Share;
 			productReference = B19A522E2610CE8000984207 /* Share Beta.appex */;
@@ -667,8 +680,8 @@
 			);
 			name = Share;
 			packageProductDependencies = (
-				B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */,
-				B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */,
+				B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */,
+				B14880D525B30A6E00D0106B /* JWTDecode */,
 			);
 			productName = Share;
 			productReference = B1A80F842589F59800F0917F /* Share.appex */;
@@ -704,8 +717,8 @@
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
 			packageReferences = (
-				B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */,
-				B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */,
+				B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
@@ -730,7 +743,7 @@
 				B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
-				B17629A326051F4500B1FDB7 /* GoogleService-Info.plist in Resources */,
+				B17629A326051F4500B1FDB7 /* GoogleService-Info-prod.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,12 +752,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B19A51D22610CD8E00984207 /* LaunchScreen.storyboard in Resources */,
+				B1F81EA1263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */,
 				B19A51D32610CD8E00984207 /* public in Resources */,
 				B19A51D42610CD8E00984207 /* Assets.xcassets in Resources */,
 				B19A51D52610CD8E00984207 /* capacitor.config.json in Resources */,
 				B19A51D62610CD8E00984207 /* Main.storyboard in Resources */,
 				B19A51D72610CD8E00984207 /* config.xml in Resources */,
-				B19A52B32610DA4E00984207 /* GoogleService-Info.plist in Resources */,
+				B19A52B32610DA4E00984207 /* GoogleService-Info-prod.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +795,7 @@
 				B19A52242610CE8000984207 /* README.txt in Resources */,
 				B19A52252610CE8000984207 /* Roboto-Thin.ttf in Resources */,
 				B19A52262610CE8000984207 /* Roboto-Regular.ttf in Resources */,
+				B1F81EA2263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */,
 				B19A52272610CE8000984207 /* PlayfairDisplay-ExtraBold.ttf in Resources */,
 				B19A52282610CE8000984207 /* PlayfairDisplay-MediumItalic.ttf in Resources */,
 				B19A52292610CE8000984207 /* PlayfairDisplay-VariableFont_wght.ttf in Resources */,
@@ -889,6 +904,42 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B1F81EA7263EF29F00C277FB /* GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/App/Firebase\"\n\ncp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-beta.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;\n";
+		};
+		B1F81EB0263EF3D400C277FB /* GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/App/Firebase\"\n\ncp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;\n";
 		};
 		D263CC097CAF62490DD3539B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1457,7 +1508,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */ = {
+		B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
@@ -1465,7 +1516,7 @@
 				minimumVersion = 2.5.0;
 			};
 		};
-		B19A51E92610CE8000984207 /* RemoteSwiftPackageReference */ = {
+		B19A51E92610CE8000984207 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
 			requirement = {
@@ -1473,7 +1524,7 @@
 				minimumVersion = 4.0.1;
 			};
 		};
-		B19A51EB2610CE8000984207 /* RemoteSwiftPackageReference */ = {
+		B19A51EB2610CE8000984207 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
@@ -1481,7 +1532,7 @@
 				minimumVersion = 2.5.0;
 			};
 		};
-		B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */ = {
+		B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
 			requirement = {
@@ -1492,24 +1543,24 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */ = {
+		B14880D525B30A6E00D0106B /* JWTDecode */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */;
+			package = B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
 			productName = JWTDecode;
 		};
-		B19A51E82610CE8000984207 /* SwiftPackageProductDependency */ = {
+		B19A51E82610CE8000984207 /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B19A51E92610CE8000984207 /* RemoteSwiftPackageReference */;
+			package = B19A51E92610CE8000984207 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
 		};
-		B19A51EA2610CE8000984207 /* SwiftPackageProductDependency */ = {
+		B19A51EA2610CE8000984207 /* JWTDecode */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B19A51EB2610CE8000984207 /* RemoteSwiftPackageReference */;
+			package = B19A51EB2610CE8000984207 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
 			productName = JWTDecode;
 		};
-		B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */ = {
+		B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */;
+			package = B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
 		};
 /* End XCSwiftPackageProductDependency section */
