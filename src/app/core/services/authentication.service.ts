@@ -130,6 +130,7 @@ export class AuthenticationService {
     return new Promise((resolve, reject) => { 
       this.firebaseAuthentication.signInWithEmailAndPassword(email, password).then(() => {
         this.getIdToken(true).then((idToken: string) => {
+          this.logger.debug('firebase idToken ', idToken);
           this.updateToken(idToken).then(resolve, reject);
         }, reject)
       }, error => {
@@ -197,10 +198,14 @@ export class AuthenticationService {
   }
 
   async legacyJwTokenExists(): Promise<boolean> {
-    const authToken = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
-    if (authToken) {
-      return Promise.resolve(true);
-    } else {
+    try {
+      const authToken = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
+      if (authToken) {
+        return Promise.resolve(true);
+      } else {
+        return Promise.resolve(false);
+      }
+    } catch (error) {
       return Promise.resolve(false);
     }
   }

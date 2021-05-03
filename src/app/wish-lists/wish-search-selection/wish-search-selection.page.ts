@@ -5,10 +5,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
 import { ModalController, Platform } from '@ionic/angular';
 import { LoadingService } from '@core/services/loading.service';
-import { UserService } from '@core/services/user.service';
 import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wish-search-selection',
@@ -40,7 +41,7 @@ export class WishSearchSelectionPage implements OnInit {
     private logger: LogService,
     public platform: Platform,
     private loadingService: LoadingService,
-    private userService: UserService,
+    private userProfileStore: UserProfileStore,
     private modalController: ModalController,
     private analyticsService: AnalyticsService
   ) { }
@@ -56,11 +57,11 @@ export class WishSearchSelectionPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.userService.showOnboardingSlides().then(show => {
-      if (show) {
+    this.userProfileStore.loadUserProfile().pipe(first()).subscribe(userProfile => {
+      if (userProfile?.userSettings.showOnboardingSlidesiOS) {
         this.openOnboardingSlidesModal();
       }
-    });
+    })
   }
 
   private async openOnboardingSlidesModal() {

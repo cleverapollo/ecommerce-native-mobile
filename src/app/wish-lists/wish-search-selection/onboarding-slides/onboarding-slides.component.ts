@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserApiService } from '@core/api/user-api.service';
 import { LogService } from '@core/services/log.service';
-import { StorageKeys, StorageService } from '@core/services/storage.service';
-import { UserService } from '@core/services/user.service';
 import { IonSlides, ModalController } from '@ionic/angular';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -20,9 +19,9 @@ export class OnboardingSlidesComponent implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private storageService: StorageService,
     private userApiService: UserApiService,
-    private logger: LogService
+    private logger: LogService,
+    private userProfileStore: UserProfileStore
   ) { }
 
   ngOnInit() {}
@@ -56,10 +55,12 @@ export class OnboardingSlidesComponent implements OnInit {
   completeOnboarding() {
     this.userApiService.updateShowOnboardingSlidesIosState(false).pipe(first()).subscribe({
       next: () => {
-        this.storageService.set(StorageKeys.SHOW_ONBOARDING_SLIDES, false);
+        this.userProfileStore.removeCachedUserProfile().finally(() => {
+          this.modalController.dismiss();
+        });
       },
-      error: this.logger.error,
-      complete: () => {
+      error: error => {
+        this.logger.error(error);
         this.modalController.dismiss();
       }
     })

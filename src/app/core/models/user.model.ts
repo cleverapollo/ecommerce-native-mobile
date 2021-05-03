@@ -5,6 +5,10 @@ export class UserProfile {
     lastName: String;
     birthday: Date;
     email: EmailDto;
+    userSettings: UserSettingsDto;
+}
+export class UserSettingsDto {
+    showOnboardingSlidesiOS: boolean;
 }
 
 export class EmailDto {

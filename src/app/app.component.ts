@@ -9,6 +9,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { UserApiService } from '@core/api/user-api.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { filter, map, take } from 'rxjs/operators';
+import { StorageKeys, StorageService } from '@core/services/storage.service';
 const { SplashScreen, StatusBar, App } = Plugins;
 
 @Component({
@@ -27,6 +28,7 @@ export class AppComponent {
     private userApiService: UserApiService,
     private authService: AuthenticationService,
     private analyticsService: AnalyticsService,
+    private storageService: StorageService
   ) {
     this.initializeApp();
   }
@@ -71,18 +73,12 @@ export class AppComponent {
   }
 
   private autoLogin() {
-    this.authService.isAuthenticated.pipe(
-      filter(val => val !== null),
-      take(1),
-      map(isAuthenticated => {
-        if (isAuthenticated) {
-          this.logger.info('auto login');
-          this.router.navigateByUrl('/secure/home', { replaceUrl: true });
-        } else {
-          return true;
-        }
-      })
-    );
+    this.storageService.get<string>(StorageKeys.FIREBASE_ID_TOKEN, true).then(idToken => { 
+      if (idToken !== null) {
+        this.logger.info('auto login');
+        this.router.navigateByUrl('/secure/home', { replaceUrl: true });
+      }
+    })
   }
 
   private onAppUrlOpen(data: any) {

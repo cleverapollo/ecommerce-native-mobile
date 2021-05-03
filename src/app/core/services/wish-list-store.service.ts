@@ -3,10 +3,8 @@ import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { CacheService } from 'ionic-cache';
 import { WishApiService } from '@core/api/wish-api.service';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { LogService } from './log.service';
-import { StorageService } from './storage.service';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,21 +27,12 @@ export class WishListStoreService {
     private wishListApiService: WishListApiService, 
     private wishApiService: WishApiService,
     private cache: CacheService,
-    private logger: LogService,
-    private storageService: StorageService,
-    private userService: UserService
+    private logger: LogService
   ) { }
 
   // WISH LISTS
 
   loadWishLists(forceRefresh: boolean = false): Observable<Array<WishListDto>> {
-    if (this.userService.accountIsEnabled) {
-      return this.loadWishListsForEnabledAccount(forceRefresh)
-    }
-    return from(Promise.resolve([]));
-  }
-
-  private loadWishListsForEnabledAccount(forceRefresh: boolean = false): Observable<Array<WishListDto>> {
     let request = this.wishListApiService.getWishLists() as Observable<Array<WishListDto>>;
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
@@ -58,13 +47,6 @@ export class WishListStoreService {
   // WISH LIST
 
   loadWishList(id: string, forceRefresh: boolean = false): Observable<WishListDto> {
-    if (this.userService.accountIsEnabled) {
-      return this.loadWishListForEnabledAccount(id, forceRefresh);
-    }
-    return from(Promise.resolve(null));
-  }
-
-  private loadWishListForEnabledAccount(id: string, forceRefresh: boolean = false): Observable<WishListDto> {
     let request = this.wishListApiService.getWishList(id);
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
@@ -119,20 +101,12 @@ export class WishListStoreService {
   // WISH
 
   loadWish(id: string, forceRefresh: boolean = false): Observable<WishDto> {
-    if (this.userService.accountIsEnabled) {
-      return this.loadWishForEnabledAccount(id, forceRefresh);
-    }
-    return from(Promise.resolve(null));
-  }
-
-  private loadWishForEnabledAccount(id: string, forceRefresh: boolean = false): Observable<WishDto> {
     let request = this.wishApiService.getWishById(id);
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWish(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
     } 
     return this.cache.loadFromObservable(this.cacheKeyWish(id), request, this.CACHE_GROUP_KEY)
   }
-
 
   updateCachedWish(wish: WishDto) {
     this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);

@@ -4,7 +4,6 @@ import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { Subscription } from 'rxjs';
-import { UserService } from '@core/services/user.service';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
 
@@ -18,17 +17,12 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   wishLists: Array<WishListDto> = new Array();
   refreshData: boolean = false
 
-  get disableAddButtons(): boolean {
-    return !this.userService.accountIsEnabled;
-  };
-
   private queryParamSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute, 
     private wishListStore: WishListStoreService,
     private navController: NavController,
-    private userService: UserService,
     private analyticsService: AnalyticsService
   ) { }
 

@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { UserService } from '@core/services/user.service';
-import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { UserProfileStore } from './user-profile-store.service';
 
@@ -14,10 +12,7 @@ import { UserProfileStore } from './user-profile-store.service';
 })
 export class SettingsPage implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
-
   profile: UserProfile
-  accountIsNotActivated: boolean;
 
   get dataForChildRoutes() {
     return {
@@ -30,23 +25,15 @@ export class SettingsPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute, 
     private userProfileStore: UserProfileStore,
-    private userService: UserService,
     private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
     this.analyticsService.setFirebaseScreenName('profile_settings');
     this.profile = this.route.snapshot.data.profile;
-    this.subscription = this.userService.$accountIsEnabled.subscribe({
-      next: accountIsEnabled => {
-        this.accountIsNotActivated = !accountIsEnabled;
-      }
-    })
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  ngOnDestroy() {}
 
   ionViewWillEnter() {
     this.userProfileStore.loadUserProfile(false).pipe(first()).subscribe(profile => {

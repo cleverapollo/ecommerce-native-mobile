@@ -15,7 +15,6 @@ export enum StorageKeys {
   FIREBASE_ID_TOKEN = 'firebaseIdToken',
   FIREBASE_USER_INFO = 'firebaseUserInfo',
   SHARED_WISH_LIST_EMAIL = 'memberEmail',
-  SHOW_ONBOARDING_SLIDES = 'showOnboardingSlides',
   SIGNUP_REQUEST = 'signupRequest',
   SIGNUP_RESPONSE = 'signupResponse',
 }
