@@ -14,7 +14,7 @@
         <array key="PlayfairDisplay-Regular.ttf">
             <string>PlayfairDisplay-Regular</string>
         </array>
-        <array key="Roboto-Bold.4f39c5796e60c9d8e732.ttf">
+        <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
         </array>
         <array key="Roboto-Medium.ttf">
@@ -305,10 +305,10 @@
             </objects>
             <point key="canvasLocation" x="3002.898550724638" y="32.8125"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Wantic Share Navigation Controller-->
         <scene sceneID="pA8-hs-lW6">
             <objects>
-                <navigationController id="TTh-Xr-mUf" sceneMemberID="viewController">
+                <navigationController id="TTh-Xr-mUf" customClass="WanticShareNavigationController" customModule="Share" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="O0p-3M-x12">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

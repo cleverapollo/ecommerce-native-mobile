@@ -58,6 +58,10 @@
 		B14880C425B2E8B700D0106B /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
 		B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
 		B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* JWTDecode */; };
+		B158951E264FCDFE005570ED /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158951D264FCDFE005570ED /* ApiService.swift */; };
+		B158951F264FCDFE005570ED /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158951D264FCDFE005570ED /* ApiService.swift */; };
+		B1589525264FD360005570ED /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1589524264FD360005570ED /* HttpStatusCode.swift */; };
+		B1589526264FD360005570ED /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1589524264FD360005570ED /* HttpStatusCode.swift */; };
 		B16360D025FE13DA00D19F73 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360CF25FE13DA00D19F73 /* Price.swift */; };
 		B16360D525FE1BF400D19F73 /* Decimal+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360D425FE1BF400D19F73 /* Decimal+Format.swift */; };
 		B16E1FB325BF3290009EEFDE /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */; };
@@ -148,6 +152,14 @@
 		B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
 		B1F81EA1263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */; };
 		B1F81EA2263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */; };
+		B1F81EBF2641D40E00C277FB /* GoogleService-Info-share-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBD2641D40E00C277FB /* GoogleService-Info-share-beta.plist */; };
+		B1F81EC02641D40E00C277FB /* GoogleService-Info-share-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBD2641D40E00C277FB /* GoogleService-Info-share-beta.plist */; };
+		B1F81EC12641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */; };
+		B1F81EC22641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */; };
+		B1F81F122641DB4000C277FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F112641DB4000C277FB /* Credentials.swift */; };
+		B1F81F132641DB4000C277FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F112641DB4000C277FB /* Credentials.swift */; };
+		B1F81F6A26430D1500C277FB /* WanticShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */; };
+		B1F81F6B26430D1500C277FB /* WanticShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */; };
 		D1244063BE45F0600004026D /* Pods_Wantic_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9DBF99F871BEB57181C64 /* Pods_Wantic_Beta.framework */; };
 /* End PBXBuildFile section */
 
@@ -274,6 +286,8 @@
 		B14880BD25B2143700D0106B /* WishDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishDataStore.swift; sourceTree = "<group>"; };
 		B14880C325B2E8B700D0106B /* ToastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastService.swift; sourceTree = "<group>"; };
 		B14880D025B3057300D0106B /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		B158951D264FCDFE005570ED /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		B1589524264FD360005570ED /* HttpStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
 		B16360CF25FE13DA00D19F73 /* Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Price.swift; sourceTree = "<group>"; };
 		B16360D425FE1BF400D19F73 /* Decimal+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Format.swift"; sourceTree = "<group>"; };
 		B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
@@ -303,6 +317,10 @@
 		B1A80FC8258B40D900F0917F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B1A80FCE258B508B00F0917F /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
 		B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-beta.plist"; sourceTree = "<group>"; };
+		B1F81EBD2641D40E00C277FB /* GoogleService-Info-share-beta.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-share-beta.plist"; sourceTree = "<group>"; };
+		B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-share-prod.plist"; sourceTree = "<group>"; };
+		B1F81F112641DB4000C277FB /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanticShareNavigationController.swift; sourceTree = "<group>"; };
 		D45E28A041CDA2DBE5AF5132 /* Pods-Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.debug.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.debug.xcconfig"; sourceTree = "<group>"; };
 		E64593797BF139F1BC31FC49 /* Pods_Share_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -491,6 +509,7 @@
 		B14880CB25B2FEDD00D0106B /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				B158951D264FCDFE005570ED /* ApiService.swift */,
 				B1A80FC8258B40D900F0917F /* AuthService.swift */,
 				B14880C325B2E8B700D0106B /* ToastService.swift */,
 				B14880BD25B2143700D0106B /* WishDataStore.swift */,
@@ -506,6 +525,7 @@
 				B1A80FA7258A705100F0917F /* EditDetailsViewController.swift */,
 				B148809B25B202CE00D0106B /* WishListTableViewController.swift */,
 				B1247FAE25BC612C009CEF57 /* ProductImageViewController.swift */,
+				B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -513,6 +533,8 @@
 		B14880CD25B2FF2000D0106B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B1F81F112641DB4000C277FB /* Credentials.swift */,
+				B1589524264FD360005570ED /* HttpStatusCode.swift */,
 				B148806D25AE129500D0106B /* LoginRequest.swift */,
 				B148806725AE0D9500D0106B /* LoginResponse.swift */,
 				B1A80F9F258A281600F0917F /* ProductInfo.swift */,
@@ -558,6 +580,7 @@
 			isa = PBXGroup;
 			children = (
 				B19A52382610D0B800984207 /* Share Beta */,
+				B1F81EBC2641D40E00C277FB /* Firebase */,
 				B16360D325FE1BDA00D19F73 /* Formatter */,
 				B114E14425BC389000F92599 /* Fonts */,
 				B14880CC25B2FF0000D0106B /* Controller */,
@@ -580,6 +603,15 @@
 			children = (
 				B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */,
 				B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		B1F81EBC2641D40E00C277FB /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				B1F81EBD2641D40E00C277FB /* GoogleService-Info-share-beta.plist */,
+				B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -790,10 +822,12 @@
 				B19A521F2610CE8000984207 /* Roboto-BlackItalic.ttf in Resources */,
 				B19A52202610CE8000984207 /* PlayfairDisplay-Italic-VariableFont_wght.ttf in Resources */,
 				B19A52212610CE8000984207 /* PlayfairDisplay-Medium.ttf in Resources */,
+				B1F81EC22641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */,
 				B19A52222610CE8000984207 /* Roboto-MediumItalic.ttf in Resources */,
 				B19A52232610CE8000984207 /* ExtensionClass.js in Resources */,
 				B19A52242610CE8000984207 /* README.txt in Resources */,
 				B19A52252610CE8000984207 /* Roboto-Thin.ttf in Resources */,
+				B1F81EC02641D40E00C277FB /* GoogleService-Info-share-beta.plist in Resources */,
 				B19A52262610CE8000984207 /* Roboto-Regular.ttf in Resources */,
 				B1F81EA2263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */,
 				B19A52272610CE8000984207 /* PlayfairDisplay-ExtraBold.ttf in Resources */,
@@ -808,6 +842,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */,
+				B1F81EBF2641D40E00C277FB /* GoogleService-Info-share-beta.plist in Resources */,
 				B114E15F25BC38AA00F92599 /* PlayfairDisplay-Black.ttf in Resources */,
 				B1247F9125BC4A9C009CEF57 /* Roboto-LightItalic.ttf in Resources */,
 				B114E16025BC38AA00F92599 /* PlayfairDisplay-SemiBoldItalic.ttf in Resources */,
@@ -829,6 +864,7 @@
 				B114E13D25BC33CF00F92599 /* Colors.xcassets in Resources */,
 				B1247F9325BC4A9C009CEF57 /* LICENSE.txt in Resources */,
 				B1247F9425BC4A9C009CEF57 /* Roboto-BlackItalic.ttf in Resources */,
+				B1F81EC12641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */,
 				B114E16625BC38AA00F92599 /* PlayfairDisplay-Italic-VariableFont_wght.ttf in Resources */,
 				B114E15A25BC38AA00F92599 /* PlayfairDisplay-Medium.ttf in Resources */,
 				B1247F8E25BC4A9C009CEF57 /* Roboto-MediumItalic.ttf in Resources */,
@@ -1025,8 +1061,11 @@
 			files = (
 				B19A51EE2610CE8000984207 /* UIColorExtension.swift in Sources */,
 				B19A51EF2610CE8000984207 /* WishListService.swift in Sources */,
+				B1F81F132641DB4000C277FB /* Credentials.swift in Sources */,
 				B19A51F02610CE8000984207 /* ProductInfo.swift in Sources */,
 				B19A51F12610CE8000984207 /* SelfSizedTableView.swift in Sources */,
+				B158951F264FCDFE005570ED /* ApiService.swift in Sources */,
+				B1589526264FD360005570ED /* HttpStatusCode.swift in Sources */,
 				B19A51F22610CE8000984207 /* ToastService.swift in Sources */,
 				B19A51F32610CE8000984207 /* UIViewControllerExtension.swift in Sources */,
 				B19A51F42610CE8000984207 /* AuthService.swift in Sources */,
@@ -1043,6 +1082,7 @@
 				B19A51FE2610CE8000984207 /* UIImageViewExtension.swift in Sources */,
 				B19A51FF2610CE8000984207 /* FooterView.swift in Sources */,
 				B19A52002610CE8000984207 /* ProductImageViewController.swift in Sources */,
+				B1F81F6B26430D1500C277FB /* WanticShareNavigationController.swift in Sources */,
 				B19A52012610CE8000984207 /* EditDetailsViewController.swift in Sources */,
 				B19A52022610CE8000984207 /* Price.swift in Sources */,
 				B19A52032610CE8000984207 /* LoginRequest.swift in Sources */,
@@ -1056,8 +1096,11 @@
 			files = (
 				B114E13525B8A56A00F92599 /* UIColorExtension.swift in Sources */,
 				B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */,
+				B1F81F122641DB4000C277FB /* Credentials.swift in Sources */,
 				B1A80FA0258A281600F0917F /* ProductInfo.swift in Sources */,
 				B16E1FB325BF3290009EEFDE /* SelfSizedTableView.swift in Sources */,
+				B158951E264FCDFE005570ED /* ApiService.swift in Sources */,
+				B1589525264FD360005570ED /* HttpStatusCode.swift in Sources */,
 				B14880C425B2E8B700D0106B /* ToastService.swift in Sources */,
 				B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */,
 				B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */,
@@ -1074,6 +1117,7 @@
 				B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */,
 				B17B403C25C4717F003363E9 /* FooterView.swift in Sources */,
 				B1247FAF25BC612C009CEF57 /* ProductImageViewController.swift in Sources */,
+				B1F81F6A26430D1500C277FB /* WanticShareNavigationController.swift in Sources */,
 				B1A80FA8258A705100F0917F /* EditDetailsViewController.swift in Sources */,
 				B16360D025FE13DA00D19F73 /* Price.swift in Sources */,
 				B148806E25AE129500D0106B /* LoginRequest.swift in Sources */,

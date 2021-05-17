@@ -32,22 +32,13 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if authService.tokenExists(), let encodedToken = authService.getAuthToken() {
-            if authService.isTokenExpired(encodedToken: encodedToken) {
-                self.authService.refreshToken(expiredAuthToken: encodedToken, completionHandler: { result in
-                    switch result {
-                    case .success(_):
-                        self.loadProductInfoFromWebPage()
-                    case .failure(_):
-                        self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
-                    }
-                })
+        authService.getAuthToken(completionHandler: { idToken in
+            if idToken == nil {
+                self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
             } else {
                 self.loadProductInfoFromWebPage()
             }
-        } else {
-            self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
-        }
+        })
         WishDataStore.shared.reset()
     }
     
@@ -65,6 +56,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+
     }
     
     private func setupView() {

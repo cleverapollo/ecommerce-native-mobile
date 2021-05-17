@@ -29,12 +29,17 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
             switch result {
             case .success(_):
                 ToastService.shared.showToast(controller: self, message: "Dein Wunsch wurde erfolgreich deiner Liste hinzugefügt.", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
-            case .failure(_):
-                ToastService.shared.showToast(controller: self, message: "Beim Speichern deines Wunsches ist ein Fehler aufgetreten", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
+            case .failure(let error):
+                if (error as NSError).code == HttpStatusCode.UNAUTHORIZED {
+                    self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+                } else {
+                    ToastService.shared.showToast(controller: self, message: "Beim Speichern deines Wunsches ist ein Fehler aufgetreten", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
+                }
             }
         })
     }
     
+    let toastService = ToastService.shared
     var wishLists: [WishList] = []
     var wishListId: UUID? {
         didSet {
@@ -64,11 +69,6 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func loadWishLists() {
-        guard let _ = AuthService.shared.getAuthToken() else {
-            ToastService.shared.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
-            return
-        }
-        
         WishListService.shared.getWishLists(completionHandler: { result in
             switch result {
             case .success(let wishLists):
@@ -79,7 +79,10 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
-            case .failure(_):
+            case .failure(let error):
+                if (error as NSError).code == HttpStatusCode.UNAUTHORIZED {
+                    self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+                }
                 self.wishLists = []
             }
         })
