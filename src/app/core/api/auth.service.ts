@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { ApiVersion } from './api-version';
-import { SignupRequestSocialLogin, SignupRequest, SignInRequest, SignupResponse, SignInResponse } from '@core/models/signup.model';
+import { SignupRequestSocialLogin, SignupRequest, SignInRequest, SignupResponse, SignInResponse, SignInRequestEmailPassword } from '@core/models/signup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +28,12 @@ export class AuthService {
     );
   }
 
-  signin(signupRequest: SignInRequest): Observable<SignInResponse> {
-    return this.apiService.post<SignInResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signin`, signupRequest);
+  signInWithThirdPartyAuthProvider(signupRequest: SignInRequest): Observable<SignInResponse> {
+    return this.apiService.post<SignInResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signin-third-party`, signupRequest);
+  }
+
+  signInWithEmailAndPassword(signInRequest: SignInRequestEmailPassword): Observable<SignInResponse> {
+    return this.apiService.post<SignInResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signin-email-password`, signInRequest);
   }
 
   private errorMessageForRegistrationServerError(error: HttpErrorResponse) {

@@ -69,24 +69,6 @@ export class AuthenticationService {
     })
   }
 
-  async login(email: string, password: string) : Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.signInWithFirebaseEmailAndPassword(email, password).then(() => {
-        this.saveCredentials(email, password);
-        resolve();
-      }, error => {
-        this.logger.error(error);
-        reject();
-      })
-    })
-  }
-
-  private saveCredentials(email: string, password: string) {
-    this.storageService.set(StorageKeys.CREDENTIALS, { email: email, password: password }, true).then(() => {
-      this.logger.debug('email and password saved sucessfully');
-    }, this.logger.error);
-  }
-
   async logout() {
     await this.storageService.clear();
     await this.cache.clearAll();
@@ -108,35 +90,32 @@ export class AuthenticationService {
     }
   }
 
-  // Firebase
-
-  signupWithFirebaseEmailAndPassword(signupRequest: SignupRequest): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.authApiService.signup(signupRequest).pipe(first()).subscribe(() => {
-        this.signInWithFirebaseEmailAndPassword(signupRequest.email, signupRequest.password).then(() => {
-          this.sendVerificationMail().then(resolve, reject);
-        }, reject)
-      }, error => {
-        const errorMessage = 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später noch einmal.';
-        this.toastService.presentErrorToast(errorMessage);
-        reject(error);
-      })
-    })
+  async signup(signupRequest: SignupRequest) {
+    try {
+      await this.authApiService.signup(signupRequest).toPromise();
+      await this.emailPasswordSignIn(signupRequest.email, signupRequest.password);
+      await this.sendVerificationMail();
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error); 
+    }
   }
 
-  signInWithFirebaseEmailAndPassword(email: string, password: string): Promise<void> {
-    return new Promise((resolve, reject) => { 
-      this.firebaseAuthentication.signInWithEmailAndPassword(email, password).then(() => {
-        this.refreshFirebaseIdToken(true).then(() => { 
-          resolve(); 
-        }, reject);
-      }, error => {
-        this.logger.error(error);
-        const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
-        this.toastService.presentErrorToast(errorMessage);
-        reject();
-      })
-    })
+  async emailPasswordSignIn(email: string, password: string): Promise<SignInResponse> {
+    try {
+      // wantic sign in
+      const signInRequest = { username: email, password: password };
+      const signInResponse = await this.authApiService.signInWithEmailAndPassword(signInRequest).toPromise();
+
+      // firebase sign in
+      await this.firebaseAuthentication.signInWithEmailAndPassword(email, password);
+      await this.refreshFirebaseIdToken(true);
+      await this.storageService.set(StorageKeys.CREDENTIALS, { email: email, password: password }, true);
+
+      return Promise.resolve(signInResponse);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
   async facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}> {
@@ -229,7 +208,7 @@ export class AuthenticationService {
     if (userInfo?.uid && userInfo?.email) {
       const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
       try {
-        const signInResponse = await this.authApiService.signin(signInRequestBody).toPromise();
+        const signInResponse = await this.authApiService.signInWithThirdPartyAuthProvider(signInRequestBody).toPromise();
         return Promise.resolve(signInResponse);
       } catch (error) {
         return Promise.reject(error);

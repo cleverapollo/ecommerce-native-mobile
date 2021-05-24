@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SignupCompletedPageRoutingModule } from './signup-completed-routing.module';
 
 import { SignupCompletedPage } from './signup-completed.page';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SignupCompletedPageRoutingModule
+    SignupCompletedPageRoutingModule,
+    SharedModule
   ],
   declarations: [SignupCompletedPage]
 })

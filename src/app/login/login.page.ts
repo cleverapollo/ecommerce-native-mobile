@@ -73,8 +73,9 @@ export class LoginPage implements OnInit {
     }
     const spinner = await this.loadingService.createLoadingSpinner();
     await spinner.present();
+    
     const input = this.loginForm.value as LoginForm;
-    this.authService.login(input.email, input.password).then(() => {
+    this.authService.emailPasswordSignIn(input.email, input.password).then(() => {
       this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');
       this.navToHome();
     }, errorReason => {

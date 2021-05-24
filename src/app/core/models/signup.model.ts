@@ -33,6 +33,11 @@ export class SignInRequest {
     email: string;
 }
 
+export class SignInRequestEmailPassword {
+    username: string;
+    password: string;
+}
+
 export class SignInResponse {
     user: UserProfile;
 }

@@ -24,7 +24,6 @@ export class SignupMailPage implements OnInit {
   @ViewChildren(IonInput) inputs: Array<IonInput>;
 
   form: FormGroup;
-  signupRequest: SignupRequest;
   validationMessages: ValidationMessages = {
     firstName: [
       new ValidationMessage('required', 'Gib bitte deinen Namen an.')
@@ -47,7 +46,6 @@ export class SignupMailPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private analyticsService: AnalyticsService,
-    private signupStateService: SignupStateService,
     private logger: LogService,
     private router: Router,
     private authService: AuthenticationService,
@@ -57,13 +55,7 @@ export class SignupMailPage implements OnInit {
   }
 
   ngOnInit() {
-    this.signupStateService.$signupRequest.subscribe(signupRequest => {
-      this.signupRequest = signupRequest
-      this.createForm(signupRequest)
-    }, errorReason => {
-      this.logger.debug('failed to load signup request from cache. ', errorReason);
-      this.createForm();
-    });
+    this.createForm();
   }
 
   private createForm(signupRequest?: SignupRequest) {
@@ -104,12 +96,23 @@ export class SignupMailPage implements OnInit {
   async signup() {
     const loadingSpinner = await this.loadingService.createLoadingSpinner();
     loadingSpinner.present();
-    this.authService.signupWithFirebaseEmailAndPassword(this.signupRequest).then(() => {
+    const signupRequest: SignupRequest = this.createSignupRequestBody();
+    this.authService.signup(signupRequest).then(() => {
       this.router.navigateByUrl('signup/signup-completed');
     }).finally(() => {
       this.loadingService.dismissLoadingSpinner(loadingSpinner);
     })
   }
+
+  private createSignupRequestBody(): SignupRequest {
+    return {
+      email: this.form.controls.email.value,
+      firstName: this.form.controls.firstName.value,
+      password: this.form.controls.password.value.value,
+      agreedToPrivacyPolicyAt: new Date()
+    };
+  }
+
   // Keyboard event handling
 
   handleKeyboardEventOnFirstNameInput(keyCode: number) {
