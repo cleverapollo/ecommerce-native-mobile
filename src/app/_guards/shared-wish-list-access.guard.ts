@@ -28,8 +28,7 @@ export class SharedWishListAccessGuard implements CanActivate {
       return true
     } 
 
-    const isAuthenticated = this.authService.isAuthenticated.value;
-    if (isAuthenticated) {
+    if (this.authService.isAuthenticated) {
       return true;
     } else {
       this.browserService.openSystemBrowser(`${APP_URL}/${urlString}`);

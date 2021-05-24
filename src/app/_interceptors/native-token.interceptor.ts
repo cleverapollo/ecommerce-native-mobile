@@ -104,8 +104,8 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         }
     }
 
-    private addAuthToken(req: HttpRequest<any>) {
-        const token = this.authService.token.value;
+    private addAuthToken(req: HttpRequest<any>): HttpRequest<any> {
+        const token = this.authService.firebaseAccessToken.value;
         return req.clone({
             setHeaders: {
                 Authorization: `Bearer ${token}`

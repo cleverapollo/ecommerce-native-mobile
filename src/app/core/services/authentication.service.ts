@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { StorageService, StorageKeys } from './storage.service';
 import { CacheService } from 'ionic-cache';
@@ -8,7 +8,7 @@ import { LogService } from './log.service';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { ToastService } from './toast.service';
 import { AuthService } from '@core/api/auth.service';
-import { AuthProvider, SignupRequest, SignupRequestSocialLogin } from '@core/models/signup.model';
+import { AuthProvider, SignInResponse, SignupRequest, SignupRequestSocialLogin } from '@core/models/signup.model';
 import { first } from 'rxjs/operators';
 import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
@@ -20,9 +20,12 @@ import { UserProfile } from '@core/models/user.model';
 })
 export class AuthenticationService {
 
-  token = new BehaviorSubject<string>(null);
-  isAuthenticated = new BehaviorSubject<boolean>(null);
+  firebaseAccessToken = new BehaviorSubject<string>(null);
   userInfo = new BehaviorSubject<any>(null);
+
+  get isAuthenticated(): boolean {
+    return this.firebaseAccessToken.value !== null;
+  }
 
   get isEmailVerified(): boolean {
     const userInfo = this.userInfo.value;
@@ -44,7 +47,7 @@ export class AuthenticationService {
   ) { 
     if (this.platform.is('capacitor')) {
       this.configFirebaseAuthentication();
-      this.loadToken();
+      this.refreshFirebaseIdToken(false);
       this.loadUserData();
     }
   }
@@ -53,23 +56,10 @@ export class AuthenticationService {
     this.firebaseAuthentication.setLanguageCode('de-DE');
   }
 
-  private loadToken() {
-    this.storageService.get<string>(StorageKeys.FIREBASE_ID_TOKEN, true).then(idToken => {
-      this.logger.debug('firebase idToken ', idToken);
-      this.isAuthenticated.next(idToken ? true : false);
-      this.updateAuthorizationHeaderForNativeHttpClient(idToken);
-      this.token.next(idToken);
-    }, error => {
-      this.logger.error(error);
-      this.isAuthenticated.next(false);
-      this.removeAuthorizationHeaderForNativeHttpClient();
-    });
-  }
-
   private loadUserData() {
     this.firebaseAuthentication.onAuthStateChanged().subscribe(userInfo => {
+      this.logger.info('user info', userInfo);
       if (userInfo) {
-        this.logger.info('user info', userInfo);
         this.storageService.set(StorageKeys.FIREBASE_USER_INFO, userInfo, true);
         this.userInfo.next(userInfo);
       } else {
@@ -101,7 +91,7 @@ export class AuthenticationService {
     await this.storageService.clear();
     await this.cache.clearAll();
     this.removeAuthorizationHeaderForNativeHttpClient();
-    this.isAuthenticated.next(false);
+    this.firebaseAccessToken.next(null);
     await this.firebaseAuthentication.signOut();
     return Promise.resolve();
   }
@@ -144,7 +134,6 @@ export class AuthenticationService {
         this.logger.error(error);
         const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
         this.toastService.presentErrorToast(errorMessage);
-        this.isAuthenticated.next(false);
         reject();
       })
     })
@@ -152,22 +141,18 @@ export class AuthenticationService {
 
   async facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}> {
     try {
+      // facebook sign in
       const facebookLoginResponse = await this.facebook.login(['email', 'public_profile']);
       const accessToken = facebookLoginResponse?.authResponse?.accessToken;
       
       if (facebookLoginResponse.status === 'connected') {
         if (accessToken) {
+          // firebase sign in
           await this.firebaseAuthentication.signInWithFacebook(accessToken);
-          const userInfo = this.userInfo.value;
-          if (userInfo?.uid && userInfo?.email) {
-            const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
-            const signInResponse = await this.authApiService.signin(signInRequestBody).toPromise();
-            return Promise.resolve({ facebookLoginResponse: facebookLoginResponse, user: signInResponse.user });
-          } else {
-            const error = 'email or uid missing ';
-            this.logger.error(error, userInfo);
-            return Promise.reject(error);
-          }
+
+          // wantic sign in 
+          const wanticSignInResponse = await this.wanticSignIn();
+          return Promise.resolve({ facebookLoginResponse: facebookLoginResponse, user: wanticSignInResponse.user });
         } {
           const error = 'no valid access token';
           this.logger.error(error);
@@ -207,16 +192,8 @@ export class AuthenticationService {
       }
 
       // wantic sign in 
-      const userInfo = this.userInfo.value;
-      if (userInfo?.uid && userInfo?.email) {
-        const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
-        const signInResponse = await this.authApiService.signin(signInRequestBody).toPromise();
-        return Promise.resolve({ googlePlusLoginResponse: googlePlusLoginResponse, user: signInResponse.user });
-      } else {
-        const error = 'email or uid missing ';
-        this.logger.error(error, userInfo);
-        return Promise.reject(error);
-      }
+      const wanticSignInResponse = await this.wanticSignIn();
+      return Promise.resolve({ googlePlusLoginResponse: googlePlusLoginResponse, user: wanticSignInResponse.user });
     } catch (error) {
       const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
       this.toastService.presentErrorToast(errorMessage);
@@ -227,49 +204,60 @@ export class AuthenticationService {
 
   async appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}> {
     try {
+      // apple sign in
       const appleSignInResponse = await this.signInWithApple.signin({
         requestedScopes: [
           ASAuthorizationAppleIDRequest.ASAuthorizationScopeFullName,
           ASAuthorizationAppleIDRequest.ASAuthorizationScopeEmail
         ]
       });
+
+      // firebase sign in
       await this.firebaseAuthentication.signInWithApple(appleSignInResponse.identityToken);
-      const userInfo = this.userInfo.value;
-      if (userInfo?.uid && userInfo?.email) {
-        const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
-        const signInResponse = await this.authApiService.signin(signInRequestBody).toPromise();
-        return Promise.resolve({ appleSignInResponse: appleSignInResponse, user: signInResponse.user });
-      }
-      this.logger.error('email or uid missing ', userInfo);
-      return Promise.reject();
+
+      // wantic sign in
+      const wanticSignInResponse = await this.wanticSignIn();
+      return Promise.resolve({ appleSignInResponse: appleSignInResponse, user: wanticSignInResponse.user });
     } catch (error) {
       this.logger.error(error);
       return Promise.reject(error);
     }
   }
 
+  async wanticSignIn(): Promise<SignInResponse> {
+    const userInfo = this.userInfo.value;
+    if (userInfo?.uid && userInfo?.email) {
+      const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
+      try {
+        const signInResponse = await this.authApiService.signin(signInRequestBody).toPromise();
+        return Promise.resolve(signInResponse);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+    const error = 'email or uid missing ';
+    this.logger.error(error, userInfo);
+    return Promise.reject(error);
+  }
+
   async refreshFirebaseIdToken(forceRefresh: boolean): Promise<string> {
     try {
       const idToken = await this.firebaseAuthentication.getIdToken(forceRefresh);
-      if (idToken) {
-        await this.updateToken(idToken);
-      }
+      await this.updateToken(idToken);
       return Promise.resolve(idToken);
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  private updateToken(token: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, token, true).then(() => {
-        this.logger.debug('updateToken');
-        this.token.next(token);
-        this.isAuthenticated.next(true);
-        this.updateAuthorizationHeaderForNativeHttpClient(token);
-        resolve();
-      }, reject);
-    })
+  private async updateToken(token: string): Promise<void> {
+    if (!token) {
+      return Promise.reject('token to upate is invalid'); 
+    }
+    await this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, token, true);
+    this.updateAuthorizationHeaderForNativeHttpClient(token);
+    this.firebaseAccessToken.next(token);
+    return Promise.resolve();
   }
 
   private getErrorMessageForFirebaseErrorCode(firebaseErrorMessage: string, errorCode: FirebaseAuthErrorCode): string {
