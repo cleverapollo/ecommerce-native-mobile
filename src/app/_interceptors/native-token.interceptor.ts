@@ -5,69 +5,116 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { Observable, from, NEVER, throwError } from 'rxjs';
+import { Observable, throwError, of, Subject } from 'rxjs';
 import { Platform } from '@ionic/angular';
-import { StorageService, StorageKeys } from '@core/services/storage.service';
+import { StorageService } from '@core/services/storage.service';
 import { LogService } from '@core/services/log.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
 
 @Injectable()
 export class NativeTokenInterceptor implements HttpInterceptor {
+
+    private refreshTokenInProgress = false;
+
+    private tokenRefreshedSource = new Subject();
+    private tokenRefreshed$ = this.tokenRefreshedSource.asObservable();
+
     constructor(
         private platform: Platform, 
         private router: Router,
-        private authService: AuthenticationService,
-        private storageService: StorageService, 
-        private logger: LogService
+        private authService: AuthenticationService
     ) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (!this.platform.is('capacitor')) {
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
+        const isLoginRequest = request.url.includes('/signin');
+        if (!this.platform.is('capacitor') || isLoginRequest) {
             return next.handle(request);
         }
-
-        return from(this.handle(request, next))
+        return next.handle(request).pipe(catchError(error => {
+            return this.handleResponseError(error, request, next);
+        }));
     }
 
-    private async handle(req: HttpRequest<any>, next: HttpHandler) {
-        const isLoginRequest = req.url.includes('/login');
-        try {
-            this.logger.log('NativeTokenInterceptor');
-            const token = await this.storageService.get<string>(StorageKeys.FIREBASE_ID_TOKEN, true);
-            if (token) {
-                const authRequest = this.addAuthToken(req, token)
-                return next.handle(authRequest).pipe(catchError( error => {
-                    this.logger.debug('catched error ', error);
-                    if (!isLoginRequest && (error.status === HttpStatusCodes.UNAUTHORIZED || error.status === HttpStatusCodes.FORBIDDEN)) {
-                        return from(new Promise<never>((resolve) => {
-                             this.authService.getIdToken(true)
-                             .then(idToken => {
-                                const authRequest = this.addAuthToken(req, idToken);
-                                next.handle(authRequest)
-                             })
-                             .catch(() => this.router.navigateByUrl('/login') )
-                             .finally(() => resolve(NEVER.toPromise()) )
-                         })); 
-                     } else {
-                         return throwError(error);
-                     }
-                })).toPromise();
-            } else {
-                return next.handle(req).toPromise();
-            }
-        } catch(error) {
-            return next.handle(req).toPromise();
+    handleResponseError(error: any, request?: HttpRequest<any>, next?: HttpHandler) {
+        // Business error
+        if (error.status === 400) {
+            // Show message
+        }
+
+        // Invalid token error
+        else if (error.status === HttpStatusCodes.UNAUTHORIZED) {
+            return this.refreshToken().pipe(
+                switchMap(() => {
+                    request = this.addAuthToken(request);
+                    return next.handle(request);
+                }),
+                catchError(e => {
+                    if (e.status !== HttpStatusCodes.UNAUTHORIZED) {
+                        return this.handleResponseError(e);
+                    } else {
+                        this.logout();
+                    }
+                }));
+        }
+
+        // Access denied error
+        else if (error.status === HttpStatusCodes.FORBIDDEN) {
+            // Show message
+            // Logout
+            this.logout();
+        }
+
+        // Server error
+        else if (error.status === 500) {
+            // Show message
+        }
+
+        // Maintenance error
+        else if (error.status === 503) {
+            // Show message
+            // Redirect to the maintenance page
+        }
+
+        return throwError(error);
+    }
+
+    private refreshToken(): Observable<any> {
+        if (this.refreshTokenInProgress) {
+            return new Observable(observer => {
+                this.tokenRefreshed$.subscribe(() => {
+                    observer.next();
+                    observer.complete();
+                });
+            });
+        } else {
+            this.refreshTokenInProgress = true;
+
+            return of(this.authService.refreshFirebaseIdToken(true)).pipe(
+                tap(() => {
+                    this.refreshTokenInProgress = false;
+                    this.tokenRefreshedSource.next();
+                }),
+                catchError(() => {
+                    this.refreshTokenInProgress = false;
+                    return of(this.logout());
+                }));
         }
     }
 
-    private addAuthToken(req: HttpRequest<any>, token: string) {
+    private addAuthToken(req: HttpRequest<any>) {
+        const token = this.authService.token.value;
         return req.clone({
             setHeaders: {
                 Authorization: `Bearer ${token}`
             }
         });
+    }
+
+    async logout() {
+        await this.authService.logout();
+        this.router.navigateByUrl('start');
     }
 }

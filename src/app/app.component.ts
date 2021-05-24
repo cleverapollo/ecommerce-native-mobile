@@ -6,11 +6,8 @@ import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { UserApiService } from '@core/api/user-api.service';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { filter, map, take } from 'rxjs/operators';
-import { StorageKeys, StorageService } from '@core/services/storage.service';
-const { SplashScreen, StatusBar, App } = Plugins;
+const { StatusBar, App } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -25,10 +22,8 @@ export class AppComponent {
     private zone: NgZone,
     private router: Router,
     private logger: LogService,
-    private userApiService: UserApiService,
     private authService: AuthenticationService,
-    private analyticsService: AnalyticsService,
-    private storageService: StorageService
+    private analyticsService: AnalyticsService
   ) {
     this.initializeApp();
   }
@@ -54,31 +49,20 @@ export class AppComponent {
       this.initCache();
       this.analyticsService.initAppsflyerSdk();
       this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
-      this.autoLogin();
     });
   }
 
   private async onAppStart() {
-    await this.migrateCachedCredentials();
+    this.migrateCachedCredentials();
   }
 
   private async onAppResume() {
-    await this.migrateCachedCredentials();
     await this.cache.clearGroup('wishList');
   }
 
   private initCache() {
     this.cache.setDefaultTTL(60 * 60);
     this.cache.setOfflineInvalidate(false);
-  }
-
-  private autoLogin() {
-    this.storageService.get<string>(StorageKeys.FIREBASE_ID_TOKEN, true).then(idToken => { 
-      if (idToken !== null) {
-        this.logger.info('auto login');
-        this.router.navigateByUrl('/secure/home', { replaceUrl: true });
-      }
-    })
   }
 
   private onAppUrlOpen(data: any) {
@@ -98,31 +82,9 @@ export class AppComponent {
     });
   }
 
-  private async migrateCachedCredentials() {
-    if (!this.platform.is('capacitor')) { return }
-    const legacyJwTokenExists = await this.authService.legacyJwTokenExists();
-    if (legacyJwTokenExists) {
-      await SplashScreen.show({ autoHide: false });
-      await this.authService.removeDeprecatedAuthToken();
-      const credentials = await this.authService.migrateSavedCredentials();
-      if (credentials !== null) {
-        const uid = await this.authService.createFirebaseAccountForExistingUser(credentials.email, credentials.password);
-        if (uid !== null) {
-          await this.userApiService.partialUpdateFirebaseUid(uid).toPromise();
-          this.router.navigateByUrl('/secure/home/wish-list-overview').finally(() => {
-            SplashScreen.hide();
-          });
-        } else {
-          SplashScreen.hide();
-        }
-      } else {
-        this.router.navigateByUrl('/login').finally(() => {
-          SplashScreen.hide();
-        });
-      }
-    }
+  private migrateCachedCredentials() {
+    this.authService.removeDeprecatedAuthToken();
+    this.authService.migrateSavedCredentials();
   }
-
-
 
 }

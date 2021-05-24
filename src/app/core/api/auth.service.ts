@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '@core/models/login.model';
 import { catchError } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ApiErrorHandlerService } from './api-error-handler.service';
-import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { ApiVersion } from './api-version';
-import { SignupRequest, SignupResponse } from '@core/models/signup.model';
+import { SignupRequestSocialLogin, SignupRequest, SignInRequest, SignupResponse, SignInResponse } from '@core/models/signup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +16,9 @@ export class AuthService {
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
-  login(email: string, password: string): Observable<LoginResponse> {
-    let requestData = {
-      username: email,
-      password: password
-    };
-    return this.apiService.post<LoginResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/login`, requestData).pipe(
-      catchError( error => this.errorHandler.handleError(error, this.errorMessageForLoginServerError))
+  signupSocialLogin(signInRequest: SignupRequestSocialLogin): Observable<void> {
+    return this.apiService.post<void>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signup-social-login`, signInRequest).pipe(
+      catchError(error => this.errorHandler.handleError(error, this.errorMessageForRegistrationServerError))
     );
   }
 
@@ -34,27 +28,8 @@ export class AuthService {
     );
   }
 
-  refreshToken(): Observable<LoginResponse> {
-    return this.apiService.get<LoginResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/refresh-token`)
-  }
-
-  private errorMessageForLoginServerError(error: HttpErrorResponse): string {
-    let errorMessage: string
-    switch (error.status) {
-      case HttpStatusCodes.UNAUTHORIZED:
-        errorMessage = 'Dein Passwort stimmt nicht mit deiner E-Mail-Adresse überein.';
-        break;
-      case HttpStatusCodes.FORBIDDEN:
-        errorMessage = 'Dein Account ist leider noch nicht freigeschaltet.';
-        break;
-      case HttpStatusCodes.NOT_FOUND:
-        errorMessage = 'Es existiert kein Benutzer mit der angegbenen E-Mail-Adresse.'
-        break;
-      case 423:
-        errorMessage = 'Dein Account ist zurzeit gesperrt und kann nicht verwendet werden.';
-        break;
-    }
-    return errorMessage;
+  signin(signupRequest: SignInRequest): Observable<SignInResponse> {
+    return this.apiService.post<SignInResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signin`, signupRequest);
   }
 
   private errorMessageForRegistrationServerError(error: HttpErrorResponse) {

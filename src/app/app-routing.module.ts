@@ -5,6 +5,7 @@ import { AccessGuard } from '@guards/access.guard';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 import { SharedWishListAccessGuard } from '@guards/shared-wish-list-access.guard';
 import { AuthGuard } from '@guards/auth.guard';
+import { AutoLoginGuard } from '@guards/auto-login.guard';
 
 const routes: Routes = [
   { 
@@ -19,6 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'start',
+    canLoad: [AutoLoginGuard],
     canActivate: [AccessGuard],
     loadChildren: () => import('./start/start.module').then( m => m.StartPageModule)
   },

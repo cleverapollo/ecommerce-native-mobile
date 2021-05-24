@@ -21,6 +21,7 @@
     ],
     "paths": {
       "@core/*": ["src/app/core/*"],
+      "@env/*": ["src/environments/*"],
       "@friends/*": ["src/app/friends/*"],
       "@guards/*": ["src/app/_guards/*"],
       "@menu/*": ["src/app/menu/*"],

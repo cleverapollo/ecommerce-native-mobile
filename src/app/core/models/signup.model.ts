@@ -17,6 +17,7 @@ export class SignupRequest {
 export class SignupRequestSocialLogin {
     uid: string;
     firstName: string;
+    lastName?: string;
     email: string;
     agreedToPrivacyPolicyAt: Date;
     authProvider: AuthProvider;
@@ -25,4 +26,13 @@ export class SignupRequestSocialLogin {
 export class SignupResponse {
     user: UserProfile;
     jwToken: LoginResponse;
+}
+
+export class SignInRequest {
+    uid: string;
+    email: string;
+}
+
+export class SignInResponse {
+    user: UserProfile;
 }

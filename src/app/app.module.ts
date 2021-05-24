@@ -35,6 +35,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 import { Appsflyer } from '@ionic-native/appsflyer/ngx';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
+import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -82,6 +83,7 @@ export function jwtOptionsFactory(storageService: StorageService) {
     FriendsWishListResolver,
     FriendsWishListDetailResolver,
     SharedWishListResolver,
+    SignInWithApple,
     UserProfileResolver,
     WishResolver,
     WishListsResolver,

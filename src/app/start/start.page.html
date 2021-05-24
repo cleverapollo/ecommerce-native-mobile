@@ -3,7 +3,7 @@
   <p>
     Lege Wunschlisten an, und teile diese mit deinen Freunden und deiner Familie.
   </p>
-  <ion-button class="wantic-save-button"  color="black" expand="block" (click)="signupWithApple()" disabled="true">
+  <ion-button *ngIf="showAppleSignIn" class="wantic-save-button"  color="black" expand="block" (click)="signupWithApple()">
     <ion-icon name="logo-apple"></ion-icon>&nbsp;<span>Weiter mit Apple</span>
   </ion-button>
   <ion-button class="wantic-save-button"  color="facebook-blue" expand="block" (click)="signupWithFacebook()" disabled="true">

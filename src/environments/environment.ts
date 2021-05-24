@@ -3,8 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 import { EnvironmentConfig } from './environment.d';
 import { version } from './../../package.json'
+import { BackendConfigType } from './backend-config-type';
 
 export const environment: EnvironmentConfig = {
+  backendType: BackendConfigType.unknown,
   production: false,
   debugMessage: '',
   serverConfig: {

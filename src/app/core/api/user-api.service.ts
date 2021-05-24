@@ -22,8 +22,8 @@ export class UserApiService {
     private logger: LogService
   ) { }
 
-  deleteUser(requestBody: DeleteAccountRequest): Observable<void> {
-    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/delete-account`, requestBody);
+  deleteUser(): Observable<void> {
+    return this.apiService.patch<void>(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/delete-account`);
   }
 
   getProfile(): Observable<UserProfile> {

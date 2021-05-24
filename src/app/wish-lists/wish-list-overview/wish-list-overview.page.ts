@@ -17,24 +17,21 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   wishLists: Array<WishListDto> = new Array();
   refreshData: boolean = false
 
-  private queryParamSubscription: Subscription;
-
   constructor(
     private route: ActivatedRoute, 
     private wishListStore: WishListStoreService,
     private navController: NavController,
     private analyticsService: AnalyticsService
-  ) { }
+  ) { 
+    this.analyticsService.setFirebaseScreenName('main');
+  }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('main');
     const resolvedData = this.route.snapshot.data;
     this.updateWishLists(resolvedData.wishLists);
   }
 
-  ngOnDestroy() {
-    this.queryParamSubscription.unsubscribe();
-  }
+  ngOnDestroy() {}
 
   ionViewWillEnter() {
     if (this.refreshData) {

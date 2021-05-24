@@ -1,74 +1,48 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { UserApiService } from '@core/api/user-api.service';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
-import { DeleteAccountRequest } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
 import { ToastService } from '@core/services/toast.service';
+import { BackendConfigType } from '@env/backend-config-type';
 import { NavController } from '@ionic/angular';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { CustomValidation } from '@shared/custom-validation';
-import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-account-delete',
   templateUrl: './account-delete.page.html',
   styleUrls: ['./account-delete.page.scss'],
 })
-export class AccountDeletePage implements OnInit, OnDestroy {
+export class AccountDeletePage implements OnInit {
 
-  form: FormGroup;
-
-  subscription: Subscription;
-
-  get validationMessages(): ValidationMessages {
-    return {
-      password: [
-        new ValidationMessage('required', 'Gib bitte dein Passwort an.')
-      ]
-    }
+  get showDeleteButton(): boolean {
+    return environment.backendType === BackendConfigType.beta || environment.backendType == BackendConfigType.dev;
   }
 
   constructor(
     private userApiService: UserApiService, 
     private authService: AuthenticationService,
     private navController: NavController,
-    private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private toastService: ToastService,
     private logger: LogService,
     private analyticsService: AnalyticsService
-  ) { }
-
-  ngOnInit() {
+  ) { 
     this.analyticsService.setFirebaseScreenName('profile_settings-delete_account');
-    this.form = this.formBuilder.group({
-      password: this.formBuilder.control('', { 
-        validators: [Validators.required],
-        updateOn: 'submit'
-      })
-    });
   }
 
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
+  ngOnInit() {}
 
-  deleteAccount() {
-    if (this.form.invalid) {
-      CustomValidation.validateFormGroup(this.form);
-      return;
-    }
-    const requestBody = new DeleteAccountRequest(this.form.controls);
-    this.loadingService.showLoadingSpinner();
-    this.subscription = this.userApiService.deleteUser(requestBody).subscribe({
+  async deleteAccount() {
+    const loadingSpinner = await this.loadingService.createLoadingSpinner();
+    await loadingSpinner.present();
+    this.userApiService.deleteUser().pipe(first()).subscribe({
       next: () => {
         this.toastService.presentSuccessToast('Dein Account wurde erfolgreich gelöscht!');
-        this.loadingService.dismissLoadingSpinner();
         this.authService.logout().finally(() => {
           this.navController.navigateRoot('start', { replaceUrl: true });
         });
@@ -83,7 +57,9 @@ export class AccountDeletePage implements OnInit, OnDestroy {
           }
         }
         this.toastService.presentErrorToast(errorMessage);
-        this.loadingService.dismissLoadingSpinner();
+      },
+      complete: () => {
+        this.loadingService.dismissLoadingSpinner(loadingSpinner);
       }
     })
   }
