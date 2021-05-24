@@ -11,7 +11,7 @@ import { AuthService } from '@core/api/auth.service';
 import { AuthProvider, SignupRequest, SignupRequestSocialLogin } from '@core/models/signup.model';
 import { first } from 'rxjs/operators';
 import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
-import { UserApiService } from '@core/api/user-api.service';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { UserProfile } from '@core/models/user.model';
 
 @Injectable({
@@ -37,7 +37,7 @@ export class AuthenticationService {
     private toastService: ToastService,
     private firebaseAuthentication: FirebaseAuthentication,
     private authApiService: AuthService,
-    private userApiService: UserApiService,
+    private facebook: Facebook,
     private signInWithApple: SignInWithApple,
   ) { 
     if (this.platform.is('capacitor')) {
@@ -146,6 +146,46 @@ export class AuthenticationService {
         reject();
       })
     })
+  }
+
+  async facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}> {
+    try {
+      const facebookLoginResponse = await this.facebook.login(['email', 'public_profile']);
+      const accessToken = facebookLoginResponse?.authResponse?.accessToken;
+      
+      if (facebookLoginResponse.status === 'connected') {
+        if (accessToken) {
+          await this.firebaseAuthentication.signInWithFacebook(accessToken);
+          const userInfo = this.userInfo.value;
+          if (userInfo?.uid && userInfo?.email) {
+            const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
+            const signInResponse = await this.authApiService.signin(signInRequestBody).toPromise();
+            return Promise.resolve({ facebookLoginResponse: facebookLoginResponse, user: signInResponse.user });
+          } else {
+            const error = 'email or uid missing ';
+            this.logger.error(error, userInfo);
+            return Promise.reject(error);
+          }
+        } {
+          const error = 'no valid access token';
+          this.logger.error(error);
+          return Promise.reject(error);
+        }
+      } else if (facebookLoginResponse.status === 'not_authorized') {
+        const error = 'The user has not authorized your application';
+        this.logger.debug(error);
+        return Promise.reject(error);
+      } else {
+        const error = 'The user is not logged in to Faceebook.';
+        this.logger.debug(error);
+        return Promise.reject(error);
+      }
+    } catch (error) {
+      const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
+      this.toastService.presentErrorToast(errorMessage);
+      this.logger.error(error);
+      return Promise.reject(error);
+    }
   }
 
   async appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}> {

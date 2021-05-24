@@ -36,6 +36,7 @@ import { EmailVerificationStatusResolver } from './email-verification/email-veri
 import { Appsflyer } from '@ionic-native/appsflyer/ngx';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
+import { Facebook } from '@ionic-native/facebook/ngx';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -78,6 +79,7 @@ export function jwtOptionsFactory(storageService: StorageService) {
     InAppBrowser,
     HTTP,
     EmailVerificationStatusResolver,
+    Facebook,
     File,
     FirebaseAuthentication,
     FriendsWishListResolver,
