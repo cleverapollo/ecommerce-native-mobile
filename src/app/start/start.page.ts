@@ -5,14 +5,13 @@ import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { LogService } from '@core/services/log.service';
 import { Plugins } from '@capacitor/core'
 import { AuthenticationService } from '@core/services/authentication.service';
-import { NavController } from '@ionic/angular';
-import { AuthProvider, SignupRequestSocialLogin } from '@core/models/signup.model';
+import { AuthProvider, SignInResponse, SignupRequestSocialLogin } from '@core/models/signup.model';
 import { UserApiService } from '@core/api/user-api.service';
 import { first } from 'rxjs/operators';
 import { AuthService } from '@core/api/auth.service';
-import { AppleSignInResponse } from '@ionic-native/sign-in-with-apple/ngx';
 import { UserProfile } from '/Users/fischeti/Documents/develop/wantic-frontend/src/app/core/models/user.model';
 import { UserService } from '@core/services/user.service';
+import { LoadingService } from '@core/services/loading.service';
 
 const { Device } = Plugins
 
@@ -24,7 +23,8 @@ const { Device } = Plugins
 export class StartPage implements OnInit {
 
   showAppleSignIn = false;
-  showFacebookSignIn = true;
+  showFacebookSignIn = false;
+  showGooglePlusSignIn = false;
   
   constructor(
     private analyticsService: AnalyticsService, 
@@ -34,6 +34,7 @@ export class StartPage implements OnInit {
     private authService: AuthenticationService,
     private authApiService: AuthService,
     private userService: UserService,
+    private loadingService: LoadingService,
     public privacyPolicyService: PrivacyPolicyService
   ) { 
     this.analyticsService.setFirebaseScreenName('logon');
@@ -42,6 +43,8 @@ export class StartPage implements OnInit {
   async ngOnInit() {
     const deviceInfo = await Device.getInfo();
     this.showAppleSignIn = deviceInfo.platform === 'ios';
+    this.showFacebookSignIn = true;
+    this.showGooglePlusSignIn = deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
   }
 
   signupWithMailAndPassword() {
@@ -50,52 +53,51 @@ export class StartPage implements OnInit {
 
   async signupWithApple() {
     const signInResponse = await this.authService.appleSignIn();
-    const userIsRegistered = signInResponse.user !== null;
-    const firstName = signInResponse?.appleSignInResponse?.fullName?.givenName;
+    const firstName = signInResponse?.appleSignInResponse?.fullName?.givenName ?? '';
     const lastName = signInResponse?.appleSignInResponse?.fullName?.familyName;
-    this.logger.debug('signInResponse', signInResponse);
-    
-    if (userIsRegistered) {
-      await this.authService.refreshFirebaseIdToken(true);
-      await this.updateFirstNameIfNeeded(firstName, signInResponse.user);
-      await this.updateLastNameIfNeeded(lastName, signInResponse.user);
-      this.router.navigateByUrl('/secure/home/wish-list-overview', { replaceUrl: true });
-    } else {
-      const signupRequest = this.createSignUpRequestSocialLogin(firstName, lastName, AuthProvider.apple);
-      if (signupRequest) {
-        await this.authApiService.signupSocialLogin(signupRequest).toPromise();
-        await this.authService.sendVerificationMail();
-        this.router.navigateByUrl('signup/signup-completed');
-      }
-    }
+    this.signIn(signInResponse, firstName, lastName, AuthProvider.apple);
   }
 
   async signupWithFacebook() {
     const signInResponse = await this.authService.facebookSignIn();
-    const userIsRegistered = signInResponse.user !== null;
-    
     const facebookUserProfile = await this.userService.facebookUserProfile;
     const firstName = facebookUserProfile?.firstName ?? '';
-    const lastName = facebookUserProfile?.lastName ?? '';
-    this.logger.debug('signInResponse', signInResponse);
+    const lastName = facebookUserProfile?.lastName;
+    this.signIn(signInResponse, firstName, lastName, AuthProvider.facebook);
+  }
 
+  async signupWithGoogle() {
+    const signInResponse = await this.authService.googlePlusSignIn();
+    const firstName = signInResponse?.googlePlusLoginResponse?.givenName ?? '';
+    const lastName = signInResponse?.googlePlusLoginResponse?.familyName;
+    this.signIn(signInResponse, firstName, lastName, AuthProvider.google);
+  }
+
+  private async signIn(signInResponse: SignInResponse, firstName: string, lastName: string, authProvider: AuthProvider) {
+    const spinner = await this.loadingService.createLoadingSpinner();
+    await spinner.present();
+
+    const userIsRegistered = signInResponse.user !== null;
     if (userIsRegistered) {
       await this.authService.refreshFirebaseIdToken(true);
       await this.updateFirstNameIfNeeded(firstName, signInResponse.user);
       await this.updateLastNameIfNeeded(lastName, signInResponse.user);
-      this.router.navigateByUrl('/secure/home/wish-list-overview', { replaceUrl: true });
+      this.router.navigateByUrl('secure/home/wish-list-overview', { replaceUrl: true });
     } else {
-      const signupRequest = this.createSignUpRequestSocialLogin(firstName, lastName, AuthProvider.facebook);
+      const signupRequest = this.createSignUpRequestSocialLogin(firstName, lastName, authProvider);
       if (signupRequest) {
         await this.authApiService.signupSocialLogin(signupRequest).toPromise();
-        await this.authService.sendVerificationMail();
-        this.router.navigateByUrl('signup/signup-completed');
+        if (this.authService.isEmailVerified) {
+          await this.authService.refreshFirebaseIdToken(true);
+          this.router.navigateByUrl('secure/home/wish-list-overview', { replaceUrl: true });
+        } else {
+          await this.authService.sendVerificationMail();
+          this.router.navigateByUrl('signup/signup-completed');
+        }
       }
     }
-  }
 
-  signupWithGoogle() {
-
+    this.loadingService.dismissLoadingSpinner(spinner);
   }
 
   // helper methods
@@ -124,7 +126,7 @@ export class StartPage implements OnInit {
   }
 
   private updateLastNameIfNeeded(lastName: string, user: UserProfile): Promise<void> {
-    if (user?.lastName === '') {
+    if (!user?.lastName) {
       return new Promise((resolve) => {
         this.userApiService.partialUpdateLastName(lastName).pipe(first()).subscribe({
           next: user => {

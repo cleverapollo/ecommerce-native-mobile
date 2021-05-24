@@ -12,6 +12,7 @@ import { AuthProvider, SignupRequest, SignupRequestSocialLogin } from '@core/mod
 import { first } from 'rxjs/operators';
 import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { UserProfile } from '@core/models/user.model';
 
 @Injectable({
@@ -38,6 +39,7 @@ export class AuthenticationService {
     private firebaseAuthentication: FirebaseAuthentication,
     private authApiService: AuthService,
     private facebook: Facebook,
+    private googlePlus: GooglePlus,
     private signInWithApple: SignInWithApple,
   ) { 
     if (this.platform.is('capacitor')) {
@@ -178,6 +180,41 @@ export class AuthenticationService {
       } else {
         const error = 'The user is not logged in to Faceebook.';
         this.logger.debug(error);
+        return Promise.reject(error);
+      }
+    } catch (error) {
+      const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
+      this.toastService.presentErrorToast(errorMessage);
+      this.logger.error(error);
+      return Promise.reject(error);
+    }
+  }
+
+  async googlePlusSignIn(): Promise<{googlePlusLoginResponse: any, user: UserProfile}> {
+    try {
+      // google plus sign in
+      const googlePlusLoginResponse = await this.googlePlus.login({});
+      const idToken = googlePlusLoginResponse?.idToken;
+      const accessToken = googlePlusLoginResponse?.accessToken;
+
+      // firebase sign in
+      if (idToken && accessToken) {
+        await this.firebaseAuthentication.signInWithGoogle(idToken, accessToken);
+      } else {
+        const error = 'idToken or accessToken missing ';
+        this.logger.error(error, idToken, accessToken);
+        return Promise.reject(error);
+      }
+
+      // wantic sign in 
+      const userInfo = this.userInfo.value;
+      if (userInfo?.uid && userInfo?.email) {
+        const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
+        const signInResponse = await this.authApiService.signin(signInRequestBody).toPromise();
+        return Promise.resolve({ googlePlusLoginResponse: googlePlusLoginResponse, user: signInResponse.user });
+      } else {
+        const error = 'email or uid missing ';
+        this.logger.error(error, userInfo);
         return Promise.reject(error);
       }
     } catch (error) {

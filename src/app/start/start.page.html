@@ -9,7 +9,7 @@
   <ion-button *ngIf="showFacebookSignIn" class="wantic-save-button"  color="facebook-blue" expand="block" (click)="signupWithFacebook()">
     <ion-icon name="logo-facebook"></ion-icon>&nbsp;<span>Weiter mit Facebook</span>
   </ion-button>
-  <ion-button class="wantic-save-button"  color="white" expand="block" (click)="signupWithGoogle()" disabled="true">
+  <ion-button *ngIf="showGooglePlusSignIn" class="wantic-save-button"  color="white" expand="block" (click)="signupWithGoogle()">
     <ion-icon src="assets/icon/google-logo.svg"></ion-icon>&nbsp;<span>Weiter mit Google</span>
   </ion-button>
   <ion-button class="wantic-save-button"  color="white" expand="block" (click)="signupWithMailAndPassword()">
