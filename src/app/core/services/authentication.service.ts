@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, pipe } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { StorageService, StorageKeys } from './storage.service';
 import { CacheService } from 'ionic-cache';
@@ -14,18 +14,16 @@ import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } f
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { UserProfile } from '@core/models/user.model';
+import { SERVER_URL } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
+  isAuthenticated = new BehaviorSubject<boolean>(null);
   firebaseAccessToken = new BehaviorSubject<string>(null);
   userInfo = new BehaviorSubject<any>(null);
-
-  get isAuthenticated(): boolean {
-    return this.firebaseAccessToken.value !== null;
-  }
 
   get isEmailVerified(): boolean {
     const userInfo = this.userInfo.value;
@@ -69,24 +67,30 @@ export class AuthenticationService {
     })
   }
 
-  async logout() {
-    await this.storageService.clear();
-    await this.cache.clearAll();
-    this.removeAuthorizationHeaderForNativeHttpClient();
-    this.firebaseAccessToken.next(null);
-    await this.firebaseAuthentication.signOut();
-    return Promise.resolve();
+  async logout(): Promise<void> {
+    try {
+      await this.storageService.clear();
+      await this.cache.clearAll();
+      this.removeAuthorizationHeaderForNativeHttpClient();
+      this.firebaseAccessToken.next(null);
+      this.isAuthenticated.next(false);
+      await this.firebaseAuthentication.signOut();
+      return Promise.resolve();
+    } catch (error) {
+      this.logger.error(error);
+      return Promise.resolve();
+    }
   }
 
   private updateAuthorizationHeaderForNativeHttpClient(token: string) {
     if (this.platform.is('capacitor') && token) {
-      this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`);
+      this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', `Bearer ${token}`);
     }
   }
 
   private removeAuthorizationHeaderForNativeHttpClient() {
     if (this.platform.is('capacitor')) {
-      this.nativeHttpClient.setHeader('*', 'Authorization', null);
+      this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', null);
     }
   }
 
@@ -225,17 +229,23 @@ export class AuthenticationService {
       await this.updateToken(idToken);
       return Promise.resolve(idToken);
     } catch (error) {
+      this.logger.error('failed to refresh firebase id token', error);
+      if (this.isAuthenticated.value === null) {
+        this.isAuthenticated.next(false);
+      }
       return Promise.reject(error);
     }
   }
 
   private async updateToken(token: string): Promise<void> {
     if (!token) {
+      this.isAuthenticated.next(false);
       return Promise.reject('token to upate is invalid'); 
     }
     await this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, token, true);
     this.updateAuthorizationHeaderForNativeHttpClient(token);
     this.firebaseAccessToken.next(token);
+    this.isAuthenticated.next(true);
     return Promise.resolve();
   }
 
