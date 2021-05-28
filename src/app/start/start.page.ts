@@ -91,6 +91,7 @@ export class StartPage implements OnInit {
           await this.authService.refreshFirebaseIdToken(true);
           this.router.navigateByUrl('secure/home/wish-list-overview', { replaceUrl: true });
         } else {
+          await this.authService.refreshFirebaseIdToken(true);
           await this.authService.sendVerificationMail();
           this.router.navigateByUrl('signup/signup-completed');
         }
