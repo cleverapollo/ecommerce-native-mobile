@@ -30,7 +30,8 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
         const isLoginRequest = request.url.includes('/signin');
-        if (!this.platform.is('capacitor') || isLoginRequest) {
+        const isGoogleApiRequest = request.url.startsWith('https://identitytoolkit.googleapis.com');
+        if (!this.platform.is('capacitor') || isLoginRequest || isGoogleApiRequest) {
             return next.handle(request);
         }
         return next.handle(request).pipe(catchError(error => {
