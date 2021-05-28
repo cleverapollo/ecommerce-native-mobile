@@ -114,6 +114,7 @@ export class AuthenticationService {
 
       return Promise.resolve(signInResponse);
     } catch (error) {
+      this.handleFirebaseAuthErrors(error);
       return Promise.reject(error);
     }
   }
@@ -147,9 +148,8 @@ export class AuthenticationService {
         return Promise.reject(error);
       }
     } catch (error) {
-      const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
-      this.toastService.presentErrorToast(errorMessage);
-      this.logger.error(error);
+      this.handleFirebaseAuthErrors(error);
+      this.logger.error(error, typeof error);
       return Promise.reject(error);
     }
   }
@@ -174,8 +174,7 @@ export class AuthenticationService {
       const wanticSignInResponse = await this.wanticSignIn();
       return Promise.resolve({ googlePlusLoginResponse: googlePlusLoginResponse, user: wanticSignInResponse.user });
     } catch (error) {
-      const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
-      this.toastService.presentErrorToast(errorMessage);
+      this.handleFirebaseAuthErrors(error);
       this.logger.error(error);
       return Promise.reject(error);
     }
@@ -198,6 +197,7 @@ export class AuthenticationService {
       const wanticSignInResponse = await this.wanticSignIn();
       return Promise.resolve({ appleSignInResponse: appleSignInResponse, user: wanticSignInResponse.user });
     } catch (error) {
+      this.handleFirebaseAuthErrors(error);
       this.logger.error(error);
       return Promise.reject(error);
     }
@@ -237,6 +237,13 @@ export class AuthenticationService {
     this.updateAuthorizationHeaderForNativeHttpClient(token);
     this.firebaseAccessToken.next(token);
     return Promise.resolve();
+  }
+
+  private handleFirebaseAuthErrors(error: any) {
+    if (error.message && error.code) {
+      const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
+      this.toastService.presentErrorToast(errorMessage);
+    }
   }
 
   private getErrorMessageForFirebaseErrorCode(firebaseErrorMessage: string, errorCode: FirebaseAuthErrorCode): string {
