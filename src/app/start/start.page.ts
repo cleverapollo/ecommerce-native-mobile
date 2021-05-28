@@ -9,9 +9,9 @@ import { AuthProvider, SignInResponse, SignupRequestSocialLogin } from '@core/mo
 import { UserApiService } from '@core/api/user-api.service';
 import { first } from 'rxjs/operators';
 import { AuthService } from '@core/api/auth.service';
-import { UserProfile } from '/Users/fischeti/Documents/develop/wantic-frontend/src/app/core/models/user.model';
 import { UserService } from '@core/services/user.service';
 import { LoadingService } from '@core/services/loading.service';
+import { UserProfile } from '@core/models/user.model';
 
 const { Device } = Plugins
 
