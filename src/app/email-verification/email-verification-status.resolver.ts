@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { GoogleApiService } from '@core/api/google-api.service';
 import { UserApiService } from '@core/api/user-api.service';
 import { UserManagementActionMode, VerifyEmailErrorCode, VerifyEmailResponse } from '@core/models/google-api.model';
@@ -9,16 +9,28 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { LogService } from '@core/services/log.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { DeviceInfo, Plugins } from '@capacitor/core'
+import { ToastService } from '@core/services/toast.service';
 
+const { Device } = Plugins
 @Injectable()
 export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEmailVerificationStatus> | Observable<PublicEmailVerificationStatus>> {
+  
+  private deviceInfo: DeviceInfo;
+  
   constructor(
     private userApiService: UserApiService, 
     private googleApiService: GoogleApiService, 
     private authService: AuthenticationService,
+    private toastService: ToastService,
+    private router: Router,
     private logger: LogService
   ) {
+    this.init();
+  }
 
+  async init() {
+    this.deviceInfo = await Device.getInfo();
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -48,12 +60,7 @@ export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEm
     if (action === UserManagementActionMode.verifyEmail && oobCode != null) {
       return this.googleApiService.verifyEmail(oobCode).pipe(
         map( response => {
-          if (response && response.emailVerified != null) {
-            const userInfo = this.authService.userInfo.value;
-            userInfo.emailVerified = response.emailVerified;
-            this.authService.userInfo.next(userInfo);
-          }
-          return PublicEmailVerificationStatus.VERIFIED;
+          return this.handleSuccessResponse(response);
         }),
         catchError((error: HttpErrorResponse) => {
           const errorMessage = this.getErrorMessage(error);
@@ -68,6 +75,21 @@ export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEm
       );
     } else {
       return of(null);
+    }
+  }
+
+  private handleSuccessResponse(response: VerifyEmailResponse): PublicEmailVerificationStatus {
+    if (this.deviceInfo.platform === 'ios' || this.deviceInfo.platform === 'android') {
+      if (response && response.emailVerified != null) {
+        const userInfo = this.authService.userInfo.value;
+        userInfo.emailVerified = response.emailVerified;
+        this.authService.userInfo.next(userInfo);
+      }
+      this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt.');
+      this.router.navigateByUrl('/secure/home/wish-list-overview');
+      return PublicEmailVerificationStatus.VERIFIED;
+    } else {
+      return PublicEmailVerificationStatus.VERIFIED;
     }
   }
 
