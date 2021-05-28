@@ -57,7 +57,7 @@
 		B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880BD25B2143700D0106B /* WishDataStore.swift */; };
 		B14880C425B2E8B700D0106B /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
 		B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
-		B14880D625B30A6E00D0106B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */; };
+		B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* JWTDecode */; };
 		B158951E264FCDFE005570ED /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158951D264FCDFE005570ED /* ApiService.swift */; };
 		B158951F264FCDFE005570ED /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158951D264FCDFE005570ED /* ApiService.swift */; };
 		B1589525264FD360005570ED /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1589524264FD360005570ED /* HttpStatusCode.swift */; };
@@ -101,8 +101,8 @@
 		B19A52022610CE8000984207 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16360CF25FE13DA00D19F73 /* Price.swift */; };
 		B19A52032610CE8000984207 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806D25AE129500D0106B /* LoginRequest.swift */; };
 		B19A52042610CE8000984207 /* TextFieldInnerPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */; };
-		B19A52062610CE8000984207 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51EA2610CE8000984207 /* SwiftPackageProductDependency */; };
-		B19A52072610CE8000984207 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51E82610CE8000984207 /* SwiftPackageProductDependency */; };
+		B19A52062610CE8000984207 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51EA2610CE8000984207 /* JWTDecode */; };
+		B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B19A51E82610CE8000984207 /* SwiftKeychainWrapper */; };
 		B19A520A2610CE8000984207 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B19A520B2610CE8000984207 /* PlayfairDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B114E14F25BC38AA00F92599 /* PlayfairDisplay-Black.ttf */; };
 		B19A520C2610CE8000984207 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8425BC4A9C009CEF57 /* Roboto-LightItalic.ttf */; };
@@ -147,7 +147,7 @@
 		B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */; };
 		B1A80FA8258A705100F0917F /* EditDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FA7258A705100F0917F /* EditDetailsViewController.swift */; };
 		B1A80FAE258A770100F0917F /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FAD258A770100F0917F /* WishList.swift */; };
-		B1A80FC1258B3F6E00F0917F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */; };
+		B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */; };
 		B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
 		B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
 		B1F81EA1263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */; };
@@ -346,8 +346,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B19A52062610CE8000984207 /* BuildFile in Frameworks */,
-				B19A52072610CE8000984207 /* BuildFile in Frameworks */,
+				B19A52062610CE8000984207 /* JWTDecode in Frameworks */,
+				B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */,
 				A46ECE88DB4DD435142EDF74 /* Pods_Share_Beta.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,8 +356,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B14880D625B30A6E00D0106B /* BuildFile in Frameworks */,
-				B1A80FC1258B3F6E00F0917F /* BuildFile in Frameworks */,
+				B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */,
+				B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */,
 				7D1D14D0E654162B80DE1E33 /* Pods_Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -692,8 +692,8 @@
 			);
 			name = "Share Beta";
 			packageProductDependencies = (
-				B19A51E82610CE8000984207 /* SwiftPackageProductDependency */,
-				B19A51EA2610CE8000984207 /* SwiftPackageProductDependency */,
+				B19A51E82610CE8000984207 /* SwiftKeychainWrapper */,
+				B19A51EA2610CE8000984207 /* JWTDecode */,
 			);
 			productName = Share;
 			productReference = B19A522E2610CE8000984207 /* Share Beta.appex */;
@@ -714,8 +714,8 @@
 			);
 			name = Share;
 			packageProductDependencies = (
-				B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */,
-				B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */,
+				B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */,
+				B14880D525B30A6E00D0106B /* JWTDecode */,
 			);
 			productName = Share;
 			productReference = B1A80F842589F59800F0917F /* Share.appex */;
@@ -751,8 +751,8 @@
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
 			packageReferences = (
-				B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */,
-				B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */,
+				B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
@@ -1372,7 +1372,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210425.1;
+				CURRENT_PROJECT_VERSION = 20210524.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1398,7 +1398,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210425.1;
+				CURRENT_PROJECT_VERSION = 20210524.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1425,7 +1425,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210425.1;
+				CURRENT_PROJECT_VERSION = 20210524.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1455,7 +1455,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210425.1;
+				CURRENT_PROJECT_VERSION = 20210524.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1584,7 +1584,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */ = {
+		B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
@@ -1592,7 +1592,7 @@
 				minimumVersion = 2.5.0;
 			};
 		};
-		B19A51E92610CE8000984207 /* RemoteSwiftPackageReference */ = {
+		B19A51E92610CE8000984207 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
 			requirement = {
@@ -1600,7 +1600,7 @@
 				minimumVersion = 4.0.1;
 			};
 		};
-		B19A51EB2610CE8000984207 /* RemoteSwiftPackageReference */ = {
+		B19A51EB2610CE8000984207 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
@@ -1608,7 +1608,7 @@
 				minimumVersion = 2.5.0;
 			};
 		};
-		B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */ = {
+		B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
 			requirement = {
@@ -1619,24 +1619,24 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B14880D525B30A6E00D0106B /* SwiftPackageProductDependency */ = {
+		B14880D525B30A6E00D0106B /* JWTDecode */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B14880D425B30A6D00D0106B /* RemoteSwiftPackageReference */;
+			package = B14880D425B30A6D00D0106B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
 			productName = JWTDecode;
 		};
-		B19A51E82610CE8000984207 /* SwiftPackageProductDependency */ = {
+		B19A51E82610CE8000984207 /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B19A51E92610CE8000984207 /* RemoteSwiftPackageReference */;
+			package = B19A51E92610CE8000984207 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
 		};
-		B19A51EA2610CE8000984207 /* SwiftPackageProductDependency */ = {
+		B19A51EA2610CE8000984207 /* JWTDecode */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B19A51EB2610CE8000984207 /* RemoteSwiftPackageReference */;
+			package = B19A51EB2610CE8000984207 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
 			productName = JWTDecode;
 		};
-		B1A80FC0258B3F6E00F0917F /* SwiftPackageProductDependency */ = {
+		B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B1A80FBF258B3F6E00F0917F /* RemoteSwiftPackageReference */;
+			package = B1A80FBF258B3F6E00F0917F /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
 		};
 /* End XCSwiftPackageProductDependency section */

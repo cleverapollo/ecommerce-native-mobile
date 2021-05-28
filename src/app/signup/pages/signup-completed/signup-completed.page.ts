@@ -16,8 +16,7 @@ export class SignupCompletedPage implements OnInit {
   }
 
   navToWishListOverview() {
-    this.router.navigateByUrl('/secure/home/wish-list-overview', { replaceUrl: true });
-
+    this.router.navigateByUrl('/secure/home', { replaceUrl: true });
   }
 
 }

@@ -32,6 +32,14 @@
         kümmern uns schnellstmöglich um das Problem.
       </p>
 
+      <h1 class="registration ion-text-center" *ngIf="emailAlreadyConfirmed">E-Mail-Adresse <br> bereits bestätigt</h1>
+      <p class="subtext ion-text-center" *ngIf="emailAlreadyConfirmed">
+        Du hast deine E-Mail-Adresse bereits bestätigt.<br><br>
+
+        Sollte dies nicht der Fall sein, dann sende uns gerne eine E-Mail an <a [href]="mailToString" target="_top">support@wantic.io</a> und wir <br>
+        kümmern uns schnellstmöglich um das Problem.
+      </p>
+
       <h1 class="registration ion-text-center" *ngIf="error">Fehler</h1>
       <p class="subtext ion-text-center" *ngIf="error">
         Deine E-Mail Adresse konnte leider <br>
@@ -47,3 +55,9 @@
     </div>
   </div>
 </ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="showButton">
+  <ion-button class="wantic-save-button" expand="block" routerLink="/secure/home/wish-list-overview">
+    Zu den Wunschlisten
+  </ion-button>
+</ion-footer>

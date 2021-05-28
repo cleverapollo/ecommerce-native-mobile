@@ -50,7 +50,7 @@ export class EmailVerificationDto {
 }
 
 export enum PublicEmailVerificationStatus {
-    ERROR, TOKEN_EXPIRED, VERIFIED
+    ERROR, TOKEN_EXPIRED, VERIFIED, EMAIL_ALREADY_CONFIRMED
 }
 
 export enum Gender {
