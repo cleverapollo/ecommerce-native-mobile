@@ -13,12 +13,11 @@ export class AutoLoginGuard implements CanLoad {
   constructor(private authService: AuthenticationService, private router: Router, private logger: LogService) {}
 
   canLoad(): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authService.firebaseAccessToken.pipe(
-      filter(token => { return token !== null }),
+    return this.authService.isAuthenticated.pipe(
+      filter(isAuthenticated => { return isAuthenticated !== null }),
       take(1),
-      map(token => {
-        this.logger.error('auto login token', token);
-        if (token) {
+      map(isAuthenticated => {
+        if (isAuthenticated) {
           this.logger.info('auto login');
           this.router.navigateByUrl('/secure/home', { replaceUrl: true });
         } else {
