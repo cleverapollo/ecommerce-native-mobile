@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto, DeleteAccountRequest, UpdateEmailChangeRequest, AccountDto } from '@core/models/user.model';
+import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto, DeleteAccountRequest, UpdateEmailChangeRequest, AccountDto, Gender } from '@core/models/user.model';
 import { UpdatePasswordRequest, ChangePasswordRequest, LoginResponse } from '@core/models/login.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
@@ -52,6 +52,12 @@ export class UserApiService {
 
   partialUpdateBirthday(birthday: Date): Observable<UserProfile> {
     return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/birthday`, { birthday: birthday }).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
+  }
+
+  partialUpdateGender(gender: Gender): Observable<UserProfile> {
+    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/gender`, { gender: gender }).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

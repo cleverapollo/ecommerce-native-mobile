@@ -7,7 +7,6 @@ import { LogService } from '@core/services/log.service';
 import { IonInput } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
-import { SignupStateService } from '../../signup-state.service';
 
 import { Plugins } from '@capacitor/core';
 import { AuthenticationService } from '@core/services/authentication.service';
@@ -101,8 +100,8 @@ export class SignupMailPage implements OnInit {
     loadingSpinner.present();
     const signupRequest: SignupRequest = this.createSignupRequestBody();
     this.authService.signup(signupRequest).then(() => {
-      this.router.navigateByUrl('signup/signup-completed');
-    }).finally(() => {
+      this.router.navigateByUrl('signup/signup-mail-two', { replaceUrl: true });
+    }, this.logger.error).finally(() => {
       this.loadingService.dismissLoadingSpinner(loadingSpinner);
     })
   }
@@ -111,6 +110,7 @@ export class SignupMailPage implements OnInit {
     return {
       email: this.form.controls.email.value,
       firstName: this.form.controls.firstName.value,
+      lastName: this.form.controls.lastName.value,
       password: this.form.controls.password.value.value,
       agreedToPrivacyPolicyAt: new Date()
     };

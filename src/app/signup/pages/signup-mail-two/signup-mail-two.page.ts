@@ -1,17 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/api/auth.service';
-import { SignupRequest } from '@core/models/signup.model';
+import { UserApiService } from '@core/api/user-api.service';
 import { Gender } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
-import { ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { CustomValidation } from '@shared/custom-validation';
-import { Subscription } from 'rxjs';
+import { ToastService } from '@core/services/toast.service';
 import { first } from 'rxjs/operators';
 import { SignupStateService } from '../../signup-state.service';
 
@@ -27,38 +24,25 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
   agreedToPrivacyPolicyAt?: Date;
 
   form: FormGroup;
-  validationMessages = {
-    date: [
-      { type: 'required', message: 'Gib bitte dein Geburtsdatum ein oder überspringe diesen Schritt.' }
-    ],
-    acceptPrivacyPolicy: [
-      new ValidationMessage('required', 'Bitte der Datenschutzerklärung zustimmen.')
-    ]
-  }
-
-  private signupStateSubscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private logger: LogService,
     private analyticsService: AnalyticsService,
-    private signupStateService: SignupStateService,
     private loadingService: LoadingService,
-    private authApiService: AuthService,
-    private authService: AuthenticationService,
+    private toastService: ToastService,
+    private userApiService: UserApiService,
     public privacyPolicyService: PrivacyPolicyService
   ) { 
-    this.analyticsService.setFirebaseScreenName('signup-mail-2');
+    this.analyticsService.setFirebaseScreenName('signup-gender-birthday');
   }
 
   ngOnInit() {
     this.createForm();
   }
 
-  ngOnDestroy(): void {
-    this.signupStateSubscription.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   private createForm() {
     let value = '';
@@ -68,8 +52,7 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       date: this.formBuilder.control(value, {
         updateOn: 'blur'
-      }),
-      acceptPrivacyPolicy: this.formBuilder.control(false, [Validators.requiredTrue])
+      })
     });
   }
 
@@ -77,12 +60,31 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
     this.gender = event.target.value as Gender;
   }
 
-  next() {
-    if (this.form.valid) {
-      this.agreedToPrivacyPolicyAt = new Date();
-    } else {
-      CustomValidation.validateFormGroup(this.form);
+  async next() {
+    const loadingSpinner = await this.loadingService.createLoadingSpinner();
+    loadingSpinner.present();
+
+    if (this.gender) {
+      this.userApiService.partialUpdateGender(this.gender).pipe(first()).subscribe({
+        error: error => {
+          this.logger.error(error);
+          this.toastService.presentErrorToast('Beim Speichern deines Geschlechts ist ein Fehler aufgetreten.');
+        }
+      })
     }
+
+    const birthdayFormControl = this.form.controls.date;
+    if (birthdayFormControl.valid) {
+      this.userApiService.partialUpdateBirthday(birthdayFormControl.value).pipe(first()).subscribe({
+        error: error => {
+          this.logger.error(error);
+          this.toastService.presentErrorToast('Beim Speichern deines Geburtstags ist ein Fehler aufgetreten.');
+        }
+      })
+    }
+
+    await this.router.navigateByUrl('/signup/signup-completed');
+    this.loadingService.dismissLoadingSpinner(loadingSpinner);
   }
 
 }

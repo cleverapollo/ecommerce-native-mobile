@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border safe-area-inset-top">
-  <app-nav-toolbar></app-nav-toolbar>
+  <app-nav-toolbar skipToPath="signup/signup-completed"></app-nav-toolbar>
 </ion-header>
 
 <ion-content>
@@ -15,7 +15,6 @@
       <ion-datetime doneText="Fertig" cancelText="Abbrechen" value="1990-01-01" [max]="maxDate" formControlName="date" displayFormat="DD.MM.YYYY" placeholder="Wähle dein Geburtsdatum aus"></ion-datetime>
       <ion-icon name="calendar" slot="end" color="secondary" class="calendar-icon"></ion-icon>
     </ion-item>
-    <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
   
     <p class="subtext gender-question ion-text-center">
       Welchem Geschlecht fühlst du dich zugehörig?
@@ -41,18 +40,7 @@
       </ion-list>
     </div>
 
-    <ion-grid class="wantic-margin-right-left consent-container" >
-      <ion-row class="consent-item" [ngClass]="{ 'unchecked': !acceptPrivacyPolicy }">
-        <ion-col size="9" class="small-text">
-          <p>Ich habe die <a (click)="privacyPolicyService.showPrivacyPolicy()"><strong>Datenschutzerklärung</strong></a> von wantic.io gelesen und akzeptiert</p>
-        </ion-col>
-        <ion-col size="3" class="auto-margin">
-          <ion-toggle name="acceptPrivacyPolicy" color="primary" formControlName="acceptPrivacyPolicy"></ion-toggle>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <app-validation-messages [control]="form.get('acceptPrivacyPolicy')" [validationMessages]="validationMessages.acceptPrivacyPolicy"></app-validation-messages>
-    <ion-button type="submit" class="wantic-save-button" expand="block">Anmelden</ion-button>
+    <ion-button type="submit" class="wantic-save-button" expand="block">Speichern und weiter</ion-button>
   
   </form>
 
