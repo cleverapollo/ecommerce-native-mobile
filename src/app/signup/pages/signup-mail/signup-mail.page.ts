@@ -64,6 +64,9 @@ export class SignupMailPage implements OnInit {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
+      lastName: this.formBuilder.control(signupRequest?.lastName ?? null, {
+        updateOn: 'blur'
+      }),
       email: [signupRequest?.email ?? null, { 
         validators: [Validators.required, CustomValidation.email], 
         updateOn: 'blur' 
@@ -116,6 +119,10 @@ export class SignupMailPage implements OnInit {
   // Keyboard event handling
 
   handleKeyboardEventOnFirstNameInput(keyCode: number) {
+    this.setFocusToNextInputFieldOnEnter(keyCode, 'lastName');
+   }
+
+   handleKeyboardEventOnLastNameInput(keyCode: number) {
     this.setFocusToNextInputFieldOnEnter(keyCode, 'email');
    }
 
