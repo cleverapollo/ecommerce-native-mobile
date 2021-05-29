@@ -4,7 +4,7 @@ import { SearchQuery, SearchResultDataService, SearchType } from '@core/services
 import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
 import { ProductSearchService } from '@core/services/product-search.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WishDto } from '@core/models/wish-list.model';
+import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { IonInfiniteScroll, Platform } from '@ionic/angular';
 import { LogService } from '@core/services/log.service';
 import { SearchService } from '@core/api/search.service';
@@ -146,9 +146,11 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
     this.page = 1;
     this.infiniteScroll.disabled = false;
     this.loading = true;
+    this.logSearchEvent();
     this.searchService.searchForItems(this.keywords, this.page).pipe(first()).subscribe({
       next: searchResult => {
         this.results = [];
+        this.logSearchResultEvent(searchResult);
         this.updateDisplayedSearchResults(searchResult)
         this.disableInfitineScrollIfNeeded();
         if (this.platform.is('hybrid')) {
@@ -160,6 +162,32 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
         this.logger.debug('searchByAmazonApi complete');
         this.loading = false;
       }
+    });
+  }
+
+  private logSearchResultEvent(searchResult: SearchResult) {
+    this.analyticsService.logAppsflyerEvent('af_search', {
+      'af_search_string': this.keywords,
+      'af_content_list': searchResult.items.map(item => item.asin)
+    });
+    this.analyticsService.logFirebaseEvent('search', {
+      'search_term': this.keywords,
+      'items': searchResult.items.map(item => {
+        return {
+          'item_id': item.asin,
+          'item_name': item.name,
+          'price': item.price
+        };
+      })
+    });
+  }
+
+  private logSearchEvent() {
+    this.analyticsService.logAppsflyerEvent('af_search', { 
+      'af_search_string': this.keywords 
+    });
+    this.analyticsService.logFirebaseEvent('search', { 
+      'search_term': this.keywords 
     });
   }
 
@@ -185,7 +213,7 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
 
   navigateToWishNewPage(item: SearchResultItem) {
     let wish = SearchResultItemMapper.map(item, new WishDto());
-    const wishList = this.route.snapshot.data.wishList;
+    const wishList: WishListDto = this.route.snapshot.data.wishList;
     if (wishList) {
       wish.wishListId = wishList.id;
     }
