@@ -87,14 +87,14 @@ export class AnalyticsService {
 
   logCompleteRegistrationEvent(authProvider: AuthProvider) {
     const authProviderString: string = AuthProvider[authProvider];
-    const appsflyerEvent: AppsflyerEvent = ['af_registration_method', authProviderString];
+    const appsflyerEvent: AppsflyerEvent = {'af_registration_method': authProviderString};
     this.logAppsflyerEvent('af_complete_registration', appsflyerEvent);
-    this.logFirebaseEvent('sign_up', { method: authProviderString });
+    this.logFirebaseEvent('sign_up', { 'method': authProviderString });
   }
 
   logLoginEvent(authProvider: AuthProvider) {
     const authProviderString: string = AuthProvider[authProvider];
     this.logAppsflyerEvent('af_login', null);
-    this.logFirebaseEvent('login', { method: authProviderString });
+    this.logFirebaseEvent('login', { 'method': authProviderString });
   }
 }
