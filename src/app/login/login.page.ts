@@ -4,7 +4,6 @@ import { LoginForm } from './login-form';
 import { NavController } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { StorageService, StorageKeys } from '@core/services/storage.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { LogService } from '@core/services/log.service';
 import { ToastService } from '@core/services/toast.service';
@@ -33,17 +32,16 @@ export class LoginPage implements OnInit {
     private navController: NavController,
     private formBuilder: FormBuilder, 
     private authService: AuthenticationService,
-    private storageService: StorageService,
     private logger: LogService,
     private toastService: ToastService,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService
-  ) { }
+  ) { 
+    this.analyticsService.setFirebaseScreenName('login');
+  }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('login');
     this.createForm();
-    this.patchValuesIfNeeded();
   }
 
   private createForm() {
@@ -58,12 +56,6 @@ export class LoginPage implements OnInit {
       }),
       saveCredentials: this.formBuilder.control(true)
     })
-  }
-
-  private patchValuesIfNeeded() {
-    this.storageService.get(StorageKeys.LOGIN_EMAIL).then(email => {
-      this.loginForm.controls['email'].patchValue(email);
-    });
   }
 
   async onSubmit() {
