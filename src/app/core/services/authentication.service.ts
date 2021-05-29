@@ -47,6 +47,8 @@ export class AuthenticationService {
       this.configFirebaseAuthentication();
       this.refreshFirebaseIdToken(false);
       this.loadUserData();
+    } else {
+      this.isAuthenticated.next(false);
     }
   }
 
