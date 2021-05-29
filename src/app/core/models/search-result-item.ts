@@ -5,12 +5,14 @@ export class SearchResult {
     items: Array<SearchResultItem>;
 }
 export class SearchResultItem {
+    asin: string;
     name: String;
     price: PriceDto;
     imageUrl: String;
     productUrl: string;
 
-    constructor(name: String, imageUrl: String, productUrl: string, price: PriceDto) {
+    constructor(asin: string, name: String, imageUrl: String, productUrl: string, price: PriceDto) {
+        this.asin = asin;
         this.name = name;
         this.imageUrl = imageUrl;
         this.productUrl = productUrl;
@@ -20,6 +22,7 @@ export class SearchResultItem {
 
 export class SearchResultItemMapper {
     static map(from: SearchResultItem, to: WishDto) : WishDto  {
+        to.asin = from.asin;
         to.name = from.name
         to.price = from.price
         to.imageUrl = from.imageUrl
