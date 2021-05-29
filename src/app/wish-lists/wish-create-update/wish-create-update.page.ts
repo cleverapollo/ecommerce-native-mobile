@@ -146,6 +146,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     this.loadingService.showLoadingSpinner();
     this.wishApiService.createWish(this.wish).toPromise().then(createdWish => {
       this.searchResultDataService.clear();
+      this.logAddToWishListEvent(createdWish);
       this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
       this.wishListStore.saveWishToCache(createdWish).then(() => {
         this.navigateToWishListDetailPage(wishListId);
@@ -154,6 +155,19 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
       this.toastService.presentErrorToast('Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.');
     }).finally(() => {
       this.loadingService.dismissLoadingSpinner();
+    });
+  }
+
+  private logAddToWishListEvent(wish: WishDto) {
+    this.analyticsService.logAppsflyerEvent('af_add_to_wishlist', {
+      'af_price': wish.price.amount,
+      'af_content_id': wish.asin,
+      'af_currency': wish.price.currency
+    });
+    this.analyticsService.logFirebaseEvent('add_to_wishlist', {
+      'content_id': wish.asin,
+      'value': wish.price.amount,
+      'currency': wish.price.currency,
     });
   }
 
