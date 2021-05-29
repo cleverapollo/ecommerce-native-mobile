@@ -30,7 +30,7 @@ ion-footer {
     p {
         color: white;
         font-size: 15px;
-        margin-bottom: 40px;
+        margin-bottom: 15px;
     }
 }
 
@@ -68,5 +68,12 @@ ion-footer {
         ion-button {
             margin-bottom: 40px;
         }
+        p {
+            margin-bottom: 15px;
+        }
     }
+}
+
+ion-button.wantic-save-button.signup-button {
+    margin-bottom: 0;
 }
