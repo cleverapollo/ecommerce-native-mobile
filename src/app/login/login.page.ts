@@ -9,6 +9,7 @@ import { LogService } from '@core/services/log.service';
 import { ToastService } from '@core/services/toast.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
+import { AuthProvider } from '@core/models/signup.model';
 
 @Component({
   selector: 'app-login',
@@ -69,6 +70,7 @@ export class LoginPage implements OnInit {
     const input = this.loginForm.value as LoginForm;
     this.authService.emailPasswordSignIn(input.email, input.password).then(() => {
       this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');
+      this.analyticsService.logLoginEvent(AuthProvider.wantic);
       this.navToHome();
     }, errorReason => {
       this.logger.error(errorReason);

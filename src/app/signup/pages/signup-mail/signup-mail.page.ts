@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SignupRequest } from '@core/models/signup.model';
+import { AuthProvider, SignupRequest } from '@core/models/signup.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LogService } from '@core/services/log.service';
 import { IonInput } from '@ionic/angular';
@@ -100,6 +100,7 @@ export class SignupMailPage implements OnInit {
     loadingSpinner.present();
     const signupRequest: SignupRequest = this.createSignupRequestBody();
     this.authService.signup(signupRequest).then(() => {
+      this.analyticsService.logCompleteRegistrationEvent(AuthProvider.wantic);
       this.router.navigateByUrl('signup/signup-mail-two', { replaceUrl: true });
     }, this.logger.error).finally(() => {
       this.loadingService.dismissLoadingSpinner(loadingSpinner);

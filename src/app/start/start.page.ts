@@ -12,6 +12,7 @@ import { AuthService } from '@core/api/auth.service';
 import { UserService } from '@core/services/user.service';
 import { LoadingService } from '@core/services/loading.service';
 import { UserProfile } from '@core/models/user.model';
+import { AppsflyerEvent } from '@ionic-native/appsflyer/ngx';
 
 const { Device } = Plugins
 
@@ -42,9 +43,9 @@ export class StartPage implements OnInit {
 
   async ngOnInit() {
     const deviceInfo = await Device.getInfo();
-    this.showAppleSignIn = deviceInfo.platform === 'ios';
+    this.showAppleSignIn = true; // deviceInfo.platform === 'ios';
     this.showFacebookSignIn = true;
-    this.showGooglePlusSignIn = deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
+    this.showGooglePlusSignIn = true; // deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
   }
 
   signupWithMailAndPassword() {
@@ -82,18 +83,19 @@ export class StartPage implements OnInit {
       await this.authService.refreshFirebaseIdToken(true);
       await this.updateFirstNameIfNeeded(firstName, signInResponse.user);
       await this.updateLastNameIfNeeded(lastName, signInResponse.user);
+      this.analyticsService.logLoginEvent(authProvider);
       this.router.navigateByUrl('secure/home/wish-list-overview', { replaceUrl: true });
     } else {
       const signupRequest = this.createSignUpRequestSocialLogin(firstName, lastName, authProvider);
       if (signupRequest) {
         await this.authApiService.signupSocialLogin(signupRequest).toPromise();
+        await this.authService.refreshFirebaseIdToken(true);
+        this.analyticsService.logCompleteRegistrationEvent(authProvider);
         if (this.authService.isEmailVerified) {
-          await this.authService.refreshFirebaseIdToken(true);
           this.router.navigateByUrl('secure/home/wish-list-overview', { replaceUrl: true });
         } else {
-          await this.authService.refreshFirebaseIdToken(true);
           await this.authService.sendVerificationMail();
-          this.router.navigateByUrl('signup/signup-completed');
+          this.router.navigateByUrl('signup/signup-mail-two');
         }
       }
     }

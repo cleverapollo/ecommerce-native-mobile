@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Plugins } from "@capacitor/core";
 import { Appsflyer, AppsflyerEvent } from '@ionic-native/appsflyer/ngx';
 import { LogService } from './log.service';
+import { AuthProvider } from '@core/models/signup.model';
 
 const { FirebaseAnalytics, Device } = Plugins;
 @Injectable({
@@ -46,8 +47,12 @@ export class AnalyticsService {
     }
   }
 
-  logFirebaseEvent(event: { [prop: string]: any }) {
+  logFirebaseEvent(eventName: string, params: { [prop: string]: any }) {
     if (this.firebaseIsConfigured) {
+      const event = {
+        name: eventName,
+        params: params
+      };
       FirebaseAnalytics.logEvent(event);
     }
   }
@@ -78,5 +83,18 @@ export class AnalyticsService {
     if (this.appsflyerIsConfigured) {
       this.appsflyer.Stop(this.analyticsEnabled);
     }
+  }
+
+  logCompleteRegistrationEvent(authProvider: AuthProvider) {
+    const authProviderString: string = AuthProvider[authProvider];
+    const appsflyerEvent: AppsflyerEvent = ['af_registration_method', authProviderString];
+    this.logAppsflyerEvent('af_complete_registration', appsflyerEvent);
+    this.logFirebaseEvent('sign_up', { method: authProviderString });
+  }
+
+  logLoginEvent(authProvider: AuthProvider) {
+    const authProviderString: string = AuthProvider[authProvider];
+    this.logAppsflyerEvent('af_login', null);
+    this.logFirebaseEvent('login', { method: authProviderString });
   }
 }
