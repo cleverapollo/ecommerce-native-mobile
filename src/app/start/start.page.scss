@@ -172,7 +172,7 @@ ion-footer {
     }
     ion-content {
         img {
-            margin-top: 75px;
+            margin-top: 150px;
         }
         p {
             margin-top: 54px;
@@ -191,19 +191,13 @@ ion-footer {
             font-size: 11px;
             margin-right: 99px;
             margin-left: 99px;
-            margin-bottom: 22px;
+            margin-bottom: 40px;
             margin-top: 22px;
             a {
                 color: var(--ion-color-dark) !important;
                 text-decoration: underline;
             }
         }
-    }
-}
-
-@media (min-height: 812px) {
-    ion-button > div {
-        padding-left: 25px;
     }
 }
 
