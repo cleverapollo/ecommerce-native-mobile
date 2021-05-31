@@ -74,7 +74,7 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
     }
 
     const birthdayFormControl = this.form.controls.date;
-    if (birthdayFormControl.valid) {
+    if (birthdayFormControl.value && birthdayFormControl.valid) {
       this.userApiService.partialUpdateBirthday(birthdayFormControl.value).pipe(first()).subscribe({
         error: error => {
           this.logger.error(error);
