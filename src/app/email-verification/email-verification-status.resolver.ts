@@ -11,6 +11,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DeviceInfo, Plugins } from '@capacitor/core'
 import { ToastService } from '@core/services/toast.service';
+import { StorageKeys, StorageService } from '@core/services/storage.service';
 
 const { Device } = Plugins
 @Injectable()
@@ -24,7 +25,8 @@ export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEm
     private authService: AuthenticationService,
     private toastService: ToastService,
     private router: Router,
-    private logger: LogService
+    private logger: LogService,
+    private storageService: StorageService
   ) {
     this.init();
   }
@@ -84,6 +86,7 @@ export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEm
         const userInfo = this.authService.userInfo.value;
         userInfo.emailVerified = response.emailVerified;
         this.authService.userInfo.next(userInfo);
+        this.storageService.set(StorageKeys.FIREBASE_EMAIL_VERIFIED, response.emailVerified, true);
       }
       this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt.');
       this.router.navigateByUrl('/secure/home/wish-list-overview');

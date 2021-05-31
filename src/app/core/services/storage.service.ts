@@ -13,6 +13,7 @@ export enum StorageKeys {
   AUTH_TOKEN = 'auth-token', // deprecated
   CREDENTIALS = 'credentials',
   FIREBASE_ID_TOKEN = 'firebaseIdToken',
+  FIREBASE_EMAIL_VERIFIED = 'firebaseEmailVerified',
   FIREBASE_USER_INFO = 'firebaseUserInfo',
   SHARED_WISH_LIST_EMAIL = 'memberEmail',
   SIGNUP_REQUEST = 'signupRequest',

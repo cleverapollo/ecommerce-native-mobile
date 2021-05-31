@@ -22,13 +22,9 @@ import { SERVER_URL } from '@env/environment';
 export class AuthenticationService {
 
   isAuthenticated = new BehaviorSubject<boolean>(null);
+  isEmailVerified = new BehaviorSubject<boolean>(null);
   firebaseAccessToken = new BehaviorSubject<string>(null);
   userInfo = new BehaviorSubject<any>(null);
-
-  get isEmailVerified(): boolean {
-    const userInfo = this.userInfo.value;
-    return userInfo.emailVerified !== false ? true : false;
-  }
 
   constructor(
     private storageService: StorageService, 
@@ -62,6 +58,12 @@ export class AuthenticationService {
       if (userInfo) {
         this.storageService.set(StorageKeys.FIREBASE_USER_INFO, userInfo, true);
         this.userInfo.next(userInfo);
+        this.storageService.get<boolean>(StorageKeys.FIREBASE_EMAIL_VERIFIED, true).then(isEmailVerified => {
+          this.isEmailVerified.next(isEmailVerified);
+        }, error => {
+          this.logger.error(error);
+          this.isEmailVerified.next(userInfo.emailVerified);
+        })
       } else {
         this.userInfo.next(null);
         this.storageService.set(StorageKeys.FIREBASE_USER_INFO, null, true);
