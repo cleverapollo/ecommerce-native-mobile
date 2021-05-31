@@ -17,7 +17,7 @@
     <app-validation-messages [control]="form.get('firstName')" [validationMessages]="validationMessages.firstName"></app-validation-messages>
 
     <ion-item lines="none">
-      <ion-input (keypress)="handleKeyboardEventOnLastNameInput($event.keyCode)" formControlName="lastName" type="text" placeholder="Nachname" autocapitalize="on" autocomplete="family-name" autofocus="true" clearInput="true" enterkeyhint="next" inputmode="text"></ion-input>
+      <ion-input (keypress)="handleKeyboardEventOnLastNameInput($event.keyCode)" formControlName="lastName" type="text" placeholder="Nachname" autocapitalize="on" autocomplete="family-name" clearInput="true" enterkeyhint="next" inputmode="text"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('lastName')" [validationMessages]="validationMessages.lastName"></app-validation-messages>
 
