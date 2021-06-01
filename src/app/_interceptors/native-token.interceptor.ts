@@ -34,6 +34,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         if (!this.platform.is('capacitor') || isLoginRequest || isGoogleApiRequest) {
             return next.handle(request);
         }
+        request = this.addAuthToken(request);
         return next.handle(request).pipe(catchError(error => {
             return this.handleResponseError(error, request, next);
         }));
