@@ -57,6 +57,7 @@ export class SettingsPage implements OnInit, OnDestroy {
         event.target.complete();
       },
       error: error => {
+        this.logger.error(error);
         event.target.complete();
       }
     });
