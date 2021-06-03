@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { ApiVersion } from './api-version';
-import { SignupRequestSocialLogin, SignupRequest, SignInRequest, SignupResponse, SignInResponse, SignInRequestEmailPassword } from '@core/models/signup.model';
+import { SignupRequestSocialLogin, SignupRequest, SignInRequest, SignupResponse, SignInResponse, SignInRequestEmailPassword, ConfirmPasswordResetRequest, ConfirmPasswordResetResponse } from '@core/models/signup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +34,10 @@ export class AuthService {
 
   signInWithEmailAndPassword(signInRequest: SignInRequestEmailPassword): Observable<SignInResponse> {
     return this.apiService.post<SignInResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signin-email-password`, signInRequest);
+  }
+
+  confirmPasswordReset(requestBody: ConfirmPasswordResetRequest): Observable<ConfirmPasswordResetResponse> {
+    return this.apiService.patch<ConfirmPasswordResetResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/confirm-password-reset`, requestBody);
   }
 
   private errorMessageForRegistrationServerError(error: HttpErrorResponse) {

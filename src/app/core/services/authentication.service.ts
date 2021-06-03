@@ -292,6 +292,10 @@ export class AuthenticationService {
     return this.firebaseAuthentication.sendEmailVerification();
   }
 
+  sendPasswordResetEmail(email: string): Promise<any> {
+    return this.firebaseAuthentication.sendPasswordResetEmail(email);
+  }
+
   async removeDeprecatedAuthToken(): Promise<void> {
     const authToken = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
     if (authToken) {

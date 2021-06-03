@@ -30,8 +30,10 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
         const isLoginRequest = request.url.includes('/signin');
+        const isSignupRequest = request.url.includes('/signup');
+        const isConfirmPasswordReset = request.url.includes('/confirm-password-reset');
         const isGoogleApiRequest = request.url.startsWith('https://identitytoolkit.googleapis.com');
-        if (!this.platform.is('capacitor') || isLoginRequest || isGoogleApiRequest) {
+        if (!this.platform.is('capacitor') || isLoginRequest || isGoogleApiRequest || isConfirmPasswordReset || isSignupRequest) {
             return next.handle(request);
         }
         request = this.addAuthToken(request);
@@ -108,11 +110,15 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     private addAuthToken(req: HttpRequest<any>): HttpRequest<any> {
         const token = this.authService.firebaseAccessToken.value;
-        return req.clone({
-            setHeaders: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+        if (token) {
+            return req.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        } else {
+            return req;
+        }
     }
 
     async logout() {

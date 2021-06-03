@@ -44,9 +44,8 @@ export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEm
 
     // verify google email v1.1.x +
     const oobCode = route.queryParamMap.get('oobCode');
-    const mode = route.queryParamMap.get('mode');
-    if (oobCode && mode) {
-      return this.verifyGoogleEmail(oobCode, mode);
+    if (oobCode) {
+      return this.verifyGoogleEmail(oobCode);
     }
 
     return Promise.resolve(PublicEmailVerificationStatus.ERROR);
@@ -56,10 +55,9 @@ export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEm
     return this.userApiService.verifyEmail(emailVerificationToken);
   }
 
-  private verifyGoogleEmail(oobCode: string, mode: string): Observable<PublicEmailVerificationStatus> {
-    const action: UserManagementActionMode = UserManagementActionMode[mode];
-    this.logger.debug('oobCode, mode', oobCode, mode);
-    if (action === UserManagementActionMode.verifyEmail && oobCode != null) {
+  private verifyGoogleEmail(oobCode: string): Observable<PublicEmailVerificationStatus> {
+    this.logger.debug('oobCode, mode', oobCode);
+    if (oobCode != null) {
       return this.googleApiService.verifyEmail(oobCode).pipe(
         map( response => {
           return this.handleSuccessResponse(response);

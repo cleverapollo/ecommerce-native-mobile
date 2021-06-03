@@ -5,6 +5,7 @@ import { UserApiService } from '@core/api/user-api.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { LogService } from '@core/services/log.service';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { AuthenticationService } from '@core/services/authentication.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -25,13 +26,14 @@ export class ResetPasswordPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, 
-    private api: UserApiService,
+    private authService: AuthenticationService,
     private logger: LogService,
     private analyticsService: AnalyticsService
-  ) { }
+  ) { 
+    this.analyticsService.setFirebaseScreenName('login-password_reset');
+  }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('login-password_reset');
     this.passwordResetRequestSuccessful = false;
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, CustomValidation.email]]
@@ -40,7 +42,7 @@ export class ResetPasswordPage implements OnInit {
 
   resetPassword() {
     this.logger.log(this.form.controls.email.value)
-    this.api.resetPassword(this.form.controls.email.value).toPromise().then(() => {
+    this.authService.sendPasswordResetEmail(this.form.controls.email.value).then(() => {
       this.passwordResetRequestSuccessful = true;
     });
   }

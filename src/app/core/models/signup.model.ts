@@ -42,3 +42,13 @@ export class SignInRequestEmailPassword {
 export class SignInResponse {
     user: UserProfile;
 }
+
+export class ConfirmPasswordResetRequest {
+    email: string;
+    oobCode: string;
+    newPassword: string;
+}
+export class ConfirmPasswordResetResponse {
+    email: string;
+    requestType: string;
+}

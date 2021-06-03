@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { UserManagementActionMode } from '@core/models/google-api.model';
 const { StatusBar, App } = Plugins;
 
 @Component({
@@ -67,19 +68,24 @@ export class AppComponent {
 
   private onAppUrlOpen(data: any) {
     this.zone.run(() => {
-      const wanticDomain = "wantic.io";
-      const firebaseDevDomain = "web.app";
-      let pageUrl = null;
-      if (data.url.includes(wanticDomain)) {
-        pageUrl = data.url.split(wanticDomain).pop();
-      } else if (data.url.includes(firebaseDevDomain)) {
-        pageUrl = data.url.split(firebaseDevDomain).pop();
-      }
-      this.logger.info('universal link routes to: ', pageUrl);
-      if (pageUrl) {
-        this.router.navigateByUrl(pageUrl);
+      const url: URL = new URL(data.url);
+      const mode = url.searchParams.get('mode');
+      const oobCode = url.searchParams.get('oobCode');
+      if (mode && oobCode) {
+        this.handleFirebaseLinks(mode, oobCode);
+      } else {
+        this.router.navigateByUrl(url.pathname);
       }
     });
+  }
+
+  private handleFirebaseLinks(modeString: string, oobCode: string) {
+    const mode: UserManagementActionMode = UserManagementActionMode[modeString];
+    if (mode === UserManagementActionMode.resetPassword) {
+      this.router.navigateByUrl(`/forgot-password/change-password?oobCode=${oobCode}`);
+    } else if (mode === UserManagementActionMode.verifyEmail) {
+      this.router.navigateByUrl(`/email-verification?oobCode=${oobCode}`);
+    }
   }
 
   private migrateCachedCredentials() {
