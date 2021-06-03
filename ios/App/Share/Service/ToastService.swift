@@ -79,6 +79,29 @@ struct ToastService {
         }
     }
     
+    func showNoWishListsAvailableToast(controller: UIViewController, extensionContext: NSExtensionContext) {
+        let title = "Keine Wunschlisten vorhanden"
+        let message = "Du hast noch keine Wunschlisten angelegt und kannst deshalb keinen Wunsch speichern. Lege jetzt deine erste Wunschliste an und wiederhole diesen Vorgang."
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.view.backgroundColor = .black
+        alert.view.alpha = 0.5
+        alert.view.layer.cornerRadius = 15
+        
+        DispatchQueue.main.async {
+            alert.addAction(UIAlertAction(title: "Jetzt Wunschliste anlegen", style: .default, handler: { (action: UIAlertAction!) in
+                if let url = URL(string: "\(AppConfig.appUrl)/secure/home/wish-list-new") {
+                    redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
+                } else {
+                    closeShareExtension(extensionContext: extensionContext)
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: { (action: UIAlertAction!) in
+                closeShareExtension(extensionContext: extensionContext)
+            }))
+            controller.present(alert, animated: true)
+        }
+    }
+    
     func redirectToHostApp(controller: UIViewController, extensionContext: NSExtensionContext, url: URL) {
         var responder = controller as UIResponder?
         let selectorOpenURL = sel_registerName("openURL:")

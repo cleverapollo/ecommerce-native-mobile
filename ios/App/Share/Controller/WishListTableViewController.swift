@@ -72,6 +72,10 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
         WishListService.shared.getWishLists(completionHandler: { result in
             switch result {
             case .success(let wishLists):
+                guard !wishLists.isEmpty else {
+                    self.toastService.showNoWishListsAvailableToast(controller: self, extensionContext: self.extensionContext!)
+                    return
+                }
                 self.wishLists = wishLists
                 self.wishListId = self.wishLists.first?.id
                 self.selectedIndexPath = IndexPath(row: 0, section: 0)
