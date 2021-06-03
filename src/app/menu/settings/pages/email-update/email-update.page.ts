@@ -5,14 +5,15 @@ import { UserApiService } from '@core/api/user-api.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
-import { EmailVerificationService } from '@core/services/email-verification.service';
-import { EmailVerificationStatus, UpdateEmailChangeRequest, UserProfile } from '@core/models/user.model';
+import { UpdateEmailChangeRequest, UserProfile } from '@core/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { LogService } from '@core/services/log.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { first } from 'rxjs/operators';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { StorageKeys, StorageService } from '@core/services/storage.service';
 
 @Component({
   selector: 'app-email-update',
@@ -43,27 +44,18 @@ export class EmailUpdatePage implements OnInit {
     private logger: LogService,
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private emailVerificationService: EmailVerificationService,
     private userProfileStore: UserProfileStore,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private authService: AuthenticationService,
+    private storageService: StorageService
   ) {
     this.analyticsService.setFirebaseScreenName('profile_settings-email');
   }
 
-  ngOnInit() {
-    this.userProfileStore.loadUserProfile().pipe(first()).subscribe({
-      next: userProfile => {
-        this.userProfile = userProfile;
-        const email = userProfile.email.value;
-        if (!this.form) {
-          this.createForm(email);
-        }
-      },
-      error: error => {
-        this.logger.debug(error);
-        this.createForm('');
-      }
-    })
+  async ngOnInit() {
+    const user = await this.userProfileStore.loadUserProfile().toPromise();
+    const email = user?.email?.value ?? '';
+    this.createForm(email);
   }
 
   private createForm(email: string) {
@@ -79,35 +71,49 @@ export class EmailUpdatePage implements OnInit {
     });
   }
 
-  saveChanges() {
+  async saveChanges() {
     if (this.form.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
-    this.loadingService.showLoadingSpinner();
+    const busyIndicator = await this.loadingService.createLoadingSpinner();
+    busyIndicator.present();
     const requestBody = new UpdateEmailChangeRequest(this.form.controls);
-    const email = this.form.controls.email.value;
     this.api.updateEmailChangeRequest(requestBody).pipe(first()).subscribe({
       next: () => {
+        const email = this.form.controls.email.value;
+        const password = this.form.controls.password.value;
         this.form.controls.email.reset(email);
-        this.emailVerificationService.updateEmailVerificationStatus(false);
+        this.authService.emailPasswordSignIn(email, password).then(() => {
+          this.authService.sendVerificationMail().finally(() => {
+            this.updateEmailVerificationStatus();
+            this.loadingService.dismissLoadingSpinner(busyIndicator);
+          });
+        });
       }, 
       error: errorResponse => {
-        let errorMessage = 'Ein allgemeiner Fehler ist aufgetreten, bitte versuche es später noch einmal.';
-        if (errorResponse instanceof HttpErrorResponse) {
-          if (errorResponse.error instanceof ErrorEvent) {
-            this.logger.log(`Error: ${errorResponse.error.message}`);
-          } else if (errorResponse.status === HttpStatusCodes.CONFLICT) {
-            errorMessage = 'Die angegebene E-Mail Adresse ist bereits in unserem System registriert.';
-          }
-        }
-        this.toastService.presentErrorToast(errorMessage);
-      },
-      complete: () => {
-        this.loadingService.dismissLoadingSpinner();
+        this.handleErrorResponse(errorResponse);
+        this.loadingService.dismissLoadingSpinner(busyIndicator);
       }
     });
-
   }
 
+  private handleErrorResponse(errorResponse: any) {
+    let errorMessage = 'Ein allgemeiner Fehler ist aufgetreten, bitte versuche es später noch einmal.';
+    if (errorResponse instanceof HttpErrorResponse) {
+      if (errorResponse.error instanceof ErrorEvent) {
+        this.logger.log(`Error: ${errorResponse.error.message}`);
+      } else if (errorResponse.status === HttpStatusCodes.CONFLICT) {
+        errorMessage = 'Die angegebene E-Mail Adresse ist bereits in unserem System registriert.';
+      }
+    }
+    this.toastService.presentErrorToast(errorMessage);
+  }
+
+  private updateEmailVerificationStatus() {
+    const userInfo = this.authService.userInfo.value;
+    userInfo.emailVerified = false;
+    this.authService.userInfo.next(userInfo);
+    this.storageService.set(StorageKeys.FIREBASE_EMAIL_VERIFIED, false, true);
+  }
 }

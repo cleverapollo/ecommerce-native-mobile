@@ -86,6 +86,7 @@ export class PasswordUpdatePage implements OnInit {
         newPassword: this.form.controls.value.value,
         newPasswordConfirmed: this.form.controls.confirm.value
       }).toPromise();
+      this.form.reset();
       this.toastService.presentSuccessToast('Dein Passwort wurde erfolgreich geändert.')
     } catch (error) {
       this.logger.error(error);
