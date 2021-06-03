@@ -100,7 +100,7 @@ export class SignupMailPage implements OnInit {
     loadingSpinner.present();
     const signupRequest: SignupRequest = this.createSignupRequestBody();
     this.authService.signup(signupRequest).then(() => {
-      this.analyticsService.logCompleteRegistrationEvent(AuthProvider.wantic);
+      this.analyticsService.logCompleteRegistrationEvent(AuthProvider.WANTIC);
       this.router.navigateByUrl('signup/signup-mail-two', { replaceUrl: true });
     }, this.logger.error).finally(() => {
       this.loadingService.dismissLoadingSpinner(loadingSpinner);

@@ -56,7 +56,7 @@ export class StartPage implements OnInit {
     const signInResponse = await this.authService.appleSignIn();
     const firstName = signInResponse?.appleSignInResponse?.fullName?.givenName ?? '';
     const lastName = signInResponse?.appleSignInResponse?.fullName?.familyName;
-    this.signIn(signInResponse, firstName, lastName, AuthProvider.apple);
+    this.signIn(signInResponse, firstName, lastName, AuthProvider.APPLE);
   }
 
   async signupWithFacebook() {
@@ -64,14 +64,14 @@ export class StartPage implements OnInit {
     const facebookUserProfile = await this.userService.facebookUserProfile;
     const firstName = facebookUserProfile?.firstName ?? '';
     const lastName = facebookUserProfile?.lastName;
-    this.signIn(signInResponse, firstName, lastName, AuthProvider.facebook);
+    this.signIn(signInResponse, firstName, lastName, AuthProvider.FACEBOOK);
   }
 
   async signupWithGoogle() {
     const signInResponse = await this.authService.googlePlusSignIn();
     const firstName = signInResponse?.googlePlusLoginResponse?.givenName ?? '';
     const lastName = signInResponse?.googlePlusLoginResponse?.familyName;
-    this.signIn(signInResponse, firstName, lastName, AuthProvider.google);
+    this.signIn(signInResponse, firstName, lastName, AuthProvider.GOOGLE);
   }
 
   private async signIn(signInResponse: SignInResponse, firstName: string, lastName: string, authProvider: AuthProvider) {

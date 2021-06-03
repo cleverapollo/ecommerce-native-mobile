@@ -2,10 +2,10 @@ import { LoginResponse } from "./login.model";
 import { Gender, UserProfile } from "./user.model";
 
 export enum AuthProvider {
-    apple = 'APPLE',
-    facebook = 'FACEBOOK',
-    google = 'GOOGLE',
-    wantic = 'WANTIC'
+    APPLE = 'APPLE',
+    FACEBOOK = 'FACEBOOK',
+    GOOGLE = 'GOOGLE',
+    WANTIC = 'WANTIC'
 }
 export class SignupRequest {
     firstName: string;

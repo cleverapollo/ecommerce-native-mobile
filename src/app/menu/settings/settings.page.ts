@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthProvider } from '@core/models/signup.model';
 import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { LogService } from '@core/services/log.service';
 import { first } from 'rxjs/operators';
 import { UserProfileStore } from './user-profile-store.service';
 
@@ -12,7 +14,9 @@ import { UserProfileStore } from './user-profile-store.service';
 })
 export class SettingsPage implements OnInit, OnDestroy {
 
-  profile: UserProfile
+  profile: UserProfile;
+  showPasswordChangeLink: boolean;
+  userCanChangeEmail: boolean;
 
   get dataForChildRoutes() {
     return {
@@ -25,12 +29,17 @@ export class SettingsPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute, 
     private userProfileStore: UserProfileStore,
-    private analyticsService: AnalyticsService
-  ) { }
-
-  ngOnInit() {
+    private analyticsService: AnalyticsService,
+    private logger: LogService
+  ) { 
     this.analyticsService.setFirebaseScreenName('profile_settings');
-    this.profile = this.route.snapshot.data.profile;
+  }
+
+  async ngOnInit() {
+    const user = await this.userProfileStore.loadUserProfile().toPromise();
+    this.profile = this.route.snapshot.data.profile ?? user;
+    this.showPasswordChangeLink = this.profile.authProvider === AuthProvider.WANTIC;
+    this.userCanChangeEmail = this.profile.authProvider === AuthProvider.WANTIC;
   }
 
   ngOnDestroy() {}

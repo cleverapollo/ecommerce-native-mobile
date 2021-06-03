@@ -70,7 +70,7 @@ export class LoginPage implements OnInit {
     const input = this.loginForm.value as LoginForm;
     this.authService.emailPasswordSignIn(input.email, input.password).then(() => {
       this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');
-      this.analyticsService.logLoginEvent(AuthProvider.wantic);
+      this.analyticsService.logLoginEvent(AuthProvider.WANTIC);
       this.navToHome();
     }, errorReason => {
       this.logger.error(errorReason);

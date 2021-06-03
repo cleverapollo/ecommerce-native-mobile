@@ -1,10 +1,12 @@
 import { AbstractControl } from "@angular/forms";
+import { AuthProvider } from "./signup.model";
 
 export class UserProfile {
     firstName: String;
     lastName: String;
     birthday: Date;
     email: EmailDto;
+    authProvider: AuthProvider;
     userSettings: UserSettingsDto;
 }
 export class UserSettingsDto {
