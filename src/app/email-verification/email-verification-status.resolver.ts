@@ -81,10 +81,7 @@ export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEm
   private handleSuccessResponse(response: VerifyEmailResponse): PublicEmailVerificationStatus {
     if (this.deviceInfo.platform === 'ios' || this.deviceInfo.platform === 'android') {
       if (response && response.emailVerified != null) {
-        const userInfo = this.authService.userInfo.value;
-        userInfo.emailVerified = response.emailVerified;
-        this.authService.userInfo.next(userInfo);
-        this.storageService.set(StorageKeys.FIREBASE_EMAIL_VERIFIED, response.emailVerified, true);
+        this.authService.updateEmailVerificationStatus(response.emailVerified);
       }
       this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich bestätigt.');
       this.router.navigateByUrl('/secure/home/wish-list-overview');

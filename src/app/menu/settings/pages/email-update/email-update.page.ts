@@ -13,7 +13,7 @@ import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { StorageKeys, StorageService } from '@core/services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-update',
@@ -38,6 +38,14 @@ export class EmailUpdatePage implements OnInit {
     }
   }
 
+  get email(): string {
+    return this.form.controls.email.value;
+  }
+
+  get password(): string {
+    return this.form.controls.password.value;
+  }
+
   constructor(
     private formBuilder: FormBuilder, 
     private api: UserApiService,
@@ -47,7 +55,7 @@ export class EmailUpdatePage implements OnInit {
     private userProfileStore: UserProfileStore,
     private analyticsService: AnalyticsService,
     private authService: AuthenticationService,
-    private storageService: StorageService
+    private router: Router
   ) {
     this.analyticsService.setFirebaseScreenName('profile_settings-email');
   }
@@ -81,14 +89,15 @@ export class EmailUpdatePage implements OnInit {
     const requestBody = new UpdateEmailChangeRequest(this.form.controls);
     this.api.updateEmailChangeRequest(requestBody).pipe(first()).subscribe({
       next: () => {
-        const email = this.form.controls.email.value;
-        const password = this.form.controls.password.value;
-        this.form.controls.email.reset(email);
-        this.authService.emailPasswordSignIn(email, password).then(() => {
+        this.form.controls.email.reset(this.email);
+        this.authService.emailPasswordSignIn(this.email, this.password).then(() => {
           this.authService.sendVerificationMail().finally(() => {
-            this.updateEmailVerificationStatus();
+            this.authService.updateEmailVerificationStatus(false);
             this.loadingService.dismissLoadingSpinner(busyIndicator);
           });
+        }, error => {
+          this.logger.error(error);
+          this.handleReAuthError(busyIndicator);
         });
       }, 
       error: errorResponse => {
@@ -96,6 +105,13 @@ export class EmailUpdatePage implements OnInit {
         this.loadingService.dismissLoadingSpinner(busyIndicator);
       }
     });
+  }
+
+  private async handleReAuthError(busyIndicator: HTMLIonLoadingElement) {
+    await this.authService.logout();
+    await this.router.navigateByUrl('/login', { state: { email: this.email } });
+    this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich geändert. Melde dich nun mit deiner neuen E-Mail-Adresse erneut an.')
+    this.loadingService.dismissLoadingSpinner(busyIndicator);
   }
 
   private handleErrorResponse(errorResponse: any) {
@@ -110,10 +126,4 @@ export class EmailUpdatePage implements OnInit {
     this.toastService.presentErrorToast(errorMessage);
   }
 
-  private updateEmailVerificationStatus() {
-    const userInfo = this.authService.userInfo.value;
-    userInfo.emailVerified = false;
-    this.authService.userInfo.next(userInfo);
-    this.storageService.set(StorageKeys.FIREBASE_EMAIL_VERIFIED, false, true);
-  }
 }

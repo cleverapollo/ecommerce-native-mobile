@@ -10,6 +10,7 @@ import { ToastService } from '@core/services/toast.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { AuthProvider } from '@core/models/signup.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ export class LoginPage implements OnInit {
   }
 
   constructor(
+    private router: Router,
     private navController: NavController,
     private formBuilder: FormBuilder, 
     private authService: AuthenticationService,
@@ -46,8 +48,9 @@ export class LoginPage implements OnInit {
   }
 
   private createForm() {
+    const email = this.router.getCurrentNavigation().extras.state?.email ?? '';
     this.loginForm = this.formBuilder.group({
-      email: this.formBuilder.control('', {
+      email: this.formBuilder.control(email, {
         validators: [Validators.required, CustomValidation.email],
         updateOn: 'blur' 
       }),

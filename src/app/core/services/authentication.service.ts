@@ -296,6 +296,11 @@ export class AuthenticationService {
     return this.firebaseAuthentication.sendPasswordResetEmail(email);
   }
 
+  updateEmailVerificationStatus(emailVerified: boolean) {
+    this.isEmailVerified.next(emailVerified);
+    this.storageService.set(StorageKeys.FIREBASE_EMAIL_VERIFIED, emailVerified, true);
+  }
+
   async removeDeprecatedAuthToken(): Promise<void> {
     const authToken = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
     if (authToken) {
