@@ -85,7 +85,7 @@ export class UserApiService {
   }
 
   updatePassword(updatePasswordRequest: UpdatePasswordRequest): Observable<Object> {
-    return this.apiService.put(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/update-password`, updatePasswordRequest).pipe(
+    return this.apiService.put(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/update-password`, updatePasswordRequest).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
