@@ -28,7 +28,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   get validationMessages(): ValidationMessages {
     return {
       wishListId: [
-        new ValidationMessage('required', 'Weise deinem Wunsch bitte eine Wunschliste zu.')
+        new ValidationMessage('required', 'Dein Wunsch muss einer Wunschliste zugeordnet sein.')
       ],
       name: [
         new ValidationMessage('required', 'Vergib deinem Wunsch bitte eine Bezeichnung.')
