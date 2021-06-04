@@ -51,14 +51,14 @@ export class LoginPage implements OnInit {
     const email = this.router.getCurrentNavigation().extras.state?.email ?? '';
     this.loginForm = this.formBuilder.group({
       email: this.formBuilder.control(email, {
-        validators: [Validators.required, CustomValidation.email],
-        updateOn: 'blur' 
+        validators: [Validators.required, CustomValidation.email]
       }),
       password: this.formBuilder.control('', {
-        validators: [Validators.required],
-        updateOn: 'blur' 
+        validators: [Validators.required]
       }),
       saveCredentials: this.formBuilder.control(true)
+    }, {
+      updateOn: 'submit'
     })
   }
 
