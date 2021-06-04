@@ -13,6 +13,7 @@ import { UserService } from '@core/services/user.service';
 import { LoadingService } from '@core/services/loading.service';
 import { UserProfile } from '@core/models/user.model';
 import { AppsflyerEvent } from '@ionic-native/appsflyer/ngx';
+import { ToastService } from '@core/services/toast.service';
 
 const { Device } = Plugins
 
@@ -36,6 +37,7 @@ export class StartPage implements OnInit {
     private authApiService: AuthService,
     private userService: UserService,
     private loadingService: LoadingService,
+    private toastService: ToastService,
     public privacyPolicyService: PrivacyPolicyService
   ) { 
     this.analyticsService.setFirebaseScreenName('logon');
@@ -43,9 +45,9 @@ export class StartPage implements OnInit {
 
   async ngOnInit() {
     const deviceInfo = await Device.getInfo();
-    this.showAppleSignIn = true; // deviceInfo.platform === 'ios';
-    this.showFacebookSignIn = true;
-    this.showGooglePlusSignIn = true; // deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
+    this.showAppleSignIn = deviceInfo.platform === 'ios';
+    this.showFacebookSignIn = deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
+    this.showGooglePlusSignIn = deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
   }
 
   signupWithMailAndPassword() {
@@ -53,25 +55,43 @@ export class StartPage implements OnInit {
   }
 
   async signupWithApple() {
-    const signInResponse = await this.authService.appleSignIn();
-    const firstName = signInResponse?.appleSignInResponse?.fullName?.givenName ?? '';
-    const lastName = signInResponse?.appleSignInResponse?.fullName?.familyName;
-    this.signIn(signInResponse, firstName, lastName, AuthProvider.APPLE);
+    try {
+      const signInResponse = await this.authService.appleSignIn();
+      const firstName = signInResponse?.appleSignInResponse?.fullName?.givenName ?? '';
+      const lastName = signInResponse?.appleSignInResponse?.fullName?.familyName;
+      this.signIn(signInResponse, firstName, lastName, AuthProvider.APPLE);
+    } catch (error) {
+      if (typeof error === 'string') {
+        this.toastService.presentErrorToast(error);
+      }
+    }
   }
 
   async signupWithFacebook() {
-    const signInResponse = await this.authService.facebookSignIn();
-    const facebookUserProfile = await this.userService.facebookUserProfile;
-    const firstName = facebookUserProfile?.firstName ?? '';
-    const lastName = facebookUserProfile?.lastName;
-    this.signIn(signInResponse, firstName, lastName, AuthProvider.FACEBOOK);
+    try {
+      const signInResponse = await this.authService.facebookSignIn();
+      const facebookUserProfile = await this.userService.facebookUserProfile;
+      const firstName = facebookUserProfile?.firstName ?? '';
+      const lastName = facebookUserProfile?.lastName;
+      this.signIn(signInResponse, firstName, lastName, AuthProvider.FACEBOOK);
+    } catch (error) {
+      if (typeof error === 'string') {
+        this.toastService.presentErrorToast(error);
+      }
+    } 
   }
 
   async signupWithGoogle() {
-    const signInResponse = await this.authService.googlePlusSignIn();
-    const firstName = signInResponse?.googlePlusLoginResponse?.givenName ?? '';
-    const lastName = signInResponse?.googlePlusLoginResponse?.familyName;
-    this.signIn(signInResponse, firstName, lastName, AuthProvider.GOOGLE);
+    try {
+      const signInResponse = await this.authService.googlePlusSignIn();
+      const firstName = signInResponse?.googlePlusLoginResponse?.givenName ?? '';
+      const lastName = signInResponse?.googlePlusLoginResponse?.familyName;
+      this.signIn(signInResponse, firstName, lastName, AuthProvider.GOOGLE);
+    } catch (error) {
+      if (typeof error === 'string') {
+        this.toastService.presentErrorToast(error);
+      }
+    }
   }
 
   private async signIn(signInResponse: SignInResponse, firstName: string, lastName: string, authProvider: AuthProvider) {

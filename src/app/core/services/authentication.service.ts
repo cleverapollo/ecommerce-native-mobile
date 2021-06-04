@@ -6,15 +6,15 @@ import { CacheService } from 'ionic-cache';
 import { HTTP } from '@ionic-native/http/ngx';
 import { LogService } from './log.service';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
-import { ToastService } from './toast.service';
 import { AuthService } from '@core/api/auth.service';
-import { AuthProvider, SignInResponse, SignupRequest, SignupRequestSocialLogin } from '@core/models/signup.model';
-import { first } from 'rxjs/operators';
+import { SignInResponse, SignupRequest } from '@core/models/signup.model';
 import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { UserProfile } from '@core/models/user.model';
 import { SERVER_URL } from '@env/environment';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,6 @@ export class AuthenticationService {
     private cache: CacheService,
     private nativeHttpClient: HTTP,
     private logger: LogService,
-    private toastService: ToastService,
     private firebaseAuthentication: FirebaseAuthentication,
     private authApiService: AuthService,
     private facebook: Facebook,
@@ -122,9 +121,27 @@ export class AuthenticationService {
 
       return Promise.resolve(signInResponse);
     } catch (error) {
-      this.handleFirebaseAuthErrors(error);
-      return Promise.reject(error);
+      let errorMessage = 'Deine Anmeldung ist fehlgeschlagen.'
+      if (error instanceof HttpErrorResponse) {
+        errorMessage = this.getErrorMessageForWanticLogin(error);
+      } else if (typeof error === 'string') {
+        errorMessage = this.getFirebaseAuthErrorMessage(error);
+      }
+      return Promise.reject(errorMessage);
     }
+  }
+
+  private getErrorMessageForWanticLogin(error: HttpErrorResponse) {
+    let errorMessage: string = null;
+    switch (error.status) {
+      case HttpStatusCodes.UNAUTHORIZED:
+        errorMessage = 'Du hast dein Passwort falsch eingegeben.';
+        break;
+      case HttpStatusCodes.NOT_FOUND:
+        errorMessage = 'Ein Benutzer mit der angegebenen E-Mail-Adresse wurde nicht gefunden';
+        break;
+    }
+    return errorMessage;
   }
 
   async facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}> {
@@ -156,9 +173,9 @@ export class AuthenticationService {
         return Promise.reject(error);
       }
     } catch (error) {
-      this.handleFirebaseAuthErrors(error);
-      this.logger.error(error, typeof error);
-      return Promise.reject(error);
+      this.logger.error(error);
+      const firebaseAuthErrorMessage = this.getFirebaseAuthErrorMessage(error);
+      return Promise.reject(firebaseAuthErrorMessage);
     }
   }
 
@@ -182,9 +199,9 @@ export class AuthenticationService {
       const wanticSignInResponse = await this.wanticSignIn();
       return Promise.resolve({ googlePlusLoginResponse: googlePlusLoginResponse, user: wanticSignInResponse.user });
     } catch (error) {
-      this.handleFirebaseAuthErrors(error);
       this.logger.error(error);
-      return Promise.reject(error);
+      const firebaseAuthErrorMessage = this.getFirebaseAuthErrorMessage(error);
+      return Promise.reject(firebaseAuthErrorMessage);
     }
   }
 
@@ -205,9 +222,9 @@ export class AuthenticationService {
       const wanticSignInResponse = await this.wanticSignIn();
       return Promise.resolve({ appleSignInResponse: appleSignInResponse, user: wanticSignInResponse.user });
     } catch (error) {
-      this.handleFirebaseAuthErrors(error);
       this.logger.error(error);
-      return Promise.reject(error);
+      const firebaseAuthErrorMessage = this.getFirebaseAuthErrorMessage(error);
+      return Promise.reject(firebaseAuthErrorMessage);
     }
   }
 
@@ -253,37 +270,10 @@ export class AuthenticationService {
     return Promise.resolve();
   }
 
-  private handleFirebaseAuthErrors(error: any) {
-    if (error.message && error.code) {
-      const errorMessage = this.getErrorMessageForFirebaseErrorCode(error.message, error.code);
-      this.toastService.presentErrorToast(errorMessage);
-    }
-  }
-
-  private getErrorMessageForFirebaseErrorCode(firebaseErrorMessage: string, errorCode: FirebaseAuthErrorCode): string {
-    let errorMessage: string = firebaseErrorMessage;
-    switch (errorCode) {
-      case FirebaseAuthErrorCode.userDisabled:
-        errorMessage = 'Dein Account ist deaktiviert.';
-        break;
-      case FirebaseAuthErrorCode.invalidEmail:
-        errorMessage = 'Deine E-Mail-Adresse scheint nicht richtig zu sein. Bitte überprüfe, ob du diese auch richtig eingegeben hast.';
-        break;
-      case FirebaseAuthErrorCode.userNotFound:
-        errorMessage = 'Der Benutzer mit der angegebenen E-Mail-Adresse wurde nicht gefunden';
-        break;
-      case FirebaseAuthErrorCode.wrongPassword:
-        errorMessage = 'Du hast dein Passwort falsch eingegeben.';
-        break;
-      case FirebaseAuthErrorCode.emailAlreadyInUse:
-        errorMessage = 'Ein Account mit der eingegebenen E-Mail-Adresse existiert bereits.';
-        break;
-      case FirebaseAuthErrorCode.weakPassword:
-        errorMessage = 'Dein Passwort ist zu schwach, es sollte min. aus 6 Zeichen bestehen.';
-        break;
-      default:
-        errorMessage = 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später noch einmal.';
-        break;
+  private getFirebaseAuthErrorMessage(error: any): string {
+    let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
+    if (error === 'User cancelled.') {
+      errorMessage = null;
     }
     return errorMessage;
   }

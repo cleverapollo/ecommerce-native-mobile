@@ -75,8 +75,8 @@ export class LoginPage implements OnInit {
       this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');
       this.analyticsService.logLoginEvent(AuthProvider.WANTIC);
       this.navToHome();
-    }, errorReason => {
-      this.logger.error(errorReason);
+    }, errorMessage => {
+      this.toastService.presentErrorToast(errorMessage);
     }).finally(() => {
       this.loadingService.dismissLoadingSpinner(spinner);
     });
