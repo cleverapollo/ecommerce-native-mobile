@@ -6,6 +6,7 @@ import { CustomValidation } from '@shared/custom-validation';
 import { LogService } from '@core/services/log.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -28,7 +29,8 @@ export class ResetPasswordPage implements OnInit {
     private formBuilder: FormBuilder, 
     private authService: AuthenticationService,
     private logger: LogService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private toastService: ToastService
   ) { 
     this.analyticsService.setFirebaseScreenName('login-password_reset');
   }
@@ -44,6 +46,16 @@ export class ResetPasswordPage implements OnInit {
     this.logger.log(this.form.controls.email.value)
     this.authService.sendPasswordResetEmail(this.form.controls.email.value).then(() => {
       this.passwordResetRequestSuccessful = true;
+    }, error => {
+      this.logger.error(error);
+      let errorMessage = 'Beim Zurücksetzen deines Passworts ist ein Fehler aufgetreten.';
+      if (typeof error === 'string') {
+        const userDoesNotExist = 'There is no user record corresponding to this identifier. The user may have been deleted.';
+        if (error === userDoesNotExist) {
+          errorMessage = 'Ein Benutzer mit angegebener E-Mail-Adresse existiert nicht.';
+        }
+      }
+      this.toastService.presentErrorToast(errorMessage);
     });
   }
 
