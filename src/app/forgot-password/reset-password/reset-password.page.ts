@@ -9,6 +9,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { ToastService } from '@core/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
+import { LoadingService } from '@core/services/loading.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -32,7 +33,8 @@ export class ResetPasswordPage implements OnInit {
     private authService: AuthenticationService,
     private logger: LogService,
     private analyticsService: AnalyticsService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private loadingService: LoadingService
   ) { 
     this.analyticsService.setFirebaseScreenName('login-password_reset');
   }
@@ -44,8 +46,10 @@ export class ResetPasswordPage implements OnInit {
     })
   }
 
-  resetPassword() {
-    this.logger.log(this.form.controls.email.value)
+  async resetPassword() {
+    const loadingSpinner = await this.loadingService.createLoadingSpinner();
+    await loadingSpinner.present();
+
     this.authService.resetPassword(this.form.controls.email.value).then(() => {
       this.passwordResetRequestSuccessful = true;
     }, error => {
@@ -64,6 +68,8 @@ export class ResetPasswordPage implements OnInit {
         }
       }
       this.toastService.presentErrorToast(errorMessage);
+    }).finally(() => {
+      this.loadingService.dismissLoadingSpinner(loadingSpinner);
     });
   }
 
