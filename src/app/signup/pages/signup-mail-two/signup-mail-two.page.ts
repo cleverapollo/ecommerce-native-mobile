@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '@core/api/auth.service';
 import { UserApiService } from '@core/api/user-api.service';
 import { Gender } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -10,7 +9,6 @@ import { LogService } from '@core/services/log.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { ToastService } from '@core/services/toast.service';
 import { first } from 'rxjs/operators';
-import { SignupStateService } from '../../signup-state.service';
 
 @Component({
   selector: 'app-signup-mail-two',
