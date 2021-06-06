@@ -11,6 +11,7 @@ import { CustomValidation } from '@shared/custom-validation';
 import { Plugins } from '@capacitor/core';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
+import { ToastService } from '@core/services/toast.service';
 const { Keyboard } = Plugins;
 
 @Component({
@@ -49,6 +50,7 @@ export class SignupMailPage implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private loadingService: LoadingService,
+    private toastService: ToastService
   ) { 
     this.analyticsService.setFirebaseScreenName('signup-mail');
   }
@@ -102,7 +104,11 @@ export class SignupMailPage implements OnInit {
     this.authService.signup(signupRequest).then(() => {
       this.analyticsService.logCompleteRegistrationEvent(AuthProvider.WANTIC);
       this.router.navigateByUrl('signup/signup-mail-two', { replaceUrl: true });
-    }, this.logger.error).finally(() => {
+    }, error => {
+      if (typeof error === 'string') {
+        this.toastService.presentErrorToast(error);
+      }
+    }).finally(() => {
       this.loadingService.dismissLoadingSpinner(loadingSpinner);
     })
   }

@@ -143,6 +143,9 @@ export class AuthenticationService {
       case HttpStatusCodes.NOT_FOUND:
         errorMessage = 'Ein Benutzer mit der angegebenen E-Mail-Adresse wurde nicht gefunden';
         break;
+      case HttpStatusCodes.LOCKED:
+        errorMessage = 'Dein Account ist gesperrt.';
+        break;
     }
     return errorMessage;
   }
