@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto, DeleteAccountRequest, UpdateEmailChangeRequest, AccountDto } from '@core/models/user.model';
+import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto, DeleteAccountRequest, UpdateEmailChangeRequest, AccountDto, Gender } from '@core/models/user.model';
 import { UpdatePasswordRequest, ChangePasswordRequest, LoginResponse } from '@core/models/login.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
@@ -22,14 +22,20 @@ export class UserApiService {
     private logger: LogService
   ) { }
 
-  deleteUser(requestBody: DeleteAccountRequest): Observable<void> {
-    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/delete-account`, requestBody);
+  deleteUser(): Observable<void> {
+    return this.apiService.patch<void>(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/delete-account`);
   }
 
   getProfile(): Observable<UserProfile> {
     return this.apiService.get<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
+  }
+
+  partialUpdateFirebaseUid(uid: string): Observable<void> {
+    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/firebase-uid`, { uid: uid }).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    ); 
   }
 
   partialUpdateFirstName(firstName: string): Observable<UserProfile> {
@@ -50,12 +56,18 @@ export class UserApiService {
     );
   }
 
+  partialUpdateGender(gender: Gender): Observable<UserProfile> {
+    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/gender`, { gender: gender }).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
+  }
+
   partialUpdateEmail(emailVerficationToken: string): Observable<LoginResponse> {
     return this.apiService.patch<LoginResponse>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/email`,  { emailVerficationToken: emailVerficationToken });
   }
 
   updateEmailChangeRequest(requestBody: UpdateEmailChangeRequest): Observable<void> {
-    return this.apiService.put<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/email`, requestBody).pipe(
+    return this.apiService.put<void>(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/profile/email`, requestBody).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
@@ -73,7 +85,7 @@ export class UserApiService {
   }
 
   updatePassword(updatePasswordRequest: UpdatePasswordRequest): Observable<Object> {
-    return this.apiService.put(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/update-password`, updatePasswordRequest).pipe(
+    return this.apiService.put(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/update-password`, updatePasswordRequest).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

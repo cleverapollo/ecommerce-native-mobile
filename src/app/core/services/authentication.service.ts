@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, pipe } from 'rxjs';
 import { Platform } from '@ionic/angular';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService, StorageKeys } from './storage.service';
-import { UserService } from './user.service';
-import { AuthService } from '../api/auth.service';
 import { CacheService } from 'ionic-cache';
 import { HTTP } from '@ionic-native/http/ngx';
-import { WanticJwtToken } from '@core/models/login.model';
 import { LogService } from './log.service';
-import { EmailVerificationService } from './email-verification.service';
-import { LoadingService } from './loading.service';
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
+import { AuthService } from '@core/api/auth.service';
+import { SignInResponse, SignupRequest } from '@core/models/signup.model';
+import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { UserProfile } from '@core/models/user.model';
+import { SERVER_URL } from '@env/environment';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { first } from 'rxjs/operators';
 
 @Injectable({
@@ -18,195 +22,323 @@ import { first } from 'rxjs/operators';
 })
 export class AuthenticationService {
 
-  token = new BehaviorSubject<string>(null);
   isAuthenticated = new BehaviorSubject<boolean>(null);
-
-  async tokenIsExpired(): Promise<boolean> {
-    if (this.token.value !== null) {
-      return this.jwtHelper.isTokenExpired(this.token.value);
-    } else {
-      const token = await this.loadToken();
-      if (token !== null) {
-        return this.jwtHelper.isTokenExpired(token);
-      } else {
-        return null;
-      }
-    }
-  }
+  isEmailVerified = new BehaviorSubject<boolean>(null);
+  firebaseAccessToken = new BehaviorSubject<string>(null);
+  userInfo = new BehaviorSubject<any>(null);
 
   constructor(
     private storageService: StorageService, 
     private platform: Platform,
-    private jwtHelper: JwtHelperService,
-    private userService: UserService,
-    private authService: AuthService,
     private cache: CacheService,
     private nativeHttpClient: HTTP,
     private logger: LogService,
-    private emailVerificationService: EmailVerificationService,
-    private loadingService: LoadingService
+    private firebaseAuthentication: FirebaseAuthentication,
+    private authApiService: AuthService,
+    private facebook: Facebook,
+    private googlePlus: GooglePlus,
+    private signInWithApple: SignInWithApple,
   ) { 
-    this.loadToken().then(token => {
-      if (token !== null && this.jwtHelper.isTokenExpired(token)) {
-        this.refreshExpiredToken();
+    if (this.platform.is('capacitor')) {
+      this.configFirebaseAuthentication();
+      this.refreshFirebaseIdToken(false);
+      this.loadUserData();
+    } else {
+      this.isAuthenticated.next(false);
+    }
+  }
+
+  private configFirebaseAuthentication() {
+    this.firebaseAuthentication.setLanguageCode('de-DE');
+  }
+
+  private loadUserData() {
+    this.firebaseAuthentication.onAuthStateChanged().subscribe(userInfo => {
+      this.logger.info('user info', userInfo);
+      if (userInfo) {
+        this.storageService.set(StorageKeys.FIREBASE_USER_INFO, userInfo, true);
+        this.userInfo.next(userInfo);
+        this.storageService.get<boolean>(StorageKeys.FIREBASE_EMAIL_VERIFIED, true).then(isEmailVerified => {
+          if (isEmailVerified !== null) {
+            this.isEmailVerified.next(isEmailVerified);
+          } else {
+            this.isEmailVerified.next(userInfo.emailVerified);
+          }
+        }, error => {
+          this.logger.error(error);
+          this.isEmailVerified.next(userInfo.emailVerified);
+        })
+      } else {
+        this.userInfo.next(null);
+        this.storageService.set(StorageKeys.FIREBASE_USER_INFO, null, true);
       }
     })
   }
 
-  async login(email: string, password: string, saveCredentials: boolean) : Promise<void> {
-    const spinner = await this.loadingService.createLoadingSpinner();
-    await spinner.present();
-    return new Promise((resolve, reject) => {
-      this.loadingService.createLoadingSpinner();
-      this.authService.login(email, password).pipe(first()).subscribe({
-        next: response => {
-          if (saveCredentials) {
-            this.saveCredentials(email, password);
-          }
-          this.updateToken(response.token).then(() => {
-            this.handleLoginSucessResponse();
-            resolve();
-          }, error => {
-            this.logger.error(error);
-            reject();
-          }).finally(() => {
-            this.loadingService.dismissLoadingSpinner(spinner);
-          });
-        },
-        error: errorResponse => {
-          this.logger.error(errorResponse);
-          this.handleLoginErrorResponse();
-          this.loadingService.dismissLoadingSpinner(spinner);
-          reject();
-        }
-      })
-    })
-  }
-
-  async logout() {
-    await this.storageService.clear();
-    await this.cache.clearAll();
-    this.removeAuthorizationHeaderForNativeHttpClient();
-    this.isAuthenticated.next(false);
-    return Promise.resolve();
-  }
-
-   async refreshExpiredToken(): Promise<void> {
-    const credentials = await this.loadCredentials();
-    if (credentials) {
-      return this.refreshToken(credentials);
-    } else {
-      this.isAuthenticated.next(false);
-      this.token.next(null);
-      return Promise.reject();
-    }
-  }
-
-  private async refreshToken(credentials: { email: string, password: string }): Promise<void> {
-    let spinner = await this.loadingService.createLoadingSpinner();
-    await spinner.present();
-    return new Promise<void>((resolve, reject) => {
-      this.authService.login(credentials.email, credentials.password).pipe(first()).subscribe({
-        next: response => {
-          this.updateToken(response.token).then(() => {
-            this.handleLoginSucessResponse();
-            this.loadingService.dismissLoadingSpinner(spinner).finally(() => {
-              resolve();
-            })
-          }, error => {
-            this.logger.error(error);
-            this.loadingService.dismissLoadingSpinner(spinner).finally(() => {
-              reject();
-            })
-          });
-        }, 
-        error: errorRespone => {
-          this.logger.error(errorRespone);
-          this.removeToken().then(() => {
-            this.handleLoginErrorResponse();
-          }, this.logger.error).finally(() => {
-            this.loadingService.dismissLoadingSpinner(spinner).finally(() => {
-              reject();
-            });
-          });
-        }
-      })
-    });
-  }
-
-  private handleLoginErrorResponse() {
-    this.isAuthenticated.next(false);
-  }
-
-  private handleLoginSucessResponse() {
-    this.isAuthenticated.next(true);
-  }
-
-  private async loadCredentials() {
-    const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
-    const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
-    if (email && password) {
-      return { email: email, password: password }
-    } else {
-      return null;
-    }
-  }
-
-  private async loadToken(): Promise<string> {
-    const token = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
-    this.token.next(token);
-    this.updateAuthState(token);
-    return Promise.resolve(token);
-  }
-
-  private updateAuthState(token: string) {
-    if (token && !this.jwtHelper.isTokenExpired(token)) {
-      this.isAuthenticated.next(true);
-      this.updateAuthorizationHeaderForNativeHttpClient(token);
-    } else {
-      this.isAuthenticated.next(false);
+  async logout(): Promise<void> {
+    try {
+      await this.storageService.clear();
+      await this.cache.clearAll();
       this.removeAuthorizationHeaderForNativeHttpClient();
+      this.firebaseAccessToken.next(null);
+      this.isAuthenticated.next(false);
+      await this.firebaseAuthentication.signOut();
+      return Promise.resolve();
+    } catch (error) {
+      this.logger.error(error);
+      return Promise.resolve();
     }
-  }
-
-  async updateToken(token: string) {
-    await this.storageService.set(StorageKeys.AUTH_TOKEN, token, true);
-
-    this.updateUserProperties(token);
-    this.updateAuthState(token);
-    this.token.next(token);
-
-    return Promise.resolve();
-  }
-
-  private removeToken() {
-    return this.storageService.remove(StorageKeys.AUTH_TOKEN);
-  }
-
-  private updateUserProperties(encodedToken: string) {
-    const decodedToken: WanticJwtToken = this.jwtHelper.decodeToken(encodedToken);
-    this.emailVerificationService.updateEmailVerificationStatus(decodedToken.emailVerificationStatus);
-    this.userService.accountIsEnabled = decodedToken.accountEnabled;
   }
 
   private updateAuthorizationHeaderForNativeHttpClient(token: string) {
-    if (this.platform.is('capacitor')) {
-      this.nativeHttpClient.setHeader('*', 'Authorization', `Bearer ${token}`);
+    if (this.platform.is('capacitor') && token) {
+      this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', `Bearer ${token}`);
     }
   }
 
   private removeAuthorizationHeaderForNativeHttpClient() {
     if (this.platform.is('capacitor')) {
-      this.nativeHttpClient.setHeader('*', 'Authorization', null);
+      this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', null);
     }
   }
 
-  private saveCredentials(email: string, password: string) {
-    this.storageService.set(StorageKeys.LOGIN_EMAIL, email, true).then(() => {
-      this.storageService.set(StorageKeys.LOGIN_PASSWORD, password, true).then(() => {
-        this.logger.debug('email and password saved sucessfully');
-      }, this.logger.error)
-    }, this.logger.error);
+  async signup(signupRequest: SignupRequest) {
+    try {
+      await this.authApiService.signup(signupRequest).toPromise();
+      await this.emailPasswordSignIn(signupRequest.email, signupRequest.password);
+      await this.sendVerificationMail();
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error); 
+    }
   }
 
+  async emailPasswordSignIn(email: string, password: string): Promise<SignInResponse> {
+    try {
+      // wantic sign in
+      const signInRequest = { username: email, password: password };
+      const signInResponse = await this.authApiService.signInWithEmailAndPassword(signInRequest).toPromise();
+
+      // firebase sign in
+      await this.firebaseAuthentication.signInWithEmailAndPassword(email, password);
+      await this.refreshFirebaseIdToken(true);
+      await this.storageService.set(StorageKeys.CREDENTIALS, { email: email, password: password }, true);
+
+      return Promise.resolve(signInResponse);
+    } catch (error) {
+      let errorMessage = 'Deine Anmeldung ist fehlgeschlagen.'
+      if (error instanceof HttpErrorResponse) {
+        errorMessage = this.getErrorMessageForWanticLogin(error);
+      } else if (typeof error === 'string') {
+        errorMessage = this.getFirebaseAuthErrorMessage(error);
+      }
+      return Promise.reject(errorMessage);
+    }
+  }
+
+  private getErrorMessageForWanticLogin(error: HttpErrorResponse) {
+    let errorMessage: string = 'Die Anmeldung ist fehlgeschlagen.';
+    switch (error.status) {
+      case HttpStatusCodes.UNAUTHORIZED:
+        errorMessage = 'Du hast dein Passwort falsch eingegeben.';
+        break;
+      case HttpStatusCodes.FORBIDDEN:
+        errorMessage = 'Dein Account ist noch nicht freigeschaltet. Um deinen Account zu aktivieren musst du dich zunächst registrieren.';
+        break;
+      case HttpStatusCodes.NOT_FOUND:
+        errorMessage = 'Ein Benutzer mit der angegebenen E-Mail-Adresse wurde nicht gefunden';
+        break;
+      case HttpStatusCodes.LOCKED:
+        errorMessage = 'Dein Account ist gesperrt.';
+        break;
+    }
+    return errorMessage;
+  }
+
+  async facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}> {
+    try {
+      // facebook sign in
+      const facebookLoginResponse = await this.facebook.login(['email', 'public_profile']);
+      const accessToken = facebookLoginResponse?.authResponse?.accessToken;
+      
+      if (facebookLoginResponse.status === 'connected') {
+        if (accessToken) {
+          // firebase sign in
+          await this.firebaseAuthentication.signInWithFacebook(accessToken);
+
+          // wantic sign in 
+          const wanticSignInResponse = await this.wanticSignIn();
+          return Promise.resolve({ facebookLoginResponse: facebookLoginResponse, user: wanticSignInResponse.user });
+        } {
+          const error = 'no valid access token';
+          this.logger.error(error);
+          return Promise.reject(error);
+        }
+      } else if (facebookLoginResponse.status === 'not_authorized') {
+        const error = 'The user has not authorized your application';
+        this.logger.debug(error);
+        return Promise.reject(error);
+      } else {
+        const error = 'The user is not logged in to Faceebook.';
+        this.logger.debug(error);
+        return Promise.reject(error);
+      }
+    } catch (error) {
+      this.logger.error(error);
+      const firebaseAuthErrorMessage = this.getFirebaseAuthErrorMessage(error);
+      return Promise.reject(firebaseAuthErrorMessage);
+    }
+  }
+
+  async googlePlusSignIn(): Promise<{googlePlusLoginResponse: any, user: UserProfile}> {
+    try {
+      // google plus sign in
+      const googlePlusLoginResponse = await this.googlePlus.login({});
+      const idToken = googlePlusLoginResponse?.idToken;
+      const accessToken = googlePlusLoginResponse?.accessToken;
+
+      // firebase sign in
+      if (idToken && accessToken) {
+        await this.firebaseAuthentication.signInWithGoogle(idToken, accessToken);
+      } else {
+        const error = 'idToken or accessToken missing ';
+        this.logger.error(error, idToken, accessToken);
+        return Promise.reject(error);
+      }
+
+      // wantic sign in 
+      const wanticSignInResponse = await this.wanticSignIn();
+      return Promise.resolve({ googlePlusLoginResponse: googlePlusLoginResponse, user: wanticSignInResponse.user });
+    } catch (error) {
+      this.logger.error(error);
+      const firebaseAuthErrorMessage = this.getFirebaseAuthErrorMessage(error);
+      return Promise.reject(firebaseAuthErrorMessage);
+    }
+  }
+
+  async appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}> {
+    try {
+      // apple sign in
+      const appleSignInResponse = await this.signInWithApple.signin({
+        requestedScopes: [
+          ASAuthorizationAppleIDRequest.ASAuthorizationScopeFullName,
+          ASAuthorizationAppleIDRequest.ASAuthorizationScopeEmail
+        ]
+      });
+
+      // firebase sign in
+      await this.firebaseAuthentication.signInWithApple(appleSignInResponse.identityToken);
+
+      // wantic sign in
+      const wanticSignInResponse = await this.wanticSignIn();
+      return Promise.resolve({ appleSignInResponse: appleSignInResponse, user: wanticSignInResponse.user });
+    } catch (error) {
+      this.logger.error(error);
+      const firebaseAuthErrorMessage = this.getFirebaseAuthErrorMessage(error);
+      return Promise.reject(firebaseAuthErrorMessage);
+    }
+  }
+
+  async wanticSignIn(): Promise<SignInResponse> {
+    const userInfo = this.userInfo.value;
+    if (userInfo?.uid && userInfo?.email) {
+      const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
+      try {
+        const signInResponse = await this.authApiService.signInWithThirdPartyAuthProvider(signInRequestBody).toPromise();
+        return Promise.resolve(signInResponse);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+    const error = 'email or uid missing ';
+    this.logger.error(error, userInfo);
+    return Promise.reject(error);
+  }
+
+  async refreshFirebaseIdToken(forceRefresh: boolean): Promise<string> {
+    try {
+      const idToken = await this.firebaseAuthentication.getIdToken(forceRefresh);
+      await this.updateToken(idToken);
+      return Promise.resolve(idToken);
+    } catch (error) {
+      this.logger.error('failed to refresh firebase id token', error);
+      if (this.isAuthenticated.value === null) {
+        this.isAuthenticated.next(false);
+      }
+      return Promise.reject(error);
+    }
+  }
+
+  private async updateToken(token: string): Promise<void> {
+    if (!token) {
+      this.isAuthenticated.next(false);
+      return Promise.reject('token to upate is invalid'); 
+    }
+    await this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, token, true);
+    this.updateAuthorizationHeaderForNativeHttpClient(token);
+    this.firebaseAccessToken.next(token);
+    this.isAuthenticated.next(true);
+    return Promise.resolve();
+  }
+
+  private getFirebaseAuthErrorMessage(error: any): string {
+    let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
+    if (error === 'User cancelled.') {
+      errorMessage = null;
+    }
+    return errorMessage;
+  }
+
+  sendVerificationMail(): Promise<any> {
+    return this.firebaseAuthentication.sendEmailVerification();
+  }
+
+  resetPassword(email: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.authApiService.resetPassword(email).toPromise().then(() => {
+        this.firebaseAuthentication.sendPasswordResetEmail(email).then(resolve, reject);
+      }, reject)
+    })
+  }
+
+  updateEmailVerificationStatus(emailVerified: boolean) {
+    this.isEmailVerified.next(emailVerified);
+    this.storageService.set(StorageKeys.FIREBASE_EMAIL_VERIFIED, emailVerified, true);
+  }
+
+  async removeDeprecatedAuthToken(): Promise<void> {
+    const authToken = await this.storageService.get<string>(StorageKeys.AUTH_TOKEN, true);
+    if (authToken) {
+      await this.storageService.remove(StorageKeys.AUTH_TOKEN, true)
+    }
+    return Promise.resolve();
+  }
+
+  async migrateSavedCredentials(): Promise<{email: string, password: string}> {
+    try {
+        const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
+        const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
+        let credentials = null;
+        if (email && password) {
+          credentials = {email: email, password: password};
+          this.storageService.set(StorageKeys.CREDENTIALS, credentials, true);
+        }
+        await this.storageService.remove(StorageKeys.LOGIN_EMAIL, true);
+        await this.storageService.remove(StorageKeys.LOGIN_PASSWORD, true);
+        return Promise.resolve(credentials);
+    } catch (error) {
+        return Promise.resolve(null);
+    }
+  }
+
+}
+
+enum FirebaseAuthErrorCode {
+  emailAlreadyInUse = 'auth/email-already-in-use',
+  invalidEmail = 'auth/invalid-email',
+  operationNotAllowed = 'auth/operation-not-allowed',
+  weakPassword = 'auth/weak-password',
+  userDisabled = 'auth/user-disabled',
+  userNotFound = 'auth/user-not-found',
+  wrongPassword = 'auth/wrong-password'
 }

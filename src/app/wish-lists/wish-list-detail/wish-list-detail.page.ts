@@ -9,7 +9,6 @@ import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { LogService } from '@core/services/log.service';
 import { NavigationService } from '@core/services/navigation.service';
 import { Subscription } from 'rxjs';
-import { UserService } from '@core/services/user.service';
 import { first } from 'rxjs/operators';
 import { APP_URL } from 'src/environments/environment';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -22,12 +21,10 @@ const { Share } = Plugins;
 })
 export class WishListDetailPage implements OnInit, OnDestroy {
 
-  private subscriptionAccountEnabled: Subscription;
   private queryParamSubscription: Subscription;
 
   wishList: WishListDto;
   showBackButton: boolean = true;
-  accountIsNotActivated: boolean;
 
   get wishListOwnerCount(): number {
     return this.wishList?.owners?.length || 0;
@@ -48,7 +45,6 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     private wishListStore: WishListStoreService,
     private userProfileStore: UserProfileStore,
     private logger: LogService,
-    private userService: UserService,
     private analyticsService: AnalyticsService
   ) { }
 
@@ -63,13 +59,6 @@ export class WishListDetailPage implements OnInit, OnDestroy {
         })
       }
     })
-
-    this.subscriptionAccountEnabled = this.userService.$accountIsEnabled.subscribe({
-      next: accountIsEnabled => {
-        this.logger.debug('enabled', accountIsEnabled);
-        this.accountIsNotActivated = !accountIsEnabled;
-      }
-    })
   }
 
   ionViewWillEnter() { 
@@ -81,7 +70,6 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.queryParamSubscription.unsubscribe();
-    this.subscriptionAccountEnabled.unsubscribe();
   }
 
   selectWish(wish: WishDto) {

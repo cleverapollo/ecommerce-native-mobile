@@ -1,15 +1,16 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { AutoLoginGuard } from './auto-login.guard';
 
 describe('AutoLoginGuard', () => {
+  let guard: AutoLoginGuard;
+
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [AutoLoginGuard]
-    });
+    TestBed.configureTestingModule({});
+    guard = TestBed.inject(AutoLoginGuard);
   });
 
-  xit('should ...', inject([AutoLoginGuard], (guard: AutoLoginGuard) => {
+  it('should be created', () => {
     expect(guard).toBeTruthy();
-  }));
+  });
 });

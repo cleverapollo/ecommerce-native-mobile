@@ -33,3 +33,8 @@ ion-list {
     font-size: 14px;
     font-weight: 500;
 }
+
+ion-item.disabled {
+    pointer-events: none;
+    cursor: default;
+}

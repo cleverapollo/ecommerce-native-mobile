@@ -1,10 +1,16 @@
 import { AbstractControl } from "@angular/forms";
+import { AuthProvider } from "./signup.model";
 
 export class UserProfile {
     firstName: String;
     lastName: String;
     birthday: Date;
     email: EmailDto;
+    authProvider: AuthProvider;
+    userSettings: UserSettingsDto;
+}
+export class UserSettingsDto {
+    showOnboardingSlidesiOS: boolean;
 }
 
 export class EmailDto {
@@ -46,7 +52,7 @@ export class EmailVerificationDto {
 }
 
 export enum PublicEmailVerificationStatus {
-    ERROR, TOKEN_EXPIRED, VERIFIED
+    ERROR, TOKEN_EXPIRED, VERIFIED, EMAIL_ALREADY_CONFIRMED
 }
 
 export enum Gender {

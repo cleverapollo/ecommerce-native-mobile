@@ -1,36 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
-import { EmailVerificationService } from '@core/services/email-verification.service';
-import { EmailVerificationStatus, UpdateEmailChangeRequest, UserProfile } from '@core/models/user.model';
+import { UpdateEmailChangeRequest, UserProfile } from '@core/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { LogService } from '@core/services/log.service';
-import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '@core/services/authentication.service';
-import { Location } from '@angular/common';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { Subscription } from 'rxjs';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { WanticJwtToken } from '@core/models/login.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { first } from 'rxjs/operators';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-update',
   templateUrl: './email-update.page.html',
   styleUrls: ['./email-update.page.scss'],
 })
-export class EmailUpdatePage implements OnInit, OnDestroy {
-
-  private updateEmailChangeRequestSubscription: Subscription;
-  private updateEmailSubscription: Subscription;
-  private routeParamSubscription: Subscription;
-  private confirmRegistrationSubscription: Subscription;
-  private getUserProfileSubscription: Subscription;
+export class EmailUpdatePage implements OnInit {
 
   form: FormGroup;
   userProfile: UserProfile;
@@ -48,46 +38,32 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
     }
   }
 
+  get email(): string {
+    return this.form.controls.email.value;
+  }
+
+  get password(): string {
+    return this.form.controls.password.value;
+  }
+
   constructor(
     private formBuilder: FormBuilder, 
     private api: UserApiService,
     private logger: LogService,
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private emailVerificationService: EmailVerificationService,
-    private route: ActivatedRoute,
     private userProfileStore: UserProfileStore,
-    private location: Location,
-    private jwtHelper: JwtHelperService,
+    private analyticsService: AnalyticsService,
     private authService: AuthenticationService,
-    private analyticsService: AnalyticsService
-  ) 
-    { }
-
-  ngOnInit() {
+    private router: Router
+  ) {
     this.analyticsService.setFirebaseScreenName('profile_settings-email');
-    this.getUserProfileSubscription = this.userProfileStore.loadUserProfile().subscribe({
-      next: userProfile => {
-        this.userProfile = userProfile;
-        const email = userProfile.email.value;
-        if (!this.form) {
-          this.createForm(email);
-        }
-      },
-      error: error => {
-        this.logger.debug(error);
-        this.createForm('');
-      }
-    })
+  }
 
-    this.routeParamSubscription = this.route.queryParamMap.subscribe({
-      next: params => {
-        const emailVerificationToken = params.get('emailVerificationToken');
-        if (emailVerificationToken !== null) {
-          this.updateEmail(emailVerificationToken);
-        }
-      }
-    });
+  async ngOnInit() {
+    const user = await this.userProfileStore.loadUserProfile().toPromise();
+    const email = user?.email?.value ?? '';
+    this.createForm(email);
   }
 
   private createForm(email: string) {
@@ -103,78 +79,51 @@ export class EmailUpdatePage implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.updateEmailChangeRequestSubscription?.unsubscribe();
-    this.updateEmailSubscription?.unsubscribe();
-    this.routeParamSubscription?.unsubscribe();
-    this.confirmRegistrationSubscription?.unsubscribe();
-    this.getUserProfileSubscription?.unsubscribe();
-  }
-
-  saveChanges() {
+  async saveChanges() {
     if (this.form.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
-    this.loadingService.showLoadingSpinner();
+    const busyIndicator = await this.loadingService.createLoadingSpinner();
+    busyIndicator.present();
     const requestBody = new UpdateEmailChangeRequest(this.form.controls);
-    const email = this.form.controls.email.value;
-    this.updateEmailChangeRequestSubscription = this.api.updateEmailChangeRequest(requestBody).subscribe({
+    this.api.updateEmailChangeRequest(requestBody).pipe(first()).subscribe({
       next: () => {
-        this.form.controls.email.reset(email);
-        this.emailVerificationService.updateEmailVerificationStatus(EmailVerificationStatus.VERIFICATION_EMAIL_SENT);
-        this.loadingService.dismissLoadingSpinner();
+        this.form.controls.email.reset(this.email);
+        this.authService.emailPasswordSignIn(this.email, this.password).then(() => {
+          this.authService.sendVerificationMail().finally(() => {
+            this.authService.updateEmailVerificationStatus(false);
+            this.loadingService.dismissLoadingSpinner(busyIndicator);
+          });
+        }, error => {
+          this.logger.error(error);
+          this.handleReAuthError(busyIndicator);
+        });
       }, 
       error: errorResponse => {
-        let errorMessage = 'Ein allgemeiner Fehler ist aufgetreten, bitte versuche es später noch einmal.';
-        if (errorResponse instanceof HttpErrorResponse) {
-          if (errorResponse.error instanceof ErrorEvent) {
-            this.logger.log(`Error: ${errorResponse.error.message}`);
-          } else if (errorResponse.status === HttpStatusCodes.BAD_REQUEST) {
-            errorMessage = 'Dein Passwort ist nicht korrekt.';
-          } else if (errorResponse.status === HttpStatusCodes.INTERNAL_SERVER_ERROR) {
-            errorMessage = 'Eine E-Mail zur Bestätigung deiner Anfrage an deine angegebene E-Mail-Adresse konnte nicht zugestellt werden.';
-          } else if (errorResponse.status === HttpStatusCodes.CONFLICT) {
-            errorMessage = 'Die angegebene E-Mail Adresse ist bereits in unserem System registriert.';
-          }
-        }
-        this.toastService.presentErrorToast(errorMessage);
-        this.loadingService.dismissLoadingSpinner();
+        this.handleErrorResponse(errorResponse);
+        this.loadingService.dismissLoadingSpinner(busyIndicator);
       }
     });
-
   }
 
-  private updateEmail(emailVerificationToken: string) {
-    this.loadingService.showLoadingSpinner();
-    this.updateEmailSubscription = this.api.partialUpdateEmail(emailVerificationToken).subscribe({
-      next: jwtResponse => {
-        const jwToken = jwtResponse.token;
-        this.authService.updateToken(jwToken);
-        
-        const decodedToken = this.jwtHelper.decodeToken(jwToken) as WanticJwtToken;
-        this.userProfile.email.value = decodedToken.sub;
-        this.userProfileStore.updateCachedUserProfile(this.userProfile);
+  private async handleReAuthError(busyIndicator: HTMLIonLoadingElement) {
+    await this.authService.logout();
+    await this.router.navigateByUrl('/login', { state: { email: this.email } });
+    this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich geändert. Melde dich nun mit deiner neuen E-Mail-Adresse erneut an.')
+    this.loadingService.dismissLoadingSpinner(busyIndicator);
+  }
 
-        this.location.replaceState('secure/menu/settings/email-update');
-        this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich geändert!');
-        this.loadingService.dismissLoadingSpinner();
-      }, 
-      error: errorResponse => {
-        let errorMessage = 'Es ist ein Fehler aufgetretet. Deine E-Mail-Adresse konnte nicht bestätigt werden.';
-        if (errorResponse instanceof HttpErrorResponse) {
-          if (errorResponse.error instanceof ErrorEvent) {
-            this.logger.log(`Error: ${errorResponse.error.message}`);
-          } else if (errorResponse.status === HttpStatusCodes.BAD_REQUEST) {
-            errorMessage = 'Dein Bestätigungslink ist abgelaufen.';
-          } else if (errorResponse.status === HttpStatusCodes.INTERNAL_SERVER_ERROR) {
-            errorMessage = 'Eine E-Mail zur Bestätigung deiner Anfrage an deine angegebene E-Mail-Adresse konnte nicht zugestellt werden.';
-          }
-        }
-        this.toastService.presentErrorToast(errorMessage);
-        this.loadingService.dismissLoadingSpinner();
+  private handleErrorResponse(errorResponse: any) {
+    let errorMessage = 'Ein allgemeiner Fehler ist aufgetreten, bitte versuche es später noch einmal.';
+    if (errorResponse instanceof HttpErrorResponse) {
+      if (errorResponse.error instanceof ErrorEvent) {
+        this.logger.log(`Error: ${errorResponse.error.message}`);
+      } else if (errorResponse.status === HttpStatusCodes.CONFLICT) {
+        errorMessage = 'Die angegebene E-Mail Adresse ist bereits in unserem System registriert.';
       }
-    })
+    }
+    this.toastService.presentErrorToast(errorMessage);
   }
 
 }

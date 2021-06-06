@@ -5,9 +5,6 @@ import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BrowserService } from '@core/services/browser.service';
-import { LogService } from '@core/services/log.service';
-import { UserService } from '@core/services/user.service';
-import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
 
@@ -18,11 +15,8 @@ import { AnalyticsService } from '@core/services/analytics.service';
 })
 export class WishDetailPage implements OnInit, OnDestroy {
 
-  private subscriptionAccountEnabled: Subscription;
-
   wishList: WishListDto
   wish: WishDto
-  accountIsNotActivated: boolean;
 
   get wishListOwnerCount(): number {
     return this.wishList?.owners?.length || 0;
@@ -42,8 +36,6 @@ export class WishDetailPage implements OnInit, OnDestroy {
     private navController: NavController,
     private route: ActivatedRoute,
     private wishListStore: WishListStoreService,
-    private logger: LogService,
-    private userService: UserService,
     private analyticsService: AnalyticsService
     ) { }
 
@@ -51,12 +43,6 @@ export class WishDetailPage implements OnInit, OnDestroy {
     this.analyticsService.setFirebaseScreenName('wishlist-wish');
     this.wishList = this.route.snapshot.data.wishList;
     this.wish = this.route.snapshot.data.wish;
-    this.subscriptionAccountEnabled = this.userService.$accountIsEnabled.subscribe({
-      next: accountIsEnabled => {
-        this.logger.debug('enabled', accountIsEnabled);
-        this.accountIsNotActivated = !accountIsEnabled;
-      }
-    })
   }
 
   ionViewWillEnter() {
@@ -64,7 +50,6 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptionAccountEnabled.unsubscribe();
   }
 
   openProductURL() {

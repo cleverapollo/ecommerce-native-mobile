@@ -116,7 +116,7 @@ export class ProductSearchService {
   private mapSearchResultArray(results: [any], url: string) {
     results.forEach(result => {
       if (result !== null && typeof result === 'object' && result.hasOwnProperty('name') && result.hasOwnProperty('imageUrl')) {
-        this.searchResults.push(new SearchResultItem(result.name, result.imageUrl, result.productUrl ? result.productUrl : url, result.price));
+        this.searchResults.push(new SearchResultItem(result.asin, result.name, result.imageUrl, result.productUrl ? result.productUrl : url, result.price));
       } else if (Array.isArray(result)) {
         this.mapSearchResultArray(result as [any], url);
       }

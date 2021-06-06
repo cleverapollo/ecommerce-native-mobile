@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct AppConfig {
     
@@ -13,4 +14,14 @@ struct AppConfig {
     static let backendUrl = "https://rest-dev.wantic.io"
     static let keychainAccessGroup = "3LDV8B8SZ2.io.wantic.app-beta"
     
+    static var appVersion: String {
+        if let bundleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            return bundleVersion
+        }
+        return "0.0.0"
+    }
+    
+    static var osVersion: String {
+        return UIDevice.current.systemVersion
+    }
 }

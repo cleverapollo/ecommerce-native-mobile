@@ -34,13 +34,18 @@ import { environment } from '../environments/environment';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 import { Appsflyer } from '@ionic-native/appsflyer/ngx';
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
+import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { AuthenticationService } from '@core/services/authentication.service';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
-export function jwtOptionsFactory(storageService: StorageService) {
+export function jwtOptionsFactory(authService: AuthenticationService) {
   return {
     tokenGetter: () => {
-      return storageService.get(StorageKeys.AUTH_TOKEN, true);
+      return authService.firebaseAccessToken;
     },
     whitelistedDomains: WHITELISTED_DOMAINS,
     blacklistedRoutes: [`${SERVER_URL}/auth*`]
@@ -76,10 +81,14 @@ export function jwtOptionsFactory(storageService: StorageService) {
     InAppBrowser,
     HTTP,
     EmailVerificationStatusResolver,
+    Facebook,
     File,
+    FirebaseAuthentication,
     FriendsWishListResolver,
     FriendsWishListDetailResolver,
+    GooglePlus,
     SharedWishListResolver,
+    SignInWithApple,
     UserProfileResolver,
     WishResolver,
     WishListsResolver,

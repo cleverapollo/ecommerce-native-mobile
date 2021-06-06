@@ -19,13 +19,13 @@
   <div class="divide"></div>
 
   <section class="ion-text-center page-actions">
-    <a [ngClass]=" { 'disabled': accountIsNotActivated }" [routerLink]="['../wish-search']">
+    <a [routerLink]="['../wish-search']">
       <ion-icon src="assets/icon/plus.svg" ></ion-icon>
     </a>
-    <a [ngClass]=" { 'disabled': accountIsNotActivated }"  [routerLink]="['../edit']">
+    <a [routerLink]="['../edit']">
       <ion-icon src="assets/icon/pencil.svg"></ion-icon>
     </a>
-    <a role="button" (click)="shareWishList()" [ngClass]=" { 'disabled': accountIsNotActivated }">
+    <a role="button" (click)="shareWishList()">
       <ion-icon src="assets/icon/share.svg"></ion-icon>
     </a>
   </section>

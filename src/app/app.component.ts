@@ -5,14 +5,10 @@ import { CacheService } from 'ionic-cache';
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
-import { UserService } from '@core/services/user.service';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { AuthService } from '@core/api/auth.service';
-import { UserApiService } from '@core/api/user-api.service';
-import { LoadingService } from '@core/services/loading.service';
-import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
-const { SplashScreen, StatusBar, App } = Plugins;
+import { UserManagementActionMode } from '@core/models/google-api.model';
+const { StatusBar, App } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -27,11 +23,7 @@ export class AppComponent {
     private zone: NgZone,
     private router: Router,
     private logger: LogService,
-    private userService: UserService,
-    private userApiService: UserApiService,
     private authService: AuthenticationService,
-    private authApiService: AuthService,
-    private loadingService: LoadingService,
     private analyticsService: AnalyticsService
   ) {
     this.initializeApp();
@@ -53,8 +45,7 @@ export class AppComponent {
           this.onAppResume();
         })
       } else {
-        this.handleAuthState();
-        this.handlePossibleAccountActivation();
+        this.migrateCachedCredentials();
       }
       this.initCache();
       this.analyticsService.initAppsflyerSdk();
@@ -63,72 +54,11 @@ export class AppComponent {
   }
 
   private async onAppStart() {
-    await this.handleAuthState();
+    this.migrateCachedCredentials();
   }
 
   private async onAppResume() {
-    await this.handleAuthState();
     await this.cache.clearGroup('wishList');
-    await this.handlePossibleAccountActivation();
-  }
-
-  private async handleAuthState(): Promise<void> {
-    const tokenIsExpired = await this.authService.tokenIsExpired();
-    if (tokenIsExpired) {
-      await SplashScreen.show({ autoHide: false });
-      await this.handleNavigation();
-      await SplashScreen.hide();
-    }
-    return Promise.resolve();
-  }
-
-  private handleNavigation() {
-    return new Promise<void>((resolve) => { 
-      this.authService.refreshExpiredToken().then(() => {
-        this.router.navigateByUrl('/secure/home/wish-list-overview').finally(() => {
-          resolve();
-        });
-      }, () => {
-        this.router.navigateByUrl('/login').finally(() => {
-          resolve();
-        });
-      });
-    });
-  }
-
-  private async handlePossibleAccountActivation() {
-    const isAuthenticated = await this.authService.isAuthenticated.toPromise();
-    if (isAuthenticated && this.userService.accountIsEnabled === false) {
-      this.logger.debug(isAuthenticated, this.userService.accountIsEnabled)
-      this.activateAccount();
-    }
-  }
-
-  private activateAccount() {
-    this.loadingService.showLoadingSpinner();
-    this.userApiService.getAccount().pipe(first()).subscribe({
-      next: account => {
-        if (account.isEnabled) {
-          this.authApiService.refreshToken().pipe(first()).subscribe({
-            next: jwtResponse => {
-              this.authService.updateToken(jwtResponse.token).finally(() => {
-                this.loadingService.dismissLoadingSpinner();
-              });
-            },
-            error: errorResponse => {
-              this.logger.error(errorResponse);
-              this.loadingService.dismissLoadingSpinner();
-            }
-          })
-        } else {
-          this.loadingService.dismissLoadingSpinner();
-        }
-      }, 
-      error: errorResponse => {
-        this.logger.error(errorResponse);
-        this.loadingService.dismissLoadingSpinner();
-      }
-    })
   }
 
   private initCache() {
@@ -138,19 +68,29 @@ export class AppComponent {
 
   private onAppUrlOpen(data: any) {
     this.zone.run(() => {
-      const wanticDomain = "wantic.io";
-      const firebaseDevDomain = "web.app";
-      let pageUrl = null;
-      if (data.url.includes(wanticDomain)) {
-        pageUrl = data.url.split(wanticDomain).pop();
-      } else if (data.url.includes(firebaseDevDomain)) {
-        pageUrl = data.url.split(firebaseDevDomain).pop();
-      }
-      this.logger.info('universal link routes to: ', pageUrl);
-      if (pageUrl) {
-        this.router.navigateByUrl(pageUrl);
+      const url: URL = new URL(data.url);
+      const mode = url.searchParams.get('mode');
+      const oobCode = url.searchParams.get('oobCode');
+      if (mode && oobCode) {
+        this.handleFirebaseLinks(mode, oobCode);
+      } else {
+        this.router.navigateByUrl(url.pathname);
       }
     });
+  }
+
+  private handleFirebaseLinks(modeString: string, oobCode: string) {
+    const mode: UserManagementActionMode = UserManagementActionMode[modeString];
+    if (mode === UserManagementActionMode.resetPassword) {
+      this.router.navigateByUrl(`/forgot-password/change-password?oobCode=${oobCode}`);
+    } else if (mode === UserManagementActionMode.verifyEmail) {
+      this.router.navigateByUrl(`/email-verification?oobCode=${oobCode}`);
+    }
+  }
+
+  private migrateCachedCredentials() {
+    this.authService.removeDeprecatedAuthToken();
+    this.authService.migrateSavedCredentials();
   }
 
 }

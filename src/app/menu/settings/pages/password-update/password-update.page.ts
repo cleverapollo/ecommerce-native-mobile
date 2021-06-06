@@ -3,9 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
 import { UserApiService } from '@core/api/user-api.service';
-import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
-import { UpdatePasswordRequest } from '@core/models/login.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { LoadingService } from '@core/services/loading.service';
+import { ToastService } from '@core/services/toast.service';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-password-update',
@@ -15,8 +16,6 @@ import { AnalyticsService } from '@core/services/analytics.service';
 export class PasswordUpdatePage implements OnInit {
 
   form: FormGroup;
-  showHint: Boolean;
-  hintConfig: HintConfig
   
   get validationMessages(): ValidationMessages {
     return {
@@ -38,12 +37,15 @@ export class PasswordUpdatePage implements OnInit {
   constructor(
     private formBuilder: FormBuilder, 
     private api: UserApiService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private loadingService: LoadingService,
+    private toastService: ToastService,
+    private logger: LogService
   ) { 
+    this.analyticsService.setFirebaseScreenName('profile_settings-password');
   }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('profile_settings-password');
     this.form = this.formBuilder.group({
       currentPassword: this.formBuilder.control('', {
         validators: [Validators.required],
@@ -70,30 +72,27 @@ export class PasswordUpdatePage implements OnInit {
     });
   }
 
-  saveChanges() {
+  async saveChanges() {
     if (this.form.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
+    const busyIndicator = await this.loadingService.createLoadingSpinner();
+    busyIndicator.present();
 
-    const request: UpdatePasswordRequest = {
-      currentPassword: this.form.controls.currentPassword.value,
-      newPassword: this.form.controls.value.value,
-      newPasswordConfirmed: this.form.controls.confirm.value
+    try {
+      await this.api.updatePassword({
+        currentPassword: this.form.controls.currentPassword.value,
+        newPassword: this.form.controls.value.value,
+        newPasswordConfirmed: this.form.controls.confirm.value
+      }).toPromise();
+      this.form.reset();
+      this.toastService.presentSuccessToast('Dein Passwort wurde erfolgreich geändert.')
+    } catch (error) {
+      this.logger.error(error);
     }
-    this.api.updatePassword(request).toPromise()
-      .then(() => {
-        this.hintConfig = hintConfigForSuccessResponse;
-      })
-      .catch(e => {
-        this.hintConfig = hintConfigForErrorResponse;
-      })
-      .finally(() => {
-        this.showHint = true;
-        setTimeout(() => {
-          this.showHint = false;
-        }, 3000);
-      })
+
+    this.loadingService.dismissLoadingSpinner(busyIndicator);
   }
 
 }

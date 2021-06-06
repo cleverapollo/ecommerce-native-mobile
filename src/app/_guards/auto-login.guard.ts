@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { filter, map, take } from 'rxjs/operators';
 import { LogService } from '@core/services/log.service';
+import { Observable, of } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AutoLoginGuard implements CanLoad  {
+export class AutoLoginGuard implements CanLoad {
 
-  constructor(
-    private authService: AuthenticationService, 
-    private router: Router,
-    private logger: LogService
-  ) {}
+  constructor(private authService: AuthenticationService, private router: Router, private logger: LogService) {}
 
-  canLoad(): Observable<boolean> {
+  canLoad(): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.isAuthenticated.pipe(
-      filter(val => val !== null),
+      filter(isAuthenticated => { return isAuthenticated !== null }),
       take(1),
       map(isAuthenticated => {
         if (isAuthenticated) {
@@ -28,7 +24,7 @@ export class AutoLoginGuard implements CanLoad  {
           return true;
         }
       })
-    );
+    )
   }
-  
+
 }

@@ -1,4 +1,6 @@
+import { BackendConfigType } from "./backend-config-type";
 export interface EnvironmentConfig {
+    backendType: BackendConfigType,
     production: boolean,
     debugMessage: string,
     serverConfig: {

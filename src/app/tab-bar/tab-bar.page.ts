@@ -1,12 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { EmailVerificationStatus } from '@core/models/user.model';
-import { EmailVerificationService } from '@core/services/email-verification.service';
-import { LogService } from '@core/services/log.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { IonTabs, NavController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
-import { getTaBarPath, TabBarRoute } from './tab-bar-routes';
 
 @Component({
   selector: 'app-tab-bar',
@@ -18,30 +13,15 @@ export class TabBarPage implements OnInit, OnDestroy {
   @ViewChild(IonTabs)
   public tabs: IonTabs;
 
-  private emailVerificationSubscription: Subscription;
-
-  disableSearchTab: boolean = false;
-
   constructor(
     private navController: NavController, 
     private searchResultDataService: SearchResultDataService,
-    private router: Router,
-    private emailVerificationService: EmailVerificationService,
-    private logger: LogService
+    private router: Router
   ) { }
 
-  ngOnInit() {
-    this.emailVerificationSubscription = this.emailVerificationService.emailVerificationStatus.subscribe({
-      next: status => {
-        this.disableSearchTab = status !== EmailVerificationStatus.VERIFIED;
-      },
-      error: this.logger.error
-    })
-  }
+  ngOnInit() {}
 
-  ngOnDestroy() {
-    this.emailVerificationSubscription.unsubscribe();
-  }
+  ngOnDestroy() {}
 
   onTabButtonClicked() {
     const selectedTab = this.tabs.getSelected();

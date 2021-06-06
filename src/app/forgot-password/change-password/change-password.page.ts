@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidation } from '@shared/custom-validation';
 import { UserApiService } from '@core/api/user-api.service';
@@ -7,16 +7,31 @@ import { ActivatedRoute } from '@angular/router';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { ChangePasswordRequest } from '@core/models/login.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { GoogleApiService } from '@core/api/google-api.service';
+import { first } from 'rxjs/operators';
+import { LogService } from '@core/services/log.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '@core/api/auth.service';
+import { LoadingService } from '@core/services/loading.service';
+import { ToastService } from '@core/services/toast.service';
+import { Plugins } from '@capacitor/core';
+import { Subscription } from 'rxjs';
+
+const { Device } = Plugins;
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.page.html',
   styleUrls: ['./change-password.page.scss'],
 })
-export class ChangePasswordPage implements OnInit {
+export class ChangePasswordPage implements OnInit, OnDestroy {
 
-  passwordChangedSuccessful: boolean;
-  token: string;
+  canShowBackToLoginButton: boolean;
+  passwordChanged: boolean;
+
+  email: string;
+  oobCode: string;
+  token: string; // deprecated
 
   form: FormGroup;
   validationMessages: ValidationMessages = {
@@ -33,21 +48,36 @@ export class ChangePasswordPage implements OnInit {
     ]
   }
 
+  private queryParamSubscription: Subscription;
+
   constructor(
     private formBuilder: FormBuilder, 
+    private authApi: AuthService,
     private api: UserApiService,
     private navController: NavController,
     private activatedRoute: ActivatedRoute,
-    private analyticsService: AnalyticsService
-  ) { }
-
-  ngOnInit() {
+    private analyticsService: AnalyticsService,
+    private googleApiService: GoogleApiService,
+    private loadingService: LoadingService,
+    private logger: LogService,
+    private toastService: ToastService
+  ) { 
     this.analyticsService.setFirebaseScreenName('login-password_reset-change_password');
-    this.passwordChangedSuccessful = false;
-    this.activatedRoute.queryParams.subscribe(params => {
+  }
+
+  async ngOnInit() {
+    const deviceInfo = await Device.getInfo();
+    this.canShowBackToLoginButton = deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
+    this.passwordChanged = false;
+    this.queryParamSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.token = params['token'];
+      this.oobCode = params['oobCode'];
     });
     this.initForm();
+  }
+
+  ngOnDestroy(): void {
+    this.queryParamSubscription.unsubscribe();
   }
 
   initForm() {
@@ -65,14 +95,59 @@ export class ChangePasswordPage implements OnInit {
   }
 
   changePassword() {
-    let request: ChangePasswordRequest = {
-      password: this.form.controls.value.value,
-      passwordConfirmed: this.form.controls.confirm.value,
-      token: this.token
+    if (this.oobCode) {
+      this.resetPassword();
+    } else if (this.token) {
+      let request: ChangePasswordRequest = {
+        password: this.form.controls.value.value,
+        passwordConfirmed: this.form.controls.confirm.value,
+        token: this.token
+      }
+      this.api.changePassword(request).toPromise().then(() => {
+        this.passwordChanged = true;
+      });
     }
-    this.api.changePassword(request).toPromise().then(() => {
-      this.passwordChangedSuccessful = true;
-    });
+  }
+
+  async resetPassword() {
+    const newPassword = this.form.controls.value.value;
+    const spinner = await this.loadingService.createLoadingSpinner();
+    spinner.present();
+    try {
+      const verifyEmailResponse = await this.googleApiService.verifyPasswortResetCode(this.oobCode).toPromise();
+      this.authApi.confirmPasswordReset({
+        email: verifyEmailResponse.email,
+        oobCode: this.oobCode, 
+        newPassword: newPassword
+      }).pipe(first()).subscribe(responseBody => {
+        this.logger.debug(responseBody);
+        this.passwordChanged = true;
+        this.toastService.presentSuccessToast('Dein Passwort wurde erfolgreich geändert.');
+      }, error => {
+        this.logger.error(error);
+        this.passwordChanged = false;
+        this.toastService.presentErrorToast('Beim Ändern deines Passworts ist ein Fehler aufgetreten.');
+      }, () => {
+        this.loadingService.dismissLoadingSpinner(spinner);
+      })
+    } catch (error) {
+      const errorMessage = this.getErrorMessage(error);
+      this.logger.error(errorMessage);
+      this.passwordChanged = false;
+      this.loadingService.dismissLoadingSpinner(spinner);
+      this.toastService.presentErrorToast('Beim Ändern deines Passworts ist ein Fehler aufgetreten.');
+    }
+  }
+
+  private getErrorMessage(error: HttpErrorResponse) {
+    let errorMessage = error.message;
+    if (typeof error.error === 'string') {
+      const googleApiError = JSON.parse(error.error);
+      if (googleApiError?.error?.message) {
+        errorMessage = googleApiError?.error?.message;
+      }
+    }
+    return errorMessage;
   }
 
   navBackToLogin() {

@@ -20,6 +20,21 @@
     <param name="onload" value="true"/>
   </feature>
 
+  <feature name="FirebaseAnalytics">
+    <param name="ios-package" value="FirebaseAnalyticsPlugin"/>
+    <param name="onload" value="$ANALYTICS_COLLECTION_ENABLED"/>
+  </feature>
+
+  <feature name="FirebaseAuthentication">
+    <param name="ios-package" value="FirebaseAuthenticationPlugin"/>
+    <param name="onload" value="false"/>
+  </feature>
+
+  <feature name="GooglePlus">
+    <param name="ios-package" value="GooglePlus"/>
+    <param name="onload" value="true"/>
+  </feature>
+
   <feature name="InAppBrowser">
     <param name="ios-package" value="CDVWKInAppBrowser"/>
     <param name="onload" value="true"/>
@@ -27,6 +42,11 @@
 
   <feature name="IonicCordovaCommon">
     <param name="ios-package" value="IonicCordovaCommon" onload="true"/>
+  </feature>
+
+  <feature name="SignInWithApple">
+    <param name="ios-package" value="SignInWithApple"/>
+    <param name="onload" value="true"/>
   </feature>
 
   <feature name="SQLitePlugin">

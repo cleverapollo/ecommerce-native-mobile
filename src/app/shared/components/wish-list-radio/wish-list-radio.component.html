@@ -1,4 +1,4 @@
-<ion-list>
+<ion-list *ngIf="wishListSelectOptions.length > 0">
   <ion-item *ngFor="let option of wishListSelectOptions; let isFirst = first; let isLast = last;" 
             (click)="wishListId = option.id;"
             [ngClass]=" {'first-item': isFirst, 'last-item': isLast } "
@@ -10,3 +10,6 @@
     </ion-avatar>
   </ion-item>
 </ion-list>
+<div *ngIf="wishListSelectOptions.length === 0" class="wantic-margin-right-left no-wish-lists-section">
+  <p>Du hast keine Wunschlisten angelegt.</p>
+</div>

@@ -1,12 +1,37 @@
-<ion-content class="ion-text-center">
+<ion-content class="ion-text-center" scrollY="false">
   <img src="assets/images/start-wantic-name.svg" />
   <p>
-    Lege Wunschlisten an, und teile diese mit deinen Freunden und deiner Familie.
+    Lege Wunschlisten an und teile diese mit deinen Freunden und deiner Familie.
   </p>
-  <ion-button class="wantic-save-button"  color="tertiary" expand="block" [routerLink]="['/registration/wish-list-name']">
-    ACCOUNT ANLEGEN
+  <ion-button *ngIf="showAppleSignIn" class="wantic-save-button"  color="black" expand="block" (click)="signupWithApple()">
+    <div class="ion-text-left">
+      <ion-icon name="logo-apple"></ion-icon>&nbsp;<span>Mit Apple anmelden</span>
+    </div>
   </ion-button>
-  <ion-button class="wantic-save-button login-button"  color="secondary" expand="block" [routerLink]="['/login']">
-    EINLOGGEN
+  <ion-button *ngIf="showFacebookSignIn" class="wantic-save-button"  color="facebook-blue" expand="block" (click)="signupWithFacebook()">
+    <div class="ion-text-left">
+      <ion-icon name="logo-facebook"></ion-icon>&nbsp;<span>Mit Facebook anmelden</span>
+    </div>
   </ion-button>
+  <ion-button *ngIf="showGooglePlusSignIn" class="wantic-save-button"  color="white" expand="block" (click)="signupWithGoogle()">
+    <div class="ion-text-left">
+      <ion-icon src="assets/icon/google-logo.svg"></ion-icon>&nbsp;<span>Mit Google anmelden</span>
+    </div>
+  </ion-button>
+  <ion-button class="wantic-save-button"  color="white" expand="block" (click)="signupWithMailAndPassword()">
+    <div class="ion-text-left">
+      <span>Mit E-Mail Adresse anmelden</span>
+    </div>
+  </ion-button>
+
 </ion-content>
+
+<ion-footer>
+  <p class="ion-text-center wantic-margin-right-left">Du hast noch kein Konto?</p>
+  <ion-button class="wantic-save-button signup-button"  color="dark" expand="block" routerLink="/signup/signup-mail">
+    <span>Mit E-Mail registrieren</span>
+  </ion-button>
+  <p class="ion-text-center wantic-margin-right-left privacy-policy-info">
+    Indem du fortfährst, stimmst du der <a (click)="privacyPolicyService.showPrivacyPolicy()">Datenschutzerklärung</a> von wantic zu.
+  </p>
+</ion-footer>

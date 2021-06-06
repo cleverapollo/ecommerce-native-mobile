@@ -8,13 +8,15 @@ const { Storage, SecureStoragePlugin } = Plugins;
 
 export enum StorageKeys {
   USER_SETTINGS = 'userSettings',
-  LOGIN_EMAIL = 'loginEmail',
-  LOGIN_PASSWORD = 'loginPassword',
-  AUTH_TOKEN = 'auth-token',
-  EMAIL_VERIFICATION_STATUS = 'emailVerificationStatus',
+  LOGIN_EMAIL = 'loginEmail', // deprecated
+  LOGIN_PASSWORD = 'loginPassword', // deprecated
+  AUTH_TOKEN = 'auth-token', // deprecated
+  CREDENTIALS = 'credentials',
+  FIREBASE_ID_TOKEN = 'firebaseIdToken',
+  FIREBASE_EMAIL_VERIFIED = 'firebaseEmailVerified',
+  FIREBASE_USER_INFO = 'firebaseUserInfo',
   SHARED_WISH_LIST_EMAIL = 'memberEmail',
-  SHOW_ONBOARDING_SLIDES = 'showOnboardingSlides',
-  REGISTRATION_RESPONSE = 'registrationResponse'
+  SIGNUP_RESPONSE = 'signupResponse',
 }
 
 @Injectable({
@@ -30,7 +32,13 @@ export class StorageService {
         if (secure) {  
           SecureStoragePlugin.get({key: storageKey}).then((cachedObject: { value: string }) => {
             if (cachedObject.value.length > 0) {
-              resolve(JSON.parse(cachedObject.value));
+               try {
+                 const jsonObject = JSON.parse(cachedObject.value);
+                 resolve(jsonObject);
+               } catch (error) {
+                 this.logger.error(`failed to parse object with key ${storageKey}`, error);
+                 resolve(null);
+               } 
             } else {
               resolve(null);
             }

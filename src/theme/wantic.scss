@@ -29,8 +29,6 @@ img.img-toolbar-wantic-logo {
 }
 
 ion-button.wantic-save-button {
-    --ion-color-contrast: white !important;
-    --color: white !important;
     font-family: 'Roboto';
     font-size: 10px;
     text-transform: uppercase;
@@ -136,6 +134,7 @@ ion-input, ion-datetime, ion-select, ion-textarea {
     --padding-bottom: 16px !important;
     font-family: 'Roboto' !important;
     font-size: 14px !important;
+    font-weight: 300 !important;
 }
 
 .toggleContainer {
@@ -180,6 +179,12 @@ ion-searchbar > div > button > ion-icon.searchbar-clear-icon {
     height: 9.9px !important;
 }
 
+form.form-signup {
+    ion-item {
+        margin-bottom: 7px;
+    }
+}
+
 form {
     ion-item {
         --inner-padding-start: 0;
@@ -196,6 +201,7 @@ form {
             border-radius: 50pt;
             background: white;
             --padding-end: 21.8px !important;
+            font-weight: normal !important;
         }
         ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty, 
         ion-textarea.ion-invalid.ion-touched, ion-textarea.ion-invalid.ion-dirty,

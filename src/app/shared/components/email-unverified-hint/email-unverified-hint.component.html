@@ -1,16 +1,9 @@
-<div class="ion-text-center wantic-info-box" *ngIf="showUnverifiedHint">
-  <p class="white-text">
-    <strong class="white-text">Bitte bestätige deine E-Mail Adresse</strong>, um den<br>
-    vollen Funktionsumfang von Wantic nutzen zu können.
-  </p>
-  <ion-button class="wantic-save-button" size="small" (click)="resendVerificationLink()" *ngIf="showButton" [disabled]="disableButton">
-    <ion-text >E-Mail erneut anfordern</ion-text>
-  </ion-button>
-</div>
-
-<div class="ion-text-center wantic-info-box" *ngIf="showEmailSentHint">
+<div class="ion-text-center wantic-info-box" *ngIf="emailVerified === false;">
   <p class="white-text">
     Wir haben dir eine E-Mail zum Bestätigen deiner E-Mail-Adresse gesendet. <br> 
     Folge bitte der Anleitung in der E-Mail.
   </p>
+  <ion-button class="wantic-save-button" size="small" (click)="resendVerificationLink()" [disabled]="disableButton">
+    <ion-text >E-Mail erneut anfordern</ion-text>
+  </ion-button>
 </div>
