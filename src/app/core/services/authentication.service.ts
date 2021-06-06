@@ -132,10 +132,13 @@ export class AuthenticationService {
   }
 
   private getErrorMessageForWanticLogin(error: HttpErrorResponse) {
-    let errorMessage: string = null;
+    let errorMessage: string = 'Die Anmeldung ist fehlgeschlagen.';
     switch (error.status) {
       case HttpStatusCodes.UNAUTHORIZED:
         errorMessage = 'Du hast dein Passwort falsch eingegeben.';
+        break;
+      case HttpStatusCodes.FORBIDDEN:
+        errorMessage = 'Dein Account ist noch nicht freigeschaltet. Um deinen Account zu aktivieren musst du dich zunächst registrieren.';
         break;
       case HttpStatusCodes.NOT_FOUND:
         errorMessage = 'Ein Benutzer mit der angegebenen E-Mail-Adresse wurde nicht gefunden';
