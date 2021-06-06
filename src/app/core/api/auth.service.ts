@@ -36,6 +36,12 @@ export class AuthService {
     return this.apiService.post<SignInResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signin-email-password`, signInRequest);
   }
 
+  resetPassword(email: String): Observable<void> {
+    return this.apiService.post<void>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/reset-password`, {
+      email: email
+    });
+  }
+
   confirmPasswordReset(requestBody: ConfirmPasswordResetRequest): Observable<ConfirmPasswordResetResponse> {
     return this.apiService.patch<ConfirmPasswordResetResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/confirm-password-reset`, requestBody);
   }

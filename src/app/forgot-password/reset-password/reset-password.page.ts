@@ -7,6 +7,8 @@ import { LogService } from '@core/services/log.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { ToastService } from '@core/services/toast.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
 
 @Component({
   selector: 'app-reset-password',
@@ -44,7 +46,7 @@ export class ResetPasswordPage implements OnInit {
 
   resetPassword() {
     this.logger.log(this.form.controls.email.value)
-    this.authService.sendPasswordResetEmail(this.form.controls.email.value).then(() => {
+    this.authService.resetPassword(this.form.controls.email.value).then(() => {
       this.passwordResetRequestSuccessful = true;
     }, error => {
       this.logger.error(error);
@@ -53,6 +55,12 @@ export class ResetPasswordPage implements OnInit {
         const userDoesNotExist = 'There is no user record corresponding to this identifier. The user may have been deleted.';
         if (error === userDoesNotExist) {
           errorMessage = 'Ein Benutzer mit angegebener E-Mail-Adresse existiert nicht.';
+        }
+      } else if (error instanceof HttpErrorResponse) {
+        switch (error.status) {
+          case HttpStatusCodes.NOT_FOUND:
+            errorMessage = 'Ein Benutzer mit der angegebenen E-Mail-Adresse wurde nicht gefunden.';
+            break;
         }
       }
       this.toastService.presentErrorToast(errorMessage);

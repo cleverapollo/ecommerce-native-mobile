@@ -15,6 +15,7 @@ import { UserProfile } from '@core/models/user.model';
 import { SERVER_URL } from '@env/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -288,8 +289,12 @@ export class AuthenticationService {
     return this.firebaseAuthentication.sendEmailVerification();
   }
 
-  sendPasswordResetEmail(email: string): Promise<any> {
-    return this.firebaseAuthentication.sendPasswordResetEmail(email);
+  resetPassword(email: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.authApiService.resetPassword(email).toPromise().then(() => {
+        this.firebaseAuthentication.sendPasswordResetEmail(email).then(resolve, reject);
+      }, reject)
+    })
   }
 
   updateEmailVerificationStatus(emailVerified: boolean) {
