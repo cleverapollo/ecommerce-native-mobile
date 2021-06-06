@@ -59,7 +59,11 @@ export class AuthenticationService {
         this.storageService.set(StorageKeys.FIREBASE_USER_INFO, userInfo, true);
         this.userInfo.next(userInfo);
         this.storageService.get<boolean>(StorageKeys.FIREBASE_EMAIL_VERIFIED, true).then(isEmailVerified => {
-          this.isEmailVerified.next(isEmailVerified);
+          if (isEmailVerified !== null) {
+            this.isEmailVerified.next(isEmailVerified);
+          } else {
+            this.isEmailVerified.next(userInfo.emailVerified);
+          }
         }, error => {
           this.logger.error(error);
           this.isEmailVerified.next(userInfo.emailVerified);
