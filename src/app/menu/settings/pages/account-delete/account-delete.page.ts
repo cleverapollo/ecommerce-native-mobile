@@ -19,6 +19,8 @@ import { environment } from 'src/environments/environment';
 })
 export class AccountDeletePage implements OnInit {
 
+  mailToString = "mailto:support@wantic.io?subject=Wantic%20-%20Account%20l%C3%B6schen"
+
   get showDeleteButton(): boolean {
     return environment.backendType === BackendConfigType.beta || environment.backendType == BackendConfigType.dev;
   }

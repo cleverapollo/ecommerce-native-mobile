@@ -6,11 +6,27 @@
 <ion-content>
 
   <h1 class="ion-text-center wantic-page-header">Profil bearbeiten</h1>
-
   <p class="wantic-margin-right-left ion-text-center">Möchtest du deinen Account wirklich löschen?</p>
+  
+  <div *ngIf="showDeleteButton">
+    <ion-button  type="submit" class="wantic-save-button" color="primary" expand="block" (click)="deleteAccount()">
+      ACCOUNT LÖSCHEN
+    </ion-button>
+  </div>
 
-  <ion-button *ngIf="showDeleteButton" type="submit" class="wantic-save-button" color="primary" expand="block" (click)="deleteAccount()">
-    ACCOUNT LÖSCHEN
-  </ion-button>
+  <div *ngIf="!showDeleteButton" class="wantic-margin-right-left">
+    <p><u>Hinweis:</u></p>
+    <p>
+      Wenn du dein Konto löschst, werden dein Profil, deine Wunschlisten und alle Wunschreservieungen dauerhaft gelöscht.<br><br>
+      Nachdem dein Konto gelöscht wurde, können wir dein Konto nicht wiederherstellen.
+    </p>
+    <p><u>So löschst du dein Konto dauerhaft:</u></p>
+    <p>
+      Schreib uns eine E-Mail mit deiner Anfrage zur Löschung deines Kontos an <a [href]="mailToString" target="_top">support@wantic.io</a>.<br>
+      Gib hierbei die E-Mail-Adresse an mit der du dein Konto bei uns angelegt hast.<br><br>
+      Anschließend werden wir deine Anfrage schnellstmöglich bearbeiten und dir eine Bestätigungsmail schicken. 
+    </p>
+  </div>
+
 
 </ion-content>
