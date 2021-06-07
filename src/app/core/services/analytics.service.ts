@@ -5,6 +5,7 @@ import { Plugins } from "@capacitor/core";
 import { Appsflyer, AppsflyerEvent } from '@ionic-native/appsflyer/ngx';
 import { LogService } from './log.service';
 import { AuthProvider } from '@core/models/signup.model';
+import { Platform } from '@ionic/angular';
 
 const { FirebaseAnalytics, Device } = Plugins;
 @Injectable({
@@ -23,7 +24,7 @@ export class AnalyticsService {
     return environment.analyticsConfigured;
   }
 
-  constructor(private appsflyer: Appsflyer, private logger: LogService) { 
+  constructor(private appsflyer: Appsflyer, private logger: LogService, private platform: Platform) { 
     this.initFirebaseSdk();
   }
 
@@ -48,12 +49,14 @@ export class AnalyticsService {
   }
 
   logFirebaseEvent(eventName: string, params: { [prop: string]: any }) {
-    if (this.firebaseIsConfigured) {
-      const event = {
-        name: eventName,
-        params: params
-      };
-      FirebaseAnalytics.logEvent(event);
+    if (this.firebaseIsConfigured) { 
+      this.platform.ready().then(() => {
+        const event = {
+          name: eventName,
+          params: params
+        };
+        FirebaseAnalytics?.logEvent(event);
+      })
     }
   }
 
@@ -65,9 +68,11 @@ export class AnalyticsService {
 
   setFirebaseScreenName(screenName: string) {
     if (this.firebaseIsConfigured) { 
-      FirebaseAnalytics.setScreenName({
-        screenName
-      });
+      this.platform.ready().then(() => {
+        FirebaseAnalytics?.setScreenName({
+          screenName
+        });
+      })
     }
   }
 
