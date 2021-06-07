@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
-import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 import { UserProfileStore } from '../../user-profile-store.service';
 import { LoadingService } from '@core/services/loading.service';
 import { ToastService } from '@core/services/toast.service';
@@ -40,7 +39,7 @@ export class ProfileSettingsFirstnamePage implements OnInit {
 
   ngOnInit() {
     this.analyticsService.setFirebaseScreenName('profile_settings-first_name');
-    const firstName = history.state.data.profile.firstName;
+    const firstName = history?.state?.data?.profile.firstName;
     this.form = this.formBuilder.group({
       firstName: this.formBuilder.control(firstName, {
         validators: [Validators.required, Validators.min(2), CustomValidation.valueHasChanged],
