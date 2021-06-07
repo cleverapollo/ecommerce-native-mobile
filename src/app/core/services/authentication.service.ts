@@ -211,8 +211,13 @@ export class AuthenticationService {
       return Promise.resolve({ googlePlusLoginResponse: googlePlusLoginResponse, user: wanticSignInResponse.user });
     } catch (error) {
       this.logger.error(error);
-      const firebaseAuthErrorMessage = this.getFirebaseAuthErrorMessage(error);
-      return Promise.reject(firebaseAuthErrorMessage);
+      let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
+      if (typeof error === 'string' && error === 'The user canceled the sign-in flow.') {
+        errorMessage = null;
+      } else {
+        errorMessage = this.getFirebaseAuthErrorMessage(error);
+      }
+      return Promise.reject(errorMessage);
     }
   }
 
@@ -234,8 +239,13 @@ export class AuthenticationService {
       return Promise.resolve({ appleSignInResponse: appleSignInResponse, user: wanticSignInResponse.user });
     } catch (error) {
       this.logger.error(error);
-      const firebaseAuthErrorMessage = this.getFirebaseAuthErrorMessage(error);
-      return Promise.reject(firebaseAuthErrorMessage);
+      let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
+      if (typeof error === 'object' && error?.code === '1001' && error?.error === 'ASAUTHORIZATION_ERROR') {
+        errorMessage = null;
+      } else {
+        errorMessage = this.getFirebaseAuthErrorMessage(error);
+      }
+      return Promise.reject(errorMessage);
     }
   }
 
