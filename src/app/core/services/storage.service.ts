@@ -42,8 +42,7 @@ export class StorageService {
             } else {
               resolve(null);
             }
-          }, error => {
-            this.logger.debug(storageKey, error);
+          }, () => {
             resolve(null);
           });
         } else {
@@ -53,8 +52,7 @@ export class StorageService {
             } else {
               resolve(null);
             }
-          }, error => {
-            this.logger.debug(storageKey, error);
+          }, () => {
             resolve(null);
           })
         }
