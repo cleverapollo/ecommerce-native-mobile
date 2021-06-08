@@ -36,8 +36,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    const user = await this.userProfileStore.loadUserProfile().toPromise();
-    this.profile = this.route.snapshot.data.profile ?? user;
+    this.profile = this.route.snapshot?.data?.profile 
     this.showPasswordChangeLink = this.profile.authProvider === AuthProvider.WANTIC;
     this.userCanChangeEmail = this.profile.authProvider === AuthProvider.WANTIC;
   }
