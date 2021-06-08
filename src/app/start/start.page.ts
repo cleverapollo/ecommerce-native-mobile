@@ -111,12 +111,10 @@ export class StartPage implements OnInit {
         await this.authApiService.signupSocialLogin(signupRequest).toPromise();
         await this.authService.refreshFirebaseIdToken(true);
         this.analyticsService.logCompleteRegistrationEvent(authProvider);
-        if (this.authService.isEmailVerified.value) {
-          this.router.navigateByUrl('secure/home/wish-list-overview', { replaceUrl: true });
-        } else {
+        if (this.authService.isEmailVerified.value === false) {
           await this.authService.sendVerificationMail();
-          this.router.navigateByUrl('signup/signup-mail-two');
         }
+        this.router.navigateByUrl('signup/signup-mail-two');
       }
     }
 

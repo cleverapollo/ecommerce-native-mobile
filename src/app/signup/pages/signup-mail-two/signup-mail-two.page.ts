@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserApiService } from '@core/api/user-api.service';
 import { Gender } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
@@ -31,6 +32,7 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private toastService: ToastService,
     private userApiService: UserApiService,
+    private authService: AuthenticationService,
     public privacyPolicyService: PrivacyPolicyService
   ) { 
     this.analyticsService.setFirebaseScreenName('signup-gender-birthday');
@@ -81,7 +83,11 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
       })
     }
 
-    await this.router.navigateByUrl('/signup/signup-completed');
+    if (this.authService.isEmailVerified.value) {
+      await this.router.navigateByUrl('secure/home/wish-list-overview', { replaceUrl: true });
+    } else {
+      await this.router.navigateByUrl('/signup/signup-completed');
+    }
     this.loadingService.dismissLoadingSpinner(loadingSpinner);
   }
 
