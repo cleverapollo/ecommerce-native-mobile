@@ -2,13 +2,10 @@ import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
-  HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { Observable, throwError, of, Subject } from 'rxjs';
+import { Observable, throwError, of, Subject, from } from 'rxjs';
 import { Platform } from '@ionic/angular';
-import { StorageService } from '@core/services/storage.service';
-import { LogService } from '@core/services/log.service';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { Router } from '@angular/router';
@@ -36,10 +33,15 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         if (!this.platform.is('capacitor') || isLoginRequest || isGoogleApiRequest || isConfirmPasswordReset || isSignupRequest) {
             return next.handle(request);
         }
-        request = this.addAuthToken(request);
+        return from(this.handle(request, next));
+    }
+
+    async handle(request: HttpRequest<any>, next: HttpHandler) {
+        const authToken = await this.authService.getFirebaseIdToken(false);
+        this.addAuthToken(request, authToken);
         return next.handle(request).pipe(catchError(error => {
             return this.handleResponseError(error, request, next);
-        }));
+        })).toPromise();
     }
 
     handleResponseError(error: any, request?: HttpRequest<any>, next?: HttpHandler) {
@@ -52,8 +54,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         else if (error.status === HttpStatusCodes.UNAUTHORIZED) {
             return this.refreshToken().pipe(
                 switchMap(() => {
-                    request = this.addAuthToken(request);
-                    return next.handle(request);
+                    return this.handleRequestAfterTokenRefresh(request, next);
                 }),
                 catchError(e => {
                     if (e.status !== HttpStatusCodes.UNAUTHORIZED) {
@@ -85,6 +86,12 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         return throwError(error);
     }
 
+    async handleRequestAfterTokenRefresh(request?: HttpRequest<any>, next?: HttpHandler) {
+        const authToken = await this.authService.getFirebaseIdToken(false);
+        this.addAuthToken(request, authToken);
+        return next.handle(request).toPromise();
+    }
+
     private refreshToken(): Observable<any> {
         if (this.refreshTokenInProgress) {
             return new Observable(observer => {
@@ -96,7 +103,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         } else {
             this.refreshTokenInProgress = true;
 
-            return of(this.authService.refreshFirebaseIdToken(true)).pipe(
+            return of(this.authService.getFirebaseIdToken(true)).pipe(
                 tap(() => {
                     this.refreshTokenInProgress = false;
                     this.tokenRefreshedSource.next();
@@ -108,8 +115,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         }
     }
 
-    private addAuthToken(req: HttpRequest<any>): HttpRequest<any> {
-        const token = this.authService.firebaseAccessToken.value;
+    private addAuthToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
         if (token) {
             return req.clone({
                 setHeaders: {
