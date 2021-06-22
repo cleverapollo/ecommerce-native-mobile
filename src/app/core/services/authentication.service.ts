@@ -263,7 +263,7 @@ export class AuthenticationService {
     return Promise.reject(error);
   }
 
-  async getFirebaseIdToken(forceRefresh: boolean): Promise<string> {
+  async getFirebaseIdToken(forceRefresh: boolean = false): Promise<string> {
     try {
       const idToken = await this.firebaseAuthentication.getIdToken(forceRefresh);
       await this.updateToken(idToken);

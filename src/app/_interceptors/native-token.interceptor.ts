@@ -38,7 +38,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     async handle(request: HttpRequest<any>, next: HttpHandler) {
         const authToken = await this.authService.getFirebaseIdToken(false);
-        this.addAuthToken(request, authToken);
+        request = this.addAuthToken(request, authToken);
         return next.handle(request).pipe(catchError(error => {
             return this.handleResponseError(error, request, next);
         })).toPromise();
@@ -54,7 +54,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         else if (error.status === HttpStatusCodes.UNAUTHORIZED) {
             return this.refreshToken().pipe(
                 switchMap(() => {
-                    return this.handleRequestAfterTokenRefresh(request, next);
+                    return from(this.handleRequestAfterTokenRefresh(request, next));
                 }),
                 catchError(e => {
                     if (e.status !== HttpStatusCodes.UNAUTHORIZED) {
@@ -88,7 +88,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     async handleRequestAfterTokenRefresh(request?: HttpRequest<any>, next?: HttpHandler) {
         const authToken = await this.authService.getFirebaseIdToken(false);
-        this.addAuthToken(request, authToken);
+        request = this.addAuthToken(request, authToken);
         return next.handle(request).toPromise();
     }
 
