@@ -20,12 +20,18 @@ Array.from(document.getElementsByTagName('img')).map(x => {
                     imageUrl = url;
                 }
             })
+        } else if(x.srcset) {
+            return getFirstImageUrlFromSrcSet(x); 
         } 
         return { name: x.alt, imageUrl: imageUrl || '' };  
     } else if(x.srcset) {
-        const imagesUrls = Array.from(x.srcset.split(','))
-            .filter(url => url.match(/(jpeg|jpg|svg|png|tiff|tif|gif)$/) != null)
-        return { name: x.alt, imageUrl: imagesUrls[0] || '' }; 
+        return getFirstImageUrlFromSrcSet(x);  
     } 
     return { name: '', imageUrl: ''  };  
-}).filter(x => x.imageUrl !== "" && x.imageUrl.startsWith('http'));
+}).filter(x => x.imageUrl !== "" && (x.imageUrl.startsWith('http') || x.imageUrl.startsWith('//')));
+
+function getFirstImageUrlFromSrcSet(x) {
+    const imagesUrls = Array.from(x.srcset.split(','))
+        .filter(url => url.match(/\.(jpeg|jpg|svg|png|tiff|tif|gif)/g) != null);
+    return { name: x.alt, imageUrl: imagesUrls[0] || '' };
+}
