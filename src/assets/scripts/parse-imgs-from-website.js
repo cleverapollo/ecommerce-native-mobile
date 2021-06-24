@@ -1,7 +1,7 @@
 Array.from(document.getElementsByTagName('img')).map(x => {
     if (x.src) {
         let imageUrl = validateUrl(x.src);
-        if (imageUrl === '' && x.srcset) {
+        if (x.srcset) {
             imageUrl = getFirstImageUrlFromSrcSet(x.srcset);
         }
         return { name: x.alt, imageUrl: imageUrl || '' };  
