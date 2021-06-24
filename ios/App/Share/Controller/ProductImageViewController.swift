@@ -138,7 +138,12 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                             return
                     }
                     
-                    let price = results["price"] as? Double ?? 0.00
+                    var priceAmount: Decimal = 0.00
+                    if let doublePrice = results["price"] as? Double  {
+                        priceAmount = Decimal(doublePrice)
+                    } else if let decimalPrice = results["price"] as? Decimal {
+                        priceAmount = decimalPrice
+                    }
                     
                     self.productInfos = productInfosDict.compactMap { (dict: NSDictionary) in
                         guard let imageUrl = dict["imageUrl"] as? String else { return nil }
@@ -146,7 +151,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                         if let name = dict["name"] as? String, !name.isEmpty {
                             displayName = name
                         }
-                        return ProductInfo(productUrl: url, imageUrl: imageUrl, name: displayName, price: Price(amount: Decimal(price)))
+                        return ProductInfo(productUrl: url, imageUrl: imageUrl, name: displayName, price: Price(amount: priceAmount))
                     }
                     self.reloadViewRemoveActivityIndicator()
                 }
