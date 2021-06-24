@@ -1,46 +1,38 @@
 Array.from(document.getElementsByTagName('img')).map(x => {
     if (x.src) {
-        let imageSrcUrl = x.src;
-        let imageUrl = getPathFromUrl(imageSrcUrl);
-        if (imageSrcUrl.match(/https/g)?.length > 1) {
-            imageUrl = validateImageUrl(imageSrcUrl, 'https');
-        } else if (imageSrcUrl.match(/http/g)?.length > 1) {
-            imageUrl = validateImageUrl(imageSrcUrl, 'http');
-        } else if(x.srcset) {
-            return getFirstImageUrlFromSrcSet(x)
-        } else if (imageSrcUrl.startsWith('//')) {
-            imageSrcUrl = 'https' + imageSrcUrl;
-            imageUrl = validateImageUrl(imageSrcUrl, 'https');
+        let imageUrl = validateUrl(x.src);
+        if (imageUrl === '' && x.srcset) {
+            imageUrl = getFirstImageUrlFromSrcSet(x.srcset);
         }
         return { name: x.alt, imageUrl: imageUrl || '' };  
-    } else if(x.srcset) {
-        return getFirstImageUrlFromSrcSet(x)
+    } else if (x.srcset) {
+        const imageUrl = getFirstImageUrlFromSrcSet(x.srcset);
+        return { name: x.alt, imageUrl: imageUrl || '' };
     } 
     return { name: '', imageUrl: ''  };  
-}).filter(x => x.imageUrl !== "" && (x.imageUrl.startsWith('http') || x.imageUrl.startsWith('//')));
+}).filter(x => x.imageUrl !== '' && (x.imageUrl.startsWith('http')));
 
-function validateImageUrl(imageSrcUrl, protocol) {
-    let imageUrl = imageSrcUrl;
-    let urls = imageSrcUrl.split(protocol);
-    urls.forEach(url => {
-        const urlToCheck = protocol + url;
-        if (urlToCheck.match(/\.(jpeg|jpg|svg|png|tiff|tif|gif)/g) != null) {
-            imageUrl = encodeURI(urlToCheck);
-        } else {
-            imageUrl = '';
-        }
-    });
+function validateUrl(url) {
+    let imageUrl = url;
+    if (!url.startsWith('http') && url.startsWith('//')) {
+        imageUrl = 'https:' + url; 
+    }
+    if (!isImageUrl(imageUrl)) {
+        imageUrl = '';
+    } 
+    if (imageUrl !== '') {
+        imageUrl = encodeURI(imageUrl);
+    }
     return imageUrl;
 }
 
-function getFirstImageUrlFromSrcSet(x) {
-    const imagesUrls = Array.from(x.srcset.split(','))
-        .filter(url => url.match(/\.(jpeg|jpg|svg|png|tiff|tif|gif)/g) != null);
+function getFirstImageUrlFromSrcSet(srcset) {
+    const imagesUrls = Array.from(srcset.split(',')).filter(isImageUrl);
     let imageUrl = '';
     if (imagesUrls.length >= 1) {
-        imageUrl = adjustImageUrl(imagesUrls[0])
+        imageUrl = validateUrl(imagesUrls[0])
     }
-    return { name: x.alt, imageUrl: imageUrl };
+    return imageUrl;
 }
 
 function adjustImageUrl(imageUrl) {
@@ -48,10 +40,13 @@ function adjustImageUrl(imageUrl) {
     if (adjustedUrl.startsWith('//')) {
         adjustedUrl = 'https:' + adjustedUrl;
     }
-    adjustedUrl = getPathFromUrl(adjustedUrl);
     return encodeURI(adjustedUrl);
+}
+
+function isImageUrl(url) {
+    return(url.match(/\.(jpeg|jpg|svg|png|tiff|tif|gif)/g) != null);
 }
 
 function getPathFromUrl(url) {
     return url.split("?")[0];
-  }
+}
