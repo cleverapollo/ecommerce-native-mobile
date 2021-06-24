@@ -24,7 +24,6 @@ export class AuthenticationService {
 
   isAuthenticated = new BehaviorSubject<boolean>(null);
   isEmailVerified = new BehaviorSubject<boolean>(null);
-  firebaseAccessToken = new BehaviorSubject<string>(null);
   userInfo = new BehaviorSubject<any>(null);
 
   constructor(
@@ -41,7 +40,7 @@ export class AuthenticationService {
   ) { 
     if (this.platform.is('capacitor')) {
       this.configFirebaseAuthentication();
-      this.refreshFirebaseIdToken(false);
+      this.getFirebaseIdToken(false);
       this.loadUserData();
     } else {
       this.isAuthenticated.next(false);
@@ -80,7 +79,6 @@ export class AuthenticationService {
       await this.storageService.clear();
       await this.cache.clearAll();
       this.removeAuthorizationHeaderForNativeHttpClient();
-      this.firebaseAccessToken.next(null);
       this.isAuthenticated.next(false);
       await this.firebaseAuthentication.signOut();
       return Promise.resolve();
@@ -121,7 +119,7 @@ export class AuthenticationService {
 
       // firebase sign in
       await this.firebaseAuthentication.signInWithEmailAndPassword(email, password);
-      await this.refreshFirebaseIdToken(true);
+      await this.getFirebaseIdToken(true);
       await this.storageService.set(StorageKeys.CREDENTIALS, { email: email, password: password }, true);
 
       return Promise.resolve(signInResponse);
@@ -265,7 +263,7 @@ export class AuthenticationService {
     return Promise.reject(error);
   }
 
-  async refreshFirebaseIdToken(forceRefresh: boolean): Promise<string> {
+  async getFirebaseIdToken(forceRefresh: boolean = false): Promise<string> {
     try {
       const idToken = await this.firebaseAuthentication.getIdToken(forceRefresh);
       await this.updateToken(idToken);
@@ -286,7 +284,6 @@ export class AuthenticationService {
     }
     await this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, token, true);
     this.updateAuthorizationHeaderForNativeHttpClient(token);
-    this.firebaseAccessToken.next(token);
     this.isAuthenticated.next(true);
     return Promise.resolve();
   }
