@@ -17,36 +17,14 @@ function validateUrl(url) {
     if (!url.startsWith('http') && url.startsWith('//')) {
         imageUrl = 'https:' + url; 
     }
-    if (!isImageUrl(imageUrl)) {
-        imageUrl = '';
-    } 
-    if (imageUrl !== '') {
-        imageUrl = encodeURI(imageUrl);
-    }
-    return imageUrl;
+    return encodeURI(imageUrl);
 }
 
 function getFirstImageUrlFromSrcSet(srcset) {
-    const imagesUrls = Array.from(srcset.split(',')).filter(isImageUrl);
+    const imagesUrls = Array.from(srcset.split(','));
     let imageUrl = '';
     if (imagesUrls.length >= 1) {
         imageUrl = validateUrl(imagesUrls[0])
     }
     return imageUrl;
-}
-
-function adjustImageUrl(imageUrl) {
-    let adjustedUrl = imageUrl.split(' ')[0];
-    if (adjustedUrl.startsWith('//')) {
-        adjustedUrl = 'https:' + adjustedUrl;
-    }
-    return encodeURI(adjustedUrl);
-}
-
-function isImageUrl(url) {
-    return(url.match(/\.(jpeg|jpg|svg|png|tiff|tif|gif)/g) != null);
-}
-
-function getPathFromUrl(url) {
-    return url.split("?")[0];
 }
