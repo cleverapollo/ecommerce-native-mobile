@@ -134,7 +134,6 @@ export class WishListCreateUpdatePage implements OnInit {
       next: createdWishList => {
         this.wishListStore.saveWishListToCache(createdWishList);
         this.wishList = createdWishList;
-        this.loadingService.dismissLoadingSpinner();
         this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
         this.loadingService.dismissLoadingSpinner();
         this.router.navigateByUrl(`/secure/home/wish-list/${createdWishList.id}`);
@@ -154,7 +153,6 @@ export class WishListCreateUpdatePage implements OnInit {
       next: updatedWishList => {
         this.wishListStore.updatedCachedWishList(updatedWishList);
         this.wishList = updatedWishList;
-        this.loadingService.dismissLoadingSpinner();
         this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
         this.loadingService.dismissLoadingSpinner();
       },
@@ -179,7 +177,6 @@ export class WishListCreateUpdatePage implements OnInit {
       this.wishListStore.removeCachedWishList(this.wishList.id);
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich gelöscht');
       this.router.navigateByUrl('/secure/home/wish-list-overview');
-      this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich gelöscht.');
     }, error => {
       this.toastService.presentErrorToast('Beim Löschen deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
     }).finally(() => {

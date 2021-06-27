@@ -40,8 +40,8 @@ export class WishListStoreService {
     return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY)
   }
 
-  removeCachedWishLists() {
-    this.cache.removeItem(this.CACHE_KEY_WISH_LISTS);
+  clearWishLists(): Promise<void> {
+    return this.cache.removeItem(this.CACHE_KEY_WISH_LISTS);
   }
 
   // WISH LIST
@@ -62,24 +62,26 @@ export class WishListStoreService {
         wishLists.splice(wishListIndex, 1);
         this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
       } else {
-        this.removeCachedWishLists();
+        this.clearWishLists();
       }
     });
   }
 
-  updatedCachedWishList(wishList: WishListDto) {
-    this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
-    this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: WishListDto[]) => {
-      const wishListIndex = wishLists.findIndex( w => w.id == wishList.id);
+  async updatedCachedWishList(wishList: WishListDto): Promise<void> {
+    try {
+      await this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
+      const wishLists = await this.cache.getItem(this.CACHE_KEY_WISH_LISTS);
+      const wishListIndex = wishLists.findIndex((w: WishListDto) => w.id == wishList.id);
       if (wishListIndex !== -1) {
         wishLists[wishListIndex] = wishList;
         this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
       } else {
-        this.removeCachedWishLists();
+        this.clearWishLists();
       }
-    }, () => {
-      this.removeCachedWishLists();
-    });
+    } catch (error) {
+      this.logger.error(error);
+      this.clearWishLists();
+    }
   }
 
   saveWishListToCache(wishList: WishListDto): Promise<void> {
@@ -108,19 +110,21 @@ export class WishListStoreService {
     return this.cache.loadFromObservable(this.cacheKeyWish(id), request, this.CACHE_GROUP_KEY)
   }
 
-  updateCachedWish(wish: WishDto) {
-    this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
-    this.cache.getItem(this.cacheKeyWishList(wish.wishListId)).then((wishList: WishListDto) => {
-      const wishIndex = wishList.wishes.findIndex( w => w.id == wish.id);
+  async updateCachedWish(wish: WishDto): Promise<void> {
+    try {
+      await this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
+      const wishList = await this.cache.getItem(this.cacheKeyWishList(wish.wishListId));
+      const wishIndex = wishList.wishes.findIndex((w: WishListDto) => w.id == wish.id);
       if (wishIndex !== -1) {
         wishList.wishes[wishIndex] = wish;
         this.updatedCachedWishList(wishList);
       } else {
         this.removeCachedWishList(wish.wishListId);
       }
-    }, () => {
+    } catch (error) {
+      this.logger.error(error);
       this.removeCachedWishList(wish.wishListId);
-    });
+    }
   }
 
   async removeWishFromCache(wish: WishDto): Promise<void> {
@@ -138,20 +142,6 @@ export class WishListStoreService {
     } catch(error) {
       this.removeCachedWishList(wish.wishListId);
       return Promise.reject();
-    }
-  }
-
-  async saveWishToCache(wish: WishDto): Promise<void> {
-    try {
-      await this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
-      const wishList: WishListDto = await this.cache.getItem(this.cacheKeyWishList(wish.wishListId));
-      wishList.wishes.unshift(wish);
-      this.updatedCachedWishList(wishList);
-      Promise.resolve();
-    } catch(error) {
-      this.logger.debug(error);
-      this.removeCachedWishList(wish.wishListId);
-      Promise.resolve();
     }
   }
 
