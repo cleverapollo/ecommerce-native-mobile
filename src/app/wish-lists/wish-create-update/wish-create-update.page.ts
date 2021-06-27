@@ -148,9 +148,9 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
       this.searchResultDataService.clear();
       this.logAddToWishListEvent(createdWish);
       this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
-      this.wishListStore.saveWishToCache(createdWish).then(() => {
+      this.wishListStore.clearWishLists().then(() => {
         this.navigateToWishListDetailPage(wishListId);
-      });
+      })
     }, error => {
       this.toastService.presentErrorToast('Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.');
     }).finally(() => {
@@ -184,7 +184,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   
   private navigateToWishListDetailPage(wishListId: number) {
     const wishSearchTabPath = getTaBarPath(TabBarRoute.WISH_SEARCH, true);
-    const url = `/secure/home/wish-list/${wishListId}`;
+    const url = `/secure/home/wish-list/${wishListId}?forceRefresh=true`;
     if (this.router.url.includes(wishSearchTabPath)) {
       this.router.navigateByUrl(wishSearchTabPath).then(() => {
         this.router.navigateByUrl(url);
