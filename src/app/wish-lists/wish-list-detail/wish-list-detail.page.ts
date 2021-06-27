@@ -84,6 +84,10 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     this.navController.navigateForward('secure/home/wish-search-selection');
   }
 
+  editWishList() {
+    this.navController.navigateForward(`secure/home/wish-list/${this.wishList.id}/edit`);
+  }
+
   async shareWishList() {
     const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
     const message = `Hurra, ${userProfile.firstName} möchte feiern. 🥳 Sieh dir die Wunschliste „${this.wishList.name}“ an und finde ein Geschenk.🎁🤩`;
