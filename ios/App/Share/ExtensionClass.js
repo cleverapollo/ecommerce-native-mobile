@@ -29,7 +29,8 @@ ExtensionClass.prototype = {
                 return { name: x.alt, imageUrl: imageUrl || '' };
             } 
             return { name: '', imageUrl: ''  };  
-        }).filter(x => x.imageUrl !== '' && (x.imageUrl.startsWith('http')));
+        }).filter(x => x.imageUrl !== '' && (x.imageUrl.startsWith('http')))
+        .sort(sortBySvgImages);
     },
     fetchPrice: function() {
         let elements = document.body.getElementsByTagName('*');
@@ -88,7 +89,20 @@ function validateUrl(url) {
     if (!url.startsWith('http') && url.startsWith('//')) {
         imageUrl = 'https:' + url; 
     }
+    imageUrl = prepareImageUrlIfNeeded(imageUrl);
     return encodeURI(imageUrl);
+}
+
+function prepareImageUrlIfNeeded(url) {
+    const validImageTypes = ['.jpeg', ,'.jpg','.svg','.png','.tiff','.tif','.gif'];
+    for (const type of validImageTypes) {
+        const indexOfTypeString = url.indexOf(type);
+        if (indexOfTypeString !== -1) {
+            url = url.substring(0, indexOfTypeString + type.length);
+            break;
+        }
+    }
+    return url;
 }
 
 function getFirstImageUrlFromSrcSet(srcset) {
@@ -98,5 +112,18 @@ function getFirstImageUrlFromSrcSet(srcset) {
         imageUrl = validateUrl(imagesUrls[0])
     }
     return imageUrl;
+}
+
+function sortBySvgImages(a, b) {
+    const isASvgImage = a.imageUrl.indexOf('.svg') !== -1;
+    const isBSvgImage = b.imageUrl.indexOf('.svg') !== -1;
+    if (isASvgImage && isBSvgImage) {
+        return 0;
+    } else if (isASvgImage) {
+        return 1;
+    } else if (isBSvgImage) {
+        return -1;
+    }
+    return 0;
 }
 var ExtensionPreprocessingJS = new ExtensionClass;
