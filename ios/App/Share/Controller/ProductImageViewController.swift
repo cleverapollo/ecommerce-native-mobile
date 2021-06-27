@@ -35,18 +35,11 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         authService.getAuthToken(completionHandler: { idToken in
             if idToken == nil {
                 self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
-            } else {
-                self.loadProductInfoFromWebPage()
+            } else if let item = self.extensionContext?.inputItems.first as? NSExtensionItem {
+                self.fetchProductInfos(extensionItem: item)
             }
         })
         WishDataStore.shared.reset()
-    }
-    
-    func loadProductInfoFromWebPage() {
-        self.showActivityIndicator("Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
-        if let item = extensionContext?.inputItems.first as? NSExtensionItem {
-            accessWebpageProperties(extensionItem: item)
-        }
     }
     
     override func viewDidLoad() {
@@ -117,49 +110,100 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         // in case you you want the cell to be 40% of your controllers view
         return CGSize(width: width * 0.4, height: width * 0.4)
     }
-
-    func accessWebpageProperties(extensionItem: NSExtensionItem) {
+    
+    func fetchProductInfos(extensionItem: NSExtensionItem) {
+        // web page
         let propertyList = String(kUTTypePropertyList)
-
-        for attachment in extensionItem.attachments! where attachment.hasItemConformingToTypeIdentifier(propertyList) {
-            attachment.loadItem(
-                forTypeIdentifier: propertyList,
-                options: nil,
-                completionHandler: { (item, error) -> Void in
-                    guard let dictionary = item as? NSDictionary, let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else {
-                        self.reloadViewRemoveActivityIndicator()
-                        return
+        // thrid party apps
+        let url = String(kUTTypeURL)
+        let text = String(kUTTypeText)
+        
+        for attachment in extensionItem.attachments! {
+            if attachment.hasItemConformingToTypeIdentifier(propertyList) {
+                fetchProductInfosFromWebPage(attachment)
+            } else if attachment.hasItemConformingToTypeIdentifier(url) {
+                attachment.loadItem(forTypeIdentifier: url, options: nil, completionHandler: { (item, error) in
+                    if let urlContent = item as? URL {
+                        self.fetchProductInfosFromWebView(urlContent)
                     }
-
-                    guard let title = results["title"] as? String,
-                          let url = results["url"] as? String,
-                          let productInfosDict = results["productInfos"] as? [NSDictionary]  else {
-                            self.reloadViewRemoveActivityIndicator()
-                            return
+                })
+            } else if attachment.hasItemConformingToTypeIdentifier(text) {
+                attachment.loadItem(forTypeIdentifier: text, options: nil, completionHandler: { (item, error) in
+                    if let textContent = item as? String, let webUrl = self.getProductUrlFromProductDescription(textContent)  {
+                        self.fetchProductInfosFromWebView(webUrl)
                     }
-                    
-                    var priceAmount: Decimal = 0.00
-                    if let doublePrice = results["price"] as? Double  {
-                        priceAmount = Decimal(doublePrice)
-                    } else if let decimalPrice = results["price"] as? Decimal {
-                        priceAmount = decimalPrice
-                    }
-                    
-                    self.productInfos = productInfosDict.compactMap { (dict: NSDictionary) in
-                        guard let imageUrl = dict["imageUrl"] as? String else { return nil }
-                        var displayName = title
-                        if let name = dict["name"] as? String, !name.isEmpty {
-                            displayName = name
-                        }
-                        return ProductInfo(productUrl: url, imageUrl: imageUrl, name: displayName, price: Price(amount: priceAmount))
-                    }
-                    self.reloadViewRemoveActivityIndicator()
-                }
-            )
+                })
+            }
         }
     }
     
-    fileprivate func reloadViewRemoveActivityIndicator() {
+    func fetchProductInfosFromWebPage(_ attachment: NSItemProvider) {
+        self.showActivityIndicator("Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
+        attachment.loadItem(
+            forTypeIdentifier: String(kUTTypePropertyList),
+            options: nil,
+            completionHandler: { (item, error) -> Void in
+                guard let dictionary = item as? NSDictionary, let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else {
+                    self.reloadViewRemoveActivityIndicator()
+                    return
+                }
+                
+                guard let title = results["title"] as? String,
+                      let url = results["url"] as? String,
+                      let productInfosDict = results["productInfos"] as? [NSDictionary]  else {
+                    self.reloadViewRemoveActivityIndicator()
+                    return
+                }
+                
+                var priceAmount: Decimal = 0.00
+                if let doublePrice = results["price"] as? Double  {
+                    priceAmount = Decimal(doublePrice)
+                } else if let decimalPrice = results["price"] as? Decimal {
+                    priceAmount = decimalPrice
+                }
+                
+                self.productInfos = productInfosDict.compactMap { (dict: NSDictionary) in
+                    guard let imageUrl = dict["imageUrl"] as? String else { return nil }
+                    var displayName = title
+                    if let name = dict["name"] as? String, !name.isEmpty {
+                        displayName = name
+                    }
+                    return ProductInfo(productUrl: url, imageUrl: imageUrl, name: displayName, price: Price(amount: priceAmount))
+                }
+                self.reloadViewRemoveActivityIndicator()
+            }
+        )
+    }
+    
+    func fetchProductInfosFromWebView(_ productUrl: URL?) {
+        if let webUrl = productUrl, webUrl.absoluteString.starts(with: "https://") {
+            self.showActivityIndicator("Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
+            DispatchQueue.main.async {
+                let webView = WebViewController(webUrl: webUrl, productImageViewController: self)
+                self.view.addSubview(webView)
+                webView.loadWebUrl(webUrl)
+            }
+        }
+    }
+    
+    func getProductUrlFromProductDescription(_ description: String) -> URL? {
+        var imageUrl: URL? = nil
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = detector.matches(in: description, options: [], range: NSRange(location: 0, length: description.utf16.count))
+
+        for match in matches {
+            guard let range = Range(match.range, in: description) else { continue }
+            let urlString = description[range]
+            print(urlString)
+            if let url = URL(string: String(urlString)) {
+                imageUrl = url
+                break
+            }
+        }
+        return imageUrl
+    }
+    
+    func reloadViewRemoveActivityIndicator() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
             self.removeActivityIndicator()

@@ -71,6 +71,12 @@
 		B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		B17B403C25C4717F003363E9 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B403B25C4717E003363E9 /* FooterView.swift */; };
 		B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B404125C482E6003363E9 /* WanticTextView.swift */; };
+		B18F1CC526874EF800FD7528 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F1CC426874EF800FD7528 /* WebViewController.swift */; };
+		B18F1CC626874EF800FD7528 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F1CC426874EF800FD7528 /* WebViewController.swift */; };
+		B18F1CCC2687610D00FD7528 /* fetch-product-infos.js in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CCB2687610D00FD7528 /* fetch-product-infos.js */; };
+		B18F1CCD2687610D00FD7528 /* fetch-product-infos.js in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CCB2687610D00FD7528 /* fetch-product-infos.js */; };
+		B18F1CDB2688846E00FD7528 /* Share Beta-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CDA2688846E00FD7528 /* Share Beta-Info.plist */; };
+		B18F1CDC2688846E00FD7528 /* Share Beta-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CDA2688846E00FD7528 /* Share Beta-Info.plist */; };
 		B19A51CE2610CD8E00984207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		B19A51D22610CD8E00984207 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		B19A51D32610CD8E00984207 /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
@@ -297,6 +303,9 @@
 		B17635ED256AD3EC00AAEBB8 /* App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		B17B403B25C4717E003363E9 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		B17B404125C482E6003363E9 /* WanticTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanticTextView.swift; sourceTree = "<group>"; };
+		B18F1CC426874EF800FD7528 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		B18F1CCB2687610D00FD7528 /* fetch-product-infos.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "fetch-product-infos.js"; sourceTree = "<group>"; };
+		B18F1CDA2688846E00FD7528 /* Share Beta-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Share Beta-Info.plist"; sourceTree = "<group>"; };
 		B19A51DF2610CD8E00984207 /* Wantic Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wantic Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B19A51E02610CD8E00984207 /* Wantic copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Wantic copy-Info.plist"; path = "/Users/fischeti/Documents/develop/wantic-frontend/ios/App/Wantic copy-Info.plist"; sourceTree = "<absolute>"; };
 		B19A522E2610CE8000984207 /* Share Beta.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Share Beta.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -526,6 +535,7 @@
 				B148809B25B202CE00D0106B /* WishListTableViewController.swift */,
 				B1247FAE25BC612C009CEF57 /* ProductImageViewController.swift */,
 				B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */,
+				B18F1CC426874EF800FD7528 /* WebViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -590,8 +600,10 @@
 				B19A52472610D1A500984207 /* AppConfig.swift */,
 				B1A80FCE258B508B00F0917F /* Share.entitlements */,
 				B1A80F97258A0F5D00F0917F /* ExtensionClass.js */,
+				B18F1CCB2687610D00FD7528 /* fetch-product-infos.js */,
 				B1A80F882589F59800F0917F /* MainInterface.storyboard */,
 				B1A80F8B2589F59800F0917F /* Info.plist */,
+				B18F1CDA2688846E00FD7528 /* Share Beta-Info.plist */,
 				B114E13C25BC33CF00F92599 /* Colors.xcassets */,
 				B114E14025BC34F700F92599 /* Icons.xcassets */,
 			);
@@ -819,6 +831,7 @@
 				B19A521A2610CE8000984207 /* OFL.txt in Resources */,
 				B19A521B2610CE8000984207 /* Roboto-ThinItalic.ttf in Resources */,
 				B19A521C2610CE8000984207 /* PlayfairDisplay-Regular.ttf in Resources */,
+				B18F1CDC2688846E00FD7528 /* Share Beta-Info.plist in Resources */,
 				B19A521D2610CE8000984207 /* Colors.xcassets in Resources */,
 				B19A521E2610CE8000984207 /* LICENSE.txt in Resources */,
 				B19A521F2610CE8000984207 /* Roboto-BlackItalic.ttf in Resources */,
@@ -828,6 +841,7 @@
 				B19A52222610CE8000984207 /* Roboto-MediumItalic.ttf in Resources */,
 				B19A52232610CE8000984207 /* ExtensionClass.js in Resources */,
 				B19A52242610CE8000984207 /* README.txt in Resources */,
+				B18F1CCD2687610D00FD7528 /* fetch-product-infos.js in Resources */,
 				B19A52252610CE8000984207 /* Roboto-Thin.ttf in Resources */,
 				B1F81EC02641D40E00C277FB /* GoogleService-Info-share-beta.plist in Resources */,
 				B19A52262610CE8000984207 /* Roboto-Regular.ttf in Resources */,
@@ -848,6 +862,7 @@
 				B114E15F25BC38AA00F92599 /* PlayfairDisplay-Black.ttf in Resources */,
 				B1247F9125BC4A9C009CEF57 /* Roboto-LightItalic.ttf in Resources */,
 				B114E16025BC38AA00F92599 /* PlayfairDisplay-SemiBoldItalic.ttf in Resources */,
+				B18F1CCC2687610D00FD7528 /* fetch-product-infos.js in Resources */,
 				B1247F8C25BC4A9C009CEF57 /* Roboto-Light.ttf in Resources */,
 				B1247F9725BC4A9C009CEF57 /* Roboto-Black.ttf in Resources */,
 				B114E15825BC38AA00F92599 /* PlayfairDisplay-Bold.ttf in Resources */,
@@ -865,6 +880,7 @@
 				B114E15E25BC38AA00F92599 /* PlayfairDisplay-Regular.ttf in Resources */,
 				B114E13D25BC33CF00F92599 /* Colors.xcassets in Resources */,
 				B1247F9325BC4A9C009CEF57 /* LICENSE.txt in Resources */,
+				B18F1CDB2688846E00FD7528 /* Share Beta-Info.plist in Resources */,
 				B1247F9425BC4A9C009CEF57 /* Roboto-BlackItalic.ttf in Resources */,
 				B1F81EC12641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */,
 				B114E16625BC38AA00F92599 /* PlayfairDisplay-Italic-VariableFont_wght.ttf in Resources */,
@@ -1111,6 +1127,7 @@
 				B19A51FC2610CE8000984207 /* WanticTextView.swift in Sources */,
 				B19A523A2610D11400984207 /* AppConfig.swift in Sources */,
 				B19A51FD2610CE8000984207 /* WishListTableViewController.swift in Sources */,
+				B18F1CC626874EF800FD7528 /* WebViewController.swift in Sources */,
 				B19A51FE2610CE8000984207 /* UIImageViewExtension.swift in Sources */,
 				B19A51FF2610CE8000984207 /* FooterView.swift in Sources */,
 				B19A52002610CE8000984207 /* ProductImageViewController.swift in Sources */,
@@ -1146,6 +1163,7 @@
 				B14880B825B20FE800D0106B /* WishService.swift in Sources */,
 				B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */,
 				B148809C25B202CE00D0106B /* WishListTableViewController.swift in Sources */,
+				B18F1CC526874EF800FD7528 /* WebViewController.swift in Sources */,
 				B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */,
 				B17B403C25C4717F003363E9 /* FooterView.swift in Sources */,
 				B1247FAF25BC612C009CEF57 /* ProductImageViewController.swift in Sources */,

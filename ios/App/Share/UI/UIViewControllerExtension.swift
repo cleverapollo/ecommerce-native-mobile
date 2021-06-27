@@ -22,6 +22,7 @@ extension UIViewController {
     }
     
     func showActivityIndicator(_ title: String) {
+        guard effectView == nil else { return }
         let width = self.view.frame.width - 20
         let height = 50
         
