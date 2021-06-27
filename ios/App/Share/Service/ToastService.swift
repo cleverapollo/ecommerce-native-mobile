@@ -13,11 +13,7 @@ struct ToastService {
     
 
     func showToast(controller: UIViewController, message : String, wishListId: UUID, extensionContext: NSExtensionContext) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.view.backgroundColor = .white
-        alert.view.alpha = 0.5
-        alert.view.layer.cornerRadius = 15
-        
+        let alert = createAlertController(title: nil, message: message)
         DispatchQueue.main.async {
             alert.addAction(UIAlertAction(title: "Wunsch anzeigen", style: .default, handler: { (action: UIAlertAction!) in
                 if let url = URL(string: "\(AppConfig.appUrl)/secure/home/wish-list/\(wishListId)?forceRefresh=true") {
@@ -36,10 +32,7 @@ struct ToastService {
     func showNotAuthorizedToast(controller: UIViewController, extensionContext: NSExtensionContext) {
         let title = "Du bist nicht angemeldet."
         let message = "Melde dich an der Wantic-App an, um dir einen Wunsch zur Wunschliste hinzuzufügen."
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.view.backgroundColor = .black
-        alert.view.alpha = 0.5
-        alert.view.layer.cornerRadius = 15
+        let alert = createAlertController(title: title, message: message)
         
         DispatchQueue.main.async {
             alert.addAction(UIAlertAction(title: "Anmelden", style: .default, handler: { (action: UIAlertAction!) in
@@ -59,10 +52,7 @@ struct ToastService {
     func showWishListLoadingErrorToast(controller: UIViewController, extensionContext: NSExtensionContext) {
         let title = "Fehler"
         let message = "Beim Laden deiner Wunschlisten ist leider ein Fehler aufgetreten. Überprüfe ob du in der Wantic App angemeldet bist und versuche es noch einmal."
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.view.backgroundColor = .black
-        alert.view.alpha = 0.5
-        alert.view.layer.cornerRadius = 15
+        let alert = createAlertController(title: title, message: message)
         
         DispatchQueue.main.async {
             alert.addAction(UIAlertAction(title: "Wantic öffnen", style: .default, handler: { (action: UIAlertAction!) in
@@ -117,6 +107,15 @@ struct ToastService {
     
     func closeShareExtension(extensionContext: NSExtensionContext) {
         extensionContext.completeRequest(returningItems: nil, completionHandler: nil)
+    }
+    
+    func createAlertController(title: String?, message: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.view.backgroundColor = .white
+        alert.view.alpha = 0.5
+        alert.view.layer.cornerRadius = 15
+        alert.view.tintColor = UIColor(named: "primary")
+        return alert
     }
     
     
