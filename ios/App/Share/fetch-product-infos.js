@@ -24,7 +24,10 @@ function validateUrl(url) {
         imageUrl = 'https:' + url; 
     }
     imageUrl = imageUrl.split(' ')[0];
-    return encodeURI(imageUrl);
+    if (url.endsWith('.html')) {
+        imageUrl = '';
+    }
+    return imageUrl !== '' ? encodeURI(imageUrl) : '';
 }
 
 function getFirstImageUrlFromSrcSet(srcset) {
