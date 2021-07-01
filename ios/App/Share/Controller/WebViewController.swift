@@ -46,10 +46,18 @@ class WebViewController: UIView, WKNavigationDelegate {
                         let productInfo = ProductInfo(productUrl: self.webUrl.absoluteString, imageUrl: imageUrlString, name: name, price: Price(amount: priceAmount))
                         productInfos.append(productInfo)
                     }
-                    self.productImageViewController.productInfos = productInfos
-                    self.productImageViewController.reloadViewRemoveActivityIndicator()
+                    if productInfos.isEmpty && self.productImageViewController.productInfos.isEmpty  {
+                        self.productImageViewController.reloadViewRemoveActivityIndicator()
+                        ToastService.shared.showNoImagesFoundAlert(controller: self.productImageViewController, extensionContext: self.productImageViewController.extensionContext)
+                    } else {
+                        self.productImageViewController.productInfos = productInfos
+                        self.productImageViewController.reloadViewRemoveActivityIndicator()
+                    }
                 } else {
                     self.productImageViewController.reloadViewRemoveActivityIndicator()
+                    if productInfos.isEmpty && self.productImageViewController.productInfos.isEmpty  {
+                        ToastService.shared.showNoImagesFoundAlert(controller: self.productImageViewController, extensionContext: self.productImageViewController.extensionContext)
+                    }
                 }
             })
         } else {
