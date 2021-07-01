@@ -53,7 +53,7 @@ struct ToastService {
         
         DispatchQueue.main.async {
             alert.addAction(UIAlertAction(title: "Anmelden", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "\(AppConfig.appUrl)/login") {
+                if let url = URL(string: "\(AppConfig.appUrl)/start") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
