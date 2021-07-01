@@ -23,20 +23,8 @@ function validateUrl(url) {
     if (!url.startsWith('http') && url.startsWith('//')) {
         imageUrl = 'https:' + url; 
     }
-    imageUrl = prepareImageUrlIfNeeded(imageUrl)
+    imageUrl = imageUrl.split(' ')[0];
     return encodeURI(imageUrl);
-}
-
-function prepareImageUrlIfNeeded(url) {
-    const validImageTypes = ['.jpeg', ,'.jpg','.svg','.png','.tiff','.tif','.gif'];
-    for (const type of validImageTypes) {
-        const indexOfTypeString = url.indexOf(type);
-        if (indexOfTypeString !== -1) {
-            url = url.substring(0, indexOfTypeString + type.length);
-            break;
-        }
-    }
-    return url;
 }
 
 function getFirstImageUrlFromSrcSet(srcset) {
