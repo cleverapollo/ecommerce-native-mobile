@@ -15,16 +15,20 @@ struct ToastService {
     func showToast(controller: UIViewController, message : String, wishListId: UUID, extensionContext: NSExtensionContext) {
         let alert = createAlertController(title: nil, message: message)
         DispatchQueue.main.async {
-            alert.addAction(UIAlertAction(title: "Wunsch anzeigen", style: .default, handler: { (action: UIAlertAction!) in
+            let alertActionShowWish = createAlertAction(title: "Wunsch anzeigen", style: .default, handler: { (action: UIAlertAction!) in
                 if let url = URL(string: "\(AppConfig.appUrl)/secure/home/wish-list/\(wishListId)?forceRefresh=true") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
                 }
-            }))
-            alert.addAction(UIAlertAction(title: "Fertig", style: .cancel, handler: { (action: UIAlertAction!) in
+            })
+            alert.addAction(alertActionShowWish)
+            
+            let alertActionCloseShareExtension = createAlertAction(title: "Fertig", style: .cancel, handler: { (action: UIAlertAction!) in
                 closeShareExtension(extensionContext: extensionContext)
-            }))
+            })
+            alert.addAction(alertActionCloseShareExtension)
+            
             controller.present(alert, animated: true)
         }
     }
@@ -42,7 +46,7 @@ struct ToastService {
                     closeShareExtension(extensionContext: extensionContext)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: { (action: UIAlertAction!) in
+            alert.addAction(createAlertAction(title: "Abbrechen", style: .cancel, handler: { (action: UIAlertAction!) in
                 closeShareExtension(extensionContext: extensionContext)
             }))
             controller.present(alert, animated: true)
@@ -55,14 +59,14 @@ struct ToastService {
         let alert = createAlertController(title: title, message: message)
         
         DispatchQueue.main.async {
-            alert.addAction(UIAlertAction(title: "Wantic öffnen", style: .default, handler: { (action: UIAlertAction!) in
+            alert.addAction(createAlertAction(title: "Wantic öffnen", style: .default, handler: { (action: UIAlertAction!) in
                 if let url = URL(string: "\(AppConfig.appUrl)/secure/home") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: { (action: UIAlertAction!) in
+            alert.addAction(createAlertAction(title: "Abbrechen", style: .cancel, handler: { (action: UIAlertAction!) in
                 closeShareExtension(extensionContext: extensionContext)
             }))
             controller.present(alert, animated: true)
@@ -78,14 +82,14 @@ struct ToastService {
         alert.view.layer.cornerRadius = 15
         
         DispatchQueue.main.async {
-            alert.addAction(UIAlertAction(title: "Jetzt Wunschliste anlegen", style: .default, handler: { (action: UIAlertAction!) in
+            alert.addAction(createAlertAction(title: "Jetzt Wunschliste anlegen", style: .default, handler: { (action: UIAlertAction!) in
                 if let url = URL(string: "\(AppConfig.appUrl)/secure/home/wish-list-new") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: { (action: UIAlertAction!) in
+            alert.addAction(createAlertAction(title: "Abbrechen", style: .cancel, handler: { (action: UIAlertAction!) in
                 closeShareExtension(extensionContext: extensionContext)
             }))
             controller.present(alert, animated: true)
@@ -116,6 +120,12 @@ struct ToastService {
         alert.view.layer.cornerRadius = 15
         alert.view.tintColor = UIColor(named: "primary")
         return alert
+    }
+    
+    func createAlertAction(title: String, style: UIAlertAction.Style, handler: ((UIAlertAction) -> Void)?) -> UIAlertAction {
+        let alertAction = UIAlertAction(title: title, style: style, handler: handler)
+        alertAction.setValue(UIColor(named: "primary"), forKey: "titleTextColor")
+        return alertAction
     }
     
     
