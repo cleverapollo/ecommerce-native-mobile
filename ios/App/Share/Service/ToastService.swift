@@ -12,7 +12,7 @@ struct ToastService {
     static let shared = ToastService()
     
     func showNoImagesFoundAlert(controller: UIViewController, extensionContext: NSExtensionContext?) {
-        let message = "Leider können wir von dieser Seite keine Bilder abrufen, deshalb kannst du keinen Wunsch hinzufügen. \n\n Solltest du deinen Wunsch von einer App versuchen hinzuzufügen, dann kannst du es alternativ über die Webseite des App-Betreibers in deinem Web-Browser (z.B. Safari) erneut versuchen. \n\n Hast du damit auch keinen Erfolg, dann schreib uns gerne eine E-Mail an hello@wantic.io und nenne uns die App/Webseite über die das Erstellen eines neuen Wunsches nicht möglich war."
+        let message = "Leider können wir von dieser Seite keine Bilder abrufen, deshalb kannst du keinen Wunsch hinzufügen. \n\n Befindest du dich gerade in einer App, dann kannst du es alternativ über die Webseite des App-Betreibers in deinem Web-Browser (z.B. Safari) erneut versuchen. \n\n Hast du damit auch keinen Erfolg, dann schreib uns gerne eine E-Mail an hello@wantic.io und nenne uns die App/Webseite über die das Erstellen eines neuen Wunsches nicht möglich war."
         let alert = createAlertController(title: "Keine Bilder gefunden", message: message)
         DispatchQueue.main.async {
             if let extensionContext = extensionContext {
