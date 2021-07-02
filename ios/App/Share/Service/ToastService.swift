@@ -52,7 +52,7 @@ struct ToastService {
         let alert = createAlertController(title: title, message: message)
         
         DispatchQueue.main.async {
-            alert.addAction(UIAlertAction(title: "Anmelden", style: .default, handler: { (action: UIAlertAction!) in
+            alert.addAction(createAlertAction(title: "Anmelden", style: .default, handler: { (action: UIAlertAction!) in
                 if let url = URL(string: "\(AppConfig.appUrl)/start") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
