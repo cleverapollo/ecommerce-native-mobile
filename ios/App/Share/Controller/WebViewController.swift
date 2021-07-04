@@ -39,11 +39,13 @@ class WebViewController: UIView, WKNavigationDelegate {
         if let javaScriptSource = loadJsFileToFetchProductInfos() {
             webView.evaluateJavaScript(javaScriptSource, completionHandler: { (result, error) in
                 if error == nil, let productInfosArray = result as? [Dictionary<String, Any>] {
+                    var productInfoId: UInt = 0
                     for item in productInfosArray {
+                        productInfoId += 1
                         guard let imageUrlString = self.getImageUrlStringFromDict(item) else { continue }
                         let priceAmount = self.getPriceFromDict(item)
                         let name = self.getNameFromDict(item)
-                        let productInfo = ProductInfo(productUrl: self.webUrl.absoluteString, imageUrl: imageUrlString, name: name, price: Price(amount: priceAmount))
+                        let productInfo = ProductInfo(id: productInfoId, productUrl: self.webUrl.absoluteString, imageUrl: imageUrlString, name: name, price: Price(amount: priceAmount))
                         productInfos.append(productInfo)
                     }
                     if productInfos.isEmpty && self.productImageViewController.productInfos.isEmpty  {

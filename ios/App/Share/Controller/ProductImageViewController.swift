@@ -24,6 +24,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     var productInfos: [ProductInfo] = []
     var selectedProductInfo: ProductInfo?
     var selectedCell: ProductInfoCell?
+    var itemsToDelete: [IndexPath: ProductInfo] = [:]
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var nextButton: UIButton!
@@ -49,7 +50,6 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-
     }
     
     private func setupView() {
@@ -76,8 +76,11 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         }
     
         let productInfo = productInfos[indexPath.row]
-        cell.image.setImageFromURl(imageUrlString: productInfo.imageUrl)
-    
+        let imageLoaded = cell.image.setImageFromURl(imageUrlString: productInfo.imageUrl)
+        if !imageLoaded {
+            itemsToDelete[indexPath] = productInfo
+        }
+        
         return cell
     }
     
@@ -162,13 +165,15 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                     priceAmount = decimalPrice
                 }
                 
+                var productInfoId: UInt = 0
                 self.productInfos = productInfosDict.compactMap { (dict: NSDictionary) in
                     guard let imageUrl = dict["imageUrl"] as? String else { return nil }
                     var displayName = title
                     if let name = dict["name"] as? String, !name.isEmpty {
                         displayName = name
                     }
-                    return ProductInfo(productUrl: url, imageUrl: imageUrl, name: displayName, price: Price(amount: priceAmount))
+                    productInfoId += 1
+                    return ProductInfo(id: productInfoId, productUrl: url, imageUrl: imageUrl, name: displayName, price: Price(amount: priceAmount))
                 }
                 self.reloadViewRemoveActivityIndicator()
             }
@@ -206,6 +211,20 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     func reloadViewRemoveActivityIndicator() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            self.collectionView.performBatchUpdates(nil, completion: {
+                (result) in
+                // ready
+                if !self.itemsToDelete.isEmpty {
+                    for itemToDelete in self.itemsToDelete {
+                        self.productInfos.removeAll(where: { $0 == itemToDelete.value })
+                    }
+                    self.collectionView.deleteItems(at: self.itemsToDelete.compactMap { $0.key })
+                    
+                    if self.productInfos.isEmpty {
+                        self.alertService.showNoImagesFoundAlert(controller: self, extensionContext: self.extensionContext)
+                    }
+                }
+            })
             self.removeActivityIndicator()
         }
     }
