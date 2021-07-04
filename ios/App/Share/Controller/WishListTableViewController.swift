@@ -69,7 +69,9 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func loadWishLists() {
+        self.showActivityIndicator("Deine Wunschlisten werden geladen ...")
         WishListService.shared.getWishLists(completionHandler: { result in
+            self.removeActivityIndicator()
             switch result {
             case .success(let wishLists):
                 guard !wishLists.isEmpty else {
