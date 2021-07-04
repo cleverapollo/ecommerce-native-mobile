@@ -49,13 +49,15 @@
 		B1247F9625BC4A9C009CEF57 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8925BC4A9C009CEF57 /* Roboto-Thin.ttf */; };
 		B1247F9725BC4A9C009CEF57 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1247F8A25BC4A9C009CEF57 /* Roboto-Black.ttf */; };
 		B1247FAF25BC612C009CEF57 /* ProductImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1247FAE25BC612C009CEF57 /* ProductImageViewController.swift */; };
+		B12EA4D62691C4F1001654EA /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4D52691C4F1001654EA /* UIImageExtension.swift */; };
+		B12EA4D72691C4F1001654EA /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4D52691C4F1001654EA /* UIImageExtension.swift */; };
 		B148806825AE0D9500D0106B /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806725AE0D9500D0106B /* LoginResponse.swift */; };
 		B148806E25AE129500D0106B /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806D25AE129500D0106B /* LoginRequest.swift */; };
 		B148809C25B202CE00D0106B /* WishListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148809B25B202CE00D0106B /* WishListTableViewController.swift */; };
 		B14880B225B20F2000D0106B /* Wish.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880B125B20F2000D0106B /* Wish.swift */; };
 		B14880B825B20FE800D0106B /* WishService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880B725B20FE800D0106B /* WishService.swift */; };
 		B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880BD25B2143700D0106B /* WishDataStore.swift */; };
-		B14880C425B2E8B700D0106B /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
+		B14880C425B2E8B700D0106B /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* AlertService.swift */; };
 		B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
 		B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = B14880D525B30A6E00D0106B /* JWTDecode */; };
 		B158951E264FCDFE005570ED /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158951D264FCDFE005570ED /* ApiService.swift */; };
@@ -88,7 +90,7 @@
 		B19A51EF2610CE8000984207 /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
 		B19A51F02610CE8000984207 /* ProductInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80F9F258A281600F0917F /* ProductInfo.swift */; };
 		B19A51F12610CE8000984207 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */; };
-		B19A51F22610CE8000984207 /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* ToastService.swift */; };
+		B19A51F22610CE8000984207 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880C325B2E8B700D0106B /* AlertService.swift */; };
 		B19A51F32610CE8000984207 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880D025B3057300D0106B /* UIViewControllerExtension.swift */; };
 		B19A51F42610CE8000984207 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
 		B19A51F52610CE8000984207 /* WishDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14880BD25B2143700D0106B /* WishDataStore.swift */; };
@@ -284,13 +286,14 @@
 		B1247FA625BC4AA5009CEF57 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		B1247FA725BC4AA5009CEF57 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		B1247FAE25BC612C009CEF57 /* ProductImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImageViewController.swift; sourceTree = "<group>"; };
+		B12EA4D52691C4F1001654EA /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		B148806725AE0D9500D0106B /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		B148806D25AE129500D0106B /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		B148809B25B202CE00D0106B /* WishListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListTableViewController.swift; sourceTree = "<group>"; };
 		B14880B125B20F2000D0106B /* Wish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wish.swift; sourceTree = "<group>"; };
 		B14880B725B20FE800D0106B /* WishService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishService.swift; sourceTree = "<group>"; };
 		B14880BD25B2143700D0106B /* WishDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishDataStore.swift; sourceTree = "<group>"; };
-		B14880C325B2E8B700D0106B /* ToastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastService.swift; sourceTree = "<group>"; };
+		B14880C325B2E8B700D0106B /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		B14880D025B3057300D0106B /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		B158951D264FCDFE005570ED /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		B1589524264FD360005570ED /* HttpStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
@@ -520,7 +523,7 @@
 			children = (
 				B158951D264FCDFE005570ED /* ApiService.swift */,
 				B1A80FC8258B40D900F0917F /* AuthService.swift */,
-				B14880C325B2E8B700D0106B /* ToastService.swift */,
+				B14880C325B2E8B700D0106B /* AlertService.swift */,
 				B14880BD25B2143700D0106B /* WishDataStore.swift */,
 				B1A80FC4258B3F9B00F0917F /* WishListService.swift */,
 				B14880B725B20FE800D0106B /* WishService.swift */,
@@ -570,6 +573,7 @@
 				B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */,
 				B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */,
 				B114E13425B8A56A00F92599 /* UIColorExtension.swift */,
+				B12EA4D52691C4F1001654EA /* UIImageExtension.swift */,
 				B1A80FA3258A2A0E00F0917F /* UIImageViewExtension.swift */,
 				B14880D025B3057300D0106B /* UIViewControllerExtension.swift */,
 				B1750DF325B468300023A9C9 /* UIViewExtension.swift */,
@@ -1114,7 +1118,7 @@
 				B19A51F12610CE8000984207 /* SelfSizedTableView.swift in Sources */,
 				B158951F264FCDFE005570ED /* ApiService.swift in Sources */,
 				B1589526264FD360005570ED /* HttpStatusCode.swift in Sources */,
-				B19A51F22610CE8000984207 /* ToastService.swift in Sources */,
+				B19A51F22610CE8000984207 /* AlertService.swift in Sources */,
 				B19A51F32610CE8000984207 /* UIViewControllerExtension.swift in Sources */,
 				B19A51F42610CE8000984207 /* AuthService.swift in Sources */,
 				B19A51F52610CE8000984207 /* WishDataStore.swift in Sources */,
@@ -1130,6 +1134,7 @@
 				B18F1CC626874EF800FD7528 /* WebViewController.swift in Sources */,
 				B19A51FE2610CE8000984207 /* UIImageViewExtension.swift in Sources */,
 				B19A51FF2610CE8000984207 /* FooterView.swift in Sources */,
+				B12EA4D72691C4F1001654EA /* UIImageExtension.swift in Sources */,
 				B19A52002610CE8000984207 /* ProductImageViewController.swift in Sources */,
 				B1F81F6B26430D1500C277FB /* WanticShareNavigationController.swift in Sources */,
 				B19A52012610CE8000984207 /* EditDetailsViewController.swift in Sources */,
@@ -1150,7 +1155,7 @@
 				B16E1FB325BF3290009EEFDE /* SelfSizedTableView.swift in Sources */,
 				B158951E264FCDFE005570ED /* ApiService.swift in Sources */,
 				B1589525264FD360005570ED /* HttpStatusCode.swift in Sources */,
-				B14880C425B2E8B700D0106B /* ToastService.swift in Sources */,
+				B14880C425B2E8B700D0106B /* AlertService.swift in Sources */,
 				B14880D125B3057300D0106B /* UIViewControllerExtension.swift in Sources */,
 				B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */,
 				B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */,
@@ -1166,6 +1171,7 @@
 				B18F1CC526874EF800FD7528 /* WebViewController.swift in Sources */,
 				B1A80FA4258A2A0E00F0917F /* UIImageViewExtension.swift in Sources */,
 				B17B403C25C4717F003363E9 /* FooterView.swift in Sources */,
+				B12EA4D62691C4F1001654EA /* UIImageExtension.swift in Sources */,
 				B1247FAF25BC612C009CEF57 /* ProductImageViewController.swift in Sources */,
 				B1F81F6A26430D1500C277FB /* WanticShareNavigationController.swift in Sources */,
 				B1A80FA8258A705100F0917F /* EditDetailsViewController.swift in Sources */,

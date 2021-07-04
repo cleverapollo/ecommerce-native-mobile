@@ -28,18 +28,18 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
         WishService.shared.saveWish(wish, completionHandler: { result in
             switch result {
             case .success(_):
-                ToastService.shared.showToast(controller: self, message: "Dein Wunsch wurde erfolgreich deiner Liste hinzugefügt.", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
+                self.alertService.showToast(controller: self, message: "Dein Wunsch wurde erfolgreich deiner Liste hinzugefügt.", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
             case .failure(let error):
                 if (error as NSError).code == HttpStatusCode.UNAUTHORIZED {
-                    self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+                    self.alertService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
                 } else {
-                    ToastService.shared.showToast(controller: self, message: "Beim Speichern deines Wunsches ist ein Fehler aufgetreten", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
+                    self.alertService.showToast(controller: self, message: "Beim Speichern deines Wunsches ist ein Fehler aufgetreten", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
                 }
             }
         })
     }
     
-    let toastService = ToastService.shared
+    let alertService = AlertService.shared
     var wishLists: [WishList] = []
     var wishListId: UUID? {
         didSet {
@@ -73,7 +73,7 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
             switch result {
             case .success(let wishLists):
                 guard !wishLists.isEmpty else {
-                    self.toastService.showNoWishListsAvailableToast(controller: self, extensionContext: self.extensionContext!)
+                    self.alertService.showNoWishListsAvailableToast(controller: self, extensionContext: self.extensionContext!)
                     return
                 }
                 self.wishLists = wishLists
@@ -85,7 +85,7 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
                 }
             case .failure(let error):
                 if (error as NSError).code == HttpStatusCode.UNAUTHORIZED {
-                    self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+                    self.alertService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
                 }
                 self.wishLists = []
             }

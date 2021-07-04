@@ -19,7 +19,7 @@ class ProductInfoCell: UICollectionViewCell {
 class ProductImageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let authService = AuthService.shared
-    let toastService = ToastService.shared
+    let alertService = AlertService.shared
     
     var productInfos: [ProductInfo] = []
     var selectedProductInfo: ProductInfo?
@@ -34,7 +34,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         
         authService.getAuthToken(completionHandler: { idToken in
             if idToken == nil {
-                self.toastService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+                self.alertService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
             } else if let item = self.extensionContext?.inputItems.first as? NSExtensionItem {
                 self.fetchProductInfos(extensionItem: item)
             }

@@ -8,15 +8,18 @@
 import UIKit
 import SVGKit
 
-extension UIImageView{
+extension UIImageView {
+    
+    static let minSizeHeight: CGFloat = 10.0
+    static let minSizeWidth: CGFloat = 10.0
 
-     func setImageFromURl(imageUrlString: String){
+     func setImageFromURl(imageUrlString: String) {
          if let url = NSURL(string: imageUrlString) {
              if let imagedata = NSData(contentsOf: url as URL) {
-                if imageUrlString.contains(".svg"), let uiImage = SVGKImage(data: imagedata as Data)?.uiImage  {
-                    self.image = uiImage
-                } else if let uiImage = UIImage(data: imagedata as Data)  {
-                    self.image = uiImage
+                if imageUrlString.contains(".svg"), let uiImage = SVGKImage(data: imagedata as Data)?.uiImage, uiImage.size.height > UIImageView.minSizeHeight && uiImage.size.width > UIImageView.minSizeWidth  {
+                    self.image = uiImage.scalePreservingAspectRatio(targetSize: frame.size)
+                } else if let uiImage = UIImage(data: imagedata as Data), uiImage.size.height > UIImageView.minSizeHeight && uiImage.size.width > UIImageView.minSizeWidth {
+                    self.image = uiImage.scalePreservingAspectRatio(targetSize: frame.size)
                 } else {
                     print("Can't create UIImage! URL is " + imageUrlString)
                 }

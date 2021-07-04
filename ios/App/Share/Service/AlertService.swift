@@ -7,9 +7,9 @@
 
 import UIKit
 
-struct ToastService {
+struct AlertService {
     
-    static let shared = ToastService()
+    static let shared = AlertService()
     
     func showNoImagesFoundAlert(controller: UIViewController, extensionContext: NSExtensionContext?) {
         let message = "Leider können wir von dieser Seite keine Bilder abrufen, deshalb kannst du keinen Wunsch hinzufügen. \n\n Befindest du dich gerade in einer App, dann kannst du es alternativ über die Webseite des App-Betreibers in deinem Web-Browser (z.B. Safari) erneut versuchen. \n\n Hast du damit auch keinen Erfolg, dann schreib uns gerne eine E-Mail an hello@wantic.io und nenne uns die App/Webseite über die das Erstellen eines neuen Wunsches nicht möglich war."
@@ -47,13 +47,13 @@ struct ToastService {
     }
     
     func showNotAuthorizedToast(controller: UIViewController, extensionContext: NSExtensionContext) {
-        let title = "Du bist nicht angemeldet."
-        let message = "Melde dich an der Wantic-App an, um dir einen Wunsch zur Wunschliste hinzuzufügen."
+        let title = "Sitzung abgelaufen"
+        let message = "Du warst eine Weile lang inaktiv, also haben wir dich abgemeldet, um deine persönlichen Daten zu schützen. \n\n Bitte öffne kurz die Wantic App, um eine neue Sitzung zu starten. Danach kannst du diesen Vorgang einfach wiederholen. \n\n Hinweis: Deine Sitzung wird im Hintergrund automatisch aktualisiert. Du musst dich in der App nicht abmelden und anschließend neu anmelden."
         let alert = createAlertController(title: title, message: message)
         
         DispatchQueue.main.async {
-            alert.addAction(createAlertAction(title: "Anmelden", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "\(AppConfig.appUrl)/start") {
+            alert.addAction(createAlertAction(title: "Sitzung erneuern", style: .default, handler: { (action: UIAlertAction!) in
+                if let url = URL(string: "\(AppConfig.appUrl)/start?renewSession=true") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)

@@ -48,7 +48,7 @@ class WebViewController: UIView, WKNavigationDelegate {
                     }
                     if productInfos.isEmpty && self.productImageViewController.productInfos.isEmpty  {
                         self.productImageViewController.reloadViewRemoveActivityIndicator()
-                        ToastService.shared.showNoImagesFoundAlert(controller: self.productImageViewController, extensionContext: self.productImageViewController.extensionContext)
+                        AlertService.shared.showNoImagesFoundAlert(controller: self.productImageViewController, extensionContext: self.productImageViewController.extensionContext)
                     } else {
                         self.productImageViewController.productInfos = productInfos
                         self.productImageViewController.reloadViewRemoveActivityIndicator()
@@ -56,7 +56,7 @@ class WebViewController: UIView, WKNavigationDelegate {
                 } else {
                     self.productImageViewController.reloadViewRemoveActivityIndicator()
                     if productInfos.isEmpty && self.productImageViewController.productInfos.isEmpty  {
-                        ToastService.shared.showNoImagesFoundAlert(controller: self.productImageViewController, extensionContext: self.productImageViewController.extensionContext)
+                        AlertService.shared.showNoImagesFoundAlert(controller: self.productImageViewController, extensionContext: self.productImageViewController.extensionContext)
                     }
                 }
             })
