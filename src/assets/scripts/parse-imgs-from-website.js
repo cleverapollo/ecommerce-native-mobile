@@ -11,6 +11,7 @@ Array.from(document.getElementsByTagName('img')).map(x => {
     } 
     return { name: '', imageUrl: ''  };  
 }).filter(x => x.imageUrl !== '' && (x.imageUrl.startsWith('http')))
+.filter(filterDuplicatedItems)
 .sort(sortBySvgImages);
 
 function validateUrl(url) {
@@ -45,4 +46,10 @@ function sortBySvgImages(a, b) {
         return -1;
     }
     return 0;
+}
+
+function filterDuplicatedItems(productInfo, index, self) {
+    return index === self.findIndex((p) => (
+        p.imageUrl === productInfo.imageUrl
+    ));
 }

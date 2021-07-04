@@ -30,6 +30,7 @@ ExtensionClass.prototype = {
             } 
             return { name: '', imageUrl: ''  };  
         }).filter(x => x.imageUrl !== '' && (x.imageUrl.startsWith('http')))
+        .filter(filterDuplicatedItems)
         .sort(sortBySvgImages);
     },
     fetchPrice: function() {
@@ -117,4 +118,11 @@ function sortBySvgImages(a, b) {
     }
     return 0;
 }
+
+function filterDuplicatedItems(productInfo, index, self) {
+    return index === self.findIndex((p) => (
+        p.imageUrl === productInfo.imageUrl
+    ));
+}
+
 var ExtensionPreprocessingJS = new ExtensionClass;
