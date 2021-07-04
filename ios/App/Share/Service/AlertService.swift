@@ -53,7 +53,7 @@ struct AlertService {
         
         DispatchQueue.main.async {
             alert.addAction(createAlertAction(title: "Sitzung erneuern", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "\(AppConfig.appUrl)/start?renewSession=true") {
+                if let url = URL(string: "\(AppConfig.appUrl)/start") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)

@@ -3,12 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { AuthenticationService } from '@core/services/authentication.service';
-import { NavigationService } from '@core/services/navigation.service';
-import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -18,18 +14,13 @@ import { ToastService } from '@core/services/toast.service';
 export class WishListOverviewPage implements OnInit, OnDestroy {
 
   wishLists: Array<WishListDto> = new Array();
-  refreshData: boolean = false
-
-  private queryParamSubscription: Subscription;
+  refreshData: boolean = false;
 
   constructor(
     private route: ActivatedRoute, 
     private wishListStore: WishListStoreService,
     private navController: NavController,
-    private analyticsService: AnalyticsService,
-    private authService: AuthenticationService,
-    private navigationService: NavigationService,
-    private toastService: ToastService
+    private analyticsService: AnalyticsService
   ) { 
     this.analyticsService.setFirebaseScreenName('main');
   }
@@ -37,28 +28,9 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   ngOnInit() {
     const resolvedData = this.route.snapshot.data;
     this.updateWishLists(resolvedData.wishLists);
-    
-    this.queryParamSubscription = this.route.queryParamMap.subscribe(queryParamMap => {
-      if (Boolean(queryParamMap.get('renewSession'))) {
-        this.renewSession();
-      }
-    })
   }
 
-  private renewSession() {
-    this.authService.getFirebaseIdToken(false).then(() => {
-      this.toastService.presentSuccessToast('Deine Sitzung wurde erfolgreich erneuert.');
-      this.navigationService.removeQueryParamFromCurrentRoute('renewSession');
-    }, () => {
-      this.navigationService.removeQueryParamFromCurrentRoute('renewSession');
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.queryParamSubscription) {
-      this.queryParamSubscription.unsubscribe();
-    }
-  }
+  ngOnDestroy() {}
 
   ionViewWillEnter() {
     if (this.refreshData) {
