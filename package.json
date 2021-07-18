@@ -8,8 +8,11 @@
     "start": "ionic serve --configuration=dev",
     "beta-web": "ionic serve --configuration=beta",
     "dev-beta-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=beta",
+    "dev-beta-android": "npx cap sync android && ionic capacitor run android -l --external --configuration=beta",
     "dev-prod-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=production",
+    "dev-prod-android": "npx cap sync && ionic capacitor run android -l --external --configuration=production",
     "build-beta-ios": "npm run build-beta && npx cap copy ios && npx cap open ios",
+    "build-beta-and": "npm run build-beta && npx cap copy android && npx cap open android",
     "build-prod-and": "npx cap sync android && ionic capacitor run android --configuration=production",
     "build-prod-ios": "npm run build && npx cap copy ios &&  npx cap open ios",
     "build-prod-ios-fix-update": "npm run build-prod-ios && cd ios/App/public && zip -r ../wantic.zip ./* -x \"*.DS_Store\"",
@@ -19,7 +22,8 @@
     "deploy-web-prod": "ionic build --prod && firebase deploy -P prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "jetifier"
   },
   "private": true,
   "dependencies": {
@@ -57,7 +61,6 @@
     "cordova-plugin-firebase-authentication": "^4.0.2",
     "cordova-plugin-googleplus": "^8.5.2",
     "cordova-plugin-inappbrowser": "^4.1.0",
-    "cordova-plugin-ionic": "5.4.7",
     "cordova-plugin-sign-in-with-apple": "^0.1.2",
     "cordova-sqlite-storage": "^5.1.0",
     "cordova-support-android-plugin": "^1.0.2",
@@ -89,6 +92,7 @@
     "cordova-plugin-whitelist": "^1.3.4",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
+    "jetifier": "^2.0.0",
     "karma": "~4.1.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
