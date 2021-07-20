@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "165303834787",
+    "firebase_url": "https://wantic-dev.firebaseio.com",
+    "project_id": "wantic-dev",
+    "storage_bucket": "wantic-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165303834787:android:4fbb8c59cf96bb05330716",
+        "android_client_info": {
+          "package_name": "io.wantic.app.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165303834787-ribtvjadvagfshgisgreai0e2k3om03l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.wantic.app.beta",
+            "certificate_hash": "02a658ec085f62dcc3137b81e325a3c8d1d4d511"
+          }
+        },
+        {
+          "client_id": "165303834787-52s37du1t3jvojlfm0tscgopttu27p03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG6kUUioOfTR2EOHx3ONywqBnOUSDuP3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165303834787-52s37du1t3jvojlfm0tscgopttu27p03.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "165303834787-11ab0h0h7agfchk51voh42u7amn0o53v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.wantic.app-beta"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

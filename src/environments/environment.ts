@@ -23,6 +23,7 @@ export const environment: EnvironmentConfig = {
     appId: '',
     measurementId: ''
   },
+  googleSignInAndroidClientId: '',
   analyticsConfigured: false
 };
 

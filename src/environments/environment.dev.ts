@@ -12,7 +12,8 @@ export const environment: EnvironmentConfig = {
         secondLevelDomain: 'localhost', // for android and iOS simulators = 10.0.2.2
         port: 8080
     },
-    analyticsConfigured: false
+    analyticsConfigured: false,
+    googleSignInAndroidClientId: '165303834787-52s37du1t3jvojlfm0tscgopttu27p03.apps.googleusercontent.com',
 };
 
 const serverConfig = environment.serverConfig;

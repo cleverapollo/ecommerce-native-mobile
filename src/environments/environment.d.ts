@@ -20,6 +20,7 @@ export interface EnvironmentConfig {
         appId: string,
         measurementId?: string // only configured if analytics is enabled
     },
+    googleSignInAndroidClientId?: string,
     appsflyerConfig?: {
         devKey: string,
         appId: string

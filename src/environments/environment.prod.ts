@@ -21,6 +21,7 @@ export const environment : EnvironmentConfig = {
     measurementId: 'G-DZ99Y0YVF0'
   },
   analyticsConfigured: true,
+  googleSignInAndroidClientId: '', // ToDo
   appsflyerConfig: {
     devKey: "s8xKbYNUpxszQP8CWguA5L",
     appId: "1536006626"

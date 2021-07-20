@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+        storeFile file('F:\\Develope\\wantic-frontend\\android-keystore\\android-upload.keystore')
+            storePassword 'h4BA)]&~Cd}P[\\4W'
+            keyAlias 'android-upload'
+            keyPassword 'U$8^p2rjcHdpfK*h'
+        }
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "io.wantic.app"
@@ -9,11 +17,43 @@ android {
         versionCode 2
         versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "environment"
+    productFlavors {
+        prod {
+            dimension "environment"
+        }
+        beta {
+            dimension "environment"
+            applicationIdSuffix ".beta"
+            versionNameSuffix "-beta"
+        }
+    }
+}
+
+easylauncher {
+    defaultFlavorNaming true
+
+    buildTypes {
+        debug {
+            filters grayRibbonFilter()
+        }
+        release {}
+    }
+
+    productFlavors {
+        beta {
+            filters grayRibbonFilter()
+        }
+        prod {
+            enable false  //Do not label in production
         }
     }
 }

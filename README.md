@@ -19,6 +19,10 @@ OS
 
 `ionic cordova run ${OS} -l --configuration=${ENV}`
 
+# Android
+
+keytool -exportcert -alias androiddebugkey -keystore .android/debug.keystore -list -v
+
 ## Hosting
 
 - Web: Firebase Hosting

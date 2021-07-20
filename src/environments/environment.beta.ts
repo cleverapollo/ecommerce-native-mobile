@@ -17,9 +17,11 @@ export const environment: EnvironmentConfig = {
         projectId: "wantic-dev",
         storageBucket: "wantic-dev.appspot.com",
         messagingSenderId: "165303834787",
-        appId: "1:165303834787:web:6e136abc3e6200aa330716"
+        appId: "1:165303834787:web:6e136abc3e6200aa330716",
+        measurementId: "G-33SQBGEXZM"
     },
-    analyticsConfigured: false,
+    analyticsConfigured: true,
+    googleSignInAndroidClientId: '165303834787-52s37du1t3jvojlfm0tscgopttu27p03.apps.googleusercontent.com',
     appsflyerConfig: {
         devKey: "s8xKbYNUpxszQP8CWguA5L",
         appId: "1560563821"

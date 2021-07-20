@@ -12,10 +12,12 @@ import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } f
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { UserProfile } from '@core/models/user.model';
-import { SERVER_URL } from '@env/environment';
+import { environment, SERVER_URL } from '@env/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
-import { first } from 'rxjs/operators';
+import { Plugins } from '@capacitor/core';
+
+const { Device } = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -191,7 +193,8 @@ export class AuthenticationService {
   async googlePlusSignIn(): Promise<{googlePlusLoginResponse: any, user: UserProfile}> {
     try {
       // google plus sign in
-      const googlePlusLoginResponse = await this.googlePlus.login({});
+      const signInOptions = await this.getSignInOptions();
+      const googlePlusLoginResponse = await this.googlePlus.login(signInOptions);
       const idToken = googlePlusLoginResponse?.idToken;
       const accessToken = googlePlusLoginResponse?.accessToken;
 
@@ -217,6 +220,17 @@ export class AuthenticationService {
       }
       return Promise.reject(errorMessage);
     }
+  }
+
+  private async getSignInOptions() {
+    let signInOptions = {};
+    const deviceInfo = await Device.getInfo();
+    if (deviceInfo.platform === 'android') {
+      signInOptions = {
+        'webClientId': environment.googleSignInAndroidClientId
+      };
+    }
+    return signInOptions;
   }
 
   async appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}> {
