@@ -20,16 +20,46 @@ OS
 `ionic cordova run ${OS} -l --configuration=${ENV}`
 
 # Android
+## Get Signing Key
 
-keytool -exportcert -alias androiddebugkey -keystore .android/debug.keystore -list -v
+The following commands lists all keys inside the keystores (SH1, SH256, ...) in form of hex values.   
+Some tools like the Facebook Developer Console needs this keys in form of Base64.    
+For that it is necessary to decode the hex value to base64.
 
-## Hosting
+- Debug: keytool -exportcert -alias androiddebugkey -keystore .android/debug.keystore -list -v
+- Release: keytool -exportcert -alias <your-alias> -keystore <path-to-keystore> -list -v
+
+# Hosting
 
 - Web: Firebase Hosting
 - iOS: AppStore Connect
-- Android: TBD
+- Android: Google Play Console
 
-## Sources and references
+# Cordova/Capacitor Plugins
+
+## Authentication
+
+- [Cordova plugin for Firebase Authentication](https://github.com/chemerisuk/cordova-plugin-firebase-authentication)
+- [Google Sign-In Cordova/PhoneGap Plugin](https://github.com/EddyVerbruggen/cordova-plugin-googleplus)
+- [cordova-plugin-facebook-connect](https://github.com/cordova-plugin-facebook-connect/cordova-plugin-facebook-connect)
+- [cordova-plugin-sign-in-with-apple](https://github.com/cordova-plugin-facebook-connect/cordova-plugin-facebook-connect)
+
+## Analytics
+
+- [Cordova AppsFlyer plugin for Android and iOS](https://github.com/AppsFlyerSDK/appsflyer-cordova-plugin)
+- [Cordova plugin for Firebase Analytics](https://github.com/chemerisuk/cordova-plugin-firebase-analytics)
+
+## Network
+
+- [Cordova Advanced HTTP](https://github.com/silkimen/cordova-plugin-advanced-http)
+- [angular-jwt](https://github.com/auth0/angular2-jwt)
+
+## Storage
+
+- [capacitor-secure-storage-plugin](https://github.com/martinkasa/capacitor-secure-storage-plugin)
+- [Ionic cache service](https://github.com/Nodonisko/ionic-cache)
+
+# Sources and references
 
 - [How to Build an Ionic HTTP Loading Interceptor & Retry Logic](https://www.youtube.com/watch?v=IJWCpa_-MeU)
 - [Ionic Development Tips](https://ionicframework.com/docs/developing/tips)
