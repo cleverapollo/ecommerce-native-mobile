@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import io.wantic.app.R
 import io.wantic.app.share.models.WishList
 
@@ -38,6 +39,7 @@ class WishListArrayAdapter(
         //
         val textViewWishListName: TextView = listItem.findViewById(R.id.textViewListItem)
         textViewWishListName.text = wishList.name
+        textViewWishListName.typeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
 
         //
         val imageViewCheckMark: ImageView = listItem.findViewById(R.id.imageViewCheckMark)
