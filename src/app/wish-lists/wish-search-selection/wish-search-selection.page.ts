@@ -10,6 +10,9 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { first } from 'rxjs/operators';
+import { Plugins } from '@capacitor/core';
+
+const { Device } = Plugins;
 
 @Component({
   selector: 'app-wish-search-selection',
@@ -31,6 +34,7 @@ export class WishSearchSelectionPage implements OnInit {
     return this.searchByAmazonApiForm?.controls.keywords.value ?? null;
   }
 
+  showShareIntentNotVisibleHint: boolean = false;
   searchByAmazonApiForm: FormGroup;
   
   constructor(
@@ -54,6 +58,14 @@ export class WishSearchSelectionPage implements OnInit {
         updateOn: 'submit'
        }]
     });
+    this.initShowShareIntentNotVisibleHint();
+  }
+
+  private async initShowShareIntentNotVisibleHint() {
+    const deviceInfo = await Device.getInfo();
+    if (deviceInfo.platform == 'ios') {
+      this.showShareIntentNotVisibleHint = true;
+    }
   }
 
   ionViewDidEnter() {

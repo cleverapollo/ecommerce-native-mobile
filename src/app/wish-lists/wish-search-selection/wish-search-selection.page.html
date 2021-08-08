@@ -30,14 +30,14 @@
    <img src="assets/images/onboarding-slide-2.png" alt="Erklärungsbild" />
  </div>
 
- <p class="wantic-margin-right-left info-text">
+ <p class="wantic-margin-right-left info-text" *ngIf="showShareIntentNotVisibleHint">
   <strong>Info:</strong> Solltest du unser App-Icon <img class="appstore-icon" src="assets/icon/appstore-icon.png" /> <br>
   nicht sehen, liegt dies an einem bekannten temporären iOS Problem.<br><br>
   
   Diese zwei Dinge kannst du probieren:
  </p>
 
- <ol class="wantic-margin-right-left">
+ <ol class="wantic-margin-right-left" *ngIf="showShareIntentNotVisibleHint">
   <li>
     Drücke erneut auf das Share-Icon <ion-icon class="share-icon" name="share-outline"></ion-icon> in Safari, oft taucht unser App-Icon beim Zweiten Anlauf auf.
   </li>
