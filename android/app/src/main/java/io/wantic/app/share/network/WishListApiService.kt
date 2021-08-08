@@ -33,10 +33,11 @@ class WishListApiService(private val requestQueue: RequestQueue) {
                         val wishList = WishList(uuid, name)
                         wishLists.add(wishList)
                     } catch (exception: JSONException) {
-                        exception.printStackTrace();
+                        exception.printStackTrace()
                     }
                 }
-                completionHandler(wishLists, null)
+                val sortedWishLists = wishLists.sortedBy { it.name }
+                completionHandler(ArrayList(sortedWishLists), null)
             },
             { error ->
                 completionHandler(null, error)
