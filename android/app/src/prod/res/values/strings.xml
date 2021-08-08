@@ -14,4 +14,5 @@
     <string name="ionic_max_versions">2</string>
     <string name="ionic_min_background_duration">30</string>
     <string name="ionic_update_api">https://api.ionicjs.com</string>
+    <string name="web_app_host" translatable="false">app.wantic.io</string>
 </resources>

@@ -85,6 +85,11 @@
                   "output": "./"
                 },
                 {
+                  "glob": "assetlinks.json",
+                  "input": "src/prod/.well-known",
+                  "output": "./.well-known"
+                },
+                {
                   "glob": "**/*",
                   "input": "src/assets",
                   "output": "assets"
@@ -121,6 +126,11 @@
                   "output": "./"
                 },
                 {
+                  "glob": "assetlinks.json",
+                  "input": "src/beta/.well-known",
+                  "output": "./.well-known"
+                },
+                {
                   "glob": "**/*",
                   "input": "src/assets",
                   "output": "assets"
@@ -155,6 +165,11 @@
                   "glob": "apple-app-site-association",
                   "input": "src/beta/.well-known",
                   "output": "./"
+                },
+                {
+                  "glob": "assetlinks.json",
+                  "input": "src/beta/.well-known",
+                  "output": "./.well-known"
                 },
                 {
                   "glob": "**/*",
