@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "io.wantic.app",
+            "sha256_cert_fingerprints": [
+                "BD:FB:99:A2:D3:28:01:B6:34:81:17:C0:A1:67:42:E0:4C:DD:79:1F:43:F3:17:B1:74:16:CD:C5:3E:82:5A:03"
+            ]
+        }
+    }
+]

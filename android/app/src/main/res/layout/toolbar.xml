@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wanticToolbar"
+    style="@style/AppTheme"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/toolbar_background"
+    android:minHeight="@dimen/abc_action_bar_default_height_material">
+
+    <ImageButton
+        android:id="@+id/toolbarCloseButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start|top"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/toolbar_close_button_description"
+        android:padding="12dp"
+        android:scaleType="fitCenter"
+
+        android:src="@drawable/icon_close_3x" />
+
+    <ImageView
+        android:id="@+id/toolbarLogo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/logo_description"
+        android:src="@drawable/wantic_logo_3x" />
+
+    <Button
+        android:id="@+id/toolbarActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_gravity="end|top"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/button_gradient"
+        android:enabled="false"
+        android:fontFamily="@font/roboto"
+        android:letterSpacing="0.1"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/save_button_label"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</androidx.appcompat.widget.Toolbar>

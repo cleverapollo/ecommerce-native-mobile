@@ -1,0 +1,37 @@
+<resources>
+    <string name="title_edit_product_details">Edit wish</string>
+    <string name="label_product_name">Name</string>
+    <string name="label_product_price">Price (in €)</string>
+    <string name="product_image_content_description">Here you can see the image of the product.</string>
+    <string name="toolbar_button_next">Next</string>
+    <string name="select_wish_list_headline">Select Wish List</string>
+    <string name="logo_description">Wantic Logo</string>
+    <string name="toolbar_close_button_description">Close Icon</string>
+    <string name="title_select_product_image">Choose image</string>
+
+    <!-- MESSAGES -->
+    <string name="title_no_product_info_found">No images found</string>
+    <string name="message_no_product_info_found">Unfortunately, we can\'t retrieve images from this page, so you can\'t add a wish. \n\n If you are currently in an app, you can alternatively try again via the app operator\'s website in your web browser (e.g. Chrome). \If you are still unsuccessful, please send us an email to hello@wantic.io and tell us which app/website did not allow you to create a new wish.</string>
+
+    <string name="message_wish_successfully_saved">Your wish was successfully added to your list.</string>
+    <string name="message_failed_to_save_wish">An error occurred while saving your wish.</string>
+
+    <string name="title_not_authorized">You are not logged in</string>
+    <string name="message_not_authorized">Please open the Wantic app and sign in there. After that you can repeat this process.</string>
+
+    <string name="title_no_wish_lists">No wish lists available</string>
+    <string name="message_no_wish_lists">You have not yet created a wish list and therefore cannot save a wish. Please create a wish list first and then repeat this process.</string>
+
+    <!-- BUTTON LABELS -->
+    <string name="save_button_label">Save</string>
+    <string name="button_label_show_wish">Show wish</string>
+    <string name="button_label_done">Done</string>
+    <string name="button_label_retry">Retry</string>
+    <string name="button_label_close">Close</string>
+    <string name="button_label_open_wantic_app">Open Wantic App</string>
+    <string name="button_label_create_wish_list_now">Create wish list now</string>
+
+    <!-- Form validation -->
+    <string name="required_name">Please enter a name for your wish.</string>
+    <string name="required_price">Please enter a price for your wish.</string>
+</resources>
