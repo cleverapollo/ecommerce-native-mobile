@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.Message
 import android.util.DisplayMetrics
 import android.util.Log
@@ -28,7 +29,6 @@ import io.wantic.app.share.models.SelectedProductImageView
 import io.wantic.app.share.utils.AndroidJSInterface
 import io.wantic.app.share.utils.AuthService
 import io.wantic.app.share.utils.FeedbackService
-import io.wantic.app.share.utils.IncomingHandler
 import kotlinx.serialization.*
 import java.util.regex.Matcher
 
@@ -51,7 +51,7 @@ class SelectProductImageActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var gridLayout: GridLayout
     private lateinit var actionButton: Button
-    private lateinit var incomingHandler: IncomingHandler
+    private lateinit var incomingHandler: Handler
 
     private var selectedView: SelectedProductImageView = SelectedProductImageView()
 
@@ -67,10 +67,10 @@ class SelectProductImageActivity : AppCompatActivity() {
         Log.d(LOG_TAG, "onCreate intent action = ${intent?.action}, intent type = ${intent?.type}")
 
         loadingSpinner = findViewById(R.id.loading_spinner)
-        incomingHandler = IncomingHandler(this)
 
         if (intent?.action == Intent.ACTION_SEND) {
             loadingSpinner.visibility = View.VISIBLE
+            incomingHandler = initIncomingHandler()
             incomingHandler.sendMessageDelayed(Message(), 10000)
 
             when {
@@ -86,6 +86,18 @@ class SelectProductImageActivity : AppCompatActivity() {
             }
         } else {
             showNoImagesFoundFeedback()
+        }
+    }
+
+    private fun initIncomingHandler() = object : Handler(mainLooper) {
+        override fun handleMessage(msg: Message) {
+            val self = this@SelectProductImageActivity
+            if (self.loadingSpinner.visibility != View.GONE) {
+                self.loadingSpinner.visibility = View.GONE
+                if (self.productInfoList.isEmpty()) {
+                    self.showNoImagesFoundFeedback()
+                }
+            }
         }
     }
 
@@ -223,7 +235,9 @@ class SelectProductImageActivity : AppCompatActivity() {
         override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
             // avoid following redirects
             Log.d(LOG_TAG, "web page shouldOverrideUrlLoading $url")
-            view.loadUrl(url)
+            if (url != null) {
+                view.loadUrl(url)
+            }
             return false // then it is not handled by default action
         }
     }
@@ -286,17 +300,14 @@ class SelectProductImageActivity : AppCompatActivity() {
 
     private fun createProductView(imageUri: Uri, productInfoId: UInt): LinearLayout {
         // calculate width and height
-        val displayMetrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val displayMetrics = getDisplayMetrics()
         val margin = 16
-        val padding = 25
         val numberOfImagesInRow = 2
         val imageWidth = (displayMetrics.widthPixels / numberOfImagesInRow) - (margin * 4)
 
         // linear layout
         val linearLayout = LinearLayout(this)
         val linearLayoutParams = LinearLayout.LayoutParams(imageWidth, imageWidth)
-        //linearLayoutParams.setMargins(margin, margin, margin, margin)
         linearLayout.layoutParams = linearLayoutParams
         linearLayout.orientation = VERTICAL
         linearLayout.setBackgroundResource(R.drawable.rounded_corner_white_border)
@@ -332,6 +343,20 @@ class SelectProductImageActivity : AppCompatActivity() {
 
         linearLayout.addView(imageView)
         return linearLayout
+    }
+
+    private fun getDisplayMetrics(): DisplayMetrics {
+        val outMetrics = DisplayMetrics()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val display = this.display
+            display?.getRealMetrics(outMetrics)
+        } else {
+            @Suppress("DEPRECATION")
+            val display = this.windowManager.defaultDisplay
+            @Suppress("DEPRECATION")
+            display.getMetrics(outMetrics)
+        }
+        return outMetrics
     }
 
 

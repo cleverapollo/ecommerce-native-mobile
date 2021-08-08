@@ -27,8 +27,7 @@ object AppConfig {
 
     val appUrl: String
         get() {
-            var url = ""
-            url = when (BuildConfig.FLAVOR) {
+            return when (BuildConfig.FLAVOR) {
                 "beta" -> {
                     "https://app.beta.wantic.io"
                 }
@@ -40,7 +39,6 @@ object AppConfig {
                     "https://app.wantic.io"
                 }
             }
-            return url
         }
 
      fun createRequestHeaders(idToken: String): MutableMap<String, String> {
