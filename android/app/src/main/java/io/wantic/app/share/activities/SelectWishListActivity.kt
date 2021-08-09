@@ -190,6 +190,7 @@ class SelectWishListActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_VIEW, webpage)
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
+            finishAffinity()
         }
     }
 
