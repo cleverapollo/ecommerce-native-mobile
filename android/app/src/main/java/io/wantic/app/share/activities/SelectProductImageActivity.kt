@@ -205,13 +205,15 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     private fun createWebViewClient() = object : WebViewClient() {
+
         override fun onPageFinished(view: WebView?, url: String?) {
+            Log.d(LOG_TAG, "onPageFinished")
             val self = this@SelectProductImageActivity
             if (self.productInfoList.isEmpty() && webViewSuccess) {
                 if (webViewSuccess) {
                     val jsonString = self.loadJsFileContent()
                     Log.d(LOG_TAG, "web page loading finished")
-                    view?.evaluateJavascript("$jsonString loadPriceInfos();", null)
+                    view?.evaluateJavascript(jsonString, null)
                 } else {
                     showNoImagesFoundFeedback()
                 }
@@ -243,7 +245,7 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     private fun loadJsFileContent(): String {
-        val fileName = "parse-price-infos.js"
+        val fileName = "find-product-info.js"
         return application.assets.open(fileName).bufferedReader().use {
             it.readText()
         }
