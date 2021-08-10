@@ -4,6 +4,10 @@ import { LogService } from '@core/services/log.service';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { first } from 'rxjs/operators';
+import { Plugins } from '@capacitor/core';
+import { Observable } from 'rxjs';
+
+const { Device } = Plugins;
 
 @Component({
   selector: 'app-onboarding-slides',
@@ -52,18 +56,33 @@ export class OnboardingSlidesComponent implements OnInit {
     this.showBackButton = false;
   }
 
-  completeOnboarding() {
-    this.userApiService.updateShowOnboardingSlidesIosState(false).pipe(first()).subscribe({
-      next: () => {
-        this.userProfileStore.removeCachedUserProfile().finally(() => {
+  async completeOnboarding() {
+    const deviceInfo = await Device.getInfo();
+
+    let updateMethod: Observable<void> = null;
+    if (deviceInfo.platform === 'ios') {
+      updateMethod = this.userApiService.updateShowOnboardingSlidesIosState(false);
+    } else if (deviceInfo.platform === 'android') {
+      updateMethod = this.userApiService.updateShowOnboardingSlidesAndroidState(false);
+    } else {
+      this.logger.debug(`platform ${deviceInfo.platform} is not supported.`);
+    }
+
+    if (updateMethod !== null) {
+      updateMethod.pipe(first()).subscribe({
+        next: () => {
+          this.userProfileStore.removeCachedUserProfile().finally(() => {
+            this.modalController.dismiss();
+          });
+        },
+        error: error => {
+          this.logger.error(error);
           this.modalController.dismiss();
-        });
-      },
-      error: error => {
-        this.logger.error(error);
-        this.modalController.dismiss();
-      }
-    })
+        }
+      })
+    } else {
+      this.logger.debug(`updateMethod is null`);
+    }
   }
 
 }

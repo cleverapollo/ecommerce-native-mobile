@@ -63,17 +63,19 @@ export class WishSearchSelectionPage implements OnInit {
 
   private async initShowShareIntentNotVisibleHint() {
     const deviceInfo = await Device.getInfo();
-    if (deviceInfo.platform == 'ios') {
+    if (deviceInfo.platform === 'ios') {
       this.showShareIntentNotVisibleHint = true;
     }
   }
 
-  ionViewDidEnter() {
-    this.userProfileStore.loadUserProfile().pipe(first()).subscribe(userProfile => {
-      if (userProfile?.userSettings.showOnboardingSlidesiOS) {
-        this.openOnboardingSlidesModal();
-      }
-    })
+  async ionViewDidEnter() {
+    const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
+    const deviceInfo = await Device.getInfo();
+    if (deviceInfo.platform === 'ios' && userProfile?.userSettings.showOnboardingSlidesiOS) {
+      this.openOnboardingSlidesModal();
+    } else if (deviceInfo.platform === 'android' && userProfile?.userSettings.showOnboardingSlidesAndroid) {
+      this.openOnboardingSlidesModal();
+    }
   }
 
   private async openOnboardingSlidesModal() {
