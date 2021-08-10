@@ -329,8 +329,18 @@ ion-modal.wantic-modal-auto-height {
     --height: 70%;
     --border-radius: 11pt;
 }
-.wantic-modal.wantic-modal-large {
-    --height:80%;
+// xs & sm
+@media (max-width: 767.98px) {
+    .wantic-modal.wantic-modal-large {
+        --height:90%;
+        --width: 90%;
+    }
+}
+// md, lg, xl
+@media (min-width: 768px) { 
+    .wantic-modal.wantic-modal-large {
+        --height:80%;
+    }
 }
 .wantic-modal.wantic-modal-small {
     --height:50%;

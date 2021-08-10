@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>
+    <ion-title mode="ios">
       Wunsch hinzufügen
     </ion-title>
     <ion-buttons slot="start" *ngIf="showBackButton">
@@ -36,7 +36,7 @@
     </ion-slide>
   </ion-slides>
 </ion-content>
-<ion-footer>
+<ion-footer class="ion-no-border">
   <ion-button *ngIf="!showCompleteButton" class="wantic-save-button" color="primary" expand="block" (click)="slideNext();">
     WEITER
   </ion-button>
