@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.view.setPadding
 import androidx.gridlayout.widget.GridLayout
 import androidx.gridlayout.widget.GridLayout.CENTER
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import io.wantic.app.R
 import io.wantic.app.share.models.ProductInfo
@@ -259,6 +260,13 @@ class SelectProductImageActivity : AppCompatActivity() {
                 FeedbackService.showNotAuthorizedAlert(this)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val eventParams = Bundle()
+        eventParams.putString(FirebaseAnalytics.Param.SCREEN_NAME, "share_extension-picture")
+        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, eventParams)
     }
 
     fun initGridLayout(productInfos: List<ProductInfo>) {

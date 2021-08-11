@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import io.wantic.app.AppConfig
 import io.wantic.app.R
@@ -235,6 +236,13 @@ class SelectWishListActivity : AppCompatActivity() {
                 finishAffinity()
             }
             .show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val eventParams = Bundle()
+        eventParams.putString(FirebaseAnalytics.Param.SCREEN_NAME, "share_extension-wishlist")
+        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, eventParams)
     }
 
 
