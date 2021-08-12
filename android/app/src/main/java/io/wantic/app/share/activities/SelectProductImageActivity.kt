@@ -228,7 +228,7 @@ class SelectProductImageActivity : AppCompatActivity() {
             request: WebResourceRequest?,
             error: WebResourceError?
         ) {
-            if (error != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (error != null) {
                 Log.e(LOG_TAG, "web page onReceivedError ${error.errorCode}")
             }
             webViewSuccess = false
