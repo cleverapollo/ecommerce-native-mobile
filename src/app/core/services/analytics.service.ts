@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { Plugins } from "@capacitor/core";
 import { Appsflyer, AppsflyerEvent } from '@ionic-native/appsflyer/ngx';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 import { LogService } from './log.service';
 import { AuthProvider } from '@core/models/signup.model';
 import { Platform } from '@ionic/angular';
 
-const { FirebaseAnalytics, Device } = Plugins;
 @Injectable({
   providedIn: 'root'
 })
@@ -15,26 +14,26 @@ export class AnalyticsService {
 
   analyticsEnabled = true;
 
-  get appsflyerIsConfigured(): Boolean {
+  get appsflyerConfigExists(): Boolean {
     const appsflyerConfig = environment.appsflyerConfig;
     return appsflyerConfig ? true : false;
   }
 
-  get firebaseIsConfigured(): Boolean {
+  get firebaseConfigExists(): Boolean {
     return environment.analyticsConfigured;
   }
 
-  constructor(private appsflyer: Appsflyer, private logger: LogService, private platform: Platform) { 
-    this.initFirebaseSdk();
-  }
-
-  async initFirebaseSdk() {
-    if ((await Device.getInfo()).platform == 'web' && this.firebaseIsConfigured) {
-      FirebaseAnalytics.initializeFirebase(environment.firebaseConfig);
-    }
+  constructor(
+    private appsflyer: Appsflyer, 
+    private logger: LogService, 
+    private platform: Platform,
+    private firebaseAnalytics: FirebaseAnalytics
+    ) { 
   }
 
   initAppsflyerSdk() {
+    if (!this.platform.is('capacitor')) {return}
+
     const appsflyerConfig = environment.appsflyerConfig;
     if (appsflyerConfig) {
       this.appsflyer.initSdk({
@@ -49,43 +48,33 @@ export class AnalyticsService {
   }
 
   logFirebaseEvent(eventName: string, params: { [prop: string]: any }) {
-    if (this.firebaseIsConfigured) { 
+    if (this.firebaseConfigExists && this.platform.is('capacitor')) { 
       this.platform.ready().then(() => {
-        const event = {
-          name: eventName,
-          params: params
-        };
-        FirebaseAnalytics?.logEvent(event);
+        this.firebaseAnalytics.logEvent(eventName, params);
       })
     }
   }
 
   logAppsflyerEvent(eventName: string, eventValues: AppsflyerEvent) {
-    if (this.appsflyerIsConfigured) {
+    if (this.appsflyerConfigExists && this.platform.is('capacitor')) {
       this.appsflyer.logEvent(eventName, eventValues);
     }
   }
 
   setFirebaseScreenName(screenName: string) {
-    if (this.firebaseIsConfigured) { 
-      this.platform.ready().then(() => {
-        FirebaseAnalytics?.setScreenName({
-          screenName
-        });
-      })
+    if (this.firebaseConfigExists && this.platform.is('capacitor')) {
+      this.firebaseAnalytics.setCurrentScreen(screenName);
     }
   }
 
   toggleAnalytics() {
     this.analyticsEnabled = !this.analyticsEnabled;
 
-    if (this.firebaseIsConfigured) {
-      FirebaseAnalytics.setCollectionEnabled({
-        enabled: this.analyticsEnabled,
-      });
+    if (this.firebaseConfigExists && this.platform.is('capacitor')) {
+      this.firebaseAnalytics.setEnabled(this.analyticsEnabled);
     }
 
-    if (this.appsflyerIsConfigured) {
+    if (this.appsflyerConfigExists && this.platform.is('capacitor')) {
       this.appsflyer.Stop(this.analyticsEnabled);
     }
   }
