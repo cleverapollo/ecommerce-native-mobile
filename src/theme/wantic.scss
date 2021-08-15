@@ -327,6 +327,9 @@ ion-modal.wantic-modal-auto-height {
     }
 }
 
+.sc-ion-modal-ios-h {
+    --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
+}
 
 .wantic-modal {
     --width: 85%;
