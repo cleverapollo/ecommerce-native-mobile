@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Wantic</string>
-    <string name="title_activity_main">Wantic</string>
-    <string name="package_name">io.wantic.app</string>
-    <string name="custom_url_scheme">io.wantic.app</string>
-    <string name="fb_app_id">494614765250156</string>
-    <string name="fb_app_name">wantic</string>
+    <string name="app_name" translatable="false">Wantic</string>
+    <string name="title_activity_main" translatable="false">Wantic</string>
+    <string name="package_name" translatable="false">io.wantic.app</string>
+    <string name="custom_url_scheme" translatable="false">io.wantic.app</string>
+    <string name="fb_app_id" translatable="false">494614765250156</string>
+    <string name="fb_app_name" translatable="false">wantic</string>
     <bool name="fb_auto_log_app_events_enabled">true</bool>
     <bool name="fb_advertiser_id_collection_enabled">true</bool>
-    <string name="ionic_app_id">0f41e38b</string>
-    <string name="ionic_channel_name">Production</string>
-    <string name="ionic_update_method">background</string>
-    <string name="ionic_max_versions">2</string>
-    <string name="ionic_min_background_duration">30</string>
-    <string name="ionic_update_api">https://api.ionicjs.com</string>
+    <string name="ionic_app_id" translatable="false">0f41e38b</string>
+    <string name="ionic_channel_name" translatable="false">Production</string>
+    <string name="ionic_update_method" translatable="false">background</string>
+    <string name="ionic_max_versions" translatable="false">2</string>
+    <string name="ionic_min_background_duration" translatable="false">30</string>
+    <string name="ionic_update_api" translatable="false">https://api.ionicjs.com</string>
     <string name="web_app_host" translatable="false">app.wantic.io</string>
 </resources>

@@ -16,32 +16,51 @@ function findProductPrice() {
     let prices = [];
     Array.prototype.forEach.call(elements, element => {
         if (element?.innerText?.includes('€')) { 
-            let searchText = element.innerText;
-            let euroCount = countNumberOfCurrencysInString(searchText);
-            for (var j = 0; j < euroCount; j++) {
-                let euroIndex = searchText.indexOf('€'); 
-                let substring = searchText.substring(euroIndex - 10, euroIndex + 10); 
-                if (substring) {
-                    substring = splitStringByLineBreaks(substring).find(v => v.indexOf('€') !== -1)
-                    let price = substring.replace(/[^\d.,€ -]/g, '');
-                    if (price.length > 2) {
-                        let euroIndex2 = price.indexOf('€'); 
-                        if (euroIndex2 == 0) {
-                            price = price.substring(1);
-                        } else {
-                            price = price.substring(0, euroIndex2 + 1)
-                        }
-                        if (price.length > 2) {
-                            prices.push(price);
-                        }
-                    }
-                }
-                searchText = searchText.slice(euroIndex-1, searchText.length-1);
-            }
+            prices = prices.concat(findAllPricesInElement(element))
         } 
     });
-    const resultPrice = mode(prices);
-    return parseFloat(resultPrice.replace('€', '').replace(',', '.').trim()) ?? 0.00;
+
+    try {
+        let resultPrice = mode(prices);
+        if (typeof resultPrice === 'string') {
+            resultPrice = resultPrice.replace('€', '').replace(',', '.').trim();
+            resultPrice = parseFloat(resultPrice);
+            if (resultPrice) {
+                return resultPrice;
+            }
+        }
+        return 0.00;
+    } catch (error) {
+        handleError(error);
+        return 0.00;
+    }
+}
+
+function findAllPricesInElement(element) {
+    let prices = [];
+    let searchText = element.innerText;
+    let euroCount = countNumberOfCurrencysInString(searchText);
+    for (var j = 0; j < euroCount; j++) {
+        let euroIndex = searchText.indexOf('€'); 
+        let substring = searchText.substring(euroIndex - 10, euroIndex + 10); 
+        if (substring) {
+            substring = splitStringByLineBreaks(substring).find(v => v.indexOf('€') !== -1)
+            let price = substring.replace(/[^\d.,€ -]/g, '');
+            if (price.length > 2) {
+                let euroIndex2 = price.indexOf('€'); 
+                if (euroIndex2 == 0) {
+                    price = price.substring(1);
+                } else {
+                    price = price.substring(0, euroIndex2 + 1)
+                }
+                if (price.length > 2) {
+                    prices.push(price);
+                }
+            }
+        }
+        searchText = searchText.slice(euroIndex-1, searchText.length-1);
+    }
+    return prices;
 }
 
 function splitStringByLineBreaks(string) {
@@ -53,10 +72,16 @@ function countNumberOfCurrencysInString(string) {
 }
 
 function mode(arr){
-    return arr.sort((a,b) =>
+    let result = arr.sort((a,b) =>
           arr.filter(v => v===a).length
         - arr.filter(v => v===b).length
     ).pop();
+
+    if (!result) {
+        result = "0,00";
+    }
+
+    return result;
 }
 
 
@@ -127,4 +152,29 @@ function filterDuplicatedItems(productInfo, index, self) {
     return index === self.findIndex((p) => (
         p.imageUrl === productInfo.imageUrl
     ));
+}
+
+// Error Handling
+
+function handleError(error) {
+    let androidError = "Unknown JS Error";
+    if (error) {
+        if (typeof error === 'string') {
+            androidError = error;
+        } else if (typeof error === 'object' && error !== null && error.message && typeof error.message === 'string') {
+            androidError = error.message;
+            if (error.name && typeof error.name === 'string') {
+                androidError = error.name + ": " + androidError;
+            }
+        }
+    }
+    Android.onError(androidError)
+}
+
+// execution
+
+try {
+    loadPriceInfos();
+} catch (error) {
+    handleError(error);
 }

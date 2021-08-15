@@ -39,6 +39,7 @@ import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { AuthenticationService } from '@core/services/authentication.service';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -83,6 +84,7 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     EmailVerificationStatusResolver,
     Facebook,
     File,
+    FirebaseAnalytics,
     FirebaseAuthentication,
     FriendsWishListResolver,
     FriendsWishListDetailResolver,
