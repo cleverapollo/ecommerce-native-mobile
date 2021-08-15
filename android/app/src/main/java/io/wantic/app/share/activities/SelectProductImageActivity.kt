@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.view.setPadding
 import androidx.gridlayout.widget.GridLayout
 import androidx.gridlayout.widget.GridLayout.CENTER
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import io.wantic.app.R
 import io.wantic.app.share.models.ProductInfo
@@ -205,13 +206,15 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     private fun createWebViewClient() = object : WebViewClient() {
+
         override fun onPageFinished(view: WebView?, url: String?) {
+            Log.d(LOG_TAG, "onPageFinished")
             val self = this@SelectProductImageActivity
             if (self.productInfoList.isEmpty() && webViewSuccess) {
                 if (webViewSuccess) {
                     val jsonString = self.loadJsFileContent()
                     Log.d(LOG_TAG, "web page loading finished")
-                    view?.evaluateJavascript("$jsonString loadPriceInfos();", null)
+                    view?.evaluateJavascript(jsonString, null)
                 } else {
                     showNoImagesFoundFeedback()
                 }
@@ -225,7 +228,7 @@ class SelectProductImageActivity : AppCompatActivity() {
             request: WebResourceRequest?,
             error: WebResourceError?
         ) {
-            if (error != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (error != null) {
                 Log.e(LOG_TAG, "web page onReceivedError ${error.errorCode}")
             }
             webViewSuccess = false
@@ -243,7 +246,7 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     private fun loadJsFileContent(): String {
-        val fileName = "parse-price-infos.js"
+        val fileName = "find-product-info.js"
         return application.assets.open(fileName).bufferedReader().use {
             it.readText()
         }
@@ -257,6 +260,13 @@ class SelectProductImageActivity : AppCompatActivity() {
                 FeedbackService.showNotAuthorizedAlert(this)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val eventParams = Bundle()
+        eventParams.putString(FirebaseAnalytics.Param.SCREEN_NAME, "share_extension-picture")
+        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, eventParams)
     }
 
     fun initGridLayout(productInfos: List<ProductInfo>) {

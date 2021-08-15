@@ -43,6 +43,11 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
         }
     }
 
+    @JavascriptInterface
+    fun onError(errorMessage: String) {
+        Log.e(LOG_TAG, "onError $errorMessage")
+    }
+
     private fun displayLoadedImages() {
         val mainHandler = Handler(this.context.mainLooper)
         val runnable = Runnable {
