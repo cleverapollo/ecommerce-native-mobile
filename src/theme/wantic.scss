@@ -234,6 +234,10 @@ ion-modal.wantic-modal-auto-height {
     --border-radius: 11pt;
 }
 
+.query-email-modal {
+    --background: var(--ion-color-dark) !important;
+}
+
 @media (min-height: 569px) and (max-height: 735px) {
     .cancel-wish-reservation-modal {
         --height: 31%;
