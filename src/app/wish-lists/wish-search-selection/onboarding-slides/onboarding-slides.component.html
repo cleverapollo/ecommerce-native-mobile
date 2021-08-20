@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-text-center" slots="fixed" scrollY="false">
-  <ion-slides pager="true" (ionSlideNextEnd)="onSlideNextEnd()" (ionSlidePrevEnd)="onSlidePrevEnd()" (ionSlideReachStart)="onSlideReachStart()" (ionSlideReachEnd)="onSlideReachEnd()">
+  <ion-slides *ngIf="platformService.isIOS" pager="true" (ionSlideNextEnd)="onSlideNextEnd()" (ionSlidePrevEnd)="onSlidePrevEnd()" (ionSlideReachStart)="onSlideReachStart()" (ionSlideReachEnd)="onSlideReachEnd()">
     <ion-slide>
       <p class="ion-text-center">
         Springe in deinen Browser und <br>
@@ -33,6 +33,37 @@
         deinen Wunsch zu deiner Liste hinzu.<br><br>
       </p>
       <img src="assets/images/onboarding-slide-3.png" alt="Onboarding Slide 3" />
+    </ion-slide>
+  </ion-slides>
+  <ion-slides *ngIf="platformService.isAndroid" pager="true" (ionSlideNextEnd)="onSlideNextEnd()" (ionSlidePrevEnd)="onSlidePrevEnd()" (ionSlideReachStart)="onSlideReachStart()" (ionSlideReachEnd)="onSlideReachEnd()">
+    <ion-slide>
+      <p class="ion-text-center">
+        Springe in deinen Browser und <br>
+        füge Wünsche aus deinem liebsten <br>
+        Onlineshop über dieses Icon <ion-icon color="primary" name="ellipsis-vertical-outline"></ion-icon> hinzu.
+      </p>
+      <img src="assets/images/onboarding-slide-android-1.png" alt="Onboarding Slide 1" />
+    </ion-slide>
+    <ion-slide>
+      <p class="ion-text-center"> 
+        Drücke dann auf Teilen <ion-icon color="primary" name="share-social-outline"></ion-icon>, <br>
+        um unsere App auf deinem <br>
+        Smartphone auswählen zu können.
+      </p>
+      <img  src="assets/images/onboarding-slide-android-2.png" alt="Onboarding Slide 2" />
+    </ion-slide>
+    <ion-slide>
+      <p class="ion-text-center">
+        Gehe in deinem App-Menü bis ganz nach <br> 
+        rechts & wähle unter &bdquo;Mehr&ldquo; wantic aus.
+      </p>
+      <img src="assets/images/onboarding-slide-android-3.png" alt="Onboarding Slide 3" />
+    </ion-slide>
+    <ion-slide>
+      <p class="ion-text-center">
+        Klicke auf das Wantic-Symbol & speichere deinen Wunsch auf deiner Wunschliste.
+      </p>
+      <img src="assets/images/onboarding-slide-android-4.png" alt="Onboarding Slide 4" />
     </ion-slide>
   </ion-slides>
 </ion-content>
