@@ -32,9 +32,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       if (this.platform.is('hybrid')) {
-        StatusBar.setStyle({ 
-          style: StatusBarStyle.Light 
-        });
+        this.initNativeStatusBar();
         // handle universal links
         App.addListener('appUrlOpen', (data: any) => {
           this.onAppUrlOpen(data);
@@ -51,6 +49,15 @@ export class AppComponent {
       this.analyticsService.initAppsflyerSdk();
       this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
     });
+  }
+
+  private initNativeStatusBar() {
+    StatusBar.setStyle({
+      style: StatusBarStyle.Light
+    });
+    if (this.platform.is('android')) {
+      StatusBar.setBackgroundColor({ color: '#CCFFFFFF' });
+    }
   }
 
   private async onAppStart() {
