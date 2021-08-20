@@ -148,7 +148,7 @@ class SelectProductImageActivity : AppCompatActivity() {
             .show()
     }
 
-    fun extractLinks(text: String): Array<String> {
+    private fun extractLinks(text: String): Array<String> {
         val links: MutableList<String> = ArrayList()
         val m: Matcher = Patterns.WEB_URL.matcher(text)
         while (m.find()) {
