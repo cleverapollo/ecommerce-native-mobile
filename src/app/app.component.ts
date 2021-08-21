@@ -55,9 +55,6 @@ export class AppComponent {
     StatusBar.setStyle({
       style: StatusBarStyle.Light
     });
-    if (this.platform.is('android')) {
-      StatusBar.setBackgroundColor({ color: '#CCFFFFFF' });
-    }
   }
 
   private async onAppStart() {
