@@ -12,10 +12,10 @@ import { AuthService } from '@core/api/auth.service';
 import { UserService } from '@core/services/user.service';
 import { LoadingService } from '@core/services/loading.service';
 import { UserProfile } from '@core/models/user.model';
-import { AppsflyerEvent } from '@ionic-native/appsflyer/ngx';
 import { ToastService } from '@core/services/toast.service';
+import { PlatformService } from '@core/services/platform.service';
 
-const { Device } = Plugins
+const { SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-start',
@@ -24,9 +24,15 @@ const { Device } = Plugins
 })
 export class StartPage implements OnInit {
 
-  showAppleSignIn = false;
-  showFacebookSignIn = false;
-  showGooglePlusSignIn = false;
+  get showAppleSignIn(): boolean {
+    return this.platformService.isIOS;
+  }
+  get showFacebookSignIn(): boolean {
+    return this.platformService.isIOS || this.platformService.isAndroid;
+  }
+  get showGooglePlusSignIn(): boolean {
+    return this.platformService.isIOS || this.platformService.isAndroid;
+  }
   
   constructor(
     private analyticsService: AnalyticsService, 
@@ -38,16 +44,18 @@ export class StartPage implements OnInit {
     private userService: UserService,
     private loadingService: LoadingService,
     private toastService: ToastService,
+    private platformService: PlatformService,
     public privacyPolicyService: PrivacyPolicyService
   ) { 
     this.analyticsService.setFirebaseScreenName('logon');
   }
 
-  async ngOnInit() {
-    const deviceInfo = await Device.getInfo();
-    this.showAppleSignIn = deviceInfo.platform === 'ios';
-    this.showFacebookSignIn = deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
-    this.showGooglePlusSignIn = deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
+  ngOnInit() {}
+
+  ionViewDidEnter() {
+    SplashScreen.hide({
+      fadeOutDuration: 500
+    });
   }
 
   signupWithMailAndPassword() {
