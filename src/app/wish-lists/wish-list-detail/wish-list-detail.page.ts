@@ -12,7 +12,8 @@ import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { APP_URL } from 'src/environments/environment';
 import { AnalyticsService } from '@core/services/analytics.service';
-const { Share } = Plugins;
+
+const { Share, SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-wish-list-detail',
@@ -67,6 +68,11 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     })
   }
 
+  ionViewDidEnter() {
+    SplashScreen.hide({
+      fadeOutDuration: 500
+    });
+  }
 
   ngOnDestroy() {
     this.queryParamSubscription.unsubscribe();

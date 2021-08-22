@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { Plugins } from '@capacitor/core';
+import { LoadingService } from '@core/services/loading.service';
+
+const { SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-wish-list-overview',
@@ -17,17 +20,23 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   refreshData: boolean = false;
 
   constructor(
-    private route: ActivatedRoute, 
     private wishListStore: WishListStoreService,
     private navController: NavController,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private loadingService: LoadingService
   ) { 
     this.analyticsService.setFirebaseScreenName('main');
   }
 
-  ngOnInit() {
-    const resolvedData = this.route.snapshot.data;
-    this.updateWishLists(resolvedData.wishLists);
+  async ngOnInit() {
+    const loading = await this.loadingService.createLoadingSpinner();
+    await loading.present();
+    this.wishListStore.loadWishLists(false).pipe(first()).subscribe( wishLists => {
+      this.updateWishLists(wishLists)
+      this.loadingService.dismissLoadingSpinner(loading);
+    }, () => {
+      this.loadingService.dismissLoadingSpinner(loading);
+    })
   }
 
   ngOnDestroy() {}
@@ -38,6 +47,12 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
         this.updateWishLists(wishLists)
       })
     }
+  }
+
+  ionViewDidEnter() {
+    SplashScreen.hide({
+      fadeOutDuration: 500
+    });
   }
 
   ionViewDidLeave() {

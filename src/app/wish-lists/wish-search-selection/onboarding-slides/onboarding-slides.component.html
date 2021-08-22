@@ -12,27 +12,13 @@
 </ion-header>
 <ion-content class="ion-text-center" slots="fixed" scrollY="false">
   <ion-slides pager="true" (ionSlideNextEnd)="onSlideNextEnd()" (ionSlidePrevEnd)="onSlidePrevEnd()" (ionSlideReachStart)="onSlideReachStart()" (ionSlideReachEnd)="onSlideReachEnd()">
-    <ion-slide>
-      <p class="ion-text-center">
-        Springe in deinen Browser und <br>
-        füge Wünsche aus deinem liebsten <br>
-        Onlineshop über dieses Icon <ion-icon class="share-icon" name="share-outline"></ion-icon> hinzu.
-      </p>
-      <img src="assets/images/onboarding-slide-1.png" alt="Onboarding Slide 1" />
-    </ion-slide>
-    <ion-slide>
-      <p class="ion-text-center"> 
-        Wische bei den App-Favoriten nach rechts <br>
-        und füge unter "Mehr" Wantic hinzu.<br><br>
-      </p>
-      <img  src="assets/images/onboarding-slide-2.png" alt="Onboarding Slide 2" />
-    </ion-slide>
-    <ion-slide>
-      <p class="ion-text-center">
-        Klicke auf das Wantic-Symbol und füge<br>
-        deinen Wunsch zu deiner Liste hinzu.<br><br>
-      </p>
-      <img src="assets/images/onboarding-slide-3.png" alt="Onboarding Slide 3" />
+    <ion-slide *ngFor="let item of slidesItems"> 
+      <p class="ion-text-center" [innerHTML]="item.description"></p>
+      <div class="center-container">
+        <div class="center">
+          <img [src]="item.imgSrc" [alt]="item.imgAlt" />
+        </div>
+      </div>
     </ion-slide>
   </ion-slides>
 </ion-content>
