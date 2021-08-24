@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".share.activities.SelectProductImageActivity">
 
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+
     <ProgressBar
         android:id="@+id/loading_spinner"
         style="?android:attr/progressBarStyleLarge"
