@@ -3,10 +3,7 @@ package io.wantic.app.share.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
+import android.os.*
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Patterns
@@ -20,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.view.setPadding
+import androidx.core.view.size
 import androidx.gridlayout.widget.GridLayout
 import androidx.gridlayout.widget.GridLayout.CENTER
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -38,6 +36,7 @@ class SelectProductImageActivity : AppCompatActivity() {
 
     companion object {
         private const val LOG_TAG = "SelectProductImage"
+        private const val COLUMN_COUNT = 2
     }
 
     // public
@@ -72,7 +71,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         if (intent?.action == Intent.ACTION_SEND) {
             loadingSpinner.visibility = View.VISIBLE
             incomingHandler = initIncomingHandler()
-            incomingHandler.sendMessageDelayed(Message(), 10000)
+            incomingHandler.sendMessageDelayed(Message(), 30000)
 
             when {
                 intent.type?.startsWith("text/") == true -> {
@@ -198,11 +197,22 @@ class SelectProductImageActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView(productUrlString: String) {
-        webView = WebView(this)
+        webView = findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
+        webView.settings.loadsImagesAutomatically = true
+
         webView.addJavascriptInterface(AndroidJSInterface(this), "Android")
         webView.webViewClient = createWebViewClient()
+        webView.webChromeClient = createWebChromeClient()
         webView.loadUrl(productUrlString)
+    }
+
+    private fun createWebChromeClient() = object : WebChromeClient() {
+        override fun onProgressChanged(view: WebView?, newProgress: Int) {
+            Log.d(LOG_TAG, "onProgressChanged = progress: $newProgress")
+            super.onProgressChanged(view, newProgress)
+        }
     }
 
     private fun createWebViewClient() = object : WebViewClient() {
@@ -210,14 +220,10 @@ class SelectProductImageActivity : AppCompatActivity() {
         override fun onPageFinished(view: WebView?, url: String?) {
             Log.d(LOG_TAG, "onPageFinished")
             val self = this@SelectProductImageActivity
-            if (self.productInfoList.isEmpty() && webViewSuccess) {
-                if (webViewSuccess) {
-                    val jsonString = self.loadJsFileContent()
-                    Log.d(LOG_TAG, "web page loading finished")
-                    view?.evaluateJavascript(jsonString, null)
-                } else {
-                    showNoImagesFoundFeedback()
-                }
+            if (webViewSuccess) {
+                val jsonString = self.loadJsFileContent()
+                Log.d(LOG_TAG, "web page loading finished")
+                view?.evaluateJavascript(jsonString, null)
             } else {
                 loadingSpinner.visibility = View.GONE
             }
@@ -269,43 +275,64 @@ class SelectProductImageActivity : AppCompatActivity() {
         FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, eventParams)
     }
 
-    fun initGridLayout(productInfos: List<ProductInfo>) {
-        val columnCount = 2
-        val rowCount = productInfos.size / columnCount
+    fun addNewProductInfoItem(productInfo: ProductInfo) {
+        val currentList = this.productInfoList.toMutableList()
+        if (currentList.add(productInfo)) {
+            this.productInfoList = currentList
+
+            val newRowCount = productInfoList.size / COLUMN_COUNT
+            if (gridLayout.rowCount != newRowCount) {
+                gridLayout.rowCount = newRowCount
+            }
+
+            var column = 1
+            if (gridLayout.size % COLUMN_COUNT == 0) {
+                column = 0
+            }
+            this.addProductInfoToGridLayout(productInfo, column)
+        }
+    }
+
+    fun initGridLayout(productInfoList: List<ProductInfo>) {
+        val rowCount = productInfoList.size / COLUMN_COUNT
 
         gridLayout = findViewById(R.id.productImagesGridLayout)
-        gridLayout.columnCount = columnCount
+        gridLayout.columnCount = COLUMN_COUNT
         gridLayout.rowCount = rowCount
 
-        Log.d(LOG_TAG, "columnCount: $columnCount, rowCount: $rowCount, numberOfImages: ${productInfos.size}")
+        Log.d(LOG_TAG, "columnCount: $COLUMN_COUNT, rowCount: $rowCount, numberOfImages: ${productInfoList.size}")
 
-        var currentColumn = 0
-        var currentRow = 0
-        for (itemIndex in 0 until productInfos.size-1) {
-            if (currentColumn == columnCount) {
-                currentColumn = 0
-                currentRow++
+        var column = 0
+        var row = 0
+        for (itemIndex in 0 until productInfoList.size-1) {
+            if (column == COLUMN_COUNT) {
+                column = 0
+                row++
             }
-            val productInfo = productInfos[itemIndex]
-            val uri = Uri.parse(productInfo.imageUrl)
-            val linearLayout = this.createProductView(uri, productInfo.id)
+            val productInfo = productInfoList[itemIndex]
+            addProductInfoToGridLayout(productInfo, column)
 
-            val rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1, CENTER)
-            val colSpan = GridLayout.spec(GridLayout.UNDEFINED, 1, CENTER)
-
-            val halfMargin = 8
-            val gridLayoutParams = GridLayout.LayoutParams(rowSpan, colSpan)
-            if (currentColumn % columnCount == 0) {
-                gridLayoutParams.rightMargin = halfMargin
-            } else if (currentColumn % columnCount == 1) {
-                gridLayoutParams.leftMargin = halfMargin
-            }
-            gridLayoutParams.bottomMargin = halfMargin
-            gridLayoutParams.topMargin = halfMargin
-            gridLayout.addView(linearLayout, gridLayoutParams)
-
-            currentColumn++
+            column++
         }
+    }
+
+    private fun addProductInfoToGridLayout(productInfo: ProductInfo, currentColumn: Int) {
+        val uri = Uri.parse(productInfo.imageUrl)
+        val linearLayout = this.createProductView(uri, productInfo.id)
+
+        val rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1, CENTER)
+        val colSpan = GridLayout.spec(GridLayout.UNDEFINED, 1, CENTER)
+
+        val halfMargin = 8
+        val gridLayoutParams = GridLayout.LayoutParams(rowSpan, colSpan)
+        if (currentColumn % COLUMN_COUNT == 0) {
+            gridLayoutParams.rightMargin = halfMargin
+        } else if (currentColumn % COLUMN_COUNT == 1) {
+            gridLayoutParams.leftMargin = halfMargin
+        }
+        gridLayoutParams.bottomMargin = halfMargin
+        gridLayoutParams.topMargin = halfMargin
+        gridLayout.addView(linearLayout, gridLayoutParams)
     }
 
     private fun createProductView(imageUri: Uri, productInfoId: UInt): LinearLayout {
