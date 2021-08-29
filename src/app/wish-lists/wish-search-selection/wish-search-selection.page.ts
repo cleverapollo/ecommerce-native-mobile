@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductSearchService } from '@core/services/product-search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { LoadingService } from '@core/services/loading.service';
 import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { first } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
+import { PlatformService } from '@core/services/platform.service';
 
 const { Device } = Plugins;
 
@@ -43,7 +43,7 @@ export class WishSearchSelectionPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private logger: LogService,
-    public platform: Platform,
+    public platformService: PlatformService,
     private loadingService: LoadingService,
     private userProfileStore: UserProfileStore,
     private modalController: ModalController,
@@ -63,17 +63,19 @@ export class WishSearchSelectionPage implements OnInit {
 
   private async initShowShareIntentNotVisibleHint() {
     const deviceInfo = await Device.getInfo();
-    if (deviceInfo.platform == 'ios') {
+    if (deviceInfo.platform === 'ios') {
       this.showShareIntentNotVisibleHint = true;
     }
   }
 
-  ionViewDidEnter() {
-    this.userProfileStore.loadUserProfile().pipe(first()).subscribe(userProfile => {
-      if (userProfile?.userSettings.showOnboardingSlidesiOS) {
-        this.openOnboardingSlidesModal();
-      }
-    })
+  async ionViewDidEnter() {
+    const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
+    const deviceInfo = await Device.getInfo();
+    if (deviceInfo.platform === 'ios' && userProfile?.userSettings.showOnboardingSlidesiOS) {
+      this.openOnboardingSlidesModal();
+    } else if (deviceInfo.platform === 'android' && userProfile?.userSettings.showOnboardingSlidesAndroid) {
+      this.openOnboardingSlidesModal();
+    }
   }
 
   private async openOnboardingSlidesModal() {

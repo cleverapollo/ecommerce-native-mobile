@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">
@@ -8,7 +8,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content slot="fixed" scroll-y="false">  
+<ion-content slot="fixed" scroll-y="false" class="ion-no-border">  
   <div *ngIf="!reservationCanceled" class="ion-text-center">
     <p>Du hast dich umentschieden und möchtest {{ wishList.owners | ownerNames:'und' }} lieber etwas anderes schenken?</p>
   </div>

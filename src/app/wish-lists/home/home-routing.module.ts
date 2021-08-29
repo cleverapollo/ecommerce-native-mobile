@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@guards/auth.guard';
 import { HomePage } from './home.page';
 import { WishListResolver } from './wish-list.resolver';
-import { WishListsResolver } from './wish-lists.resolver';
 
 
 const routes: Routes = [
@@ -19,7 +18,6 @@ const routes: Routes = [
       {
         path: 'wish-list-overview',
         canActivate: [AuthGuard],
-        resolve: { wishLists: WishListsResolver },
         loadChildren: () => import('@wishLists/wish-list-overview/wish-list-overview.module').then( m => m.WishListOverviewPageModule)
       },
       {

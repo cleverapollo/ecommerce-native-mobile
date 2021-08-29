@@ -9,8 +9,7 @@
   </ion-text>
 
   <p class="wantic-margin-right-left">
-    Gib deinen Wunsch in dieses Suchfeld ein <br>
-    ODER ...
+    Gib deinen Wunsch in dieses Suchfeld ein ODER ...
   </p>
 
   <form [formGroup]="searchByAmazonApiForm" (ngSubmit)="searchByAmazonApi()">
@@ -23,11 +22,15 @@
  <p class="wantic-margin-right-left">
    ... springe in deinen Browser und 
    füge Wünsche aus deinem liebsten 
-   Onlineshop über dieses Icon <ion-icon class="share-icon" name="share-outline"></ion-icon> hinzu.
+   Onlineshop über dieses Icon 
+   <ion-icon *ngIf="platformService.isIOS" class="share-icon" name="share-outline"></ion-icon> 
+   <ion-icon *ngIf="platformService.isAndroid" color="primary" name="share-social-outline"></ion-icon>
+   hinzu.
  </p>
 
  <div class="wantic-margin-right-left ion-text-center">
-   <img src="assets/images/onboarding-slide-2.png" alt="Erklärungsbild" />
+   <img *ngIf="platformService.isIOS" src="assets/images/onboarding-slide-2.png" alt="Erklärungsbild" />
+   <img *ngIf="platformService.isAndroid" src="assets/images/onboarding-slide-android-2.png" alt="Erklärungsbild" />
  </div>
 
  <p class="wantic-margin-right-left info-text" *ngIf="showShareIntentNotVisibleHint">

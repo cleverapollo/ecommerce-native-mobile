@@ -8,7 +8,7 @@ import { LogService } from '@core/services/log.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserManagementActionMode } from '@core/models/google-api.model';
-const { StatusBar, App } = Plugins;
+const { StatusBar, App, SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -32,9 +32,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       if (this.platform.is('hybrid')) {
-        StatusBar.setStyle({ 
-          style: StatusBarStyle.Light 
-        });
+        this.initNativeStatusBar();
         // handle universal links
         App.addListener('appUrlOpen', (data: any) => {
           this.onAppUrlOpen(data);
@@ -50,6 +48,12 @@ export class AppComponent {
       this.initCache();
       this.analyticsService.initAppsflyerSdk();
       this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
+    });
+  }
+
+  private initNativeStatusBar() {
+    StatusBar.setStyle({
+      style: StatusBarStyle.Light
     });
   }
 
@@ -74,7 +78,11 @@ export class AppComponent {
       if (mode && oobCode) {
         this.handleFirebaseLinks(mode, oobCode);
       } else {
-        this.router.navigateByUrl(url.pathname);
+        this.router.navigateByUrl(url.pathname).finally(() => {
+          SplashScreen.hide({
+            fadeOutDuration: 500
+          });
+        });
       }
     });
   }
@@ -82,9 +90,17 @@ export class AppComponent {
   private handleFirebaseLinks(modeString: string, oobCode: string) {
     const mode: UserManagementActionMode = UserManagementActionMode[modeString];
     if (mode === UserManagementActionMode.resetPassword) {
-      this.router.navigateByUrl(`/forgot-password/change-password?oobCode=${oobCode}`);
+      this.router.navigateByUrl(`/forgot-password/change-password?oobCode=${oobCode}`).finally(() => {
+        SplashScreen.hide({
+          fadeOutDuration: 500
+        });
+      });
     } else if (mode === UserManagementActionMode.verifyEmail) {
-      this.router.navigateByUrl(`/email-verification?oobCode=${oobCode}`);
+      this.router.navigateByUrl(`/email-verification?oobCode=${oobCode}`).finally(() => {
+        SplashScreen.hide({
+          fadeOutDuration: 500
+        });
+      });
     }
   }
 

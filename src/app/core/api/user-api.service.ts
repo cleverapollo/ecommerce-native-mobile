@@ -138,6 +138,12 @@ export class UserApiService {
     });
   }
 
+  updateShowOnboardingSlidesAndroidState(state: boolean): Observable<void> {
+    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/user-settings/show-onboarding-slides-android`, { 
+      show: state 
+    });
+  }
+
   getAccount(): Observable<AccountDto> {
     return this.apiService.get<AccountDto>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/accounts`);
   }

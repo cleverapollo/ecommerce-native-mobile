@@ -2,12 +2,9 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LogService } from '@core/services/log.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import { Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
-
-const { SplashScreen } = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -23,20 +20,12 @@ export class AutoLoginGuard implements CanLoad {
       map(isAuthenticated => {
         if (isAuthenticated) {
           this.logger.info('auto login');
-          this.router.navigateByUrl('/secure/home', { replaceUrl: true }).finally(() => {
-            this.hideSplashScreen();
-          });
+          this.router.navigateByUrl('/secure/home', { replaceUrl: true });
         } else {
           return true;
         }
       })
     )
-  }
-
-  private hideSplashScreen() {
-    this.platform.ready().then(() => {
-      SplashScreen.hide();
-    });
   }
 
 }

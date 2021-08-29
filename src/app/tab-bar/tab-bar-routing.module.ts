@@ -24,7 +24,7 @@ const routes: Routes = [
       {
         path: getTaBarPath(TabBarRoute.FRIENDS_HOME, false),
         canActivate: [AuthGuard],
-        loadChildren: () => import('@friends/friends-home//friends-home.module').then( m => m.FriendsHomePageModule)
+        loadChildren: () => import('@friends/friends-home/friends-home.module').then( m => m.FriendsHomePageModule)
       },
       {
         path: getTaBarPath(TabBarRoute.WISH_SEARCH, false),

@@ -12,7 +12,8 @@ object FeedbackService {
 
     fun showNotAuthorizedAlert(context: Activity) {
         AlertDialog.Builder(context)
-            .setMessage(R.string.message_failed_to_save_wish)
+            .setTitle(R.string.title_not_authorized)
+            .setMessage(R.string.message_not_authorized)
             .setNeutralButton(R.string.button_label_open_wantic_app) { _, _ ->
                 startMainActivity(context)
             }

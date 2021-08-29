@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import io.wantic.app.R
 import io.wantic.app.share.activities.SelectProductImageActivity
+import io.wantic.app.share.models.ProductInfo
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -41,6 +42,30 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
                 Log.e(LOG_TAG, localizedMessage)
             }
         }
+    }
+
+    @JavascriptInterface
+    fun onError(errorMessage: String) {
+        Log.e(LOG_TAG, "onError $errorMessage")
+    }
+
+    @JavascriptInterface
+    fun onProductInfoLoaded(productInfoJsonString: String) {
+        Log.d(LOG_TAG, "onProductInfoLoaded $productInfoJsonString")
+        val productInfo: ProductInfo = Json.decodeFromString(productInfoJsonString)
+        val itemExists = context.productInfoList.any { info -> info.id == productInfo.id }
+        if (!itemExists) {
+            val mainHandler = Handler(this.context.mainLooper)
+            val runnable = Runnable {
+                this@AndroidJSInterface.context.addNewProductInfoItem(productInfo)
+            }
+            mainHandler.post(runnable)
+        }
+    }
+
+    @JavascriptInterface
+    fun log(debugMessage: String) {
+        Log.d(LOG_TAG, debugMessage);
     }
 
     private fun displayLoadedImages() {

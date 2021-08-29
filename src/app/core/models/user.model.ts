@@ -11,6 +11,7 @@ export class UserProfile {
 }
 export class UserSettingsDto {
     showOnboardingSlidesiOS: boolean;
+    showOnboardingSlidesAndroid: boolean;
 }
 
 export class EmailDto {
