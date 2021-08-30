@@ -29,7 +29,7 @@ struct AlertService {
         let alert = createAlertController(title: nil, message: message)
         DispatchQueue.main.async {
             let alertActionShowWish = createAlertAction(title: "Wunsch anzeigen", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "\(AppConfig.appUrl)/secure/home/wish-list/\(wishListId)?forceRefresh=true") {
+                if let url = URL(string: "\(AppConfig.appLinkHost):secure/home/wish-list/\(wishListId)?forceRefresh=true") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
@@ -53,7 +53,7 @@ struct AlertService {
         
         DispatchQueue.main.async {
             alert.addAction(createAlertAction(title: "Sitzung erneuern", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "\(AppConfig.appUrl)/start") {
+                if let url = URL(string: "\(AppConfig.appLinkHost):start") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
@@ -73,7 +73,7 @@ struct AlertService {
         
         DispatchQueue.main.async {
             alert.addAction(createAlertAction(title: "Wantic öffnen", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "\(AppConfig.appUrl)/secure/home") {
+                if let url = URL(string: "\(AppConfig.appLinkHost):secure/home") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
@@ -96,7 +96,7 @@ struct AlertService {
         
         DispatchQueue.main.async {
             alert.addAction(createAlertAction(title: "Jetzt Wunschliste anlegen", style: .default, handler: { (action: UIAlertAction!) in
-                if let url = URL(string: "\(AppConfig.appUrl)/secure/home/wish-list-new") {
+                if let url = URL(string: "\(AppConfig.appLinkHost):secure/home/wish-list-new") {
                     redirectToHostApp(controller: controller, extensionContext: extensionContext, url: url)
                 } else {
                     closeShareExtension(extensionContext: extensionContext)
