@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>165303834787-11ab0h0h7agfchk51voh42u7amn0o53v.apps.googleusercontent.com</string>
+	<string>165303834787-qg388ti2329v29ikbea58s104sbnr4eq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.165303834787-11ab0h0h7agfchk51voh42u7amn0o53v</string>
+	<string>com.googleusercontent.apps.165303834787-qg388ti2329v29ikbea58s104sbnr4eq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>165303834787-34rtls9eb33b11q69t64ihukkdh67bov.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAY4RQ5cF62brJPBp_fIzgeP_oMGE6CXB4</string>
 	<key>GCM_SENDER_ID</key>
@@ -19,17 +21,17 @@
 	<key>STORAGE_BUCKET</key>
 	<string>wantic-dev.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:165303834787:ios:2bd458f08f0e00ed330716</string>
+	<string>1:165303834787:ios:3e64fce24daa9a84330716</string>
 	<key>DATABASE_URL</key>
 	<string>https://wantic-dev.firebaseio.com</string>
 </dict>
