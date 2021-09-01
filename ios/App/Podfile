@@ -17,19 +17,28 @@ def capacitor_pods
 end
 
 target 'Wantic' do
+  pod 'GoogleUtilities', '~> 7.2.2'
   capacitor_pods
   # Add your Pods here
 end
 
 target 'Wantic Beta' do
+  pod 'GoogleUtilities', '~> 7.2.2'
   capacitor_pods
   # Add your Pods here
 end
 
-target 'Share' do
+def share_extension_pods
   pod 'SVGKit', :git => 'https://github.com/SVGKit/SVGKit.git', :branch => '3.x'
+  pod 'GoogleUtilities', '~> 7.2.2'
+  pod 'Firebase/Analytics', '~> 7.0.0'
+  pod 'Firebase/Auth', '~> 7.0.0'
+end
+
+target 'Share' do
+  share_extension_pods
 end
 
 target 'Share Beta' do
-  pod 'SVGKit', :git => 'https://github.com/SVGKit/SVGKit.git', :branch => '3.x'
+  share_extension_pods
 end

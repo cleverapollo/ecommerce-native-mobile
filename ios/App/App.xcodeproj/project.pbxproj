@@ -51,6 +51,8 @@
 		B1247FAF25BC612C009CEF57 /* ProductImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1247FAE25BC612C009CEF57 /* ProductImageViewController.swift */; };
 		B12EA4D62691C4F1001654EA /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4D52691C4F1001654EA /* UIImageExtension.swift */; };
 		B12EA4D72691C4F1001654EA /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4D52691C4F1001654EA /* UIImageExtension.swift */; };
+		B13727A926DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B13727A826DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist */; };
+		B13727AA26DBC2FE00E0DCF4 /* GoogleService-Info-share-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B13727A826DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist */; };
 		B148806825AE0D9500D0106B /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806725AE0D9500D0106B /* LoginResponse.swift */; };
 		B148806E25AE129500D0106B /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806D25AE129500D0106B /* LoginRequest.swift */; };
 		B148809C25B202CE00D0106B /* WishListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148809B25B202CE00D0106B /* WishListTableViewController.swift */; };
@@ -147,7 +149,6 @@
 		B19A523A2610D11400984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52392610D11400984207 /* AppConfig.swift */; };
 		B19A52482610D1A500984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52472610D1A500984207 /* AppConfig.swift */; };
 		B19A527D2610D7C800984207 /* Share Beta.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B19A522E2610CE8000984207 /* Share Beta.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B19A52B32610DA4E00984207 /* GoogleService-Info-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B1A80F8E2589F59800F0917F /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B1A80F842589F59800F0917F /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1A80F98258A0F5D00F0917F /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F97258A0F5D00F0917F /* ExtensionClass.js */; };
@@ -158,10 +159,8 @@
 		B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */; };
 		B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
 		B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
+		B1EBF5A526DBB7EA00E051D0 /* GoogleService-Info-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */; };
 		B1F81EA1263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */; };
-		B1F81EA2263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */; };
-		B1F81EBF2641D40E00C277FB /* GoogleService-Info-share-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBD2641D40E00C277FB /* GoogleService-Info-share-beta.plist */; };
-		B1F81EC02641D40E00C277FB /* GoogleService-Info-share-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBD2641D40E00C277FB /* GoogleService-Info-share-beta.plist */; };
 		B1F81EC12641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */; };
 		B1F81EC22641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */; };
 		B1F81F122641DB4000C277FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F112641DB4000C277FB /* Credentials.swift */; };
@@ -287,6 +286,7 @@
 		B1247FA725BC4AA5009CEF57 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		B1247FAE25BC612C009CEF57 /* ProductImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImageViewController.swift; sourceTree = "<group>"; };
 		B12EA4D52691C4F1001654EA /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		B13727A826DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-share-beta.plist"; sourceTree = "<group>"; };
 		B148806725AE0D9500D0106B /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		B148806D25AE129500D0106B /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		B148809B25B202CE00D0106B /* WishListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListTableViewController.swift; sourceTree = "<group>"; };
@@ -329,7 +329,6 @@
 		B1A80FC8258B40D900F0917F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B1A80FCE258B508B00F0917F /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
 		B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-beta.plist"; sourceTree = "<group>"; };
-		B1F81EBD2641D40E00C277FB /* GoogleService-Info-share-beta.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-share-beta.plist"; sourceTree = "<group>"; };
 		B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-share-prod.plist"; sourceTree = "<group>"; };
 		B1F81F112641DB4000C277FB /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanticShareNavigationController.swift; sourceTree = "<group>"; };
@@ -626,7 +625,7 @@
 		B1F81EBC2641D40E00C277FB /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				B1F81EBD2641D40E00C277FB /* GoogleService-Info-share-beta.plist */,
+				B13727A826DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist */,
 				B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */,
 			);
 			path = Firebase;
@@ -701,6 +700,7 @@
 				B19A51ED2610CE8000984207 /* Sources */,
 				B19A52052610CE8000984207 /* Frameworks */,
 				B19A52092610CE8000984207 /* Resources */,
+				B13727B026DBC8B400E0DCF4 /* GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -723,6 +723,7 @@
 				B1A80F802589F59800F0917F /* Sources */,
 				B1A80F812589F59800F0917F /* Frameworks */,
 				B1A80F822589F59800F0917F /* Resources */,
+				B13727B126DD51F700E0DCF4 /* GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -806,9 +807,9 @@
 				B19A51D32610CD8E00984207 /* public in Resources */,
 				B19A51D42610CD8E00984207 /* Assets.xcassets in Resources */,
 				B19A51D52610CD8E00984207 /* capacitor.config.json in Resources */,
+				B13727AA26DBC2FE00E0DCF4 /* GoogleService-Info-share-beta.plist in Resources */,
 				B19A51D62610CD8E00984207 /* Main.storyboard in Resources */,
 				B19A51D72610CD8E00984207 /* config.xml in Resources */,
-				B19A52B32610DA4E00984207 /* GoogleService-Info-prod.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,11 +846,10 @@
 				B19A52222610CE8000984207 /* Roboto-MediumItalic.ttf in Resources */,
 				B19A52232610CE8000984207 /* ExtensionClass.js in Resources */,
 				B19A52242610CE8000984207 /* README.txt in Resources */,
+				B13727A926DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist in Resources */,
 				B18F1CCD2687610D00FD7528 /* fetch-product-infos.js in Resources */,
 				B19A52252610CE8000984207 /* Roboto-Thin.ttf in Resources */,
-				B1F81EC02641D40E00C277FB /* GoogleService-Info-share-beta.plist in Resources */,
 				B19A52262610CE8000984207 /* Roboto-Regular.ttf in Resources */,
-				B1F81EA2263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */,
 				B19A52272610CE8000984207 /* PlayfairDisplay-ExtraBold.ttf in Resources */,
 				B19A52282610CE8000984207 /* PlayfairDisplay-MediumItalic.ttf in Resources */,
 				B19A52292610CE8000984207 /* PlayfairDisplay-VariableFont_wght.ttf in Resources */,
@@ -862,13 +862,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */,
-				B1F81EBF2641D40E00C277FB /* GoogleService-Info-share-beta.plist in Resources */,
 				B114E15F25BC38AA00F92599 /* PlayfairDisplay-Black.ttf in Resources */,
 				B1247F9125BC4A9C009CEF57 /* Roboto-LightItalic.ttf in Resources */,
 				B114E16025BC38AA00F92599 /* PlayfairDisplay-SemiBoldItalic.ttf in Resources */,
 				B18F1CCC2687610D00FD7528 /* fetch-product-infos.js in Resources */,
 				B1247F8C25BC4A9C009CEF57 /* Roboto-Light.ttf in Resources */,
 				B1247F9725BC4A9C009CEF57 /* Roboto-Black.ttf in Resources */,
+				B1EBF5A526DBB7EA00E051D0 /* GoogleService-Info-prod.plist in Resources */,
 				B114E15825BC38AA00F92599 /* PlayfairDisplay-Bold.ttf in Resources */,
 				B114E15B25BC38AA00F92599 /* PlayfairDisplay-BoldItalic.ttf in Resources */,
 				B114E15D25BC38AA00F92599 /* PlayfairDisplay-Italic.ttf in Resources */,
@@ -977,6 +977,42 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B13727B026DBC8B400E0DCF4 /* GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Share/Firebase\"\n\ncp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-share-beta.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex/GoogleService-Info.plist\" ;\n\n";
+		};
+		B13727B126DD51F700E0DCF4 /* GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Share/Firebase\"\n\ncp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-share-prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex/GoogleService-Info.plist\" ;\n";
 		};
 		B1F81EA7263EF29F00C277FB /* GoogleService-Info */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1345,7 +1381,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210706.1;
+				CURRENT_PROJECT_VERSION = 20210830.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1353,7 +1389,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1371,7 +1407,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210706.1;
+				CURRENT_PROJECT_VERSION = 20210830.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1379,7 +1415,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = USE_PUSH;
@@ -1396,7 +1432,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210704.1;
+				CURRENT_PROJECT_VERSION = 20210831.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1404,7 +1440,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1422,7 +1458,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210704.1;
+				CURRENT_PROJECT_VERSION = 20210831.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1430,7 +1466,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = USE_PUSH;
@@ -1449,7 +1485,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210704.1;
+				CURRENT_PROJECT_VERSION = 20210831.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1458,7 +1494,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta.share";
@@ -1479,7 +1515,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210704.1;
+				CURRENT_PROJECT_VERSION = 20210831.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1488,7 +1524,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta.share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1508,7 +1544,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210706.1;
+				CURRENT_PROJECT_VERSION = 20210830.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1517,7 +1553,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app.share;
@@ -1538,7 +1574,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210706.1;
+				CURRENT_PROJECT_VERSION = 20210830.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1547,7 +1583,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app.share;
 				PRODUCT_NAME = "$(TARGET_NAME)";

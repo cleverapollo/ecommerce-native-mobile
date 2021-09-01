@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 private enum ViewIdentifier: Int {
     case productImage = 0
@@ -63,6 +64,14 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     var textFields: [UITextInput] = []
     
     var productInfo: ProductInfo!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+            AnalyticsParameterScreenName: "share_extension-name-price"
+        ])
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
