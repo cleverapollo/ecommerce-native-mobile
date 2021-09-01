@@ -14,7 +14,6 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
-import io.wantic.app.AppConfig
 import io.wantic.app.R
 import io.wantic.app.share.adapters.WishListArrayAdapter
 import io.wantic.app.share.models.ProductInfo
@@ -174,11 +173,12 @@ class SelectWishListActivity : AppCompatActivity() {
     }
 
     private fun showNoWishListsFoundDialog() {
+        val appLinkScheme = resources.getString(R.string.app_link_scheme)
         AlertDialog.Builder(this)
             .setTitle(R.string.title_no_wish_lists)
             .setMessage(R.string.message_no_wish_lists)
             .setNeutralButton(R.string.button_label_create_wish_list_now) { _, _ ->
-                openDeepLink("${AppConfig.appUrl}/secure/home/wish-list-new")
+                openDeepLink("${appLinkScheme}://secure/home/wish-list-new")
             }
             .setNegativeButton(R.string.button_label_close) { _, _ ->
                 finishAffinity()
@@ -227,10 +227,11 @@ class SelectWishListActivity : AppCompatActivity() {
     }
 
     private fun showSuccessAlert(wish: Wish) {
+        val appLinkScheme = resources.getString(R.string.app_link_scheme)
         AlertDialog.Builder(this)
             .setMessage(R.string.message_wish_successfully_saved)
             .setPositiveButton(R.string.button_label_show_wish) { _, _ ->
-                openDeepLink("${AppConfig.appUrl}/secure/home/wish-list/${wish.wishListId}?forceRefresh=true")
+                openDeepLink("${appLinkScheme}://secure/home/wish-list/${wish.wishListId}?forceRefresh=true")
             }
             .setNeutralButton(R.string.button_label_done) { _, _ ->
                 finishAffinity()
