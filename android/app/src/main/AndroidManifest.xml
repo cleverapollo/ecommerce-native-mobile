@@ -81,6 +81,13 @@
                 <data android:scheme="https" android:host="wantic.io"/>
                 <data android:scheme="https" android:host="@string/web_app_host"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "wantic(beta)://” -->
+                <data android:scheme="@string/app_link_scheme" />
+            </intent-filter>
         </activity>
         <activity android:name=".share.activities.SelectProductImageActivity" android:screenOrientation="portrait">
             <intent-filter>

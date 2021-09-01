@@ -15,4 +15,5 @@
     <string name="ionic_min_background_duration" translatable="false">30</string>
     <string name="ionic_update_api" translatable="false">https://api.ionicjs.com</string>
     <string name="web_app_host" translatable="false">app.beta.wantic.io</string>
+    <string name="app_link_scheme" translatable="false">wanticbeta</string>
 </resources>
