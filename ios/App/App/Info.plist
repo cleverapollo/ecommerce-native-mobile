@@ -43,6 +43,16 @@
 				<string>fb494614765250156</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLName</key>
+			<string>io.wantic.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wantic</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>

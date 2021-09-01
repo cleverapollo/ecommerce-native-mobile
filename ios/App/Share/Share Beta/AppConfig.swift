@@ -13,6 +13,7 @@ struct AppConfig {
     static let appUrl = "https://app.beta.wantic.io"
     static let backendUrl = "https://rest-dev.wantic.io"
     static let keychainAccessGroup = "3LDV8B8SZ2.io.wantic.app-beta"
+    static let appLinkHost = "wanticbeta"
     
     static var appVersion: String {
         if let bundleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {

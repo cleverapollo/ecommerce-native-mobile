@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class WishListTableViewCell: UITableViewCell {
 
@@ -50,6 +51,14 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     var selectedIndexPath: IndexPath?
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+            AnalyticsParameterScreenName: "share_extension-wishlist"
+        ])
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

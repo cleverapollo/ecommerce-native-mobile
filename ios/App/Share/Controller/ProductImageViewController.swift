@@ -7,6 +7,7 @@
 
 import UIKit
 import MobileCoreServices
+import FirebaseAnalytics
 
 private let reuseIdentifier = "ProductInfoCell"
 
@@ -41,6 +42,10 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
             }
         })
         WishDataStore.shared.reset()
+        
+        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+            AnalyticsParameterScreenName: "share_extension-picture"
+        ])
     }
     
     override func viewDidLoad() {
