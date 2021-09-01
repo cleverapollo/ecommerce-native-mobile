@@ -700,7 +700,7 @@
 				B19A51ED2610CE8000984207 /* Sources */,
 				B19A52052610CE8000984207 /* Frameworks */,
 				B19A52092610CE8000984207 /* Resources */,
-				B13727B026DBC8B400E0DCF4 /* ShellScript */,
+				B13727B026DBC8B400E0DCF4 /* GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -723,6 +723,7 @@
 				B1A80F802589F59800F0917F /* Sources */,
 				B1A80F812589F59800F0917F /* Frameworks */,
 				B1A80F822589F59800F0917F /* Resources */,
+				B13727B126DD51F700E0DCF4 /* GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -977,7 +978,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B13727B026DBC8B400E0DCF4 /* ShellScript */ = {
+		B13727B026DBC8B400E0DCF4 /* GoogleService-Info */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -986,6 +987,7 @@
 			);
 			inputPaths = (
 			);
+			name = "GoogleService-Info";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -993,6 +995,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Share/Firebase\"\n\ncp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-share-beta.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex/GoogleService-Info.plist\" ;\n\n";
+		};
+		B13727B126DD51F700E0DCF4 /* GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Share/Firebase\"\n\ncp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-share-prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex/GoogleService-Info.plist\" ;\n";
 		};
 		B1F81EA7263EF29F00C277FB /* GoogleService-Info */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1412,7 +1432,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210830.1;
+				CURRENT_PROJECT_VERSION = 20210831.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1438,7 +1458,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210830.1;
+				CURRENT_PROJECT_VERSION = 20210831.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1465,7 +1485,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210830.1;
+				CURRENT_PROJECT_VERSION = 20210831.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1495,7 +1515,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210830.1;
+				CURRENT_PROJECT_VERSION = 20210831.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
