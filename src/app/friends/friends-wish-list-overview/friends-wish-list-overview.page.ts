@@ -15,8 +15,9 @@ import { AnalyticsService } from '@core/services/analytics.service';
 })
 export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
 
-  wishLists: FriendWishList[];
-
+  wishLists: FriendWishList[] = [];
+  
+  private forceRefreshWishLists = false;
   private queryParamSubscription: Subscription;
 
   constructor(
@@ -29,30 +30,23 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('family_friends');
-    this.wishLists = this.route.snapshot.data.wishLists;
-
-    this.queryParamSubscription = this.route.queryParamMap.subscribe({
-      next: queryParams => {
-        const forceRefresh = queryParams.get('forceRefresh');
-        if (forceRefresh !== null) {
-          this.friendWishListStore.loadWishLists(Boolean(forceRefresh)).subscribe({
-            next: updatedWishLists => {
-              this.wishLists = updatedWishLists;
-              this.removeQueryParams();
-            },
-            error: error => {
-              this.logger.error(error);
-              this.removeQueryParams();
-            }
-          })
-        }
+    this.queryParamSubscription = this.route.queryParams.subscribe(queryParams => {
+      if (queryParams.forceRefresh) {
+        this.forceRefreshWishLists = Boolean(queryParams.forceRefresh);
+        this.router.navigate(['.'], { relativeTo: this.route, queryParams: {}}); // remove query params
       }
     });
   }
 
-  private removeQueryParams() {
-    this.router.navigate(['.'], { relativeTo: this.route, queryParams: {}});
+  ionViewWillEnter() {
+    this.friendWishListStore.loadWishLists(this.forceRefreshWishLists).pipe(first()).subscribe(wishLists => {
+      this.forceRefreshWishLists = false;
+      this.wishLists = wishLists;
+    })
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('family_friends');
   }
 
   ngOnDestroy() {
@@ -69,7 +63,7 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
         this.wishLists = wishLists;
         event.target.complete();
       },
-      error: error => {
+      error: () => {
         event.target.complete();
       }
     });
