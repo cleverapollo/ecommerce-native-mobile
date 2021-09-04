@@ -39,12 +39,14 @@ export class LoginPage implements OnInit {
     private toastService: ToastService,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('login');
-  }
+  ) { }
 
   ngOnInit() {
     this.createForm();
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('login');
   }
 
   private createForm() {

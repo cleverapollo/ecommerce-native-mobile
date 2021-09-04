@@ -35,15 +35,17 @@ export class ResetPasswordPage implements OnInit {
     private analyticsService: AnalyticsService,
     private toastService: ToastService,
     private loadingService: LoadingService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('login-password_reset');
-  }
+  ) {}
 
   ngOnInit() {
     this.passwordResetRequestSuccessful = false;
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, CustomValidation.email]]
     })
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('login-password_reset');
   }
 
   async resetPassword() {

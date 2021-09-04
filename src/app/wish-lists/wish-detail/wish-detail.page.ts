@@ -40,13 +40,16 @@ export class WishDetailPage implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('wishlist-wish');
     this.wishList = this.route.snapshot.data.wishList;
     this.wish = this.route.snapshot.data.wish;
   }
 
   ionViewWillEnter() {
     this.loadWish();
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('wishlist-wish');
   }
 
   ngOnDestroy() {

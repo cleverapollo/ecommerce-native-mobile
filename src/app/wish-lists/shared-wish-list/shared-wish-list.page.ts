@@ -36,15 +36,17 @@ export class SharedWishListPage implements OnInit {
     private loadingService: LoadingService,
     private logger: LogService,
     private analyticsService: AnalyticsService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('shared-wishlist')
-  }
+  ) { }
 
   ngOnInit() {
     this.data = this.route.snapshot.data.data;
     this.wishList = this.data.wishList;
     this.getEmail();
     this.openQueryEmailModal();
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('shared-wishlist')
   }
 
   private async getEmail() {

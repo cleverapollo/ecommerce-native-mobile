@@ -34,12 +34,14 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
     private userApiService: UserApiService,
     private authService: AuthenticationService,
     public privacyPolicyService: PrivacyPolicyService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('signup-gender-birthday');
-  }
+  ) { }
 
   ngOnInit() {
     this.createForm();
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('signup-gender-birthday');
   }
 
   ngOnDestroy(): void {}

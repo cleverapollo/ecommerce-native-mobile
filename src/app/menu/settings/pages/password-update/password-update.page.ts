@@ -41,9 +41,7 @@ export class PasswordUpdatePage implements OnInit {
     private loadingService: LoadingService,
     private toastService: ToastService,
     private logger: LogService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('profile_settings-password');
-  }
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -70,6 +68,10 @@ export class PasswordUpdatePage implements OnInit {
     }, {
       validator: CustomValidation.passwordMatchValidator
     });
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-password');
   }
 
   async saveChanges() {

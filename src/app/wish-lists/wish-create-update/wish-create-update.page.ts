@@ -66,7 +66,6 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName(this.screenName);
     this.initViewData();
     this.createForm();
   }
@@ -99,6 +98,10 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
         updateOn: 'blur'
       }),
     });
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName(this.screenName);
   }
 
   ngOnDestroy(): void {}

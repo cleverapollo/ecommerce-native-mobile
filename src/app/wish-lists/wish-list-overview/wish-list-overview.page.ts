@@ -24,9 +24,7 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
     private navController: NavController,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('main');
-  }
+  ) { }
 
   async ngOnInit() {
     const loading = await this.loadingService.createLoadingSpinner();
@@ -50,6 +48,7 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('main');
     SplashScreen.hide({
       fadeOutDuration: 500
     });

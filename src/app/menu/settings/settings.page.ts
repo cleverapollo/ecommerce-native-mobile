@@ -4,6 +4,7 @@ import { AuthProvider } from '@core/models/signup.model';
 import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LogService } from '@core/services/log.service';
+import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { UserProfileStore } from './user-profile-store.service';
 
@@ -13,6 +14,8 @@ import { UserProfileStore } from './user-profile-store.service';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
+
+  private loadUserProfileSubscription: Subscription;
 
   profile: UserProfile;
   showPasswordChangeLink: boolean;
@@ -31,9 +34,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private userProfileStore: UserProfileStore,
     private analyticsService: AnalyticsService,
     private logger: LogService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('profile_settings');
-  }
+  ) { }
 
   async ngOnInit() {
     this.profile = this.route.snapshot?.data?.profile 
@@ -41,12 +42,18 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.userCanChangeEmail = this.profile.authProvider === AuthProvider.WANTIC;
   }
 
-  ngOnDestroy() {}
-
   ionViewWillEnter() {
-    this.userProfileStore.loadUserProfile(false).pipe(first()).subscribe(profile => {
+    this.loadUserProfileSubscription = this.userProfileStore.loadUserProfile(false).subscribe(profile => {
       this.profile = profile;
     })
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('profile_settings');
+  }
+
+  ngOnDestroy() {
+    this.loadUserProfileSubscription.unsubscribe();
   }
 
   forceRefresh(event) {

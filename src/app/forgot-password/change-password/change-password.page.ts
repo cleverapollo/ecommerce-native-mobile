@@ -61,9 +61,7 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private logger: LogService,
     private toastService: ToastService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('login-password_reset-change_password');
-  }
+  ) { }
 
   async ngOnInit() {
     const deviceInfo = await Device.getInfo();
@@ -74,6 +72,10 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
       this.oobCode = params['oobCode'];
     });
     this.initForm();
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('login-password_reset-change_password');
   }
 
   ngOnDestroy(): void {
