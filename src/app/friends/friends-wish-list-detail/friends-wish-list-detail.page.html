@@ -8,7 +8,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> 
 
-  <section class="ion-text-center wish-list-detail-container"> 
+  <section class="ion-text-center wish-list-detail-container" *ngIf="wishList"> 
     <app-owners-info [owners]="wishList.owners"></app-owners-info>
     <div class="details">
       <p class="wish-list-owner-names">{{ wishList.owners | ownerNames }}</p>
@@ -19,7 +19,7 @@
  
   <div class="divide"></div>
 
-   <ion-grid>
+   <ion-grid *ngIf="wishList">
      <ion-row>
        <ion-col size="6" *ngFor="let wish of wishList.wishes">
          <app-friends-wish [wish]="wish" (onWishPurchased)="updateWish($event)"></app-friends-wish>

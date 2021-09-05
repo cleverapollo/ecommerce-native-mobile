@@ -88,7 +88,6 @@ export class WishListCreateUpdatePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName(this.screenName);
     this.wishList = this.route.snapshot.data.wishList;
     this.userProfileStore.loadUserProfile().subscribe(userProfile => {
       this.userEmail = userProfile.email.value;
@@ -110,6 +109,10 @@ export class WishListCreateUpdatePage implements OnInit {
         }),
       });
     }
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName(this.screenName);
   }
 
   goBack() {

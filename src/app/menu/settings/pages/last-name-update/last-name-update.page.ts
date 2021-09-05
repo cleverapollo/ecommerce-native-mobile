@@ -39,7 +39,6 @@ export class LastNameUpdatePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('profile_settings-last_name');
     this.form = this.formBuilder.group({
       lastName: this.formBuilder.control('', {
         validators: [Validators.required, Validators.min(2), CustomValidation.valueHasChanged],
@@ -52,6 +51,10 @@ export class LastNameUpdatePage implements OnInit {
   async loadInitialValue() {
     const user = await this.userProfileStore.loadUserProfile().toPromise();
     this.form.controls.lastName.setValue(user.lastName);
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-last_name');
   }
 
   saveChanges() {

@@ -14,7 +14,6 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de'
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { FriendsWishListResolver } from '@friends/friends-wish-list-overview/friends-wish-list.resolver';
 import { UserProfileResolver } from '@shared/user-profile.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
@@ -23,7 +22,6 @@ import { CoreModule } from '@core/core.module';
 import { CacheModule } from "ionic-cache";
 import { WishListResolver } from '@wishLists/home/wish-list.resolver';
 import { WishResolver } from '@wishLists/home/wish.resolver';
-import { FriendsWishListDetailResolver } from '@friends/friends-wish-list-detail/friends-wish-list-detail.resolver';
 import { HTTP } from '@ionic-native/http/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
@@ -86,8 +84,6 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     File,
     FirebaseAnalytics,
     FirebaseAuthentication,
-    FriendsWishListResolver,
-    FriendsWishListDetailResolver,
     GooglePlus,
     SharedWishListResolver,
     SignInWithApple,

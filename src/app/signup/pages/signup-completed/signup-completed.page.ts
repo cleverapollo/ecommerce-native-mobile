@@ -11,7 +11,9 @@ export class SignupCompletedPage implements OnInit {
 
   constructor(private router: Router, private analyticsService: AnalyticsService) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('signup-complete');
   }
 

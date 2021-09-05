@@ -51,7 +51,6 @@ export class WishSearchSelectionPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('wish_add');
     this.searchByAmazonApiForm = this.formBuilder.group({
       keywords: [null, { 
         validators: [Validators.required, Validators.minLength(2)],
@@ -69,6 +68,7 @@ export class WishSearchSelectionPage implements OnInit {
   }
 
   async ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('wish_add');
     const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
     const deviceInfo = await Device.getInfo();
     if (deviceInfo.platform === 'ios' && userProfile?.userSettings.showOnboardingSlidesiOS) {

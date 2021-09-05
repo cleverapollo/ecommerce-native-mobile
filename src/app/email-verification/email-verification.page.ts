@@ -34,14 +34,19 @@ export class EmailVerificationPage implements OnInit {
     return this.emailVerificationStatus === PublicEmailVerificationStatus.ERROR;
   }
 
-  constructor(private route: ActivatedRoute, private analyticsService: AnalyticsService) { 
-    this.analyticsService.setFirebaseScreenName('email_verification_result');
-  }
+  constructor(
+    private route: ActivatedRoute, 
+    private analyticsService: AnalyticsService
+  ) { }
 
   async ngOnInit() {
     this.emailVerificationStatus = this.route.snapshot.data.emailVerificationStatus;
     const deviceInfo = await Device.getInfo();
     this.showButton = deviceInfo.platform === 'android' || deviceInfo.platform === 'ios';
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('email_verification_result');
   }
 
 }

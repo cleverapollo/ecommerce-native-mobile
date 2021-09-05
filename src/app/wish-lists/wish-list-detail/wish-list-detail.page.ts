@@ -50,7 +50,6 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('wishlist');
     this.wishList = this.route.snapshot.data.wishList;
     this.queryParamSubscription = this.route.queryParamMap.subscribe(queryParamMap => {
       if (Boolean(queryParamMap.get('forceRefresh'))) {
@@ -69,6 +68,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('wishlist');
     SplashScreen.hide({
       fadeOutDuration: 500
     });

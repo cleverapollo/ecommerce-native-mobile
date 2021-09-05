@@ -25,7 +25,9 @@ export class MenuPage implements OnInit {
     public privacyPolicyService: PrivacyPolicyService
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('settings');
   }
 

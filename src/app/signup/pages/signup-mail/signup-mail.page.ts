@@ -51,9 +51,7 @@ export class SignupMailPage implements OnInit {
     private authService: AuthenticationService,
     private loadingService: LoadingService,
     private toastService: ToastService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('signup-mail');
-  }
+  ) { }
 
   ngOnInit() {
     this.createForm();
@@ -87,6 +85,10 @@ export class SignupMailPage implements OnInit {
         validator: CustomValidation.passwordMatchValidator
       })
     });
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('signup-mail');
   }
 
   next() {

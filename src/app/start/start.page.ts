@@ -46,13 +46,12 @@ export class StartPage implements OnInit {
     private toastService: ToastService,
     private platformService: PlatformService,
     public privacyPolicyService: PrivacyPolicyService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('logon');
-  }
+  ) { }
 
   ngOnInit() {}
 
   ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('logon');
     SplashScreen.hide({
       fadeOutDuration: 500
     });
