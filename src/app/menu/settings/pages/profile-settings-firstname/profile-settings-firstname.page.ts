@@ -38,7 +38,6 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   { }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('profile_settings-first_name');
     const firstName = history?.state?.data?.profile.firstName;
     this.form = this.formBuilder.group({
       firstName: this.formBuilder.control(firstName, {
@@ -46,6 +45,10 @@ export class ProfileSettingsFirstnamePage implements OnInit {
         updateOn: 'submit'
       })
     });
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-first_name');
   }
 
   saveChanges() {

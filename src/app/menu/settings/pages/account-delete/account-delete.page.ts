@@ -33,11 +33,13 @@ export class AccountDeletePage implements OnInit {
     private toastService: ToastService,
     private logger: LogService,
     private analyticsService: AnalyticsService
-  ) { 
-    this.analyticsService.setFirebaseScreenName('profile_settings-delete_account');
-  }
+  ) { }
 
   ngOnInit() {}
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-delete_account');
+  }
 
   async deleteAccount() {
     const loadingSpinner = await this.loadingService.createLoadingSpinner();

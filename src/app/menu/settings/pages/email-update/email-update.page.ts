@@ -56,9 +56,7 @@ export class EmailUpdatePage implements OnInit {
     private analyticsService: AnalyticsService,
     private authService: AuthenticationService,
     private router: Router
-  ) {
-    this.analyticsService.setFirebaseScreenName('profile_settings-email');
-  }
+  ) {}
 
   async ngOnInit() {
     const user = await this.userProfileStore.loadUserProfile().toPromise();
@@ -77,6 +75,10 @@ export class EmailUpdatePage implements OnInit {
         updateOn: 'blur'
       })
     });
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-email');
   }
 
   async saveChanges() {

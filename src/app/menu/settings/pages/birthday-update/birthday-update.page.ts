@@ -37,7 +37,6 @@ export class BirthdayUpdatePage implements OnInit {
   { }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('profile_settings-birthday');
     this.form = this.formBuilder.group({
       birthday: this.formBuilder.control('', {
         validators: [Validators.required, CustomValidation.valueHasChanged],
@@ -52,6 +51,10 @@ export class BirthdayUpdatePage implements OnInit {
     if (user.birthday) {
       this.form.controls.birthday.setValue(new Date(user.birthday).toISOString());
     }
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('profile_settings-birthday');
   }
 
   saveChanges() {

@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FriendWishList, FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { LogService } from '@core/services/log.service';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
   templateUrl: './friends-wish-list-detail.page.html',
   styleUrls: ['./friends-wish-list-detail.page.scss'],
 })
-export class FriendsWishListDetailPage implements OnInit {
+export class FriendsWishListDetailPage implements OnInit, OnDestroy {
 
-  wishList: FriendWishList
+  wishList: FriendWishList;
+  
+  private wishListId: string;
   
   constructor(
+    private logger: LogService,
     private navController: NavController, 
     private route: ActivatedRoute,
     private friendWishListStore: FriendWishListStoreService,
@@ -23,9 +27,22 @@ export class FriendsWishListDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.analyticsService.setFirebaseScreenName('wishlist-family_friends');
-    this.wishList = this.route.snapshot.data.wishList;
+    this.route.paramMap.subscribe(paramMap => {
+      this.wishListId = paramMap.get('wishListId');
+    })
   }
+
+  ionViewWillEnter() {
+    this.friendWishListStore.loadWishList(this.wishListId).pipe(first()).subscribe(wishList => {
+      this.wishList = wishList;
+    })
+  }
+
+  ionViewDidEnter() {
+    this.analyticsService.setFirebaseScreenName('wishlist-family_friends');
+  }
+
+  ngOnDestroy() {}
 
   goBack() {
     this.navController.navigateBack('/friends-wish-list-overview');
@@ -45,7 +62,7 @@ export class FriendsWishListDetailPage implements OnInit {
         this.wishList = wishList;
         event.target.complete();
       },
-      error: error => {
+      error: () => {
         event.target.complete();
       }
     });
