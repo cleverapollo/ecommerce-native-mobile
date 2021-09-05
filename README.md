@@ -29,6 +29,14 @@ For that it is necessary to decode the hex value to base64.
 - Debug: keytool -exportcert -alias androiddebugkey -keystore .android/debug.keystore -list -v
 - Release: keytool -exportcert -alias <your-alias> -keystore <path-to-keystore> -list -v
 
+## Test your deep links
+
+
+Open a shared wish list of an friend.
+```
+adb.exe -s emulator-5554 shell am start -W -a android.intent.action.VIEW -d wanticbeta://meine-wunschliste/33de35b0-3305-423c-9654-36a92efdf33f io.wantic.app.beta
+```
+
 # Hosting
 
 - Web: Firebase Hosting
@@ -63,4 +71,5 @@ For that it is necessary to decode the hex value to base64.
 
 - [How to Build an Ionic HTTP Loading Interceptor & Retry Logic](https://www.youtube.com/watch?v=IJWCpa_-MeU)
 - [Ionic Development Tips](https://ionicframework.com/docs/developing/tips)
+- [Android: Create Deep Links to App Content](https://developer.android.com/training/app-links/deep-linking)
 
