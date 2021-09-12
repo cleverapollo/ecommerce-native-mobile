@@ -14,6 +14,9 @@
       (click)="reserve()">
       NICHT MEHR <br> SCHENKEN
     </ion-button>
+    <ion-button class="give-button" *ngIf="isDebugInfoVisible" expand="block" color="dark" (click)="showDebugInfo()">
+      <ion-icon name="construct-outline"></ion-icon>&nbsp;DEBUG INFO
+    </ion-button>
   </ion-card-content>
 </ion-card>
 <div *ngIf="wish.reservedByFriend" class="wish-reserved-image-container">

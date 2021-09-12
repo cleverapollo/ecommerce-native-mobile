@@ -39,4 +39,8 @@
   <ion-button class="wantic-save-button" color="primary" expand="block" (click)="openProductURL()">
     WEBSEITE BESUCHEN
   </ion-button>
+  <ion-button *ngIf="isDebugInfoVisible" class="wantic-save-button" color="dark" expand="block" (click)="showDebugInfo()">
+    <ion-icon name="construct-outline"></ion-icon>&nbsp;DEBUG INFO
+  </ion-button>
+
 </ion-content>

@@ -8,6 +8,7 @@ import { LogService } from '@core/services/log.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserManagementActionMode } from '@core/models/google-api.model';
+import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
 const { StatusBar, App, SplashScreen } = Plugins;
 
 @Component({
@@ -24,7 +25,8 @@ export class AppComponent {
     private router: Router,
     private logger: LogService,
     private authService: AuthenticationService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private affiliateDataStore: AffiliateDataStoreService
   ) {
     this.initializeApp();
   }
@@ -47,6 +49,9 @@ export class AppComponent {
       }
       this.initCache();
       this.analyticsService.initAppsflyerSdk();
+      if (this.authService.isAuthenticated.getValue()) {
+        this.affiliateDataStore.loadData();
+      } 
       this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
     });
   }

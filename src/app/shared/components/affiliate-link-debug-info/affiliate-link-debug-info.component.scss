@@ -1,0 +1,16 @@
+:host {
+    background-color: var(--wantic-background-color);
+}
+
+.debug-info-content {
+    margin-left: 16px; 
+    margin-right: 16px;
+}
+
+ion-toolbar {
+    padding-top: 0;
+    --background: var(--wantic-background-color);
+    ion-icon {
+        color: black;
+    }
+}

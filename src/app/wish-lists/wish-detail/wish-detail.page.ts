@@ -1,12 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from '@core/services/alert.service';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BrowserService } from '@core/services/browser.service';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { AffiliateService } from '@core/services/affiliate.service';
+import { environment } from '@env/environment';
+import { BackendConfigType } from '@env/backend-config-type';
+import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
 
 @Component({
   selector: 'app-wish-detail',
@@ -16,7 +20,12 @@ import { AnalyticsService } from '@core/services/analytics.service';
 export class WishDetailPage implements OnInit, OnDestroy {
 
   wishList: WishListDto
-  wish: WishDto
+  wish: WishDto;
+  
+  get isDebugInfoVisible(): boolean {
+    return environment.backendType === BackendConfigType.beta ||  
+      environment.backendType === BackendConfigType.dev;
+  }
 
   get wishListOwnerCount(): number {
     return this.wishList?.owners?.length || 0;
@@ -36,7 +45,9 @@ export class WishDetailPage implements OnInit, OnDestroy {
     private navController: NavController,
     private route: ActivatedRoute,
     private wishListStore: WishListStoreService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private affiliateService: AffiliateService,
+    private modalController: ModalController
     ) { }
 
   ngOnInit() {
@@ -56,7 +67,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   openProductURL() {
-    const url = this.wish.productUrl;
+    const url = this.affiliateService.createAffiliateLink(this.wish.productUrl);
     this.browserService.openInAppBrowser(url);
   }
 
@@ -81,4 +92,15 @@ export class WishDetailPage implements OnInit, OnDestroy {
     this.wish = wish;
   }
 
+  async showDebugInfo() {
+    const modal = await this.modalController.create({
+      component: AffiliateLinkDebugInfoComponent,
+      componentProps: {
+        wish: this.wish
+      },
+      cssClass: 'wantic-modal',
+    });
+    await modal.present();
+  }
+ 
 }
