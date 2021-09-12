@@ -14,10 +14,12 @@ import { UserInitialsComponent } from './components/user-initials/user-initials.
 import { OwnersInfoComponent } from './components/owners-info/owners-info.component';
 import { TruncateNamePipe } from './pipes/truncate-name.pipe';
 import { ShowHidePasswordComponent } from './components/show-hide-password/show-hide-password.component';
+import { AffiliateLinkDebugInfoComponent } from './components/affiliate-link-debug-info/affiliate-link-debug-info.component';
 
 @NgModule({
   declarations: [
     SecurePipe, 
+    AffiliateLinkDebugInfoComponent,
     OwnersInfoComponent,
     OwnerNamesPipe, 
     ValidationMessagesComponent, 
@@ -38,6 +40,7 @@ import { ShowHidePasswordComponent } from './components/show-hide-password/show-
   ],
   exports: [
     SecurePipe, 
+    AffiliateLinkDebugInfoComponent,
     OwnersInfoComponent,
     OwnerNamesPipe, 
     ValidationMessagesComponent, 

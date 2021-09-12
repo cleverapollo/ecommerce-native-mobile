@@ -1,0 +1,16 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content slot="fixed" scroll-y="false" class="ion-no-border">
+  <div class="debug-info-content">
+    <h1>Debug Info</h1>
+    <p><strong>URL</strong> = {{ wish.productUrl }}</p>
+    <p><strong>Affiliate Link</strong> = {{ affiliateLink }}</p>
+  </div>
+</ion-content>

@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { Plugins } from '@capacitor/core';
 import { LoadingService } from '@core/services/loading.service';
+import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
 
 const { SplashScreen } = Plugins;
 
@@ -23,7 +24,8 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
     private wishListStore: WishListStoreService,
     private navController: NavController,
     private analyticsService: AnalyticsService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private affiliateDataStore: AffiliateDataStoreService
   ) { }
 
   async ngOnInit() {
@@ -44,6 +46,13 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
       this.wishListStore.loadWishLists(false).subscribe( wishLists => {
         this.updateWishLists(wishLists)
       })
+    }
+    this.initAffiliateDataIfNeeded();
+  }
+
+  private initAffiliateDataIfNeeded() {
+    if (this.affiliateDataStore.affiliateProgrammes.length === 0) {
+      this.affiliateDataStore.loadData();
     }
   }
 

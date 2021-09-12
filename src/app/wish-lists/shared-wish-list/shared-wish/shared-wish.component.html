@@ -15,6 +15,9 @@
       (click)="reserve()">
       NICHT <br> MEHR SCHENKEN
     </ion-button>
+    <ion-button class="give-button" *ngIf="isDebugInfoVisible" expand="block" color="dark" (click)="showDebugInfo()">
+      <ion-icon name="construct-outline"></ion-icon>&nbsp;DEBUG INFO
+    </ion-button>
     </div>
   </ion-card-content>
 </ion-card>
