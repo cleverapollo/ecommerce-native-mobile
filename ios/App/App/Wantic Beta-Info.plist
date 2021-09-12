@@ -59,6 +59,8 @@
 	<string>494614765250156</string>
 	<key>FacebookDisplayName</key>
 	<string>wantic beta</string>
+	<key>IOS_GOOGLEUTILITIES_VERSION</key>
+	<string>7.4</string>
 	<key>IonApi</key>
 	<string>https://api.ionicjs.com</string>
 	<key>IonAppId</key>
