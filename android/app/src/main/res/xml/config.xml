@@ -58,6 +58,7 @@
   <preference name="BackupWebStorage" value="none" />
   <preference name="SplashMaintainAspectRatio" value="true" />
   <preference name="FadeSplashScreenDuration" value="1000" />
+  <preference name="IOS_GOOGLEUTILITIES_VERSION" value="7.4" />
   <preference name="SplashShowOnlyFirstTime" value="false" />
   <preference name="SplashScreen" value="screen" />
   <preference name="SplashScreenDelay" value="2000" />

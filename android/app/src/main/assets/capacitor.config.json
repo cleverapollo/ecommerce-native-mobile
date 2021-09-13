@@ -16,6 +16,7 @@
       "BackupWebStorage": "none",
       "SplashMaintainAspectRatio": "true",
       "FadeSplashScreenDuration": "1000",
+      "IOS_GOOGLEUTILITIES_VERSION": "7.4",
       "SplashShowOnlyFirstTime": "false",
       "SplashScreen": "screen",
       "SplashScreenDelay": "2000"
