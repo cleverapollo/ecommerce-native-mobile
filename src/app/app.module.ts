@@ -38,6 +38,8 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
+import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, UserTrackingService } from '@angular/fire/analytics';
+import { AngularFireModule } from '@angular/fire';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -55,6 +57,8 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAnalyticsModule,
     BrowserModule,
     CoreModule,
     CacheModule.forRoot({ keyPrefix: 'wantic-app-cache' }),
@@ -88,9 +92,13 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     SharedWishListResolver,
     SignInWithApple,
     UserProfileResolver,
+    UserTrackingService,
     WishResolver,
     WishListsResolver,
     WishListResolver,
+    { provide: APP_NAME, useValue: environment.angularFire.APP_NAME },
+    { provide: APP_VERSION, useValue: environment.angularFire.APP_VERSION },
+    { provide: DEBUG_MODE, useValue: environment.angularFire.DEBUG_MODE },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'de' },
     { provide: HTTP_INTERCEPTORS, useClass: NativeTokenInterceptor, multi: true },
