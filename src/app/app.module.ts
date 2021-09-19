@@ -38,7 +38,7 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
-import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, UserTrackingService } from '@angular/fire/analytics';
+import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { AngularFireModule } from '@angular/fire';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
@@ -93,6 +93,7 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     SignInWithApple,
     UserProfileResolver,
     UserTrackingService,
+    ScreenTrackingService,
     WishResolver,
     WishListsResolver,
     WishListResolver,
