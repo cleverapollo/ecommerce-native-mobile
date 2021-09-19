@@ -2,5 +2,14 @@
   "projects": {
     "default": "wantic-dev",
     "prod": "wantic-prd"
+  },
+  "targets": {
+    "wantic-dev": {
+      "hosting": {
+        "app": [
+          "wantic-dev"
+        ]
+      }
+    }
   }
 }
