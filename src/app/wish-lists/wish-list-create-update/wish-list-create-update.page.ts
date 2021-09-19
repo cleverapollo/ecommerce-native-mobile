@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListCreateRequest, WishListCreateOrUpdateRequest, WishListUpdateRequest } from './wish-list-create-update.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
@@ -99,6 +99,7 @@ export class WishListCreateUpdatePage implements OnInit {
     if (!this.form) {
       const name = this.wishList?.name ? this.wishList.name : '';
       const date = this.wishList?.date ? new Date(this.wishList.date).toISOString() : '';
+      const showReservedWishes = this.wishList?.showReservedWishes ? this.wishList?.showReservedWishes : false;
       this.form = this.formBuilder.group({
         'name': this.formBuilder.control(name, {
           validators: [Validators.required],
@@ -107,6 +108,7 @@ export class WishListCreateUpdatePage implements OnInit {
         'date': this.formBuilder.control(date, {
           updateOn: 'blur'
         }),
+        'showReservedWishes': this.formBuilder.control(showReservedWishes)
       });
     }
   }
@@ -124,10 +126,11 @@ export class WishListCreateUpdatePage implements OnInit {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
-    let request = new WishListCreateOrUpdateRequest();
-    request.name = this.form.controls.name.value;
-    request.date = this.form.controls.date.value;
-
+    const request: WishListCreateOrUpdateRequest = {
+      name:  this.form.controls.name.value,
+      showReservedWishes: this.form.controls.showReservedWishes.value,
+      date: this.form.controls.date.value
+    };
     this.wishList && this.wishList.id ? this.update(request) : this.create(request);
   }
 

@@ -34,6 +34,7 @@ export class WishListDto {
     wishes: WishDto[];
     creatorEmail: string;
     owners: UserWishListDto[];
+    showReservedWishes: boolean;
 }
 
 export class WishListRegistration {

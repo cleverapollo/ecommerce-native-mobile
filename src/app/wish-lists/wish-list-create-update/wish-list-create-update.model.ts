@@ -1,6 +1,7 @@
 export class WishListCreateOrUpdateRequest {
     name: string;
     date?: Date;
+    showReservedWishes: boolean;
 }
 
 export class WishListCreateRequest extends WishListCreateOrUpdateRequest {
