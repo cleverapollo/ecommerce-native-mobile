@@ -10,6 +10,13 @@
           "wantic-dev"
         ]
       }
+    },
+    "wantic-prd": {
+      "hosting": {
+        "app": [
+          "wantic-prd"
+        ]
+      }
     }
   }
 }

@@ -9,7 +9,6 @@ export interface EnvironmentConfig {
         secondLevelDomain: string,
         port?: number
     },
-    analyticsConfigured: boolean,
     firebaseConfig?: {
         apiKey: string,
         authDomain: string,

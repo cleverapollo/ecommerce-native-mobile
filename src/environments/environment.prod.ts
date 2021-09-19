@@ -11,16 +11,15 @@ export const environment : EnvironmentConfig = {
     secondLevelDomain: 'rest-prd.wantic.io',
   },
   firebaseConfig: {
-    apiKey: 'AIzaSyBokQ5eUvMeNum-0XN06RxxE8eypufVDjg',
-    authDomain: 'wantic-prd.firebaseapp.com',
-    databaseURL: 'https://wantic-prd.firebaseio.com',
-    projectId: 'wantic-prd',
-    storageBucket: 'wantic-prd.appspot.com',
-    messagingSenderId: '553198243306',
-    appId: '1:553198243306:web:63be133f670f95908c3693',
-    measurementId: 'G-DZ99Y0YVF0'
+    apiKey: "AIzaSyBokQ5eUvMeNum-0XN06RxxE8eypufVDjg",
+    authDomain: "wantic-prd.firebaseapp.com",
+    databaseURL: "https://wantic-prd.firebaseio.com",
+    projectId: "wantic-prd",
+    storageBucket: "wantic-prd.appspot.com",
+    messagingSenderId: "553198243306",
+    appId: "1:553198243306:web:5b9f05bbb60fb8528c3693",
+    measurementId: "G-KW4T4N2DQE"
   },
-  analyticsConfigured: true,
   googleSignInAndroidClientId: '553198243306-cdqvmtcn23oejp3n3dsm1ll5ultjvuui.apps.googleusercontent.com', 
   appsflyerConfig: {
     devKey: "s8xKbYNUpxszQP8CWguA5L",

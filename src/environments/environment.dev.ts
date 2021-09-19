@@ -12,7 +12,16 @@ export const environment: EnvironmentConfig = {
         secondLevelDomain: 'localhost', // for android and iOS simulators = 10.0.2.2
         port: 8080
     },
-    analyticsConfigured: false,
+    firebaseConfig: {
+        apiKey: "AIzaSyDIpjCfUOk-BAs6D7P1UgwMxAUjAzjsHcc",
+        authDomain: "wantic-dev.firebaseapp.com",
+        databaseURL: "https://wantic-dev.firebaseio.com",
+        projectId: "wantic-dev",
+        storageBucket: "wantic-dev.appspot.com",
+        messagingSenderId: "165303834787",
+        appId: "1:165303834787:web:6e136abc3e6200aa330716",
+        measurementId: "G-33SQBGEXZM"
+    },
     googleSignInAndroidClientId: '165303834787-52s37du1t3jvojlfm0tscgopttu27p03.apps.googleusercontent.com',
 };
 
