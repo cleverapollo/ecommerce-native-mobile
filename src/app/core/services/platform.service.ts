@@ -15,5 +15,9 @@ export class PlatformService {
   get isAndroid(): boolean { 
     return this.platform.is('capacitor') && this.platform.is('android');
   }
+
+  get isNativePlatform(): boolean {
+    return this.isAndroid || this.isIOS;
+  }
   
 }

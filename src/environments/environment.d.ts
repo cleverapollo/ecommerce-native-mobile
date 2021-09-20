@@ -9,7 +9,6 @@ export interface EnvironmentConfig {
         secondLevelDomain: string,
         port?: number
     },
-    analyticsConfigured: boolean,
     firebaseConfig?: {
         apiKey: string,
         authDomain: string,
@@ -19,6 +18,11 @@ export interface EnvironmentConfig {
         messagingSenderId: string,
         appId: string,
         measurementId?: string // only configured if analytics is enabled
+    },
+    angularFire?: {
+        APP_NAME: string,
+        APP_VERSION: string,
+        DEBUG_MODE: boolean
     },
     googleSignInAndroidClientId?: string,
     appsflyerConfig?: {
