@@ -31,6 +31,10 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     return this.wishList?.owners?.length || 0;
   }
 
+  get showReservedWishes(): boolean {
+    return this.wishList?.showReservedWishes || false;
+  }
+
   cssClass(first: boolean, last: boolean) {
     return {
       'standalone': this.wishListOwnerCount == 1,

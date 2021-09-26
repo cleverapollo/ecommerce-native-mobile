@@ -13,6 +13,7 @@ export class WishDto {
     price: PriceDto;
     productUrl: string;
     imageUrl: String;
+    isReserved: boolean;
 }
 
 export class WishListSelectOptionDto {

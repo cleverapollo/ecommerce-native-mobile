@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListCreateRequest, WishListCreateOrUpdateRequest, WishListUpdateRequest } from './wish-list-create-update.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { IonDatetime, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { AlertService } from '@core/services/alert.service';
@@ -15,16 +15,20 @@ import { LoadingService } from '@core/services/loading.service';
 import { first } from 'rxjs/operators';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wish-list-create-update',
   templateUrl: './wish-list-create-update.page.html',
   styleUrls: ['./wish-list-create-update.page.scss'],
 })
-export class WishListCreateUpdatePage implements OnInit {
+export class WishListCreateUpdatePage implements OnInit, OnDestroy {
 
   private wishList: WishListDto;
   private userEmail: string;
+
+  private loadUserProfileSubscription: Subscription;
+  private loadWishListSubscription: Subscription;
 
   form: FormGroup;
 
@@ -89,28 +93,38 @@ export class WishListCreateUpdatePage implements OnInit {
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
-    this.userProfileStore.loadUserProfile().subscribe(userProfile => {
+    this.loadUserProfileSubscription = this.userProfileStore.loadUserProfile().subscribe(userProfile => {
       this.userEmail = userProfile.email.value;
     });
-    this.initFormIfNotPresent();
+    this.initForm();
   }
 
-  initFormIfNotPresent() {
-    if (!this.form) {
-      const name = this.wishList?.name ? this.wishList.name : '';
-      const date = this.wishList?.date ? new Date(this.wishList.date).toISOString() : '';
-      const showReservedWishes = this.wishList?.showReservedWishes ? this.wishList?.showReservedWishes : false;
-      this.form = this.formBuilder.group({
-        'name': this.formBuilder.control(name, {
-          validators: [Validators.required],
-          updateOn: 'blur'
-        }),
-        'date': this.formBuilder.control(date, {
-          updateOn: 'blur'
-        }),
-        'showReservedWishes': this.formBuilder.control(showReservedWishes)
-      });
-    }
+  ngOnDestroy(): void {
+    this.loadWishListSubscription.unsubscribe();
+    this.loadUserProfileSubscription.unsubscribe();
+  }
+
+  private initForm() {
+    const name = this.wishList?.name ? this.wishList.name : '';
+    const date = this.wishList?.date ? new Date(this.wishList.date).toISOString() : '';
+    const showReservedWishes = this.wishList?.showReservedWishes ? this.wishList?.showReservedWishes : false;
+    this.form = this.formBuilder.group({
+      'name': this.formBuilder.control(name, {
+        validators: [Validators.required],
+        updateOn: 'blur'
+      }),
+      'date': this.formBuilder.control(date, {
+        updateOn: 'blur'
+      }),
+      'showReservedWishes': this.formBuilder.control(showReservedWishes)
+    });
+  }
+
+  ionViewWillEnter() { 
+    this.loadWishListSubscription = this.wishListStore.loadWishList(this.wishList.id).subscribe( wishList => {
+      this.wishList = wishList;
+      this.initForm();
+    })
   }
 
   ionViewDidEnter() {

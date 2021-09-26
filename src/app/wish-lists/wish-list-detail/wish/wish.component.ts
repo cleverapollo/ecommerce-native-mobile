@@ -9,6 +9,11 @@ import { WishDto } from '@core/models/wish-list.model';
 export class WishComponent implements OnInit {
 
   @Input() wish: WishDto;
+  @Input() showReservedWishes: boolean;
+
+  get showReservedState(): boolean {
+    return this.showReservedWishes && this.wish.isReserved;
+  }
 
   constructor() { }
 

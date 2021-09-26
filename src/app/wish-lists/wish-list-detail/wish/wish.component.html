@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card [ngClass]="{ 'wish-reserved': showReservedState }">
   <div class="image-container">
     <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" />
     <img class="placeholder" *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg">
@@ -8,3 +8,6 @@
     <div class="wish-price">{{ wish.price.displayString }}</div>
   </ion-card-content>
 </ion-card>
+<div *ngIf="showReservedState" class="wish-reserved-image-container">
+  <img src="assets/icon/wish-reserved.svg" alt="Graue, ovale Form auf dem 'Leider schon vergriffen' zu lesen ist."/>
+</div>
