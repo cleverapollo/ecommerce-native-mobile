@@ -35,6 +35,10 @@ export class SharedWishComponent implements OnInit {
     this.onButtonClicked.emit(this.wish);
   }
 
+  imgOnErrorHandler(event) {
+    event.target.src = 'assets/images/wish-list-placeholder.svg';
+ }
+
   async showDebugInfo() {
     const modal = await this.modalController.create({
       component: AffiliateLinkDebugInfoComponent,
