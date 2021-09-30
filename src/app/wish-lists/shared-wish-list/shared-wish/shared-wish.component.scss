@@ -1,0 +1,51 @@
+ion-grid {
+    padding: 0;
+    ion-col.col-block {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+ion-button.action-button {
+    margin-top: 0;
+}
+ion-button.action-button-block {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+// xs & sm
+@media (max-width: 767.98px) {
+    ion-button.action-button-left {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    ion-button.action-button-right {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    ion-col.col-left {
+        padding-left: 0;
+        padding-right: 1px;
+    }
+    ion-col.col-right {
+        padding-left: 1px;
+        padding-right: 0;
+    }
+}
+// md, lg, xl
+@media (min-width: 768px) { 
+    ion-button.action-button-left {
+        margin-left: 0;
+    }
+    ion-button.action-button-right {
+        margin-right: 0;
+    }
+    ion-col.col-left {
+        padding-left: 0;
+    }
+    ion-col.col-right {
+        padding-right: 0;
+    }
+}
