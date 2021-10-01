@@ -1,32 +1,11 @@
-<ion-grid class="friend-avatar-container">
+<ion-grid>
 
-  <div  *ngIf="wishList.owners?.length == 1" class="centered-user-initials">
-    <app-user-initials [firstName]="wishList.owners[0].firstName" [lastName]="wishList.owners[0].lastName"></app-user-initials>
-  </div>
-
-  <!--2-->
-  <ion-row *ngIf="wishList.owners?.length == 2">
-    <ion-col size="6">
-      <ion-avatar class="float-right">
-        <app-user-initials 
-          [firstName]="wishList.owners[0].firstName" 
-          [lastName]="wishList.owners[0].lastName">
-        </app-user-initials>
-      </ion-avatar>
-    </ion-col>
-    <ion-col size="6">
-      <ion-avatar>
-        <app-user-initials
-          [firstName]="wishList.owners[1].firstName" 
-          [lastName]="wishList.owners[1].lastName">
-        </app-user-initials>
-      </ion-avatar>
+  <ion-row *ngIf="wishList.owners?.length == 1" class="user-initials-container">
+    <ion-col class="centered-user-initials user-initials-overlay">
+      <app-user-initials [firstName]="wishList.owners[0].firstName" [lastName]="wishList.owners[0].lastName"></app-user-initials>
     </ion-col>
   </ion-row>
 
-</ion-grid>
-
-<ion-grid>
   <ion-row class="wish-images-container-top">
     <ion-col size="6" class="wish-image-container wish-one">
       <img *ngIf="wishList.wishes.length > 0 && wishList.wishes[0].imageUrl" [src]="wishList.wishes[0].imageUrl" alt="Wunsch eins">

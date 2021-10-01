@@ -18,8 +18,12 @@
   </p>
   <ion-grid class="wantic-container">
     <ion-row>
-      <ion-col *ngFor="let wishList of wishLists" size="6" (click)="selectWishList(wishList)">
-        <app-friend-wish-list [wishList]="wishList"></app-friend-wish-list>
+      <ion-col *ngFor="let wishList of wishLists; let i = index;" size="6" (click)="selectWishList(wishList)" class="app-friend-wish-list-container">
+        <div class="wish-list-wrapper-padding-right" [ngClass]="{ 'wish-list-wrapper-padding-right': i % 2 == 0 , 'wish-list-wrapper-padding-left': i % 2 == 1}">
+          <div class="wish-list-box">
+            <app-friend-wish-list [wishList]="wishList"></app-friend-wish-list>
+          </div>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

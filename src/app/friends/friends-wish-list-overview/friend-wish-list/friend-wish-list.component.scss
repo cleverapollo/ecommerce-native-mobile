@@ -14,18 +14,13 @@
     }
 }
 
-.friend-avatar-container {
-    background: linear-gradient(to bottom, #f7f6f1 50%, white 50%);
-    height: 15%;
-    ion-avatar {
-        border: 3px solid white;
-    }
-    ion-avatar.auto-margin {
-        margin: auto
-    }
-    ion-avatar.float-right {
-        float: right;
-    }
+.user-initials-overlay {
+    position: relative;
+    bottom: 25px;
+}
+
+.user-initials-container {
+    height: 35px;
 }
 
 .wish-list-name {
@@ -35,8 +30,6 @@
     white-space: nowrap;
     overflow: hidden;
 }
-
-
 
 .wish-list-description {
     border-top: 1px dashed #F0EDE3;
