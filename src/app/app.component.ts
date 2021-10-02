@@ -9,6 +9,9 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserManagementActionMode } from '@core/models/google-api.model';
 import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
+import { PlatformService } from '@core/services/platform.service';
+import { ScriptLoadingStatus, ScriptService } from '@core/services/script.service';
+import { ScriptName } from '@core/data/script-store';
 const { StatusBar, App, SplashScreen } = Plugins;
 
 @Component({
@@ -20,20 +23,22 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
+    private platformService: PlatformService,
     private cache: CacheService,
     private zone: NgZone,
     private router: Router,
     private logger: LogService,
     private authService: AuthenticationService,
     private analyticsService: AnalyticsService,
-    private affiliateDataStore: AffiliateDataStoreService
+    private affiliateDataStore: AffiliateDataStoreService,
+    private scriptService: ScriptService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      if (this.platform.is('hybrid')) {
+      if (this.platformService.isNativePlatform) {
         this.initNativeStatusBar();
         // handle universal links
         App.addListener('appUrlOpen', (data: any) => {
@@ -46,6 +51,7 @@ export class AppComponent {
         })
       } else {
         this.migrateCachedCredentials();
+        this.loadWebAppScripts();
       }
       this.initCache();
       this.analyticsService.initAppsflyerSdk();
@@ -73,6 +79,12 @@ export class AppComponent {
   private initCache() {
     this.cache.setDefaultTTL(60 * 60);
     this.cache.setOfflineInvalidate(false);
+  }
+
+  private loadWebAppScripts() {
+    this.scriptService.loadScript(ScriptName.HOTJAR).then( result => {
+      this.logger.debug(`loaded script ${ScriptName[result.script]} with status ${ScriptLoadingStatus[result.status]}`, result);
+    })
   }
 
   private onAppUrlOpen(data: any) {
