@@ -4,14 +4,13 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { LogService } from '@core/services/log.service';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutoLoginGuard implements CanLoad {
 
-  constructor(private authService: AuthenticationService, private router: Router, private logger: LogService, private platform: Platform) {}
+  constructor(private authService: AuthenticationService, private router: Router, private logger: LogService) {}
 
   canLoad(): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.isAuthenticated.pipe(

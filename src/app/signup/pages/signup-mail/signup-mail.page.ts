@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthProvider, SignupRequest } from '@core/models/signup.model';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { LogService } from '@core/services/log.service';
 import { IonInput } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
@@ -46,7 +45,6 @@ export class SignupMailPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private analyticsService: AnalyticsService,
-    private logger: LogService,
     private router: Router,
     private authService: AuthenticationService,
     private loadingService: LoadingService,
