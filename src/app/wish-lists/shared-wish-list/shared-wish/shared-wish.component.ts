@@ -22,6 +22,15 @@ export class SharedWishComponent implements OnInit {
       environment.backendType === BackendConfigType.dev;
   }
 
+  get cssClassWishReservedState(): string {
+    if (this.wish.reservedByFriend) {
+      return 'wish-reserved';
+    } else if (this.wish.bought) {
+      return 'wish-bought';
+    }
+    return null;
+  }
+
   constructor(private browserService: BrowserService, private modalController: ModalController) { }
 
   ngOnInit() {}

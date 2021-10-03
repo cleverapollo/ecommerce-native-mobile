@@ -1,21 +1,46 @@
-<ion-card [ngClass]="{ 'wish-reserved': wish.reservedByFriend, 'wish-bought': wish.bought }" class="wish-border">
-  <div class="image-container" (click)="openProductURL()">
+<ion-card class="wish-border" [ngClass]="{ 'wish-bought-border': wish.bought }">
+  <div class="image-container" (click)="openProductURL()" [ngClass]="cssClassWishReservedState">
     <app-image [src]="wish.imageUrl" [alt]="wish.name"></app-image>
   </div>
   <ion-card-content>
-    <div class="wish-name">{{ wish.name | truncateName }}</div>
-    <div class="wish-price">{{ wish.price.displayString }}</div>
-    <ion-button class="give-button" *ngIf="!wish.bought && !wish.reservedByFriend" expand="block" fill="outline"
-      color="tertiary" (click)="reserve()">
-      SCHENKEN
-    </ion-button>
-    <ion-button class="give-button" *ngIf="wish.bought && !wish.reservedByFriend" expand="block" color="tertiary"
-      (click)="reserve()">
-      NICHT MEHR <br> SCHENKEN
-    </ion-button>
-    <ion-button class="give-button" *ngIf="isDebugInfoVisible" expand="block" color="dark" (click)="showDebugInfo()">
-      <ion-icon name="construct-outline"></ion-icon>&nbsp;DEBUG INFO
-    </ion-button>
+    <div class="wish-name truncate-name" [ngClass]="cssClassWishReservedState">{{ wish.name  }}</div>
+    <div class="wish-price" [ngClass]="cssClassWishReservedState">{{ wish.price.displayString }}</div>
+    <div *ngIf="!readonly">
+      <ion-grid>
+        <ion-row *ngIf="!wish.reservedByFriend">
+          <ion-col sizeXs="12" sizeMd="6" class="col-left">
+            <ion-button class="give-button action-button action-button-left" *ngIf="!wish.bought" fill="outline" color="tertiary" expand="block"
+              (click)="reserve()">
+              SCHENKEN
+            </ion-button>
+            <ion-button class="give-button action-button action-button-left" *ngIf="wish.bought" color="tertiary" expand="block"
+              (click)="reserve()">
+              NICHT <br> MEHR SCHENKEN
+            </ion-button>
+          </ion-col>
+          <ion-col sizeXs="12" sizeMd="6" class="col-right">
+            <ion-button class="give-button action-button action-button-right"  fill="outline" color="primary" expand="block"
+              (click)="openProductURL()">
+              ZUM SHOP
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="wish.reservedByFriend">
+          <ion-col  class="col-block">
+            <ion-button class="give-button action-button action-button-block" fill="outline" color="light" expand="block" (click)="openProductURL()">
+              ZUM SHOP
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row  *ngIf="isDebugInfoVisible">
+          <ion-col class="col-block">
+            <ion-button class="give-button action-button action-button-block" expand="block" color="dark" (click)="showDebugInfo()">
+              <ion-icon name="construct-outline"></ion-icon>&nbsp;DEBUG INFO
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>    
+    </div>
   </ion-card-content>
 </ion-card>
 <div *ngIf="wish.reservedByFriend" class="wish-reserved-image-container">

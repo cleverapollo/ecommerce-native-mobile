@@ -1,10 +1,10 @@
-<ion-card [ngClass]="{ 'wish-reserved': wish.reservedByFriend, 'wish-bought': wish.bought }" class="wish-border">
-  <div class="image-container" (click)="openProductURL()">
+<ion-card class="wish-border" [ngClass]="{ 'wish-bought-border': wish.bought }">
+  <div class="image-container" (click)="openProductURL()" [ngClass]="cssClassWishReservedState">
     <app-image [src]="wish.imageUrl" alt="Vorschaubild auf dem der Wunsch '{{ wish.name }}' zu sehen ist"></app-image>
   </div>
   <ion-card-content>
-    <div class="wish-name truncate-name">{{ wish.name  }}</div>
-    <div class="wish-price">{{ wish.price.displayString }}</div>
+    <div class="wish-name truncate-name" [ngClass]="cssClassWishReservedState">{{ wish.name  }}</div>
+    <div class="wish-price" [ngClass]="cssClassWishReservedState">{{ wish.price.displayString }}</div>
     <div *ngIf="!readonly">
       <ion-grid>
         <ion-row *ngIf="!wish.reservedByFriend">
@@ -27,7 +27,7 @@
         </ion-row>
         <ion-row *ngIf="wish.reservedByFriend">
           <ion-col  class="col-block">
-            <ion-button class="give-button action-button action-button-block" fill="outline" color="primary" expand="block" (click)="openProductURL()">
+            <ion-button class="give-button action-button action-button-block" fill="outline" color="light" expand="block" (click)="openProductURL()">
               ZUM SHOP
             </ion-button>
           </ion-col>
