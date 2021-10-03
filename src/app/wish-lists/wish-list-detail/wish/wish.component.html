@@ -1,7 +1,7 @@
 <ion-card [ngClass]="{ 'wish-reserved': showReservedState }">
   <div class="image-container">
-    <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" />
-    <img class="placeholder" *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg">
+    <app-image *ngIf="wish.imageUrl" [src]="wish.imageUrl" alt="Vorschaubild des Wunsches {{ wish.name }}"></app-image>
+    <img class="placeholder" *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg" alt="Platzhalterbild" />
   </div>
   <ion-card-content>
     <div class="wish-name truncate-name">{{ wish.name }}</div>

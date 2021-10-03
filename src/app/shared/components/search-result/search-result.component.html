@@ -1,6 +1,6 @@
 <ion-card>
   <div class="image-container" (click)="openProductURL()">
-    <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" />
+    <app-image *ngIf="wish.imageUrl" [src]="wish.imageUrl" [alt]="wish.name"></app-image>
   </div>
   <ion-card-content>
     <div class="wish-name truncate-name" (click)="openProductURL()">{{ wish?.name }}</div>

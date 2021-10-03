@@ -1,7 +1,6 @@
 <ion-card [ngClass]="{ 'wish-reserved': wish.reservedByFriend, 'wish-bought': wish.bought }" class="wish-border">
   <div class="image-container" (click)="openProductURL()">
-    <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" />
-    <img *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg">
+    <app-image [src]="wish.imageUrl" [alt]="wish.name"></app-image>
   </div>
   <ion-card-content>
     <div class="wish-name">{{ wish.name | truncateName }}</div>
@@ -20,5 +19,5 @@
   </ion-card-content>
 </ion-card>
 <div *ngIf="wish.reservedByFriend" class="wish-reserved-image-container">
-  <img src="assets/icon/wish-reserved.svg" alt="Icon auf dem 'Leider schon vergriffen' zu lesen ist." />
+  <img src="assets/icon/wish-reserved.svg" alt="Icon auf dem ein Geschenk zu sehen ist." />
 </div>

@@ -15,11 +15,13 @@ import { OwnersInfoComponent } from './components/owners-info/owners-info.compon
 import { TruncateNamePipe } from './pipes/truncate-name.pipe';
 import { ShowHidePasswordComponent } from './components/show-hide-password/show-hide-password.component';
 import { AffiliateLinkDebugInfoComponent } from './components/affiliate-link-debug-info/affiliate-link-debug-info.component';
+import { ImageComponent } from './components/image/image.component';
 
 @NgModule({
   declarations: [
     SecurePipe, 
     AffiliateLinkDebugInfoComponent,
+    ImageComponent,
     OwnersInfoComponent,
     OwnerNamesPipe, 
     ValidationMessagesComponent, 
@@ -41,6 +43,7 @@ import { AffiliateLinkDebugInfoComponent } from './components/affiliate-link-deb
   exports: [
     SecurePipe, 
     AffiliateLinkDebugInfoComponent,
+    ImageComponent,
     OwnersInfoComponent,
     OwnerNamesPipe, 
     ValidationMessagesComponent, 

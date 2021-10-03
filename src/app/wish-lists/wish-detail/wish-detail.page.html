@@ -18,7 +18,7 @@
 
   <ion-card>
     <div class="product-image-container">
-      <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" (click)="openProductURL()" alt="Produktbild">
+      <app-image *ngIf="wish.imageUrl" [src]="wish.imageUrl" (click)="openProductURL()" alt="Produktbild"></app-image>
       <img class="placeholder" *ngIf="!wish.imageUrl" src="assets/images/wish-list-placeholder.svg" (click)="openProductURL()" alt="Platzhalterbild">
     </div>
     <ion-card-content>

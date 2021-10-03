@@ -1,0 +1,2 @@
+<img *ngIf="src" [src]="src" [alt]="alt" (error)="onError($event)" />
+<img *ngIf="!src" [src]="fallbackImageUrl" [alt]="placeholderAltText" />
