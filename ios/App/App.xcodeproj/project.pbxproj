@@ -87,7 +87,6 @@
 		B18F1CCC2687610D00FD7528 /* fetch-product-infos.js in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CCB2687610D00FD7528 /* fetch-product-infos.js */; };
 		B18F1CCD2687610D00FD7528 /* fetch-product-infos.js in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CCB2687610D00FD7528 /* fetch-product-infos.js */; };
 		B18F1CDB2688846E00FD7528 /* Share Beta-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CDA2688846E00FD7528 /* Share Beta-Info.plist */; };
-		B18F1CDC2688846E00FD7528 /* Share Beta-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CDA2688846E00FD7528 /* Share Beta-Info.plist */; };
 		B19A51CE2610CD8E00984207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		B19A51D22610CD8E00984207 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		B19A51D32610CD8E00984207 /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
@@ -266,9 +265,7 @@
 		B18F1CCB2687610D00FD7528 /* fetch-product-infos.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "fetch-product-infos.js"; sourceTree = "<group>"; };
 		B18F1CDA2688846E00FD7528 /* Share Beta-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Share Beta-Info.plist"; sourceTree = "<group>"; };
 		B19A51DF2610CD8E00984207 /* Wantic Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wantic Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B19A51E02610CD8E00984207 /* Wantic copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Wantic copy-Info.plist"; path = "/Users/fischeti/Documents/develop/wantic-frontend/ios/App/Wantic copy-Info.plist"; sourceTree = "<absolute>"; };
 		B19A522E2610CE8000984207 /* Share Beta.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Share Beta.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B19A522F2610CE8100984207 /* Share copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Share copy-Info.plist"; path = "/Users/fischeti/Documents/develop/wantic-frontend/ios/App/Share copy-Info.plist"; sourceTree = "<absolute>"; };
 		B19A52392610D11400984207 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		B19A52472610D1A500984207 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		B19A530926123C8D00984207 /* Wantic Beta-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Wantic Beta-Info.plist"; sourceTree = "<group>"; };
@@ -348,8 +345,6 @@
 				504EC3061FED79650016851F /* App */,
 				B1A80F852589F59800F0917F /* Share */,
 				504EC3051FED79650016851F /* Products */,
-				B19A51E02610CD8E00984207 /* Wantic copy-Info.plist */,
-				B19A522F2610CE8100984207 /* Share copy-Info.plist */,
 				7CFF9FF8E9A94F76BFF001AF /* Pods */,
 				0716F31E2A2F37C872DE8423 /* Frameworks */,
 			);
@@ -745,7 +740,6 @@
 				B182B5812709BDD1006B5B77 /* PlayfairDisplay-Italic.ttf in Resources */,
 				B182B5832709BDD1006B5B77 /* PlayfairDisplay-Black.ttf in Resources */,
 				B182B59D2709BE22006B5B77 /* Roboto-Medium.ttf in Resources */,
-				B18F1CDC2688846E00FD7528 /* Share Beta-Info.plist in Resources */,
 				B182B5A32709BE22006B5B77 /* Roboto-Bold.ttf in Resources */,
 				B182B5852709BDD1006B5B77 /* PlayfairDisplay-BoldItalic.ttf in Resources */,
 				B182B57B2709BDD1006B5B77 /* PlayfairDisplay-Regular.ttf in Resources */,
