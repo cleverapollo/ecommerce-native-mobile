@@ -21,11 +21,6 @@ jobs:
       - name: Run Tests
         run: npm run ci:test
 
-      - name: Code Coverage
-        run: npm run ci:codecov
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v1.5.0
         with:
