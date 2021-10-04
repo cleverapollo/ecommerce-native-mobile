@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListCreateRequest, WishListCreateOrUpdateRequest, WishListUpdateRequest } from './wish-list-create-update.model';
 import { WishListApiService } from '@core/api/wish-list-api.service';
@@ -15,20 +15,16 @@ import { LoadingService } from '@core/services/loading.service';
 import { first } from 'rxjs/operators';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wish-list-create-update',
   templateUrl: './wish-list-create-update.page.html',
   styleUrls: ['./wish-list-create-update.page.scss'],
 })
-export class WishListCreateUpdatePage implements OnInit, OnDestroy {
+export class WishListCreateUpdatePage implements OnInit {
 
   private wishList: WishListDto;
   private userEmail: string;
-
-  private loadUserProfileSubscription: Subscription;
-  private loadWishListSubscription: Subscription;
 
   form: FormGroup;
 
@@ -93,15 +89,19 @@ export class WishListCreateUpdatePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
-    this.loadUserProfileSubscription = this.userProfileStore.loadUserProfile().subscribe(userProfile => {
+    this.userProfileStore.loadUserProfile().pipe(first()).subscribe(userProfile => {
       this.userEmail = userProfile.email.value;
     });
     this.initForm();
   }
 
-  ngOnDestroy(): void {
-    this.loadWishListSubscription.unsubscribe();
-    this.loadUserProfileSubscription.unsubscribe();
+  ionViewWillEnter() { 
+    if (this.isUpdatePage) {
+      this.wishListStore.loadWishList(this.wishList.id).pipe(first()).subscribe( wishList => {
+        this.wishList = wishList;
+        this.initForm();
+      })
+    } 
   }
 
   private initForm() {
@@ -118,13 +118,6 @@ export class WishListCreateUpdatePage implements OnInit, OnDestroy {
       }),
       'showReservedWishes': this.formBuilder.control(showReservedWishes)
     });
-  }
-
-  ionViewWillEnter() { 
-    this.loadWishListSubscription = this.wishListStore.loadWishList(this.wishList.id).subscribe( wishList => {
-      this.wishList = wishList;
-      this.initForm();
-    })
   }
 
   ionViewDidEnter() {
