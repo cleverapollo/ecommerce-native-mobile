@@ -241,7 +241,8 @@
                 "output": "/assets"
               },
               "src/manifest.webmanifest"
-            ]
+            ],
+            "codeCoverage": true
           },
           "configurations": {
             "ci": {

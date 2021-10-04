@@ -20,12 +20,12 @@
     "build-beta": "ionic build --configuration=beta",
     "deploy-web-beta": "ionic build --configuration=beta && firebase deploy -P default",
     "deploy-web-prod": "ionic build --prod && firebase deploy -P prod",
-    "test": "ng test",
+    "test": "ng test --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "jetifier",
     "ci:build": "ionic build --configuration=beta",
-    "ci:test": "ng test --watch false --browsers ChromeHeadless"
+    "ci:test": "ng test --no-watch --no-progress --browsers ChromeHeadless"
   },
   "private": true,
   "dependencies": {
