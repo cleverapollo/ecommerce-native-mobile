@@ -25,7 +25,7 @@
     "e2e": "ng e2e",
     "postinstall": "jetifier",
     "ci:build": "ionic build --configuration=beta",
-    "ci:test": "ng test --no-watch --no-progress --browsers ChromeHeadless"
+    "ci:test": "npm test --no-watch --no-progress --browsers ChromeHeadless"
   },
   "private": true,
   "dependencies": {
