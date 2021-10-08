@@ -5,10 +5,11 @@ import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.servi
 import { LogService } from '../log.service';
 import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class AffiliateService {
+export class AffiliateDefaultService {
 
   constructor(
     private logger: LogService, 

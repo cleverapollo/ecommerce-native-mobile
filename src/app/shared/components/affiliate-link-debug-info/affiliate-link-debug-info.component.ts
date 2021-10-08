@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WishDto } from '@core/models/wish-list.model';
-import { AffiliateService } from '@core/services/affiliate.service';
+import { AffiliateDouglasService } from '@core/services/affiliate/affiliate-douglas.service';
+import { AffiliateDefaultService } from '@core/services/affiliate/affiliate-default.service';
 import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ModalController } from '@ionic/angular';
 
@@ -13,11 +14,21 @@ export class AffiliateLinkDebugInfoComponent implements OnInit {
 
   @Input() wish: WishDto | FriendWish;
 
-  constructor(private affiliateService: AffiliateService, private modalController: ModalController) { }
+  affiliateLink: string = '';
 
-  ngOnInit() {}
+  constructor(private affiliateService: AffiliateDefaultService, private modalController: ModalController, private affiliateDouglasService: AffiliateDouglasService) { }
 
-  get affiliateLink(): string {
+  ngOnInit() {
+    if (this.wish.productUrl.includes('douglas.de')) { 
+      this.affiliateDouglasService.createAffiliateLink(this.wish.productUrl).then(affiliateLink => {
+        this.affiliateLink = affiliateLink;
+      })
+    } else {
+      this.affiliateLink = this.initAffiliateLink();
+    }
+  }
+
+  initAffiliateLink(): string {
     let affiliateLink = '';
     if (this.wish.productUrl) {
       affiliateLink = this.affiliateService.createAffiliateLink(this.wish.productUrl);

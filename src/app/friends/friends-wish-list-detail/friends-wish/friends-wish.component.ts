@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WishApiService } from '@core/api/wish-api.service';
 import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { BrowserService } from '@core/services/browser.service';
-import { AffiliateService } from '@core/services/affiliate/affiliate.service';
+import { AffiliateDefaultService } from '@core/services/affiliate/affiliate-default.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
 import { ModalController } from '@ionic/angular';
@@ -35,7 +35,7 @@ export class FriendsWishComponent implements OnInit {
   constructor(
     private browserService: BrowserService,
     private wishApiService: WishApiService,
-    private affiliateService: AffiliateService,
+    private affiliateService: AffiliateDefaultService,
     private modalController: ModalController
   ) { }
 

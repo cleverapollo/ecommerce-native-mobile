@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AffiliateProgramme } from '@core/models/affiliate.model';
 import { AffiliateDataStoreService } from '../../data/affiliate-data-store.service';
 
-import { AffiliateService } from './affiliate.service';
+import { AffiliateDefaultService } from './affiliate-default.service';
 import { LogService } from '@core/services/log.service';
 
 class MockLoggerService {
@@ -36,7 +36,7 @@ class MockAffiliateDataStoreService {
 }
 
 describe('AffiliateService', () => {
-  let service: AffiliateService;
+  let service: AffiliateDefaultService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -48,7 +48,7 @@ describe('AffiliateService', () => {
         useClass: MockAffiliateDataStoreService
       }]
     });
-    service = TestBed.inject(AffiliateService);
+    service = TestBed.inject(AffiliateDefaultService);
   });
 
   it('should be created', () => {
