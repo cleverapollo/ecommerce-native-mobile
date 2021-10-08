@@ -3,7 +3,7 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 
 import { AffiliateDouglasService } from './affiliate-douglas.service';
 import { HttpClient } from '@angular/common/http';
-import { LogService } from './log.service';
+import { LogService } from '@core/services/log.service';
 
 import bodyMilkGeneratorResult from './affiliate-douglas-bodymilk-response';
 import parfumeGeneratorResult from './affiliate-douglas-parfum-response';

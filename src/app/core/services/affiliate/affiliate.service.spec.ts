@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { AffiliateProgramme } from '@core/models/affiliate.model';
-import { AffiliateDataStoreService } from '../data/affiliate-data-store.service';
+import { AffiliateDataStoreService } from '../../data/affiliate-data-store.service';
 
 import { AffiliateService } from './affiliate.service';
-import { LogService } from './log.service';
+import { LogService } from '@core/services/log.service';
 
 class MockLoggerService {
   error(message) {

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { LogService } from './log.service';
+import { LogService } from '@core/services/log.service';
 
 @Injectable({
   providedIn: 'root'
