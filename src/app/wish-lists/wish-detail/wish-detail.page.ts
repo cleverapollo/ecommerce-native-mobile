@@ -7,7 +7,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BrowserService } from '@core/services/browser.service';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { AffiliateService } from '@core/services/affiliate.service';
+import { AffiliateService } from '@core/services/affiliate/affiliate.service';
 import { environment } from '@env/environment';
 import { BackendConfigType } from '@env/backend-config-type';
 import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
