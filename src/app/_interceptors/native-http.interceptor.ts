@@ -140,7 +140,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
       try {
         body = JSON.parse(nativeHttpResponse.data);
       } catch (error) {
-        body = { response: nativeHttpResponse.data };
+        body = nativeHttpResponse.data;
       }
     }
     return body;
