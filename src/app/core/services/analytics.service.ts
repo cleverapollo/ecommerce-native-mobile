@@ -7,7 +7,7 @@ import { LogService } from './log.service';
 import { AuthProvider } from '@core/models/signup.model';
 import { Platform } from '@ionic/angular';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
-import { PlatformService } from './platform.service';
+import { DefaultPlatformService } from './platform.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class AnalyticsService {
     private appsflyer: Appsflyer, 
     private logger: LogService, 
     private platform: Platform,
-    private platformService: PlatformService,
+    private platformService: DefaultPlatformService,
     private firebaseAnalytics: FirebaseAnalytics,
     private angularFireAnalytics: AngularFireAnalytics
     ) { 

@@ -13,7 +13,7 @@ import { UserService } from '@core/services/user.service';
 import { LoadingService } from '@core/services/loading.service';
 import { UserProfile } from '@core/models/user.model';
 import { ToastService } from '@core/services/toast.service';
-import { PlatformService } from '@core/services/platform.service';
+import { DefaultPlatformService } from '@core/services/platform.service';
 
 const { SplashScreen } = Plugins;
 
@@ -44,7 +44,7 @@ export class StartPage implements OnInit {
     private userService: UserService,
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private platformService: PlatformService,
+    private platformService: DefaultPlatformService,
     public privacyPolicyService: PrivacyPolicyService
   ) { }
 

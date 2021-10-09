@@ -5,7 +5,7 @@ import { IonSlides, ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { PlatformService } from '@core/services/platform.service';
+import { DefaultPlatformService } from '@core/services/platform.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 class WanticSlideItem {
@@ -42,7 +42,7 @@ export class OnboardingSlidesComponent implements OnInit {
     private logger: LogService,
     private userProfileStore: UserProfileStore,
     private domSanitzer: DomSanitizer,
-    public platformService: PlatformService
+    public platformService: DefaultPlatformService
   ) { }
 
   private get androidSlides(): WanticSlideItem[] {

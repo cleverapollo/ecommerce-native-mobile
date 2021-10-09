@@ -7,10 +7,10 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BrowserService } from '@core/services/browser.service';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { AffiliateDefaultService } from '@core/services/affiliate/affiliate-default.service';
 import { environment } from '@env/environment';
 import { BackendConfigType } from '@env/backend-config-type';
 import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
+import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
 
 @Component({
   selector: 'app-wish-detail',
@@ -39,6 +39,8 @@ export class WishDetailPage implements OnInit, OnDestroy {
     }
   }
 
+  private affiliateLink: string = '';
+
   constructor(
     private browserService: BrowserService,
     public alertService: AlertService,
@@ -46,13 +48,14 @@ export class WishDetailPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private wishListStore: WishListStoreService,
     private analyticsService: AnalyticsService,
-    private affiliateService: AffiliateDefaultService,
+    private affiliateLinkService: AffiliateLinkService,
     private modalController: ModalController
     ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
     this.wish = this.route.snapshot.data.wish;
+    this.affiliateLink = await this.affiliateLinkService.createAffiliateLink(this.wish.productUrl);
   }
 
   ionViewWillEnter() {
@@ -67,8 +70,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   openProductURL() {
-    const url = this.affiliateService.createAffiliateLink(this.wish.productUrl);
-    this.browserService.openInAppBrowser(url);
+    this.browserService.openInAppBrowser(this.affiliateLink);
   }
 
   goBack() {

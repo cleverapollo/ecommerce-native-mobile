@@ -2,15 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { LogService } from '@core/services/log.service';
+import { DefaultPlatformService } from '../platform.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AffiliateDouglasService {
+export class AffiliateDouglasService implements AffiliateService {
 
   private static DOUGLAS_DOMAIN = 'douglas.de'
+  private static WANTIC_AFFILIATE_ID = '813821';
+  private static DOUGLAS_AWIN_PROGRAM_ID = '10076';
 
-  constructor(private httpClient: HttpClient, private logger: LogService) { }
+  constructor(private httpClient: HttpClient, private logger: LogService, private platformService: DefaultPlatformService) { }
+
+  supportsDomain(domain: string): boolean {
+    return domain === AffiliateDouglasService.DOUGLAS_DOMAIN 
+      && this.platformService.isNativePlatform // web request is blocked by CORS;
+  }
 
   createAffiliateLink(productUrlString: string): Promise<string> {
     if (!productUrlString.includes(AffiliateDouglasService.DOUGLAS_DOMAIN)) {
@@ -28,6 +36,7 @@ export class AffiliateDouglasService {
         },
         responseType: 'text'
       }).pipe(first()).subscribe( generatorResult => {
+        generatorResult = this.removeImageElementsFromGeneratorResult(generatorResult);
         const affiliateLink = this.parseAffiliateLinkFromGeneratorResult(generatorResult);
         if (affiliateLink === null) {
           resolve(productUrlString);
@@ -42,7 +51,13 @@ export class AffiliateDouglasService {
   }
 
   private createRequestURL(productUrlString: string) {
-    return `http://adgenerator.nonstoppartner.net/?clientURL=${productUrlString}&linkText=Test&zpar0=&zpar1=&language=de&client=douglas&l=de&clicktag=https://www.awin1.com/awclick.php?gid=362940&mid=10076&awinaffid=813821&linkid=2383202&clickref=&clickref2=&p=&nw=fiw1`;
+    const encodedURL = encodeURIComponent(productUrlString);
+    const encodedClickTagURL = encodeURIComponent(`https://www.awin1.com/awclick.php?gid=362940&mid=${AffiliateDouglasService.DOUGLAS_AWIN_PROGRAM_ID}&awinaffid=${AffiliateDouglasService.WANTIC_AFFILIATE_ID}&linkid=2383202&clickref=&clickref2=&p=`);
+    return `http://adgenerator.nonstoppartner.net/?clientURL=${encodedURL}&linkText=Test&zpar0=&zpar1=&language=de&client=douglas&l=de&clicktag=${encodedClickTagURL}&nw=fiw1`;
+  }
+
+  private removeImageElementsFromGeneratorResult(generatorResult: string) {
+    return generatorResult.replace(/<img[^>]*>/g,"");
   }
 
   private parseAffiliateLinkFromGeneratorResult(generatorResult: string): string | null {
@@ -58,7 +73,7 @@ export class AffiliateDouglasService {
 
       if (decodedAnchorHTMLString.includes('<a') && decodedAnchorHTMLString.includes('</a>')) {
         const anchor = this.createHTMLAnchorElementFromHTMLString(decodedAnchorHTMLString);
-        if (anchor && anchor.href) {
+        if (anchor && anchor.href && this.isValidAffiliateURL(anchor.href)) {
           result = anchor.href;
           break;
         }
@@ -66,6 +81,19 @@ export class AffiliateDouglasService {
     }
 
     return result;
+  }
+
+  private isValidAffiliateURL(urlString: string): boolean {
+    const wanticAffiliateId = '813821';
+    const douglasAwinProgramId = '10076';
+    try {
+      const url = new URL(urlString);
+      return url.searchParams.has('gid') && url.searchParams.has('linkid') &&
+        url.searchParams.has('mid') && url.searchParams.get('mid') === douglasAwinProgramId &&
+        url.searchParams.has('awinaffid') && url.searchParams.get('awinaffid') === wanticAffiliateId;
+    } catch (error) {
+      return false;
+    }
   }
 
   private createHTMLElementFromHTMLString(htmlString: string): HTMLElement {

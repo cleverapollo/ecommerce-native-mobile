@@ -118,7 +118,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
       url = `${url}?${queryParams.toString()}`;
     }
     this.logUrl(url);
-    return encodeURI(url);
+    return url;
   }
 
   private createResponse(nativeHttpResponse: HTTPResponse) {

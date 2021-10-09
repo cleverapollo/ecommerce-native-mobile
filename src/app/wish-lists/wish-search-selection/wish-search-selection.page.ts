@@ -10,7 +10,7 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { Plugins } from '@capacitor/core';
-import { PlatformService } from '@core/services/platform.service';
+import { DefaultPlatformService } from '@core/services/platform.service';
 
 const { Device } = Plugins;
 
@@ -43,7 +43,7 @@ export class WishSearchSelectionPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private logger: LogService,
-    public platformService: PlatformService,
+    public platformService: DefaultPlatformService,
     private loadingService: LoadingService,
     private userProfileStore: UserProfileStore,
     private modalController: ModalController,
