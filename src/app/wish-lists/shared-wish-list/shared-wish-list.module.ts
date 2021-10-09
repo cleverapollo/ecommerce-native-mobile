@@ -8,7 +8,6 @@ import { SharedWishListPageRoutingModule } from './shared-wish-list-routing.modu
 import { SharedWishListPage } from './shared-wish-list.page';
 import { SharedModule } from '@shared/shared.module';
 import { SharedWishComponent } from './shared-wish/shared-wish.component';
-import { WishReservedModalComponent } from './wish-reserved-modal/wish-reserved-modal.component';
 
 @NgModule({
   imports: [
@@ -19,9 +18,8 @@ import { WishReservedModalComponent } from './wish-reserved-modal/wish-reserved-
   ],
   declarations: [
     SharedWishListPage, 
-    SharedWishComponent, 
-    WishReservedModalComponent
+    SharedWishComponent
   ],
-  entryComponents: [WishReservedModalComponent]
+  entryComponents: []
 })
 export class SharedWishListPageModule {}
