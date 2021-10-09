@@ -6,7 +6,7 @@ import { Platform } from '@ionic/angular';
 
 import { AnalyticsService } from './analytics.service';
 import { LogService } from './log.service';
-import { PlatformService } from './platform.service';
+import { DefaultPlatformService } from './platform.service';
 
 describe('AnalyticsService', () => {
 
@@ -23,7 +23,7 @@ describe('AnalyticsService', () => {
         { provide: Appsflyer, useValue: appsflyer },
         { provide: LogService, useValue: logger },
         { provide: Platform, useValue: platform },
-        { provide: PlatformService, useValue: platformService },
+        { provide: DefaultPlatformService, useValue: platformService },
         { provide: FirebaseAnalytics, useValue: firebaseAnalytics },
         { provide: AngularFireAnalytics, useValue: angularFireAnalytics }
       ]

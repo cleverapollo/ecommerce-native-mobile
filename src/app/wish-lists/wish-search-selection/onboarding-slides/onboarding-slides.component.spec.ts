@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserApiService } from '@core/api/user-api.service';
 import { LogService } from '@core/services/log.service';
-import { PlatformService } from '@core/services/platform.service';
+import { DefaultPlatformService } from '@core/services/platform.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 
@@ -33,7 +33,7 @@ describe('OnboardingSlidesComponent', () => {
         { provide: LogService, useValue: logger },
         { provide: UserProfileStore, useValue: userProfileStore },
         { provide: DomSanitizer, useValue: domSanitzer },
-        { provide: PlatformService, useValue: platformService },
+        { provide: DefaultPlatformService, useValue: platformService },
       ]
     }).compileComponents();
 

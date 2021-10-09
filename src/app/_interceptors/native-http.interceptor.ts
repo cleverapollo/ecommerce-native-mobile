@@ -118,7 +118,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
       url = `${url}?${queryParams.toString()}`;
     }
     this.logUrl(url);
-    return encodeURI(url);
+    return url;
   }
 
   private createResponse(nativeHttpResponse: HTTPResponse) {
@@ -140,7 +140,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
       try {
         body = JSON.parse(nativeHttpResponse.data);
       } catch (error) {
-        body = { response: nativeHttpResponse.data };
+        body = nativeHttpResponse.data;
       }
     }
     return body;

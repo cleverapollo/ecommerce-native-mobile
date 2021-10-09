@@ -10,6 +10,7 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
+import { SERVER_URL } from '@env/environment';
 
 @Injectable()
 export class NativeTokenInterceptor implements HttpInterceptor {
@@ -115,15 +116,15 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         }
     }
 
-    private addAuthToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-        if (token) {
-            return req.clone({
+    private addAuthToken(request: HttpRequest<any>, token: string): HttpRequest<any> {
+        if (token && request.url.startsWith(SERVER_URL)) {
+            return request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${token}`
                 }
             });
         } else {
-            return req;
+            return request;
         }
     }
 

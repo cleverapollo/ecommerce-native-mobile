@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AffiliateService } from '@core/services/affiliate.service';
+import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 
 import { AffiliateLinkDebugInfoComponent } from './affiliate-link-debug-info.component';
@@ -7,8 +7,8 @@ import { AffiliateLinkDebugInfoComponent } from './affiliate-link-debug-info.com
 describe('AffiliateLinkDebugInfoComponent', () => {
 
   let affiliateService: any = {
-    createAffiliateLink(): string {
-      return 'affiliateLink'
+    createAffiliateLink(): Promise<string> {
+      return Promise.resolve('affiliateLink');
     }
   };
   let modalController: any;
@@ -21,7 +21,7 @@ describe('AffiliateLinkDebugInfoComponent', () => {
       declarations: [ AffiliateLinkDebugInfoComponent ],
       imports: [IonicModule.forRoot()],
       providers: [
-        { provide: AffiliateService, useValue: affiliateService },
+        { provide: AffiliateLinkService, useValue: affiliateService },
         { provide: ModalController, useValue: modalController }
       ]
     }).compileComponents();

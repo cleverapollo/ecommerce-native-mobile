@@ -9,7 +9,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserManagementActionMode } from '@core/models/google-api.model';
 import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
-import { PlatformService } from '@core/services/platform.service';
+import { DefaultPlatformService } from '@core/services/platform.service';
 import { ScriptLoadingStatus, ScriptService } from '@core/services/script.service';
 import { ScriptName } from '@core/data/script-store';
 const { StatusBar, App, SplashScreen } = Plugins;
@@ -23,7 +23,7 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
-    private platformService: PlatformService,
+    private platformService: DefaultPlatformService,
     private cache: CacheService,
     private zone: NgZone,
     private router: Router,

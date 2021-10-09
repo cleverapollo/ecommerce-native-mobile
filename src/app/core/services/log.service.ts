@@ -1,10 +1,20 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 
+interface Logger {
+  trace(message: any, ...additional: any[]): void;
+  debug(message: any, ...additional: any[]): void;
+  info(message: any, ...additional: any[]): void;
+  log(message: any, ...additional: any[]): void;
+  warn(message: any, ...additional: any[]): void;
+  error(message: any, ...additional: any[]): void;
+  fatal(message: any, ...additional: any[]): void;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class LogService {
+export class LogService implements Logger {
 
   constructor(private ngxLogger: NGXLogger) { }
 
@@ -64,5 +74,22 @@ export class LogService {
     if (this) {
       this.ngxLogger ? this.ngxLogger.fatal(message, additional) : console.error(message, additional);
     }
+  }
+}
+
+export class StubLogService implements Logger {
+  trace(message: any, ...additional: any[]): void {
+  }
+  debug(message: any, ...additional: any[]): void {
+  }
+  info(message: any, ...additional: any[]): void {
+  }
+  log(message: any, ...additional: any[]): void {
+  }
+  warn(message: any, ...additional: any[]): void {
+  }
+  fatal(message: any, ...additional: any[]): void {
+  }
+  error(message) {
   }
 }

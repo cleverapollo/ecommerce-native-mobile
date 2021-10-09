@@ -2,27 +2,40 @@ import { Injectable } from '@angular/core';
 import { AffiliateProgramme } from '@core/models/affiliate.model';
 import { WishDto } from '@core/models/wish-list.model';
 import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
-import { LogService } from './log.service';
+import { LogService } from '../log.service';
 import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class AffiliateService {
+export class AffiliateDefaultService implements AffiliateService {
 
   constructor(
     private logger: LogService, 
     private affiliateDataStore: AffiliateDataStoreService) 
     { }
+  
+  supportsDomain(domain: string): boolean {
+    let support = false;
+    const affiliateProgrammes = this.affiliateDataStore.affiliateProgrammes;
+    for (const programme of affiliateProgrammes) {
+      if (this.affiliateProgrammeSupportsDomain(programme, domain)) {
+        support = true;
+        break;
+      }
+    }
+    return support;
+  }
 
-
-  createAffiliateLinkForWish(wish: WishDto | FriendWish) {
-    wish.productUrl = this.createAffiliateLink(wish.productUrl);
+  async createAffiliateLinkForWish(wish: WishDto | FriendWish): Promise<WishDto | FriendWish> {
+    const affiliateLink = await this.createAffiliateLink(wish.productUrl);
+    wish.productUrl = affiliateLink;
     return wish;
   }
 
-  createAffiliateLink(productUrlUrlString: string): string {
-    let affiliateProgrammes = this.affiliateDataStore.affiliateProgrammes;
+  createAffiliateLink(productUrlUrlString: string): Promise<string> {
+    const affiliateProgrammes = this.affiliateDataStore.affiliateProgrammes;
     let affiliateLink = productUrlUrlString;
     let affiliateProgramme = null;
     let productUrl: URL = null;
@@ -44,7 +57,7 @@ export class AffiliateService {
       affiliateLink = this.buildAffiliateLinkForProgramme(affiliateProgramme, productUrl);
     }
 
-    return affiliateLink;
+    return Promise.resolve(affiliateLink);
   }
 
   private affiliateProgrammeSupportsDomain(programme: AffiliateProgramme, domain: string): boolean {
