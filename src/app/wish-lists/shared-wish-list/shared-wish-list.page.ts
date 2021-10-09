@@ -13,7 +13,7 @@ import { AnalyticsService } from '@core/services/analytics.service';
 })
 export class SharedWishListPage implements OnInit {
 
-  data: { wishList: FriendWishList, email?: string };
+  data: { wishList: FriendWishList };
   wishList: FriendWishList;
   
   constructor(

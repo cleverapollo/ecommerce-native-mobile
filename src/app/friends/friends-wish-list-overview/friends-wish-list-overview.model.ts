@@ -20,9 +20,3 @@ export class FriendWish {
     reservedByFriend: Boolean;
     bought: Boolean;
 }
-
-export interface RegisterUserAndReserveWishRequest {
-    wishListId: string;
-    email: String;
-    wishId: string;
-}

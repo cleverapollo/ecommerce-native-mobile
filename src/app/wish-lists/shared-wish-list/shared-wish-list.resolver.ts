@@ -3,28 +3,27 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@a
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
-import { StorageKeys, StorageService } from '@core/services/storage.service';
+import { DefaultPlatformService } from '@core/services/platform.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
-import { Platform } from '@ionic/angular';
 
 @Injectable()
-export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList, email?: string }>> {
+export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList }>> {
+  
   constructor(
     private wishListApi: WishListApiService, 
     private publicResourceApiService: PublicResourceApiService,
-    private storageService: StorageService,
-    private platform: Platform,
+    private platformService: DefaultPlatformService,
     private friendWishListStore: FriendWishListStoreService,
     private wishListStore: WishListStoreService,
     private router: Router
     ) {}
 
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<{ wishList: FriendWishList, email?: string }> {
-    return new Promise<{ wishList: FriendWishList, email?: string }>(async (resolve, reject) => {
+  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<{ wishList: FriendWishList }> {
+    return new Promise<{ wishList: FriendWishList }>(async (resolve, reject) => {
       const wishListId = route.paramMap.get('wishListId');
       try {
-        if (this.platform.is('hybrid')) {
+        if (this.platformService.isNativePlatform) {
           if (await this.isFriendWishList(wishListId)) {
             this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`)
           } else if (await this.isOwnWishList(wishListId)) {
@@ -35,23 +34,13 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
             });
           }
         } else {
-          const currentEmail = await this.storageService.get<string>(StorageKeys.SHARED_WISH_LIST_EMAIL, true);
-          const identifier = this.createIdentifier(wishListId, currentEmail);
-          const wishList = await this.publicResourceApiService.getSharedWishList(identifier).toPromise();
-          resolve({ wishList: wishList, email: currentEmail });
+          const wishList = await this.publicResourceApiService.getSharedWishList(wishListId).toPromise();
+          resolve({ wishList: wishList });
         }
       } catch (error) {
         reject(error)
       }
     });
-  }
-
-  private createIdentifier(wishListIdString: string, currentEmail: string) {
-    let identifier = wishListIdString;
-    if (currentEmail) {
-      identifier += `_${currentEmail}`;
-    }
-    return identifier;
   }
 
   private async isFriendWishList(wishListId: string) {

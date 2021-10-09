@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SearchResult } from '@core/models/search-result-item';
-import { FriendWishList, RegisterUserAndReserveWishRequest } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiErrorHandlerService } from './api-error-handler.service';
@@ -17,15 +17,8 @@ export class PublicResourceApiService {
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
-  getSharedWishList(identifier: string): Observable<FriendWishList> {
-    const params = new HttpParams().set('identifier', identifier);
-    return this.apiService.get<FriendWishList>(`${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists`, params).pipe(
-      catchError(error => this.errorHandler.handleError(error))
-    );
-  }
-
-  registerUserAndReserveWish(data: RegisterUserAndReserveWishRequest): Observable<FriendWishList> {
-    return this.apiService.post<FriendWishList>(`${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists`, data).pipe(
+  getSharedWishList(wishListId: string): Observable<FriendWishList> {
+    return this.apiService.get<FriendWishList>(`${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists/${wishListId}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
