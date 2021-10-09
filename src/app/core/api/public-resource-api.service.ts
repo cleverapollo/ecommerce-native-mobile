@@ -30,8 +30,8 @@ export class PublicResourceApiService {
     );
   }
 
-  toggleWishReservation(wishListId: string, wishId: string, email: string): Observable<FriendWishList> {
-    return this.apiService.patch<FriendWishList>(`${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists/${wishListId}/wish/${wishId}?userEmail=${email}`).pipe(
+  toggleWishReservation(wishListId: string, wishId: string): Observable<FriendWishList> {
+    return this.apiService.patch<FriendWishList>(`${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists/${wishListId}/wish/${wishId}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
