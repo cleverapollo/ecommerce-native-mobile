@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertService } from '@core/services/alert.service';
 import { ModalController, NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
@@ -43,7 +42,6 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   constructor(
     private browserService: BrowserService,
-    public alertService: AlertService,
     private navController: NavController,
     private route: ActivatedRoute,
     private wishListStore: WishListStoreService,
