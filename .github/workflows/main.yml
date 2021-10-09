@@ -1,6 +1,6 @@
 name: Build Angular App and Deploy on Firebase
 on:
-  push:
+  pull_request:
     branches:
       - master
 
@@ -10,18 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
+        id: checkout_repo
         uses: actions/checkout@master
 
       - name: Install Dependencies
+        id: install_dependencies
         run: npm install
 
       - name: Build
+        id: build_app
         run: npm run ci:build
 
       - name: Run Tests
+        id: test_app
         run: npm run ci:test
+        continue-on-error: true
 
       - name: Deploy to Firebase
+        id: deploy_app
         uses: w9jds/firebase-action@v1.5.0
         with:
           args: deploy -P default --only hosting 
@@ -31,6 +37,17 @@ jobs:
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
+          SLACK_ICON_EMOJI: ':beers:'
           SLACK_CHANNEL: ci_cd
           SLACK_COLOR: ${{ job.status }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Slack Notification on Failing Unit Tests
+        if: steps.test_app.outcome == 'failure'
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_ICON_EMOJI: ':hankey:'
+          SLACK_CHANNEL: ci_cd
+          SLACK_COLOR: '#FF0000'
+          SLACK_MESSAGE: 'Unit Tests failed! :scream:'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
