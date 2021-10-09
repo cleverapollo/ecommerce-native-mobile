@@ -3,8 +3,6 @@ import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ReserveWishModalComponent } from './reserve-wish-modal/reserve-wish-modal.component';
-import { StorageKeys, StorageService } from '@core/services/storage.service';
-import { CancelWishReservationModalComponent } from './cancel-wish-reservation-modal/cancel-wish-reservation-modal.component';
 import { first } from 'rxjs/operators';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
@@ -49,7 +47,7 @@ export class SharedWishListPage implements OnInit {
   async toggleWishReservation(wish: FriendWish) {
     const canCancelReservation = this.email && wish.bought && !wish.reservedByFriend;
     if (canCancelReservation) {
-      this.openCancelReservationModal(wish);
+      this.cancelWishReservation(wish);
     } else {
       this.openReserveWishModal(wish);
     }
@@ -71,13 +69,13 @@ export class SharedWishListPage implements OnInit {
     modal.present();
   } 
 
-  private async openCancelReservationModal(wish: FriendWish) {
-    const modal = await this.createModal(CancelWishReservationModalComponent, wish, 'cancel-wish-reservation-modal', (data: any) => {
-      if (data && data['data']) {
-        this.wishList = data['data'];
-      }
-    });
-    modal.present();
+  private cancelWishReservation(wish: FriendWish) {
+    this.publicResourceApiService.toggleWishReservation(this.wishList.id, wish.id, this.email).pipe(first()).subscribe({
+      next: wishList => {
+        this.wishList = wishList;
+      },
+      error: this.logger.error
+    })
   }
 
   private async createModal(component, wish: FriendWish, cssClass: string, onWillDismiss: (data: any) => void) {
