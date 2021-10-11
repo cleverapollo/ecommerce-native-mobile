@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
-import { LogService } from '@core/services/log.service';
-import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { PublicResourceApiService } from '@core/api/public-resource-api.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shared-wish-list',
@@ -18,9 +17,8 @@ export class SharedWishListPage implements OnInit {
   
   constructor(
     private route: ActivatedRoute, 
-    private publicResourceApiService: PublicResourceApiService,
-    private logger: LogService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private publicResourceApiService: PublicResourceApiService
   ) { }
 
   ngOnInit() {
@@ -32,13 +30,19 @@ export class SharedWishListPage implements OnInit {
     this.analyticsService.setFirebaseScreenName('shared-wishlist')
   }
 
-  toggleWishReservation(wish: FriendWish) {
-    this.publicResourceApiService.toggleWishReservation(this.wishList.id, wish.id).pipe(first()).subscribe({
-      next: wishList => {
-        this.wishList = wishList;
-      },
-      error: this.logger.error
-    });
+  updateWishList(updatedWish: FriendWish) {
+    const wishIndex = this.wishList.wishes.findIndex((w: FriendWish) => w.id == updatedWish.id);
+    if (wishIndex !== -1) {
+      this.wishList.wishes[wishIndex] = updatedWish;
+    } else {
+      this.refreshData();
+    }
+  }
+
+  private refreshData() {
+    this.publicResourceApiService.getSharedWishList(this.wishList.id).pipe(first()).subscribe(wishList => {
+      this.wishList = wishList;
+    })
   }
 
 }

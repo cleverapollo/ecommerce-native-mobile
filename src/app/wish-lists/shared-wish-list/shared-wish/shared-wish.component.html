@@ -1,4 +1,4 @@
-<ion-card class="wish-border" [ngClass]="{ 'wish-bought-border': wish.bought }">
+<ion-card *ngIf="wish" class="wish-border" [ngClass]="{ 'wish-bought-border': isCancellable }">
   <div class="image-container" (click)="openProductURL()" [ngClass]="cssClassWishReservedState">
     <app-image [src]="wish.imageUrl" alt="Vorschaubild auf dem der Wunsch '{{ wish.name }}' zu sehen ist"></app-image>
   </div>
@@ -7,15 +7,18 @@
     <div class="wish-price" [ngClass]="cssClassWishReservedState">{{ wish.price.displayString }}</div>
     <div *ngIf="!readonly">
       <ion-grid>
-        <ion-row *ngIf="!wish.reservedByFriend">
+        <ion-row *ngIf="isStateChangeable || isLoading">
           <ion-col sizeMd="6" class="col-left">
-            <ion-button class="give-button action-button action-button-left" *ngIf="!wish.bought" fill="outline" color="tertiary" expand="block"
+            <ion-button class="give-button action-button action-button-left" *ngIf="isReservable" fill="outline" color="tertiary" expand="block"
               (click)="reserve()">
               SCHENKEN
             </ion-button>
-            <ion-button class="give-button action-button action-button-left" *ngIf="wish.bought" color="tertiary" expand="block"
-              (click)="reserve()">
+            <ion-button class="give-button action-button action-button-left" *ngIf="isCancellable" color="tertiary" expand="block"
+              (click)="cancelReservation()">
               NICHT <br> MEHR SCHENKEN
+            </ion-button>
+            <ion-button class="give-button action-button action-button-left" *ngIf="isLoading" fill="outline" color="light" expand="block" disabled="true">
+              LÄDT
             </ion-button>
           </ion-col>
           <ion-col sizeMd="6" class="col-right">
@@ -25,7 +28,7 @@
             </ion-button>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="wish.reservedByFriend">
+        <ion-row *ngIf="!isStateChangeable && !isLoading">
           <ion-col  class="col-block">
             <ion-button class="give-button action-button action-button-block" fill="outline" color="light" expand="block" (click)="openProductURL()">
               ZUM SHOP
@@ -43,6 +46,6 @@
     </div>
   </ion-card-content>
 </ion-card>
-<div *ngIf="wish.reservedByFriend" class="wish-reserved-image-container" (click)="openProductURL()">
+<div *ngIf="!isStateChangeable && !isLoading" class="wish-reserved-image-container" (click)="openProductURL()">
   <img src="assets/icon/wish-reserved.svg" alt="Graue, ovale Form auf dem 'Leider schon vergriffen' zu lesen ist."/>
 </div>

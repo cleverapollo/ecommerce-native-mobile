@@ -10,7 +10,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
 import { LoadingService } from '@core/services/loading.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
 
@@ -61,7 +61,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     private wishListStore: WishListStoreService,
     private searchResultDataService: SearchResultDataService,
     private loadingService: LoadingService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private analyticsService: AnalyticsService
     ) { }
 

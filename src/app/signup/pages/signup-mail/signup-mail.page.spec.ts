@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { IonicModule } from '@ionic/angular';
 
 import { SignupMailPage } from './signup-mail.page';
@@ -19,7 +19,7 @@ describe('SignupMailPage', () => {
   let analyticsService: AnalyticsService;
   let authService: AuthenticationService;
   let loadingService: LoadingService;
-  let toastService: ToastService;
+  let toastService: CoreToastService;
 
   let component: SignupMailPage;
   let fixture: ComponentFixture<SignupMailPage>;
@@ -33,7 +33,7 @@ describe('SignupMailPage', () => {
         { provide: AnalyticsService, useValue: analyticsService },
         { provide: AuthenticationService, useValue: authService },
         { provide: LoadingService, useValue: loadingService },
-        { provide: ToastService, useValue: toastService },
+        { provide: CoreToastService, useValue: toastService },
       ]
     }).compileComponents();
 

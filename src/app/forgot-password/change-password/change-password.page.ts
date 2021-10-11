@@ -13,7 +13,7 @@ import { LogService } from '@core/services/log.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '@core/api/auth.service';
 import { LoadingService } from '@core/services/loading.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { Plugins } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 
@@ -60,7 +60,7 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
     private googleApiService: GoogleApiService,
     private loadingService: LoadingService,
     private logger: LogService,
-    private toastService: ToastService
+    private toastService: CoreToastService
   ) { }
 
   async ngOnInit() {

@@ -17,6 +17,6 @@ export class FriendWish {
     price: PriceDto;
     productUrl: string;
     imageUrl: String;
-    reservedByFriend: Boolean;
-    bought: Boolean;
+    reservedByFriend: boolean;
+    bought: boolean;
 }

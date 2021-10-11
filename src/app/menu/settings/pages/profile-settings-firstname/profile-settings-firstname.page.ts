@@ -4,7 +4,7 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { UserApiService } from '@core/api/user-api.service';
 import { UserProfileStore } from '../../user-profile-store.service';
 import { LoadingService } from '@core/services/loading.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
 
@@ -32,7 +32,7 @@ export class ProfileSettingsFirstnamePage implements OnInit {
     private formBuilder: FormBuilder, 
     private api: UserApiService,
     private userProfileStore: UserProfileStore,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private analyticsService: AnalyticsService
   ) 
   { }

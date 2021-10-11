@@ -10,7 +10,7 @@ import { LogService } from '@core/services/log.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DeviceInfo, Plugins } from '@capacitor/core'
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 
 const { Device } = Plugins
@@ -23,7 +23,7 @@ export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEm
     private userApiService: UserApiService, 
     private googleApiService: GoogleApiService, 
     private authService: AuthenticationService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private router: Router,
     private logger: LogService,
     private storageService: StorageService

@@ -7,7 +7,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { IonicModule } from '@ionic/angular';
 
 import { SignupMailTwoPage } from './signup-mail-two.page';
@@ -22,7 +22,7 @@ describe('SignupMailTwoPage', () => {
   let logger: LogService;
   let analyticsService: AnalyticsService;
   let loadingService: LoadingService;
-  let toastService: ToastService;
+  let toastService: CoreToastService;
   let userApiService: UserApiService;
   let authService: AuthenticationService;
   let privacyPolicyService: PrivacyPolicyService;
@@ -39,7 +39,7 @@ describe('SignupMailTwoPage', () => {
         { provide: LogService, useValue: logger },
         { provide: AnalyticsService, useValue: analyticsService },
         { provide: LoadingService, useValue: loadingService },
-        { provide: ToastService, useValue: toastService },
+        { provide: CoreToastService, useValue: toastService },
         { provide: UserApiService, useValue: userApiService },
         { provide: AuthenticationService, useValue: authService },
         { provide: PrivacyPolicyService, useValue: privacyPolicyService },

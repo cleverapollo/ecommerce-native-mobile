@@ -6,7 +6,7 @@ import { UserProfileStore } from '../../user-profile-store.service';
 import { Subscription } from 'rxjs';
 import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
 import { LoadingService } from '@core/services/loading.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
 
@@ -34,7 +34,7 @@ export class LastNameUpdatePage implements OnInit {
     private api: UserApiService,
     private userProfileStore: UserProfileStore,
     private loadingService: LoadingService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private analyticsService: AnalyticsService
   ) { }
 
