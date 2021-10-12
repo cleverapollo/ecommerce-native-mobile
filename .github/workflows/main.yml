@@ -40,6 +40,7 @@ jobs:
           SLACK_ICON_EMOJI: ':beers:'
           SLACK_CHANNEL: ci_cd
           SLACK_COLOR: ${{ job.status }}
+          SLACK_MESSAGE: 'New Web-App Version deployed on BETA (https://app.beta.wantic.io/)! :rocket:'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Slack Notification on Failing Unit Tests

@@ -6,7 +6,7 @@ import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { AlertService } from '@core/services/alert.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
@@ -78,7 +78,7 @@ export class WishListCreateUpdatePage implements OnInit {
     private apiService: WishListApiService,
     private navController: NavController,
     private alertService: AlertService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private wishListStore: WishListStoreService,
     private route: ActivatedRoute,
     private router: Router,

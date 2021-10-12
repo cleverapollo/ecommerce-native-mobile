@@ -8,7 +8,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -30,7 +30,7 @@ export class SignupMailTwoPage implements OnInit, OnDestroy {
     private logger: LogService,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private userApiService: UserApiService,
     private authService: AuthenticationService,
     public privacyPolicyService: PrivacyPolicyService

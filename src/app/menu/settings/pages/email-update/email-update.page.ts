@@ -4,7 +4,7 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { UserApiService } from '@core/api/user-api.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { LoadingService } from '@core/services/loading.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { UpdateEmailChangeRequest, UserProfile } from '@core/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
@@ -51,7 +51,7 @@ export class EmailUpdatePage implements OnInit {
     private api: UserApiService,
     private logger: LogService,
     private loadingService: LoadingService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private userProfileStore: UserProfileStore,
     private analyticsService: AnalyticsService,
     private authService: AuthenticationService,

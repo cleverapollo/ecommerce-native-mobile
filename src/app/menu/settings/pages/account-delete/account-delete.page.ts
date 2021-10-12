@@ -6,7 +6,7 @@ import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { LogService } from '@core/services/log.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { NavController } from '@ionic/angular';
 import { first } from 'rxjs/operators';
@@ -30,7 +30,7 @@ export class AccountDeletePage implements OnInit {
     private authService: AuthenticationService,
     private navController: NavController,
     private loadingService: LoadingService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private logger: LogService,
     private analyticsService: AnalyticsService
   ) { }

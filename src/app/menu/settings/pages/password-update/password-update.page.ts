@@ -5,7 +5,7 @@ import { CustomValidation } from '@shared/custom-validation';
 import { UserApiService } from '@core/api/user-api.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { LogService } from '@core/services/log.service';
 
 @Component({
@@ -39,7 +39,7 @@ export class PasswordUpdatePage implements OnInit {
     private api: UserApiService,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private logger: LogService
   ) {}
 

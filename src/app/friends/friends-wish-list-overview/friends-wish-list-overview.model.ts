@@ -17,12 +17,6 @@ export class FriendWish {
     price: PriceDto;
     productUrl: string;
     imageUrl: String;
-    reservedByFriend: Boolean;
-    bought: Boolean;
-}
-
-export interface RegisterUserAndReserveWishRequest {
-    wishListId: string;
-    email: String;
-    wishId: string;
+    reservedByFriend: boolean;
+    bought: boolean;
 }

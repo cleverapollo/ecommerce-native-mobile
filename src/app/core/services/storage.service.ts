@@ -15,14 +15,21 @@ export enum StorageKeys {
   FIREBASE_ID_TOKEN = 'firebaseIdToken',
   FIREBASE_EMAIL_VERIFIED = 'firebaseEmailVerified',
   FIREBASE_USER_INFO = 'firebaseUserInfo',
-  SHARED_WISH_LIST_EMAIL = 'memberEmail',
+  SHARED_WISH_LIST_EMAIL = 'memberEmail', // deprecated
   SIGNUP_RESPONSE = 'signupResponse',
+}
+
+export interface Storage {
+  get<T>(storageKey: string, secure: boolean) : Promise<T>;
+  set(storageKey: string, value: any, secure: boolean) : Promise<void>;
+  remove(storageKey: string, secure: boolean): Promise<void>;
+  clear(): Promise<void>;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class StorageService {
+export class StorageService implements Storage {
 
   constructor(private platform: Platform, private logger: LogService) { }
 

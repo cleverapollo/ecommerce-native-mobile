@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
+export interface ToastService {
+  presentSuccessToast(message: string): Promise<void>;
+  presentErrorToast(message: string): Promise<void>;
+  presentInfoToast(message: string): Promise<void>;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class ToastService {
+export class CoreToastService implements ToastService {
 
   private static TOAST_DURATION = 3000
 
@@ -26,7 +32,7 @@ export class ToastService {
     const toast = await this.toastController.create({
       message: message,
       color: color,
-      duration: ToastService.TOAST_DURATION,
+      duration: CoreToastService.TOAST_DURATION,
       position: 'top',
       cssClass: 'center-text'
     });

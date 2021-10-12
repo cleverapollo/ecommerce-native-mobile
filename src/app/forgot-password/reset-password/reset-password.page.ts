@@ -6,7 +6,7 @@ import { CustomValidation } from '@shared/custom-validation';
 import { LogService } from '@core/services/log.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { LoadingService } from '@core/services/loading.service';
@@ -33,7 +33,7 @@ export class ResetPasswordPage implements OnInit {
     private authService: AuthenticationService,
     private logger: LogService,
     private analyticsService: AnalyticsService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private loadingService: LoadingService
   ) {}
 

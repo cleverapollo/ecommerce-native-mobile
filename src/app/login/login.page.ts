@@ -6,7 +6,7 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { AuthenticationService } from '@core/services/authentication.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { LogService } from '@core/services/log.service';
-import { ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { AuthProvider } from '@core/models/signup.model';
@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder, 
     private authService: AuthenticationService,
     private logger: LogService,
-    private toastService: ToastService,
+    private toastService: CoreToastService,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService
   ) { }
