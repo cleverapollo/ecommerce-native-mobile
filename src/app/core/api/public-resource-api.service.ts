@@ -44,7 +44,7 @@ export class PublicResourceApiService implements PublicResourceApi {
 
   private createRequestForWishReservationStateChange(wishListId: string, wishId: string, action: StateChangeAction): Observable<FriendWish> {
     const actionString = StateChangeAction[action];
-    return this.apiService.patch<FriendWish>(`${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists/${wishListId}/wish/${wishId}?action=${actionString}`).pipe(
+    return this.apiService.patch<FriendWish>(`${ApiVersion.v2}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists/${wishListId}/wish/${wishId}?action=${actionString}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
