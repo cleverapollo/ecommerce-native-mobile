@@ -138,13 +138,15 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     fun showNoImagesFoundFeedback() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.title_no_product_info_found)
-            .setMessage(R.string.message_no_product_info_found)
-            .setNegativeButton(R.string.button_label_close) { _, _ ->
-                finishAffinity(this)
-            }
-            .show()
+        if (!isFinishing) {
+            AlertDialog.Builder(this@SelectProductImageActivity)
+                .setTitle(R.string.title_no_product_info_found)
+                .setMessage(R.string.message_no_product_info_found)
+                .setNegativeButton(R.string.button_label_close) { _, _ ->
+                    finishAffinity(this)
+                }
+                .show()
+        }
     }
 
     private fun extractLinks(text: String): Array<String> {
