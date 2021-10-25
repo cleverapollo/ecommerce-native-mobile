@@ -36,7 +36,7 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
 
   loading: Boolean;
   searchSuggestions = [
-    "Spiegel Bestseller 2020",
+    "Spiegel Bestseller",
     "Baby Geschenk",
     "Reiseführer",
     "Holzspielzeug",
