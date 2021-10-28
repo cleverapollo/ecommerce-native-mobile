@@ -138,13 +138,15 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     fun showNoImagesFoundFeedback() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.title_no_product_info_found)
-            .setMessage(R.string.message_no_product_info_found)
-            .setNegativeButton(R.string.button_label_close) { _, _ ->
-                finishAffinity(this)
-            }
-            .show()
+        if (!isFinishing) {
+            AlertDialog.Builder(this@SelectProductImageActivity)
+                .setTitle(R.string.title_no_product_info_found)
+                .setMessage(R.string.message_no_product_info_found)
+                .setNegativeButton(R.string.button_label_close) { _, _ ->
+                    finishAffinity(this)
+                }
+                .show()
+        }
     }
 
     private fun extractLinks(text: String): Array<String> {
@@ -225,7 +227,7 @@ class SelectProductImageActivity : AppCompatActivity() {
                 Log.d(LOG_TAG, "web page loading finished")
                 view?.evaluateJavascript(jsonString, null)
             } else {
-                loadingSpinner.visibility = View.GONE
+                stopLoading()
             }
         }
 
@@ -279,17 +281,19 @@ class SelectProductImageActivity : AppCompatActivity() {
         val currentList = this.productInfoList.toMutableList()
         if (currentList.add(productInfo)) {
             this.productInfoList = currentList
-
-            val newRowCount = productInfoList.size / COLUMN_COUNT
-            if (gridLayout.rowCount != newRowCount) {
-                gridLayout.rowCount = newRowCount
+            if (this::gridLayout.isInitialized) {
+                val newRowCount = productInfoList.size / COLUMN_COUNT
+                if (gridLayout.rowCount != newRowCount) {
+                    gridLayout.rowCount = newRowCount
+                }
+                var column = 1
+                if (gridLayout.size % COLUMN_COUNT == 0) {
+                    column = 0
+                }
+                this.addProductInfoToGridLayout(productInfo, column)
+            } else {
+                this.initGridLayout(this.productInfoList)
             }
-
-            var column = 1
-            if (gridLayout.size % COLUMN_COUNT == 0) {
-                column = 0
-            }
-            this.addProductInfoToGridLayout(productInfo, column)
         }
     }
 
