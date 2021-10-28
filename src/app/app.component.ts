@@ -82,8 +82,10 @@ export class AppComponent {
   }
 
   private loadWebAppScripts() {
-    this.scriptService.loadScript(ScriptName.HOTJAR).then( result => {
-      this.logger.debug(`loaded script ${ScriptName[result.script]} with status ${ScriptLoadingStatus[result.status]}`, result);
+    this.scriptService.load(ScriptName.HOTJAR, ScriptName.GTM).then( results => {
+      results.forEach( result => {
+        this.logger.debug(`loaded script ${ScriptName[result.script]} with status ${ScriptLoadingStatus[result.status]}`, result);
+      })
     })
   }
 

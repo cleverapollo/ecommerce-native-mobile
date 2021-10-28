@@ -1,5 +1,5 @@
 export enum ScriptName {
-  HOTJAR
+  HOTJAR, GTM
 }
 
 export interface Script {
@@ -8,5 +8,6 @@ export interface Script {
 }
 
 export const ScriptStore: Script[] = [
-  { name: ScriptName.HOTJAR, src: 'assets/scripts/hotjar.js'}
+  { name: ScriptName.HOTJAR, src: 'assets/scripts/hotjar.js'},
+  { name: ScriptName.GTM, src: 'assets/scripts/gtm.js'}
 ];
