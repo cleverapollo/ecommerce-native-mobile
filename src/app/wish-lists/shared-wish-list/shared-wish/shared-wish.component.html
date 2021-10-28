@@ -9,11 +9,11 @@
       <ion-grid>
         <ion-row *ngIf="isStateChangeable || isLoading">
           <ion-col sizeMd="6" class="col-left">
-            <ion-button class="give-button action-button action-button-left" *ngIf="isReservable" fill="outline" color="tertiary" expand="block"
+            <ion-button class="give-button action-button action-button-left" *ngIf="isReservable" fill="outline" color="tertiary" expand="block" name="action-reserve-wish"
               (click)="reserve()">
               SCHENKEN
             </ion-button>
-            <ion-button class="give-button action-button action-button-left" *ngIf="isCancellable" color="tertiary" expand="block"
+            <ion-button class="give-button action-button action-button-left" *ngIf="isCancellable" color="tertiary" expand="block" name="action-cancel-wish-reservation"
               (click)="cancelReservation()">
               NICHT <br> MEHR SCHENKEN
             </ion-button>
@@ -22,7 +22,7 @@
             </ion-button>
           </ion-col>
           <ion-col sizeMd="6" class="col-right">
-            <ion-button class="give-button action-button action-button-right"  fill="outline" color="primary" expand="block"
+            <ion-button class="give-button action-button action-button-right"  fill="outline" color="primary" expand="block" name="action-open-product-url"
               (click)="openProductURL()">
               ZUM SHOP
             </ion-button>
@@ -30,7 +30,7 @@
         </ion-row>
         <ion-row *ngIf="!isStateChangeable && !isLoading">
           <ion-col  class="col-block">
-            <ion-button class="give-button action-button action-button-block" fill="outline" color="light" expand="block" (click)="openProductURL()">
+            <ion-button class="give-button action-button action-button-block" fill="outline" color="light" expand="block" name="action-open-product-url" (click)="openProductURL()">
               ZUM SHOP
             </ion-button>
           </ion-col>

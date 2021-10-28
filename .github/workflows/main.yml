@@ -1,8 +1,11 @@
 name: Build Angular App and Deploy on Firebase
 on:
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Define branch name'     
+        required: true
+        default: 'master'
 
 jobs:
   build:
@@ -12,6 +15,8 @@ jobs:
       - name: Checkout Repo
         id: checkout_repo
         uses: actions/checkout@master
+        with:
+          ref: ${{ github.event.inputs.branch }}
 
       - name: Install Dependencies
         id: install_dependencies
