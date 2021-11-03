@@ -163,8 +163,9 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         var formIsValid = true
         for textInput in textFields {
             if let textField = textInput as? UITextField {
-                if textField == productPrice, let amount = textField.text {
-                    WishDataStore.shared.wish.price.amount = Decimal(string: amount) ?? 0.00
+                if textField == productPrice, let priceAmountString = textField.text {
+                    let amount = priceAmountString.decimalValue
+                    WishDataStore.shared.wish.price.amount = amount
                 }
             } else if let textView = textInput as? UITextView {
                 /*textView.translatesAutoresizingMaskIntoConstraints = true
