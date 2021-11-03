@@ -126,6 +126,8 @@
 		B19A523A2610D11400984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52392610D11400984207 /* AppConfig.swift */; };
 		B19A52482610D1A500984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52472610D1A500984207 /* AppConfig.swift */; };
 		B19A527D2610D7C800984207 /* Share Beta.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B19A522E2610CE8000984207 /* Share Beta.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B1A410BB2731D40B000DB58C /* String+Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A410BA2731D40B000DB58C /* String+Decimal.swift */; };
+		B1A410BC2731D40B000DB58C /* String+Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A410BA2731D40B000DB58C /* String+Decimal.swift */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
 		B1A80F8E2589F59800F0917F /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B1A80F842589F59800F0917F /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1A80F98258A0F5D00F0917F /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F97258A0F5D00F0917F /* ExtensionClass.js */; };
@@ -197,12 +199,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01A5C2233CA7AEE20480AD39 /* Pods-Wantic.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.xctest.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.xctest.xcconfig"; sourceTree = "<group>"; };
 		08306D799C7EAC0B134BF2F6 /* Pods-Wantic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.debug.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.debug.xcconfig"; sourceTree = "<group>"; };
 		0FACE3CCFB1AC49FE6800C41 /* Pods-Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.debug.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.debug.xcconfig"; sourceTree = "<group>"; };
 		224EA8C7F4A13B5E1D71AAA9 /* Pods_Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C4764BF868B775D38055237 /* Pods-Share Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.debug.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.debug.xcconfig"; sourceTree = "<group>"; };
 		2EE753DDAFA5FADD1CA3005B /* Pods-Wantic Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.release.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.release.xcconfig"; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
+		3FB8C8FA33749721ED242189 /* Pods-Share.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.xctest.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.xctest.xcconfig"; sourceTree = "<group>"; };
 		4E3649D9A59B91EF69358822 /* Pods-Share Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.release.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.release.xcconfig"; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* Wantic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wantic.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,10 +216,12 @@
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		504EC3131FED79650016851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = SOURCE_ROOT; };
+		6BF033FFB7CA9C854296B1E8 /* Pods-Share Beta.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.xctest.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.xctest.xcconfig"; sourceTree = "<group>"; };
 		73345A22E0DF0C1493B9AB3F /* Pods-Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.release.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.release.xcconfig"; sourceTree = "<group>"; };
 		7A1A1E3069FF2D518F1CD520 /* Pods-Wantic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.release.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.release.xcconfig"; sourceTree = "<group>"; };
 		7B27AB4136DB89BC062A666D /* Pods_Wantic_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD091C1006C592B3EC8CF9E /* Pods-Wantic Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.debug.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.debug.xcconfig"; sourceTree = "<group>"; };
+		9078F69AEFC11CE4B1541AC1 /* Pods-Wantic Beta.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.xctest.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.xctest.xcconfig"; sourceTree = "<group>"; };
 		97EFE697BDE6917534998A24 /* Pods_Share_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B114E13425B8A56A00F92599 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		B114E13C25BC33CF00F92599 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -270,6 +276,7 @@
 		B19A52472610D1A500984207 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		B19A530926123C8D00984207 /* Wantic Beta-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Wantic Beta-Info.plist"; sourceTree = "<group>"; };
 		B19A531026123D3D00984207 /* Wantic Beta.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Wantic Beta.entitlements"; sourceTree = "<group>"; };
+		B1A410BA2731D40B000DB58C /* String+Decimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Decimal.swift"; sourceTree = "<group>"; };
 		B1A80F842589F59800F0917F /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A80F892589F59800F0917F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B1A80F8B2589F59800F0917F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -391,6 +398,10 @@
 				7A1A1E3069FF2D518F1CD520 /* Pods-Wantic.release.xcconfig */,
 				8AD091C1006C592B3EC8CF9E /* Pods-Wantic Beta.debug.xcconfig */,
 				2EE753DDAFA5FADD1CA3005B /* Pods-Wantic Beta.release.xcconfig */,
+				3FB8C8FA33749721ED242189 /* Pods-Share.xctest.xcconfig */,
+				6BF033FFB7CA9C854296B1E8 /* Pods-Share Beta.xctest.xcconfig */,
+				01A5C2233CA7AEE20480AD39 /* Pods-Wantic.xctest.xcconfig */,
+				9078F69AEFC11CE4B1541AC1 /* Pods-Wantic Beta.xctest.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -468,6 +479,7 @@
 			isa = PBXGroup;
 			children = (
 				B16360D425FE1BF400D19F73 /* Decimal+Format.swift */,
+				B1A410BA2731D40B000DB58C /* String+Decimal.swift */,
 			);
 			path = Formatter;
 			sourceTree = "<group>";
@@ -653,7 +665,7 @@
 		504EC2FC1FED79650016851F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1220;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 0920;
 				TargetAttributes = {
 					504EC3031FED79650016851F = {
@@ -1051,6 +1063,7 @@
 				B19A51FA2610CE8000984207 /* WishList.swift in Sources */,
 				B19A51FB2610CE8000984207 /* WishService.swift in Sources */,
 				B19A51FC2610CE8000984207 /* WanticTextView.swift in Sources */,
+				B1A410BC2731D40B000DB58C /* String+Decimal.swift in Sources */,
 				B19A523A2610D11400984207 /* AppConfig.swift in Sources */,
 				B19A51FD2610CE8000984207 /* WishListTableViewController.swift in Sources */,
 				B18F1CC626874EF800FD7528 /* WebViewController.swift in Sources */,
@@ -1088,6 +1101,7 @@
 				B148806825AE0D9500D0106B /* LoginResponse.swift in Sources */,
 				B1A80FAE258A770100F0917F /* WishList.swift in Sources */,
 				B14880B825B20FE800D0106B /* WishService.swift in Sources */,
+				B1A410BB2731D40B000DB58C /* String+Decimal.swift in Sources */,
 				B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */,
 				B148809C25B202CE00D0106B /* WishListTableViewController.swift in Sources */,
 				B18F1CC526874EF800FD7528 /* WebViewController.swift in Sources */,
@@ -1267,7 +1281,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210830.1;
+				CURRENT_PROJECT_VERSION = 20211013.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1275,7 +1289,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1293,7 +1307,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210830.1;
+				CURRENT_PROJECT_VERSION = 20211013.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1301,7 +1315,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = USE_PUSH;
@@ -1318,7 +1332,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20211003.1;
+				CURRENT_PROJECT_VERSION = 20211103.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1326,7 +1340,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1344,7 +1358,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20211003.1;
+				CURRENT_PROJECT_VERSION = 20211103.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1352,7 +1366,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = USE_PUSH;
@@ -1371,7 +1385,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20211003.1;
+				CURRENT_PROJECT_VERSION = 20211103.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1380,7 +1394,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta.share";
@@ -1401,7 +1415,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20211003.1;
+				CURRENT_PROJECT_VERSION = 20211103.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1410,7 +1424,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta.share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1419,6 +1433,176 @@
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
+		};
+		B1A410C12731D596000DB58C /* XCTest */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"XCTEST=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = XCTest;
+		};
+		B1A410C22731D596000DB58C /* XCTest */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01A5C2233CA7AEE20480AD39 /* Pods-Wantic.xctest.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20211013.1;
+				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				INFOPLIST_FILE = App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
+				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG USE_PUSH";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = XCTest;
+		};
+		B1A410C32731D596000DB58C /* XCTest */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9078F69AEFC11CE4B1541AC1 /* Pods-Wantic Beta.xctest.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
+				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20211103.1;
+				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.3.1;
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG USE_PUSH";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = XCTest;
+		};
+		B1A410C42731D596000DB58C /* XCTest */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3FB8C8FA33749721ED242189 /* Pods-Share.xctest.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20211013.1;
+				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				INFOPLIST_FILE = Share/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app.share;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = XCTest;
+		};
+		B1A410C52731D596000DB58C /* XCTest */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6BF033FFB7CA9C854296B1E8 /* Pods-Share Beta.xctest.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20211103.1;
+				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.wantic.app-beta.share";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = XCTest;
 		};
 		B1A80F902589F59800F0917F /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1430,7 +1614,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210830.1;
+				CURRENT_PROJECT_VERSION = 20211013.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1439,7 +1623,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app.share;
@@ -1460,7 +1644,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20210830.1;
+				CURRENT_PROJECT_VERSION = 20211013.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1469,7 +1653,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = io.wantic.app.share;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1486,6 +1670,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				504EC3141FED79650016851F /* Debug */,
+				B1A410C12731D596000DB58C /* XCTest */,
 				504EC3151FED79650016851F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1495,6 +1680,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				504EC3171FED79650016851F /* Debug */,
+				B1A410C22731D596000DB58C /* XCTest */,
 				504EC3181FED79650016851F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1504,6 +1690,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B19A51DD2610CD8E00984207 /* Debug */,
+				B1A410C32731D596000DB58C /* XCTest */,
 				B19A51DE2610CD8E00984207 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1513,6 +1700,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B19A522C2610CE8000984207 /* Debug */,
+				B1A410C52731D596000DB58C /* XCTest */,
 				B19A522D2610CE8000984207 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1522,6 +1710,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B1A80F902589F59800F0917F /* Debug */,
+				B1A410C42731D596000DB58C /* XCTest */,
 				B1A80F912589F59800F0917F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
