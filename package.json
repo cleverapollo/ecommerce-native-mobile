@@ -63,7 +63,7 @@
     "cordova-plugin-firebase-analytics": "^6.1.0",
     "cordova-plugin-firebase-authentication": "^5.0.0",
     "cordova-plugin-googleplus": "git+https://github.com/ti7215fi/cordova-plugin-googleplus.git",
-    "cordova-plugin-inappbrowser": "^4.1.0",
+    "cordova-plugin-inappbrowser": "5.0.0",
     "cordova-plugin-sign-in-with-apple": "^0.1.2",
     "cordova-sqlite-storage": "^5.1.0",
     "cordova-support-android-plugin": "^1.0.2",
