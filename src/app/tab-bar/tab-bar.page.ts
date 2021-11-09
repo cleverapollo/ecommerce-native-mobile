@@ -1,6 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { LogService } from '@core/services/log.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { IonTabs, NavController } from '@ionic/angular';
 
@@ -16,9 +14,7 @@ export class TabBarPage implements OnInit, OnDestroy {
 
   constructor(
     private navController: NavController, 
-    private searchResultDataService: SearchResultDataService,
-    private router: Router,
-    private logger: LogService
+    private searchResultDataService: SearchResultDataService
   ) { }
 
   ngOnInit() {}
