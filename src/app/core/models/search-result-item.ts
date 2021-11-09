@@ -5,18 +5,30 @@ export class SearchResult {
     items: Array<SearchResultItem>;
 }
 export class SearchResultItem {
+    id?: number;
     asin: string;
     name: String;
     price: PriceDto;
     imageUrl: String;
     productUrl: string;
 
-    constructor(asin: string, name: String, imageUrl: String, productUrl: string, price: PriceDto) {
+    constructor(asin: string, name: String, imageUrl: String, productUrl: string, price: PriceDto | number, id?: number) {
         this.asin = asin;
         this.name = name;
         this.imageUrl = imageUrl;
         this.productUrl = productUrl;
-        this.price = price;
+        this.id = id;
+
+        if (price instanceof PriceDto) {
+            this.price = price;
+        } else if (typeof price === 'number') {
+            const priceAmnout = price as number;
+            let priceDto = new PriceDto();
+            priceDto.amount = priceAmnout;
+            priceDto.currency = '€';
+            this.price = priceDto;
+        }
+
     }
 }
 
@@ -29,4 +41,12 @@ export class SearchResultItemMapper {
         to.productUrl = from.productUrl
         return to
     }
+}
+
+export interface WebCrawlerResultItem {
+    id: number;
+    imageUrl: string;
+    name: string;
+    price: number;
+    productUrl: string;
 }

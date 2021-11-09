@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { UrlTree } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
@@ -13,8 +13,15 @@ export class NavToolbarComponent implements OnInit {
   @Input() backNavigationPath?: string | any[] | UrlTree;
   @Input() showBackButton: boolean = true;
 
+  @Input() disableNextButton: boolean = false;
+  @Output() onNextButtonClicked = new EventEmitter();
+
   get canSkip(): boolean {
     return this.skipToPath ? true : false;
+  }
+
+  get showNextButton(): boolean {
+    return this.onNextButtonClicked?.observers.length > 0 || false;
   }
 
   constructor(private navController: NavController) { }
@@ -32,6 +39,10 @@ export class NavToolbarComponent implements OnInit {
 
   skip() {
     this.navController.navigateForward(this.skipToPath)
+  }
+
+  next() {
+    this.onNextButtonClicked.emit();
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { LogService } from '@core/services/log.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { IonTabs, NavController } from '@ionic/angular';
 
@@ -16,7 +17,8 @@ export class TabBarPage implements OnInit, OnDestroy {
   constructor(
     private navController: NavController, 
     private searchResultDataService: SearchResultDataService,
-    private router: Router
+    private router: Router,
+    private logger: LogService
   ) { }
 
   ngOnInit() {}
@@ -25,11 +27,7 @@ export class TabBarPage implements OnInit, OnDestroy {
 
   onTabButtonClicked() {
     const selectedTab = this.tabs.getSelected();
-    if (this.router.url.includes(`secure/${selectedTab}/`)) {
-      this.navController.navigateBack(`secure/${selectedTab}`);
-    } else {
-      this.navController.navigateRoot(`secure/${selectedTab}`);
-    }
+    this.navController.navigateRoot(`secure/${selectedTab}`);
     this.searchResultDataService.clear();
   }
 

@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { IonicModule } from '@ionic/angular';
 
-import { WishSearchResultsPageRoutingModule } from './wish-search-results-routing.module';
+import { WishSearchResultsPageRoutingModule } from './amazon-search-results-routing.module';
 
-import { WishSearchResultsPage } from './wish-search-results.page';
+import { AmazonSearchResultsPage } from './amazon-search-results.page';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
@@ -15,6 +15,6 @@ import { SharedModule } from '@shared/shared.module';
     WishSearchResultsPageRoutingModule,
     SharedModule
   ],
-  declarations: [WishSearchResultsPage]
+  declarations: [AmazonSearchResultsPage]
 })
 export class WishSearchResultsPageModule {}

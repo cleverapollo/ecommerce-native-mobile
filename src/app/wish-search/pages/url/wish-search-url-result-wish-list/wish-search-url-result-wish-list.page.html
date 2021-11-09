@@ -1,0 +1,23 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar (onNextButtonClicked)="save($event)" [disableNextButton]="selectedIndex === -1"></app-nav-toolbar>
+  <app-email-unverified-hint></app-email-unverified-hint>
+</ion-header>
+
+<ion-content>
+
+  <ion-text>
+    <h1 class="wantic-page-header ion-text-center">Wunschliste auswählen</h1>
+  </ion-text>
+
+  <div class="ion-text-center">
+    <app-image imgClass="wantic-thumbnail" [src]="selectedProduct?.imageUrl" [alt]="selectedProduct?.name"></app-image>
+  </div>
+
+  <form [formGroup]="form" *ngIf="form">
+    <div>
+      <app-wish-list-radio formControlName="wishListId" [initialValue]="form.get('wishListId').value"></app-wish-list-radio>
+      <app-validation-messages [control]="form.get('wishListId')" [validationMessages]="validationMessages.wishListId"></app-validation-messages>
+    </div>
+  </form>
+
+</ion-content>

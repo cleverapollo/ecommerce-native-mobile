@@ -1,0 +1,14 @@
+.image-container {
+    background: white;
+    margin-left: var(--wantic-margin);
+    margin-right: var(--wantic-margin);
+    border-radius: 25px;
+    ion-img {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  }
+
+  ion-label {
+      font-size: 15px;
+  }

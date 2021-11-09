@@ -9,6 +9,7 @@ export class ImageComponent implements OnInit {
 
   @Input() src: string;
   @Input() alt: string;
+  @Input() imgClass: string;
 
   get fallbackImageUrl(): string {
     return 'assets/images/wish-list-placeholder.svg';

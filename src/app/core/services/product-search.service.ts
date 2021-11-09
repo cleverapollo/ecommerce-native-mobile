@@ -1,126 +1,24 @@
 import { Injectable } from '@angular/core';
-import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser/ngx';
 import { SearchResult, SearchResultItem } from '@core/models/search-result-item';
-import { LoadingService } from './loading.service';
-import { HttpClient } from '@angular/common/http';
 import { SearchQuery, SearchResultDataService, SearchType } from './search-result-data.service';
 import { SearchService } from '@core/api/search.service';
-import { from, Observable } from 'rxjs';
-import { Platform } from '@ionic/angular';
-import { FileService } from './file.service';
-import { LogService } from './log.service';
+import { WebPageCrawlerService } from './web-page-crawler.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductSearchService {
 
-  private searchResults: SearchResultItem[] = [];
-
   constructor(
-    private platform: Platform,
-    private http: HttpClient,
-    private inAppBrowser: InAppBrowser, 
-    private loadingService: LoadingService,
     private searchResultDataService: SearchResultDataService,
     private searchService: SearchService,
-    private fileService: FileService,
-    private logger: LogService
-  ) { }
-
-  async searchByUrl(url: string): Promise<SearchResultItem[]> {
-    return new Promise((resolve, reject) => {
-      const browser = this.inAppBrowser.create(url, '_blank', { location: 'no', clearcache: 'yes', toolbar: 'no', hidden: 'yes' });
-      browser.on('loadstart')?.subscribe(event => {
-        this.onLoadStart();
-      }, this.handleGeneralError); 
-      browser.on('exit')?.subscribe(event => {
-        this.onBrowserExit();
-      }, this.handleGeneralError);
-      browser.on('loadstop')?.subscribe(event => {
-        this.onLoadComplete(browser, url).then(results => {
-          resolve(results);
-        }, error => {
-          this.handleGeneralError(error);
-          reject();
-        });
-      }, this.handleGeneralError);
-      browser.on('loaderror')?.subscribe(event => {
-        this.onLoadError();
-        reject();
-      });
-    });
+    private webPageCrawler: WebPageCrawlerService
+  ) { 
   }
 
-  private async onLoadComplete(browser: InAppBrowserObject, url) {
-    this.logger.log('loading finished ...');
-    this.loadingService.dismissLoadingSpinner();
-    try {
-      const code = await (await this.getCodeToExecute(url)).toPromise();
-      this.logger.log('code to excecute', code);
-      const results: [any] = await browser.executeScript({ code: code });
-      this.logger.log('result after execution', results);
-      this.searchResults = [];
-      this.mapSearchResultArray(results, url);
-
-      const searchQuery = new SearchQuery();
-      searchQuery.searchTerm = url;
-      searchQuery.type = SearchType.URL;
-      searchQuery.results = this.searchResults;
-      this.searchResultDataService.update(searchQuery);
-
-      return Promise.resolve(results)
-    } catch (e) {
-      this.logger.error('browser onLoadComplete', e);
-      return Promise.reject(e);
-    }
-  }
-
-  private async getCodeToExecute(url) {
-    if (this.platform.is('capacitor')) {
-      return from(this.fileService.getTextContentFromFileInAssetFolder('parse-imgs-from-website.js', 'scripts')); 
-    }
-    return this.http.get(this.scriptFilePath(url), { responseType: 'text' });
-  }
-
-  private onLoadError() {
-    this.logger.log('loading error');
-    this.loadingService.dismissLoadingSpinner();
-  }
-
-  private onLoadStart() {
-    this.logger.log('start loading ...');
-    this.loadingService.showLoadingSpinner();
-  }
-
-  private onBrowserExit() {
-    this.logger.log('exit browser ...');
-    this.loadingService.dismissLoadingSpinner();
-  }
-
-  private handleGeneralError(error) {
-    this.logger.log('general error ...', error);
-    this.loadingService.dismissLoadingSpinner();
-  }
-
-  private scriptFilePath(url: string) {
-    let assetPath = './assets/scripts';
-    if (url.indexOf('otto.de') !== -1) {
-      this.logger.log(assetPath);
-      return `${assetPath}/parse-articles-from-otto.js`;
-    } else {
-      return `${assetPath}/parse-imgs-from-website.js`;
-    }
-  }
-
-  private mapSearchResultArray(results: [any], url: string) {
-    results.forEach(result => {
-      if (result !== null && typeof result === 'object' && result.hasOwnProperty('name') && result.hasOwnProperty('imageUrl')) {
-        this.searchResults.push(new SearchResultItem(result.asin, result.name, result.imageUrl, result.productUrl ? result.productUrl : url, result.price));
-      } else if (Array.isArray(result)) {
-        this.mapSearchResultArray(result as [any], url);
-      }
-    });
+  searchByUrl(url: string): Observable<SearchResultItem[]> {
+    return this.webPageCrawler.search(url);
   }
 
   searchByAmazonApi(keywords: string, page: number): Promise<SearchResult> {

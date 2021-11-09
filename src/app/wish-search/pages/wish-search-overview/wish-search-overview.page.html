@@ -1,0 +1,46 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar></app-nav-toolbar>
+  <app-email-unverified-hint></app-email-unverified-hint>
+</ion-header>
+
+<ion-content>
+  <ion-text>
+    <h1 class="wantic-page-header ion-text-center">Wunsch hinzufügen</h1>
+  </ion-text>
+
+  <form [formGroup]="searchByURLForm" (ngSubmit)="searchByURL()" *ngIf="showUrlSearch">
+    <p class="wantic-margin-right-left">
+      <ion-icon src="assets/icon/icon-link-1.svg"></ion-icon>&nbsp;URL deines Wunsches einfügen
+    </p>
+    <ion-item lines="none">
+      <ion-input type="url" enterkeyhint="search" placeholder="z.B. https://www.meinlieblingsshop.de/…" formControlName="url" autocapitalize="on" clearInput="true" inputmode="url" autocomplete="url" pattern="url"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="searchByURLForm.get('url')" [validationMessages]="validationMessages.url"></app-validation-messages>
+  </form>
+
+  <hr *ngIf="showUrlSearch" />
+
+  <form [formGroup]="searchByAmazonApiForm" (ngSubmit)="searchByAmazonApi()">
+    <p class="wantic-margin-right-left">
+      <ion-icon name="logo-amazon"></ion-icon>&nbsp;Was wünschst du dir?<br>
+        Durchsuche Amazon.
+    </p>
+    <ion-item lines="none">
+      <ion-input type="text" enterkeyhint="search" placeholder="Amazon Suche" formControlName="keywords" autocapitalize="on" clearInput="true" inputmode="search"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="searchByAmazonApiForm.get('keywords')" [validationMessages]="validationMessages.keywords"></app-validation-messages>
+  </form>
+
+  <hr />
+
+  <div class="wantic-margin-right-left">
+    <p>
+      <ion-icon *ngIf="platformService.isIOS" name="share-outline"></ion-icon><ion-icon *ngIf="platformService.isAndroid" src="assets/icon/share-android.svg"></ion-icon>&nbsp;Füge Wünsche direkt aus deinem Browser von allen Webseiten hinzu.
+    </p>
+    <div class="ion-text-center">
+      <img *ngIf="platformService.isAndroid" src="assets/images/add-wish-share-ext-android.png" alt=""/>
+      <img *ngIf="platformService.isIOS" src="assets/images/add-wish-share-ext-ios.png" alt="" />
+    </div>
+  </div>
+
+</ion-content>

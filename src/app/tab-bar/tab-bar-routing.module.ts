@@ -29,7 +29,7 @@ const routes: Routes = [
       {
         path: getTaBarPath(TabBarRoute.WISH_SEARCH, false),
         canActivate: [AuthGuard],
-        loadChildren: () => import('@wishLists/wish-search-results/wish-search-results.module').then( m => m.WishSearchResultsPageModule)
+        loadChildren: () => import('@wishSearch/pages/wish-search-overview/wish-search-overview.module').then( m => m.WishSearchSelectionPageModule)
       },
       {
         path: getTaBarPath(TabBarRoute.MENU, false),

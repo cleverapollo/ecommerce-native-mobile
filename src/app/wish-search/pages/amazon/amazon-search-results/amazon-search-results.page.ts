@@ -18,11 +18,11 @@ import { AnalyticsService } from '@core/services/analytics.service';
 const { Keyboard } = Plugins;
 
 @Component({
-  selector: 'app-wish-search-results',
-  templateUrl: './wish-search-results.page.html',
-  styleUrls: ['./wish-search-results.page.scss'],
+  selector: 'app-amazon-search-results',
+  templateUrl: './amazon-search-results.page.html',
+  styleUrls: ['./amazon-search-results.page.scss'],
 })
-export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
+export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
 
   private _results: SearchResultItem[] = [];
 
@@ -60,18 +60,8 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
   page: number = 1;
   maxPageCount: number = 1;
 
-  searchByUrlForm: FormGroup;
   searchByAmazonApiForm: FormGroup;
-  searchType: SearchType = SearchType.AMAZON_API;
   removeSearchResultsAfterLeavingPage: boolean = true;
-
-  get showUrlForm(): boolean {
-    return this.searchType === SearchType.URL;
-  }
-
-  get showKeywordsForm(): boolean {
-    return this.searchType === SearchType.AMAZON_API;
-  }
 
   get showBackButton(): boolean {
     return this.router.url !== '/secure/wish-search';
@@ -105,7 +95,6 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.analyticsService.setFirebaseScreenName('search');
     this.searchResultDataService.$lastSearchQuery.subscribe(query => {
-      this.searchType = query.type;
       this.createForm(query.searchTerm);
       this.results = query.results;
       this.page = query.pageCount;
@@ -131,13 +120,7 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  searchByUrl() {
-    const url = this.searchByUrlForm.controls.url.value;
-    this.productSearchService.searchByUrl(url).then(searchResults => {
-    }, this.logger.error);
-  }
-
-  searchByAmazonApi() {
+  search() {
     if (this.searchByAmazonApiForm.invalid) {
       CustomValidation.validateFormGroup(this.searchByAmazonApiForm);
       return;
@@ -223,7 +206,7 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
 
   onSearchSuggestionClick(suggestion: string) {
     this.keywords = suggestion;
-    this.searchByAmazonApi();
+    this.search();
   }
 
   private disableInfitineScrollIfNeeded() {
@@ -250,21 +233,12 @@ export class WishSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private createForm(value: String) {
-    switch (this.searchType) {
-      case SearchType.AMAZON_API:
-        this.searchByAmazonApiForm = this.formBuilder.group({
-          keywords: [value, {
-            validators: [Validators.required, Validators.minLength(2)],
-            updateOn: 'submit'
-          }]
-        });
-        break;
-      case SearchType.URL: 
-        this.searchByUrlForm = this.formBuilder.group({
-          url: value
-        });
-        break;
-    }
+    this.searchByAmazonApiForm = this.formBuilder.group({
+      keywords: [value, {
+        validators: [Validators.required, Validators.minLength(2)],
+        updateOn: 'submit'
+      }]
+    });
   }
 
 }

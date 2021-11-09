@@ -8,10 +8,19 @@
     <ion-col class="wantic-logo-container">
       <img class="wantic-logo" src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
     </ion-col>
-    <ion-col class="wantic-skip-button-container">
+    <ion-col class="wantic-skip-button-container" *ngIf="canSkip">
       <button class="wantic-skip-button" *ngIf="canSkip" (click)="skip()">
         ÜBERSPRINGEN
       </button>
+    </ion-col>
+    <ion-col class="wantic-next-button-container" *ngIf="showNextButton">
+      <button class="wantic-next-button" (click)="next()" [disabled]="disableNextButton">
+        WEITER
+      </button>
+    </ion-col>
+    <!--ToDo: refactoring -->
+    <ion-col class="wantic-skip-button-container" *ngIf="!canSkip && !showNextButton">
+
     </ion-col>
   </ion-row>
 </ion-grid>

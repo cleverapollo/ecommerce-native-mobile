@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '@guards/auth.guard';
 
-import { WishSearchResultsPage } from './wish-search-results.page';
+import { AmazonSearchResultsPage } from './amazon-search-results.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: WishSearchResultsPage
+    component: AmazonSearchResultsPage
   },
   {
     path: 'wish-new',

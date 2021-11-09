@@ -1,0 +1,14 @@
+.image {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10pt;
+    background: white;
+}
+
+.selected-image {
+    border-color: black;
+}
+
+.unselected-image {
+    border-color:white;
+}
