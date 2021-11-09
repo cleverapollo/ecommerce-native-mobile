@@ -6,6 +6,9 @@ ion-header.safe-area-inset-top {
     margin-top: constant(safe-area-inset-top);
     margin-top: env(safe-area-inset-top);
  }
+ion-header.safe-area-inset-top.md {
+    margin-top: 27px
+}
 
 a.wantic-link {
     color: var(--ion-color-tertiary);

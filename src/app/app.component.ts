@@ -66,6 +66,9 @@ export class AppComponent {
     StatusBar.setStyle({
       style: StatusBarStyle.Light
     });
+    StatusBar.setOverlaysWebView({
+      overlay: true
+    });
   }
 
   private async onAppStart() {
