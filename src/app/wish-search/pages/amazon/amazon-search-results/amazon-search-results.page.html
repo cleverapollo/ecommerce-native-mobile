@@ -6,7 +6,7 @@
 <ion-content>
   <h1 class="wantic-page-header ion-text-center">Was wünschst du dir?</h1>
 
-  <form *ngIf="showKeywordsForm" [formGroup]="searchByAmazonApiForm" (ngSubmit)="search()">
+  <form [formGroup]="searchByAmazonApiForm" (ngSubmit)="search()">
     <ion-item lines="none">
       <ion-input type="search" inputmode="search" enterkeyhint="search" placeholder="z.B. Holzspielzeug" formControlName="keywords" clearInput="true"></ion-input>
     </ion-item>
