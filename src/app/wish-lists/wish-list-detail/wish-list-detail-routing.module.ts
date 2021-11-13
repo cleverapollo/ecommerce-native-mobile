@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: 'wish-search',
     canActivate: [AuthGuard],
-    loadChildren: () => import('@wishLists/wish-search-selection/wish-search-selection.module').then( m => m.WishSearchSelectionPageModule)
+    loadChildren: () => import('@wishSearch/pages/wish-search-overview/wish-search-overview.module').then( m => m.WishSearchSelectionPageModule)
   }
 ];
 

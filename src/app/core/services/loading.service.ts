@@ -31,7 +31,7 @@ export class LoadingService {
       if (topLoadingElement) {
         return await topLoadingElement.dismiss();
       } else {
-        return await this.loadingController.dismiss();
+        return Promise.resolve(true);
       }
     }
   }

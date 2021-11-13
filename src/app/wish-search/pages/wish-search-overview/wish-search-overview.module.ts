@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { IonicModule } from '@ionic/angular';
 
-import { WishSearchSelectionPageRoutingModule } from './wish-search-selection-routing.module';
+import { WishSearchSelectionPageRoutingModule } from './wish-search-overview-routing.module';
 
-import { WishSearchSelectionPage } from './wish-search-selection.page';
+import { WishSearchOverviewPage } from './wish-search-overview.page';
 import { SharedModule } from '@shared/shared.module';
-import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
+import { ShareExtensionExplanationComponent } from '../../share-extension-explanation/share-extension-explanation.component';
 
 @NgModule({
   imports: [
@@ -16,6 +16,6 @@ import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides
     WishSearchSelectionPageRoutingModule,
     SharedModule
   ],
-  declarations: [WishSearchSelectionPage, OnboardingSlidesComponent]
+  declarations: [WishSearchOverviewPage, ShareExtensionExplanationComponent]
 })
 export class WishSearchSelectionPageModule {}

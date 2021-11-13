@@ -91,7 +91,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   }
 
   goToSearchSelectionPage() {
-    this.navController.navigateForward('secure/home/wish-search-selection');
+    this.navController.navigateForward('secure/home/wish-search-overview');
   }
 
   editWishList() {

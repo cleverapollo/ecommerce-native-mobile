@@ -28,7 +28,8 @@
       "@menu/*": ["src/app/menu/*"],
       "@registration/*": ["src/app/registration/*"],
       "@shared/*": ["src/app/shared/*"],
-      "@wishLists/*": ["src/app/wish-lists/*"]
+      "@wishLists/*": ["src/app/wish-lists/*"],
+      "@wishSearch/*": ["src/app/wish-search/*"]
     }
   },
   "angularCompilerOptions": {

@@ -6,14 +6,14 @@ export class PriceDto {
     displayString: string;
 }
 export class WishDto {
-    id: string;
+    id?: string;
     asin?: string;
     wishListId: string;
     name: String;
     price: PriceDto;
     productUrl: string;
     imageUrl: String;
-    isReserved: boolean;
+    isReserved?: boolean;
 }
 
 export class WishListSelectOptionDto {

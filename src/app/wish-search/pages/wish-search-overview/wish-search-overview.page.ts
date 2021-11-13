@@ -5,27 +5,35 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
 import { ModalController } from '@ionic/angular';
 import { LoadingService } from '@core/services/loading.service';
-import { OnboardingSlidesComponent } from './onboarding-slides/onboarding-slides.component';
+import { ShareExtensionExplanationComponent } from '../../share-extension-explanation/share-extension-explanation.component';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { Plugins } from '@capacitor/core';
 import { DefaultPlatformService } from '@core/services/platform.service';
+import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
+import { first } from 'rxjs/operators';
+import { BackendConfigType } from '@env/backend-config-type';
+import { environment } from '@env/environment';
 
 const { Device } = Plugins;
 
 @Component({
-  selector: 'app-wish-search-selection',
-  templateUrl: './wish-search-selection.page.html',
-  styleUrls: ['./wish-search-selection.page.scss'],
+  selector: 'app-wish-search-overview',
+  templateUrl: './wish-search-overview.page.html',
+  styleUrls: ['./wish-search-overview.page.scss'],
 })
-export class WishSearchSelectionPage implements OnInit {
+export class WishSearchOverviewPage implements OnInit {
   
   get validationMessages(): ValidationMessages {
     return {
       keywords: [
         new ValidationMessage('required', 'Bitte gib einen Suchbegriff ein.'),
         new ValidationMessage('minlength', 'Bitte gib min. 2 Zeichen an.')
+      ],
+      url: [
+        new ValidationMessage('required', 'Bitte gib zunächst eine URL ein.'),
+        new ValidationMessage('pattern', 'Die eingegebene URL ist ungültig. Bitte überprüfe deine Eingabe.')
       ]
     }
   };
@@ -34,8 +42,16 @@ export class WishSearchSelectionPage implements OnInit {
     return this.searchByAmazonApiForm?.controls.keywords.value ?? null;
   }
 
-  showShareIntentNotVisibleHint: boolean = false;
+  get url(): string {
+    return this.searchByURLForm?.controls.url.value ?? null;
+  }
+
+  get showUrlSearch(): boolean {
+    return environment.backendType !== BackendConfigType.prod;
+  }
+
   searchByAmazonApiForm: FormGroup;
+  searchByURLForm: FormGroup;
   
   constructor(
     private productSearchService: ProductSearchService, 
@@ -57,14 +73,12 @@ export class WishSearchSelectionPage implements OnInit {
         updateOn: 'submit'
        }]
     });
-    this.initShowShareIntentNotVisibleHint();
-  }
-
-  private async initShowShareIntentNotVisibleHint() {
-    const deviceInfo = await Device.getInfo();
-    if (deviceInfo.platform === 'ios') {
-      this.showShareIntentNotVisibleHint = true;
-    }
+    this.searchByURLForm = this.formBuilder.group({
+      url: [null, { 
+        validators: [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')],
+        updateOn: 'submit'
+       }]
+    });
   }
 
   async ionViewDidEnter() {
@@ -80,7 +94,7 @@ export class WishSearchSelectionPage implements OnInit {
 
   private async openOnboardingSlidesModal() {
     const modal = await this.modalController.create({
-      component: OnboardingSlidesComponent,
+      component: ShareExtensionExplanationComponent,
       cssClass: 'wantic-modal wantic-modal-large',
       backdropDismiss: false
     });
@@ -93,14 +107,22 @@ export class WishSearchSelectionPage implements OnInit {
     }
     this.loadingService.showLoadingSpinner();
     this.productSearchService.searchByAmazonApi(this.keywords, 1).then(searchResults => {
-      this.navigateToSearchResultPage();
+      const targetUrl = `${getTaBarPath(TabBarRoute.WISH_SEARCH, true)}/search-by-amazon`
+      this.router.navigateByUrl(targetUrl).then(() => {
+        this.searchByAmazonApiForm.reset();
+      });
     }, this.logger.error).finally(() => {
       this.loadingService.dismissLoadingSpinner();
     });
   }
 
-  private navigateToSearchResultPage() {
-    this.router.navigate(['wish-search-results'], { relativeTo: this.route });
+  searchByURL() {
+    const targetUrl = `${getTaBarPath(TabBarRoute.WISH_SEARCH, true)}/search-by-url/select-image`
+    this.productSearchService.searchByUrl(this.url).pipe(first()).subscribe(searchResults => {
+      this.router.navigateByUrl(targetUrl).then(() => {
+        this.searchByURLForm.reset();
+      });
+    }, this.logger.error)
   }
 
 }

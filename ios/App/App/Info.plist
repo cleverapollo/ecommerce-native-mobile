@@ -60,6 +60,8 @@
 	<string>494614765250156</string>
 	<key>FacebookDisplayName</key>
 	<string>wantic</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>IonApi</key>
 	<string>https://api.ionicjs.com</string>
 	<key>IonAppId</key>

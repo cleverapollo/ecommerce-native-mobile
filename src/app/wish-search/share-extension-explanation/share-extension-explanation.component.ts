@@ -15,11 +15,11 @@ class WanticSlideItem {
 }
 
 @Component({
-  selector: 'app-onboarding-slides',
-  templateUrl: './onboarding-slides.component.html',
-  styleUrls: ['./onboarding-slides.component.scss'],
+  selector: 'app-share-extension-explanation',
+  templateUrl: './share-extension-explanation.component.html',
+  styleUrls: ['./share-extension-explanation.component.scss'],
 })
-export class OnboardingSlidesComponent implements OnInit {
+export class ShareExtensionExplanationComponent implements OnInit {
 
   @ViewChild(IonSlides) slides: IonSlides;
 

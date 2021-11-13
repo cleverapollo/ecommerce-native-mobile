@@ -6,7 +6,7 @@ import { DefaultPlatformService } from '@core/services/platform.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 
-import { OnboardingSlidesComponent } from './onboarding-slides.component';
+import { ShareExtensionExplanationComponent } from './share-extension-explanation.component';
 
 describe('OnboardingSlidesComponent', () => {
 
@@ -20,12 +20,12 @@ describe('OnboardingSlidesComponent', () => {
     get isIOS(): boolean { return false }
   }
 
-  let component: OnboardingSlidesComponent;
-  let fixture: ComponentFixture<OnboardingSlidesComponent>;
+  let component: ShareExtensionExplanationComponent;
+  let fixture: ComponentFixture<ShareExtensionExplanationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OnboardingSlidesComponent ],
+      declarations: [ ShareExtensionExplanationComponent ],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: ModalController, useValue: modalController },
@@ -37,7 +37,7 @@ describe('OnboardingSlidesComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(OnboardingSlidesComponent);
+    fixture = TestBed.createComponent(ShareExtensionExplanationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

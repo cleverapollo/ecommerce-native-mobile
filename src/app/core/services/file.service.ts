@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { File } from '@ionic-native/file/ngx';
+import { File, FileEntry } from '@ionic-native/file/ngx';
 import { LogService } from './log.service';
 
 @Injectable({
@@ -7,9 +7,15 @@ import { LogService } from './log.service';
 })
 export class FileService {
 
-  private readonly assetPath = 'www/assets';
+  private readonly assetPath = 'public/assets';
 
   constructor(private file: File, private logger: LogService) { }
+
+  private get fileReader(): FileReader {
+    const fileReader = new FileReader();
+    const zoneOriginalInstance = (fileReader as any)["__zone_symbol__originalInstance"];
+    return zoneOriginalInstance || fileReader;
+  }
 
   get applicationDirectoryPath(): string {
     return this.file.applicationDirectory;
@@ -19,21 +25,18 @@ export class FileService {
     let filePath = this.createFilePath(fileName, subDir);
     try {
       const dirExists = await this.file.checkDir(this.applicationDirectoryPath, this.assetPath);
-      this.logger.info('asset path exists');
       if (dirExists) {
         const fileExists = await this.file.checkFile(`${this.applicationDirectoryPath}${this.assetPath}/`, filePath);
-        this.logger.info('file in asset path exists');
         if (fileExists) {
           const directoryUrl = this.createDirectoryUrlForAssetsFolder(subDir);
-          const dir = await this.file.resolveDirectoryUrl(directoryUrl);
-          const fileEntry = await this.file.getFile(dir, fileName, { create: false, exclusive: false });
-          this.logger.info('resolve file entry successfull');
+          const localDirectoryURL = await this.file.resolveDirectoryUrl(directoryUrl);
+          const fileEntry = await this.file.getFile(localDirectoryURL, fileName, { create: false, exclusive: false });
           return this.readFileContent(fileEntry);
         } else {
-          return Promise.reject();
+          return Promise.reject('file in asset directory does not exist');
         }
       } else {
-        return Promise.reject();
+        return Promise.reject('asset directory does not exist.');
       }
     } catch(error) {
       return Promise.reject(error);
@@ -45,7 +48,7 @@ export class FileService {
     if (subDir) {
       filePath = `${subDir}/${fileName}`;
     }
-    this.logger.log('file path to resolve ', filePath);
+    this.logger.debug('file path to resolve ', filePath);
     return filePath;
   }
 
@@ -54,34 +57,43 @@ export class FileService {
     if (subDir) {
       directoryUrl += `/${subDir}`;
     }
-    this.logger.info('directory url to resolve  ', directoryUrl);
+    this.logger.debug('directory url to resolve  ', directoryUrl);
     return directoryUrl;
   }
 
-  private async readFileContent(fileEntry): Promise<string> {
+  private async readFileContent(fileEntry: FileEntry): Promise<string> {
     return new Promise((resolve, reject) => {
-      fileEntry.file((file) => {
-        const reader = new FileReader();
-        reader.onloadend = (e) => {
+      fileEntry.file((file: any) => {
+        this.logger.debug("FileReader read as text ");
+        const reader = this.fileReader;
+        reader.onloadstart = (event) => {
+          this.logger.debug('file reader on load start ...', event);
+        }
+        reader.onloadend = (event) => {
+          this.logger.debug('file reader on load end ...', event);
           const result = reader.result;
           if (result instanceof ArrayBuffer) {
-            this.logger.log('result is array buffer');
+            this.logger.debug('result is array buffer');
             reject();
           }
-          this.logger.info("Successful file read: " + result);
+          this.logger.debug("Successful file read: " + result);
           resolve(result as string);
         };
         reader.onerror = (error) => {
+          this.logger.error('file reader on load error ...', event);
           reject(error);
         };
         reader.readAsText(file);
+      }, fileError => {
+        this.logger.error(`${fileError.code}: ${fileError.message}`);
+        reject(fileError);
       });
     });
   }
 
   readFileContentAsArrayBuffer(file: any): Promise<Blob> {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
+      const reader = this.fileReader;
       reader.readAsArrayBuffer(file);
       reader.onload = () => {
         resolve(file);

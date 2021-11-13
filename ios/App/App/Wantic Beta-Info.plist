@@ -61,6 +61,8 @@
 	<string>wantic beta</string>
 	<key>IOS_GOOGLEUTILITIES_VERSION</key>
 	<string>7.4</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>IonApi</key>
 	<string>https://api.ionicjs.com</string>
 	<key>IonAppId</key>
