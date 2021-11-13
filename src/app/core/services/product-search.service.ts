@@ -18,6 +18,8 @@ export class ProductSearchService {
   }
 
   searchByUrl(url: string): Observable<SearchResultItem[]> {
+    this.searchResultDataService.clear();
+    this.webPageCrawler.closeInAppBrowser();
     return this.webPageCrawler.search(url);
   }
 

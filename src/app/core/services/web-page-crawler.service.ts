@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { SearchResultItem } from '@core/models/search-result-item';
 import { InAppBrowser, InAppBrowserEvent, InAppBrowserObject } from '@ionic-native/in-app-browser/ngx';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { LoadingService } from './loading.service';
+import { FileService } from './file.service';
 import { LogService } from './log.service';
+import { DefaultPlatformService } from './platform.service';
 import { SearchQuery, SearchResultDataService, SearchType } from './search-result-data.service';
 
 @Injectable({
@@ -19,32 +20,24 @@ export class WebPageCrawlerService {
   private url: string;
   private webCrawlerScriptContent: string = null;
   private webCrawlerScriptLoading: boolean = false;
-  private inProgress = false;
-  private busyIndicator: HTMLIonLoadingElement = null;
+  private loadingComplete: boolean = false;
 
   constructor(
     private logger: LogService,
     private http: HttpClient,
     private inAppBrowser: InAppBrowser,
-    private loadingService: LoadingService,
-    private searchResultDataService: SearchResultDataService
+    private searchResultDataService: SearchResultDataService,
+    private platformService: DefaultPlatformService,
+    private fileService: FileService
   ) { 
     this._result$ =  new BehaviorSubject([]);
     this.result$ = this._result$.asObservable();
   }
 
-  private async loadWebCrawlerScriptContent(): Promise<string> {
-    if (this.webCrawlerScriptLoading) { return; }
-    this.webCrawlerScriptLoading = true;
-    const content = await this.http.get(`${window.location.origin}/assets/scripts/parse-imgs-from-website.js`, { responseType: 'text' }).toPromise();
-    this.webCrawlerScriptLoading = false;
-    this.webCrawlerScriptContent = content;
-    return content;
-  }
-
   search(url: string): Observable<SearchResultItem[]> {
+    this.loadingComplete = false;
     this.url = url;
-    this.browser = this.inAppBrowser.create(url, '_blank', { location: 'no', clearcache: 'yes', toolbar: 'no', hidden: 'yes' });
+    this.browser = this.inAppBrowser.create(url, '_blank', { location: 'yes', clearcache: 'yes', toolbar: 'no', hidden: 'yes' });
     this.browser.on('loadstart')?.subscribe(event => {
       this.onLoadStart();
     }, this.handleGeneralError); 
@@ -64,25 +57,56 @@ export class WebPageCrawlerService {
   }
 
   private async onLoadComplete(url: string) {
-    if (this.inProgress) { return; }
-    this.inProgress = true;
+    if (this.loadingComplete) { return }
+    this.loadingComplete = true;
     this.logger.log('loading finished ...');
     try {
+      const code = await this.getCode();
+      const webPageCrawlerResult = await this.iabResolveExecuteScript(code);
+      this.logger.log('web crawler result ...', webPageCrawlerResult);
 
-      let code = this.webCrawlerScriptContent;
-      if (code === null) {
-        code = await this.loadWebCrawlerScriptContent();
-      } 
-      const results: [any] = await this.browser.executeScript({ code: code });
-      this.logger.log('result ...', results);
-      this.mapSearchResultArray(results, url);
+      this.mapSearchResultArray(webPageCrawlerResult[0], url);
       this.updateSearchQuery(this._result$.value);
     } catch (error) {
-      this.stopBusyIndicator();
       this.handleGeneralError(error);
     }
-    this.stopBusyIndicator();
-    this.inProgress = false;
+  }
+
+  private async getCode() {
+    let code = this.webCrawlerScriptContent;
+    if (code === null) {
+      code = await this.loadWebCrawlerScriptContent();
+    }
+    return code;
+  }
+
+  private async loadWebCrawlerScriptContent(): Promise<string> {
+    const fileName = 'parse-imgs-from-website.js';
+    const subDir = 'scripts';
+    if (this.webCrawlerScriptLoading) { return; }
+    this.webCrawlerScriptLoading = true;
+    if (this.platformService.isNativePlatform) { 
+      const content = await this.fileService.getTextContentFromFileInAssetFolder(fileName, subDir);
+      this.webCrawlerScriptContent = content;
+    } else {
+      const content = await this.http.get(`${window.location.origin}/assets/${subDir}/${fileName}`, { responseType: 'text' }).toPromise();
+      this.webCrawlerScriptContent = content;
+    }
+    this.webCrawlerScriptLoading = false;
+    return this.webCrawlerScriptContent;
+  }
+
+
+  private iabResolveExecuteScript(code: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.logger.log('execute script ...');
+      this.browser.executeScript({code: code}).then((result) => {
+        resolve(result);
+      }, e => {
+        this.logger.error(e);
+        reject();
+      });
+    });
   }
 
   private updateSearchQuery(results: SearchResultItem[]) {
@@ -95,17 +119,17 @@ export class WebPageCrawlerService {
 
   private onLoadError() {
     this.logger.log('loading error');
-    this.stopBusyIndicator();
+    this.loadingComplete = true;
   }
 
   private async onLoadStart() {
     this.logger.log('start loading ...');
-    await this.startBusyIndicator();
+    
   }
 
   private onBrowserExit() {
     this.logger.log('exit browser ...');
-    this.stopBusyIndicator();
+    this.loadingComplete = true;
   }
 
   private onMessageReceived(event: InAppBrowserEvent) {
@@ -120,7 +144,6 @@ export class WebPageCrawlerService {
 
   private handleGeneralError(error) {
     this.logger.log('general error ...', error);
-    this.stopBusyIndicator();
   }
 
   private mapSearchResultArray(results: any[], url: string) {
@@ -135,20 +158,6 @@ export class WebPageCrawlerService {
       this.addItem(item);
     } else if (Array.isArray(result)) {
       this.mapSearchResultArray(result as any[], url);
-    }
-  }
-
-  private async startBusyIndicator() {
-    if (!this.busyIndicator) {
-      this.busyIndicator = await this.loadingService.createLoadingSpinner();
-      await this.busyIndicator.present();
-    }
-  }
-
-  private async stopBusyIndicator() {
-    if (this.busyIndicator) {
-      await this.loadingService.dismissLoadingSpinner(this.busyIndicator);
-      this.busyIndicator = null;
     }
   }
 

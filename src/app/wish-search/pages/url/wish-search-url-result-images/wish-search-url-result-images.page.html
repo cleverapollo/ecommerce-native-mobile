@@ -13,7 +13,7 @@
     <ion-row>
       <ion-col size="6" *ngFor="let product of products; let i = index;" >
         <div class="ion-text-center image" [ngClass]="{ 'selected-image': selectedIndex === i, 'unselected-image': selectedIndex !== i }" (click)="selectImage(product, i)">
-          <img class="wish-search-url-image" [src]="product.imageUrl" [alt]="product.name" loading="lazy" />
+          <ion-img class="wish-search-url-image" [src]="product.imageUrl" [alt]="product.name" ></ion-img>
         </div>
       </ion-col>
     </ion-row>
