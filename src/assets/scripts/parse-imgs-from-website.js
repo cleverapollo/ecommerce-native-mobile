@@ -77,8 +77,6 @@ function mode(arr) {
 // images and name
 
 function loadProductInfoList() {
-    sendCordovaInAppBrowserMessageEvent('number of images ' + document.images.length);
-
     let produtInfoList = [];
     let index = 0;
     for (const htmlImage of document.images) {
@@ -98,9 +96,18 @@ function loadProductInfoList() {
         ++index;
     }
 
+    produtInfoList = spliceProductInfoList(produtInfoList);
+
     return produtInfoList.filter(x => x.imageUrl !== '' && (x.imageUrl.startsWith('http')))
         .filter(filterDuplicatedItems)
         .sort(sortBySvgImages);
+}
+
+function spliceProductInfoList(produtInfoList) {
+    if (produtInfoList.length > 30) {
+        produtInfoList.length = 30;
+    }
+    return produtInfoList;
 }
 
 function onHtmlImageLoadError() {
@@ -209,8 +216,8 @@ function logError(error) {
 }
 
 function sendCordovaInAppBrowserMessageEvent(message) {
-    if (!webkit.messageHandlers.cordova_iab) {
-        alert('Cordova IAB postMessage API not found!');
+    if (!webkit || !webkit.messageHandlers || !webkit.messageHandlers.cordova_iab) {
+        console.error('Cordova IAB postMessage API not found!');
         return;
     }
     webkit.messageHandlers.cordova_iab.postMessage(message);
