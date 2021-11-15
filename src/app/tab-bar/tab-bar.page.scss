@@ -3,11 +3,22 @@ ion-tabs {
         ion-tab-button {
             --color: var(--ion-color-secondary);
             --color-selected: var(--ion-color-primary);
-            ion-icon {
-                font-size: 50px;
+            ion-icon.icon-home {
+                width: 37.95pt;
+                height: 28.71pt;
+            }
+            ion-icon.icon-friends {
+                width: 50.65pt;
+                height: 28.71pt;
             }
             ion-icon.icon-add {
                 stroke: var(--ion-color-secondary);
+                width: 28.71pt;
+                height: 28.71pt;
+            }
+            ion-icon.icon-burger-menu {
+                width: 26.78pt;
+                height: 28.71pt;
             }
         }
         ion-tab-button.tab-selected {
