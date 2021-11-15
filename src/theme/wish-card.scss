@@ -60,13 +60,14 @@ ion-card {
     height: 100%;
     ion-card-content {
         border-top: 1px dashed #F0EDE3;
-        padding-right: 10px;
-        padding-left: 10px;
+        padding-inline-start: 10px !important;
+        padding-inline-end: 10px !important;
     }
 }
 
 ion-button.action-button {
     margin-top: 0;
+    white-space: normal;
 }
 ion-button.action-button-block {
     margin-left: 0;
@@ -85,10 +86,10 @@ ion-button.action-button-block {
     }
     ion-col.col-left {
         padding-left: 0;
-        padding-right: 1px;
+        padding-right: 3px;
     }
     ion-col.col-right {
-        padding-left: 1px;
+        padding-left: 3px;
         padding-right: 0;
     }
 }
