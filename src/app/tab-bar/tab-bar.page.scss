@@ -3,28 +3,31 @@ ion-tabs {
         ion-tab-button {
             --color: var(--ion-color-secondary);
             --color-selected: var(--ion-color-primary);
-            ion-icon.icon-home {
-                width: 37.95pt;
-                height: 24.71pt;
-            }
-            ion-icon.icon-friends {
-                width: 50.65pt;
-                height: 24.71pt;
-            }
             ion-icon.icon-add {
                 stroke: var(--ion-color-secondary);
-                width: 28.71pt;
-                height: 24.71pt;
+                width: 32.5px;
+                height: 32.5px;
+            }
+            ion-icon.icon-friends {
+                stroke: var(--ion-color-secondary);
+                width: 50.857px;
+                height: 27.66px;
+            }
+            ion-icon.icon-home {
+                stroke: var(--ion-color-secondary);
+                width: 41.42px;
+                height: 30.961px;
             }
             ion-icon.icon-burger-menu {
-                width: 27.78pt;
-                height: 24.71pt;
+                stroke: var(--ion-color-secondary);
+                width: 29.281px;
+                height: 25.5px;
             }
         }
         ion-tab-button.tab-selected {
             border-top: 2px solid;
             padding-bottom: 2px;
-            ion-icon.icon-add {
+            ion-icon.icon-add, ion-icon.icon-friends, ion-icon.icon-home, ion-icon.icon-burger-menu {
                 stroke: var(--ion-color-primary);
             }
         }
