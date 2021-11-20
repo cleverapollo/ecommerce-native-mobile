@@ -19,6 +19,7 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
   
   private forceRefreshWishLists = false;
   private queryParamSubscription: Subscription;
+  private loadWishListsSubscription: Subscription;
 
   constructor(
     private navContoller: NavController, 
@@ -51,6 +52,7 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.queryParamSubscription.unsubscribe();
+    this.loadWishListsSubscription?.unsubscribe();
   }
 
   selectWishList(wishList: FriendWishList) {
@@ -58,7 +60,7 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.friendWishListStore.loadWishLists(true).pipe(first()).subscribe({
+    this.loadWishListsSubscription = this.friendWishListStore.loadWishLists(true).subscribe({
       next: wishLists => {
         this.wishLists = wishLists;
         event.target.complete();

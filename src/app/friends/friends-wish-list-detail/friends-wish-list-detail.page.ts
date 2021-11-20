@@ -6,6 +6,7 @@ import { FriendWishListStoreService } from '@core/services/friend-wish-list-stor
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LogService } from '@core/services/log.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
@@ -17,6 +18,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
   wishList: FriendWishList;
   
   private wishListId: string;
+  private loadWishListSubscription: Subscription;
   
   constructor(
     private logger: LogService,
@@ -42,7 +44,9 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
     this.analyticsService.setFirebaseScreenName('wishlist-family_friends');
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.loadWishListSubscription?.unsubscribe();
+  }
 
   goBack() {
     this.navController.navigateBack('/friends-wish-list-overview');
@@ -57,7 +61,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
   } 
 
   forceRefresh(event) {
-    this.friendWishListStore.loadWishList(this.wishList.id, true).pipe(first()).subscribe({
+    this.loadWishListSubscription = this.friendWishListStore.loadWishList(this.wishList.id, true).subscribe({
       next: wishList => {
         this.wishList = wishList;
         event.target.complete();

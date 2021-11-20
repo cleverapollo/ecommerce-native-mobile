@@ -16,6 +16,7 @@ import { UserProfileStore } from './user-profile-store.service';
 export class SettingsPage implements OnInit, OnDestroy {
 
   private loadUserProfileSubscription: Subscription;
+  private forceLoadUserProfileSubscription: Subscription;
 
   profile: UserProfile;
   showPasswordChangeLink: boolean;
@@ -54,10 +55,11 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.loadUserProfileSubscription.unsubscribe();
+    this.forceLoadUserProfileSubscription?.unsubscribe();
   }
 
   forceRefresh(event) {
-    this.userProfileStore.loadUserProfile(true).pipe(first()).subscribe({
+    this.forceLoadUserProfileSubscription = this.userProfileStore.loadUserProfile(true).subscribe({
       next: profile => {
         this.profile = profile;
         event.target.complete();

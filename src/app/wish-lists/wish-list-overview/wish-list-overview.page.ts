@@ -7,6 +7,7 @@ import { AnalyticsService } from '@core/services/analytics.service';
 import { Plugins } from '@capacitor/core';
 import { LoadingService } from '@core/services/loading.service';
 import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
+import { Subscription } from 'rxjs';
 
 const { SplashScreen } = Plugins;
 
@@ -19,6 +20,8 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
 
   wishLists: Array<WishListDto> = new Array();
   refreshData: boolean = false;
+
+  private loadWishListsSubscription: Subscription;
 
   constructor(
     private wishListStore: WishListStoreService,
@@ -39,7 +42,9 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
     })
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.loadWishListsSubscription?.unsubscribe();
+  }
 
   ionViewWillEnter() {
     if (this.refreshData) {
@@ -72,7 +77,7 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.wishListStore.loadWishLists(true).pipe(first()).subscribe({
+    this.loadWishListsSubscription = this.wishListStore.loadWishLists(true).subscribe({
       next: wishLists => {
         this.updateWishLists(wishLists);
         event.target.complete();
