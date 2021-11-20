@@ -10,6 +10,7 @@ import { environment } from '@env/environment';
 import { BackendConfigType } from '@env/backend-config-type';
 import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
 import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wish-detail',
@@ -39,6 +40,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   private affiliateLink: string = '';
+  private loadWishSubscription: Subscription;
 
   constructor(
     private browserService: BrowserService,
@@ -65,6 +67,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.loadWishSubscription?.unsubscribe();
   }
 
   openProductURL() {
@@ -76,7 +79,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.wishListStore.loadWish(this.wish.id, true).pipe(first()).subscribe({
+    this.loadWishSubscription = this.wishListStore.loadWish(this.wish.id, true).subscribe({
       next: wish => {
         this.wish = wish;
         event.target.complete();

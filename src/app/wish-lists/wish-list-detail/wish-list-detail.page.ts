@@ -23,6 +23,7 @@ const { Share, SplashScreen } = Plugins;
 export class WishListDetailPage implements OnInit, OnDestroy {
 
   private queryParamSubscription: Subscription;
+  private loadWishListSubscription: Subscription;
 
   wishList: WishListDto;
   showBackButton: boolean = true;
@@ -80,6 +81,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.queryParamSubscription.unsubscribe();
+    this.loadWishListSubscription?.unsubscribe();
   }
 
   selectWish(wish: WishDto) {
@@ -116,7 +118,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.wishListStore.loadWishList(this.wishList.id, true).pipe(first()).subscribe({
+    this.loadWishListSubscription = this.wishListStore.loadWishList(this.wishList.id, true).subscribe({
       next: wishList => {
         this.wishList = wishList;
         event.target.complete();
