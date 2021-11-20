@@ -3,11 +3,20 @@ import { SharedWishListApiService } from '@core/api/shared-wish-list-api.service
 import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { CacheService } from 'ionic-cache';
 import { Observable } from 'rxjs';
+import { LogService } from './log.service';
+
+export interface FriendWishListStore {
+  loadWishLists(forceRefresh: boolean): Observable<Array<FriendWishList>>;
+  loadWishList(id: string, forceRefresh: boolean): Observable<FriendWishList>;
+  removeWishListById(wishListId: string): Promise<void>;
+  removeCachedWishLists(): Promise<void>;
+  updateCachedWishList(wishList: FriendWishList): void;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class FriendWishListStoreService {
+export class FriendWishListStoreService implements FriendWishListStore {
 
   private readonly CACHE_DEFAULT_TTL = 60 * 60;
   private readonly CACHE_GROUP_KEY = 'friendWishList';
@@ -18,16 +27,22 @@ export class FriendWishListStoreService {
   }
 
   constructor(
-    private friendApiService: SharedWishListApiService, 
-    private cache: CacheService
+    private sharedWishListApiService: SharedWishListApiService, 
+    private cache: CacheService,
+    private logger: LogService
   ) { }
 
   loadWishLists(forceRefresh: boolean = false): Observable<Array<FriendWishList>> {
-    let request = this.friendApiService.getWishLists() as Observable<Array<FriendWishList>>;
+    let request = this.sharedWishListApiService.getWishLists() as Observable<Array<FriendWishList>>;
     if (forceRefresh) {
+      this.logger.log('force refresh');
       return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
     } 
     return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY)
+  }
+
+  removeWishListById(wishListId: string): Promise<void> {
+    return this.sharedWishListApiService.removeWishListById(wishListId).toPromise();
   }
 
   removeCachedWishLists(): Promise<void> {
@@ -35,14 +50,14 @@ export class FriendWishListStoreService {
   }
 
   loadWishList(id: string, forceRefresh: boolean = false): Observable<FriendWishList> {
-    let request = this.friendApiService.getWishListById(id);
+    const request = this.sharedWishListApiService.getWishListById(id);
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
     } 
     return this.cache.loadFromObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY)
   }
 
-  updateCachedWishList(wishList: FriendWishList) {
+  updateCachedWishList(wishList: FriendWishList): void {
     this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
     this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: FriendWishList[]) => {
       const wishListIndex = wishLists.findIndex( w => w.id == wishList.id);

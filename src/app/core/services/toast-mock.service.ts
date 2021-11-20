@@ -1,34 +1,13 @@
-import { Storage } from "./storage.service";
+import { ToastService } from "./toast.service";
 
-export class MockStorageService implements Storage {
-
-    getResult: any = null;
-    setResult: any = null;
-    removeResult: any = null;
-    clearResult: any = null;
-
-    get<T>(storageKey: string, secure: boolean): Promise<T> {
-        if (this.getResult == null) {
-            return Promise.reject();
-        }
-        return Promise.resolve(this.getResult);
+export class MockToastService implements ToastService {
+    presentSuccessToast(message: string): Promise<void> {
+        return Promise.resolve();
     }
-    set(storageKey: string, value: any, secure: boolean): Promise<void> {
-        if (this.setResult == null) {
-            return Promise.reject();
-        }
-        return Promise.resolve(this.setResult);
+    presentErrorToast(message: string): Promise<void> {
+        return Promise.resolve();
     }
-    remove(storageKey: string, secure: boolean): Promise<void> {
-        if (this.removeResult == null) {
-            return Promise.reject();
-        }
-        return Promise.resolve(this.removeResult);
-    }
-    clear(): Promise<void> {
-        if (this.clearResult == null) {
-            return Promise.reject();
-        }
-        return Promise.resolve(this.clearResult);
+    presentInfoToast(message: string): Promise<void> {
+        return Promise.resolve();
     }
 }

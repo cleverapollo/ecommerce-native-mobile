@@ -3,10 +3,9 @@ import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
-import { LogService } from '@core/services/log.service';
 import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
 
 @Component({
   selector: 'app-friends-wish-list-overview',
@@ -18,14 +17,17 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
   wishLists: FriendWishList[] = [];
   
   private forceRefreshWishLists = false;
-  private queryParamSubscription: Subscription;
+
+  // subscriptions
+  private queryParamSubscription: Subscription = null;
+  private refreshWishListsSubscription: Subscription = null;
+  private forceRefreshWishListsSubscription: Subscription = null;
 
   constructor(
     private navContoller: NavController, 
     private route: ActivatedRoute,
     private router: Router,
     private friendWishListStore: FriendWishListStoreService,
-    private logger: LogService,
     private analyticsService: AnalyticsService
   ) {}
 
@@ -39,7 +41,7 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.friendWishListStore.loadWishLists(this.forceRefreshWishLists).pipe(first()).subscribe(wishLists => {
+    this.refreshWishListsSubscription = this.friendWishListStore.loadWishLists(this.forceRefreshWishLists).subscribe(wishLists => {
       this.forceRefreshWishLists = false;
       this.wishLists = wishLists;
     })
@@ -50,15 +52,17 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.queryParamSubscription.unsubscribe();
+    this.queryParamSubscription?.unsubscribe();
+    this.refreshWishListsSubscription?.unsubscribe();
+    this.forceRefreshWishListsSubscription?.unsubscribe();
   }
 
   selectWishList(wishList: FriendWishList) {
-    this.navContoller.navigateForward(`secure/friends-home/wish-list/${wishList.id}`);
+    this.navContoller.navigateForward(`${getTaBarPath(TabBarRoute.FRIENDS_HOME, true)}/wish-list/${wishList.id}`);
   }
 
   forceRefresh(event) {
-    this.friendWishListStore.loadWishLists(true).pipe(first()).subscribe({
+    this.forceRefreshWishListsSubscription = this.friendWishListStore.loadWishLists(true).subscribe({
       next: wishLists => {
         this.wishLists = wishLists;
         event.target.complete();

@@ -3,7 +3,7 @@ import { PublicResourceApiMockService } from '@core/api/public-resource-api-mock
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { BrowserService } from '@core/services/browser.service';
 import { StorageService } from '@core/services/storage.service';
-import { MockStorageService } from '@core/services/toast-mock.service';
+import { MockStorageService } from '@core/services/storage-mock.service';
 import { CoreToastService, ToastService } from '@core/services/toast.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { WishListTestDataUtils } from '@core/test/wish-list-data.utils';

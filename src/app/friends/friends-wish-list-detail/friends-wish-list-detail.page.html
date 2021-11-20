@@ -15,6 +15,7 @@
       <p class="wish-list-name">{{ wishList.name }}</p>
       <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
     </div>
+    <ion-button class="wantic-save-button leave-wish-list" fill="outline" color="light" (click)="showDeleteAlert()" id="leave-wish-list-button">WUNSCHLISTE VERLASSEN</ion-button>
   </section>
  
   <div class="divide"></div>

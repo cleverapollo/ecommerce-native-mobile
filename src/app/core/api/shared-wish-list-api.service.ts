@@ -27,4 +27,10 @@ export class SharedWishListApiService {
     );
   }
 
+  removeWishListById(id: string): Observable<void> {
+    return this.apiService.delete<void>(`${ApiVersion.v1}/${SharedWishListApiService.REST_END_POINT}/${id}/members`).pipe(
+      catchError(error => this.errorHandler.handleError(error))
+    );
+  }
+
 }
