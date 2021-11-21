@@ -26,7 +26,7 @@ describe('FriendsWishListOverviewPage', () => {
         FriendWishListComponent,
         EmailUnverifiedHintComponent
       ],
-      imports: [IonicModule.forRoot(),, RouterTestingModule.withRoutes([])],
+      imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         { provide: AnalyticsService, useValue: analyticsService },
         { provide: FriendWishListStoreService, useValue: friendWishListStore },

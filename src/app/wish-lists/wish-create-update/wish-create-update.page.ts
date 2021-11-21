@@ -19,7 +19,7 @@ import { AnalyticsService } from '@core/services/analytics.service';
   templateUrl: './wish-create-update.page.html',
   styleUrls: ['./wish-create-update.page.scss'],
 })
-export class WishCreateUpdatePage implements OnInit, OnDestroy {
+export class WishCreateUpdatePage implements OnInit {
 
   wish: WishDto
   wishList: WishListDto
@@ -71,7 +71,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   }
 
   private initViewData() {
-    this.wish = this.route.snapshot.data.wish ? this.route.snapshot.data.wish : this.router.getCurrentNavigation().extras.state.searchResult;
+    this.wish = this.route.snapshot.data.wish ? this.route.snapshot.data.wish : this.router.getCurrentNavigation()?.extras.state.searchResult;
     this.wishList = this.route.snapshot.data.wishList;
   }
 
@@ -82,8 +82,8 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     } else if (this.wishList) {
       wishListId = this.wishList.id;
     }
-    const name = this.wish.name ? this.wish.name : '';
-    const price = this.wish.price.amount ? this.wish.price.amount : 0.00;
+    const name = this.wish?.name ? this.wish.name : '';
+    const price = this.wish?.price.amount ? this.wish.price.amount : 0.00;
     const formattedPrice = this.formatAmount(price);
     this.form = this.formBuilder.group({
       'wishListId': this.formBuilder.control(wishListId, {
@@ -91,6 +91,9 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
       }),
       'name': this.formBuilder.control(name, {
         validators: [Validators.required],
+        updateOn: 'blur'
+      }),
+      'note': this.formBuilder.control(this.wish?.note, {
         updateOn: 'blur'
       }),
       'price': this.formBuilder.control(formattedPrice, {
@@ -103,8 +106,6 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName(this.screenName);
   }
-
-  ngOnDestroy(): void {}
 
   createOrUpdateWish() {
     if (this.form.invalid) {
@@ -142,23 +143,30 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   }
 
   private createWish() {
-    const wishListId = this.form.controls.wishListId.value;
-    this.wish.wishListId = wishListId;
-    this.wish.name = this.form.controls.name.value;
-    this.wish.price = this.createPrice(this.form.controls.price.value);
+    this.updateProperties();
     this.loadingService.showLoadingSpinner();
     this.wishApiService.createWish(this.wish).toPromise().then(createdWish => {
       this.searchResultDataService.clear();
       this.logAddToWishListEvent(createdWish);
       this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
       this.wishListStore.clearWishLists().then(() => {
-        this.navigateToWishListDetailPage(wishListId);
+        this.navigateToWishListDetailPage(this.wish.wishListId);
       })
     }, error => {
       this.toastService.presentErrorToast('Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.');
     }).finally(() => {
       this.loadingService.dismissLoadingSpinner();
     });
+  }
+
+  private updateProperties(): void {
+    const formControls = this.form.controls;
+    if (!this.isUpdatePage) {
+      this.wish.wishListId = formControls.wishListId.value;
+    }
+    this.wish.name = formControls.name.value;
+    this.wish.note = formControls.note.value;
+    this.wish.price = this.createPrice(formControls.price.value);
   }
 
   private logAddToWishListEvent(wish: WishDto) {
@@ -185,7 +193,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
     return price;
   }
   
-  private navigateToWishListDetailPage(wishListId: number) {
+  private navigateToWishListDetailPage(wishListId: string) {
     const wishSearchTabPath = getTaBarPath(TabBarRoute.WISH_SEARCH, true);
     const url = `/secure/home/wish-list/${wishListId}?forceRefresh=true`;
     if (this.router.url.includes(wishSearchTabPath)) {
@@ -198,8 +206,7 @@ export class WishCreateUpdatePage implements OnInit, OnDestroy {
   }
 
   private updateWish() {
-    this.wish.name = this.form.controls.name.value;
-    this.wish.price = this.createPrice(this.form.controls.price.value);
+    this.updateProperties();
     this.loadingService.showLoadingSpinner();
     this.wishApiService.update(this.wish).toPromise().then(updatedWish => { 
         this.wishListStore.updateCachedWish(updatedWish);
