@@ -10,6 +10,7 @@ export class WishDto {
     asin?: string;
     wishListId: string;
     name: String;
+    note?: string;
     price: PriceDto;
     productUrl: string;
     imageUrl: String;

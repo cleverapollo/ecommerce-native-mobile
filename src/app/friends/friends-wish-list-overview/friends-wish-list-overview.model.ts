@@ -14,6 +14,7 @@ export class FriendWish {
     asin?: string;
     wishListId: string;
     name: String;
+    note?: string;
     price: PriceDto;
     productUrl: string;
     imageUrl: String;
