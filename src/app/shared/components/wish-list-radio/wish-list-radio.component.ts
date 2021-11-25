@@ -61,7 +61,7 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   writeValue(selectedOption: WishListSelectOptionDto | String): void {

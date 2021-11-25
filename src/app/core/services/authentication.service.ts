@@ -19,10 +19,26 @@ import { Plugins } from '@capacitor/core';
 
 const { Device } = Plugins;
 
+export interface AppAuthenticationService {
+  signup(signupRequest: SignupRequest): Promise<void>;
+  emailPasswordSignIn(email: string, password: string): Promise<SignInResponse>;
+  facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}>;
+  googlePlusSignIn(): Promise<{googlePlusLoginResponse: any, user: UserProfile}>;
+  appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}>;
+  wanticSignIn(): Promise<SignInResponse>;
+  logout(): Promise<void>;
+  getFirebaseIdToken(forceRefresh: boolean): Promise<string>;
+  sendVerificationMail(): Promise<any>;
+  resetPassword(email: string): Promise<void>;
+  updateEmailVerificationStatus(emailVerified: boolean): void;
+  removeDeprecatedAuthToken(): Promise<void>;
+  migrateSavedCredentials(): Promise<{email: string, password: string}>;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService implements AppAuthenticationService {
 
   isAuthenticated = new BehaviorSubject<boolean>(null);
   isEmailVerified = new BehaviorSubject<boolean>(null);

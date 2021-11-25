@@ -6,10 +6,22 @@ import { WishApiService } from '@core/api/wish-api.service';
 import { Observable } from 'rxjs';
 import { LogService } from './log.service';
 
+export interface WishListStore {
+  loadWishLists(forceRefresh: boolean): Observable<Array<WishListDto>>;
+  loadWishList(id: string, forceRefresh: boolean): Observable<WishListDto>;
+  loadWish(id: string, forceRefresh: boolean): Observable<WishDto>;
+  clearWishLists(): Promise<void>;
+  removeCachedWishList(id: string): void;
+  removeWishFromCache(wish: WishDto): Promise<void>;
+  updatedCachedWishList(wishList: WishListDto): Promise<void>;
+  updateCachedWish(wish: WishDto): Promise<void>;
+  saveWishListToCache(wishList: WishListDto): Promise<void>;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class WishListStoreService {
+export class WishListStoreService implements WishListStore {
 
   private readonly CACHE_DEFAULT_TTL = 60 * 60;
   private readonly CACHE_GROUP_KEY = 'wishList';
