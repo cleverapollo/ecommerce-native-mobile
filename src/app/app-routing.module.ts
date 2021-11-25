@@ -6,6 +6,7 @@ import { EmailVerificationStatusResolver } from './email-verification/email-veri
 import { SharedWishListAccessGuard } from '@guards/shared-wish-list-access.guard';
 import { AuthGuard } from '@guards/auth.guard';
 import { AutoLoginGuard } from '@guards/auto-login.guard';
+import { FirebaseRouteGuard } from '@guards/firebase-route.guard';
 
 const routes: Routes = [
   { 
@@ -43,6 +44,11 @@ const routes: Routes = [
     path: 'email-verification',
     resolve: { emailVerificationStatus: EmailVerificationStatusResolver },
     loadChildren: () => import('./email-verification/email-verification.module').then( m => m.EmailVerificationPageModule)
+  },
+  {
+    path: 'firebase',
+    canActivate: [FirebaseRouteGuard],
+    loadChildren: () => import('./firebase-route/firebase-route.module').then( m => m.FirebaseRouteModule)
   },
   {
     path: 'signup',
