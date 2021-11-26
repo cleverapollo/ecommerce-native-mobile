@@ -91,12 +91,17 @@ export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEm
     }
   }
 
-  private getErrorMessage(error: HttpErrorResponse) {
-    let errorMessage = error.message;
-    if (typeof error.error === 'string') {
-      const googleApiError = JSON.parse(error.error);
+  private getErrorMessage(httpError: HttpErrorResponse) {
+    let errorMessage = httpError.message;
+    if (typeof httpError.error === 'string') {
+      const googleApiError = JSON.parse(httpError.error);
       if (googleApiError?.error?.message) {
         errorMessage = googleApiError?.error?.message;
+      }
+    } else if (typeof httpError.error === 'object') {
+      const googleApiError = httpError.error.error;
+      if (googleApiError?.message) {
+        errorMessage = googleApiError?.message;
       }
     }
     return errorMessage;
