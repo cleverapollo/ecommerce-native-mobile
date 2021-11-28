@@ -7,10 +7,19 @@ import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
 import { ApiVersion } from './api-version';
 
+export interface WishListApi {
+  acceptInvitation(id: string): Promise<void>;
+  create(wishList: WishListCreateRequest): Observable<WishListDto>;
+  getWishLists() : Observable<Array<WishListDto>>;
+  getWishList(id: string): Observable<WishListDto>;
+  update(wishList: WishListUpdateRequest): Observable<WishListDto>;
+  delete(id: string): Observable<Object>;
+  removeWish(wish: WishDto): Observable<Object>;
+}
 @Injectable({
   providedIn: 'root'
 })
-export class WishListApiService {
+export class WishListApiService implements WishListApi {
 
   private static REST_END_POINT = 'wish-lists';
 

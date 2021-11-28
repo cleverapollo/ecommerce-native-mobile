@@ -6,10 +6,16 @@ import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
 import { ApiVersion } from './api-version';
 
+export interface WishApi {
+  createWish(wish: WishDto): Observable<WishDto>;
+  getWishById(wishId: string) : Observable<WishDto>;
+  reserveWish(wishId: string) : Observable<Object>;
+  update(updatedWish: WishDto) : Observable<WishDto>;
+}
 @Injectable({
   providedIn: 'root'
 })
-export class WishApiService {
+export class WishApiService implements WishApi {
 
   private static REST_END_POINT = 'wishes';
 
