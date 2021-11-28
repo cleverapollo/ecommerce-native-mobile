@@ -1,9 +1,9 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WishDto } from '@core/models/wish-list.model';
 import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
-import { AlertService } from '@core/services/alert.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { BrowserService } from '@core/services/browser.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
@@ -17,12 +17,8 @@ describe('WishDetailPage', () => {
   let component: WishDetailPage;
   let fixture: ComponentFixture<WishDetailPage>;
 
-  let browserService: any = {
-    openInAppBrowser(url: string): Promise<void> { return Promise.resolve(); }
-  };
-  let navController: any = {
-    back() {}
-  };
+  let browserService: any = jasmine.createSpyObj('browserService', ['openInAppBrowser']);  
+  let navController = jasmine.createSpyObj('navController', ['back']);
   let route = {
     snapshot: {
       data: {
@@ -36,9 +32,7 @@ describe('WishDetailPage', () => {
       return of(WishListTestData.wishBoschWasher)
     }
   };
-  let analyticsService: any = {
-    setFirebaseScreenName(event: string) {}
-  };
+  let analyticsService = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
   let affiliateLinkService: AffiliateService = {
     createAffiliateLink: function (productUrlString: string): Promise<string> {
       return Promise.resolve('https://www.affiliate-link.de/product-id')
@@ -63,7 +57,8 @@ describe('WishDetailPage', () => {
         { provide: NavController, useValue: navController },
         { provide: BrowserService, useValue: browserService },
         { provide: ModalController, useValue: modalController }
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(WishDetailPage);
@@ -73,5 +68,46 @@ describe('WishDetailPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('ionViewDidEnter', () => {
+    it('should send a analytics event', () => {
+      component.ionViewDidEnter();
+      expect(analyticsService.setFirebaseScreenName).toHaveBeenCalledWith('wishlist-wish');
+    })
+  });
+
+  describe('ionViewWillEnter', () => {
+    it('should load wish data', () => {
+      const wishListStoreSpy = spyOn(wishListStore, 'loadWish').and.returnValue(of());
+      component.ionViewWillEnter();
+      expect(wishListStoreSpy).toHaveBeenCalledWith('1');
+    });
+  })
+
+  describe('goBack', () => {
+    it('should navigate back', () => {
+      component.goBack();
+      expect(navController.back).toHaveBeenCalled();
+    });
+  });
+
+  describe('openProductURL', () => {
+    it('should open product url in browser', () => {
+      component.openProductURL();
+      expect(browserService.openInAppBrowser).toHaveBeenCalledWith('https://www.affiliate-link.de/product-id');
+    })
+  })
+
+  describe('showDebugInfo', () => {
+
+    it('should open an modal', () => {
+      const modalControllerSpy = spyOn(modalController, 'create');
+
+      component.showDebugInfo();
+
+      expect(modalControllerSpy).toHaveBeenCalled();
+    })
+
   });
 });
