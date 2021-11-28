@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { FirebaseRouteGuard } from './firebase-route.guard';
 
@@ -6,7 +7,9 @@ describe('FirebaseRouteGuard', () => {
   let guard: FirebaseRouteGuard;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule.withRoutes([])]
+    });
     guard = TestBed.inject(FirebaseRouteGuard);
   });
 
