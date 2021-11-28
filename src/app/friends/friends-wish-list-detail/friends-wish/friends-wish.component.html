@@ -5,6 +5,7 @@
   <ion-card-content>
     <div class="wish-name truncate-name" [ngClass]="cssClassWishReservedState">{{ wish.name  }}</div>
     <div class="wish-price" [ngClass]="cssClassWishReservedState">{{ wish.price.displayString }}</div>
+    <div class="wish-note shared-wish-note" *ngIf="wish?.note">{{ wish.note }}</div>
     <div>
       <ion-grid>
         <ion-row *ngIf="!wish.reservedByFriend">

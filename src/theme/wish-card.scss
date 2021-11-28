@@ -28,6 +28,20 @@
     border-top: 1px dashed #f7f6f1;
 }
 
+.wish-note {
+    letter-spacing: 0px;
+    color: var(--ion-color-light);
+    white-space: pre-line;
+}
+
+.own-wish-note {
+    font: normal normal normal 18px/20px Roboto;
+}
+
+.shared-wish-note {
+    font: normal normal normal 13px/16px Roboto;
+}
+
 ion-button.give-button {
     font-size: 10px;
     font-weight: bold;
