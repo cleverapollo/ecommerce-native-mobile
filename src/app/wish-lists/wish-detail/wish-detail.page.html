@@ -26,6 +26,7 @@
         <div class="wish-description">
           <div class="wish-name">{{ wish?.name || 'wird geladen' }}</div>
           <div class="wish-price">{{ wish?.price.displayString || 'wird geladen' }}</div>
+          <div class="wish-note" *ngIf="wish?.note">{{ wish.note }}</div>
         </div>
         <div class="ion-text-center edit-wish-button-container">
           <a [routerLink]="['../edit']" class="edit-wish-button">

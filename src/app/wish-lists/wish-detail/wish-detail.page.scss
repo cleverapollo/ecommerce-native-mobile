@@ -86,3 +86,10 @@ section.wish-list-detail-container {
 ion-button.wantic-save-button {
     margin-bottom: 5pt;
 }
+
+.wish-note {
+    color: var(--ion-color-light);
+    white-space: pre-line;
+    font: normal normal normal 18px/20px Roboto;
+    letter-spacing: 0px;
+}
