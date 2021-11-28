@@ -3,6 +3,8 @@ import { FriendWish, FriendWishList } from "@friends/friends-wish-list-overview/
 
 export class WishListTestData {
 
+    // birthday
+
     static get wishBoschWasher(): WishDto {
         return {
             id: '1',
