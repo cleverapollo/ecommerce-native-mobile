@@ -161,9 +161,7 @@ export class WishCreateUpdatePage implements OnInit {
 
   private updateProperties(): void {
     const formControls = this.form.controls;
-    if (!this.isUpdatePage) {
-      this.wish.wishListId = formControls.wishListId.value;
-    }
+    this.wish.wishListId = formControls.wishListId.value;
     this.wish.name = formControls.name.value;
     this.wish.note = formControls.note.value;
     this.wish.price = this.createPrice(formControls.price.value);

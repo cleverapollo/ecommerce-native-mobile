@@ -34,7 +34,7 @@
     <app-validation-messages [control]="form.get('price')" [validationMessages]="validationMessages.price"></app-validation-messages>
 
     <!--wish list id-->
-    <section *ngIf="!isUpdatePage">
+    <section lines="none">
       <p class="wantic-margin-right-left">Wähle deine Wunschliste</p>
       <app-wish-list-radio formControlName="wishListId" [initialValue]="form.get('wishListId').value"></app-wish-list-radio>
       <app-validation-messages [control]="form.get('wishListId')" [validationMessages]="validationMessages.wishListId"></app-validation-messages>

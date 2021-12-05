@@ -26,3 +26,23 @@ ion-list {
 div.no-wish-lists-section {
   padding-left: 10px;
 }
+
+ion-item.input-wish-list-name.ion-invalid {
+  --highlight-color-invalid: transparent;
+  ion-input.ion-invalid {
+    border-color: transparent;
+  }
+} 
+
+ion-button.save-wish-list-button {
+  --box-shadow: none;
+  --border-radius: 40px;
+  letter-spacing: 1px;
+  font: normal normal bold 10px/12px Roboto;
+}
+
+ion-label.label-font-style {
+  margin-left: 13px;
+  letter-spacing: 0px;
+  font: normal normal medium 14px/16px Roboto;
+}

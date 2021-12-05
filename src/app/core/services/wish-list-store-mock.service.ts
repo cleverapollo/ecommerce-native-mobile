@@ -35,5 +35,7 @@ export class MockWishListStoreService implements WishListStore {
     saveWishListToCache(wishList: WishListDto): Promise<void> {
         return Promise.resolve();
     }
-
+    clear(): Promise<any> {
+        return Promise.resolve();
+    }
 }

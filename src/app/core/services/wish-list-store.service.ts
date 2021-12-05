@@ -16,6 +16,7 @@ export interface WishListStore {
   updatedCachedWishList(wishList: WishListDto): Promise<void>;
   updateCachedWish(wish: WishDto): Promise<void>;
   saveWishListToCache(wishList: WishListDto): Promise<void>;
+  clear(): Promise<any>;
 }
 
 @Injectable({
@@ -41,6 +42,10 @@ export class WishListStoreService implements WishListStore {
     private cache: CacheService,
     private logger: LogService
   ) { }
+
+  clear(): Promise<any> {
+    return this.cache.clearGroup(this.CACHE_GROUP_KEY);
+  }
 
   // WISH LISTS
 

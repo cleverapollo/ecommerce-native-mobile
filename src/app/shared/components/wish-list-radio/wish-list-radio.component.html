@@ -1,15 +1,31 @@
-<ion-list *ngIf="wishListSelectOptions.length > 0">
-  <ion-item *ngFor="let option of wishListSelectOptions; let isFirst = first; let isLast = last;" 
-            (click)="wishListId = option.id;"
-            [ngClass]=" {'first-item': isFirst, 'last-item': isLast } "
-  >
-    <ion-label>{{ option.name }}</ion-label>
+<ion-list>
+  <!--- form to create wish list -->
+  <form *ngIf="showForm" (ngSubmit)="createNewWishList()" style="overflow-y: scroll;" class="form-create-new-wish-list">
+    <ion-item [formGroup]="form" class="first-item input-wish-list-name">
+      <ion-input name="name" formControlName="name" placeholder="Gib einen Namen ein" enterkeyhint="done" autocapitalize="on" clear-input="true" inputmode="text" required="true"></ion-input>
+      <ion-button type="submit" *ngIf="showSaveWishListButton" size="small" color="dark" [disabled]="form.invalid" class="save-wish-list-button">Fertig</ion-button>
+      <ion-spinner *ngIf="showLoading" color="primary"></ion-spinner>
+    </ion-item>
+  </form>
+  <!--- button to enable edit mode -->
+  <ion-item *ngIf="!isEditMode" class="first-item button-enable-edit-mode" (click)="enableEditMode()">
+    <ion-icon color="primary" name="add-outline"></ion-icon>
+    <ion-label class="label-font-style">
+      Neue Wunschliste anlegen
+    </ion-label>
+  </ion-item>
+  <!--- wish list items -->
+  <ion-item *ngFor="let option of wishListSelectOptions; let isLast = last;" (click)="wishListId = option.id;" [ngClass]=" {'last-item': isLast }" class="radio-wish-list-option" >
+    <ion-label class="radio-option-name">{{ option.name }}</ion-label>
     <ion-avatar slot="end">
-      <img *ngIf="wishListId == option.id" src="assets/icon/checked.svg" alt="checked icon" />
-      <img *ngIf="wishListId != option.id" src="assets/icon/unchecked.svg" alt="unchecked icon" />
+      <img *ngIf="wishListId == option.id" src="assets/icon/checked.svg" alt="checked icon" class="icon-checked" />
+      <img *ngIf="wishListId != option.id" src="assets/icon/unchecked.svg" alt="unchecked icon" class="icon-unchecked" />
     </ion-avatar>
   </ion-item>
+  <!--- hint no wish lists -->
+  <ion-item *ngIf="hasNoWishLists" class="last-item hint-no-wish-lists" >
+    <ion-label class="label-font-style">
+      Du hast noch keine Wunschlisten angelegt.
+    </ion-label>
+  </ion-item>
 </ion-list>
-<div *ngIf="wishListSelectOptions.length === 0" class="wantic-margin-right-left no-wish-lists-section">
-  <p>Du hast keine Wunschlisten angelegt.</p>
-</div>

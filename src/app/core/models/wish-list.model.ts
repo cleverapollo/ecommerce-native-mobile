@@ -21,11 +21,13 @@ export class WishListSelectOptionDto {
     id: string;
     name: String;
 
+    constructor(id: string, name: string) {
+        this.id = id;
+        this.name = name;
+    }
+
     static forWishList(wishList: WishListDto): WishListSelectOptionDto {
-        const model = new WishListSelectOptionDto();
-        model.id = wishList.id;
-        model.name = wishList.name;
-        return model;
+        return new WishListSelectOptionDto(wishList.id, wishList.name);
     }
 }
 
