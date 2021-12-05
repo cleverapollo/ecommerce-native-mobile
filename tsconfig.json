@@ -32,6 +32,10 @@
       "@wishSearch/*": ["src/app/wish-search/*"]
     }
   },
+  "exclude": [
+    "src/app/core/test/*",
+    "src/app/core/services/*-mock.service.ts"
+  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
