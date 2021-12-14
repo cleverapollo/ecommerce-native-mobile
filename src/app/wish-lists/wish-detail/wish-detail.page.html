@@ -17,15 +17,15 @@
   </section>
 
   <ion-card>
-    <div class="product-image-container">
-      <img *ngIf="wish && wish.imageUrl" [src]="wish.imageUrl" (click)="openProductURL()" [alt]="wish.name" (error)="onImgLoadingError($event)" />
-      <img *ngIf="!wish?.imageUrl" class="placeholder" src="assets/images/wish-list-placeholder.svg" (click)="openProductURL()" alt="Platzhalterbild"/>
-    </div>
+    <app-wish-shop-info [wish]="wish" [styles]="shopInfoComponentStyles">
+      <div class="position-absolute product-image-container" (click)="openProductURL()">
+        <app-image [src]="wish.imageUrl" [alt]="wish.name" [imgClass]="productImageCssClass"></app-image>
+      </div>
+    </app-wish-shop-info>
     <ion-card-content>
       <div  class="ion-text-left">
         <div class="wish-description">
           <div class="wish-name">{{ wish?.name || 'wird geladen' }}</div>
-          <div class="wish-price">{{ wish?.price.displayString || 'wird geladen' }}</div>
           <div class="wish-note own-wish-note" *ngIf="wish?.note">{{ wish.note }}</div>
         </div>
         <div class="ion-text-center edit-wish-button-container">

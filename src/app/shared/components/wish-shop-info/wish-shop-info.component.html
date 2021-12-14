@@ -1,0 +1,10 @@
+<div class="wish-info-overlay-container" > 
+  <ng-content></ng-content>
+  <div class="position-absolute shop-info-overlay" [ngStyle]="styles.shopInfoOverlay">
+    <ion-icon class="icon-star" [ngClass]="fillIconCSSClass" [ngStyle]="styles.iconStar" src="assets/icon/star.svg" alt="Stern"></ion-icon>
+    <div *ngIf="shopLogoUrl" class="shop-logo-container" [ngStyle]="styles.shopLogoContainer">
+      <ion-icon class="shop-logo" [src]="shopLogoUrl"></ion-icon>
+    </div>
+    <div class="price-info" [ngStyle]="styles.priceInfo">{{ priceDisplayString }}</div>
+  </div>
+</div>

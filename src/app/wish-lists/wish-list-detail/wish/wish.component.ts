@@ -19,9 +19,4 @@ export class WishComponent implements OnInit {
 
   ngOnInit() {}
 
-  onImgLoadingError(event) {
-    event.target.src = 'assets/images/wish-list-placeholder.svg';
-    event.target.alt = 'Das Bild zeigt ein Quadrat mit einem Fragezeichen. Es stellt dar, dass es einen Fehler beim Laden des Bildes gegeben hat.';
-  }
-
 }

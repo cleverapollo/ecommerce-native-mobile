@@ -13,11 +13,12 @@ export class FriendWish {
     id: string;
     asin?: string;
     wishListId: string;
-    name: String;
+    name: string;
     note?: string;
     price: PriceDto;
     productUrl: string;
     imageUrl: String;
     reservedByFriend: boolean;
     bought: boolean;
+    isFavorite: boolean;
 }

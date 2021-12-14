@@ -1,10 +1,11 @@
 <ion-card class="wish-border" [ngClass]="{ 'wish-bought-border': wish.bought }">
-  <div class="image-container" (click)="openProductURL()" [ngClass]="cssClassWishReservedState">
-    <app-image [src]="wish.imageUrl" [alt]="wish.name"></app-image>
-  </div>
+  <app-wish-shop-info [wish]="wish">
+    <div class="image-container" (click)="openProductURL()" [ngClass]="cssClassWishReservedState">
+      <app-image [src]="wish.imageUrl" [alt]="wish.name"></app-image>
+    </div>
+  </app-wish-shop-info>
   <ion-card-content>
     <div class="wish-name truncate-name" [ngClass]="cssClassWishReservedState">{{ wish.name  }}</div>
-    <div class="wish-price" [ngClass]="cssClassWishReservedState">{{ wish.price.displayString }}</div>
     <div class="wish-note shared-wish-note" *ngIf="wish?.note">{{ wish.note }}</div>
     <div>
       <ion-grid>
@@ -28,7 +29,7 @@
         </ion-row>
         <ion-row *ngIf="wish.reservedByFriend">
           <ion-col  class="col-block">
-            <ion-button class="give-button action-button action-button-block" fill="outline" color="light" expand="block" (click)="openProductURL()">
+            <ion-button class="give-button action-button action-button-block" fill="outline" color="tertiary" expand="block" (click)="openProductURL()">
               ZUM SHOP
             </ion-button>
           </ion-col>

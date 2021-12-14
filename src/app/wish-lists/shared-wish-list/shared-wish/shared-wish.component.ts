@@ -9,6 +9,7 @@ import { StorageService } from '@core/services/storage.service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { first } from 'rxjs/operators';
 import { CoreToastService } from '@core/services/toast.service';
+import { WishShopInfoComponentStyles } from '@shared/components/wish-shop-info/wish-shop-info.component';
 
 export enum SharedWishListState {
   CANCELLABLE, RESERVABLE, RESERVED, LOADING

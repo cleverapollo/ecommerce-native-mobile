@@ -8,6 +8,7 @@ import { WishListTestDataUtils } from '@core/test/wish-list-data.utils';
 import { IonicModule } from '@ionic/angular';
 import { OwnersInfoComponent } from '@shared/components/owners-info/owners-info.component';
 import { OwnerNamesPipe } from '@shared/pipes/owner-names.pipe';
+import { SortByIsFavoritePipe } from '@shared/pipes/sort-by-is-favorite.pipe';
 
 import { SharedWishListPage } from './shared-wish-list.page';
 
@@ -29,7 +30,7 @@ describe('SharedWishListPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharedWishListPage, OwnerNamesPipe, OwnersInfoComponent],
+      declarations: [ SharedWishListPage, OwnerNamesPipe, OwnersInfoComponent, SortByIsFavoritePipe],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: AnalyticsService, useValue: analyticsServiceSpy },

@@ -1,5 +1,12 @@
+// variables
+:root {
+    --wish-card-border-width: 2px;
+}
+
+// styles
+
 .wish-border.wish-bought-border {
-    border: 2px solid var(--ion-color-tertiary);
+    border: var(--wish-card-border-width) solid var(--ion-color-tertiary);
 }
 
 .wish-reserved {
@@ -7,7 +14,7 @@
 }
 
 .wish-border {
-    border: 2px solid white;
+    border: var(--wish-card-border-width) solid white;
     border-radius: 10pt;
 }
 
@@ -63,6 +70,7 @@ ion-img {
 ion-card {
     div.image-container {
         height: 180px;
+        position: relative;
         img {
             max-height: 180px;
             margin: auto;

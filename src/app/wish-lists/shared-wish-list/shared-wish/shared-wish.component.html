@@ -1,10 +1,11 @@
 <ion-card *ngIf="wish" class="wish-border" [ngClass]="{ 'wish-bought-border': isCancellable }">
-  <div class="image-container" (click)="openProductURL()" [ngClass]="cssClassWishReservedState">
-    <app-image [src]="wish.imageUrl" alt="Vorschaubild auf dem der Wunsch '{{ wish.name }}' zu sehen ist"></app-image>
-  </div>
+  <app-wish-shop-info [wish]="wish">
+    <div class="image-container" (click)="openProductURL()" [ngClass]="cssClassWishReservedState">
+      <app-image [src]="wish.imageUrl" [alt]="wish.name"></app-image>
+    </div>
+  </app-wish-shop-info>
   <ion-card-content>
     <div class="wish-name truncate-name" [ngClass]="cssClassWishReservedState">{{ wish.name  }}</div>
-    <div class="wish-price" [ngClass]="cssClassWishReservedState">{{ wish.price.displayString }}</div>
     <div class="wish-note shared-wish-note" *ngIf="wish?.note">{{ wish.note }}</div>
     <div *ngIf="!readonly">
       <ion-grid>
@@ -31,7 +32,7 @@
         </ion-row>
         <ion-row *ngIf="!isStateChangeable && !isLoading">
           <ion-col  class="col-block">
-            <ion-button class="give-button action-button action-button-block" fill="outline" color="light" expand="block" name="action-open-product-url" (click)="openProductURL()">
+            <ion-button class="give-button action-button action-button-block" fill="outline" color="tertiary" expand="block" name="action-open-product-url" (click)="openProductURL()">
               ZUM SHOP
             </ion-button>
           </ion-col>

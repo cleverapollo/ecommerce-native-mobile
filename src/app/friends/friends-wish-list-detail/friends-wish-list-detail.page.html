@@ -22,7 +22,7 @@
 
    <ion-grid *ngIf="wishList">
      <ion-row>
-       <ion-col size="6" *ngFor="let wish of wishList.wishes">
+       <ion-col size="6" *ngFor="let wish of wishList.wishes | sortByIsFavorite">
          <app-friends-wish [wish]="wish" (onWishPurchased)="updateWish($event)"></app-friends-wish>
        </ion-col>
      </ion-row>

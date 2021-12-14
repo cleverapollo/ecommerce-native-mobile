@@ -40,7 +40,8 @@ describe('AffiliateLinkDebugInfoComponent', () => {
       productUrl: 'https://www.otto.de/p/bosch-waschmaschine-4-wan282a8-8-kg-1400-u-min-1214867044/#variationId=1243447578',
       imageUrl: 'https://i.otto.de/i/otto/2233c1d8-93ed-50da-8618-a1c6241c0254?$001PICT36$',
       reservedByFriend: false,
-      bought: false
+      bought: false,
+      isFavorite: false
     }
     fixture.detectChanges();
   }));

@@ -212,7 +212,9 @@ form {
             border: 2px solid var(--ion-color-primary);
         }
         ion-label.label-stacked {
-            margin-bottom: 10px !important;
+            margin-bottom: 8px !important;
+            font: normal normal normal 15px/20px Roboto !important;
+            letter-spacing: 0px !important;
         }
     }
     ion-item.ion-invalid.ion-touched, ion-item.ion-invalid.ion-dirty {
@@ -409,10 +411,9 @@ ion-header {
 }
 
 div.divide {
-    border: 1px dashed var(--ion-color-secondary);
+    border: 2px dashed #F0EDE3;
     margin-right: 25%;
     margin-left: 25%;
-    opacity: 0.3;
     margin-top: 15px;
     margin-bottom: 15px;
 }
@@ -515,4 +516,8 @@ ion-card {
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+.position-absolute {
+    position: absolute;
 }

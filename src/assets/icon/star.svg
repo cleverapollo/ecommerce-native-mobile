@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="19" height="18" viewBox="0 0 19 18">
+  <defs>
+    <filter id="Polygon_3" x="0" y="0" width="19" height="18" filterUnits="userSpaceOnUse">
+      <feOffset dy="-1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feFlood flood-opacity="0.161" result="color"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur"/>
+      <feComposite operator="in" in="color"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g data-type="innerShadowGroup">
+    <path id="Polygon_3-2" data-name="Polygon 3" d="M9.066.763a.5.5,0,0,1,.869,0L12.57,5.39a.5.5,0,0,0,.335.242L18.134,6.7a.5.5,0,0,1,.268.828l-3.6,3.922a.5.5,0,0,0-.128.394l.6,5.282a.5.5,0,0,1-.7.512l-4.863-2.2a.5.5,0,0,0-.412,0l-4.863,2.2a.5.5,0,0,1-.7-.512l.6-5.282a.5.5,0,0,0-.128-.394L.6,7.527A.5.5,0,0,1,.866,6.7L6.1,5.632A.5.5,0,0,0,6.43,5.39Z" />
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Polygon_3)">
+      <path id="Polygon_3-3" data-name="Polygon 3" d="M9.066.763a.5.5,0,0,1,.869,0L12.57,5.39a.5.5,0,0,0,.335.242L18.134,6.7a.5.5,0,0,1,.268.828l-3.6,3.922a.5.5,0,0,0-.128.394l.6,5.282a.5.5,0,0,1-.7.512l-4.863-2.2a.5.5,0,0,0-.412,0l-4.863,2.2a.5.5,0,0,1-.7-.512l.6-5.282a.5.5,0,0,0-.128-.394L.6,7.527A.5.5,0,0,1,.866,6.7L6.1,5.632A.5.5,0,0,0,6.43,5.39Z" fill="#fff"/>
+    </g>
+  </g>
+</svg>

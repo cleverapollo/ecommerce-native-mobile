@@ -111,6 +111,7 @@ describe('WishCreateUpdatePage', () => {
 
       expect(formControls.name).toBeDefined();
       expect(formControls.name.value).toBe('');
+      expect(formControls.name.valid).toBeFalsy();
       expect(formControls.name.hasError('required')).toBeTruthy();
 
       expect(formControls.note).toBeDefined();
@@ -120,6 +121,10 @@ describe('WishCreateUpdatePage', () => {
       expect(formControls.price).toBeDefined();
       expect(formControls.price.value).toBe('0.00');
       expect(formControls.price.hasError('required')).toBeFalsy();
+
+      expect(formControls.isFavorite).toBeDefined();
+      expect(formControls.isFavorite.value).toBeFalsy();
+      expect(formControls.isFavorite.valid).toBeTruthy();
     });
   });
   
@@ -149,22 +154,27 @@ describe('WishCreateUpdatePage', () => {
 
     expect(formControls.wishListId).toBeDefined();
     expect(formControls.wishListId.value).toBe('1');
-    expect(formControls.wishListId.hasError('required')).toBeFalsy();
+    expect(formControls.wishListId.valid).toBeTruthy();
 
     component.form.controls.name.setValue('BOSCH Waschmaschine 4 WAN282A8, 8 kg, 1400 U/min');
     component.form.controls.price.setValue('469.00');
+    component.form.controls.isFavorite.setValue(true);
 
     expect(formControls.name).toBeDefined();
     expect(formControls.name.value).toBe('BOSCH Waschmaschine 4 WAN282A8, 8 kg, 1400 U/min');
-    expect(formControls.name.hasError('required')).toBeFalsy();
+    expect(formControls.name.valid).toBeTruthy();
 
     expect(formControls.note).toBeDefined();
     expect(formControls.note.value).toBeNull();
-    expect(formControls.note.hasError('required')).toBeFalsy();
+    expect(formControls.note.valid).toBeTruthy();
 
     expect(formControls.price).toBeDefined();
     expect(formControls.price.value).toBe('469.00');
-    expect(formControls.price.hasError('required')).toBeFalsy();
+    expect(formControls.price.valid).toBeTruthy();
+
+    expect(formControls.isFavorite).toBeDefined();
+    expect(formControls.isFavorite.value).toBeTruthy();
+    expect(formControls.isFavorite.valid).toBeTruthy();
   });
 
   describe('createOrUpdateWish', () => {
@@ -196,7 +206,8 @@ describe('WishCreateUpdatePage', () => {
           displayString: '469,00 €'
         },
         productUrl: '',
-        imageUrl: ''
+        imageUrl: '',
+        isFavorite: false
       });
 
       // when
@@ -235,7 +246,8 @@ describe('WishCreateUpdatePage', () => {
         name: undefined,
         price: undefined,
         productUrl: '',
-        imageUrl: ''
+        imageUrl: '',
+        isFavorite: false
       }
       component.form.controls.name.setValue('BOSCH Waschmaschine 4 WAN282A8, 8 kg, 1400 U/min');
       component.form.controls.price.setValue('469.00');
@@ -307,7 +319,8 @@ describe('WishCreateUpdatePage', () => {
           displayString: '469,00 €'
         },
         productUrl: '',
-        imageUrl: ''
+        imageUrl: '',
+        isFavorite: false
       })
 
       // when

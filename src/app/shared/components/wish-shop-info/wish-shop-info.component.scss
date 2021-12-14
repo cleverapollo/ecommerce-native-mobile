@@ -1,0 +1,36 @@
+.wish-info-overlay-container {
+    position: relative;
+    .shop-info-overlay {
+        right: 0;
+        top:0;
+        z-index: 9;
+        box-shadow: 0px 3px 6px #00000029;
+        border-radius: 0px 0px 13px 13px;
+        background: white;
+        margin-right: 13px;
+        max-width: 50px;
+        .icon-star {
+            margin-top: 7px;
+        }
+        .icon-star.fill-gray {
+            fill: #c7c7c7;
+        }
+        .icon-star.fill-primary {
+            fill: var(--ion-color-primary);
+        }
+        .shop-logo-container {
+            max-height: 16px;
+            margin-top: 3px;
+            margin-bottom: 1px;
+        }
+        .price-info {
+            text-align: center;
+            color: var(--ion-color-primary);
+            margin-top: 1px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+}

@@ -2,7 +2,15 @@
     border-top: 1px dashed #f7f6f1;
 }
 
+.wish-note {
+    font: normal normal normal 13px/16px Roboto;
+}
+
 ion-card {
+    background-color: white;
+    margin: 0;
+    height: 100%;
+    border-radius: 10px;
     div.image-container {
         min-height: 140px;
         img {
@@ -13,10 +21,6 @@ ion-card {
             width: 90%;
         }
     }
-    background-color: white;
-    margin: 0;
-    height: 100%;
-    
     ion-card-content {
         border-top: 1px dashed #F0EDE3;
     }

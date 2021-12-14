@@ -1,11 +1,12 @@
 <ion-card [ngClass]="{ 'wish-reserved': showReservedState }">
-  <div class="image-container">
-    <img *ngIf="wish.imageUrl" [src]="wish.imageUrl" alt="Vorschaubild des Wunsches {{ wish.name }}" (error)="onImgLoadingError($event)"/>
-    <img *ngIf="!wish.imageUrl" class="placeholder"  src="assets/images/wish-list-placeholder.svg" alt="Platzhalterbild" />
-  </div>
+  <app-wish-shop-info [wish]="wish">
+    <div class="image-container">
+      <app-image [src]="wish.imageUrl" [alt]="wish.name"></app-image>
+    </div>
+  </app-wish-shop-info>
   <ion-card-content>
     <div class="wish-name truncate-name">{{ wish.name }}</div>
-    <div class="wish-price">{{ wish.price.displayString }}</div>
+    <div class="wish-note" *ngIf="wish?.note">{{ wish.note }}</div>
   </ion-card-content>
 </ion-card>
 <div *ngIf="showReservedState" class="wish-reserved-image-container">

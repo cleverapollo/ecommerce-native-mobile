@@ -9,12 +9,13 @@ export class WishDto {
     id?: string;
     asin?: string;
     wishListId: string;
-    name: String;
+    name: string;
     note?: string;
     price: PriceDto;
     productUrl: string;
     imageUrl: String;
     isReserved?: boolean;
+    isFavorite: boolean = false;
 }
 
 export class WishListSelectOptionDto {

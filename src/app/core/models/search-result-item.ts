@@ -7,12 +7,12 @@ export class SearchResult {
 export class SearchResultItem {
     id?: number;
     asin: string;
-    name: String;
+    name: string;
     price: PriceDto;
     imageUrl: String;
     productUrl: string;
 
-    constructor(asin: string, name: String, imageUrl: String, productUrl: string, price: PriceDto | number, id?: number) {
+    constructor(asin: string, name: string, imageUrl: String, productUrl: string, price: PriceDto | number, id?: number) {
         this.asin = asin;
         this.name = name;
         this.imageUrl = imageUrl;

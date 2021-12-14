@@ -23,34 +23,29 @@
 }
 
 ion-card {
-    div.product-image-container {
-        position: relative;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        img {
-            margin: auto;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            max-height: 100%;
-            max-width: 100%;
-        }
-        img.placeholder {
-            width: 70%;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-    }
     background-color: white;
     height: auto;
     text-align: center;
     margin-right: 10px;
     margin-left: 10px;
     margin-bottom: 20px;
+    border-radius: 10px;
+    .product-image-container {
+        position: relative;
+        img {
+            margin: auto;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            max-height: 100%;
+            max-width: 100%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
     ion-card-content {
-        border-top: 1px dashed #F0EDE3;
+        border-top: 2px dashed #F0EDE3;
         padding: 10px;
         div.wish-description {
             width: 85%;
@@ -63,9 +58,6 @@ ion-card {
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-            }
-            div.wish-price {
-                margin-top: 4px;
             }
         }
         div.edit-wish-button-container {

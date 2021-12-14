@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishListApiService } from '@core/api/wish-list-api.service';
@@ -31,7 +31,11 @@ export class WishCreateUpdatePage implements OnInit {
         new ValidationMessage('required', 'Dein Wunsch muss einer Wunschliste zugeordnet sein.')
       ],
       name: [
-        new ValidationMessage('required', 'Vergib deinem Wunsch bitte eine Bezeichnung.')
+        new ValidationMessage('required', 'Vergib deinem Wunsch bitte eine Bezeichnung.'),
+        new ValidationMessage('maxlength', 'Der Name ist zu lang.')
+      ],
+      note: [
+        new ValidationMessage('maxlength', 'Deine Notiz ist zu lang.')
       ],
       price: [
         new ValidationMessage('required', 'Vergib deinem Wunsch bitte einen Preis.')
@@ -90,14 +94,18 @@ export class WishCreateUpdatePage implements OnInit {
         validators: [Validators.required]
       }),
       'name': this.formBuilder.control(name, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.maxLength(255)],
         updateOn: 'blur'
       }),
       'note': this.formBuilder.control(this.wish?.note, {
+        validators: [Validators.maxLength(255)],
         updateOn: 'blur'
       }),
       'price': this.formBuilder.control(formattedPrice, {
         validators: [Validators.required],
+        updateOn: 'blur'
+      }),
+      'isFavorite': this.formBuilder.control(this.wish?.isFavorite ?? false, {
         updateOn: 'blur'
       }),
     });
@@ -165,6 +173,7 @@ export class WishCreateUpdatePage implements OnInit {
     this.wish.name = formControls.name.value;
     this.wish.note = formControls.note.value;
     this.wish.price = this.createPrice(formControls.price.value);
+    this.wish.isFavorite = formControls.isFavorite.value;
   }
 
   private logAddToWishListEvent(wish: WishDto) {

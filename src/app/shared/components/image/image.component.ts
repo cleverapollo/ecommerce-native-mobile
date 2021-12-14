@@ -23,9 +23,13 @@ export class ImageComponent implements OnInit {
 
   ngOnInit() { }
 
-  onError(event) {
+  onError(event: { target: HTMLImageElement }) {
     event.target.src = this.fallbackImageUrl;
     event.target.alt = this.placeholderAltText;
+
+    const imgClass = this.imgClass || '';
+    const cssPlaceholderClass = 'placeholder';
+    this.imgClass = imgClass ? imgClass + ` ${cssPlaceholderClass}` : cssPlaceholderClass;
   }
 
 }

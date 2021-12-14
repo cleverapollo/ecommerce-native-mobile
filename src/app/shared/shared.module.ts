@@ -16,6 +16,8 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
 import { ShowHidePasswordComponent } from './components/show-hide-password/show-hide-password.component';
 import { AffiliateLinkDebugInfoComponent } from './components/affiliate-link-debug-info/affiliate-link-debug-info.component';
 import { ImageComponent } from './components/image/image.component';
+import { WishShopInfoComponent } from './components/wish-shop-info/wish-shop-info.component';
+import { SortByIsFavoritePipe } from './pipes/sort-by-is-favorite.pipe';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { ImageComponent } from './components/image/image.component';
     ShowHidePasswordComponent,
     UserInitialsComponent,
     WishListRadioComponent,
-    TruncateNamePipe
+    WishShopInfoComponent,
+    TruncateNamePipe,
+    SortByIsFavoritePipe
   ],
   imports: [
     CommonModule,
@@ -54,9 +58,11 @@ import { ImageComponent } from './components/image/image.component';
     ReactiveFormsModule,
     SearchResultComponent,
     ShowHidePasswordComponent,
+    SortByIsFavoritePipe,
     TruncateNamePipe,
     UserInitialsComponent,
-    WishListRadioComponent
+    WishListRadioComponent,
+    WishShopInfoComponent
   ]
 })
 export class SharedModule { }

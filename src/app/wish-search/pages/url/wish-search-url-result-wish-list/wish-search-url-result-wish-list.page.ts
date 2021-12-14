@@ -65,7 +65,8 @@ export class WishSearchUrlResultWishListPage implements OnInit {
       price: formData.price,
       imageUrl: formData.imageUrl,
       productUrl: this.urlSearchDataStore.searchResultItem.productUrl,
-      wishListId: this.form.controls.wishListId.value
+      wishListId: this.form.controls.wishListId.value,
+      isFavorite: false
     }
     this.loadingService.showLoadingSpinner().finally(() => {
       this.wishService.createWish(wish).pipe(first()).subscribe(createdWish => {
