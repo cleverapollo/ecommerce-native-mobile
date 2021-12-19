@@ -34,14 +34,14 @@ export class AffiliateDefaultService implements AffiliateService {
     return wish;
   }
 
-  createAffiliateLink(productUrlUrlString: string): Promise<string> {
+  createAffiliateLink(productUrlString: string): Promise<string> {
     const affiliateProgrammes = this.affiliateDataStore.affiliateProgrammes;
-    let affiliateLink = productUrlUrlString;
+    let affiliateLink = productUrlString;
     let affiliateProgramme = null;
     let productUrl: URL = null;
     
     try {
-      productUrl = new URL(productUrlUrlString);
+      productUrl = new URL(productUrlString);
       const domain = productUrl.hostname.startsWith('www.') ? productUrl.hostname.substring(4) : productUrl.hostname;
       for (const programme of affiliateProgrammes) {
         if (this.affiliateProgrammeSupportsDomain(programme, domain)) {
@@ -51,9 +51,13 @@ export class AffiliateDefaultService implements AffiliateService {
       }
     } catch (error) {
       this.logger.error(error);
+      return Promise.resolve(productUrlString);
     }
 
-    if (productUrl && affiliateProgramme) {
+    if (affiliateProgramme === null) {
+      affiliateProgramme = this.sovrnAffiliateProgramme;
+    }
+    if (affiliateProgramme) {
       affiliateLink = this.buildAffiliateLinkForProgramme(affiliateProgramme, productUrl);
     }
 
@@ -97,6 +101,11 @@ export class AffiliateDefaultService implements AffiliateService {
     } catch (error) {
       return null;
     }
+  }
+
+  private get sovrnAffiliateProgramme(): AffiliateProgramme {
+    const programmes = this.affiliateDataStore.affiliateProgrammes;
+    return programmes.find(v => v.validDomains.includes('*'));
   }
 
 
