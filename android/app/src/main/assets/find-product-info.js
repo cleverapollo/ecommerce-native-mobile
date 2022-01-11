@@ -7,7 +7,7 @@
         let elements = document.body.getElementsByTagName('*');
         let prices = [];
         Array.prototype.forEach.call(elements, element => {
-            if (element?.innerText?.includes('€')) {
+            if (element && element.innerText && element.innerText.includes('€')) {
                 prices = prices.concat(findAllPricesInElement(element))
             }
         });
