@@ -5,12 +5,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.*
 import android.widget.AbsListView.CHOICE_MODE_SINGLE
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.android.volley.RequestQueue
+import com.android.volley.TimeoutError
 import com.android.volley.toolbox.Volley
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
@@ -19,11 +22,15 @@ import io.wantic.app.share.adapters.WishListArrayAdapter
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.Wish
 import io.wantic.app.share.models.WishList
+import io.wantic.app.share.network.WishApi
 import io.wantic.app.share.network.WishApiService
+import io.wantic.app.share.network.WishListApi
 import io.wantic.app.share.network.WishListApiService
+import io.wantic.app.share.utils.AlertService
 import io.wantic.app.share.utils.AuthService
 import io.wantic.app.share.utils.CircleTransform
-import io.wantic.app.share.utils.FeedbackService
+import io.wantic.app.share.utils.KeyboardHandler.hideSoftKeyboard
+import io.wantic.app.share.utils.ToastService
 
 
 class SelectWishListActivity : AppCompatActivity() {
@@ -32,16 +39,32 @@ class SelectWishListActivity : AppCompatActivity() {
         private const val LOG_TAG = "SelectWishListActivity"
     }
 
+    // network
     private lateinit var requestQueue: RequestQueue
-    private lateinit var wishListApiService: WishListApiService
-    private lateinit var wishApiService: WishApiService
+    private lateinit var wishListApiService: WishListApi
+    private lateinit var wishApiService: WishApi
 
-    private lateinit var productInfo: ProductInfo
-    private lateinit var productImageView: ImageView
+    // auth
+    private var idToken: String? = null
+
+    // wish list list
     private lateinit var wishListListView: ListView
     private lateinit var wishListArrayAdapter: WishListArrayAdapter
-    private lateinit var loadingSpinner: ProgressBar
-    private lateinit var actionButton: Button
+    private lateinit var textViewNoWishListsHint: TextView
+
+    private var wishLists: ArrayList<WishList> = ArrayList()
+        set(value) {
+            if (value.isEmpty()) {
+                textViewNoWishListsHint.visibility = VISIBLE
+            } else if (textViewNoWishListsHint.visibility == VISIBLE) {
+                textViewNoWishListsHint.visibility = GONE
+            }
+            field = value
+        }
+
+    // wish
+    private lateinit var productInfo: ProductInfo
+    private lateinit var productImageView: ImageView
 
     private var wish: Wish? = null
         set(value) {
@@ -53,44 +76,85 @@ class SelectWishListActivity : AppCompatActivity() {
             field = value
         }
 
-    private var idToken: String? = null
-    private var wishLists: ArrayList<WishList> = ArrayList()
+    // generic
+    private lateinit var loadingSpinner: ProgressBar
+    private lateinit var actionButton: Button
 
+    // Create new wish list ui items
+    private lateinit var editTextNewWishListName: EditText
+    private lateinit var buttonSaveNewWishList: Button
+    private lateinit var buttonAddNewWishList: Button
+
+    private var newWishListName: String
+        get() {
+            return editTextNewWishListName.text.toString()
+        }
+        set(value) {
+            editTextNewWishListName.setText(value)
+        }
+
+    // life cycle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_wish_list)
-        loadingSpinner = findViewById(R.id.loading_spinner)
-        initToolbar()
 
-        productInfo = intent.getSerializableExtra("productInfo") as ProductInfo
-        Log.d(LOG_TAG, "productInfo: $productInfo")
+        setupBusyIndicator()
+        setupToolbar()
+        setupNetworkServices()
 
-        initProductImageView()
-        initWishListListView()
+        setupData()
 
-        initNetworkServices()
+        setupProductImageView()
+        setupNewWishListUIItems()
+        setupWishListListView()
+
+        clearKeyboardFocusOnClickOutsideForm(findViewById(R.id.activity_select_wish_list_parent))
     }
 
-    private fun initNetworkServices() {
+    private fun setupData() {
+        productInfo = intent.getSerializableExtra("productInfo") as ProductInfo
+        Log.d(LOG_TAG, "productInfo: $productInfo")
+    }
+
+    private fun setupBusyIndicator() {
+        loadingSpinner = findViewById(R.id.loading_spinner)
+    }
+
+    private fun clearKeyboardFocusOnClickOutsideForm(view: View) {
+        view.setOnClickListener {
+            clearFocusOnEditTextAndKeyboard()
+        }
+    }
+
+    private fun setupNetworkServices() {
         requestQueue = Volley.newRequestQueue(this)
         this.wishListApiService = WishListApiService(requestQueue)
         this.wishApiService = WishApiService(requestQueue)
     }
 
-    private fun initWishListListView() {
+    private fun setupWishListListView() {
+        textViewNoWishListsHint = findViewById(R.id.hint_no_wish_lists)
+
         wishListListView = findViewById(R.id.wish_list_list_view)
         wishListListView.choiceMode = CHOICE_MODE_SINGLE
         wishListListView.onItemClickListener =
-            AdapterView.OnItemClickListener { _, view, position, _ ->
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                clearFocusOnEditTextAndKeyboard()
                 val wishList: WishList = this.wishLists[position]
-                Log.d(LOG_TAG, "UUID: ${wishList.id}")
                 wish = Wish.create(productInfo, wishList.id)
-                wishListArrayAdapter.selectWishListItem(view)
+                wishListArrayAdapter.selectItem(position)
             }
     }
 
-    private fun initProductImageView() {
+    private fun clearFocusOnEditTextAndKeyboard() {
+        if (editTextNewWishListName.hasFocus()) {
+            hideSoftKeyboard(this)
+            editTextNewWishListName.clearFocus()
+        }
+    }
+
+    private fun setupProductImageView() {
         productImageView = findViewById(R.id.product_image_thumbnail)
         val imageUri = Uri.parse(productInfo.imageUrl)
         if (imageUri != null) {
@@ -103,7 +167,43 @@ class SelectWishListActivity : AppCompatActivity() {
         }
     }
 
-    private fun initToolbar() {
+    private fun setupNewWishListUIItems() {
+        buttonAddNewWishList = findViewById(R.id.button_add_new_wish_list)
+        buttonAddNewWishList.setOnClickListener {
+            toggleNewWishListUIElements()
+        }
+
+        editTextNewWishListName = findViewById(R.id.new_wish_list_name)
+        buttonSaveNewWishList = findViewById(R.id.button_save_new_wish_list)
+        buttonSaveNewWishList.setOnClickListener {
+            val formIsValid = validateForm()
+            if (idToken != null && formIsValid) {
+                saveWishList(idToken!!, newWishListName)
+            }
+        }
+    }
+
+    private fun toggleNewWishListUIElements() {
+        if (buttonAddNewWishList.visibility == VISIBLE) {
+            buttonAddNewWishList.visibility = GONE
+            editTextNewWishListName.visibility = VISIBLE
+            buttonSaveNewWishList.visibility = VISIBLE
+        } else {
+            buttonAddNewWishList.visibility = VISIBLE
+            editTextNewWishListName.visibility = GONE
+            buttonSaveNewWishList.visibility = GONE
+        }
+    }
+
+    private fun validateForm(): Boolean {
+        if (newWishListName.isBlank()) {
+            editTextNewWishListName.error = "Name is required"
+            return false
+        }
+        return true
+    }
+
+    private fun setupToolbar() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -141,49 +241,37 @@ class SelectWishListActivity : AppCompatActivity() {
                 this.idToken = idToken
                 loadWishLists(idToken)
             } else {
-                FeedbackService.showNotAuthorizedAlert(this)
+                AlertService.showNotAuthorizedAlert(this)
             }
         }
     }
 
     private fun loadWishLists(idToken: String) {
-        loadingSpinner.visibility = View.VISIBLE
+        loadingSpinner.visibility = VISIBLE
         this.wishListApiService.getWishLists(idToken) { wishLists, error ->
-            loadingSpinner.visibility = View.GONE
+            loadingSpinner.visibility = GONE
             when {
                 wishLists != null -> {
-                    this.wishLists = wishLists
-                    if (this.wishLists.isNotEmpty()) {
+                    if (wishLists.isNotEmpty()) {
+                        this.wishLists = wishLists
                         wishListArrayAdapter = WishListArrayAdapter(applicationContext, wishLists)
                         wishListListView.adapter = wishListArrayAdapter
-                        wishListListView.setItemChecked(0, true)
-                        wish = Wish.create(this.productInfo, wishLists[0].id)
+                        checkFirstWishListItem()
                     } else {
-                       showNoWishListsFoundDialog()
+                        this.wishLists = ArrayList()
                     }
                 }
                 error != null -> {
                     Log.e(LOG_TAG, "Response error: $error")
+                    if (error is TimeoutError) {
+                        // ToDo: retry reloading
+                    }
                 }
                 else -> {
                     Log.e(LOG_TAG, "Undefined case: Error and wishLists are null")
                 }
             }
         }
-    }
-
-    private fun showNoWishListsFoundDialog() {
-        val appLinkScheme = resources.getString(R.string.app_link_scheme)
-        AlertDialog.Builder(this)
-            .setTitle(R.string.title_no_wish_lists)
-            .setMessage(R.string.message_no_wish_lists)
-            .setNeutralButton(R.string.button_label_create_wish_list_now) { _, _ ->
-                openDeepLink("${appLinkScheme}://secure/home/wish-list-new")
-            }
-            .setNegativeButton(R.string.button_label_close) { _, _ ->
-                finishAffinity()
-            }
-            .show()
     }
 
     private fun openDeepLink(url: String) {
@@ -195,11 +283,50 @@ class SelectWishListActivity : AppCompatActivity() {
         }
     }
 
+    private fun saveWishList(idToken: String, wishListName: String) {
+        loadingSpinner.visibility = VISIBLE
+        this.wishListApiService.createNewWishList(idToken, wishListName) { wishList, error ->
+            loadingSpinner.visibility = GONE
+            toggleNewWishListUIElements()
+            when {
+                wishList != null -> {
+                    wishListArrayAdapter.addWishList(wishList)
+                    checkFirstWishListItem()
+                    newWishListName = ""
+                    val toastMessage = resources.getString(R.string.message_wish_list_successfully_saved)
+                    ToastService.showToast(this, toastMessage)
+                    hideSoftKeyboard(this)
+                }
+                error != null -> {
+                    Log.e(LOG_TAG, "Response error: $error")
+                    showErrorAlert(idToken, wishListName)
+                }
+                else -> {
+                    Log.e(LOG_TAG, "Undefined case: wishList: $wishList, error: $error")
+                }
+            }
+        }
+    }
+
+    private fun showErrorAlert(idToken: String, wishListName: String) {
+        AlertDialog.Builder(this)
+            .setMessage(R.string.message_failed_to_save_new_wish_list)
+            .setNeutralButton(R.string.button_label_retry) { _, _ ->
+                saveWishList(idToken, wishListName)
+            }
+            .show()
+    }
+
+    private fun checkFirstWishListItem() {
+        wishListListView.setItemChecked(0, true)
+        wish = Wish.create(this.productInfo, wishLists[0].id)
+    }
+
     private fun saveWish(idToken: String, wish: Wish) {
         if (this.wish == null) { return }
-        loadingSpinner.visibility = View.VISIBLE
+        loadingSpinner.visibility = VISIBLE
         this.wishApiService.saveWish(idToken, wish) { successfullySaved, error ->
-            loadingSpinner.visibility = View.GONE
+            loadingSpinner.visibility = GONE
             when {
                 successfullySaved -> {
                     showSuccessAlert(wish)
@@ -245,6 +372,5 @@ class SelectWishListActivity : AppCompatActivity() {
         eventParams.putString(FirebaseAnalytics.Param.SCREEN_NAME, "share_extension-wishlist")
         FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, eventParams)
     }
-
 
 }

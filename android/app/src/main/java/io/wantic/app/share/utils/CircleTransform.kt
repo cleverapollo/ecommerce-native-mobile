@@ -20,7 +20,6 @@ package io.wantic.app.share.utils
 import android.graphics.*
 import com.squareup.picasso.Transformation
 
-
 /**
  * Created by julian on 13/6/21.
  */

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/activity_select_wish_list_parent"
     tools:context=".share.activities.SelectWishListActivity">
 
     <include
@@ -15,9 +16,10 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:visibility="invisible"
-        android:layout_centerInParent="true"
+        android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -27,8 +29,8 @@
         android:id="@+id/select_wish_list_headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
         android:fontFamily="@font/playfair_display"
         android:text="@string/select_wish_list_headline"
         android:textAlignment="center"
@@ -45,24 +47,123 @@
         android:layout_marginStart="142dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="141dp"
-        android:contentDescription="@string/product_image_content_description"
         android:background="@drawable/rounded_corner_black_border"
+        android:contentDescription="@string/product_image_content_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_wish_list_headline"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <LinearLayout
+        android:id="@+id/container_new_wish_list"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:background="@drawable/rounded_corner_top"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_image_thumbnail">
+
+        <EditText
+            android:id="@+id/new_wish_list_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="21dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/placeholder_enter_name"
+            android:importantForAutofill="no"
+            android:inputType="textAutoCorrect"
+            android:labelFor="@id/new_wish_list_name"
+            android:singleLine="true"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button_save_new_wish_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="21dp"
+            android:background="@drawable/button_done_new_wish_list"
+            android:letterSpacing="0.05"
+            android:text="@string/button_label_done"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/button_add_new_wish_list"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/icon_plus"
+            android:drawablePadding="13dp"
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp"
+            android:text="@string/button_label_create_new_wish_list"
+            android:gravity="start|center_vertical"
+            android:fontFamily="@font/roboto_medium"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/button_border_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layerType="software"
+        android:src="@drawable/dotted_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_new_wish_list" />
+
+    <TextView
+        android:id="@+id/hint_no_wish_lists"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:background="@drawable/rounded_corner_bottom"
+        android:paddingStart="21dp"
+        android:paddingEnd="21dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="@string/title_no_wish_lists"
+        android:textSize="18sp"
+        android:typeface="normal"
+        android:visibility="visible"
+        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_border_bottom" />
+
     <ListView
         android:id="@+id/wish_list_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:divider="@null"
+        android:animateLayoutChanges="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_image_thumbnail" />
+        app:layout_constraintTop_toBottomOf="@+id/button_border_bottom" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

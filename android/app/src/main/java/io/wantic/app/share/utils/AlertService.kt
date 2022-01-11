@@ -8,9 +8,9 @@ import androidx.core.app.ActivityCompat.finishAffinity
 import io.wantic.app.MainActivity
 import io.wantic.app.R
 
-object FeedbackService {
+object AlertService : AlertMessaging {
 
-    fun showNotAuthorizedAlert(context: Activity) {
+    override fun showNotAuthorizedAlert(context: Activity) {
         AlertDialog.Builder(context)
             .setTitle(R.string.title_not_authorized)
             .setMessage(R.string.message_not_authorized)

@@ -9,7 +9,7 @@ import io.wantic.app.share.models.Wish
 import org.json.JSONException
 import org.json.JSONObject
 
-class WishApiService(private val requestQueue: RequestQueue) {
+class WishApiService(private val requestQueue: RequestQueue): WishApi {
 
     companion object {
         private const val LOG_TAG = "WishApiService"
@@ -18,7 +18,7 @@ class WishApiService(private val requestQueue: RequestQueue) {
 
     private val url: String = "${AppConfig.backendUrl}/$RESOURCE_URI"
 
-    fun saveWish(idToken: String, wish: Wish, completionHandler: (successfullySaved: Boolean, error: VolleyError?) -> Unit) {
+    override fun saveWish(idToken: String, wish: Wish, completionHandler: (successfullySaved: Boolean, error: VolleyError?) -> Unit) {
         val data = createJsonObject(wish)
         val request = object : JsonObjectRequest(
             Method.POST, url, data,

@@ -3,8 +3,6 @@ package io.wantic.app.share.activities
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -18,6 +16,8 @@ import com.squareup.picasso.Picasso
 import io.wantic.app.R
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.utils.DecimalDigitsInputFilter
+import io.wantic.app.share.utils.KeyboardHandler
+import io.wantic.app.share.utils.KeyboardHandling
 import io.wantic.app.share.utils.onRightDrawableClicked
 import java.text.DecimalFormatSymbols
 
@@ -28,6 +28,10 @@ class EditProductDetailsActivity : AppCompatActivity() {
         private const val LOG_TAG = "EditProductDetails"
     }
 
+    // Services
+    private val keyboardHandler: KeyboardHandling = KeyboardHandler
+
+    // UI
     private lateinit var productImageView: ImageView
     private lateinit var productNameView: EditText
     private lateinit var productPriceView: EditText
@@ -58,9 +62,9 @@ class EditProductDetailsActivity : AppCompatActivity() {
     private fun initProductPriceView() {
         productPriceView = findViewById(R.id.productPrice)
         productPriceView.setText(String.format("%.2f", productInfo!!.price))
-        productPriceView.setOnFocusChangeListener { view, hasFocus ->
+        productPriceView.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                this.hideKeyboard(view)
+                keyboardHandler.hideSoftKeyboard(this)
             }
         }
         productPriceView.filters = arrayOf(DecimalDigitsInputFilter(2))
@@ -103,9 +107,9 @@ class EditProductDetailsActivity : AppCompatActivity() {
     private fun initProductNameView() {
         productNameView = findViewById(R.id.productName)
         productNameView.setText(productInfo!!.name)
-        productNameView.setOnFocusChangeListener { view, hasFocus ->
+        productNameView.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                this.hideKeyboard(view)
+                keyboardHandler.hideSoftKeyboard(this)
             }
         }
         productNameView.addTextChangedListener(afterTextChanged = { editable ->
@@ -182,12 +186,6 @@ class EditProductDetailsActivity : AppCompatActivity() {
     private fun enableButton(button: Button) {
         button.isEnabled = true
         actionButton.background.alpha = 255
-    }
-
-    private fun hideKeyboard(view: View) {
-        val inputMethodManager: InputMethodManager =
-            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onResume() {

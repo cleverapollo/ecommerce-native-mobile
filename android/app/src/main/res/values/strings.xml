@@ -22,6 +22,9 @@
     <string name="title_no_wish_lists">No wish lists available</string>
     <string name="message_no_wish_lists">You have not yet created a wish list and therefore cannot save a wish. Please create a wish list first and then repeat this process.</string>
 
+    <string name="message_wish_list_successfully_saved">Your wish list has been successfully saved.</string>
+    <string name="message_failed_to_save_new_wish_list">An error occurred while creating your wish list.</string>
+
     <!-- BUTTON LABELS -->
     <string name="save_button_label">Save</string>
     <string name="button_label_show_wish">Show wish</string>
@@ -30,8 +33,12 @@
     <string name="button_label_close">Close</string>
     <string name="button_label_open_wantic_app">Open Wantic App</string>
     <string name="button_label_create_wish_list_now">Create wish list now</string>
+    <string name="button_label_create_new_wish_list">Create new wish list</string>
 
     <!-- Form validation -->
     <string name="required_name">Please enter a name for your wish.</string>
     <string name="required_price">Please enter a price for your wish.</string>
+
+    <!-- Placeholder -->
+    <string name="placeholder_enter_name"><i>Enter a name</i></string>
 </resources>

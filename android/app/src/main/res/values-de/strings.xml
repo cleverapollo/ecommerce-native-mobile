@@ -23,6 +23,9 @@
     <string name="title_no_wish_lists">Keine Wunschlisten vorhanden</string>
     <string name="message_no_wish_lists">Du hast noch keine Wunschlisten angelegt und kannst deshalb keinen Wunsch speichern. Bitte erstelle zunächst eine Wunschliste und wiederhole anschließend diesen Vorgang.</string>
 
+    <string name="message_wish_list_successfully_saved">Deine Wunschliste wurde erfolgreich gespeichert.</string>
+    <string name="message_failed_to_save_new_wish_list">Beim Anlegen deiner Wunschliste ist ein Fehler aufgetreten.</string>
+
     <!-- BUTTON LABELS -->
     <string name="save_button_label">Speichern</string>
     <string name="button_label_show_wish">Wunsch anzeigen</string>
@@ -31,8 +34,12 @@
     <string name="button_label_close">Schließen</string>
     <string name="button_label_open_wantic_app">Wantic App öffnen</string>
     <string name="button_label_create_wish_list_now">Wunschliste jetzt anlegen</string>
+    <string name="button_label_create_new_wish_list">Neue Wunschliste anlegen</string>
 
     <!-- Form validation -->
     <string name="required_name">Bitte gib einen Namen für deinen Wunsch an.</string>
     <string name="required_price">Bitte gib einen Preis für deinen Wunsch an.</string>
+
+    <!-- Placeholder -->
+    <string name="placeholder_enter_name"><i>Gib einen Namen ein</i></string>
 </resources>

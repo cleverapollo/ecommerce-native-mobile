@@ -25,9 +25,9 @@ import com.squareup.picasso.Picasso
 import io.wantic.app.R
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.SelectedProductImageView
+import io.wantic.app.share.utils.AlertService
 import io.wantic.app.share.utils.AndroidJSInterface
 import io.wantic.app.share.utils.AuthService
-import io.wantic.app.share.utils.FeedbackService
 import kotlinx.serialization.*
 import java.util.regex.Matcher
 
@@ -203,6 +203,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         webView.settings.loadsImagesAutomatically = true
+        WebView.setWebContentsDebuggingEnabled(true)
 
         webView.addJavascriptInterface(AndroidJSInterface(this), "Android")
         webView.webViewClient = createWebViewClient()
@@ -224,7 +225,7 @@ class SelectProductImageActivity : AppCompatActivity() {
             val self = this@SelectProductImageActivity
             if (webViewSuccess) {
                 val jsonString = self.loadJsFileContent()
-                Log.d(LOG_TAG, "web page loading finished")
+                Log.d(LOG_TAG, "web page loading finished $jsonString")
                 view?.evaluateJavascript(jsonString, null)
             } else {
                 stopLoading()
@@ -265,7 +266,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         super.onStart()
         AuthService.getIdToken { idToken ->
             if (idToken == null) {
-                FeedbackService.showNotAuthorizedAlert(this)
+                AlertService.showNotAuthorizedAlert(this)
             }
         }
     }

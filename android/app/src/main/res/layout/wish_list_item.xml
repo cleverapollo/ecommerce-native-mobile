@@ -10,10 +10,8 @@
         android:id="@+id/textViewListItem"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_corner_top"
         android:ems="10"
         android:gravity="center_vertical"
         android:paddingStart="20dp"
@@ -25,25 +23,22 @@
 
     <ImageView
         android:id="@+id/imageViewCheckMark"
-        android:layout_width="24pt"
+        android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="11dp"
-        android:layout_marginEnd="32dp"
-        android:src="@drawable/icon_list_item_checked"
+        android:layout_marginEnd="20dp"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewListItem"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_list_item_checked"
-        tools:srcCompat="@drawable/icon_list_item_checked" />
+        tools:srcCompat="@drawable/icon_list_item_unchecked" />
 
     <ImageView
         android:id="@+id/imageViewBottomBorder"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
         android:layerType="software"
         android:src="@drawable/dotted_line"
         app:layout_constraintEnd_toEndOf="parent"
