@@ -4,8 +4,8 @@ import { TestBed, async } from '@angular/core/testing';
 import { Platform } from '@ionic/angular';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { Plugins } from '@capacitor/core';
-const { SplashScreen, StatusBar } = Plugins;
+import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar } from '@capacitor/status-bar';
 
 import { AppComponent } from './app.component';
 

@@ -4,12 +4,10 @@ import { WishListDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { first } from 'rxjs/operators';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { Plugins } from '@capacitor/core';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { LoadingService } from '@core/services/loading.service';
 import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
 import { Subscription } from 'rxjs';
-
-const { SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-wish-list-overview',

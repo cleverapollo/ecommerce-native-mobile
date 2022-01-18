@@ -7,13 +7,20 @@ use_frameworks!
 install! 'cocoapods', :disable_input_output_paths => true
 
 def capacitor_pods
-  # Automatic Capacitor Pod dependencies, do not delete
   pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
-  pod 'CapacitorSecureStoragePlugin', :path => '../../node_modules/capacitor-secure-storage-plugin'
+  pod 'CapacitorApp', :path => '..\..\node_modules\@capacitor\app'
+  pod 'CapacitorBrowser', :path => '..\..\node_modules\@capacitor\browser'
+  pod 'CapacitorDevice', :path => '..\..\node_modules\@capacitor\device'
+  pod 'CapacitorHaptics', :path => '..\..\node_modules\@capacitor\haptics'
+  pod 'CapacitorKeyboard', :path => '..\..\node_modules\@capacitor\keyboard'
+  pod 'CapacitorShare', :path => '..\..\node_modules\@capacitor\share'
+  pod 'CapacitorSplashScreen', :path => '..\..\node_modules\@capacitor\splash-screen'
+  pod 'CapacitorStatusBar', :path => '..\..\node_modules\@capacitor\status-bar'
+  pod 'CapacitorStorage', :path => '..\..\node_modules\@capacitor\storage'
+  pod 'CapacitorSecureStoragePlugin', :path => '..\..\node_modules\capacitor-secure-storage-plugin'
   pod 'CordovaPlugins', :path => '../capacitor-cordova-ios-plugins'
   pod 'CordovaPluginsStatic', :path => '../capacitor-cordova-ios-plugins'
-  # Do not delete
 end
 
 target 'Wantic' do

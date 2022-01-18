@@ -14,10 +14,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '@core/api/auth.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
-import { Plugins } from '@capacitor/core';
+import { Device } from '@capacitor/device';
 import { Subscription } from 'rxjs';
-
-const { Device } = Plugins;
 
 @Component({
   selector: 'app-change-password',

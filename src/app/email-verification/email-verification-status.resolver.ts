@@ -9,11 +9,10 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { LogService } from '@core/services/log.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { DeviceInfo, Plugins } from '@capacitor/core'
+import { DeviceInfo, Device } from '@capacitor/device'
 import { CoreToastService } from '@core/services/toast.service';
-import { StorageKeys, StorageService } from '@core/services/storage.service';
+import { StorageService } from '@core/services/storage.service';
 
-const { Device } = Plugins
 @Injectable()
 export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEmailVerificationStatus> | Observable<PublicEmailVerificationStatus>> {
   

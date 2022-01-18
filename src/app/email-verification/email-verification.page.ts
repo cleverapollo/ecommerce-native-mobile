@@ -1,11 +1,8 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { VerifyEmailResponse } from '@core/models/google-api.model';
 import { PublicEmailVerificationStatus } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { Plugins } from '@capacitor/core'
-const { Device } = Plugins
+import { Device } from '@capacitor/device'
 
 @Component({
   selector: 'app-email-verification',

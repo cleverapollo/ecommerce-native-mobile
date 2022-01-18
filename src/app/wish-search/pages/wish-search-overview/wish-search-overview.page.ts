@@ -9,14 +9,12 @@ import { ShareExtensionExplanationComponent } from '../../share-extension-explan
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { Plugins } from '@capacitor/core';
+import { Device } from '@capacitor/device';
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
 import { first } from 'rxjs/operators';
 import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
-
-const { Device } = Plugins;
 
 @Component({
   selector: 'app-wish-search-overview',

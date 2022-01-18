@@ -15,9 +15,7 @@ import { UserProfile } from '@core/models/user.model';
 import { environment, SERVER_URL } from '@env/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
-import { Plugins } from '@capacitor/core';
-
-const { Device } = Plugins;
+import { Device } from '@capacitor/device';
 
 export interface AppAuthenticationService {
   signup(signupRequest: SignupRequest): Promise<void>;

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { Plugins } from '@capacitor/core';
-
-const { Browser } = Plugins;
+import { Browser } from '@capacitor/browser';
 
 @Injectable({
   providedIn: 'root'

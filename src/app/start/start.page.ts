@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { LogService } from '@core/services/log.service';
-import { Plugins } from '@capacitor/core'
+import { SplashScreen } from '@capacitor/splash-screen'
 import { AuthenticationService } from '@core/services/authentication.service';
 import { AuthProvider, SignInResponse, SignupRequestSocialLogin } from '@core/models/signup.model';
 import { UserApiService } from '@core/api/user-api.service';
@@ -14,8 +14,6 @@ import { LoadingService } from '@core/services/loading.service';
 import { UserProfile } from '@core/models/user.model';
 import { CoreToastService } from '@core/services/toast.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
-
-const { SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-start',

@@ -6,12 +6,10 @@ import { AnalyticsService } from '@core/services/analytics.service';
 import { IonInput } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
-
-import { Plugins } from '@capacitor/core';
+import { Keyboard } from '@capacitor/keyboard';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
-const { Keyboard } = Plugins;
 
 @Component({
   selector: 'app-signup-mail',

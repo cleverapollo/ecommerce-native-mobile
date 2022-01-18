@@ -10,12 +10,10 @@ import { LogService } from '@core/services/log.service';
 import { SearchService } from '@core/api/search.service';
 import { PagingService } from '@core/services/paging.service';
 import { first } from 'rxjs/operators';
-import { Plugins } from '@capacitor/core';
+import { Keyboard } from '@capacitor/keyboard';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
-
-const { Keyboard } = Plugins;
 
 @Component({
   selector: 'app-amazon-search-results',

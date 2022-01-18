@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 import 'capacitor-secure-storage-plugin';
-import { Plugins } from "@capacitor/core";
 import { LogService } from './log.service';
-const { Storage, SecureStoragePlugin } = Plugins;
+import { Storage } from '@capacitor/storage';
+import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 
 export enum StorageKeys {
   USER_SETTINGS = 'userSettings',

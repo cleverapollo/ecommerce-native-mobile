@@ -2,7 +2,6 @@
 	"appId": "io.wantic.app",
 	"appName": "Wantic",
 	"bundledWebRuntime": false,
-	"npmClient": "npm",
 	"webDir": "www",
 	"plugins": {
 		"SplashScreen": {

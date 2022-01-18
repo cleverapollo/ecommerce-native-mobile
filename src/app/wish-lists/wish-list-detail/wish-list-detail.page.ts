@@ -3,17 +3,14 @@ import { NavController } from '@ionic/angular';
 import { WishListDto, WishDto } from '@core/models/wish-list.model';
 import { ActivatedRoute } from '@angular/router';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-
-import { Plugins } from '@capacitor/core';
+import { Share } from '@capacitor/share';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { LogService } from '@core/services/log.service';
 import { NavigationService } from '@core/services/navigation.service';
 import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
 import { APP_URL } from 'src/environments/environment';
 import { AnalyticsService } from '@core/services/analytics.service';
-
-const { Share, SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-wish-list-detail',

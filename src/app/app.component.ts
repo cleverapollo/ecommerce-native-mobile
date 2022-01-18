@@ -2,7 +2,9 @@ import { Component, NgZone } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { CacheService } from 'ionic-cache';
-import { Plugins, StatusBarStyle } from '@capacitor/core';
+import { Style, StatusBar } from '@capacitor/status-bar';
+import { App } from '@capacitor/app';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
 import { LogService } from '@core/services/log.service';
 import { AuthenticationService } from '@core/services/authentication.service';
@@ -12,7 +14,7 @@ import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.servi
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { ScriptLoadingStatus, ScriptService } from '@core/services/script.service';
 import { ScriptName } from '@core/data/script-store';
-const { StatusBar, App, SplashScreen } = Plugins;
+import { Storage } from '@capacitor/storage';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +41,9 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       if (this.platformService.isNativePlatform) {
+        // migrate Capacitor 2 data to Capator 3 data
+        Storage.migrate()
+        
         this.initNativeStatusBar();
         // handle universal links
         App.addListener('appUrlOpen', (data: any) => {
@@ -64,7 +69,7 @@ export class AppComponent {
 
   private initNativeStatusBar() {
     StatusBar.setStyle({
-      style: StatusBarStyle.Light
+      style: Style.Light
     });
     StatusBar.setOverlaysWebView({
       overlay: true

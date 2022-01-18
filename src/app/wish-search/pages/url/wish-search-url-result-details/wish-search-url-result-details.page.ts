@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SearchResult, SearchResultItem } from '@core/models/search-result-item';
+import { SearchResultItem } from '@core/models/search-result-item';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { IonInput } from '@ionic/angular';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
-import { Plugins } from '@capacitor/core';
+import { Keyboard } from '@capacitor/keyboard';
 import { UrlSearchDataStoreService } from '../url-search-data-store.service';
 import { PriceDto } from '@core/models/wish-list.model';
 import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
-const { Keyboard } = Plugins;
 
 @Component({
   selector: 'app-wish-search-url-result-details',

@@ -3,9 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SERVER_URL } from 'src/environments/environment';
 import { LogService } from '@core/services/log.service';
-import { Plugins } from '@capacitor/core';
-
-const { Device } = Plugins;
+import { Device } from '@capacitor/device';
+import { App } from '@capacitor/app';
 
 @Injectable({
   providedIn: 'root'
@@ -95,9 +94,10 @@ export class ApiService {
   }
 
   private async createClientInfoHeader() {
+    const appInfo = await App.getInfo();
     const deviceInfo = await Device.getInfo();
     const languageCode = (await Device.getLanguageCode()).value;
-    return `platform=${deviceInfo.platform}; osVersion=${deviceInfo.osVersion}; appVersion=${deviceInfo.appVersion}; locale=${languageCode};`;
+    return `platform=${deviceInfo.platform}; osVersion=${deviceInfo.osVersion}; appVersion=${appInfo.version}; locale=${languageCode};`;
   }
 
 }
