@@ -17,22 +17,12 @@ public class MainActivity extends BridgeActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // Initializes the Bridge
-    this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
-      // Additional plugins you've installed go here
-      // Ex: add(TotallyAwesomePlugin.class);
-    }});
-
-    if(Build.VERSION.SDK_INT >= 24 ){
-      ServiceWorkerController swController = ServiceWorkerController.getInstance();
-
-      swController.setServiceWorkerClient(new ServiceWorkerClient() {
-        @Override
-        public WebResourceResponse shouldInterceptRequest(WebResourceRequest request) {
-          return bridge.getLocalServer().shouldInterceptRequest(request);
-        }
-      });
-    }
-
+    ServiceWorkerController swController = ServiceWorkerController.getInstance();
+    swController.setServiceWorkerClient(new ServiceWorkerClient() {
+      @Override
+      public WebResourceResponse shouldInterceptRequest(WebResourceRequest request) {
+        return bridge.getLocalServer().shouldInterceptRequest(request);
+      }
+    });
   }
 }
