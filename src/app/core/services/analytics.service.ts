@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { Appsflyer, AppsflyerEvent } from '@ionic-native/appsflyer/ngx';
-import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
+import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { LogService } from './log.service';
 import { AuthProvider } from '@core/models/signup.model';
 import { Platform } from '@ionic/angular';
@@ -26,7 +26,6 @@ export class AnalyticsService {
     private logger: LogService, 
     private platform: Platform,
     private platformService: DefaultPlatformService,
-    private firebaseAnalytics: FirebaseAnalytics,
     private angularFireAnalytics: AngularFireAnalytics
     ) { 
   }
@@ -50,7 +49,7 @@ export class AnalyticsService {
   logFirebaseEvent(eventName: string, params: { [prop: string]: any }) {
     if (this.platformService.isNativePlatform) { 
       this.platform.ready().then(() => {
-        this.firebaseAnalytics.logEvent(eventName, params);
+        FirebaseAnalytics.logEvent({ name: eventName, params});
       })
     } else {
       this.angularFireAnalytics.logEvent(eventName, params);
@@ -65,7 +64,9 @@ export class AnalyticsService {
 
   setFirebaseScreenName(screenName: string) {
     if (this.platformService.isNativePlatform) {
-      this.firebaseAnalytics.setCurrentScreen(screenName);
+      FirebaseAnalytics.setScreenName({
+        screenName: screenName
+      });
     } else {
       this.angularFireAnalytics.setCurrentScreen(screenName);
     }
@@ -75,7 +76,7 @@ export class AnalyticsService {
     this.analyticsEnabled = !this.analyticsEnabled;
 
     if (this.platformService.isNativePlatform) {
-      this.firebaseAnalytics.setEnabled(this.analyticsEnabled);
+      FirebaseAnalytics.setCollectionEnabled({ enabled: this.analyticsEnabled });
       if (this.appsflyerConfigExists) {
         this.appsflyer.Stop(this.analyticsEnabled);
       }

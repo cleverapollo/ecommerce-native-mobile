@@ -37,7 +37,6 @@ import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { AngularFireModule } from '@angular/fire';
 
@@ -86,7 +85,6 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     EmailVerificationStatusResolver,
     Facebook,
     File,
-    FirebaseAnalytics,
     FirebaseAuthentication,
     GooglePlus,
     SharedWishListResolver,

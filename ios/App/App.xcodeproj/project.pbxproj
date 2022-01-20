@@ -7,15 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02B3FA8F97CCBFAEE38D116B /* Pods_Wantic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F117C9375DC49984BC885D82 /* Pods_Wantic.framework */; };
-		04D7159E0264C53817F42509 /* Pods_Share_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97EFE697BDE6917534998A24 /* Pods_Share_Beta.framework */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
-		41A5DF104C372338DE008928 /* Pods_Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224EA8C7F4A13B5E1D71AAA9 /* Pods_Share.framework */; };
 		504EC3081FED79650016851F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
 		504EC30F1FED79650016851F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
-		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
+		62B31205B0FAD597CCA2BF87 /* Pods_Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8382BD0C25374B11719E4D49 /* Pods_Share.framework */; };
+		8735BFF3B87516A7F9602F86 /* Pods_Wantic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0CDC2C6C77D06D5150EC842 /* Pods_Wantic.framework */; };
+		8B9E922586B0F0A0E69754EF /* Pods_Share_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E7117CD670D1C6F8683E9C /* Pods_Share_Beta.framework */; };
 		B114E13525B8A56A00F92599 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114E13425B8A56A00F92599 /* UIColorExtension.swift */; };
 		B114E13D25BC33CF00F92599 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B114E13C25BC33CF00F92599 /* Colors.xcassets */; };
 		B114E14125BC34F700F92599 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B114E14025BC34F700F92599 /* Icons.xcassets */; };
@@ -23,7 +22,6 @@
 		B12EA4D62691C4F1001654EA /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4D52691C4F1001654EA /* UIImageExtension.swift */; };
 		B12EA4D72691C4F1001654EA /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4D52691C4F1001654EA /* UIImageExtension.swift */; };
 		B13727A926DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B13727A826DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist */; };
-		B13727AA26DBC2FE00E0DCF4 /* GoogleService-Info-share-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B13727A826DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist */; };
 		B148806825AE0D9500D0106B /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806725AE0D9500D0106B /* LoginResponse.swift */; };
 		B148806E25AE129500D0106B /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148806D25AE129500D0106B /* LoginRequest.swift */; };
 		B148809C25B202CE00D0106B /* WishListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B148809B25B202CE00D0106B /* WishListTableViewController.swift */; };
@@ -44,6 +42,8 @@
 		B1750DF425B468300023A9C9 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750DF325B468300023A9C9 /* UIViewExtension.swift */; };
 		B17629A326051F4500B1FDB7 /* GoogleService-Info-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */; };
 		B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
+		B177B6A22799FA3F00F571DD /* public in Resources */ = {isa = PBXBuildFile; fileRef = B177B6A12799FA3F00F571DD /* public */; };
+		B177B6A32799FA3F00F571DD /* public in Resources */ = {isa = PBXBuildFile; fileRef = B177B6A12799FA3F00F571DD /* public */; };
 		B17B403C25C4717F003363E9 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B403B25C4717E003363E9 /* FooterView.swift */; };
 		B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B404125C482E6003363E9 /* WanticTextView.swift */; };
 		B182B57A2709BDD1006B5B77 /* PlayfairDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B182B5742709BDC9006B5B77 /* PlayfairDisplay-Regular.ttf */; };
@@ -86,10 +86,8 @@
 		B18F1CC626874EF800FD7528 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F1CC426874EF800FD7528 /* WebViewController.swift */; };
 		B18F1CCC2687610D00FD7528 /* fetch-product-infos.js in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CCB2687610D00FD7528 /* fetch-product-infos.js */; };
 		B18F1CCD2687610D00FD7528 /* fetch-product-infos.js in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CCB2687610D00FD7528 /* fetch-product-infos.js */; };
-		B18F1CDB2688846E00FD7528 /* Share Beta-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B18F1CDA2688846E00FD7528 /* Share Beta-Info.plist */; };
 		B19A51CE2610CD8E00984207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		B19A51D22610CD8E00984207 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
-		B19A51D32610CD8E00984207 /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		B19A51D42610CD8E00984207 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		B19A51D52610CD8E00984207 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		B19A51D62610CD8E00984207 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
@@ -138,26 +136,17 @@
 		B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = B1A80FC0258B3F6E00F0917F /* SwiftKeychainWrapper */; };
 		B1A80FC5258B3F9B00F0917F /* WishListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC4258B3F9B00F0917F /* WishListService.swift */; };
 		B1A80FC9258B40D900F0917F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A80FC8258B40D900F0917F /* AuthService.swift */; };
-		B1EBF5A526DBB7EA00E051D0 /* GoogleService-Info-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */; };
 		B1F81EA1263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */; };
 		B1F81EC12641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */; };
-		B1F81EC22641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */; };
 		B1F81F122641DB4000C277FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F112641DB4000C277FB /* Credentials.swift */; };
 		B1F81F132641DB4000C277FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F112641DB4000C277FB /* Credentials.swift */; };
 		B1F81F6A26430D1500C277FB /* WanticShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */; };
 		B1F81F6B26430D1500C277FB /* WanticShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */; };
-		D90353C84B3AEE23E77B9B64 /* Pods_Wantic_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B27AB4136DB89BC062A666D /* Pods_Wantic_Beta.framework */; };
+		D94ED42B35E26405D9628EFA /* Pods_Wantic_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2382B3E3D7FA845C94EADA /* Pods_Wantic_Beta.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		B19A52562610D4BA00984207 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B19A51E72610CE8000984207;
-			remoteInfo = "Share Beta";
-		};
-		B19A527E2610D7C800984207 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
 			proxyType = 1;
@@ -174,6 +163,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B177B69D2799E9BC00F571DD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B177B6A02799E9C100F571DD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B19A51DA2610CD8E00984207 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -199,15 +208,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		01A5C2233CA7AEE20480AD39 /* Pods-Wantic.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.xctest.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.xctest.xcconfig"; sourceTree = "<group>"; };
-		08306D799C7EAC0B134BF2F6 /* Pods-Wantic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.debug.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.debug.xcconfig"; sourceTree = "<group>"; };
-		0FACE3CCFB1AC49FE6800C41 /* Pods-Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.debug.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.debug.xcconfig"; sourceTree = "<group>"; };
-		224EA8C7F4A13B5E1D71AAA9 /* Pods_Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C4764BF868B775D38055237 /* Pods-Share Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.debug.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.debug.xcconfig"; sourceTree = "<group>"; };
-		2EE753DDAFA5FADD1CA3005B /* Pods-Wantic Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.release.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.release.xcconfig"; sourceTree = "<group>"; };
+		0E2382B3E3D7FA845C94EADA /* Pods_Wantic_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0EACCD8AED6E87823CF83E3C /* Pods-Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.debug.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.debug.xcconfig"; sourceTree = "<group>"; };
+		24171BEC5DCE4982DE991229 /* Pods-Wantic Beta.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.xctest.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.xctest.xcconfig"; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		3FB8C8FA33749721ED242189 /* Pods-Share.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.xctest.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.xctest.xcconfig"; sourceTree = "<group>"; };
-		4E3649D9A59B91EF69358822 /* Pods-Share Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.release.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.release.xcconfig"; sourceTree = "<group>"; };
+		3F071E774A18F12C416ED7B9 /* Pods-Share Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.release.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.release.xcconfig"; sourceTree = "<group>"; };
+		458CEF35E2F0FC34E6D844ED /* Pods-Share.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.xctest.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.xctest.xcconfig"; sourceTree = "<group>"; };
+		45A94683FCAF2A0206249C05 /* Pods-Share Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.debug.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.debug.xcconfig"; sourceTree = "<group>"; };
+		46E7117CD670D1C6F8683E9C /* Pods_Share_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* Wantic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wantic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504EC3071FED79650016851F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -215,14 +223,10 @@
 		504EC30E1FED79650016851F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		504EC3131FED79650016851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = SOURCE_ROOT; };
-		6BF033FFB7CA9C854296B1E8 /* Pods-Share Beta.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.xctest.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.xctest.xcconfig"; sourceTree = "<group>"; };
-		73345A22E0DF0C1493B9AB3F /* Pods-Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.release.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.release.xcconfig"; sourceTree = "<group>"; };
-		7A1A1E3069FF2D518F1CD520 /* Pods-Wantic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.release.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.release.xcconfig"; sourceTree = "<group>"; };
-		7B27AB4136DB89BC062A666D /* Pods_Wantic_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8AD091C1006C592B3EC8CF9E /* Pods-Wantic Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.debug.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.debug.xcconfig"; sourceTree = "<group>"; };
-		9078F69AEFC11CE4B1541AC1 /* Pods-Wantic Beta.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.xctest.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.xctest.xcconfig"; sourceTree = "<group>"; };
-		97EFE697BDE6917534998A24 /* Pods_Share_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8382BD0C25374B11719E4D49 /* Pods_Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8934B5C8F2C4ED5D4A325C65 /* Pods-Wantic Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.debug.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.debug.xcconfig"; sourceTree = "<group>"; };
+		939FD2BDEB82977011BCDD5C /* Pods-Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.release.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.release.xcconfig"; sourceTree = "<group>"; };
+		A9AA3B2D5095C82DE1D6605D /* Pods-Wantic.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.xctest.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.xctest.xcconfig"; sourceTree = "<group>"; };
 		B114E13425B8A56A00F92599 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		B114E13C25BC33CF00F92599 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B114E14025BC34F700F92599 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
@@ -259,6 +263,7 @@
 		B1750DF325B468300023A9C9 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		B17629A226051F4500B1FDB7 /* GoogleService-Info-prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-prod.plist"; sourceTree = "<group>"; };
 		B17635ED256AD3EC00AAEBB8 /* App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
+		B177B6A12799FA3F00F571DD /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = "<group>"; };
 		B17B403B25C4717E003363E9 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		B17B404125C482E6003363E9 /* WanticTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanticTextView.swift; sourceTree = "<group>"; };
 		B182B5742709BDC9006B5B77 /* PlayfairDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-Regular.ttf"; sourceTree = "<group>"; };
@@ -292,7 +297,11 @@
 		B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-share-prod.plist"; sourceTree = "<group>"; };
 		B1F81F112641DB4000C277FB /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanticShareNavigationController.swift; sourceTree = "<group>"; };
-		F117C9375DC49984BC885D82 /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C46CE12E54A108283CA10339 /* Pods-Wantic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.release.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.release.xcconfig"; sourceTree = "<group>"; };
+		C9F092FFCD18C67EAE08E2E1 /* Pods-Wantic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.debug.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.debug.xcconfig"; sourceTree = "<group>"; };
+		D0CDC2C6C77D06D5150EC842 /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E80D998C06A088495E3F8961 /* Pods-Share Beta.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.xctest.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.xctest.xcconfig"; sourceTree = "<group>"; };
+		F8B7F4479C217A1ED6A93A0C /* Pods-Wantic Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.release.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,7 +309,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02B3FA8F97CCBFAEE38D116B /* Pods_Wantic.framework in Frameworks */,
+				8735BFF3B87516A7F9602F86 /* Pods_Wantic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,7 +317,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D90353C84B3AEE23E77B9B64 /* Pods_Wantic_Beta.framework in Frameworks */,
+				D94ED42B35E26405D9628EFA /* Pods_Wantic_Beta.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,7 +327,7 @@
 			files = (
 				B19A52062610CE8000984207 /* JWTDecode in Frameworks */,
 				B19A52072610CE8000984207 /* SwiftKeychainWrapper in Frameworks */,
-				04D7159E0264C53817F42509 /* Pods_Share_Beta.framework in Frameworks */,
+				8B9E922586B0F0A0E69754EF /* Pods_Share_Beta.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,24 +337,13 @@
 			files = (
 				B14880D625B30A6E00D0106B /* JWTDecode in Frameworks */,
 				B1A80FC1258B3F6E00F0917F /* SwiftKeychainWrapper in Frameworks */,
-				41A5DF104C372338DE008928 /* Pods_Share.framework in Frameworks */,
+				62B31205B0FAD597CCA2BF87 /* Pods_Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0716F31E2A2F37C872DE8423 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				224EA8C7F4A13B5E1D71AAA9 /* Pods_Share.framework */,
-				97EFE697BDE6917534998A24 /* Pods_Share_Beta.framework */,
-				F117C9375DC49984BC885D82 /* Pods_Wantic.framework */,
-				7B27AB4136DB89BC062A666D /* Pods_Wantic_Beta.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		504EC2FB1FED79650016851F = {
 			isa = PBXGroup;
 			children = (
@@ -353,7 +351,7 @@
 				B1A80F852589F59800F0917F /* Share */,
 				504EC3051FED79650016851F /* Products */,
 				7CFF9FF8E9A94F76BFF001AF /* Pods */,
-				0716F31E2A2F37C872DE8423 /* Frameworks */,
+				59B8715A9E80395CFE15914C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -371,6 +369,7 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				B177B6A12799FA3F00F571DD /* public */,
 				B1F81E94263EF19500C277FB /* Firebase */,
 				B19A531026123D3D00984207 /* Wantic Beta.entitlements */,
 				B19A530926123C8D00984207 /* Wantic Beta-Info.plist */,
@@ -382,26 +381,36 @@
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,
 				2FAD9762203C412B000D30F8 /* config.xml */,
-				50B271D01FEDC1A000F3C39B /* public */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		59B8715A9E80395CFE15914C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8382BD0C25374B11719E4D49 /* Pods_Share.framework */,
+				46E7117CD670D1C6F8683E9C /* Pods_Share_Beta.framework */,
+				D0CDC2C6C77D06D5150EC842 /* Pods_Wantic.framework */,
+				0E2382B3E3D7FA845C94EADA /* Pods_Wantic_Beta.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7CFF9FF8E9A94F76BFF001AF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0FACE3CCFB1AC49FE6800C41 /* Pods-Share.debug.xcconfig */,
-				73345A22E0DF0C1493B9AB3F /* Pods-Share.release.xcconfig */,
-				2C4764BF868B775D38055237 /* Pods-Share Beta.debug.xcconfig */,
-				4E3649D9A59B91EF69358822 /* Pods-Share Beta.release.xcconfig */,
-				08306D799C7EAC0B134BF2F6 /* Pods-Wantic.debug.xcconfig */,
-				7A1A1E3069FF2D518F1CD520 /* Pods-Wantic.release.xcconfig */,
-				8AD091C1006C592B3EC8CF9E /* Pods-Wantic Beta.debug.xcconfig */,
-				2EE753DDAFA5FADD1CA3005B /* Pods-Wantic Beta.release.xcconfig */,
-				3FB8C8FA33749721ED242189 /* Pods-Share.xctest.xcconfig */,
-				6BF033FFB7CA9C854296B1E8 /* Pods-Share Beta.xctest.xcconfig */,
-				01A5C2233CA7AEE20480AD39 /* Pods-Wantic.xctest.xcconfig */,
-				9078F69AEFC11CE4B1541AC1 /* Pods-Wantic Beta.xctest.xcconfig */,
+				0EACCD8AED6E87823CF83E3C /* Pods-Share.debug.xcconfig */,
+				458CEF35E2F0FC34E6D844ED /* Pods-Share.xctest.xcconfig */,
+				939FD2BDEB82977011BCDD5C /* Pods-Share.release.xcconfig */,
+				45A94683FCAF2A0206249C05 /* Pods-Share Beta.debug.xcconfig */,
+				E80D998C06A088495E3F8961 /* Pods-Share Beta.xctest.xcconfig */,
+				3F071E774A18F12C416ED7B9 /* Pods-Share Beta.release.xcconfig */,
+				C9F092FFCD18C67EAE08E2E1 /* Pods-Wantic.debug.xcconfig */,
+				A9AA3B2D5095C82DE1D6605D /* Pods-Wantic.xctest.xcconfig */,
+				C46CE12E54A108283CA10339 /* Pods-Wantic.release.xcconfig */,
+				8934B5C8F2C4ED5D4A325C65 /* Pods-Wantic Beta.debug.xcconfig */,
+				24171BEC5DCE4982DE991229 /* Pods-Wantic Beta.xctest.xcconfig */,
+				F8B7F4479C217A1ED6A93A0C /* Pods-Wantic Beta.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -570,14 +579,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 504EC3161FED79650016851F /* Build configuration list for PBXNativeTarget "Wantic" */;
 			buildPhases = (
-				F0DB5040ABF7E66079FF1A12 /* [CP] Check Pods Manifest.lock */,
+				9890BB9F9B854757A8BF86FF /* [CP] Check Pods Manifest.lock */,
 				504EC3001FED79650016851F /* Sources */,
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
 				B1A80F8F2589F59800F0917F /* Embed App Extensions */,
 				B1F81EB0263EF3D400C277FB /* GoogleService-Info */,
-				D71F3F145FCF06FBEB19BD37 /* [CP] Embed Pods Frameworks */,
-				9D67EFB1B4A12E7839C22C0B /* [CP] Copy Pods Resources */,
+				5D2BF56964FA322784E0280D /* [CP] Embed Pods Frameworks */,
+				303922DBEAAC2B44BF1B0883 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -593,20 +602,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B19A51DC2610CD8E00984207 /* Build configuration list for PBXNativeTarget "Wantic Beta" */;
 			buildPhases = (
-				8C033304D85C7ABA687A88D4 /* [CP] Check Pods Manifest.lock */,
+				AC1B51D69CB02BEF5190AB62 /* [CP] Check Pods Manifest.lock */,
 				B19A51CD2610CD8E00984207 /* Sources */,
 				B19A51CF2610CD8E00984207 /* Frameworks */,
 				B19A51D12610CD8E00984207 /* Resources */,
 				B19A51DA2610CD8E00984207 /* Embed App Extensions */,
 				B1F81EA7263EF29F00C277FB /* GoogleService-Info */,
-				606876D494A26383358EAEC9 /* [CP] Embed Pods Frameworks */,
-				CDE20ECF9A73B5B06DDAFAA9 /* [CP] Copy Pods Resources */,
+				8ED5C541325A4EEC759679A2 /* [CP] Embed Pods Frameworks */,
+				72412F8B9DDF8BE262D278D8 /* [CP] Copy Pods Resources */,
+				B177B69D2799E9BC00F571DD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				B19A52572610D4BA00984207 /* PBXTargetDependency */,
-				B19A527F2610D7C800984207 /* PBXTargetDependency */,
 			);
 			name = "Wantic Beta";
 			productName = App;
@@ -617,11 +626,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B19A522B2610CE8000984207 /* Build configuration list for PBXNativeTarget "Share Beta" */;
 			buildPhases = (
-				0FE37892B8FA6DC45D632F28 /* [CP] Check Pods Manifest.lock */,
+				EFB19EE85D3478CA4D7838AE /* [CP] Check Pods Manifest.lock */,
 				B19A51ED2610CE8000984207 /* Sources */,
 				B19A52052610CE8000984207 /* Frameworks */,
 				B19A52092610CE8000984207 /* Resources */,
 				B13727B026DBC8B400E0DCF4 /* GoogleService-Info */,
+				B177B6A02799E9C100F571DD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -640,7 +650,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B1A80F922589F59800F0917F /* Build configuration list for PBXNativeTarget "Share" */;
 			buildPhases = (
-				7D7BD0E01D556592F282C9AB /* [CP] Check Pods Manifest.lock */,
+				C9ADBB463326D6D98CC2177E /* [CP] Check Pods Manifest.lock */,
 				B1A80F802589F59800F0917F /* Sources */,
 				B1A80F812589F59800F0917F /* Frameworks */,
 				B1A80F822589F59800F0917F /* Resources */,
@@ -710,12 +720,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */,
-				50B271D11FEDC1A000F3C39B /* public in Resources */,
 				504EC30F1FED79650016851F /* Assets.xcassets in Resources */,
 				B17635EB256ABC9500AAEBB8 /* capacitor.config.json in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
 				B17629A326051F4500B1FDB7 /* GoogleService-Info-prod.plist in Resources */,
+				B177B6A22799FA3F00F571DD /* public in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -725,12 +735,11 @@
 			files = (
 				B19A51D22610CD8E00984207 /* LaunchScreen.storyboard in Resources */,
 				B1F81EA1263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */,
-				B19A51D32610CD8E00984207 /* public in Resources */,
 				B19A51D42610CD8E00984207 /* Assets.xcassets in Resources */,
 				B19A51D52610CD8E00984207 /* capacitor.config.json in Resources */,
-				B13727AA26DBC2FE00E0DCF4 /* GoogleService-Info-share-beta.plist in Resources */,
 				B19A51D62610CD8E00984207 /* Main.storyboard in Resources */,
 				B19A51D72610CD8E00984207 /* config.xml in Resources */,
+				B177B6A32799FA3F00F571DD /* public in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,7 +767,6 @@
 				B182B5A42709BE22006B5B77 /* Roboto-BlackItalic.ttf in Resources */,
 				B182B59E2709BE22006B5B77 /* Roboto-BoldItalic.ttf in Resources */,
 				B19A521D2610CE8000984207 /* Colors.xcassets in Resources */,
-				B1F81EC22641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */,
 				B19A52232610CE8000984207 /* ExtensionClass.js in Resources */,
 				B13727A926DBC22D00E0DCF4 /* GoogleService-Info-share-beta.plist in Resources */,
 				B18F1CCD2687610D00FD7528 /* fetch-product-infos.js in Resources */,
@@ -790,9 +798,7 @@
 				B182B57A2709BDD1006B5B77 /* PlayfairDisplay-Regular.ttf in Resources */,
 				B182B5942709BE22006B5B77 /* Roboto-BlackItalic.ttf in Resources */,
 				B182B58E2709BE22006B5B77 /* Roboto-BoldItalic.ttf in Resources */,
-				B1EBF5A526DBB7EA00E051D0 /* GoogleService-Info-prod.plist in Resources */,
 				B114E13D25BC33CF00F92599 /* Colors.xcassets in Resources */,
-				B18F1CDB2688846E00FD7528 /* Share Beta-Info.plist in Resources */,
 				B1F81EC12641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */,
 				B1A80F98258A0F5D00F0917F /* ExtensionClass.js in Resources */,
 				B114E14125BC34F700F92599 /* Icons.xcassets in Resources */,
@@ -802,29 +808,52 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0FE37892B8FA6DC45D632F28 /* [CP] Check Pods Manifest.lock */ = {
+		303922DBEAAC2B44BF1B0883 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Share Beta-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic/Pods-Wantic-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		606876D494A26383358EAEC9 /* [CP] Embed Pods Frameworks */ = {
+		5D2BF56964FA322784E0280D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic/Pods-Wantic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		72412F8B9DDF8BE262D278D8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8ED5C541325A4EEC759679A2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -839,7 +868,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7D7BD0E01D556592F282C9AB /* [CP] Check Pods Manifest.lock */ = {
+		9890BB9F9B854757A8BF86FF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -854,14 +883,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Share-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Wantic-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8C033304D85C7ABA687A88D4 /* [CP] Check Pods Manifest.lock */ = {
+		AC1B51D69CB02BEF5190AB62 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -881,21 +910,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9D67EFB1B4A12E7839C22C0B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic/Pods-Wantic-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B13727B026DBC8B400E0DCF4 /* GoogleService-Info */ = {
@@ -970,37 +984,7 @@
 			shellPath = /bin/sh;
 			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/App/Firebase\"\n\ncp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;\n";
 		};
-		CDE20ECF9A73B5B06DDAFAA9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D71F3F145FCF06FBEB19BD37 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wantic/Pods-Wantic-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F0DB5040ABF7E66079FF1A12 /* [CP] Check Pods Manifest.lock */ = {
+		C9ADBB463326D6D98CC2177E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1015,7 +999,29 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Wantic-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Share-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EFB19EE85D3478CA4D7838AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Share Beta-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1125,11 +1131,6 @@
 			target = B19A51E72610CE8000984207 /* Share Beta */;
 			targetProxy = B19A52562610D4BA00984207 /* PBXContainerItemProxy */;
 		};
-		B19A527F2610D7C800984207 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B19A51E72610CE8000984207 /* Share Beta */;
-			targetProxy = B19A527E2610D7C800984207 /* PBXContainerItemProxy */;
-		};
 		B1A80F8D2589F59800F0917F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B1A80F832589F59800F0917F /* Share */;
@@ -1169,6 +1170,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1213,12 +1215,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1226,6 +1229,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1264,27 +1268,27 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		504EC3171FED79650016851F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 08306D799C7EAC0B134BF2F6 /* Pods-Wantic.debug.xcconfig */;
+			baseConfigurationReference = C9F092FFCD18C67EAE08E2E1 /* Pods-Wantic.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211117.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1301,16 +1305,15 @@
 		};
 		504EC3181FED79650016851F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A1A1E3069FF2D518F1CD520 /* Pods-Wantic.release.xcconfig */;
+			baseConfigurationReference = C46CE12E54A108283CA10339 /* Pods-Wantic.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211117.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1326,16 +1329,53 @@
 		};
 		B19A51DD2610CD8E00984207 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8AD091C1006C592B3EC8CF9E /* Pods-Wantic Beta.debug.xcconfig */;
+			baseConfigurationReference = 8934B5C8F2C4ED5D4A325C65 /* Pods-Wantic Beta.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211113.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AppAuth/AppAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Capacitor/Capacitor.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorApp/CapacitorApp.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorBrowser/CapacitorBrowser.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorCordova/Cordova.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorDevice/CapacitorDevice.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorHaptics/CapacitorHaptics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorKeyboard/CapacitorKeyboard.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorSecureStoragePlugin/CapacitorSecureStoragePlugin.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorShare/CapacitorShare.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorSplashScreen/CapacitorSplashScreen.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorStatusBar/CapacitorStatusBar.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorStorage/CapacitorStorage.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CocoaLumberjack/CocoaLumberjack.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CordovaPlugins/CordovaPlugins.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CordovaPluginsStatic/CordovaPluginsStatic.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKShareKit/FBSDKShareKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseAuth/FirebaseAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore/FirebaseCore.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInstallations/FirebaseInstallations.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMAppAuth/GTMAppAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport/GoogleDataTransport.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities/GoogleUtilities.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SVGKit/SVGKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb/nanopb.framework/Headers\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
+					"\"${PODS_TARGET_SRCROOT}/Sources/FBLPromises/include\"",
+				);
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1352,16 +1392,55 @@
 		};
 		B19A51DE2610CD8E00984207 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EE753DDAFA5FADD1CA3005B /* Pods-Wantic Beta.release.xcconfig */;
+			baseConfigurationReference = F8B7F4479C217A1ED6A93A0C /* Pods-Wantic Beta.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211113.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AppAuth/AppAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Capacitor/Capacitor.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorApp/CapacitorApp.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorBrowser/CapacitorBrowser.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorCordova/Cordova.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorDevice/CapacitorDevice.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorHaptics/CapacitorHaptics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorKeyboard/CapacitorKeyboard.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorSecureStoragePlugin/CapacitorSecureStoragePlugin.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorShare/CapacitorShare.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorSplashScreen/CapacitorSplashScreen.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorStatusBar/CapacitorStatusBar.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorStorage/CapacitorStorage.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CocoaLumberjack/CocoaLumberjack.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CordovaPlugins/CordovaPlugins.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CordovaPluginsStatic/CordovaPluginsStatic.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKShareKit/FBSDKShareKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseAuth/FirebaseAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore/FirebaseCore.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInstallations/FirebaseInstallations.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMAppAuth/GTMAppAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport/GoogleDataTransport.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities/GoogleUtilities.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SVGKit/SVGKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb/nanopb.framework/Headers\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"$(inherited)",
+					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
+					"\"${PODS_TARGET_SRCROOT}/Sources/FBLPromises/include\"",
+					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks/FirebaseAnalytics.xcframework/ios-arm64_armv7/FirebaseAnalytics.framework/Headers\"",
+				);
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1377,18 +1456,18 @@
 		};
 		B19A522C2610CE8000984207 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C4764BF868B775D38055237 /* Pods-Share Beta.debug.xcconfig */;
+			baseConfigurationReference = 45A94683FCAF2A0206249C05 /* Pods-Share Beta.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211113.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1407,18 +1486,18 @@
 		};
 		B19A522D2610CE8000984207 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E3649D9A59B91EF69358822 /* Pods-Share Beta.release.xcconfig */;
+			baseConfigurationReference = 3F071E774A18F12C416ED7B9 /* Pods-Share Beta.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211113.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1438,6 +1517,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1483,27 +1563,27 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = XCTest;
 		};
 		B1A410C22731D596000DB58C /* XCTest */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01A5C2233CA7AEE20480AD39 /* Pods-Wantic.xctest.xcconfig */;
+			baseConfigurationReference = A9AA3B2D5095C82DE1D6605D /* Pods-Wantic.xctest.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211117.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = App/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1520,16 +1600,55 @@
 		};
 		B1A410C32731D596000DB58C /* XCTest */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9078F69AEFC11CE4B1541AC1 /* Pods-Wantic Beta.xctest.xcconfig */;
+			baseConfigurationReference = 24171BEC5DCE4982DE991229 /* Pods-Wantic Beta.xctest.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211113.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AppAuth/AppAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Capacitor/Capacitor.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorApp/CapacitorApp.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorBrowser/CapacitorBrowser.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorCordova/Cordova.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorDevice/CapacitorDevice.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorHaptics/CapacitorHaptics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorKeyboard/CapacitorKeyboard.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorSecureStoragePlugin/CapacitorSecureStoragePlugin.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorShare/CapacitorShare.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorSplashScreen/CapacitorSplashScreen.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorStatusBar/CapacitorStatusBar.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CapacitorStorage/CapacitorStorage.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CocoaLumberjack/CocoaLumberjack.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CordovaPlugins/CordovaPlugins.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CordovaPluginsStatic/CordovaPluginsStatic.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKShareKit/FBSDKShareKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseAuth/FirebaseAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore/FirebaseCore.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInstallations/FirebaseInstallations.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMAppAuth/GTMAppAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport/GoogleDataTransport.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities/GoogleUtilities.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SVGKit/SVGKit.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb/nanopb.framework/Headers\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"$(inherited)",
+					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
+					"\"${PODS_TARGET_SRCROOT}/Sources/FBLPromises/include\"",
+					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks/FirebaseAnalytics.xcframework/ios-arm64_armv7/FirebaseAnalytics.framework/Headers\"",
+				);
 				INFOPLIST_FILE = "App/Wantic Beta-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1546,18 +1665,18 @@
 		};
 		B1A410C42731D596000DB58C /* XCTest */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FB8C8FA33749721ED242189 /* Pods-Share.xctest.xcconfig */;
+			baseConfigurationReference = 458CEF35E2F0FC34E6D844ED /* Pods-Share.xctest.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211117.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1576,18 +1695,18 @@
 		};
 		B1A410C52731D596000DB58C /* XCTest */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6BF033FFB7CA9C854296B1E8 /* Pods-Share Beta.xctest.xcconfig */;
+			baseConfigurationReference = E80D998C06A088495E3F8961 /* Pods-Share Beta.xctest.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211113.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1606,18 +1725,18 @@
 		};
 		B1A80F902589F59800F0917F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0FACE3CCFB1AC49FE6800C41 /* Pods-Share.debug.xcconfig */;
+			baseConfigurationReference = 0EACCD8AED6E87823CF83E3C /* Pods-Share.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211117.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1636,18 +1755,18 @@
 		};
 		B1A80F912589F59800F0917F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 73345A22E0DF0C1493B9AB3F /* Pods-Share.release.xcconfig */;
+			baseConfigurationReference = 939FD2BDEB82977011BCDD5C /* Pods-Share.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20211117.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = Share/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

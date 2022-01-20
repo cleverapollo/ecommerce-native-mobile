@@ -9,6 +9,7 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
+    implementation project(':capacitor-community-firebase-analytics')
     implementation project(':capacitor-app')
     implementation project(':capacitor-browser')
     implementation project(':capacitor-device')
@@ -20,7 +21,6 @@ dependencies {
     implementation project(':capacitor-storage')
     implementation project(':capacitor-secure-storage-plugin')
     implementation "com.facebook.android:facebook-android-sdk:9.1.1"
-    implementation "com.google.firebase:firebase-analytics:19.0.+"
     implementation "com.google.firebase:firebase-auth:21.0.+"
     implementation "com.google.android.gms:play-services-auth:15.0.1"
     implementation "com.google.android.gms:play-services-identity:15.0.1"
