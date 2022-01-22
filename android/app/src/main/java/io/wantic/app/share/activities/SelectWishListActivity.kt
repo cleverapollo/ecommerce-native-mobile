@@ -15,10 +15,11 @@ import androidx.appcompat.widget.Toolbar
 import com.android.volley.RequestQueue
 import com.android.volley.TimeoutError
 import com.android.volley.toolbox.Volley
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import io.wantic.app.R
 import io.wantic.app.share.adapters.WishListArrayAdapter
+import io.wantic.app.share.core.analytics.AnalyticsTracking
+import io.wantic.app.share.core.analytics.GoogleAnalytics
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.Wish
 import io.wantic.app.share.models.WishList
@@ -43,6 +44,7 @@ class SelectWishListActivity : AppCompatActivity() {
     private lateinit var requestQueue: RequestQueue
     private lateinit var wishListApiService: WishListApi
     private lateinit var wishApiService: WishApi
+    private lateinit var analytics: AnalyticsTracking
 
     // auth
     private var idToken: String? = null
@@ -129,6 +131,7 @@ class SelectWishListActivity : AppCompatActivity() {
 
     private fun setupNetworkServices() {
         requestQueue = Volley.newRequestQueue(this)
+        this.analytics = GoogleAnalytics.init()
         this.wishListApiService = WishListApiService(requestQueue)
         this.wishApiService = WishApiService(requestQueue)
     }
@@ -368,9 +371,7 @@ class SelectWishListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val eventParams = Bundle()
-        eventParams.putString(FirebaseAnalytics.Param.SCREEN_NAME, "share_extension-wishlist")
-        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, eventParams)
+        analytics.logScreenEvent("share_extension-wishlist")
     }
 
 }

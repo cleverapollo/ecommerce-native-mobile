@@ -11,9 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import io.wantic.app.R
+import io.wantic.app.share.core.analytics.AnalyticsTracking
+import io.wantic.app.share.core.analytics.GoogleAnalytics
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.utils.DecimalDigitsInputFilter
 import io.wantic.app.share.utils.KeyboardHandler
@@ -30,6 +31,7 @@ class EditProductDetailsActivity : AppCompatActivity() {
 
     // Services
     private val keyboardHandler: KeyboardHandling = KeyboardHandler
+    private lateinit var analytics: AnalyticsTracking
 
     // UI
     private lateinit var productImageView: ImageView
@@ -49,6 +51,8 @@ class EditProductDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        analytics = GoogleAnalytics.init()
+
         setContentView(R.layout.activity_edit_product_details)
         initToolbar()
 
@@ -190,9 +194,7 @@ class EditProductDetailsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val eventParams = Bundle()
-        eventParams.putString(FirebaseAnalytics.Param.SCREEN_NAME, "share_extension-name-price")
-        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, eventParams)
+        analytics.logScreenEvent("share_extension-name-price")
     }
 
 }

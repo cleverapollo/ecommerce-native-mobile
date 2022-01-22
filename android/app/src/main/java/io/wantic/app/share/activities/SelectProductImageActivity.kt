@@ -20,9 +20,10 @@ import androidx.core.view.setPadding
 import androidx.core.view.size
 import androidx.gridlayout.widget.GridLayout
 import androidx.gridlayout.widget.GridLayout.CENTER
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import io.wantic.app.R
+import io.wantic.app.share.core.analytics.AnalyticsTracking
+import io.wantic.app.share.core.analytics.GoogleAnalytics
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.SelectedProductImageView
 import io.wantic.app.share.utils.AlertService
@@ -52,6 +53,7 @@ class SelectProductImageActivity : AppCompatActivity() {
     private lateinit var gridLayout: GridLayout
     private lateinit var actionButton: Button
     private lateinit var incomingHandler: Handler
+    private lateinit var analytics: AnalyticsTracking
 
     private var selectedView: SelectedProductImageView = SelectedProductImageView()
 
@@ -67,6 +69,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         Log.d(LOG_TAG, "onCreate intent action = ${intent?.action}, intent type = ${intent?.type}")
 
         loadingSpinner = findViewById(R.id.loading_spinner)
+        analytics = GoogleAnalytics.init()
 
         if (intent?.action == Intent.ACTION_SEND) {
             loadingSpinner.visibility = View.VISIBLE
@@ -273,9 +276,7 @@ class SelectProductImageActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val eventParams = Bundle()
-        eventParams.putString(FirebaseAnalytics.Param.SCREEN_NAME, "share_extension-picture")
-        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, eventParams)
+        analytics.logScreenEvent("share_extension-picture")
     }
 
     fun addNewProductInfoItem(productInfo: ProductInfo) {

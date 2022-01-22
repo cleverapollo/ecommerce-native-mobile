@@ -1,6 +1,7 @@
 package io.wantic.app;
 
-import android.os.Build;
+import com.getcapacitor.community.firebaseanalytics.FirebaseAnalytics;
+
 import android.os.Bundle;
 import android.webkit.ServiceWorkerClient;
 import android.webkit.ServiceWorkerController;
@@ -8,14 +9,12 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 
 import com.getcapacitor.BridgeActivity;
-import com.getcapacitor.Plugin;
-
-import java.util.ArrayList;
 
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    registerPlugin(FirebaseAnalytics.class);
 
     ServiceWorkerController swController = ServiceWorkerController.getInstance();
     swController.setServiceWorkerClient(new ServiceWorkerClient() {
