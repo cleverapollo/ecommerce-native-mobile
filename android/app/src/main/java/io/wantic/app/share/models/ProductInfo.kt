@@ -5,9 +5,9 @@ import java.io.Serializable as JavaSerializable
 
 @Serializable
 data class ProductInfo(
-    val id: UInt,
+    val id: Int,
     var name: String,
-    val imageUrl: String,
+    var imageUrl: String?,
     val productUrl: String,
     var price: Float = 0.00f
 ) : JavaSerializable

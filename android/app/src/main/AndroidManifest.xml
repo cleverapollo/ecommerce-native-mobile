@@ -1,15 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="io.wantic.app">
-    <supports-screens
-        android:largeScreens="false"
-        android:xlargeScreens="false"
-        android:largestWidthLimitDp="840" />
+<?xml version='1.0' encoding='utf-8'?>
+<manifest package="io.wantic.app" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <supports-screens android:largeScreens="false" android:largestWidthLimitDp="840" android:xlargeScreens="false" />
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https" android:host="@string/web_app_host"/>
+            <data android:host="@string/web_app_host" android:scheme="https" />
         </intent>
     </queries>
     <!-- Permissions -->
@@ -50,31 +45,25 @@
             android:theme="@style/AppTheme.NoActionBarLaunch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="@string/custom_url_scheme" />
             </intent-filter>
             <intent-filter android:autoVerify="true" tools:targetApi="m">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="https" android:host="wantic.io"/>
-                <data android:scheme="https" android:host="@string/web_app_host"/>
+                <data android:host="wantic.io" android:scheme="https" />
+                <data android:host="@string/web_app_host" android:scheme="https" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "wantic(beta)://” -->
                 <data android:scheme="@string/app_link_scheme" />
             </intent-filter>
         </activity>
@@ -90,16 +79,8 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+        <provider android:authorities="${applicationId}.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
         </provider>
     </application>
-
 </manifest>

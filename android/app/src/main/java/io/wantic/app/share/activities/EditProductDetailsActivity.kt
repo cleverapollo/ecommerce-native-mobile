@@ -1,8 +1,10 @@
 package io.wantic.app.share.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -11,14 +13,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
-import com.squareup.picasso.Picasso
 import io.wantic.app.R
 import io.wantic.app.share.core.analytics.AnalyticsTracking
 import io.wantic.app.share.core.analytics.GoogleAnalytics
+import io.wantic.app.share.core.extensions.hideKeyboard
+import io.wantic.app.share.core.ui.media.BitmapGraphicsHandler
+import io.wantic.app.share.core.ui.media.GraphicsHandler
+import io.wantic.app.share.core.ui.media.GraphicsHandling
+import io.wantic.app.share.core.ui.UIConstants.IMAGE_FALLBACK
+import io.wantic.app.share.core.ui.media.VectorGraphicsHandler
 import io.wantic.app.share.models.ProductInfo
+import io.wantic.app.share.models.ShareResult
 import io.wantic.app.share.utils.DecimalDigitsInputFilter
-import io.wantic.app.share.utils.KeyboardHandler
-import io.wantic.app.share.utils.KeyboardHandling
 import io.wantic.app.share.utils.onRightDrawableClicked
 import java.text.DecimalFormatSymbols
 
@@ -30,8 +36,10 @@ class EditProductDetailsActivity : AppCompatActivity() {
     }
 
     // Services
-    private val keyboardHandler: KeyboardHandling = KeyboardHandler
     private lateinit var analytics: AnalyticsTracking
+    private var graphicsHandler: GraphicsHandling = GraphicsHandler(
+        BitmapGraphicsHandler(), VectorGraphicsHandler(this)
+    )
 
     // UI
     private lateinit var productImageView: ImageView
@@ -39,15 +47,9 @@ class EditProductDetailsActivity : AppCompatActivity() {
     private lateinit var productPriceView: EditText
     private lateinit var actionButton: Button
 
-    private var productInfo: ProductInfo? = null
-        set(value) {
-            if (value != null) {
-                enableButton(this.actionButton)
-            } else {
-                disableButton(this.actionButton)
-            }
-            field = value
-        }
+    // Intent extras
+    private lateinit var productInfo: ProductInfo
+    private lateinit var shareResult: ShareResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,20 +57,31 @@ class EditProductDetailsActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_edit_product_details)
         initToolbar()
+        initKeyboardHandling()
 
+        shareResult = intent.getSerializableExtra("shareResult") as ShareResult
         productInfo = intent.getSerializableExtra("productInfo") as ProductInfo
-        assert(productInfo != null)
+        
         initProductImageView()
         initProductNameView()
         initProductPriceView()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initKeyboardHandling() {
+        val parentView: View = findViewById(R.id.activity_edit_product_details_parent)
+        parentView.setOnTouchListener { _, _ ->
+            hideKeyboard()
+            false
+        }
+    }
+
     private fun initProductPriceView() {
         productPriceView = findViewById(R.id.productPrice)
-        productPriceView.setText(String.format("%.2f", productInfo!!.price))
+        productPriceView.setText(String.format("%.2f", productInfo.price))
         productPriceView.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                keyboardHandler.hideSoftKeyboard(this)
+                hideKeyboard()
             }
         }
         productPriceView.filters = arrayOf(DecimalDigitsInputFilter(2))
@@ -82,7 +95,7 @@ class EditProductDetailsActivity : AppCompatActivity() {
                 }
                 validateInput(stringValue, productPriceView, R.string.required_price)
             }
-            this.productInfo!!.price = price
+            this.productInfo.price = price
         })
         productPriceView.onRightDrawableClicked {
             it.text.clear()
@@ -110,16 +123,16 @@ class EditProductDetailsActivity : AppCompatActivity() {
 
     private fun initProductNameView() {
         productNameView = findViewById(R.id.productName)
-        productNameView.setText(productInfo!!.name)
+        productNameView.setText(productInfo.name)
         productNameView.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                keyboardHandler.hideSoftKeyboard(this)
+                hideKeyboard()
             }
         }
         productNameView.addTextChangedListener(afterTextChanged = { editable ->
             val text = editable.toString()
             validateInput(text, productNameView, R.string.required_name)
-            this.productInfo!!.name = text
+            this.productInfo.name = text
         })
         productNameView.onRightDrawableClicked {
             it.text.clear()
@@ -148,13 +161,16 @@ class EditProductDetailsActivity : AppCompatActivity() {
 
     private fun initProductImageView() {
         productImageView = findViewById(R.id.productImageView)
-        val imageUri = Uri.parse(productInfo!!.imageUrl)
+
+        var imageUri: Uri? = null
+        if (productInfo.imageUrl != null) {
+            imageUri = Uri.parse(productInfo.imageUrl)
+        }
+
         if (imageUri != null) {
-            Picasso.get()
-                .load(imageUri)
-                .fit()
-                .centerInside()
-                .into(productImageView)
+            graphicsHandler.loadImageUrlIntoView(imageUri, productImageView)
+        } else {
+            graphicsHandler.loadGraphicResourceIntoView(IMAGE_FALLBACK, productImageView)
         }
     }
 
@@ -166,12 +182,11 @@ class EditProductDetailsActivity : AppCompatActivity() {
         // create action button
         actionButton = toolbar.findViewById(R.id.toolbarActionButton)
         actionButton.text = resources.getString(R.string.toolbar_button_next)
+        actionButton.isEnabled = true
 
         actionButton.setOnClickListener {
             val navigationIntent = Intent(this, SelectWishListActivity::class.java)
-            if (productInfo != null) {
-                navigationIntent.putExtra("productInfo", productInfo)
-            }
+            navigationIntent.putExtra("productInfo", productInfo)
             startActivity(navigationIntent)
         }
 

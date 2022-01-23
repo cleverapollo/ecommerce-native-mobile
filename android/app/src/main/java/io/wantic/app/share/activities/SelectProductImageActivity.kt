@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.*
 import android.util.DisplayMetrics
 import android.util.Log
-import android.util.Patterns
 import android.view.Gravity.CENTER_HORIZONTAL
 import android.view.View
 import android.webkit.*
@@ -20,17 +19,18 @@ import androidx.core.view.setPadding
 import androidx.core.view.size
 import androidx.gridlayout.widget.GridLayout
 import androidx.gridlayout.widget.GridLayout.CENTER
-import com.squareup.picasso.Picasso
 import io.wantic.app.R
 import io.wantic.app.share.core.analytics.AnalyticsTracking
 import io.wantic.app.share.core.analytics.GoogleAnalytics
+import io.wantic.app.share.core.ui.*
+import io.wantic.app.share.core.ui.media.*
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.SelectedProductImageView
-import io.wantic.app.share.utils.AlertService
-import io.wantic.app.share.utils.AndroidJSInterface
-import io.wantic.app.share.utils.AuthService
+import io.wantic.app.share.models.ShareResult
+import io.wantic.app.share.utils.*
 import kotlinx.serialization.*
-import java.util.regex.Matcher
+import java.util.*
+import kotlin.math.ceil
 
 
 class SelectProductImageActivity : AppCompatActivity() {
@@ -55,9 +55,15 @@ class SelectProductImageActivity : AppCompatActivity() {
     private lateinit var incomingHandler: Handler
     private lateinit var analytics: AnalyticsTracking
 
+    private var graphicsHandler: GraphicsHandling = GraphicsHandler(
+        BitmapGraphicsHandler(), VectorGraphicsHandler(this)
+    )
+
     private var selectedView: SelectedProductImageView = SelectedProductImageView()
+    private var shareResultParser: ShareResultParsing = ShareResultParser
 
     private var webViewSuccess = true
+    private var shareResult: ShareResult? = null
 
     // life cycle
 
@@ -72,19 +78,22 @@ class SelectProductImageActivity : AppCompatActivity() {
         analytics = GoogleAnalytics.init()
 
         if (intent?.action == Intent.ACTION_SEND) {
-            loadingSpinner.visibility = View.VISIBLE
+            startLoading()
             incomingHandler = initIncomingHandler()
             incomingHandler.sendMessageDelayed(Message(), 30000)
 
             when {
                 intent.type?.startsWith("text/") == true -> {
-                    handleIntentTypeText()
+                    val textContent = intent.getStringExtra(Intent.EXTRA_TEXT)
+                    handleExtraTextFromIntent(textContent)
                 }
                 intent.type?.startsWith("image/") == true -> {
-                    handleIntentTypeImage()
+                    val textContent = intent?.extras?.getString(Intent.EXTRA_TEXT)
+                    handleExtraTextFromIntent(textContent)
                 }
                 else -> {
                     stopLoading()
+                    showNoImagesFoundFeedback()
                 }
             }
         } else {
@@ -96,48 +105,39 @@ class SelectProductImageActivity : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
             val self = this@SelectProductImageActivity
             if (self.loadingSpinner.visibility != View.GONE) {
-                self.loadingSpinner.visibility = View.GONE
+                self.stopLoading()
                 if (self.productInfoList.isEmpty()) {
-                    self.showNoImagesFoundFeedback()
+                    if (shareResult == null) {
+                        self.showNoImagesFoundFeedback()
+                    } else {
+                        self.navigateForward(null)
+                    }
                 }
             }
         }
     }
 
-    private fun handleIntentTypeImage() {
-        val extraText = intent?.extras?.getString(Intent.EXTRA_TEXT)
-        if (extraText != null) {
-            val links = extractLinks(extraText)
-            if (links.size == 1) {
-                this.initWebView(links.first())
+    private fun handleExtraTextFromIntent(textContent: String?) {
+        if (textContent != null) {
+            shareResult = shareResultParser.parseTextToShareResult(textContent)
+            if (shareResult != null) {
+                this.initWebView(shareResult!!.productURLString)
             } else {
                 stopLoading()
-            }
-        }
-    }
-
-    private fun handleIntentTypeText() {
-        val textContent = intent.getStringExtra(Intent.EXTRA_TEXT)
-        if (textContent != null) {
-            Log.d(LOG_TAG, textContent)
-            if (URLUtil.isValidUrl(textContent)) {
-                this.initWebView(textContent)
-            } else {
-                val links = extractLinks(textContent)
-                if (links.size == 1) {
-                    this.initWebView(links.first())
-                } else {
-                    stopLoading()
-                }
+                showNoImagesFoundFeedback()
             }
         } else {
             stopLoading()
+            showNoImagesFoundFeedback()
         }
+    }
+
+    private fun startLoading() {
+        loadingSpinner.visibility = View.VISIBLE
     }
 
     private fun stopLoading() {
         loadingSpinner.visibility = View.GONE
-        showNoImagesFoundFeedback()
     }
 
     fun showNoImagesFoundFeedback() {
@@ -152,17 +152,6 @@ class SelectProductImageActivity : AppCompatActivity() {
         }
     }
 
-    private fun extractLinks(text: String): Array<String> {
-        val links: MutableList<String> = ArrayList()
-        val m: Matcher = Patterns.WEB_URL.matcher(text)
-        while (m.find()) {
-            val url: String = m.group()
-            Log.d(LOG_TAG, "URL extracted: $url")
-            links.add(url)
-        }
-        return links.toTypedArray()
-    }
-
     private fun initToolbar() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -175,12 +164,8 @@ class SelectProductImageActivity : AppCompatActivity() {
         disableButton(actionButton)
 
         actionButton.setOnClickListener {
-            val navigationIntent = Intent(this, EditProductDetailsActivity::class.java)
             val productInfo = productInfoList.find { it.id == selectedView.imageView?.tag ?: false }
-            if (productInfo != null) {
-                navigationIntent.putExtra("productInfo", productInfo)
-            }
-            startActivity(navigationIntent)
+            navigateForward(productInfo)
         }
 
         // create close button
@@ -188,6 +173,19 @@ class SelectProductImageActivity : AppCompatActivity() {
         closeButton.setOnClickListener {
             finishAffinity()
         }
+    }
+
+    fun navigateForward(productInfo: ProductInfo?) {
+        val fallback = ProductInfo(-1, "", null, shareResult!!.productURLString)
+        var productInfoExtra = fallback
+        if (productInfo != null) {
+            productInfoExtra = productInfo
+        }
+        val navigationIntent = Intent(this, EditProductDetailsActivity::class.java).apply {
+            putExtra("productInfo", productInfoExtra)
+            putExtra("shareResult", shareResult)
+        }
+        startActivity(navigationIntent)
     }
 
     private fun disableButton(button: Button) {
@@ -228,10 +226,11 @@ class SelectProductImageActivity : AppCompatActivity() {
             val self = this@SelectProductImageActivity
             if (webViewSuccess) {
                 val jsonString = self.loadJsFileContent()
-                Log.d(LOG_TAG, "web page loading finished $jsonString")
                 view?.evaluateJavascript(jsonString, null)
             } else {
-                stopLoading()
+                assert(shareResult != null)
+                val productInfo = ProductInfo(-1, "", null, shareResult!!.productURLString)
+                navigateForward(productInfo)
             }
         }
 
@@ -300,7 +299,7 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     fun initGridLayout(productInfoList: List<ProductInfo>) {
-        val rowCount = productInfoList.size / COLUMN_COUNT
+        val rowCount = calculateRowCount(productInfoList.size)
 
         gridLayout = findViewById(R.id.productImagesGridLayout)
         gridLayout.columnCount = COLUMN_COUNT
@@ -310,16 +309,20 @@ class SelectProductImageActivity : AppCompatActivity() {
 
         var column = 0
         var row = 0
-        for (itemIndex in 0 until productInfoList.size-1) {
+        for (productInfo in productInfoList) {
             if (column == COLUMN_COUNT) {
                 column = 0
                 row++
             }
-            val productInfo = productInfoList[itemIndex]
             addProductInfoToGridLayout(productInfo, column)
 
             column++
         }
+    }
+
+    private fun calculateRowCount(numberOfItems: Int): Int{
+        val rowCount: Float = ceil(numberOfItems.toFloat() / COLUMN_COUNT.toFloat())
+        return rowCount.toInt()
     }
 
     private fun addProductInfoToGridLayout(productInfo: ProductInfo, currentColumn: Int) {
@@ -341,7 +344,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         gridLayout.addView(linearLayout, gridLayoutParams)
     }
 
-    private fun createProductView(imageUri: Uri, productInfoId: UInt): LinearLayout {
+    private fun createProductView(imageUri: Uri, productInfoId: Int): LinearLayout {
         // calculate width and height
         val displayMetrics = getDisplayMetrics()
         val margin = 16
@@ -376,13 +379,8 @@ class SelectProductImageActivity : AppCompatActivity() {
         }
 
         // load image into view
-        Picasso.get()
-            .load(imageUri)
-            .placeholder(R.drawable.rounded_corner)
-            .resize(imageWidth, imageWidth)
-            .onlyScaleDown()
-            .centerInside()
-            .into(imageView)
+        val options = GraphicOptions(imageWidth, imageWidth)
+        graphicsHandler.loadImageUrlIntoView(imageUri, imageView, options)
 
         linearLayout.addView(imageView)
         return linearLayout
@@ -401,6 +399,5 @@ class SelectProductImageActivity : AppCompatActivity() {
         }
         return outMetrics
     }
-
 
 }

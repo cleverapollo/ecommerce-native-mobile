@@ -15,11 +15,13 @@ import androidx.appcompat.widget.Toolbar
 import com.android.volley.RequestQueue
 import com.android.volley.TimeoutError
 import com.android.volley.toolbox.Volley
-import com.squareup.picasso.Picasso
 import io.wantic.app.R
 import io.wantic.app.share.adapters.WishListArrayAdapter
 import io.wantic.app.share.core.analytics.AnalyticsTracking
 import io.wantic.app.share.core.analytics.GoogleAnalytics
+import io.wantic.app.share.core.extensions.hideKeyboard
+import io.wantic.app.share.core.ui.UIConstants.IMAGE_FALLBACK
+import io.wantic.app.share.core.ui.media.*
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.Wish
 import io.wantic.app.share.models.WishList
@@ -30,7 +32,6 @@ import io.wantic.app.share.network.WishListApiService
 import io.wantic.app.share.utils.AlertService
 import io.wantic.app.share.utils.AuthService
 import io.wantic.app.share.utils.CircleTransform
-import io.wantic.app.share.utils.KeyboardHandler.hideSoftKeyboard
 import io.wantic.app.share.utils.ToastService
 
 
@@ -95,6 +96,11 @@ class SelectWishListActivity : AppCompatActivity() {
             editTextNewWishListName.setText(value)
         }
 
+    // UI
+    private var graphicsHandler: GraphicsHandling = GraphicsHandler(
+        BitmapGraphicsHandler(), VectorGraphicsHandler(this)
+    )
+
     // life cycle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,21 +158,24 @@ class SelectWishListActivity : AppCompatActivity() {
 
     private fun clearFocusOnEditTextAndKeyboard() {
         if (editTextNewWishListName.hasFocus()) {
-            hideSoftKeyboard(this)
+            hideKeyboard()
             editTextNewWishListName.clearFocus()
         }
     }
 
     private fun setupProductImageView() {
         productImageView = findViewById(R.id.product_image_thumbnail)
-        val imageUri = Uri.parse(productInfo.imageUrl)
+
+        var imageUri: Uri? = null
+        if (productInfo.imageUrl != null) {
+            imageUri = Uri.parse(productInfo.imageUrl)
+        }
+
+        val options = GraphicOptions(transformation = CircleTransform())
         if (imageUri != null) {
-            Picasso.get()
-                .load(imageUri)
-                .fit()
-                .centerInside()
-                .transform(CircleTransform())
-                .into(productImageView)
+            graphicsHandler.loadImageUrlIntoView(imageUri, productImageView, options)
+        } else {
+            graphicsHandler.loadGraphicResourceIntoView(IMAGE_FALLBACK, productImageView, options)
         }
     }
 
@@ -298,7 +307,7 @@ class SelectWishListActivity : AppCompatActivity() {
                     newWishListName = ""
                     val toastMessage = resources.getString(R.string.message_wish_list_successfully_saved)
                     ToastService.showToast(this, toastMessage)
-                    hideSoftKeyboard(this)
+                    hideKeyboard()
                 }
                 error != null -> {
                     Log.e(LOG_TAG, "Response error: $error")

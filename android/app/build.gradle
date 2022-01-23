@@ -1,4 +1,11 @@
+plugins {
+    id "com.starter.easylauncher" version "5.0.0"
+}
+
 apply plugin: 'com.android.application'
+apply from: 'capacitor.build.gradle'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlinx-serialization'
 
 android {
     signingConfigs {
@@ -22,6 +29,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk {
                 debugSymbolLevel 'SYMBOL_TABLE'
@@ -81,16 +89,12 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.github.corouteam:GlideToVectorYou:v2.0.0'
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
 }
-
-apply from: 'capacitor.build.gradle'
-apply plugin: 'kotlin-android'
-//apply plugin: 'kotlin'
-apply plugin: 'kotlinx-serialization'
 
 try {
     def servicesJSON = file('google-services.json')

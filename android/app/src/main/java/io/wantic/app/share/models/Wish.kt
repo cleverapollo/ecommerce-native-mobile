@@ -10,7 +10,7 @@ class Wish constructor(
     val wishListId: @Serializable(with = UUIDSerializer::class) UUID,
     val name: String, val price: Price,
     val productUrl: String,
-    val imageUrl: String
+    val imageUrl: String?
     ) {
 
     companion object {

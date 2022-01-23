@@ -19,19 +19,12 @@ buildscript {
     }
 }
 
-plugins {
-    id "com.starter.easylauncher" version "4.0.0"
-}
-
 apply from: "variables.gradle"
 
 allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
-
-/*task clean(type: Delete) {
-    delete rootProject.buildDir
-}*/

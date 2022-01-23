@@ -4,9 +4,6 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.webkit.JavascriptInterface
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import io.wantic.app.R
 import io.wantic.app.share.activities.SelectProductImageActivity
 import io.wantic.app.share.models.ProductInfo
 import kotlinx.serialization.decodeFromString
@@ -30,11 +27,9 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
             context.infoLoaded = true
             hideLoadingSpinner()
             if (this.context.productInfoList.isEmpty()) {
-                hideLoadingSpinner()
-                showNoImagesFoundFeedback()
+                onImagesNotFound()
             } else {
                 displayLoadedImages()
-                hideLoadingSpinner()
             }
         } catch (ex: Exception) {
             val localizedMessage = ex.localizedMessage
@@ -76,13 +71,8 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
         mainHandler.post(runnable)
     }
 
-    private fun showNoImagesFoundFeedback() {
-        AlertDialog.Builder(this@AndroidJSInterface.context)
-            .setTitle(R.string.title_no_product_info_found)
-            .setMessage(R.string.message_no_product_info_found)
-            .setNegativeButton(R.string.button_label_close) { _, _ ->
-                ActivityCompat.finishAffinity(this@AndroidJSInterface.context)
-            }
+    private fun onImagesNotFound() {
+        this@AndroidJSInterface.context.navigateForward(null)
     }
 
     private fun hideLoadingSpinner() {
