@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.View
 import android.webkit.JavascriptInterface
 import io.wantic.app.share.activities.SelectProductImageActivity
-import io.wantic.app.share.models.ProductInfo
+import io.wantic.app.share.models.WebImage
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -16,17 +16,17 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
     }
 
     @JavascriptInterface
-    fun onProductInfosLoaded(productInfoListString: String) {
-        Log.d(LOG_TAG, "onProductInfosLoaded $productInfoListString")
-        if (this.context.productInfoList.isNotEmpty()) {
-            hideLoadingSpinner()
+    fun onProductInfosLoaded(webCrawlerResultJsonString: String) {
+        Log.d(LOG_TAG, "onProductInfosLoaded $webCrawlerResultJsonString")
+        if (context.webCrawlerResult != null) {
+            Log.d(LOG_TAG, "webCrawlerResult already set $webCrawlerResultJsonString")
             return
         }
         try {
-            context.productInfoList = Json.decodeFromString(productInfoListString)
+            context.webCrawlerResult = Json.decodeFromString(webCrawlerResultJsonString)
             context.infoLoaded = true
             hideLoadingSpinner()
-            if (this.context.productInfoList.isEmpty()) {
+            if (this.context.webCrawlerResult!!.images.isEmpty()) {
                 onImagesNotFound()
             } else {
                 displayLoadedImages()
@@ -45,14 +45,14 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
     }
 
     @JavascriptInterface
-    fun onProductInfoLoaded(productInfoJsonString: String) {
-        Log.d(LOG_TAG, "onProductInfoLoaded $productInfoJsonString")
-        val productInfo: ProductInfo = Json.decodeFromString(productInfoJsonString)
-        val itemExists = context.productInfoList.any { info -> info.id == productInfo.id }
+    fun onProductInfoLoaded(webImageJsonString: String) {
+        Log.d(LOG_TAG, "onProductInfoLoaded $webImageJsonString")
+        val webImage: WebImage = Json.decodeFromString(webImageJsonString)
+        val itemExists = context.webCrawlerResult!!.images.any { image -> image.id == webImage.id }
         if (!itemExists) {
             val mainHandler = Handler(this.context.mainLooper)
             val runnable = Runnable {
-                this@AndroidJSInterface.context.addNewProductInfoItem(productInfo)
+                this@AndroidJSInterface.context.addNewProductInfoItem(webImage)
             }
             mainHandler.post(runnable)
         }
@@ -66,7 +66,8 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
     private fun displayLoadedImages() {
         val mainHandler = Handler(this.context.mainLooper)
         val runnable = Runnable {
-            this@AndroidJSInterface.context.initGridLayout(this.context.productInfoList)
+            Log.d(LOG_TAG, "initGridLayout from displayLoadedImages")
+            this@AndroidJSInterface.context.initGridLayout(this.context.webCrawlerResult!!.images)
         }
         mainHandler.post(runnable)
     }

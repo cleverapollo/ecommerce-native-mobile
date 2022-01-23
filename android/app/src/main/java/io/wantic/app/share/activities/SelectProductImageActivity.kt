@@ -24,9 +24,7 @@ import io.wantic.app.share.core.analytics.AnalyticsTracking
 import io.wantic.app.share.core.analytics.GoogleAnalytics
 import io.wantic.app.share.core.ui.*
 import io.wantic.app.share.core.ui.media.*
-import io.wantic.app.share.models.ProductInfo
-import io.wantic.app.share.models.SelectedProductImageView
-import io.wantic.app.share.models.ShareResult
+import io.wantic.app.share.models.*
 import io.wantic.app.share.utils.*
 import kotlinx.serialization.*
 import java.util.*
@@ -45,7 +43,7 @@ class SelectProductImageActivity : AppCompatActivity() {
     lateinit var loadingSpinner: ProgressBar
 
     var infoLoaded = false
-    var productInfoList: List<ProductInfo> = emptyList()
+    var webCrawlerResult: WebCrawlerResult? = null
 
     // private
 
@@ -106,12 +104,12 @@ class SelectProductImageActivity : AppCompatActivity() {
             val self = this@SelectProductImageActivity
             if (self.loadingSpinner.visibility != View.GONE) {
                 self.stopLoading()
-                if (self.productInfoList.isEmpty()) {
-                    if (shareResult == null) {
-                        self.showNoImagesFoundFeedback()
-                    } else {
+                if (self.webCrawlerResult != null) {
+                    if (self.webCrawlerResult!!.images.isEmpty()) {
                         self.navigateForward(null)
                     }
+                } else {
+                    self.navigateForward(null)
                 }
             }
         }
@@ -140,7 +138,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         loadingSpinner.visibility = View.GONE
     }
 
-    fun showNoImagesFoundFeedback() {
+    private fun showNoImagesFoundFeedback() {
         if (!isFinishing) {
             AlertDialog.Builder(this@SelectProductImageActivity)
                 .setTitle(R.string.title_no_product_info_found)
@@ -164,7 +162,13 @@ class SelectProductImageActivity : AppCompatActivity() {
         disableButton(actionButton)
 
         actionButton.setOnClickListener {
-            val productInfo = productInfoList.find { it.id == selectedView.imageView?.tag ?: false }
+            var productInfo: ProductInfo? = null
+            if (webCrawlerResult != null) {
+                val webImage = webCrawlerResult!!.images.find { it.id == selectedView.imageView?.tag ?: false }
+                productInfo = webImage?.let {
+                        it1 -> ProductInfo(it1.id, webCrawlerResult!!.title, webImage.url, webCrawlerResult!!.url, webCrawlerResult!!.price)
+                }
+            }
             navigateForward(productInfo)
         }
 
@@ -176,16 +180,37 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     fun navigateForward(productInfo: ProductInfo?) {
-        val fallback = ProductInfo(-1, "", null, shareResult!!.productURLString)
-        var productInfoExtra = fallback
+        val fallback: ProductInfo? = createFallBack()
+        var productInfoExtra: ProductInfo? = null
         if (productInfo != null) {
             productInfoExtra = productInfo
+        } else if (fallback != null) {
+            productInfoExtra = fallback
         }
-        val navigationIntent = Intent(this, EditProductDetailsActivity::class.java).apply {
-            putExtra("productInfo", productInfoExtra)
-            putExtra("shareResult", shareResult)
+
+        if (productInfoExtra != null) {
+            val navigationIntent = Intent(this, EditProductDetailsActivity::class.java).apply {
+                putExtra("productInfo", productInfoExtra)
+                putExtra("shareResult", shareResult)
+            }
+            startActivity(navigationIntent)
+        } else {
+            showNoImagesFoundFeedback()
         }
-        startActivity(navigationIntent)
+    }
+
+    private fun createFallBack(): ProductInfo? {
+        val id = -1
+        var name = ""
+        var fallback: ProductInfo? = null
+        if (shareResult != null) {
+            if (shareResult!!.productName != null) {
+                name = shareResult!!.productName!!
+            }
+            val url = shareResult!!.productURLString
+            fallback = ProductInfo(id, name, null, url)
+        }
+        return fallback
     }
 
     private fun disableButton(button: Button) {
@@ -257,7 +282,7 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     private fun loadJsFileContent(): String {
-        val fileName = "find-product-info.js"
+        val fileName = "web-crawler.js"
         return application.assets.open(fileName).bufferedReader().use {
             it.readText()
         }
@@ -278,43 +303,47 @@ class SelectProductImageActivity : AppCompatActivity() {
         analytics.logScreenEvent("share_extension-picture")
     }
 
-    fun addNewProductInfoItem(productInfo: ProductInfo) {
-        val currentList = this.productInfoList.toMutableList()
-        if (currentList.add(productInfo)) {
-            this.productInfoList = currentList
+    fun addNewProductInfoItem(webImage: WebImage) {
+        var currentList: MutableList<WebImage> = mutableListOf()
+        if (this.webCrawlerResult != null) {
+            currentList = this.webCrawlerResult!!.images.toMutableList()
+        }
+        if (currentList.add(webImage)) {
+            this.webCrawlerResult!!.images = currentList
             if (this::gridLayout.isInitialized) {
-                val newRowCount = productInfoList.size / COLUMN_COUNT
-                if (gridLayout.rowCount != newRowCount) {
+                val newRowCount = calculateRowCount(this.webCrawlerResult!!.images.size)
+                if (gridLayout.rowCount != newRowCount && newRowCount > gridLayout.rowCount) {
                     gridLayout.rowCount = newRowCount
                 }
                 var column = 1
                 if (gridLayout.size % COLUMN_COUNT == 0) {
                     column = 0
                 }
-                this.addProductInfoToGridLayout(productInfo, column)
+                this.addProductInfoToGridLayout(webImage, column)
             } else {
-                this.initGridLayout(this.productInfoList)
+                Log.d(LOG_TAG, "initGridLayout from addNewProductInfoItem")
+                this.initGridLayout(this.webCrawlerResult!!.images)
             }
         }
     }
 
-    fun initGridLayout(productInfoList: List<ProductInfo>) {
-        val rowCount = calculateRowCount(productInfoList.size)
+    fun initGridLayout(webImages: List<WebImage>) {
+        val rowCount = calculateRowCount(webImages.size)
+
+        Log.d(LOG_TAG, "columnCount: $COLUMN_COUNT, rowCount: $rowCount, numberOfImages: ${webImages.size}")
 
         gridLayout = findViewById(R.id.productImagesGridLayout)
         gridLayout.columnCount = COLUMN_COUNT
         gridLayout.rowCount = rowCount
 
-        Log.d(LOG_TAG, "columnCount: $COLUMN_COUNT, rowCount: $rowCount, numberOfImages: ${productInfoList.size}")
-
         var column = 0
         var row = 0
-        for (productInfo in productInfoList) {
+        for (webImage in webImages) {
             if (column == COLUMN_COUNT) {
                 column = 0
                 row++
             }
-            addProductInfoToGridLayout(productInfo, column)
+            addProductInfoToGridLayout(webImage, column)
 
             column++
         }
@@ -325,9 +354,9 @@ class SelectProductImageActivity : AppCompatActivity() {
         return rowCount.toInt()
     }
 
-    private fun addProductInfoToGridLayout(productInfo: ProductInfo, currentColumn: Int) {
-        val uri = Uri.parse(productInfo.imageUrl)
-        val linearLayout = this.createProductView(uri, productInfo.id)
+    private fun addProductInfoToGridLayout(webImage: WebImage, currentColumn: Int) {
+        val uri = Uri.parse(webImage.url)
+        val linearLayout = this.createProductView(uri, webImage.id)
 
         val rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1, CENTER)
         val colSpan = GridLayout.spec(GridLayout.UNDEFINED, 1, CENTER)
@@ -344,7 +373,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         gridLayout.addView(linearLayout, gridLayoutParams)
     }
 
-    private fun createProductView(imageUri: Uri, productInfoId: Int): LinearLayout {
+    private fun createProductView(imageUri: Uri, webImageId: Int): LinearLayout {
         // calculate width and height
         val displayMetrics = getDisplayMetrics()
         val margin = 16
@@ -363,7 +392,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         val imageViewLayoutParams = LinearLayout.LayoutParams(imageWidth, imageWidth)
         imageViewLayoutParams.gravity = CENTER_HORIZONTAL
         val imageView = ImageView(this)
-        imageView.tag = productInfoId
+        imageView.tag = webImageId
         imageView.setPadding(8)
         imageView.layoutParams = imageViewLayoutParams
         imageView.setOnClickListener {
