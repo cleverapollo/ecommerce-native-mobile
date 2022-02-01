@@ -33,7 +33,7 @@ describe('AffiliateDefaultService', () => {
     { advertiserId: '6724', deeplinkTemplate: adcellDeeplinkTemplate, validDomains: ['aromamanufaktur.com'] },
     { advertiserId: '6619', deeplinkTemplate: adcellDeeplinkTemplate, validDomains: ['hempamed.de'] },
     { advertiserId: '4760', deeplinkTemplate: adcellDeeplinkTemplate, validDomains: ['klaraseats.com'] },
-    { advertiserId: '0', deeplinkTemplate: '${PRODUCT_URL}${QUERY_PARAM_SEPERATOR}tag=helloworldtri-21', validDomains: ['amazon.de', 'amazon.com'] },
+    { advertiserId: '0', deeplinkTemplate: '${PRODUCT_URL}${QUERY_PARAM_SEPERATOR}tag=wantic03-21', validDomains: ['amazon.de', 'amazon.com'] },
     { advertiserId: '0', deeplinkTemplate: 'http://redirect.viglink.com?key=e0562bb177d75be5331216a6971d6bca&u=${ENCODED_PRODUCT_URL}', validDomains: ['*'] },
   ]
 
@@ -104,22 +104,22 @@ describe('AffiliateDefaultService', () => {
       // Amazon
 
       service.createAffiliateLink("https://www.amazon.de/Mundschutzmaske-zertifiziert-Atemschutzmasken-hygienische-Einzelverpackung/dp/B08TTYBD3K/ref=zg-bs_sports_1/257-9050733-2865403?pd_rd_w=mB31y&pf_rd_p=f132fd53-9870-459e-8ea1-2187701626ae&pf_rd_r=RXNXS96YT49E0314YSRZ&pd_rd_r=dba2a0eb-efd0-4811-b14d-0a9001b46ad3&pd_rd_wg=fEb7L&pd_rd_i=B08TTYBD3K&psc=1").then(result => {
-        expect(result).toBe("https://www.amazon.de/Mundschutzmaske-zertifiziert-Atemschutzmasken-hygienische-Einzelverpackung/dp/B08TTYBD3K/ref=zg-bs_sports_1/257-9050733-2865403?pd_rd_w=mB31y&pf_rd_p=f132fd53-9870-459e-8ea1-2187701626ae&pf_rd_r=RXNXS96YT49E0314YSRZ&pd_rd_r=dba2a0eb-efd0-4811-b14d-0a9001b46ad3&pd_rd_wg=fEb7L&pd_rd_i=B08TTYBD3K&psc=1&tag=helloworldtri-21"); // "should add affiliate tag to url using & seperator"
+        expect(result).toBe("https://www.amazon.de/Mundschutzmaske-zertifiziert-Atemschutzmasken-hygienische-Einzelverpackung/dp/B08TTYBD3K/ref=zg-bs_sports_1/257-9050733-2865403?pd_rd_w=mB31y&pf_rd_p=f132fd53-9870-459e-8ea1-2187701626ae&pf_rd_r=RXNXS96YT49E0314YSRZ&pd_rd_r=dba2a0eb-efd0-4811-b14d-0a9001b46ad3&pd_rd_wg=fEb7L&pd_rd_i=B08TTYBD3K&psc=1&tag=wantic03-21"); // "should add affiliate tag to url using & seperator"
         done();
       });
 
       service.createAffiliateLink("https://www.amazon.de/some-product/").then(result => {
-        expect(result).toBe("https://www.amazon.de/some-product/?tag=helloworldtri-21"); // should add affiliate tag to url using ? seperator
+        expect(result).toBe("https://www.amazon.de/some-product/?tag=wantic03-21"); // should add affiliate tag to url using ? seperator
         done();
       });
 
       service.createAffiliateLink("https://www.amazon.de/Super-Sparrow-Trinkflasche-Wasserdurchfluss-Wiederverwendbare/dp/B07BJFX6MC/ref=zg-bs_sports_4/257-9050733-2865403?pd_rd_w=75taz&pf_rd_p=f132fd53-9870-459e-8ea1-2187701626ae&pf_rd_r=8G79P6T63YJDSYBXHJKP&pd_rd_r=39ee585c-ec54-492e-bc94-52944c897787&pd_rd_wg=1oggQ&pd_rd_i=B08K6VQNKB&psc=1&tag=some-other-tag").then(result => {
-        expect(result).toBe("https://www.amazon.de/Super-Sparrow-Trinkflasche-Wasserdurchfluss-Wiederverwendbare/dp/B07BJFX6MC/ref=zg-bs_sports_4/257-9050733-2865403?pd_rd_w=75taz&pf_rd_p=f132fd53-9870-459e-8ea1-2187701626ae&pf_rd_r=8G79P6T63YJDSYBXHJKP&pd_rd_r=39ee585c-ec54-492e-bc94-52944c897787&pd_rd_wg=1oggQ&pd_rd_i=B08K6VQNKB&psc=1&tag=helloworldtri-21"); // should override affiliate tag from another company in url
+        expect(result).toBe("https://www.amazon.de/Super-Sparrow-Trinkflasche-Wasserdurchfluss-Wiederverwendbare/dp/B07BJFX6MC/ref=zg-bs_sports_4/257-9050733-2865403?pd_rd_w=75taz&pf_rd_p=f132fd53-9870-459e-8ea1-2187701626ae&pf_rd_r=8G79P6T63YJDSYBXHJKP&pd_rd_r=39ee585c-ec54-492e-bc94-52944c897787&pd_rd_wg=1oggQ&pd_rd_i=B08K6VQNKB&psc=1&tag=wantic03-21"); // should override affiliate tag from another company in url
         done();
       });
 
-      service.createAffiliateLink("https://www.amazon.com/AmazonBasics-NC1406118R1-Laptop-Tasche-Bildschirmdiagonale-Schwarz/dp/B00LU7B8X0?ref_=ast_sto_dp&th=1&psc=1&tag=helloworldtri-21").then(result => {
-        expect(result).toBe("https://www.amazon.com/AmazonBasics-NC1406118R1-Laptop-Tasche-Bildschirmdiagonale-Schwarz/dp/B00LU7B8X0?ref_=ast_sto_dp&th=1&psc=1&tag=helloworldtri-21"); // should avoid duplicated tag params
+      service.createAffiliateLink("https://www.amazon.com/AmazonBasics-NC1406118R1-Laptop-Tasche-Bildschirmdiagonale-Schwarz/dp/B00LU7B8X0?ref_=ast_sto_dp&th=1&psc=1&tag=wantic03-21").then(result => {
+        expect(result).toBe("https://www.amazon.com/AmazonBasics-NC1406118R1-Laptop-Tasche-Bildschirmdiagonale-Schwarz/dp/B00LU7B8X0?ref_=ast_sto_dp&th=1&psc=1&tag=wantic03-21"); // should avoid duplicated tag params
         done();
       });
 
