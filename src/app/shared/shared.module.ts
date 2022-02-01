@@ -15,7 +15,7 @@ import { OwnersInfoComponent } from './components/owners-info/owners-info.compon
 import { TruncateNamePipe } from './pipes/truncate-name.pipe';
 import { ShowHidePasswordComponent } from './components/show-hide-password/show-hide-password.component';
 import { AffiliateLinkDebugInfoComponent } from './components/affiliate-link-debug-info/affiliate-link-debug-info.component';
-import { ImageComponent } from './components/image/image.component';
+import { WishImageComponent } from './components/wish-image/wish-image.component';
 import { WishShopInfoComponent } from './components/wish-shop-info/wish-shop-info.component';
 import { SortByIsFavoritePipe } from './pipes/sort-by-is-favorite.pipe';
 
@@ -23,7 +23,7 @@ import { SortByIsFavoritePipe } from './pipes/sort-by-is-favorite.pipe';
   declarations: [
     SecurePipe, 
     AffiliateLinkDebugInfoComponent,
-    ImageComponent,
+    WishImageComponent,
     OwnersInfoComponent,
     OwnerNamesPipe, 
     ValidationMessagesComponent, 
@@ -47,7 +47,7 @@ import { SortByIsFavoritePipe } from './pipes/sort-by-is-favorite.pipe';
   exports: [
     SecurePipe, 
     AffiliateLinkDebugInfoComponent,
-    ImageComponent,
+    WishImageComponent,
     OwnersInfoComponent,
     OwnerNamesPipe, 
     ValidationMessagesComponent, 

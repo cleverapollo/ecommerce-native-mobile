@@ -1,0 +1,1 @@
+declare type CSSStyle = { [className: string]: string };

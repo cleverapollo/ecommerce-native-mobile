@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WishListDto } from '@core/models/wish-list.model';
+import { WishDto, WishListDto } from '@core/models/wish-list.model';
+import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 
 @Component({
   selector: 'app-wish-list',
@@ -22,6 +23,17 @@ export class WishListComponent implements OnInit {
       return 'left';
     } else {
       return 'center';
+    }
+  }
+
+  get wishImageStyle(): WishImageComponentStyles {
+    return {
+      errorImg: {
+        'padding': '5px' 
+      },
+      placeholderImg: {
+        'padding': '5px' 
+      }
     }
   }
 

@@ -13,6 +13,7 @@ import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 
 @Component({
   selector: 'app-wish-create-update',
@@ -53,6 +54,15 @@ export class WishCreateUpdatePage implements OnInit {
 
   get isUpdatePage(): boolean {
     return (this.wish && this.wish.id) ? true : false;
+  }
+
+  get wishImagesStyles(): WishImageComponentStyles {
+    return {
+      img: {
+        'padding-top': '20px',
+        'padding-bottom': '20px'
+      }
+    };
   }
 
   constructor(

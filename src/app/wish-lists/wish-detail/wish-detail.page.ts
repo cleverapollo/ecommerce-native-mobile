@@ -9,6 +9,7 @@ import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
 import { ModalController, NavController } from '@ionic/angular';
 import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
+import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 import { WishShopInfoComponentStyles } from '@shared/components/wish-shop-info/wish-shop-info.component';
 import { Subscription } from 'rxjs';
 
@@ -49,6 +50,14 @@ export class WishDetailPage implements OnInit, OnDestroy {
         'font': 'normal normal 900 18px/20px Roboto' 
       }
     }
+  }
+
+  get wishImageComponentStyles(): WishImageComponentStyles {
+    let style  = {};
+    if (!this.wish.imageUrl) {
+      style['height'] = '70%';
+    }
+    return { img: style };
   }
 
   cssClass(first: boolean, last: boolean) {
@@ -108,11 +117,6 @@ export class WishDetailPage implements OnInit, OnDestroy {
         event.target.complete();
       }
     });
-  }
-
-  onImgLoadingError(event) {
-    event.target.src = 'assets/images/wish-list-placeholder.svg';
-    event.target.alt = 'Das Bild zeigt ein Quadrat mit einem Fragezeichen. Es stellt dar, dass es einen Fehler beim Laden des Bildes gegeben hat.';
   }
 
   private async loadWish() {

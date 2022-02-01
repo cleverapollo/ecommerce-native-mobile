@@ -3,10 +3,10 @@ import { WishDto } from '@core/models/wish-list.model';
 import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 
 export interface WishShopInfoComponentStyles {
-  shopInfoOverlay: { [className: string]: string };
-  iconStar: { [className: string]: string };
-  shopLogoContainer: { [className: string]: string };
-  priceInfo: { [className: string]: string }
+  shopInfoOverlay: CSSStyle;
+  iconStar: CSSStyle;
+  shopLogoContainer: CSSStyle;
+  priceInfo: CSSStyle
 }
 
 @Component({

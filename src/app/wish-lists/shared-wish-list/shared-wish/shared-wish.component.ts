@@ -9,7 +9,7 @@ import { StorageService } from '@core/services/storage.service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { first } from 'rxjs/operators';
 import { CoreToastService } from '@core/services/toast.service';
-import { WishShopInfoComponentStyles } from '@shared/components/wish-shop-info/wish-shop-info.component';
+import { WISH_ERROR_IMAGE_ASSET_URL } from '@core/ui.constants';
 
 export enum SharedWishListState {
   CANCELLABLE, RESERVABLE, RESERVED, LOADING
@@ -143,7 +143,7 @@ export class SharedWishComponent implements OnInit {
   }
 
   imgOnErrorHandler(event) {
-    event.target.src = 'assets/images/wish-list-placeholder.svg';
+    event.target.src = WISH_ERROR_IMAGE_ASSET_URL;
  }
 
   async showDebugInfo() {
