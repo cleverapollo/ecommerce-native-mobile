@@ -1,18 +1,34 @@
-//
-//  AuthService.swift
-//  Share
-//
-//  Created by Tim Fischer on 17.12.20.
-//
-
 import Foundation
-import SwiftKeychainWrapper
 import JWTDecode
 import Firebase
 
-class AuthService {
+// MARK: - Models
+
+struct Credentials: Codable {
     
-    var keychainwrapper: KeychainWrapper = KeychainWrapper.init(serviceName: "cap_sec", accessGroup: AppConfig.keychainAccessGroup)
+    let email: String
+    let password: String
+}
+
+struct LoginRequest: Codable {
+    
+    let username: String
+    let password: String
+}
+
+struct LoginResponse: Codable {
+    
+    let token: String
+}
+
+// MARK: - API
+
+protocol Authentication {
+    
+    func getAuthToken(completionHandler: @escaping (String?) -> Void)
+}
+
+class AuthService: Authentication {
     
     static let shared = AuthService()
     
@@ -22,7 +38,7 @@ class AuthService {
             do {
                 try Auth.auth().useUserAccessGroup(AppConfig.keychainAccessGroup)
             } catch let error as NSError {
-                print("Error changing user acccess group %@", error)
+                print("Error changing user access group %@", error)
             }
         }
     }
@@ -43,8 +59,8 @@ class AuthService {
         getIdToken() { idToken in
             if let idToken = idToken {
                 completionHandler(idToken)
-            } else if let encodedToken = self.keychainwrapper.string(forKey: "firebaseIdToken") {
-                completionHandler(encodedToken.replacingOccurrences(of: "\"", with: ""))
+            } else if let firebaseIdToken = SecretStore.getValue(for: .firebaseIdToken) {
+                completionHandler(firebaseIdToken.replacingOccurrences(of: "\"", with: ""))
             } else {
                 completionHandler(nil)
             }

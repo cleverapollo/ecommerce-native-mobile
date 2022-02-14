@@ -1,13 +1,7 @@
-//
-//  Decimal+Format.swift
-//  Share
-//
-//  Created by Tim Fischer on 14.03.21.
-//
-
 import Foundation
 
 extension Decimal {
+    
     var formattedAmount: String {
         let formatter = NumberFormatter()
         formatter.generatesDecimalNumbers = true

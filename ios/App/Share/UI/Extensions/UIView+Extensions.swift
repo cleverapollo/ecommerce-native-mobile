@@ -1,11 +1,32 @@
-//
-//  UIViewExtension.swift
-//  Share
-//
-//  Created by Tim Fischer on 17.01.21.
-//
-
 import UIKit
+
+extension UIView {
+    
+    func setupAutoLayout(forSubview: UIView) {
+        
+        let insets: NSDirectionalEdgeInsets = .zero
+        let constraints: [NSLayoutConstraint] = [
+            forSubview.leadingAnchor.constraint(equalTo: leadingAnchor,
+                                     constant: insets.leading),
+
+            forSubview.trailingAnchor.constraint(equalTo: trailingAnchor,
+                                      constant: -insets.trailing),
+
+            forSubview.topAnchor.constraint(equalTo: topAnchor,
+                                 constant: insets.top),
+
+            forSubview.bottomAnchor.constraint(equalTo: bottomAnchor,
+                                    constant: -insets.bottom)
+        ]
+        
+        translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(forSubview)
+        
+        NSLayoutConstraint.activate(constraints)
+    }
+}
+
 
 @IBDesignable
 class DesignableNavigationItem: UINavigationItem {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TTh-Xr-mUf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TTh-Xr-mUf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -176,8 +176,47 @@
                                 <color key="separatorColor" name="separatorColor"/>
                                 <color key="sectionIndexBackgroundColor" name="backgroundColor"/>
                                 <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewWishListTableViewCell" id="Hy4-KZ-iX9" customClass="NewWishListTableViewCell" customModule="Share" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="304" height="54.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hy4-KZ-iX9" id="MO8-ID-Rup">
+                                            <rect key="frame" x="0.0" y="0.0" width="304" height="54.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mEK-zn-yGk" customClass="NewWishListButton" customModule="Share" customModuleProvider="target">
+                                                    <rect key="frame" x="6" y="0.0" width="282" height="54.5"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="add" imagePlacement="leading" title="Neue Wunschliste anlegen" imagePadding="10" titleAlignment="leading">
+                                                        <fontDescription key="titleFontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
+                                                    </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="newWishListButtonPressed:" destination="Hy4-KZ-iX9" eventType="touchUpInside" id="K7K-S3-gkX"/>
+                                                    </connections>
+                                                </button>
+                                                <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qOF-DG-8lJ" customClass="NewWishListTextField" customModule="Share" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="10" width="272" height="34.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mEK-zn-yGk" firstAttribute="top" secondItem="MO8-ID-Rup" secondAttribute="top" id="Aol-Jx-oAl"/>
+                                                <constraint firstAttribute="bottom" secondItem="qOF-DG-8lJ" secondAttribute="bottom" constant="10" id="AsD-yf-aV6"/>
+                                                <constraint firstAttribute="bottom" secondItem="mEK-zn-yGk" secondAttribute="bottom" id="C0U-fP-9j7"/>
+                                                <constraint firstItem="mEK-zn-yGk" firstAttribute="leading" secondItem="MO8-ID-Rup" secondAttribute="leading" constant="6" id="EeT-vF-PrD"/>
+                                                <constraint firstItem="qOF-DG-8lJ" firstAttribute="top" secondItem="MO8-ID-Rup" secondAttribute="top" constant="10" id="FBa-Rd-vkh"/>
+                                                <constraint firstAttribute="trailing" secondItem="mEK-zn-yGk" secondAttribute="trailing" constant="16" id="WXk-gv-LpB"/>
+                                                <constraint firstItem="qOF-DG-8lJ" firstAttribute="leading" secondItem="MO8-ID-Rup" secondAttribute="leading" constant="16" id="dn4-QR-2OQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="qOF-DG-8lJ" secondAttribute="trailing" constant="16" id="mpQ-Mf-ADl"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="newWishListButton" destination="mEK-zn-yGk" id="QxM-lw-fza"/>
+                                            <outlet property="newWishListTextField" destination="qOF-DG-8lJ" id="pXk-Ju-pu4"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WishListTableViewCell" id="yIW-9e-e7z" customClass="WishListTableViewCell" customModule="Share" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="304" height="35"/>
+                                        <rect key="frame" x="0.0" y="99" width="304" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yIW-9e-e7z" id="dr7-jX-qr2">
                                             <rect key="frame" x="0.0" y="0.0" width="304" height="35"/>
@@ -551,9 +590,13 @@
         <designable name="10L-eq-uA3">
             <size key="intrinsicContentSize" width="4" height="18.5"/>
         </designable>
+        <designable name="mEK-zn-yGk">
+            <size key="intrinsicContentSize" width="218" height="31.5"/>
+        </designable>
     </designables>
     <color key="tintColor" name="textColor"/>
     <resources>
+        <image name="add" width="17.5" height="17.5"/>
         <image name="close" width="15" height="15"/>
         <image name="logo" width="48" height="48"/>
         <image name="unchecked" width="24" height="24"/>

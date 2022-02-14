@@ -1,10 +1,3 @@
-//
-//  WebViewController.swift
-//  App
-//
-//  Created by Tim Fischer on 26.06.21.
-//
-
 import UIKit
 import WebKit
 
@@ -50,7 +43,7 @@ class WebViewController: UIView, WKNavigationDelegate {
                     }
                     if productInfos.isEmpty && self.productImageViewController.productInfos.isEmpty  {
                         self.productImageViewController.reloadViewRemoveActivityIndicator()
-                        AlertService.shared.showNoImagesFoundAlert(controller: self.productImageViewController, extensionContext: self.productImageViewController.extensionContext)
+                        self.showNoImagesFoundAlert()
                     } else {
                         self.productImageViewController.productInfos = productInfos
                         self.productImageViewController.reloadViewRemoveActivityIndicator()
@@ -58,12 +51,20 @@ class WebViewController: UIView, WKNavigationDelegate {
                 } else {
                     self.productImageViewController.reloadViewRemoveActivityIndicator()
                     if productInfos.isEmpty && self.productImageViewController.productInfos.isEmpty  {
-                        AlertService.shared.showNoImagesFoundAlert(controller: self.productImageViewController, extensionContext: self.productImageViewController.extensionContext)
+                        self.showNoImagesFoundAlert()
                     }
                 }
             })
         } else {
             self.productImageViewController.reloadViewRemoveActivityIndicator()
+        }
+    }
+    
+    private func showNoImagesFoundAlert() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let alert = Alert.get(.noImagesFound(vc: self.productImageViewController))
+            self.productImageViewController.present(alert, animated: true)
         }
     }
     

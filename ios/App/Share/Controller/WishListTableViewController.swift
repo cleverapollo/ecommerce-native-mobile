@@ -1,56 +1,110 @@
-//
-//  WishListTableViewController.swift
-//  Share
-//
-//  Created by Tim Fischer on 15.01.21.
-//
-
 import UIKit
 import FirebaseAnalytics
 
 class WishListTableViewCell: UITableViewCell {
 
     static let identifier = "WishListTableViewCell"
+    static let sectionNumber = 1
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var checkMarkImageView: UIImageView!
-    
 }
 
-class WishListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class NewWishListTableViewCell: UITableViewCell {
+    
+    static let identifier = "NewWishListTableViewCell"
+    static let sectionNumber = 0
+    
+    @IBOutlet weak var newWishListButton: NewWishListButton!
+    @IBOutlet weak var newWishListTextField: NewWishListTextField!
+    
+    @IBAction func newWishListButtonPressed(_ sender: Any) {
+        
+        hideButton()
+        showTextField()
+    }
+    
+    // MARK: - TextField
+    
+    func hideTextField() {
+        newWishListTextField.isHidden = true
+    }
+    
+    func showTextField() {
+        newWishListTextField.isHidden = false
+        newWishListTextField.becomeFirstResponder()
+    }
+    
+    // MARK: - Button
+    
+    func hideButton() {
+        newWishListButton.isHidden = true
+    }
+    
+    func showButton() {
+        newWishListButton.isHidden = false
+    }
+}
+
+enum WishListsLoadingState {
+    
+    case inProgress
+    case none
+    case error
+    case done(wishListCount: Int)
+    
+    func infoText() -> String? {
+        var text: String? = nil
+        switch self {
+        case .inProgress:
+            text = "Wunschlisten werden geladen ..."
+        case .done(let wishListCount):
+            if wishListCount == 0 {
+                text = "Keine Wunschlisten vorhanden"
+            }
+        case .error:
+            text = "Fehler beim Laden deiner Wunschlisten"
+        case .none:
+            text = nil
+        }
+        return text
+    }
+}
+
+class WishListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: SelfSizedTableView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var selectedWishImageView: UIImageView!
     
-    
     @IBAction func onButtonTap() {
-        let wish = WishDataStore.shared.wish
-        WishService.shared.saveWish(wish, completionHandler: { result in
-            switch result {
-            case .success(_):
-                self.alertService.showToast(controller: self, message: "Dein Wunsch wurde erfolgreich deiner Liste hinzugefügt.", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
-            case .failure(let error):
-                if (error as NSError).code == HttpStatusCode.UNAUTHORIZED {
-                    self.alertService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
-                } else {
-                    self.alertService.showToast(controller: self, message: "Beim Speichern deines Wunsches ist ein Fehler aufgetreten", wishListId: wish.wishListId!, extensionContext: self.extensionContext!)
-                }
-            }
-        })
+        saveNewWish()
     }
     
-    let alertService = AlertService.shared
+    var newWishListTableViewCell: NewWishListTableViewCell? {
+        let indexPath = IndexPath(row: 0, section: NewWishListTableViewCell.sectionNumber)
+        return tableView.cellForRow(at: indexPath) as? NewWishListTableViewCell
+    }
+    
+    var newWishListTextField: NewWishListTextField? {
+        newWishListTableViewCell?.newWishListTextField
+    }
+    
+    // WishLists
     var wishLists: [WishList] = []
+    var wishListsLoadingState: WishListsLoadingState = .none
     var wishListId: UUID? {
         didSet {
             WishDataStore.shared.wish.wishListId = wishListId
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.saveButton.isEnabled = WishDataStore.shared.wish.isValid()
             }
         }
     }
     var selectedIndexPath: IndexPath?
+    
+    // MARK: - lifecycle
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -63,99 +117,135 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupViews()
+        setupData()
+        setupTableView()
+        
         loadWishLists()
     }
     
-    private func setupViews() {
+    private func setupData() {
+        
         if let imageUrl = WishDataStore.shared.wish.imageUrl {
             self.selectedWishImageView.setImageFromURl(imageUrlString: imageUrl)
         }
         saveButton.isEnabled = WishDataStore.shared.wish.isValid()
         wishListId = WishDataStore.shared.wish.wishListId
-        tableView.tableFooterView = UIView()
-        tableView.separatorColor = UIColor(hex: "#F1EEE4")
     }
     
-    private func loadWishLists() {
-        self.showActivityIndicator("Deine Wunschlisten werden geladen ...")
-        WishListService.shared.getWishLists(completionHandler: { result in
-            self.removeActivityIndicator()
-            switch result {
-            case .success(let wishLists):
-                guard !wishLists.isEmpty else {
-                    self.alertService.showNoWishListsAvailableToast(controller: self, extensionContext: self.extensionContext!)
-                    return
-                }
-                self.wishLists = wishLists
-                self.wishListId = self.wishLists.first?.id
-                self.selectedIndexPath = IndexPath(row: 0, section: 0)
-                WishDataStore.shared.wish.wishListId = self.wishListId
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            case .failure(let error):
-                if (error as NSError).code == HttpStatusCode.UNAUTHORIZED {
-                    self.alertService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
-                }
-                self.wishLists = []
-            }
-        })
+    private func setupTableView() {
+        
+        tableView.tableFooterView = UIView()
+        tableView.separatorColor = Color.get(.separatorColor)
+    }
+    
+    private func selectFirstWishList() {
+        
+        self.wishListId = self.wishLists.first?.id
+        self.selectedIndexPath = IndexPath(row: 0, section: WishListTableViewCell.sectionNumber)
+    }
+    
+    private func reloadTableViewData() {
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return wishLists.count
+        
+        switch section {
+        case NewWishListTableViewCell.sectionNumber:
+            return 1
+        case WishListTableViewCell.sectionNumber:
+            if wishLists.isEmpty {
+                // show hint that the user has no wish lists
+                return 1
+            }
+            return wishLists.count
+        default:
+            return 0
+        }
     }
-
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        switch indexPath.section {
+        case NewWishListTableViewCell.sectionNumber:
+            return handleNewWishListTableViewCells(tableView, cellForRowAt: indexPath)
+        case WishListTableViewCell.sectionNumber:
+            return handleWishListTableViewCells(tableView, cellForRowAt: indexPath)
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    private func handleNewWishListTableViewCells(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewWishListTableViewCell.identifier, for: indexPath) as? NewWishListTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        // setup action handler
+        cell.newWishListTextField.onButtonClick = { wishListName in
+            self.saveNewWishList(wishListName: wishListName)
+        }
+        
+        // setup corners
+        cell.layer.cornerRadius = Constants.cornerRadius
+        cell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        
+        return cell
+    }
+
+    private func handleWishListTableViewCells(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: WishListTableViewCell.identifier, for: indexPath) as? WishListTableViewCell else {
             return UITableViewCell()
         }
         
+        let wishListIndex = indexPath.row
+        let isFirstRow = wishListIndex == 0
+        var isLastRow = false
+        
         if !wishLists.isEmpty {
+            isLastRow = wishListIndex == wishLists.count - 1
             
-            if indexPath.section == 0 {
-                let cornerRadius: CGFloat = 25
-                if indexPath.row == 0 {
-                    cell.layer.cornerRadius = cornerRadius
-                    cell.clipsToBounds = true
-                    var maskedCorners: CACornerMask = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-                    if  wishLists.count == 1 {
-                        maskedCorners.insert(.layerMinXMaxYCorner)
-                        maskedCorners.insert(.layerMaxXMaxYCorner)
-                        cell.layer.cornerRadius = 20
-                    }
-                    cell.layer.maskedCorners = maskedCorners
-                } else if indexPath.row == wishLists.count - 1 {
-                    cell.layer.cornerRadius = cornerRadius
-                    cell.clipsToBounds = true
-                    cell.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
-                } else {
-                    cell.layer.cornerRadius = 0
-                    cell.clipsToBounds = false
-                }
-            }
-            
-            let wishList = wishLists[indexPath.row]
+            // setup text
+            let wishList = wishLists[wishListIndex]
             cell.nameLabel.text = wishList.name
+            
+            // setup check mark
+            cell.checkMarkImageView.isHidden = false
             if wishList.id == wishListId {
-                cell.checkMarkImageView.image = UIImage(named: "checkMark")
+                cell.checkMarkImageView.image = Icon.get(.checkMark)
             } else {
-                cell.checkMarkImageView.image = UIImage(named: "unchecked")
+                cell.checkMarkImageView.image = Icon.get(.unchecked)
             }
+        } else {
+            isLastRow = true
+            
+            cell.nameLabel.text = wishListsLoadingState.infoText()
+            cell.checkMarkImageView.isHidden = true
         }
+        
+        // setup style
+        cell.clipsToBounds = isLastRow || isFirstRow
+        cell.layer.cornerRadius = isLastRow ? Constants.cornerRadius : 0
+        cell.layer.maskedCorners = isLastRow ? [.layerMinXMaxYCorner,.layerMaxXMaxYCorner] : []
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard !wishLists.isEmpty else { return }
+        
         let wishList = wishLists[indexPath.row]
         
         var indexPathsToReload = [indexPath]
@@ -169,36 +259,153 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
+        
         extensionContext?.completeRequest(returningItems: nil, completionHandler: {_ in
             WishDataStore.shared.reset()
         })
     }
+}
+
+// MARK: - Network
+
+extension WishListTableViewController {
     
-    // MARK: UITextFieldDelegate
+    // MARK: - Save new wish list
     
-    /*func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let text = textField.text, !text.isEmpty else {
-            return true
+    private func saveNewWishList(wishListName: String) {
+        
+        showLoadingSpinnerInTextField()
+        
+        let requestBody = WishListCreateRequest(name: wishListName)
+        WishListResource.createWishList(requestBody) { result in
+            self.dismissLoadingSpinnerInTextField()
+            switch result {
+            case .success(let response):
+                let newWishList = response.data
+                self.toggleNewWishListUIViews()
+                self.wishLists.insert(newWishList, at: 0)
+                self.selectFirstWishList()
+                self.reloadTableViewData()
+            case .failure(let error):
+                self.handleCreateNewWishListError(error, wishListName: wishListName)
+            }
         }
-        createNewWishList(text)
-        return false
     }
     
-    private func createNewWishList(_ wishListName: String) {
-        WishListService.shared.createNewWishList(wishListName, completionHandler: { result in
+    private func dismissLoadingSpinnerInTextField() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.newWishListTextField?.dismissLoading()
+        }
+    }
+    
+    private func showLoadingSpinnerInTextField() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.newWishListTextField?.showLoading()
+        }
+    }
+    
+    private func toggleNewWishListUIViews() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.newWishListTextField?.clearTextField()
+            self.newWishListTableViewCell?.hideTextField()
+            self.newWishListTableViewCell?.showButton()
+        }
+    }
+    
+    // MARK: - Load wish lists
+    
+    private func loadWishLists() {
+        
+        wishListsLoadingState = .inProgress
+        WishListResource.queryWishLists() { result in
+            self.removeActivityIndicator()
             switch result {
-            case .success(let wishList):
-                self.wishLists.insert(wishList, at: 0)
-                DispatchQueue.main.async {
-                    self.tableView.beginUpdates()
-                    self.tableView.insertRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
-                    self.tableView.endUpdates()
+            case .success(let response):
+                let wishLists = response.data
+                self.wishListsLoadingState = .done(wishListCount: wishLists.count)
+                self.wishLists = wishLists
+                self.selectFirstWishList()
+            case .failure(let error):
+                self.wishLists = []
+                self.wishListsLoadingState = .error
+                self.handleLoadWishListsError(error)
+            }
+            self.reloadTableViewData()
+        }
+    }
+    
+    // MARK: - Save new wish
+    
+    private func saveNewWish() {
+        
+        let wish = WishDataStore.shared.wish
+        WishResource.createWish(wish) { result in
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    let alert = Alert.get(.addedWishSuccessful(vc: self, wishListId: wish.wishListId!))
+                    self.present(alert, animated: true)
                 }
             case .failure(let error):
-                print(error)
+                self.handleSaveWishError(error, wish: wish)
             }
-        })
-    }*/
+        }
+    }
+    
+}
 
+// MARK: Error Handling
 
+extension WishListTableViewController {
+    
+    private func handleLoadWishListsError(_ error: NetworkError) {
+        
+        let message = "Beim Laden deiner Wunschlisten ist ein Fehler aufgetreten."
+        handleError(error, message: message) { [weak self] _ in
+            
+            guard let self = self else { return }
+            self.loadWishLists()
+        }
+    }
+    
+    private func handleCreateNewWishListError(_ error: NetworkError, wishListName: String) {
+        
+        let message = "Beim Speichern deiner Wunschliste ist ein Fehler aufgetreten."
+        handleError(error, message: message) { [weak self] _ in
+            
+            guard let self = self else { return }
+            self.saveNewWishList(wishListName: wishListName)
+        }
+    }
+    
+    private func handleSaveWishError(_ error: NetworkError, wish: Wish) {
+        
+        let message = "Beim Speichern deines Wunsches ist ein Fehler aufgetreten."
+        handleError(error, message: message) { [weak self] _ in
+            
+            guard let self = self else { return }
+            self.saveNewWish()
+        }
+    }
+    
+    private func handleError(_ error: NetworkError, message: String, retryAction: @escaping (UIAlertAction) -> Void) {
+        
+        DispatchQueue.main.async { [weak self] in
+            
+            guard let self = self else { return }
+            
+            var alert: UIAlertController
+            switch error {
+            case .unauthorized:
+                alert = Alert.get(.unauthorized(vc: self))
+            case .unexpected(_), .general:
+                alert = Alert.get(.generalError(message: message, retryAction: retryAction))
+            }
+            self.present(alert, animated: true)
+        }
+    }
 }

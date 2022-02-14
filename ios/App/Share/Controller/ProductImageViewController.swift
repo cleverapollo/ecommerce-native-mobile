@@ -1,10 +1,3 @@
-//
-//  ProductImageViewController.swift
-//  Share
-//
-//  Created by Tim Fischer on 23.01.21.
-//
-
 import UIKit
 import MobileCoreServices
 import FirebaseAnalytics
@@ -20,7 +13,6 @@ class ProductInfoCell: UICollectionViewCell {
 class ProductImageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let authService = AuthService.shared
-    let alertService = AlertService.shared
     
     var productInfos: [ProductInfo] = []
     var selectedProductInfo: ProductInfo?
@@ -34,13 +26,17 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        authService.getAuthToken(completionHandler: { idToken in
+        authService.getAuthToken() { idToken in
             if idToken == nil {
-                self.alertService.showNotAuthorizedToast(controller: self, extensionContext: self.extensionContext!)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    let alert = Alert.get(.unauthorized(vc: self))
+                    self.present(alert, animated: true)
+                }
             } else if let item = self.extensionContext?.inputItems.first as? NSExtensionItem {
                 self.fetchProductInfos(extensionItem: item)
             }
-        })
+        }
         WishDataStore.shared.reset()
         
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [
@@ -214,7 +210,8 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func reloadViewRemoveActivityIndicator() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             self.collectionView.reloadData()
             self.collectionView.performBatchUpdates(nil, completion: {
                 (result) in
@@ -226,7 +223,8 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                     self.collectionView.deleteItems(at: self.itemsToDelete.compactMap { $0.key })
                     
                     if self.productInfos.isEmpty {
-                        self.alertService.showNoImagesFoundAlert(controller: self, extensionContext: self.extensionContext)
+                        let alert = Alert.get(.noImagesFound(vc: self))
+                        self.present(alert, animated: true)
                     }
                 }
             })

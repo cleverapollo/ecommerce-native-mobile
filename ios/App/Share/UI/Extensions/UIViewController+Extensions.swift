@@ -1,15 +1,10 @@
-//
-//  UIViewControllerExtension.swift
-//  Share
-//
-//  Created by Tim Fischer on 16.01.21.
-//
-
 import UIKit
 
 var effectView: UIVisualEffectView?
 
 extension UIViewController {
+    
+    // MARK: - Keyboard Handling
     
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
@@ -20,6 +15,8 @@ extension UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    // MARK: - Activity Indicator
     
     func showActivityIndicator(_ title: String) {
         guard effectView == nil else { return }
@@ -55,6 +52,30 @@ extension UIViewController {
             effectView?.removeFromSuperview()
             effectView = nil
         }
+    }
+    
+    //
+    
+    func closeShareExtension() {
+        
+        guard let extensionContext = self.extensionContext else {
+            return
+        }
+        extensionContext.completeRequest(returningItems: nil, completionHandler: nil)
+    }
+    
+    func redirectToHostApp(url: URL) {
+        
+        var responder = self as UIResponder?
+        let selectorOpenURL = sel_registerName("openURL:")
+        
+        while (responder != nil) {
+            if (responder?.responds(to: selectorOpenURL))! {
+                let _ = responder?.perform(selectorOpenURL, with: url)
+            }
+            responder = responder!.next
+        }
+        closeShareExtension()
     }
     
 }

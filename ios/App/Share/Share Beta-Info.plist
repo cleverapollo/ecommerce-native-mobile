@@ -49,6 +49,9 @@
 	<array>
 		<string>PlayfairDisplay-Regular.ttf</string>
 		<string>Roboto-Regular.ttf</string>
+		<string>Roboto-Italic.ttf</string>
+		<string>Roboto-Medium.ttf</string>
+		<string>Roboto-Bold.ttf</string>
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>

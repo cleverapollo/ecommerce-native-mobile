@@ -1,13 +1,9 @@
-//
-//  Wish.swift
-//  Share
-//
-//  Created by Tim Fischer on 15.01.21.
-//
-
 import Foundation
 
+// MARK: - Models
+
 struct Wish: Codable {
+    
     var id: UUID?
     var wishListId: UUID?
     var name: String?
@@ -20,6 +16,7 @@ struct Wish: Codable {
     }
     
     mutating func addProductInfo(_ productInfo: ProductInfo) {
+        
         name = productInfo.name
         productUrl = productInfo.productUrl
         imageUrl = productInfo.imageUrl
@@ -34,5 +31,23 @@ struct Wish: Codable {
             return false
         }
         return true
+    }
+}
+
+// MARK: - API
+
+protocol WishApi: NetworkResource {
+    
+    static func createWish(_ wish: Wish, completionHandler: @escaping (Result<NetworkResponse<Wish>, NetworkError>) -> Void)
+}
+
+struct WishResource: WishApi {
+    
+    static var baseUrl: URL = URL(string: "\(AppConfig.backendUrl)/v1/wishes")!
+    
+    static func createWish(_ wish: Wish, completionHandler: @escaping (Result<NetworkResponse<Wish>, NetworkError>) -> Void) {
+        
+        let httpBody = try! JSONEncoder().encode(wish)
+        Network.post(baseUrl, bodyData: httpBody, completionHandler: completionHandler)
     }
 }
