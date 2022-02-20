@@ -1,5 +1,4 @@
 import UIKit
-import FirebaseAnalytics
 
 class WishListTableViewCell: UITableViewCell {
 
@@ -98,7 +97,7 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
             WishDataStore.shared.wish.wishListId = wishListId
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.saveButton.isEnabled = WishDataStore.shared.wish.isValid()
+                self.saveButton.isEnabled = WishDataStore.shared.wish.isValid
             }
         }
     }
@@ -109,33 +108,40 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-            AnalyticsParameterScreenName: "share_extension-wishlist"
-        ])
+        FirebaseAnalytics.logScreenEvent("share_extension-wishlist")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupData()
+        wishListId = WishDataStore.shared.wish.wishListId
+        
+        setupImage()
+        setupActionButton()
         setupTableView()
         
         loadWishLists()
     }
     
-    private func setupData() {
+    private func setupImage() {
         
         if let imageUrl = WishDataStore.shared.wish.imageUrl {
             self.selectedWishImageView.setImageFromURl(imageUrlString: imageUrl)
+        } else {
+            self.selectedWishImageView.image = Image.get(.fallbackWishImage)
         }
-        saveButton.isEnabled = WishDataStore.shared.wish.isValid()
-        wishListId = WishDataStore.shared.wish.wishListId
     }
     
     private func setupTableView() {
         
         tableView.tableFooterView = UIView()
         tableView.separatorColor = Color.get(.separatorColor)
+    }
+    
+    private func setupActionButton() {
+        
+        saveButton.isEnabled = WishDataStore.shared.wish.isValid
+        saveButton.applyGradient()
     }
     
     private func selectFirstWishList() {
@@ -321,7 +327,6 @@ extension WishListTableViewController {
         
         wishListsLoadingState = .inProgress
         WishListResource.queryWishLists() { result in
-            self.removeActivityIndicator()
             switch result {
             case .success(let response):
                 let wishLists = response.data

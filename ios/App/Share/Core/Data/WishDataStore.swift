@@ -4,6 +4,7 @@ protocol WishDataStorable {
     
     var wish: Wish { get }
     
+    func update(_ wish: Wish)
     func reset()
 }
 
@@ -16,6 +17,11 @@ class WishDataStore: WishDataStorable {
     private init() {
         
         wish = Wish()
+    }
+    
+    public func update(_ wish: Wish) {
+        
+        self.wish = wish
     }
 
     public func reset() {

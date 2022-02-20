@@ -8,25 +8,43 @@ extension UIImageView {
 
     @discardableResult
     func setImageFromURl(imageUrlString: String) -> Bool {
-         if let url = NSURL(string: imageUrlString) {
-             if let imagedata = NSData(contentsOf: url as URL) {
-                if imageUrlString.contains(".svg"), let uiImage = SVGKImage(data: imagedata as Data)?.uiImage, uiImage.size.height > UIImageView.minSizeHeight && uiImage.size.width > UIImageView.minSizeWidth  {
-                    self.image = uiImage.scalePreservingAspectRatio(targetSize: frame.size)
-                    print("Load UIImage with URL is " + imageUrlString)
-                    return true
-                } else if let uiImage = UIImage(data: imagedata as Data), uiImage.size.height > UIImageView.minSizeHeight && uiImage.size.width > UIImageView.minSizeWidth {
-                    print("Load UIImage with URL is " + imageUrlString)
-                    self.image = uiImage.scalePreservingAspectRatio(targetSize: frame.size)
-                    return true
-                } else {
-                    print("Can't create UIImage! URL is " + imageUrlString)
-                }
-             } else {
-                print("Can't create image data from URL! URL is " + imageUrlString)
-             }
-         } else {
-            print("Can't create URL from String! URL is " + imageUrlString)
-         }
-        return false
+        
+        guard let url = NSURL(string: imageUrlString) else {
+            Logger.error("Can't create URL from String!", imageUrlString)
+            return false
+        }
+        
+        guard let imageData = NSData(contentsOf: url as URL) else {
+            Logger.error("Can't create image data from URL!", imageUrlString)
+            return false
+        }
+        
+        var uiImage: UIImage?
+        if imageUrlString.contains(".svg"), let svgImage = SVGKImage(data: imageData as Data)?.uiImage {
+            uiImage = svgImage
+        } else if let image = UIImage(data: imageData as Data) {
+            uiImage = image
+        }
+        
+        guard uiImage != nil else {
+            Logger.error("UIImage is nil")
+            return false
+        }
+        
+        guard imageIsEqualOrGreaterThanMinSize(uiImage!) else {
+            Logger.debug("Image size is less than min size. (\(UIImageView.minSizeWidth) x \(UIImageView.minSizeHeight))")
+            return false
+        }
+        
+        Logger.success("Load image with URL " + imageUrlString)
+        self.image = uiImage!.scalePreservingAspectRatio(targetSize: frame.size)
+        return true
      }
+    
+    /// Checks that the image has a minimum height and width.
+    /// This prevents that images with a low quality and images like placeholders (transparent images with 1x1 dp) are not shown.
+    private func imageIsEqualOrGreaterThanMinSize(_ image: UIImage) -> Bool {
+        
+        image.size.height > UIImageView.minSizeHeight && image.size.width > UIImageView.minSizeWidth
+    }
  }

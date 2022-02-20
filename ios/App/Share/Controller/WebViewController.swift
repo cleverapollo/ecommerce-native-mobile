@@ -1,15 +1,19 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIView, WKNavigationDelegate {
+class WebViewController: UIView {
     
     var webView: WKWebView!
     let webUrl: URL
-    let productImageViewController: ProductImageViewController
     
-    init(webUrl: URL, productImageViewController: ProductImageViewController) {
+    var onWebCrawlerResult: (WebPageInfo?) -> Void
+    
+    // MARK: - life cycle
+    
+    init(webUrl: URL, onWebCrawlerResult: @escaping (WebPageInfo?) -> Void) {
+        
         self.webUrl = webUrl
-        self.productImageViewController = productImageViewController
+        self.onWebCrawlerResult = onWebCrawlerResult
         super.init(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 50, height: 50)))
         
         webView = WKWebView()
@@ -17,84 +21,48 @@ class WebViewController: UIView, WKNavigationDelegate {
     }
     
     required init?(coder: NSCoder) {
+        
         self.webUrl = URL(string: "https://wantic.io")!
-        self.productImageViewController = ProductImageViewController()
+        self.onWebCrawlerResult = { _ in }
         super.init(coder: coder)
     }
     
+    // MARK: - load web url
+    
     func loadWebUrl(_ productUrl: URL) {
+        
         webView.load(URLRequest(url: productUrl))
         webView.allowsBackForwardNavigationGestures = true
     }
+}
+
+// MARK: - WKNavigationDelegate
+
+extension WebViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        var productInfos: [ProductInfo] = []
-        if let javaScriptSource = loadJsFileToFetchProductInfos() {
-            webView.evaluateJavaScript(javaScriptSource, completionHandler: { (result, error) in
-                if error == nil, let productInfosArray = result as? [Dictionary<String, Any>] {
-                    var productInfoId: UInt = 0
-                    for item in productInfosArray {
-                        productInfoId += 1
-                        guard let imageUrlString = self.getImageUrlStringFromDict(item) else { continue }
-                        let priceAmount = self.getPriceFromDict(item)
-                        let name = self.getNameFromDict(item)
-                        let productInfo = ProductInfo(id: productInfoId, productUrl: self.webUrl.absoluteString, imageUrl: imageUrlString, name: name, price: Price(amount: priceAmount))
-                        productInfos.append(productInfo)
-                    }
-                    if productInfos.isEmpty && self.productImageViewController.productInfos.isEmpty  {
-                        self.productImageViewController.reloadViewRemoveActivityIndicator()
-                        self.showNoImagesFoundAlert()
-                    } else {
-                        self.productImageViewController.productInfos = productInfos
-                        self.productImageViewController.reloadViewRemoveActivityIndicator()
-                    }
-                } else {
-                    self.productImageViewController.reloadViewRemoveActivityIndicator()
-                    if productInfos.isEmpty && self.productImageViewController.productInfos.isEmpty  {
-                        self.showNoImagesFoundAlert()
-                    }
-                }
-            })
-        } else {
-            self.productImageViewController.reloadViewRemoveActivityIndicator()
+        
+        guard let javaScriptSource = File.getFileContent(.webCrawler) else {
+            Logger.error("Error while reading web crawler script")
+            self.onWebCrawlerResult(nil)
+            return
         }
-    }
-    
-    private func showNoImagesFoundAlert() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            let alert = Alert.get(.noImagesFound(vc: self.productImageViewController))
-            self.productImageViewController.present(alert, animated: true)
-        }
-    }
-    
-    private func loadJsFileToFetchProductInfos() -> String? {
-        if let filePath = Bundle.main.path(forResource: "fetch-product-infos", ofType: "js") {
-            do {
-                return try String(contentsOfFile: filePath)
-            } catch {
-                return nil
+        
+        webView.evaluateJavaScript(javaScriptSource, completionHandler: { (result, error) in
+            
+            guard error == nil else {
+                Logger.error("Error while fetching results", error!)
+                self.onWebCrawlerResult(nil)
+                return
             }
-        }
-        return nil
+            
+            guard let resultDict = result as? [String: Any] else {
+                Logger.error("No results from script: Result is ", result ?? "nil")
+                self.onWebCrawlerResult(nil)
+                return
+            }
+            
+            self.onWebCrawlerResult(WebCrawler.getWebPageInfo(from: resultDict))
+        })
     }
-    
-    func getPriceFromDict(_ item: [String : Any]) -> Decimal {
-        var priceAmount: Decimal = 0.00
-        if let doublePrice = item["price"] as? Double  {
-            priceAmount = Decimal(doublePrice)
-        } else if let decimalPrice = item["price"] as? Decimal {
-            priceAmount = decimalPrice
-        }
-        return priceAmount
-    }
-    
-    func getImageUrlStringFromDict(_ item: [String : Any]) -> String? {
-        return item["imageUrl"] as? String
-    }
-    
-    func getNameFromDict(_ item: [String : Any]) -> String {
-        return item["name"] as? String ?? ""
-    }
-
 }

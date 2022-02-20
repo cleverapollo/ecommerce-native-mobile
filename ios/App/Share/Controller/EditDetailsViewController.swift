@@ -1,12 +1,4 @@
-//
-//  EditDetailsViewController.swift
-//  Share
-//
-//  Created by Tim Fischer on 16.12.20.
-//
-
 import UIKit
-import FirebaseAnalytics
 
 private enum ViewIdentifier: Int {
     case productImage = 0
@@ -14,13 +6,21 @@ private enum ViewIdentifier: Int {
     case productPrice = 2
 }
 
-class ProductImageTableViewCell: UITableViewCell {
+protocol CustomTableViewCell {
+    
+    static var sectionNumber: Int { get }
+    static var reuseIdentifier: String { get }
+}
+
+class ProductImageTableViewCell: UITableViewCell, CustomTableViewCell {
+    static let sectionNumber: Int = 0
     static let reuseIdentifier = "ProductImageTableViewCell"
     
     @IBOutlet weak var productImageView: UIImageView!
 }
 
-class ProductNameTableViewCell: UITableViewCell {
+class ProductNameTableViewCell: UITableViewCell, CustomTableViewCell {
+    static let sectionNumber: Int = 1
     static let reuseIdentifier = "ProductNameTableViewCell"
     
     @IBOutlet weak var headerLabel: UILabel!
@@ -28,6 +28,7 @@ class ProductNameTableViewCell: UITableViewCell {
 }
 
 class ProductPriceTableViewCell: UITableViewCell {
+    static let sectionNumber: Int = 2
     static let reuseIdentifier = "ProductPriceTableViewCell"
     
     @IBOutlet weak var headerLabel: UILabel!
@@ -38,6 +39,12 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
 
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var tableView: SelfSizedTableView!
+    
+    @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
+        extensionContext?.completeRequest(returningItems: nil, completionHandler: { _ in
+            WishDataStore.shared.reset()
+        })
+    }
     
     var productImage: UIImageView? {
         get {
@@ -63,14 +70,21 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     
     var textFields: [UITextInput] = []
     
-    var productInfo: ProductInfo!
+    var webPageInfo: WebPageInfo!
+    var webPageImage: WebPageImage?
+    
+    private var displayName: String {
+        var displayName = webPageInfo.title
+        if let imageName = webPageImage?.name, !imageName.isEmpty {
+            displayName = imageName
+        }
+        return displayName
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-            AnalyticsParameterScreenName: "share_extension-name-price"
-        ])
+        FirebaseAnalytics.logScreenEvent("share_extension-name-price")
     }
     
     override func viewDidLoad() {
@@ -87,6 +101,16 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         self.hideKeyboardWhenTappedAround()
     }
     
+    func setupView() {
+        
+        setupActionButton()
+        validateTextFields()
+    }
+    
+    private func setupActionButton() {
+        
+        nextButton.applyGradient()
+    }
     
     @objc func keyboardWillShow(notification:NSNotification) {
         if let keyboardBeginSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -111,39 +135,62 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: ProductImageTableViewCell.reuseIdentifier, for: indexPath) as? ProductImageTableViewCell {
-                cell.productImageView.setImageFromURl(imageUrlString: productInfo.imageUrl)
-                return cell
-            }
-        } else if indexPath.section == 1 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: ProductNameTableViewCell.reuseIdentifier, for: indexPath) as? ProductNameTableViewCell {
-                textFields.append(cell.productNameView)
-                cell.productNameView.text = productInfo.name
-                /*cell.productNameView.translatesAutoresizingMaskIntoConstraints = true
-                cell.productNameView.sizeToFit()
-                cell.productNameView.isScrollEnabled = false*/
-                return cell
-            }
-        } else if indexPath.section == 2 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: ProductPriceTableViewCell.reuseIdentifier, for: indexPath) as? ProductPriceTableViewCell {
-                textFields.append(cell.productPriceView)
-                cell.productPriceView.text = productInfo.price.amount.formattedAmount
-                return cell
-            }
+        
+        switch indexPath.section {
+        case ProductImageTableViewCell.sectionNumber:
+            return setupImageTableViewCell(tableView, cellForRowAt: indexPath)
+        case ProductNameTableViewCell.sectionNumber:
+            return setupNameTableViewCell(tableView, cellForRowAt: indexPath)
+        case ProductPriceTableViewCell.sectionNumber:
+            return setupPriceTableViewCell(tableView, cellForRowAt: indexPath)
+        default:
+            return UITableViewCell()
         }
-        return UITableViewCell()
+    }
+    
+    private func setupImageTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductImageTableViewCell.reuseIdentifier, for: indexPath) as? ProductImageTableViewCell else {
+            return UITableViewCell()
+        }
+        if let webPageImage = webPageImage {
+            cell.productImageView.setImageFromURl(imageUrlString: webPageImage.url)
+        } else {
+            cell.productImageView.image = Image.get(.fallbackWishImage)
+        }
+        return cell
+    }
+    
+    private func setupNameTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductNameTableViewCell.reuseIdentifier, for: indexPath) as? ProductNameTableViewCell else {
+            return UITableViewCell()
+        }
+        textFields.append(cell.productNameView)
+        cell.productNameView.text = displayName
+        
+        return cell
+    }
+    
+    private func setupPriceTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductPriceTableViewCell.reuseIdentifier, for: indexPath) as? ProductPriceTableViewCell else {
+            return UITableViewCell()
+        }
+        textFields.append(cell.productPriceView)
+        cell.productPriceView.text = webPageInfo.price.amount.formattedAmount
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        
+        switch indexPath.section {
+        case ProductImageTableViewCell.sectionNumber:
             return 241
-        } else if indexPath.section == 1 {
+        case ProductNameTableViewCell.sectionNumber:
             return 168
-        } else if indexPath.section == 2 {
+        case ProductPriceTableViewCell.sectionNumber:
             return 99
+        default:
+            return UITableView.automaticDimension
         }
-        return UITableView.automaticDimension
     }
     
     // MARK: UITextFieldDelegate
@@ -168,9 +215,6 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
                     WishDataStore.shared.wish.price.amount = amount
                 }
             } else if let textView = textInput as? UITextView {
-                /*textView.translatesAutoresizingMaskIntoConstraints = true
-                textView.sizeToFit()
-                textView.isScrollEnabled = false*/
                 if textView == productName {
                     WishDataStore.shared.wish.name = textView.text
                 }
@@ -230,17 +274,5 @@ class EditDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     func countCharacterInString(string: String, char: String.Element) -> Int {
         return string.filter { $0 == char }.count
     }
-    
-    // MARK: - View Methods
 
-    func setupView() {
-        validateTextFields()
-    }
-    
-    @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
-        extensionContext?.completeRequest(returningItems: nil, completionHandler: { _ in
-            WishDataStore.shared.reset()
-        })
-    }
-    
 }

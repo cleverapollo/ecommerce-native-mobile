@@ -11,26 +11,25 @@ struct Wish: Codable {
     var productUrl: String?
     var imageUrl: String?
     
+    var isValid: Bool {
+        wishListId != nil && name != nil && productUrl != nil
+    }
+    
     init() {
         self.price = Price(amount: 0.00)
     }
     
-    mutating func addProductInfo(_ productInfo: ProductInfo) {
+    init(_ webPageInfo: WebPageInfo, webPageImage: WebPageImage?) {
         
-        name = productInfo.name
-        productUrl = productInfo.productUrl
-        imageUrl = productInfo.imageUrl
-        price = productInfo.price
-    }
-    
-    func isValid() -> Bool {
-        guard let _ = self.wishListId,
-              let _ = self.name,
-              let _ = self.productUrl,
-              let _ = self.imageUrl else {
-            return false
+        if let webPageImageName = webPageImage?.name, !webPageImageName.isEmpty {
+            name = webPageImageName
+        } else {
+            name = webPageInfo.title
         }
-        return true
+        
+        productUrl = webPageInfo.url
+        imageUrl = webPageImage?.url
+        price = webPageInfo.price
     }
 }
 

@@ -1,6 +1,5 @@
 import UIKit
 import MobileCoreServices
-import FirebaseAnalytics
 
 private let reuseIdentifier = "ProductInfoCell"
 
@@ -12,63 +11,123 @@ class ProductInfoCell: UICollectionViewCell {
 
 class ProductImageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    let authService = AuthService.shared
-    
-    var productInfos: [ProductInfo] = []
-    var selectedProductInfo: ProductInfo?
-    var selectedCell: ProductInfoCell?
-    var itemsToDelete: [IndexPath: ProductInfo] = [:]
+    // MARK: - Views
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerStackView: UIStackView!
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
     @IBOutlet weak var nextButton: UIButton!
+    
+    @IBOutlet weak var noImagesFoundView: UIView!
+    
     @IBOutlet weak var closeButton: UIBarButtonItem!
+    @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
+        extensionContext?.completeRequest(returningItems: nil, completionHandler: {_ in
+            WishDataStore.shared.reset()
+        })
+    }
+    
+    private var loadingIndicatorView: UIVisualEffectView?
+    
+    // MARK: - properties
+    
+    private let authService = AuthService.shared
+    
+    private var items: [WebPageImage] = []
+    private var itemsToDelete: [IndexPath: WebPageImage] = [:]
+    
+    var selectedImage: WebPageImage?
+    var selectedCell: ProductInfoCell?
+    var webPageInfo: WebPageInfo? {
+        didSet {
+            self.items = self.webPageInfo?.images ?? []
+            self.reloadCollectionView()
+            self.enableNextButton(true)
+            self.showNoImagesFoundView(self.items.isEmpty)
+            self.updateWish()
+        }
+    }
+    
+    private func updateWish() {
+        guard let webPageInfo = webPageInfo else {
+            return
+        }
+        var webPageImage: WebPageImage?
+        if let selectedImage = self.selectedImage {
+            webPageImage = selectedImage
+        }
+        WishDataStore.shared.update(Wish(webPageInfo, webPageImage: webPageImage))
+    }
+        
+    // MARK: - lifecycle
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         authService.getAuthToken() { idToken in
             if idToken == nil {
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    let alert = Alert.get(.unauthorized(vc: self))
-                    self.present(alert, animated: true)
-                }
+                self.presentAlert(Alert.get(.unauthorized(vc: self)))
             } else if let item = self.extensionContext?.inputItems.first as? NSExtensionItem {
                 self.fetchProductInfos(extensionItem: item)
             }
         }
         WishDataStore.shared.reset()
         
-        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-            AnalyticsParameterScreenName: "share_extension-picture"
-        ])
+        FirebaseAnalytics.logScreenEvent("share_extension-picture")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupView()
         
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
+        setupActionButton()
+        showNoImagesFoundView(false)
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
-    private func setupView() {
-        nextButton.isEnabled = selectedCell != nil
+    private func setupActionButton() {
+        
+        nextButton.applyGradient()
+        enableNextButton(false)
+    }
+    
+    private func enableNextButton(_ enable: Bool) {
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.nextButton.isEnabled = enable
+        }
+    }
+    
+    private func showNoImagesFoundView(_ show: Bool) {
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.noImagesFoundView.isHidden = !show
+        }
     }
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     if let viewController = segue.destination as? EditDetailsViewController {
-         let indexPath = collectionView.indexPath(for: selectedCell!)!
-         viewController.productInfo = productInfos[indexPath.row]
-     }
+        guard let viewController = segue.destination as? EditDetailsViewController else {
+            return
+        }
+        guard let webPageInfo = webPageInfo else {
+            return
+        }
+        
+        if let selectedImage = self.selectedImage {
+            viewController.webPageImage = selectedImage
+        }
+        viewController.webPageInfo = webPageInfo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return productInfos.count
+        return webPageInfo?.images.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -76,31 +135,36 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
             return UICollectionViewCell()
         }
     
-        let productInfo = productInfos[indexPath.row]
-        let imageLoaded = cell.image.setImageFromURl(imageUrlString: productInfo.imageUrl)
+        guard let image = webPageInfo?.images[indexPath.row] else {
+            return UICollectionViewCell()
+        }
+        
+        // Remove elements that could not be loaded to prevent blank images.
+        let imageLoaded = cell.image.setImageFromURl(imageUrlString: image.url)
         if !imageLoaded {
-            itemsToDelete[indexPath] = productInfo
+            itemsToDelete[indexPath] = image
         }
         
         return cell
     }
     
-     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! ProductInfoCell
-        let productInfo = productInfos[indexPath.row]
-        
-        if selectedCell == cell {
-            cell.layer.borderWidth = 0.0
-            selectedCell = nil
-            nextButton.isEnabled = false
-        } else {
-            cell.layer.borderWidth = 2.0
-            cell.layer.borderColor = UIColor(hex: "#3E3E3E")?.cgColor
-            selectedCell = cell
-            nextButton.isEnabled = true
-            WishDataStore.shared.wish.addProductInfo(productInfo)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let webPageInfo = webPageInfo else {
+            return
         }
         
+        let cell = collectionView.cellForItem(at: indexPath) as! ProductInfoCell
+        let webPageImage = webPageInfo.images[indexPath.row]
+        let wish = Wish(webPageInfo, webPageImage: webPageImage)
+        let cellIsSelectedCell = selectedCell == cell
+        
+        cell.layer.borderWidth = cellIsSelectedCell ? 0.0 : 2.0
+        cell.layer.borderColor = UIColor(hex: "#3E3E3E")?.cgColor
+        
+        selectedCell = cellIsSelectedCell ? nil : cell
+        selectedImage = cellIsSelectedCell ? nil : webPageImage
+        
+        WishDataStore.shared.update(wish)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -115,10 +179,14 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         return CGSize(width: width * 0.4, height: width * 0.4)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: 0, height: 0)
+    }
+    
     func fetchProductInfos(extensionItem: NSExtensionItem) {
         // web page
         let propertyList = String(kUTTypePropertyList)
-        // thrid party apps
+        // third party apps
         let url = String(kUTTypeURL)
         let text = String(kUTTypeText)
         
@@ -142,53 +210,39 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func fetchProductInfosFromWebPage(_ attachment: NSItemProvider) {
-        self.showActivityIndicator("Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
+        showLoadingIndicator(with: "Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
         attachment.loadItem(
             forTypeIdentifier: String(kUTTypePropertyList),
             options: nil,
             completionHandler: { (item, error) -> Void in
-                guard let dictionary = item as? NSDictionary, let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else {
-                    self.reloadViewRemoveActivityIndicator()
+                guard let dictionary = item as? NSDictionary, let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? [String: Any] else {
+                    self.reloadCollectionView()
+                    self.presentAlert(Alert.get(.noImagesFound(vc: self)))
                     return
                 }
-                
-                guard let title = results["title"] as? String,
-                      let url = results["url"] as? String,
-                      let productInfosDict = results["productInfos"] as? [NSDictionary]  else {
-                    self.reloadViewRemoveActivityIndicator()
-                    return
-                }
-                
-                var priceAmount: Decimal = 0.00
-                if let doublePrice = results["price"] as? Double  {
-                    priceAmount = Decimal(doublePrice)
-                } else if let decimalPrice = results["price"] as? Decimal {
-                    priceAmount = decimalPrice
-                }
-                
-                var productInfoId: UInt = 0
-                self.productInfos = productInfosDict.compactMap { (dict: NSDictionary) in
-                    guard let imageUrl = dict["imageUrl"] as? String else { return nil }
-                    var displayName = title
-                    if let name = dict["name"] as? String, !name.isEmpty {
-                        displayName = name
-                    }
-                    productInfoId += 1
-                    return ProductInfo(id: productInfoId, productUrl: url, imageUrl: imageUrl, name: displayName, price: Price(amount: priceAmount))
-                }
-                self.reloadViewRemoveActivityIndicator()
+                self.webPageInfo = WebCrawler.getWebPageInfo(from: results)
             }
         )
     }
     
     func fetchProductInfosFromWebView(_ productUrl: URL?) {
-        if let webUrl = productUrl, webUrl.absoluteString.starts(with: "https://") {
-            self.showActivityIndicator("Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
-            DispatchQueue.main.async {
-                let webView = WebViewController(webUrl: webUrl, productImageViewController: self)
-                self.view.addSubview(webView)
-                webView.loadWebUrl(webUrl)
+        guard let webUrl = productUrl, webUrl.absoluteString.starts(with: "https://") else {
+            Logger.error("Web url isn't conform to https protocol. URL is ", productUrl ?? "")
+            return
+        }
+        showLoadingIndicator(with: "Wir durchsuchen derzeit die Seite nach Bildern \n hab noch einen kurzen Moment Geduld.")
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let webView = WebViewController(webUrl: webUrl) { webPageInfo in
+                guard let webPageInfo = webPageInfo else {
+                    self.reloadCollectionView()
+                    self.presentAlert(Alert.get(.noImagesFound(vc: self)))
+                    return
+                }
+                self.webPageInfo = webPageInfo
             }
+            self.view.addSubview(webView)
+            webView.loadWebUrl(webUrl)
         }
     }
     
@@ -200,7 +254,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         for match in matches {
             guard let range = Range(match.range, in: description) else { continue }
             let urlString = description[range]
-            print(urlString)
+            Logger.debug("URL parsed from description: ", urlString)
             if let url = URL(string: String(urlString)) {
                 imageUrl = url
                 break
@@ -209,26 +263,20 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         return imageUrl
     }
     
-    func reloadViewRemoveActivityIndicator() {
+    func reloadCollectionView() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.collectionView.reloadData()
-            self.collectionView.performBatchUpdates(nil, completion: {
-                (result) in
+            self.collectionView.performBatchUpdates(nil) { (result) in
                 // ready
                 if !self.itemsToDelete.isEmpty {
                     for itemToDelete in self.itemsToDelete {
-                        self.productInfos.removeAll(where: { $0 == itemToDelete.value })
+                        self.items.removeAll(where: { $0 == itemToDelete.value })
                     }
                     self.collectionView.deleteItems(at: self.itemsToDelete.compactMap { $0.key })
-                    
-                    if self.productInfos.isEmpty {
-                        let alert = Alert.get(.noImagesFound(vc: self))
-                        self.present(alert, animated: true)
-                    }
                 }
-            })
-            self.removeActivityIndicator()
+                self.stopLoadingIndicator()
+            }
         }
     }
     
@@ -244,12 +292,38 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         let rightInset = leftInset
         return UIEdgeInsets(top: 10, left: leftInset, bottom: 10, right: rightInset)
     }
-
     
-    @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
-        extensionContext?.completeRequest(returningItems: nil, completionHandler: {_ in
-            WishDataStore.shared.reset()
-        })
+    private func presentAlert(_ alert: UIAlertController) {
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.present(alert, animated: true)
+        }
+    }
+    
+}
+
+// MARK: - Loading Indicator
+
+extension ProductImageViewController {
+    
+    private func showLoadingIndicator(with text: String) {
+        
+        if let indicatorView = loadingIndicatorView {
+            removeActivityIndicator(indicatorView)
+        }
+        let loadingIndicator = createActivityIndicatorView(with: text)
+        showActivityIndicator(loadingIndicator)
+        loadingIndicatorView = loadingIndicator
+    }
+    
+    private func stopLoadingIndicator() {
+        
+        guard let indicatorView = loadingIndicatorView else {
+            return
+        }
+        removeActivityIndicator(indicatorView)
+        loadingIndicatorView = nil
     }
     
 }

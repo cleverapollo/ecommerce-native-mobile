@@ -1,10 +1,3 @@
-//
-//  Price.swift
-//  Share
-//
-//  Created by Tim Fischer on 14.03.21.
-//
-
 import Foundation
 
 struct Price: Codable {

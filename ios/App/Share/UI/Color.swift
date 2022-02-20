@@ -16,6 +16,8 @@ enum Color: String {
     case backgroundColor
     case textColor
     case separatorColor
+    case gradientStart
+    case gradientEnd
     
     static func get(_ color: Color) -> UIColor {
         UIColor(named: color.rawValue)!

@@ -1,19 +1,3 @@
-var ExtensionClass = function() {};
-
-ExtensionClass.prototype = {
-    run: function(arguments) {
-        arguments.completionFunction({
-            "title": document.title,
-            "hostname": document.location.hostname,
-            "images": this.fetchImages(),
-            "price": this.fetchPrice(),
-            "url": document.URL
-        });
-    },
-    fetchImages: loadImages,
-    fetchPrice: findPrice
-};
-
 // Price
 
 function findPrice() {
@@ -227,4 +211,16 @@ function handleError(error) {
     console.error(errorMessage)
 }
 
-var ExtensionPreprocessingJS = new ExtensionClass;
+// 
+
+function fetchAppInfo() {
+    return {
+        "title": document.title,
+        "hostname": document.location.hostname,
+        "images": loadImages(),
+        "price": findPrice(),
+        "url": document.URL
+    }
+}
+
+fetchAppInfo()
