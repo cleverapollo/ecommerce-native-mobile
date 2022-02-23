@@ -5,10 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
@@ -17,10 +14,10 @@ import io.wantic.app.R
 import io.wantic.app.share.core.analytics.AnalyticsTracking
 import io.wantic.app.share.core.analytics.GoogleAnalytics
 import io.wantic.app.share.core.extensions.hideKeyboard
+import io.wantic.app.share.core.ui.UIConstants.IMAGE_FALLBACK
 import io.wantic.app.share.core.ui.media.BitmapGraphicsHandler
 import io.wantic.app.share.core.ui.media.GraphicsHandler
 import io.wantic.app.share.core.ui.media.GraphicsHandling
-import io.wantic.app.share.core.ui.UIConstants.IMAGE_FALLBACK
 import io.wantic.app.share.core.ui.media.VectorGraphicsHandler
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.ShareResult
@@ -46,6 +43,7 @@ class EditProductDetailsActivity : AppCompatActivity() {
     private lateinit var productNameView: EditText
     private lateinit var productPriceView: EditText
     private lateinit var actionButton: Button
+    private lateinit var textViewNoImagesFound: TextView
 
     // Intent extras
     private lateinit var productInfo: ProductInfo
@@ -61,7 +59,8 @@ class EditProductDetailsActivity : AppCompatActivity() {
 
         shareResult = intent.getSerializableExtra("shareResult") as ShareResult
         productInfo = intent.getSerializableExtra("productInfo") as ProductInfo
-        
+
+        initTextViewNoImagesFound()
         initProductImageView()
         initProductNameView()
         initProductPriceView()
@@ -159,6 +158,14 @@ class EditProductDetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun initTextViewNoImagesFound() {
+        textViewNoImagesFound = findViewById(R.id.hintNoImagesFound)
+    }
+
+    private fun showTextViewNoImagesFound() {
+        textViewNoImagesFound.visibility = View.VISIBLE
+    }
+
     private fun initProductImageView() {
         productImageView = findViewById(R.id.productImageView)
 
@@ -170,6 +177,7 @@ class EditProductDetailsActivity : AppCompatActivity() {
         if (imageUri != null) {
             graphicsHandler.loadImageUrlIntoView(imageUri, productImageView)
         } else {
+            showTextViewNoImagesFound()
             graphicsHandler.loadGraphicResourceIntoView(IMAGE_FALLBACK, productImageView)
         }
     }

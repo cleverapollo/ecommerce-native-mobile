@@ -9,6 +9,8 @@
     <string name="toolbar_close_button_description">Close Icon</string>
     <string name="title_select_product_image">Choose image</string>
 
+    <string name="hint_no_images_fetched">Sorry, no images could be found. You can still proceed to save your wish with these replacement image.</string>
+
     <!-- MESSAGES -->
     <string name="title_no_product_info_found">No images found</string>
     <string name="message_no_product_info_found">Unfortunately, we can\'t retrieve images from this page, so you can\'t add a wish. \n\n If you are currently in an app, you can alternatively try again via the app operator\'s website in your web browser (e.g. Chrome). \If you are still unsuccessful, please send us an email to hello@wantic.io and tell us which app/website did not allow you to create a new wish.</string>
