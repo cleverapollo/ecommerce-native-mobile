@@ -164,9 +164,17 @@ class SelectProductImageActivity : AppCompatActivity() {
         actionButton.setOnClickListener {
             var productInfo: ProductInfo? = null
             if (webCrawlerResult != null) {
-                val webImage = webCrawlerResult!!.images.find { it.id == selectedView.imageView?.tag ?: false }
-                productInfo = webImage?.let {
-                        it1 -> ProductInfo(it1.id, webCrawlerResult!!.title, webImage.url, webCrawlerResult!!.url, webCrawlerResult!!.price)
+                val webImage = webCrawlerResult!!.images.find {
+                    it.id == selectedView.imageView?.tag ?: false
+                }
+                productInfo = webImage?.let { it1 ->
+                    ProductInfo(
+                        it1.id,
+                        if (it1.name.isEmpty()) webCrawlerResult!!.title else it1.name,
+                        webImage.url,
+                        webCrawlerResult!!.url,
+                        webCrawlerResult!!.price
+                    )
                 }
             }
             navigateForward(productInfo)
@@ -330,7 +338,10 @@ class SelectProductImageActivity : AppCompatActivity() {
     fun initGridLayout(webImages: List<WebImage>) {
         val rowCount = calculateRowCount(webImages.size)
 
-        Log.d(LOG_TAG, "columnCount: $COLUMN_COUNT, rowCount: $rowCount, numberOfImages: ${webImages.size}")
+        Log.d(
+            LOG_TAG,
+            "columnCount: $COLUMN_COUNT, rowCount: $rowCount, numberOfImages: ${webImages.size}"
+        )
 
         gridLayout = findViewById(R.id.productImagesGridLayout)
         gridLayout.columnCount = COLUMN_COUNT
@@ -349,7 +360,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         }
     }
 
-    private fun calculateRowCount(numberOfItems: Int): Int{
+    private fun calculateRowCount(numberOfItems: Int): Int {
         val rowCount: Float = ceil(numberOfItems.toFloat() / COLUMN_COUNT.toFloat())
         return rowCount.toInt()
     }
@@ -386,7 +397,6 @@ class SelectProductImageActivity : AppCompatActivity() {
         linearLayout.layoutParams = linearLayoutParams
         linearLayout.orientation = VERTICAL
         linearLayout.setBackgroundResource(R.drawable.rounded_corner_white_border)
-
 
         // init image view
         val imageViewLayoutParams = LinearLayout.LayoutParams(imageWidth, imageWidth)
