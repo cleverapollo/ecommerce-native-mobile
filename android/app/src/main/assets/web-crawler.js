@@ -14,14 +14,17 @@
             htmlImage.onerror = onHtmlImageLoadError(index);
 
             const src = htmlImage.currentSrc || htmlImage.src;
+            const name = unescapeHtml(htmlImage.alt) || "";
             if (src) {
                 webImages.push({
                     id: index,
+                    name: name,
                     url: src
                 })
             } else if (htmlImage.srcset) {
                 urls.push({
                     id: index,
+                    name: name,
                     url: getFirstImageUrlFromSrcSet(htmlImage.srcset)
                 });
             }
@@ -36,20 +39,29 @@
     function onHtmlImageLoadSuccess(htmlImage, index) {
         return () => {
             const src = htmlImage.currentSrc || htmlImage.src;
+            const name = unescapeHtml(htmlImage.alt) || "";
             if (src) {
                 const webImage = {
                     id: index,
+                    name: name,
                     url: src
                 }
                 Android.onProductInfoLoaded(JSON.stringify(webImage));
             } else if (htmlImage.srcset) {
                 const webImage = {
                     id: index,
+                    name: name,
                     url: getFirstImageUrlFromSrcSet(htmlImage.srcset)
                 }
                 Android.onProductInfoLoaded(JSON.stringify(webImage));
             }
         };
+    }
+
+    function unescapeHtml(escapedHtmlString) {
+        const e = document.createElement('div');
+        e.innerHTML = escapedHtmlString;
+        return e.innerText;
     }
 
     function getFirstImageUrlFromSrcSet(srcset) {

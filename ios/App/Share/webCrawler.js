@@ -85,7 +85,7 @@ function loadImages() {
         htmlImage.onerror = onHtmlImageLoadError(index);
 
         const src = htmlImage.currentSrc || htmlImage.src;
-        const name = htmlImage.alt || "";
+        const name = unescapeHtml(htmlImage.alt) || '';
         if (src) {
             webImages.push({
                 id: index,
@@ -110,7 +110,7 @@ function loadImages() {
 function onHtmlImageLoadSuccess(htmlImage, index) {
     return () => {
         const src = htmlImage.currentSrc || htmlImage.src;
-        const name = htmlImage.alt || "";
+        const name = unescapeHtml(htmlImage.alt) || '';
         if (src) {
             const webImage = {
                 id: index,
@@ -127,6 +127,12 @@ function onHtmlImageLoadSuccess(htmlImage, index) {
             console.debug(JSON.stringify(webImage));
         }
     };
+}
+
+function unescapeHtml(escapedHtmlString) {
+    const e = document.createElement('div');
+    e.innerHTML = escapedHtmlString;
+    return e.innerText;
 }
 
 function getFirstImageUrlFromSrcSet(srcset) {
