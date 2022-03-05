@@ -11,7 +11,7 @@ A description of the changes proposed in the pull request.
 A reference to a related issue in JIRA and/or GitHub.
 
 Resolves #XXX
-- WANTIC-XXX [WANTIC-XXX](https://wantic.atlassian.net/browse/WANTIC-XXX)
+- [WANTIC-XXX](https://wantic.atlassian.net/browse/WANTIC-XXX)
 
 # How to test
 
