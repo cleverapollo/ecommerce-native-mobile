@@ -1,4 +1,4 @@
-### Changes
+# Changes
 
 A description of the changes proposed in the pull request.
 
@@ -6,13 +6,18 @@ A description of the changes proposed in the pull request.
 - 🚀 Feature
 - 🛠 Refactoring / Updates
 
-### Backlog
+# Backlog
 
-A reference to a related issue in JIRA. 
+A reference to a related issue in JIRA and/or GitHub.
 
-- Resolves: WANTIC-XXX
+Resolves #XXX
+- WANTIC-XXX [WANTIC-XXX](https://wantic.atlassian.net/browse/WANTIC-XXX)
 
-### Review Metadata
+# How to test
+
+Describe how the reviewer of the PR can test your changes. 
+
+# Review Metadata
 
 All additional infos that could help to review the PR.
 
