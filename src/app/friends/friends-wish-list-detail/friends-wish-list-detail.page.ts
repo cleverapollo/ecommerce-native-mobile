@@ -72,8 +72,17 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
   } 
 
   async showDeleteAlert() {
+    const numberOfReservedWishes = this.wishList.wishes.map(wish => wish.bought).length;
     const header = 'Wunschliste verlassen?';
-    const message = 'Sie wird dir nicht mehr angezeigt und deine reservierten Wünsche werden wieder freigegeben. Du kannst diese Aktion nicht mehr rückgängig machen.'
+    let message = `Bist du dir sicher, dass du die Wunschliste verlassen möchtest? <br><br>
+    Du kannst dann nicht mehr darauf zugreifen.
+    `
+    if (numberOfReservedWishes > 0) {
+      message += '<br><br>'
+      message += `<strong>Hinweis:</strong> Du hast noch Wünsche für dich reserviert.
+      Die Reservierungen bleiben auch nach dem Verlassen der Wunschliste bestehen.
+      ` // ToDo: add pluralized message 
+    }
     const alert = await this.alertService.createDeleteAlert(header, message, this.onDeleteConfirmation);
     alert.present();
   }
