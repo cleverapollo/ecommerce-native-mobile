@@ -237,11 +237,10 @@ describe('FriendsWishListDetailPage', () => {
     let dismissLoadingServiceSpy: jasmine.Spy;
 
     beforeEach(() => {
-
-
       navigateSpy = spyOn(router, 'navigateByUrl');
       showLoadingServiceSpy = spyOn(loadingService, 'showLoadingSpinner');
       dismissLoadingServiceSpy = spyOn(loadingService, 'dismissLoadingSpinner');
+      component.wishList = new FriendWishList();
     })
 
     it('should show delete alert', fakeAsync(() => {
