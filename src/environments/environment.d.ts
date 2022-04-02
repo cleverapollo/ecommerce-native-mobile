@@ -1,3 +1,4 @@
+import { AFInit } from "appsflyer-capacitor-plugin";
 import { BackendConfigType } from "./backend-config-type";
 export interface EnvironmentConfig {
     backendType: BackendConfigType,
@@ -25,8 +26,5 @@ export interface EnvironmentConfig {
         DEBUG_MODE: boolean
     },
     googleSignInAndroidClientId?: string,
-    appsflyerConfig?: {
-        devKey: string,
-        appId: string
-    }
+    appsflyerConfig?: AFInit
 }

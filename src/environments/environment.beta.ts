@@ -30,7 +30,8 @@ export const environment: EnvironmentConfig = {
     googleSignInAndroidClientId: '165303834787-52s37du1t3jvojlfm0tscgopttu27p03.apps.googleusercontent.com',
     appsflyerConfig: {
         devKey: "s8xKbYNUpxszQP8CWguA5L",
-        appId: "1560563821"
+        appID: "1560563821",
+        isDebug: true
     }
 };
 

@@ -40,6 +40,10 @@
 		"classpath": "com.capacitorjs.plugins.storage.StoragePlugin"
 	},
 	{
+		"pkg": "appsflyer-capacitor-plugin",
+		"classpath": "capacitor.plugin.appsflyer.sdk.AppsFlyerPlugin"
+	},
+	{
 		"pkg": "capacitor-secure-storage-plugin",
 		"classpath": "com.whitestein.securestorage.SecureStoragePlugin"
 	}

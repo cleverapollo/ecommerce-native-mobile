@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { Appsflyer, AppsflyerEvent } from '@ionic-native/appsflyer/ngx';
+import { AFInit, AppsFlyer } from 'appsflyer-capacitor-plugin';
 import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { LogService } from './log.service';
 import { AuthProvider } from '@core/models/signup.model';
@@ -22,7 +22,6 @@ export class AnalyticsService {
   }
 
   constructor(
-    private appsflyer: Appsflyer, 
     private logger: LogService, 
     private platform: Platform,
     private platformService: DefaultPlatformService,
@@ -33,12 +32,10 @@ export class AnalyticsService {
   initAppsflyerSdk() {
     if (!this.platformService.isNativePlatform) {return}
 
-    const appsflyerConfig = environment.appsflyerConfig;
+    const appsflyerConfig: AFInit = environment.appsflyerConfig;
     if (appsflyerConfig) {
-      this.appsflyer.initSdk({
-        devKey: appsflyerConfig.devKey,
-        appId: appsflyerConfig.appId
-      }).then(() => {
+      AppsFlyer.initSDK(appsflyerConfig).then( res => {
+        this.logger.debug(JSON.stringify(res));
         this.logger.info('initialized appsflyer sdk successful')
       }, () => {
         this.logger.error('initialized appsflyer sdk failed')
@@ -56,9 +53,12 @@ export class AnalyticsService {
     }
   }
 
-  logAppsflyerEvent(eventName: string, eventValues: AppsflyerEvent) {
+  logAppsflyerEvent(eventName: string, eventValue: any) {
     if (this.appsflyerConfigExists && this.platformService.isNativePlatform) {
-      this.appsflyer.logEvent(eventName, eventValues);
+      AppsFlyer.logEvent({
+        eventName: eventName,
+        eventValue: eventValue
+      });
     }
   }
 
@@ -78,7 +78,9 @@ export class AnalyticsService {
     if (this.platformService.isNativePlatform) {
       FirebaseAnalytics.setCollectionEnabled({ enabled: this.analyticsEnabled });
       if (this.appsflyerConfigExists) {
-        this.appsflyer.Stop(this.analyticsEnabled);
+        AppsFlyer.stop({
+          stop: true
+        });
       }
     } else {
       this.angularFireAnalytics.setAnalyticsCollectionEnabled(this.analyticsEnabled);
@@ -87,8 +89,8 @@ export class AnalyticsService {
 
   logCompleteRegistrationEvent(authProvider: AuthProvider) {
     const authProviderString: string = AuthProvider[authProvider];
-    const appsflyerEvent: AppsflyerEvent = {'af_registration_method': authProviderString};
-    this.logAppsflyerEvent('af_complete_registration', appsflyerEvent);
+    const eventValue = {'af_registration_method': authProviderString};
+    this.logAppsflyerEvent('af_complete_registration', eventValue);
     this.logFirebaseEvent('sign_up', { 'method': authProviderString });
   }
 
