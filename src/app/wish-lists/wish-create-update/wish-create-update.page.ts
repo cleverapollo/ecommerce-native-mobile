@@ -12,6 +12,7 @@ import { CoreToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
+import { NavigationService } from '@core/services/navigation.service';
 
 @Component({
   selector: 'app-wish-create-update',
@@ -72,20 +73,21 @@ export class WishCreateUpdatePage implements OnInit {
     private searchResultDataService: SearchResultDataService,
     private loadingService: LoadingService,
     private toastService: CoreToastService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private navigationService: NavigationService
   ) { }
 
   ngOnInit() {
-    this.initViewData();
-    this.createForm();
+    this.setupViewData();
+    this.setupForm();
   }
 
-  private initViewData() {
+  private setupViewData() {
     this.wish = this.route.snapshot.data.wish ? this.route.snapshot.data.wish : this.router.getCurrentNavigation()?.extras.state.searchResult;
     this.wishList = this.route.snapshot.data.wishList;
   }
 
-  private createForm() {
+  private setupForm() {
     let wishListId = null;
     if (this.isUpdatePage) {
       wishListId = this.wish.wishListId;
@@ -145,6 +147,7 @@ export class WishCreateUpdatePage implements OnInit {
       await this.wishListStore.updateWish(this.wish);
       await this.loadingService.dismissLoadingSpinner();
       await this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich aktualisiert.');
+      this.navigationService.back();
     } catch (error) {
       this.loadingService.dismissLoadingSpinner();
       this.toastService.presentErrorToast('Bei der Aktualisierung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.');
@@ -184,13 +187,11 @@ export class WishCreateUpdatePage implements OnInit {
     if (this.router.url.includes(wishSearchTabPath)) {
       try {
         await this.router.navigateByUrl(wishSearchTabPath);
-        this.router.navigateByUrl(url);
       } catch (error) {
         // ToDo
       }
-    } else {
-      this.router.navigateByUrl(url);
     }
+    this.router.navigateByUrl(url);
   }
 
   private updateWishListId(): void {
