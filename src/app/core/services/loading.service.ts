@@ -18,8 +18,8 @@ export class LoadingService {
     let loading = await this.loadingController.getTop();
     if (!loading) {
       loading = await this.createLoadingSpinner();
-      return await loading.present();
     }
+    loading.present();
   }
 
   async createLoadingSpinner(): Promise<HTMLIonLoadingElement> {

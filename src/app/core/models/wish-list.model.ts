@@ -4,6 +4,13 @@ export class PriceDto {
     amount: number;
     currency: string;
     displayString: string;
+
+    static fromAmount(amount: number) {
+        let price = new PriceDto();
+        price.amount = amount;
+        price.currency = '€'
+        return price;
+    }
 }
 export class WishDto {
     id?: string;

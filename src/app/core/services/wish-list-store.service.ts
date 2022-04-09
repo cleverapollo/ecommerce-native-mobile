@@ -10,11 +10,11 @@ export interface WishListStore {
   loadWishLists(forceRefresh: boolean): Observable<Array<WishListDto>>;
   loadWishList(id: string, forceRefresh: boolean): Observable<WishListDto>;
   loadWish(id: string, forceRefresh: boolean): Observable<WishDto>;
+  createWish(wish: WishDto): Promise<WishDto>;
   clearWishLists(): Promise<void>;
-  removeCachedWishList(id: string): void;
-  removeWishFromCache(wish: WishDto): Promise<void>;
+  removeWish(wish: WishDto): Promise<void>;
+  updateWish(wish: WishDto): Promise<WishDto>;
   updatedCachedWishList(wishList: WishListDto): Promise<void>;
-  updateCachedWish(wish: WishDto): Promise<void>;
   saveWishListToCache(wishList: WishListDto): Promise<void>;
   clear(): Promise<any>;
 }
@@ -119,6 +119,26 @@ export class WishListStoreService implements WishListStore {
 
   // WISH
 
+  async createWish(wish: WishDto): Promise<WishDto> {
+    try {
+      const createdWish = await this.wishApiService.createWish(wish).toPromise();
+      await this.clearWishLists();
+      return createdWish;
+    } catch (error) {
+      throw error; 
+    }
+  }
+
+  async updateWish(wish: WishDto): Promise<WishDto> {
+    try {
+      const updatedWish = await this.wishApiService.update(wish).toPromise();
+      await this.updateCachedWish(updatedWish);
+      return updatedWish;
+    } catch (error) {
+      throw error; 
+    }
+  }
+
   loadWish(id: string, forceRefresh: boolean = false): Observable<WishDto> {
     let request = this.wishApiService.getWishById(id);
     if (forceRefresh) {
@@ -127,7 +147,7 @@ export class WishListStoreService implements WishListStore {
     return this.cache.loadFromObservable(this.cacheKeyWish(id), request, this.CACHE_GROUP_KEY)
   }
 
-  async updateCachedWish(wish: WishDto): Promise<void> {
+  private async updateCachedWish(wish: WishDto): Promise<void> {
     try {
       await this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
       const wishList = await this.cache.getItem(this.cacheKeyWishList(wish.wishListId));
@@ -144,7 +164,12 @@ export class WishListStoreService implements WishListStore {
     }
   }
 
-  async removeWishFromCache(wish: WishDto): Promise<void> {
+  async removeWish(wish: WishDto): Promise<void> {
+    await this.wishListApiService.removeWish(wish).toPromise();
+    await this.removeWishFromCache(wish);
+  }
+
+  private async removeWishFromCache(wish: WishDto): Promise<void> {
     try {
       await this.cache.removeItem(this.cacheKeyWish(wish.id));
       const wishList: WishListDto = await this.cache.getItem(this.cacheKeyWishList(wish.wishListId));

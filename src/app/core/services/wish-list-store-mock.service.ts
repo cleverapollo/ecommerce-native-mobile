@@ -20,17 +20,17 @@ export class MockWishListStoreService implements WishListStore {
     clearWishLists(): Promise<void> {
         return Promise.resolve();
     }
-    removeCachedWishList(id: string): void {
-
+    createWish(wish: WishDto): Promise<WishDto> {
+        return Promise.resolve(wish);
     }
-    removeWishFromCache(wish: WishDto): Promise<void> {
+    removeWish(wish: WishDto): Promise<void> {
         return Promise.resolve();
     }
     updatedCachedWishList(wishList: WishListDto): Promise<void> {
         return Promise.resolve();
     }
-    updateCachedWish(wish: WishDto): Promise<void> {
-        return Promise.resolve();
+    updateWish(wish: WishDto): Promise<WishDto> {
+        return Promise.resolve(wish);
     }
     saveWishListToCache(wishList: WishListDto): Promise<void> {
         return Promise.resolve();

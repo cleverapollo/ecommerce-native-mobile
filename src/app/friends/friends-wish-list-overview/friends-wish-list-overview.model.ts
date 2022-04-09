@@ -5,8 +5,8 @@ export class FriendWishList {
     id: string;
     name: String;
     date: String;
-    wishes: Array<FriendWish>;
-    owners: Array<UserDto>;
+    wishes: Array<FriendWish> = [];
+    owners: Array<UserDto> = [];
 }
 
 export class FriendWish {

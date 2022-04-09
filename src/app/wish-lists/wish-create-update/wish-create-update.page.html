@@ -10,19 +10,19 @@
     <app-wish-image [src]="wish?.imageUrl" [styles]="wishImagesStyles"></app-wish-image>
   </div>
 
-  <form [formGroup]="form">
+  <form [formGroup]="form" *ngIf="wish">
 
     <!--name-->
     <ion-item lines="none">
       <ion-label position="stacked">Name</ion-label>
-      <ion-textarea formControlName="name" auto-grow="true" required="true" maxlength="255"></ion-textarea>
+      <ion-textarea formControlName="name" auto-grow="true" required="true" maxlength="255" [(ngModel)]="wish.name"></ion-textarea>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 
     <!--note-->
     <ion-item lines="none">
       <ion-label position="stacked">Notiz</ion-label>
-      <ion-textarea formControlName="note" name="note" rows="3" spellcheck="true" maxlength="255"></ion-textarea>
+      <ion-textarea formControlName="note" name="note" rows="3" spellcheck="true" maxlength="255" [(ngModel)]="wish.note"></ion-textarea>
     </ion-item>
     <app-validation-messages [control]="form.get('note')" [validationMessages]="validationMessages.note"></app-validation-messages>
 
@@ -36,7 +36,7 @@
     <!--favorite-->
     <ion-item lines="none">
       <ion-label class="font-favorite-toggle-header">Wunsch als Favorit <br> kennzeichnen</ion-label>
-      <ion-toggle slot="end" name="isFavorite" color="primary" formControlName="isFavorite"></ion-toggle>
+      <ion-toggle slot="end" name="isFavorite" color="primary" formControlName="isFavorite" [(ngModel)]="wish.isFavorite"></ion-toggle>
     </ion-item>
 
     <!--wish list id-->

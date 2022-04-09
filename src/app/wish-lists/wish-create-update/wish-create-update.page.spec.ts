@@ -48,8 +48,6 @@ describe('WishCreateUpdatePage', () => {
 
   let activatedRoute: any = {snapshot: {data: snapshotData}}; 
   let router: Router;
-  let wishListApiService: WishListApiMockService = new WishListApiMockService();
-  let wishApiService: WishApiMockService = new WishApiMockService();
   let alertService: AppAlertService = new MockAlertService();
   let wishListStore: WishListStore = new MockWishListStoreService();
   let searchResultDataService: SearchResultDataService = jasmine.createSpyObj('searchResultDataService', ['clear']);
@@ -75,9 +73,7 @@ describe('WishCreateUpdatePage', () => {
         FormBuilder,
         { provide: ActivatedRoute, useValue: activatedRoute },
         { provide: AnalyticsService, useValue: analyticsService },
-        { provide: WishListApiService, useValue: wishListApiService },
         { provide: AlertService, useValue: alertService },
-        { provide: WishApiService, useValue: wishApiService },
         { provide: WishListStoreService, useValue: wishListStore },
         { provide: SearchResultDataService, useValue: searchResultDataService },
         { provide: LoadingService, useValue: loadingService },
@@ -196,7 +192,7 @@ describe('WishCreateUpdatePage', () => {
       wish.wishListId = '1';
       component.wish = wish
 
-      wishApiService.createWishResponse = of({
+      spyOn(wishListStore, 'createWish').and.returnValue(Promise.resolve({
         id: '1234',
         wishListId: '1',
         name: 'BOSCH Waschmaschine 4 WAN282A8, 8 kg, 1400 U/min',
@@ -208,7 +204,7 @@ describe('WishCreateUpdatePage', () => {
         productUrl: '',
         imageUrl: '',
         isFavorite: false
-      });
+      }));
 
       // when
 
@@ -252,7 +248,7 @@ describe('WishCreateUpdatePage', () => {
       component.form.controls.name.setValue('BOSCH Waschmaschine 4 WAN282A8, 8 kg, 1400 U/min');
       component.form.controls.price.setValue('469.00');
 
-      wishApiService.createWishResponse = throwError('something went wrong');
+      spyOn(wishListStore, 'createWish').and.throwError('something went wrong');
 
       // when
       component.createOrUpdateWish();
@@ -267,7 +263,7 @@ describe('WishCreateUpdatePage', () => {
     }));
 
     it('should not trigger a request if any required form input is missing', () => {
-      const wishApiSpy = spyOn(wishApiService, 'createWish');
+      const wishApiSpy = spyOn(wishListStore, 'createWish');
       let wish = new WishDto();
       wish.wishListId = '1';
       component.wish = wish;
@@ -304,12 +300,10 @@ describe('WishCreateUpdatePage', () => {
     })
 
     it('should update a wish', fakeAsync(() => {
-      const wishListStoreSpy = spyOn(wishListStore, 'updateCachedWish');
       // given
-  
       component.wish = WishListTestData.wishBoschWasher;
 
-      wishApiService.updateResponse = of({
+      const wishListStoreSpy = spyOn(wishListStore, 'updateWish').and.returnValue(Promise.resolve({
         id: '1234',
         wishListId: '1',
         name: 'Waschmaschine',
@@ -321,7 +315,7 @@ describe('WishCreateUpdatePage', () => {
         productUrl: '',
         imageUrl: '',
         isFavorite: false
-      })
+      }));
 
       // when
       component.form.controls.name.setValue('Waschmaschine');
@@ -342,7 +336,7 @@ describe('WishCreateUpdatePage', () => {
       component.wish = WishListTestData.wishBoschWasher;
 
       // when
-      wishApiService.updateResponse = throwError('an error occured');
+      spyOn(wishListStore, 'updateWish').and.throwError('an error occured');
       component.form.controls.name.setValue('Waschmaschine');
       component.createOrUpdateWish();
       tick();
@@ -371,7 +365,7 @@ describe('WishCreateUpdatePage', () => {
     it('should delete a wish', fakeAsync(() => {
       // given
       component.wish = WishListTestData.wishBoschWasher;
-      wishListApiService.removeResponse = of();
+      spyOn(wishListStore, 'removeWish').and.returnValue(Promise.resolve());
 
       // when
       component.deleteWish();
@@ -391,7 +385,7 @@ describe('WishCreateUpdatePage', () => {
       component.wish = WishListTestData.wishBoschWasher;
 
       // when
-      wishListApiService.removeResponse = throwError('an error occured while deleting a wish');
+      spyOn(wishListStore, 'removeWish').and.throwError('an error occured while deleting a wish');
       component.deleteWish();
       tick();
 
