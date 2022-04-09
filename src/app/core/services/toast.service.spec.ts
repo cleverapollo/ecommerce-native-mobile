@@ -6,7 +6,7 @@ describe('ToastService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   xit('should be created', () => {
-    const service: CoreToastService = TestBed.get(CoreToastService);
+    const service: CoreToastService = TestBed.inject(CoreToastService);
     expect(service).toBeTruthy();
   });
 });

@@ -6,7 +6,7 @@ describe('UserProfileDataService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   xit('should be created', () => {
-    const service: UserProfileStore = TestBed.get(UserProfileStore);
+    const service: UserProfileStore = TestBed.inject(UserProfileStore);
     expect(service).toBeTruthy();
   });
 });

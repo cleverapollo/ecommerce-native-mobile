@@ -6,7 +6,7 @@ describe('ApiErrorHandlerService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   xit('should be created', () => {
-    const service: ApiErrorHandlerService = TestBed.get(ApiErrorHandlerService);
+    const service: ApiErrorHandlerService = TestBed.inject(ApiErrorHandlerService);
     expect(service).toBeTruthy();
   });
 });

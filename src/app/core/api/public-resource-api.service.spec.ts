@@ -17,7 +17,7 @@ describe('PublicResourceApiService', () => {
   }));
 
   it('should be created', () => {
-    const service: PublicResourceApiService = TestBed.get(PublicResourceApiService);
+    const service: PublicResourceApiService = TestBed.inject(PublicResourceApiService);
     expect(service).toBeTruthy();
   });
 });
