@@ -36,9 +36,10 @@ export class AnalyticsService {
     if (appsflyerConfig) {
       AppsFlyer.initSDK(appsflyerConfig).then( res => {
         this.logger.debug(JSON.stringify(res));
-        this.logger.info('initialized appsflyer sdk successful')
-      }, () => {
-        this.logger.error('initialized appsflyer sdk failed')
+        this.logger.info('initialized appsflyer sdk successful');
+      }, error => {
+        this.logger.error('initialized appsflyer sdk failed');
+        this.logger.error(error);
       })
     }
   }
