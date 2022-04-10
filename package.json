@@ -66,7 +66,7 @@
     "@ionic/storage-angular": "^3.0.6",
     "appsflyer-capacitor-plugin": "^6.5.2",
     "capacitor-secure-storage-plugin": "^0.5.1",
-    "cordova-android": "^8.1.0",
+    "cordova-android": "10.1.1",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-advanced-http": "^3.3.0",
     "cordova-plugin-facebook-connect": "^2.3.0",
