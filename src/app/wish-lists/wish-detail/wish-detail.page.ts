@@ -7,7 +7,7 @@ import { BrowserService } from '@core/services/browser.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 import { WishShopInfoComponentStyles } from '@shared/components/wish-shop-info/wish-shop-info.component';
@@ -73,7 +73,6 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   constructor(
     private browserService: BrowserService,
-    private navController: NavController,
     private route: ActivatedRoute,
     private wishListStore: WishListStoreService,
     private analyticsService: AnalyticsService,
@@ -101,10 +100,6 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   openProductURL() {
     this.browserService.openInAppBrowser(this.affiliateLink);
-  }
-
-  goBack() {
-    this.navController.back();
   }
 
   forceRefresh(event) {

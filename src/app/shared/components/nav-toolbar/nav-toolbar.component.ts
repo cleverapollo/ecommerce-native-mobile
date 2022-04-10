@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { UrlTree } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavigationService } from '@core/services/navigation.service';
 
 @Component({
   selector: 'app-nav-toolbar',
@@ -24,21 +24,19 @@ export class NavToolbarComponent implements OnInit {
     return this.onNextButtonClicked?.observers.length > 0 || false;
   }
 
-  constructor(private navController: NavController) { }
+  constructor(private navigationService: NavigationService) { }
 
   ngOnInit() { }
 
   goBack() {
-    if (this.backNavigationPath) {
-      this.navController.navigateBack(this.backNavigationPath);
-    } else {
-      this.navController.back();
-    }
+    this.navigationService.back(this.backNavigationPath);
     this.showBackButton = false;
   }
 
   skip() {
-    this.navController.navigateForward(this.skipToPath)
+    if (this.canSkip) {
+      this.navigationService.forward(this.skipToPath);
+    }
   }
 
   next() {
