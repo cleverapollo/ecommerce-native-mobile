@@ -38,6 +38,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { AngularFireModule } from '@angular/fire';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -74,7 +75,8 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
       colorScheme: ['#7D3C98', '#17A589', '#1F618D', '#797D7F', '#F39C12', '#E74C3C', '#E74C3C']
     }),
     NativeHttpModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    IonicStorageModule.forRoot()
   ],
   providers: [
     InAppBrowser,
