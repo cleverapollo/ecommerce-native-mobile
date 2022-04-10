@@ -27,7 +27,8 @@ export class LogService implements Logger {
     if (this) {
       logger = this.logger;
     }
-    logger && additional?.length > 0 ? logger.trace(message, additional) : logger.trace(message);
+    const logMessage = LogService.createLogMessage(message, '🟣');
+    logger && additional?.length > 0 ? logger.trace(logMessage, additional) : logger.trace(logMessage);
   }
 
   debug(message: any, ...additional: any[]): void {
@@ -35,7 +36,8 @@ export class LogService implements Logger {
     if (this) {
       logger = this.logger;
     }
-    logger && additional?.length > 0 ? logger.debug(message, additional) : logger.debug(message);
+    const logMessage = LogService.createLogMessage(message, '🐞');
+    logger && additional?.length > 0 ? logger.debug(logMessage, additional) : logger.debug(logMessage);
   }
 
   info(message: any, ...additional: any[]): void {
@@ -43,7 +45,8 @@ export class LogService implements Logger {
     if (this) {
       logger = this.logger;
     }
-    logger && additional?.length > 0 ? logger.info(message, additional) : logger.info(message);
+    const logMessage = LogService.createLogMessage(message, '🟢');
+    logger && additional?.length > 0 ? logger.info(logMessage, additional) : logger.info(logMessage);
   }
 
   log(message: any, ...additional: any[]): void {
@@ -51,7 +54,8 @@ export class LogService implements Logger {
     if (this) {
       logger = this.logger;
     }
-    logger && additional?.length > 0 ? logger.log(message, additional) : logger.log(message);
+    const logMessage = LogService.createLogMessage(message, '🟢');
+    logger && additional?.length > 0 ? logger.log(logMessage, additional) : logger.log(logMessage);
   }
 
   warn(message: any, ...additional: any[]): void {
@@ -59,7 +63,8 @@ export class LogService implements Logger {
     if (this) {
       logger = this.logger;
     }
-    logger && additional?.length > 0 ? logger.warn(message, additional) : logger.warn(message);
+    const logMessage = LogService.createLogMessage(message, '🟡');
+    logger && additional?.length > 0 ? logger.warn(logMessage, additional) : logger.warn(logMessage);
   }
 
   error(message: any, ...additional: any[]): void {
@@ -67,13 +72,22 @@ export class LogService implements Logger {
     if (this) {
       logger = this.logger;
     }
-    logger && additional?.length > 0 ? logger.error(message, additional) : logger.error(message);
+    const logMessage = LogService.createLogMessage(message, '🔴');
+    logger && additional?.length > 0 ? logger.error(logMessage, additional) : logger.error(logMessage);
   }
 
   fatal(message: any, ...additional: any[]): void {
     if (this) {
       this.ngxLogger ? this.ngxLogger.fatal(message, additional) : console.error(message, additional);
     }
+  }
+
+  private static createLogMessage(message: any, emoji: string) {
+    let errorMessage = message;
+    if (typeof errorMessage === 'string') {
+      errorMessage = `${emoji} ${message}`;
+    }
+    return errorMessage;
   }
 }
 
