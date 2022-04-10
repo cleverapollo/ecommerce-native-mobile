@@ -19,7 +19,6 @@ import { SharedWishComponent } from './shared-wish/shared-wish.component';
   declarations: [
     SharedWishListPage, 
     SharedWishComponent
-  ],
-  entryComponents: []
+  ]
 })
 export class SharedWishListPageModule {}

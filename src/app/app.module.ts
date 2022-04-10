@@ -17,7 +17,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { UserProfileResolver } from '@shared/user-profile.resolver';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
-import { StorageKeys, StorageService } from '@core/services/storage.service';
+import { StorageService } from '@core/services/storage.service';
 import { CoreModule } from '@core/core.module';
 import { CacheModule } from "ionic-cache";
 import { WishListResolver } from '@wishLists/home/wish-list.resolver';
@@ -53,7 +53,6 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAnalyticsModule,
