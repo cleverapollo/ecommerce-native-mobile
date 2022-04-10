@@ -1,8 +1,8 @@
 import { EnvironmentConfig } from './environment.d';
-import { version } from './../../package.json'
+import packageJson from '../../package.json';
 import { BackendConfigType } from './backend-config-type';
 
-export const appVersion = version;
+export const appVersion = packageJson.version;
 
 export const environment: EnvironmentConfig = {
     backendType: BackendConfigType.dev,
