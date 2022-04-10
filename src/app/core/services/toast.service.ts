@@ -17,24 +17,25 @@ export class CoreToastService implements ToastService {
   constructor(private toastController: ToastController) { }
 
   async presentSuccessToast(message: string) {
-    this.presentToast(message, 'success');
+    this.presentToast(message, 'success', 'checkmark-outline');
   }
 
   async presentErrorToast(message: string) {
-    this.presentToast(message, 'danger');
+    this.presentToast(message, 'danger', 'close-outline');
   }
 
   async presentInfoToast(message: string) {
-    this.presentToast(message, 'primary');
+    this.presentToast(message, 'primary', 'information-outline');
   }
 
-  private async presentToast(message: string, color: string) {
+  private async presentToast(message: string, color: string, icon: string) {
     const toast = await this.toastController.create({
       message: message,
       color: color,
       duration: CoreToastService.TOAST_DURATION,
       position: 'top',
-      cssClass: 'center-text'
+      cssClass: 'center-text',
+      icon: icon
     });
     toast.present();
   }
