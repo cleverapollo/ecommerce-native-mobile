@@ -35,39 +35,69 @@ export class AppComponent {
     private affiliateDataStore: AffiliateDataStoreService,
     private scriptService: ScriptService
   ) {
-    this.initializeApp();
+    this.setupApp();
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      if (this.platformService.isNativePlatform) {
-        // migrate Capacitor 2 data to Capator 3 data
-        Storage.migrate()
-        
-        this.initNativeStatusBar();
-        // handle universal links
-        App.addListener('appUrlOpen', (data: any) => {
-          this.onAppUrlOpen(data);
-        });
-        this.onAppStart()
-        // app did become active
-        this.platform.resume.subscribe(() => { 
-          this.onAppResume();
-        })
-      } else {
-        this.migrateCachedCredentials();
-        this.loadWebAppScripts();
-      }
-      this.initCache();
-      this.analyticsService.initAppsflyerSdk();
-      if (this.authService.isAuthenticated.getValue()) {
-        this.affiliateDataStore.loadData();
-      } 
-      this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
+  async setupApp() {
+    await this.platform.ready();
+    if (this.platformService.isNativePlatform) {
+      this.setupNativeApp();
+    } else {
+      this.setupWebApp();
+    }
+    this.setupCache();
+    this.analyticsService.initAppsflyerSdk();
+    this.setupAffiliateData();
+    this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
+  }
+
+  private setupCache() {
+    this.cache.setDefaultTTL(60 * 60);
+    this.cache.setOfflineInvalidate(false);
+  }
+
+  private setupAffiliateData() {
+    if (this.authService.isAuthenticated.getValue()) {
+      this.affiliateDataStore.loadData();
+    }
+  }
+
+  /**
+   * Setup code that is only relevant for web app.
+   */
+  private setupWebApp() {
+    this.migrateCachedCredentials();
+    this.loadWebAppScripts();
+  }
+
+  private loadWebAppScripts() {
+    this.scriptService.load(ScriptName.HOTJAR, ScriptName.GTM).then( results => {
+      results.forEach( result => {
+        this.logger.debug(`loaded script ${ScriptName[result.script]} with status ${ScriptLoadingStatus[result.status]}`, result);
+      })
+    })
+  }
+
+  /**
+   * Setup code that is only relevant for ios and android.
+   */
+  private setupNativeApp() {
+    // migrate Capacitor 2 data to Capator 3 data
+    Storage.migrate();
+
+    this.setupStatusBar();
+    // handle universal links
+    App.addListener('appUrlOpen', (data: any) => {
+      this.onAppUrlOpen(data);
+    });
+    this.onAppStart();
+    // app did become active
+    this.platform.resume.subscribe(() => {
+      this.onAppResume();
     });
   }
 
-  private initNativeStatusBar() {
+  private setupStatusBar() {
     StatusBar.setStyle({
       style: Style.Light
     });
@@ -84,18 +114,6 @@ export class AppComponent {
     await this.cache.clearGroup('wishList');
   }
 
-  private initCache() {
-    this.cache.setDefaultTTL(60 * 60);
-    this.cache.setOfflineInvalidate(false);
-  }
-
-  private loadWebAppScripts() {
-    this.scriptService.load(ScriptName.HOTJAR, ScriptName.GTM).then( results => {
-      results.forEach( result => {
-        this.logger.debug(`loaded script ${ScriptName[result.script]} with status ${ScriptLoadingStatus[result.status]}`, result);
-      })
-    })
-  }
 
   private onAppUrlOpen(data: any) {
     this.zone.run(() => {
