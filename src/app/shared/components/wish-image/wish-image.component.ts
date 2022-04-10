@@ -48,7 +48,7 @@ export class WishImageComponent implements OnInit {
   constructor(private logger: LogService) {}
 
   ngOnInit() { 
-    this.logger.log('onStart', this.src);
+    this.logger.debug('onStart', this.src);
     if (this.src) {
       this.imgType = ImageType.WISH_IMAGE
     } else {
@@ -60,7 +60,7 @@ export class WishImageComponent implements OnInit {
   }
 
   onError(event: { target: HTMLImageElement }) {
-    this.logger.log('onError', event);
+    this.logger.debug('onError', event);
     this.onComplete();
     this.imgType = ImageType.ERROR;
     event.target.src = WISH_ERROR_IMAGE_ASSET_URL;
@@ -68,7 +68,7 @@ export class WishImageComponent implements OnInit {
   }
 
   onLoad(event: { target: HTMLImageElement }) {
-    this.logger.log('onLoad', event);
+    this.logger.debug('onLoad', event);
     this.onComplete();
   }
 
