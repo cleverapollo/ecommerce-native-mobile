@@ -11,7 +11,7 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">Geburtstag</ion-label>
-      <ion-datetime doneText="Fertig" cancelText="Abbrechen" formControlName="birthday" displayFormat="DD.MM.YYYY" placeholder="Trage ein Datum ein"></ion-datetime>
+      <ion-datetime doneText="Fertig" cancelText="Abbrechen" formControlName="birthday"></ion-datetime>
     </ion-item>
     <app-validation-messages [control]="form.get('birthday')" [validationMessages]="validationMessages.birthday"></app-validation-messages>
 

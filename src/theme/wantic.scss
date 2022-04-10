@@ -127,7 +127,20 @@ ion-searchbar {
     }
 }
 
-ion-input, ion-datetime, ion-select, ion-textarea {
+ion-datetime {
+    --background: white !important;
+    --color: var(--ion-color-primary);
+    // placeholder-color: #FFA571 !important;
+    --placeholder-font-style: italic !important;
+    padding-left: 19px !important;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    font-family: 'Roboto' !important;
+    font-size: 14px !important;
+    font-weight: 300 !important;
+}
+
+ion-input, ion-select, ion-textarea {
     --background: white !important;
     --color: var(--ion-color-primary);
     --placeholder-color: #FFA571 !important;
@@ -156,12 +169,13 @@ ion-input, ion-datetime, ion-select, ion-textarea {
     }
 }
 
+/*
 ion-datetime::part(placeholder) {
     font-style: italic;
     color: var(--ion-color-secondary);
     margin: auto;
     font-family: 'Roboto';
-}
+}*/
 
 ion-item {   
     .calendar-icon {
@@ -227,12 +241,13 @@ ion-button.wantic-margin-right-left {
     --padding-end: 0;
 }
 
+ion-modal.wantic-modal-auto-height::part(content) {
+    min-height: 400px;
+    height: auto;
+    --height: auto;
+}
+
 ion-modal.wantic-modal-auto-height {
-    .modal-wrapper {
-        min-height: 400px;
-        height: auto;
-        --height: auto;
-    }
     --height: auto;
     --width: 85%;
     --border-radius: 11pt;

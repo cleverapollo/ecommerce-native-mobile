@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 import { EnvironmentConfig } from './environment.d';
-import { version } from './../../package.json'
+import * as packageInfo from './../../package.json'
 import { BackendConfigType } from './backend-config-type';
 
 export const environment: EnvironmentConfig = {
@@ -29,7 +29,7 @@ export const environment: EnvironmentConfig = {
 export const SERVER_URL = ''; 
 export const APP_URL = '';
 export const WHITELISTED_DOMAINS = []; 
-export const appVersion = version;
+export const appVersion = packageInfo.version;
 
 /*
  * For easier debugging in development mode, you can import the following file

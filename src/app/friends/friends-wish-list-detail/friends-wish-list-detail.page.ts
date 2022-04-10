@@ -9,6 +9,7 @@ import { AlertService } from '@core/services/alert.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { Subscription } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
@@ -18,6 +19,14 @@ import { Subscription } from 'rxjs';
 export class FriendsWishListDetailPage implements OnInit, OnDestroy {
 
   wishList: FriendWishList;
+
+  get date(): string {
+    let dateString  = 'noch kein Datum festgelegt';
+    if (this.wishList.date) {
+      dateString = this.datePipe.transform(this.wishList.date.toString());
+    }
+    return dateString;
+  }
   
   private wishListId: string;
 
@@ -34,7 +43,8 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
     private analyticsService: AnalyticsService,
     private alertService: AlertService,
     private loadingService: LoadingService,
-    private toastService: CoreToastService
+    private toastService: CoreToastService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { FriendWishList } from '../friends-wish-list-overview.model';
 
@@ -10,7 +11,15 @@ export class FriendWishListComponent implements OnInit {
 
   @Input() wishList: FriendWishList;
 
-  constructor() { }
+  get date(): string {
+    let dateString  = 'noch kein Datum festgelegt';
+    if (this.wishList.date) {
+      dateString = this.datePipe.transform(this.wishList.date.toString());
+    }
+    return dateString;
+  }
+
+  constructor(private datePipe: DatePipe) { }
 
   ngOnInit() {}
 
