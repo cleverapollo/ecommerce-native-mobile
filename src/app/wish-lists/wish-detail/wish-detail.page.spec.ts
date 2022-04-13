@@ -85,13 +85,6 @@ describe('WishDetailPage', () => {
     });
   })
 
-  describe('goBack', () => {
-    it('should navigate back', () => {
-      component.goBack();
-      expect(navController.back).toHaveBeenCalled();
-    });
-  });
-
   describe('openProductURL', () => {
     it('should open product url in browser', () => {
       component.openProductURL();

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { PublicResourceApiMockService } from '@core/api/public-resource-api-mock-service';
@@ -35,7 +36,8 @@ describe('SharedWishListPage', () => {
       providers: [
         { provide: AnalyticsService, useValue: analyticsServiceSpy },
         { provide: PublicResourceApiService, useValue: publicResourceApiServiceMock },
-        { provide: ActivatedRoute, useValue: route }
+        { provide: ActivatedRoute, useValue: route },
+        DatePipe
       ]
     }).compileComponents();
 

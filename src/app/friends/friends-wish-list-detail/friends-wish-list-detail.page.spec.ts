@@ -16,6 +16,7 @@ import { WishListTestData } from '@core/test/wish-list-data';
 import { NextObserver, Observable, Observer, of, PartialObserver, Subscription, throwError } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { DatePipe } from '@angular/common';
 
 describe('FriendsWishListDetailPage', () => {
 
@@ -51,6 +52,7 @@ describe('FriendsWishListDetailPage', () => {
         { provide: FriendWishListStoreService, useValue: sharedWishListStore },
         { provide: NavController, useValue: navController },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
+        DatePipe
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
