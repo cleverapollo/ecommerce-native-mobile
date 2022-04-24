@@ -58,7 +58,7 @@ export class SignupMailTwoPage implements OnInit {
 
     await this.saveGenderIfNeeded();
     await this.saveBirthdayIfNeeded();
-    // await this.navigateToNextPage();
+    await this.navigateToNextPage();
 
     this.loadingService.dismissLoadingSpinner(loadingSpinner);
   }
