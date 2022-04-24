@@ -34,7 +34,6 @@ export class CoreToastService implements ToastService {
       color: color,
       duration: CoreToastService.TOAST_DURATION,
       position: 'top',
-      cssClass: 'center-text',
       icon: icon
     });
     toast.present();
