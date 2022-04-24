@@ -3,6 +3,7 @@ import { UserProfile } from '@core/models/user.model';
 import { from, Observable } from 'rxjs';
 import { UserApiService } from '@core/api/user-api.service';
 import { CacheService } from 'ionic-cache';
+import { LogService } from '@core/services/log.service';
 
 export interface StoredUserProfile {
   item: UserProfile;
@@ -20,7 +21,8 @@ export class UserProfileStore {
 
   constructor(
     private cache: CacheService, 
-    private api: UserApiService
+    private api: UserApiService,
+    private logger: LogService
   ) 
   {}
 
@@ -32,9 +34,22 @@ export class UserProfileStore {
     return this.cache.loadFromObservable(this.CACHE_KEY, request, this.CACHE_GROUP_KEY)
   }
 
-  updateCachedUserProfile(userProfile: UserProfile) {
-    return this.cache.saveItem(this.CACHE_KEY, userProfile, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL)
-      .catch(() => { this.removeCachedUserProfile() });
+  async updateCachedUserProfile(userProfile: UserProfile): Promise<any> {
+
+    // try to update cached profile
+    try {
+      return await this.cache.saveItem(this.CACHE_KEY, userProfile, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
+    } catch (error) {
+      this.logger.error(error);
+    }
+
+    // try to remove item from cache
+    try {
+      return await this.cache.removeItem(this.CACHE_KEY);
+    } catch (error) {
+      this.logger.error(error);
+      return Promise.reject(error);
+    }
   }
 
   removeCachedUserProfile(): Promise<any> {

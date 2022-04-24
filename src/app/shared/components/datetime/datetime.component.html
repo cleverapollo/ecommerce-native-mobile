@@ -1,0 +1,28 @@
+<div class="wtc-label-container" *ngIf="label">
+  <label class="wtc-label-stacked">{{ label }}</label>
+</div>
+<ion-item lines="none" id="open-datetime-modal">
+  <ion-input [placeholder]="placeholder" readonly="true" [value]="formattedDate"></ion-input>
+  <ion-icon slot="end" icon="calendar" color="secondary"></ion-icon>
+</ion-item>
+
+<ion-modal trigger="open-datetime-modal">
+  <ng-template>
+    <ion-content>
+      <ion-datetime 
+        #modalDatetime 
+        presentation="date" 
+        size="cover"
+        locale="de-DE"
+        [min]="minDate"
+        [disabled]="disabled"
+        [value]="initialDate"
+        (ionChange)="onDateChanged(modalDatetime.value)">
+        <ion-buttons slot="buttons">
+          <ion-button (click)="reset()">Zurücksetzen</ion-button>
+          <ion-button color="primary" (click)="confirm()">Übernehmen</ion-button>
+        </ion-buttons>
+      </ion-datetime>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -18,9 +18,11 @@ import { AffiliateLinkDebugInfoComponent } from './components/affiliate-link-deb
 import { WishImageComponent } from './components/wish-image/wish-image.component';
 import { WishShopInfoComponent } from './components/wish-shop-info/wish-shop-info.component';
 import { SortByIsFavoritePipe } from './pipes/sort-by-is-favorite.pipe';
+import { DatetimeComponent } from './components/datetime/datetime.component';
 
 @NgModule({
   declarations: [
+    DatetimeComponent,
     SecurePipe, 
     AffiliateLinkDebugInfoComponent,
     WishImageComponent,
@@ -45,6 +47,7 @@ import { SortByIsFavoritePipe } from './pipes/sort-by-is-favorite.pipe';
     IonicModule
   ],
   exports: [
+    DatetimeComponent,
     SecurePipe, 
     AffiliateLinkDebugInfoComponent,
     WishImageComponent,

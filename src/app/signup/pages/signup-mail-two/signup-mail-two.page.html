@@ -11,10 +11,7 @@
 
   <form [formGroup]="form" *ngIf="form" (ngSubmit)="next()">
     
-    <ion-item lines="none" class="ion-item-select-date">
-      <ion-datetime doneText="Fertig" cancelText="Abbrechen" value="1990-01-01" formControlName="date"></ion-datetime>
-      <ion-icon name="calendar" slot="end" color="secondary" class="calendar-icon"></ion-icon>
-    </ion-item>
+    <app-datetime formControlName="date" initialDate="1990-01-01T00:00:00" placeholder="Wähle dein Geburtsdatum aus"></app-datetime>
   
     <p class="subtext gender-question ion-text-center">
       Welchem Geschlecht fühlst du dich zugehörig?

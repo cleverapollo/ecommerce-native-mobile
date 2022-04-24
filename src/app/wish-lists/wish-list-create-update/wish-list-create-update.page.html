@@ -7,17 +7,15 @@
   <h1 class="ion-text-center wantic-page-header">{{ title }}</h1>
 
   <form [formGroup]="form" *ngIf="form">
+    <div class="wtc-label-container">
+      <label class="wtc-label-stacked">Name der Wunschliste</label>
+    </div>
     <ion-item lines="none">
-      <ion-label position="stacked">Name der Wunschliste</ion-label>
       <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name" clearInput="true" autocapitalize="true" enterkeyhint="next" inputmode="text" required="true" spellcheck="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 
-    <ion-item lines="none">
-      <ion-label position="stacked">Datum des Ereignisses</ion-label>
-      <ion-datetime [min]="minDate" [max]="maxDate" formControlName="date" doneText="Fertig" cancelText="Abbrechen"></ion-datetime>
-    </ion-item>
-    <app-validation-messages [control]="form.get('date')" [validationMessages]="validationMessages.date"></app-validation-messages>
+    <app-datetime formControlName="date" placeholder="Datum des Ereignisses" label="Datum" [minDate]="minDate"></app-datetime>
 
     <ion-item lines="none" class="toggleContainer">
       <ion-label class="ion-text-wrap" [ngClass]="{ 'toggle-checked': form.get('showReservedWishes').value, 'toggle-unchecked': !form.get('showReservedWishes').value }">Ich möchte sehen, welche Wünsche geschenkt werden</ion-label>

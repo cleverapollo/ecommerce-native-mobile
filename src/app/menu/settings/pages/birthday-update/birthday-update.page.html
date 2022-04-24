@@ -9,10 +9,7 @@
 
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveChanges()">
 
-    <ion-item lines="none">
-      <ion-label position="stacked">Geburtstag</ion-label>
-      <ion-datetime doneText="Fertig" cancelText="Abbrechen" formControlName="birthday"></ion-datetime>
-    </ion-item>
+    <app-datetime formControlName="birthday" label="Geburtstag" placeholder="01.01.1990" initialDate="1990-01-01T00:00:00"></app-datetime>
     <app-validation-messages [control]="form.get('birthday')" [validationMessages]="validationMessages.birthday"></app-validation-messages>
 
     <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block">

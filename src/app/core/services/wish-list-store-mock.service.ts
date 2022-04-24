@@ -1,4 +1,5 @@
 import { WishListDto, WishDto } from "@core/models/wish-list.model";
+import { WishListCreateRequest, WishListUpdateRequest } from "@wishLists/wish-list-create-update/wish-list-create-update.model";
 import { Observable, of } from "rxjs";
 import { WishListStore } from "./wish-list-store.service";
 
@@ -23,6 +24,9 @@ export class MockWishListStoreService implements WishListStore {
     createWish(wish: WishDto): Promise<WishDto> {
         return Promise.resolve(wish);
     }
+    createWishList(wish: WishListCreateRequest): Promise<WishListDto> {
+        return Promise.resolve(this.wishlist);
+    }
     removeWish(wish: WishDto): Promise<void> {
         return Promise.resolve();
     }
@@ -31,6 +35,9 @@ export class MockWishListStoreService implements WishListStore {
     }
     updateWish(wish: WishDto): Promise<WishDto> {
         return Promise.resolve(wish);
+    }
+    updateWishList(wishList: WishListUpdateRequest): Promise<WishListDto> {
+        return Promise.resolve(this.wishlist);
     }
     saveWishListToCache(wishList: WishListDto): Promise<void> {
         return Promise.resolve();

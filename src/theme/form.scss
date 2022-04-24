@@ -1,0 +1,11 @@
+div.wtc-label-container {
+
+    margin-bottom: 8px;
+
+    label.wtc-label-stacked {
+        margin-left: var(--wantic-margin);
+        font: normal normal normal 15px/20px Roboto;
+        letter-spacing: 0px;
+        color: var(--ion-color-tertiary);
+    }
+}

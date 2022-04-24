@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WishListCreateRequest, WishListCreateOrUpdateRequest, WishListUpdateRequest } from './wish-list-create-update.model';
-import { WishListApiService } from '@core/api/wish-list-api.service';
 import { NavController } from '@ionic/angular';
 import { WishListDto } from '@core/models/wish-list.model';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
@@ -12,7 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { UserWishListDto } from '@core/models/user.model';
 import { LoadingService } from '@core/services/loading.service';
-import { first } from 'rxjs/operators';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
 
@@ -23,13 +21,9 @@ import { AnalyticsService } from '@core/services/analytics.service';
 })
 export class WishListCreateUpdatePage implements OnInit {
 
-  private wishList: WishListDto;
-  private userEmail: string;
-
   form: FormGroup;
-
-  get minDate(): number { return new Date().getFullYear(); } 
-  get maxDate(): number { return this.minDate + 10; }
+  /** ISO Date string */
+  minDate: String;
 
   get title(): string {
     return  this.isUpdatePage ? 'Wunschliste bearbeiten' : 'Neue Wunschliste hinzufügen';
@@ -73,9 +67,11 @@ export class WishListCreateUpdatePage implements OnInit {
     return this.userEmail == this.wishList.creatorEmail;
   }
 
+  private wishList: WishListDto;
+  private userEmail: string;
+
   constructor(
     private formBuilder: FormBuilder, 
-    private apiService: WishListApiService,
     private navController: NavController,
     private alertService: AlertService,
     private toastService: CoreToastService,
@@ -87,37 +83,23 @@ export class WishListCreateUpdatePage implements OnInit {
     private analyticsService: AnalyticsService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
-    this.userProfileStore.loadUserProfile().pipe(first()).subscribe(userProfile => {
-      this.userEmail = userProfile.email.value;
-    });
-    this.initForm();
+    this.minDate = new Date().toISOString();
+    await this.setupUserEmail();
+    this.setupForm();
   }
 
-  ionViewWillEnter() { 
+  private async setupUserEmail() {
+    const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
+    this.userEmail = userProfile.email.value;
+  }
+
+  async ionViewWillEnter() { 
     if (this.isUpdatePage) {
-      this.wishListStore.loadWishList(this.wishList.id).pipe(first()).subscribe( wishList => {
-        this.wishList = wishList;
-        this.initForm();
-      })
+      this.wishList = await this.wishListStore.loadWishList(this.wishList.id).toPromise();
+      this.setupForm();
     } 
-  }
-
-  private initForm() {
-    const name = this.wishList?.name ? this.wishList.name : '';
-    const date = this.wishList?.date ? new Date(this.wishList.date).toISOString() : '';
-    const showReservedWishes = this.wishList?.showReservedWishes ? this.wishList?.showReservedWishes : false;
-    this.form = this.formBuilder.group({
-      'name': this.formBuilder.control(name, {
-        validators: [Validators.required],
-        updateOn: 'blur'
-      }),
-      'date': this.formBuilder.control(date, {
-        updateOn: 'blur'
-      }),
-      'showReservedWishes': this.formBuilder.control(showReservedWishes)
-    });
   }
 
   ionViewDidEnter() {
@@ -141,60 +123,68 @@ export class WishListCreateUpdatePage implements OnInit {
     this.wishList && this.wishList.id ? this.update(request) : this.create(request);
   }
 
-  private create(request: WishListCreateOrUpdateRequest) {
-    this.loadingService.showLoadingSpinner();
-    this.apiService.create(request as WishListCreateRequest).pipe(first()).subscribe({
-      next: createdWishList => {
-        this.wishListStore.saveWishListToCache(createdWishList);
-        this.wishList = createdWishList;
-        this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
-        this.loadingService.dismissLoadingSpinner();
-        this.router.navigateByUrl(`/secure/home/wish-list/${createdWishList.id}`);
-      },
-      error: error => {
-        this.toastService.presentErrorToast('Bei der Erstellung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
-        this.loadingService.dismissLoadingSpinner();
-      },
-    });
-  }
-
-  private update(request: WishListCreateOrUpdateRequest) {
-    const updateRequest = request as WishListUpdateRequest;
-    updateRequest.id = this.wishList.id;
-    this.loadingService.showLoadingSpinner();
-    this.apiService.update(updateRequest).pipe(first()).subscribe({
-      next: updatedWishList => {
-        this.wishListStore.updatedCachedWishList(updatedWishList);
-        this.wishList = updatedWishList;
-        this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
-        this.loadingService.dismissLoadingSpinner();
-      },
-      error: error => {
-        this.toastService.presentErrorToast('Bei der Aktualisierung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
-        this.loadingService.dismissLoadingSpinner();
-      },
-    });
-  }
-
-  deleteWishList() {
+  async deleteWishList() {
     const header = 'Wunschliste löschen';
     const message =  `Möchtest du deine Wunschliste ${this.wishList.name} wirklich löschen?`;
-    this.alertService.createDeleteAlert(header, message, this.onDeleteConfirmation).then( alert => {
-      alert.present();
-    });
+    const alert = await this.alertService.createDeleteAlert(header, message, this.onDeleteConfirmation);
+    alert.present();
   }
 
-  private onDeleteConfirmation = () => {
+  private onDeleteConfirmation = async () => {
     this.loadingService.showLoadingSpinner();
-    this.apiService.delete(this.wishList.id).toPromise().then(() => {
-      this.wishListStore.removeCachedWishList(this.wishList.id);
+
+    try {
+      await this.wishListStore.deleteWishList(this.wishList.id);
+      this.loadingService.dismissLoadingSpinner();
       this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich gelöscht');
       this.router.navigateByUrl('/secure/home/wish-list-overview');
-    }, error => {
-      this.toastService.presentErrorToast('Beim Löschen deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
-    }).finally(() => {
+    } catch (error) {
       this.loadingService.dismissLoadingSpinner();
+      this.toastService.presentErrorToast('Beim Löschen deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
+    }
+  }
+
+  private setupForm() {
+    const name = this.wishList?.name ? this.wishList.name : '';
+    const date = this.wishList?.date ? new Date(this.wishList.date).toISOString() : '';
+    const showReservedWishes = this.wishList?.showReservedWishes ? this.wishList?.showReservedWishes : false;
+    this.form = this.formBuilder.group({
+      'name': this.formBuilder.control(name, {
+        validators: [Validators.required],
+        updateOn: 'blur'
+      }),
+      'date': this.formBuilder.control(date),
+      'showReservedWishes': this.formBuilder.control(showReservedWishes)
     });
   }
 
+  private async create(request: WishListCreateOrUpdateRequest) {
+    this.loadingService.showLoadingSpinner();
+
+    try {
+      const createdWishList = await this.wishListStore.createWishList(request as WishListCreateRequest);
+      this.wishList = createdWishList;
+      this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich erstellt.');
+      this.loadingService.dismissLoadingSpinner();
+      this.router.navigateByUrl(`/secure/home/wish-list/${createdWishList.id}`);
+    } catch (error) {
+      this.toastService.presentErrorToast('Bei der Erstellung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
+      this.loadingService.dismissLoadingSpinner();
+    }
+  }
+
+  private async update(request: WishListCreateOrUpdateRequest) {
+    this.loadingService.showLoadingSpinner();
+
+    const updateRequest = request as WishListUpdateRequest;
+    updateRequest.id = this.wishList.id;
+    try {
+      this.wishList = await this.wishListStore.updateWishList(updateRequest);
+      this.toastService.presentSuccessToast('Deine Wunschliste wurde erfolgreich aktualisiert.');
+      this.loadingService.dismissLoadingSpinner();
+    } catch (error) {
+      this.toastService.presentErrorToast('Bei der Aktualisierung deiner Wunschliste ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.');
+      this.loadingService.dismissLoadingSpinner();
+    }
+  }
 }

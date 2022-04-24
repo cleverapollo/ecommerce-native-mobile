@@ -5,16 +5,18 @@ import { CacheService } from 'ionic-cache';
 import { WishApiService } from '@core/api/wish-api.service';
 import { Observable } from 'rxjs';
 import { LogService } from './log.service';
+import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
 
 export interface WishListStore {
   loadWishLists(forceRefresh: boolean): Observable<Array<WishListDto>>;
   loadWishList(id: string, forceRefresh: boolean): Observable<WishListDto>;
   loadWish(id: string, forceRefresh: boolean): Observable<WishDto>;
   createWish(wish: WishDto): Promise<WishDto>;
+  createWishList(wish: WishListCreateRequest): Promise<WishListDto>;
+  updateWish(wish: WishDto): Promise<WishDto>;
+  updateWishList(wishList: WishListUpdateRequest): Promise<WishListDto>;
   clearWishLists(): Promise<void>;
   removeWish(wish: WishDto): Promise<void>;
-  updateWish(wish: WishDto): Promise<WishDto>;
-  updatedCachedWishList(wishList: WishListDto): Promise<void>;
   saveWishListToCache(wishList: WishListDto): Promise<void>;
   clear(): Promise<any>;
 }
@@ -71,20 +73,43 @@ export class WishListStoreService implements WishListStore {
     return this.cache.loadFromObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY)
   }
 
-  removeCachedWishList(id: string) {
-    this.cache.removeItem(this.cacheKeyWishList(id));
-    this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: WishListDto[]) => {
+  async deleteWishList(id: string): Promise<void> {
+    await this.wishListApiService.delete(id).toPromise();
+    return this.removeCachedWishList(id);
+  }
+
+  private async removeCachedWishList(id: string): Promise<void> {
+    try {
+      await this.cache.removeItem(this.cacheKeyWishList(id));
+    } catch (error) {
+      return Promise.reject();
+    }
+
+    try {
+      const wishLists: WishListDto[] = await this.cache.getItem(this.CACHE_KEY_WISH_LISTS);
       const wishListIndex = wishLists.findIndex( w => w.id == id);
       if (wishListIndex !== -1) {
         wishLists.splice(wishListIndex, 1);
-        this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
+        return this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
       } else {
-        this.clearWishLists();
+        return this.clearWishLists();
       }
-    });
+    } catch (error) {
+      return Promise.reject();
+    }
   }
 
-  async updatedCachedWishList(wishList: WishListDto): Promise<void> {
+  async updateWishList(wishList: WishListUpdateRequest): Promise<WishListDto> {
+    try {
+      const updatedWishList = await this.wishListApiService.update(wishList).toPromise();
+      await this.updatedCachedWishList(updatedWishList);
+      return updatedWishList;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  private async updatedCachedWishList(wishList: WishListDto): Promise<void> {
     try {
       await this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
       const wishLists = await this.cache.getItem(this.CACHE_KEY_WISH_LISTS);
@@ -98,6 +123,16 @@ export class WishListStoreService implements WishListStore {
     } catch (error) {
       this.logger.error(error);
       this.clearWishLists();
+    }
+  }
+
+  async createWishList(request: WishListCreateRequest): Promise<WishListDto> {
+    try {
+      const wishList = await this.wishListApiService.create(request as WishListCreateRequest).toPromise();
+      await this.saveWishListToCache(wishList);
+      return wishList;
+    } catch (error) {
+      return Promise.reject(error);
     }
   }
 
