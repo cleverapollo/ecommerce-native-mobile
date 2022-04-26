@@ -3,7 +3,10 @@ package io.wantic.app.share.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity.CENTER_HORIZONTAL
@@ -22,12 +25,9 @@ import androidx.gridlayout.widget.GridLayout.CENTER
 import io.wantic.app.R
 import io.wantic.app.share.core.analytics.AnalyticsTracking
 import io.wantic.app.share.core.analytics.GoogleAnalytics
-import io.wantic.app.share.core.ui.*
 import io.wantic.app.share.core.ui.media.*
 import io.wantic.app.share.models.*
 import io.wantic.app.share.utils.*
-import kotlinx.serialization.*
-import java.util.*
 import kotlin.math.ceil
 
 
@@ -170,10 +170,12 @@ class SelectProductImageActivity : AppCompatActivity() {
                 productInfo = webImage?.let { it1 ->
                     ProductInfo(
                         it1.id,
-                        if (it1.name.isEmpty()) webCrawlerResult!!.title else it1.name,
+                        it1.name.ifEmpty { webCrawlerResult!!.title },
                         webImage.url,
                         webCrawlerResult!!.url,
-                        webCrawlerResult!!.price
+                        webCrawlerResult!!.price,
+                        false,
+                        null
                     )
                 }
             }

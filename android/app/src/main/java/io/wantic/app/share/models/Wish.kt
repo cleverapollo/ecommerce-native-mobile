@@ -8,15 +8,25 @@ import java.util.*
 class Wish constructor(
     var id: @Serializable(with = UUIDSerializer::class) UUID?,
     val wishListId: @Serializable(with = UUIDSerializer::class) UUID,
-    val name: String, val price: Price,
+    val name: String, val price: Price, val note: String?,
     val productUrl: String,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val isFavorite: Boolean
     ) {
 
     companion object {
         fun create(productInfo: ProductInfo, wishListId: UUID): Wish {
             val price = Price(productInfo.price)
-            return Wish(null, wishListId, productInfo.name, price, productInfo.productUrl, productInfo.imageUrl)
+            return Wish(
+                null,
+                wishListId,
+                productInfo.name,
+                price,
+                productInfo.note,
+                productInfo.productUrl,
+                productInfo.imageUrl,
+                productInfo.isFavorite
+            )
         }
     }
 

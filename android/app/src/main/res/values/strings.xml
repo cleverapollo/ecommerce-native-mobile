@@ -1,6 +1,7 @@
 <resources>
     <string name="title_edit_product_details">Edit wish</string>
     <string name="label_product_name">Name</string>
+    <string name="label_product_note">Note</string>
     <string name="label_product_price">Price (in €)</string>
     <string name="product_image_content_description">Here you can see the image of the product.</string>
     <string name="toolbar_button_next">Next</string>
@@ -40,7 +41,11 @@
     <!-- Form validation -->
     <string name="required_name">Please enter a name for your wish.</string>
     <string name="required_price">Please enter a price for your wish.</string>
+    <string name="wish_list_required_name">Name for wish list is required</string>
 
     <!-- Placeholder -->
     <string name="placeholder_enter_name"><i>Enter a name</i></string>
+
+    <!-- Switch is favorite -->
+    <string name="switch_is_favorite_text">Mark wish as favourite</string>
 </resources>

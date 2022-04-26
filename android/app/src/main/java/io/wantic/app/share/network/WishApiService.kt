@@ -50,6 +50,8 @@ class WishApiService(private val requestQueue: RequestQueue): WishApi {
             data.put("productUrl", wish.productUrl)
             data.put("imageUrl", wish.imageUrl)
             data.put("price", price)
+            data.put("isFavorite", wish.isFavorite)
+            data.put("note", wish.note)
         } catch (exception: JSONException) {
             exception.printStackTrace()
         }

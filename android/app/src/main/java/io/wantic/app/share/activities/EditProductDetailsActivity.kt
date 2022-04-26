@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
@@ -41,7 +42,9 @@ class EditProductDetailsActivity : AppCompatActivity() {
     // UI
     private lateinit var productImageView: ImageView
     private lateinit var productNameView: EditText
+    private lateinit var productNoteView: EditText
     private lateinit var productPriceView: EditText
+    private lateinit var isFavoriteWishSwitch: SwitchCompat
     private lateinit var actionButton: Button
     private lateinit var textViewNoImagesFound: TextView
 
@@ -63,7 +66,9 @@ class EditProductDetailsActivity : AppCompatActivity() {
         initTextViewNoImagesFound()
         initProductImageView()
         initProductNameView()
+        initProductNoteView()
         initProductPriceView()
+        initWishIsFavoriteSwitch()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -120,6 +125,13 @@ class EditProductDetailsActivity : AppCompatActivity() {
         return modifiedValue
     }
 
+    private fun initWishIsFavoriteSwitch() {
+        isFavoriteWishSwitch = findViewById(R.id.switchIsFavorite)
+        isFavoriteWishSwitch.setOnCheckedChangeListener { _, isChecked ->
+            this.productInfo.isFavorite = isChecked
+        }
+    }
+
     private fun initProductNameView() {
         productNameView = findViewById(R.id.productName)
         productNameView.setText(productInfo.name)
@@ -155,6 +167,22 @@ class EditProductDetailsActivity : AppCompatActivity() {
                 this.theme
             )
             enableButton(this.actionButton)
+        }
+    }
+
+    private fun initProductNoteView() {
+        productNoteView = findViewById(R.id.productNote)
+        productNoteView.setText(productInfo.note)
+        productNoteView.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard()
+            }
+        }
+        productNoteView.addTextChangedListener(afterTextChanged = { editable ->
+            this.productInfo.note = editable.toString()
+        })
+        productNoteView.onRightDrawableClicked {
+            it.text.clear()
         }
     }
 

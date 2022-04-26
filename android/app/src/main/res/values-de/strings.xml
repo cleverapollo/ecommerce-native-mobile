@@ -2,6 +2,7 @@
 <resources>
     <string name="title_edit_product_details">Wunsch bearbeiten</string>
     <string name="label_product_name">Name</string>
+    <string name="label_product_note">Notiz</string>
     <string name="label_product_price">Preis (in €)</string>
     <string name="product_image_content_description">Hier ist das Produktbild zu sehen.</string>
     <string name="toolbar_button_next">Weiter</string>
@@ -41,7 +42,11 @@
     <!-- Form validation -->
     <string name="required_name">Bitte gib einen Namen für deinen Wunsch an.</string>
     <string name="required_price">Bitte gib einen Preis für deinen Wunsch an.</string>
+    <string name="wish_list_required_name">Name für die Wunschliste ist erforderlich</string>
 
     <!-- Placeholder -->
     <string name="placeholder_enter_name"><i>Gib einen Namen ein</i></string>
+
+    <!-- Switch is favorite -->
+    <string name="switch_is_favorite_text">Wunsch als Favorit kennzeichnen</string>
 </resources>

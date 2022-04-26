@@ -209,7 +209,7 @@ class SelectWishListActivity : AppCompatActivity() {
 
     private fun validateForm(): Boolean {
         if (newWishListName.isBlank()) {
-            editTextNewWishListName.error = "Name is required"
+            editTextNewWishListName.error = resources.getString(R.string.wish_list_required_name)
             return false
         }
         return true
