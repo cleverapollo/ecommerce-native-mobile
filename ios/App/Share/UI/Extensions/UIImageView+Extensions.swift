@@ -20,14 +20,25 @@ extension UIImageView {
         }
         
         var uiImage: UIImage?
-        if imageUrlString.contains(".svg"), let svgImage = SVGKImage(data: imageData as Data)?.uiImage {
-            uiImage = svgImage
+        if imageUrlString.contains(".svg"), let svgImage = SVGKImage(data: imageData as Data) {
+            
+            guard svgImage.hasSize() else {
+                Logger.error("SVG Image has no size!", imageUrlString)
+                return false
+            }
+            uiImage = svgImage.uiImage
         } else if let image = UIImage(data: imageData as Data) {
             uiImage = image
         }
         
         guard uiImage != nil else {
             Logger.error("UIImage is nil")
+            return false
+        }
+        
+        // make sure image has a valid size to prevent crashes
+        guard !uiImage!.size.width.isInfinite && !uiImage!.size.height.isInfinite else {
+            Logger.error("Image has infinite size!", imageUrlString)
             return false
         }
         
