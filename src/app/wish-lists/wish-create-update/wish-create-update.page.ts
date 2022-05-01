@@ -112,9 +112,7 @@ export class WishCreateUpdatePage implements OnInit {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
-      'isFavorite': this.formBuilder.control(this.wish?.isFavorite ?? false, {
-        updateOn: 'blur'
-      }),
+      'isFavorite': this.formBuilder.control(this.wish?.isFavorite ?? false)
     });
   }
 
