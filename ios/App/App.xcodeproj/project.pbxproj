@@ -131,6 +131,8 @@
 		B19A523A2610D11400984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52392610D11400984207 /* AppConfig.swift */; };
 		B19A52482610D1A500984207 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19A52472610D1A500984207 /* AppConfig.swift */; };
 		B19A527D2610D7C800984207 /* Share Beta.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B19A522E2610CE8000984207 /* Share Beta.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B19B46712819B7AF00E9E075 /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19B46702819B7AF00E9E075 /* CustomSwitch.swift */; };
+		B19B46722819B7AF00E9E075 /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19B46702819B7AF00E9E075 /* CustomSwitch.swift */; };
 		B1A410BB2731D40B000DB58C /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A410BA2731D40B000DB58C /* String+Extensions.swift */; };
 		B1A410BC2731D40B000DB58C /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A410BA2731D40B000DB58C /* String+Extensions.swift */; };
 		B1A80F8A2589F59800F0917F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A80F882589F59800F0917F /* MainInterface.storyboard */; };
@@ -156,6 +158,8 @@
 		B1A8285B27BC2EA900F2B0C5 /* WebPageImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8285927BC2EA900F2B0C5 /* WebPageImage.swift */; };
 		B1A8285D27BC365700F2B0C5 /* WebCrawler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8285C27BC365700F2B0C5 /* WebCrawler.swift */; };
 		B1A8285E27BC365700F2B0C5 /* WebCrawler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8285C27BC365700F2B0C5 /* WebCrawler.swift */; };
+		B1B7B799281C612C005D5962 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7B798281C612C005D5962 /* Validation.swift */; };
+		B1B7B79A281C612C005D5962 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7B798281C612C005D5962 /* Validation.swift */; };
 		B1F81EA1263EF1F800C277FB /* GoogleService-Info-beta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */; };
 		B1F81EC12641D40E00C277FB /* GoogleService-Info-share-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */; };
 		B1F81F6A26430D1500C277FB /* WanticShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */; };
@@ -313,6 +317,7 @@
 		B19A52472610D1A500984207 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		B19A530926123C8D00984207 /* Wantic Beta-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Wantic Beta-Info.plist"; sourceTree = "<group>"; };
 		B19A531026123D3D00984207 /* Wantic Beta.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Wantic Beta.entitlements"; sourceTree = "<group>"; };
+		B19B46702819B7AF00E9E075 /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
 		B1A410BA2731D40B000DB58C /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		B1A80F842589F59800F0917F /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A80F892589F59800F0917F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -331,6 +336,7 @@
 		B1A8285627BC27EB00F2B0C5 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		B1A8285927BC2EA900F2B0C5 /* WebPageImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageImage.swift; sourceTree = "<group>"; };
 		B1A8285C27BC365700F2B0C5 /* WebCrawler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebCrawler.swift; sourceTree = "<group>"; };
+		B1B7B798281C612C005D5962 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		B1F81EA0263EF1F800C277FB /* GoogleService-Info-beta.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-beta.plist"; sourceTree = "<group>"; };
 		B1F81EBE2641D40E00C277FB /* GoogleService-Info-share-prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-share-prod.plist"; sourceTree = "<group>"; };
 		B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanticShareNavigationController.swift; sourceTree = "<group>"; };
@@ -539,6 +545,7 @@
 				B122318527C277CA00FDC943 /* Analytics.swift */,
 				B17A113327BEBCCC00FD3148 /* File.swift */,
 				B122318227C2687200FDC943 /* Logger.swift */,
+				B1B7B798281C612C005D5962 /* Validation.swift */,
 				B1A8284927B8260B00F2B0C5 /* Data */,
 				B1A8284527B808A500F2B0C5 /* Network */,
 			);
@@ -656,6 +663,7 @@
 				B16E1FB225BF3290009EEFDE /* SelfSizedTableView.swift */,
 				B16E1FCA25C0770A009EEFDE /* TextFieldInnerPadding.swift */,
 				B17B404125C482E6003363E9 /* WanticTextView.swift */,
+				B19B46702819B7AF00E9E075 /* CustomSwitch.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1143,6 +1151,7 @@
 			files = (
 				B19A51EE2610CE8000984207 /* UIColor+Extensions.swift in Sources */,
 				B1A8285E27BC365700F2B0C5 /* WebCrawler.swift in Sources */,
+				B19B46722819B7AF00E9E075 /* CustomSwitch.swift in Sources */,
 				B19A51EF2610CE8000984207 /* WishListResouce.swift in Sources */,
 				B1913C2127ADBC1200BD8F4A /* Color.swift in Sources */,
 				B19A51F02610CE8000984207 /* WebPageInfo.swift in Sources */,
@@ -1152,6 +1161,7 @@
 				B19A51F32610CE8000984207 /* UIViewController+Extensions.swift in Sources */,
 				B122319327C2A72A00FDC943 /* UIButton+Extensions.swift in Sources */,
 				B1FA5E7327AE9F51004AA41C /* NewWishListButton.swift in Sources */,
+				B1B7B79A281C612C005D5962 /* Validation.swift in Sources */,
 				B19A51F42610CE8000984207 /* Authentication.swift in Sources */,
 				B122319027C29B2100FDC943 /* UINavigationItem+Extensions.swift in Sources */,
 				B19A51F52610CE8000984207 /* WishDataStore.swift in Sources */,
@@ -1194,6 +1204,7 @@
 			files = (
 				B114E13525B8A56A00F92599 /* UIColor+Extensions.swift in Sources */,
 				B1A8285D27BC365700F2B0C5 /* WebCrawler.swift in Sources */,
+				B19B46712819B7AF00E9E075 /* CustomSwitch.swift in Sources */,
 				B1A80FC5258B3F9B00F0917F /* WishListResouce.swift in Sources */,
 				B1913C2027ADBC1200BD8F4A /* Color.swift in Sources */,
 				B1A80FA0258A281600F0917F /* WebPageInfo.swift in Sources */,
@@ -1203,6 +1214,7 @@
 				B14880D125B3057300D0106B /* UIViewController+Extensions.swift in Sources */,
 				B122319227C2A72A00FDC943 /* UIButton+Extensions.swift in Sources */,
 				B1FA5E7227AE9F51004AA41C /* NewWishListButton.swift in Sources */,
+				B1B7B799281C612C005D5962 /* Validation.swift in Sources */,
 				B1A80FC9258B40D900F0917F /* Authentication.swift in Sources */,
 				B122318F27C29B2100FDC943 /* UINavigationItem+Extensions.swift in Sources */,
 				B14880BE25B2143700D0106B /* WishDataStore.swift in Sources */,
@@ -1450,7 +1462,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20220227.1;
+				CURRENT_PROJECT_VERSION = 20220424.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1513,7 +1525,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20220227.1;
+				CURRENT_PROJECT_VERSION = 20220424.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1580,7 +1592,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20220227.1;
+				CURRENT_PROJECT_VERSION = 20220424.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1610,7 +1622,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20220227.1;
+				CURRENT_PROJECT_VERSION = 20220424.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1721,7 +1733,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = "App/Wantic Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20220227.1;
+				CURRENT_PROJECT_VERSION = 20220424.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1819,7 +1831,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Share/Share.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20220227.1;
+				CURRENT_PROJECT_VERSION = 20220424.1;
 				DEVELOPMENT_TEAM = 3LDV8B8SZ2;
 				INFOPLIST_FILE = "Share/Share Beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;

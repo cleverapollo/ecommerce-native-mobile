@@ -3,24 +3,28 @@ import UIKit
 
 enum Alert {
     
-    case unauthorized(vc: UIViewController)
+    case unauthorized
     case generalError(message: String, retryAction: (UIAlertAction) -> Void)
-    case noImagesFound(vc: UIViewController)
-    case addedWishSuccessful(vc: UIViewController, wishListId: UUID)
+    case noImagesFound
+    case addedWishSuccessful(wishListId: UUID)
     
-    static func get(_ alert: Alert) -> UIAlertController {
-        var alertController: UIAlertController
-        switch alert {
-        case .unauthorized(let vc):
-            alertController = createUnauthorizedAlert(vc: vc)
-        case .generalError(let message, let retryAction):
-            alertController = createGeneralErrorAlert(message: message, retryAction: retryAction)
-        case .noImagesFound(let vc):
-            alertController = createNoImagesFoundAlert(vc: vc)
-        case .addedWishSuccessful(let vc, let wishListId):
-            alertController = createWishAddedAlert(vc: vc, wishListId: wishListId)
+    static func present(_ alert: Alert, on parent: UIViewController) {
+        
+        DispatchQueue.main.async {
+
+            var alertController: UIAlertController
+            switch alert {
+            case .unauthorized:
+                alertController = createUnauthorizedAlert(vc: parent)
+            case .generalError(let message, let retryAction):
+                alertController = createGeneralErrorAlert(message: message, retryAction: retryAction)
+            case .noImagesFound:
+                alertController = createNoImagesFoundAlert(vc: parent)
+            case .addedWishSuccessful(let wishListId):
+                alertController = createWishAddedAlert(vc: parent, wishListId: wishListId)
+            }
+            parent.present(alertController, animated: true)
         }
-        return alertController
     }
     
     // MARK: - general error

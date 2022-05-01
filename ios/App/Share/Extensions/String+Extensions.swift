@@ -17,4 +17,9 @@ extension String {
         }
         return 0.00
     }
+    
+    mutating func truncateIfNeeded() {
+        guard self.count > Constants.maxAllowedChars else { return }
+        self = String(self.prefix(Constants.maxAllowedChars))
+    }
 }

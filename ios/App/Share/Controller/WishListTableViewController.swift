@@ -136,6 +136,8 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         tableView.tableFooterView = UIView()
         tableView.separatorColor = Color.get(.separatorColor)
+        // add spacing below the table view
+        tableView.contentInset = Constants.tableViewInsets
     }
     
     private func setupActionButton() {
@@ -183,15 +185,15 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         switch indexPath.section {
         case NewWishListTableViewCell.sectionNumber:
-            return handleNewWishListTableViewCells(tableView, cellForRowAt: indexPath)
+            return setupNewWishListTableViewCells(tableView, cellForRowAt: indexPath)
         case WishListTableViewCell.sectionNumber:
-            return handleWishListTableViewCells(tableView, cellForRowAt: indexPath)
+            return setupWishListTableViewCells(tableView, cellForRowAt: indexPath)
         default:
             return UITableViewCell()
         }
     }
     
-    private func handleNewWishListTableViewCells(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    private func setupNewWishListTableViewCells(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewWishListTableViewCell.identifier, for: indexPath) as? NewWishListTableViewCell else {
             return UITableViewCell()
@@ -209,7 +211,7 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
 
-    private func handleWishListTableViewCells(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    private func setupWishListTableViewCells(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: WishListTableViewCell.identifier, for: indexPath) as? WishListTableViewCell else {
             return UITableViewCell()
@@ -347,14 +349,11 @@ extension WishListTableViewController {
     private func saveNewWish() {
         
         let wish = WishDataStore.shared.wish
-        WishResource.createWish(wish) { result in
+        WishResource.createWish(wish) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(_):
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    let alert = Alert.get(.addedWishSuccessful(vc: self, wishListId: wish.wishListId!))
-                    self.present(alert, animated: true)
-                }
+                Alert.present(.addedWishSuccessful(wishListId: wish.wishListId!), on: self)
             case .failure(let error):
                 self.handleSaveWishError(error, wish: wish)
             }
@@ -398,19 +397,12 @@ extension WishListTableViewController {
     }
     
     private func handleError(_ error: NetworkError, message: String, retryAction: @escaping (UIAlertAction) -> Void) {
-        
-        DispatchQueue.main.async { [weak self] in
-            
-            guard let self = self else { return }
-            
-            var alert: UIAlertController
-            switch error {
-            case .unauthorized:
-                alert = Alert.get(.unauthorized(vc: self))
-            case .unexpected(_), .general:
-                alert = Alert.get(.generalError(message: message, retryAction: retryAction))
-            }
-            self.present(alert, animated: true)
+
+        switch error {
+        case .unauthorized:
+            Alert.present(.unauthorized, on: self)
+        case .unexpected(_), .general:
+            Alert.present(.generalError(message: message, retryAction: retryAction), on: self)
         }
     }
 }

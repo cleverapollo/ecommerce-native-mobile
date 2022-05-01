@@ -65,9 +65,10 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        authService.getAuthToken() { idToken in
+        authService.getAuthToken() { [weak self] idToken in
+            guard let self = self else { return }
             if idToken == nil {
-                self.presentAlert(Alert.get(.unauthorized(vc: self)))
+                Alert.present(.unauthorized, on: self)
             } else if let item = self.extensionContext?.inputItems.first as? NSExtensionItem {
                 self.fetchProductInfos(extensionItem: item)
             }
@@ -214,10 +215,11 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         attachment.loadItem(
             forTypeIdentifier: String(kUTTypePropertyList),
             options: nil,
-            completionHandler: { (item, error) -> Void in
+            completionHandler: { [weak self] (item, error) -> Void in
+                guard let self = self else { return }
                 guard let dictionary = item as? NSDictionary, let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? [String: Any] else {
                     self.reloadCollectionView()
-                    self.presentAlert(Alert.get(.noImagesFound(vc: self)))
+                    Alert.present(.noImagesFound, on: self)
                     return
                 }
                 self.webPageInfo = WebCrawler.getWebPageInfo(from: results)
@@ -236,7 +238,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
             let webView = WebViewController(webUrl: webUrl) { webPageInfo in
                 guard let webPageInfo = webPageInfo else {
                     self.reloadCollectionView()
-                    self.presentAlert(Alert.get(.noImagesFound(vc: self)))
+                    Alert.present(.noImagesFound, on: self)
                     return
                 }
                 self.webPageInfo = webPageInfo
