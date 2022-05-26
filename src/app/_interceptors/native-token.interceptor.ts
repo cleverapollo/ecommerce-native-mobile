@@ -5,12 +5,12 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable, throwError, of, Subject, from } from 'rxjs';
-import { Platform } from '@ionic/angular';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { SERVER_URL } from '@env/environment';
+import { DefaultPlatformService } from '@core/services/platform.service';
 
 @Injectable()
 export class NativeTokenInterceptor implements HttpInterceptor {
@@ -21,7 +21,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
     private tokenRefreshed$ = this.tokenRefreshedSource.asObservable();
 
     constructor(
-        private platform: Platform, 
+        private platform: DefaultPlatformService, 
         private router: Router,
         private authService: AuthenticationService
     ) { }
@@ -31,14 +31,18 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         const isSignupRequest = request.url.includes('/signup');
         const isConfirmPasswordReset = request.url.includes('/confirm-password-reset');
         const isGoogleApiRequest = request.url.startsWith('https://identitytoolkit.googleapis.com');
-        if (!this.platform.is('capacitor') || isLoginRequest || isGoogleApiRequest || isConfirmPasswordReset || isSignupRequest) {
+
+        if (this.platform.isNativePlatform) {
+            return next.handle(request);
+        }
+        if (isLoginRequest || isGoogleApiRequest || isConfirmPasswordReset || isSignupRequest) {
             return next.handle(request);
         }
         return from(this.handle(request, next));
     }
 
     async handle(request: HttpRequest<any>, next: HttpHandler) {
-        const authToken = await this.authService.getFirebaseIdToken(false);
+        const authToken = await this.authService.setupFirebaseIdToken(false);
         request = this.addAuthToken(request, authToken);
         return next.handle(request).pipe(catchError(error => {
             return this.handleResponseError(error, request, next);
@@ -88,7 +92,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
     }
 
     async handleRequestAfterTokenRefresh(request?: HttpRequest<any>, next?: HttpHandler) {
-        const authToken = await this.authService.getFirebaseIdToken(false);
+        const authToken = await this.authService.setupFirebaseIdToken(false);
         request = this.addAuthToken(request, authToken);
         return next.handle(request).toPromise();
     }
@@ -104,7 +108,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         } else {
             this.refreshTokenInProgress = true;
 
-            return of(this.authService.getFirebaseIdToken(true)).pipe(
+            return of(this.authService.setupFirebaseIdToken(true)).pipe(
                 tap(() => {
                     this.refreshTokenInProgress = false;
                     this.tokenRefreshedSource.next();

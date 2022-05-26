@@ -105,7 +105,7 @@ export class StartPage implements OnInit {
 
     const userIsRegistered = signInResponse.user !== null;
     if (userIsRegistered) {
-      await this.authService.getFirebaseIdToken(true);
+      await this.authService.setupFirebaseIdToken(true);
       await this.updateFirstNameIfNeeded(firstName, signInResponse.user);
       await this.updateLastNameIfNeeded(lastName, signInResponse.user);
       this.analyticsService.logLoginEvent(authProvider);
@@ -114,7 +114,7 @@ export class StartPage implements OnInit {
       const signupRequest = this.createSignUpRequestSocialLogin(firstName, lastName, authProvider);
       if (signupRequest) {
         await this.authApiService.signupSocialLogin(signupRequest).toPromise();
-        await this.authService.getFirebaseIdToken(true);
+        await this.authService.setupFirebaseIdToken(true);
         this.analyticsService.logCompleteRegistrationEvent(authProvider);
         if (this.authService.isEmailVerified.value === false) {
           await this.authService.sendVerificationMail();

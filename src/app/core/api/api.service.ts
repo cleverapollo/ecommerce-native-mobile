@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SERVER_URL } from 'src/environments/environment';
+import { appVersion, SERVER_URL } from 'src/environments/environment';
 import { LogService } from '@core/services/log.service';
 import { Device } from '@capacitor/device';
 import { App } from '@capacitor/app';
+import { DefaultPlatformService } from '@core/services/platform.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,15 @@ export class ApiService {
 
   private clientInfoHeader?: string;
 
-  constructor(private httpClient: HttpClient, private logger: LogService) { 
+  constructor(
+    private httpClient: HttpClient, 
+    private logger: LogService,
+    private platformService: DefaultPlatformService) { 
     this.initClientInfoHeader();
   }
 
   private async initClientInfoHeader() {
-    const clientInfoHeader = await this.createClientInfoHeader();
-    this.clientInfoHeader = clientInfoHeader;
+    this.clientInfoHeader = await this.setupClientInfoHeader();
   }
 
   post<T>(url: string, body: any) : Observable<T> {
@@ -93,11 +96,28 @@ export class ApiService {
     }
   }
 
-  private async createClientInfoHeader() {
-    const appInfo = await App.getInfo();
-    const deviceInfo = await Device.getInfo();
-    const languageCode = (await Device.getLanguageCode()).value;
-    return `platform=${deviceInfo.platform}; osVersion=${deviceInfo.osVersion}; appVersion=${appInfo.version}; locale=${languageCode};`;
+  private async setupClientInfoHeader() {
+    let platform: string = 'unknown';
+    let osVersion: string = '0.0.0';
+    let version: string = appVersion;
+    let locale: string = 'de_DE';
+
+    if (this.platformService.isNativePlatform) {
+      const appInfo = await App.getInfo();
+      const deviceInfo = await Device.getInfo();
+      const languageCode = await Device.getLanguageCode();
+
+      platform = deviceInfo.platform;
+      osVersion = deviceInfo.osVersion;
+      version = appInfo.version;
+      locale = languageCode.value;
+    } else {
+      platform = 'web';
+    }
+
+    const headerValue = `platform=${platform}; osVersion=${osVersion}; appVersion=${version}; locale=${locale};`
+    this.logger.debug(headerValue);
+    return headerValue;
   }
 
 }

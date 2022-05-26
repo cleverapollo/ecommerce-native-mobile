@@ -72,16 +72,17 @@ export class LoginPage implements OnInit {
     const spinner = await this.loadingService.createLoadingSpinner();
     await spinner.present();
     
-    const input = this.loginForm.value as LoginForm;
-    this.authService.emailPasswordSignIn(input.email, input.password).then(() => {
+    try {
+      const input = this.loginForm.value as LoginForm;
+      await this.authService.emailPasswordSignIn(input.email, input.password);
       this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');
       this.analyticsService.logLoginEvent(AuthProvider.WANTIC);
-      this.navToHome();
-    }, errorMessage => {
-      this.toastService.presentErrorToast(errorMessage);
-    }).finally(() => {
       this.loadingService.dismissLoadingSpinner(spinner);
-    });
+      this.navToHome();
+    } catch (errorMessage) {
+      this.loadingService.dismissLoadingSpinner(spinner);
+      this.toastService.presentErrorToast(errorMessage);
+    }
   }
 
   navToPasswordForgottenPage() {

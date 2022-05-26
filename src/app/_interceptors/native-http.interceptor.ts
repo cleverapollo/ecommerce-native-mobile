@@ -9,9 +9,9 @@ import {
   HttpErrorResponse
 } from "@angular/common/http";
 import { Observable, from } from "rxjs";
-import { Platform } from "@ionic/angular";
 import { HTTP, HTTPResponse } from "@ionic-native/http/ngx";
 import { LogService } from '@core/services/log.service';
+import { DefaultPlatformService } from "@core/services/platform.service";
 
 type HttpMethod =
   | "get"
@@ -46,7 +46,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
   
   constructor(
     private nativeHttp: HTTP, 
-    private platform: Platform,
+    private platform: DefaultPlatformService,
     private logger: LogService
   ) {}
 
@@ -54,7 +54,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!this.platform.is("capacitor")) {
+    if (!this.platform.isNativePlatform) {
       return next.handle(request);
     }
 
@@ -67,7 +67,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     const headers = this.createRequestHeaders(request);
 
     try {
-      await this.platform.ready();
+      await this.platform.isReady();
       const nativeHttpResponse = await this.sendRequest(request, headers);
       const response = this.createResponse(nativeHttpResponse);
       return Promise.resolve(response);

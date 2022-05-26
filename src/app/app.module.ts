@@ -45,7 +45,7 @@ registerLocaleData(localeDe, 'de', localeDeExtra)
 export function jwtOptionsFactory(authService: AuthenticationService) {
   return {
     tokenGetter: () => {
-      return authService?.getFirebaseIdToken;
+      return authService?.setupFirebaseIdToken;
     },
     whitelistedDomains: WHITELISTED_DOMAINS,
     blacklistedRoutes: [`${SERVER_URL}/auth*`]

@@ -5,6 +5,11 @@ import 'capacitor-secure-storage-plugin';
 import { LogService } from './log.service';
 import { Storage } from '@capacitor/storage';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
+import { DefaultPlatformService } from './platform.service';
+import SecureStorage from 'secure-web-storage';
+import CryptoJS from 'crypto-js'
+
+const SECRET_KEY = 'wantic_sec';
 
 export enum StorageKeys {
   USER_SETTINGS = 'userSettings',
@@ -20,8 +25,8 @@ export enum StorageKeys {
 }
 
 export interface Storage {
-  get<T>(storageKey: string, secure: boolean) : Promise<T>;
-  set(storageKey: string, value: any, secure: boolean) : Promise<void>;
+  get<T>(storageKey: string, secure: boolean): Promise<T>;
+  set(storageKey: string, value: any, secure: boolean): Promise<void>;
   remove(storageKey: string, secure: boolean): Promise<void>;
   clear(): Promise<void>;
 }
@@ -31,72 +36,183 @@ export interface Storage {
 })
 export class StorageService implements Storage {
 
-  constructor(private platform: Platform, private logger: LogService) { }
+  private secureWebStorage: SecureStorage;
 
-  async get<T>(storageKey: string, secure: boolean = false) : Promise<T> {
-    return new Promise((resolve, reject) => {
-      this.platformReady().then(() => {
-        if (secure) {  
-          SecureStoragePlugin.get({key: storageKey}).then((cachedObject: { value: string }) => {
-            if (cachedObject.value.length > 0) {
-               try {
-                 const jsonObject = JSON.parse(cachedObject.value);
-                 resolve(jsonObject);
-               } catch (error) {
-                 this.logger.error(`failed to parse object with key ${storageKey}`, error);
-                 resolve(null);
-               } 
-            } else {
-              resolve(null);
-            }
-          }, () => {
-            resolve(null);
-          });
-        } else {
-          Storage.get({ key: storageKey }).then(object => {
-            if (object?.value?.length > 0) {
-              resolve(JSON.parse(object.value));
-            } else {
-              resolve(null);
-            }
-          }, () => {
-            resolve(null);
-          })
-        }
-      }, reject);
+  constructor(
+    private platform: Platform,
+    private platformService: DefaultPlatformService,
+    private logger: LogService) { 
+      this.setupSecureWebStorage();
+  }
+
+  private setupSecureWebStorage() {
+    this.secureWebStorage = new SecureStorage(localStorage, {
+      hash: function hash(key): any {
+        key = CryptoJS.SHA256(key, SECRET_KEY);
+        return key.toString();
+      },
+      // Encrypt the localstorage data
+      encrypt: function encrypt(data) {
+        data = CryptoJS.AES.encrypt(data, SECRET_KEY);
+        data = data.toString();
+        return data;
+      },
+      // Decrypt the encrypted data
+      decrypt: function decrypt(data) {
+        data = CryptoJS.AES.decrypt(data, SECRET_KEY);
+        data = data.toString(CryptoJS.enc.Utf8);
+        return data;
+      }
     });
   }
+
+  // GET
+
+  async get<T>(storageKey: string, secure: boolean = false): Promise<T> {
+    try {
+      await this.platform.ready();
+      if (secure) {
+        return this.getSecure(storageKey);
+      } else {
+        return this.getPublic(storageKey);
+      }
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  private async getPublic<T>(storageKey: string): Promise<T> {
+    if (this.platformService.isNativePlatform) {
+      try {
+        const cachedObject = await Storage.get({ key: storageKey });
+        if (cachedObject?.value?.length > 0) {
+          return JSON.parse(cachedObject.value);
+        } else {
+          return null;
+        }
+      } catch (error) {
+        return null;
+      }
+    } else {
+      const cachedObject = localStorage.getItem(storageKey);
+      return JSON.parse(cachedObject);
+    }
+  }
+
+  private async getSecure<T>(storageKey: string): Promise<T> {
+    if (this.platformService.isNativePlatform) {
+      let cachedObject: { value: string } = null;
+      try {
+        cachedObject = await SecureStoragePlugin.get({ key: storageKey });
+      } catch (error) {
+        return Promise.resolve(null);
+      }
+  
+      if (cachedObject.value.length <= 0) {
+        return Promise.resolve(null);
+      }
+    
+      try {
+        const jsonObject = JSON.parse(cachedObject.value);
+        return Promise.resolve(jsonObject);
+      } catch (error) {
+        this.logger.error(`failed to parse object with key ${storageKey}`, error);
+        return Promise.resolve(null);
+      }
+    } else {
+      const cachedObject = this.secureWebStorage.getItem(storageKey);
+      return Promise.resolve(cachedObject);
+    }
+  }
+
+  // SET
 
   async set(storageKey: string, value: any, secure: boolean = false) {
     value = JSON.stringify(value);
-    await this.platformReady().then(() => {
+    try {
+      await this.platform.ready();
       if (secure) {
-        SecureStoragePlugin.set({key: storageKey, value: value}).then(this.logger.log, this.logger.error);
+        this.setSecure(storageKey, value);
       } else {
-        Storage.set({ key: storageKey, value: value })
+        this.setPublic(storageKey, value);
       }
-    }, this.logger.error);
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
+
+  private setSecure(storageKey: string, value: any) {
+    if (this.platformService.isNativePlatform) {
+      SecureStoragePlugin.set({ key: storageKey, value: value })
+        .then(this.logger.log, this.logger.error);
+    } else {
+      this.secureWebStorage.setItem(storageKey, value);
+    }
+  }
+
+  private setPublic(storageKey: string, value: any) {
+    if (this.platformService.isNativePlatform) {
+      Storage.set({ key: storageKey, value: value });
+    } else {
+      localStorage.setItem(storageKey, JSON.stringify(value));
+    }
+  }
+
+  // REMOVE
 
   async remove(storageKey: string, secure: boolean = false) {
-    await this.platformReady().then(() => {
-      const storage = secure ? SecureStoragePlugin : Storage;
-      storage.remove({ key: storageKey });
-    }, this.logger.error);
+    try {
+      await this.platform.ready();
+      if (secure) {
+        this.removeSecure(storageKey);
+      } else {
+        this.removePublic(storageKey);
+      }
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
+
+  private removeSecure(storageKey: string) {
+    if (this.platformService.isNativePlatform) {
+      SecureStoragePlugin.remove({ key: storageKey });
+    } else {
+      this.secureWebStorage.removeItem(storageKey);
+    }
+  }
+
+  private removePublic(storageKey: string) {
+    if (this.platformService.isNativePlatform) {
+      Storage.remove({ key: storageKey })
+    } else {
+      localStorage.removeItem(storageKey);
+    }
+  }
+
+  // CLEAR
 
   clear(): Promise<void> {
-    return new Promise<void>((resolve) => {
-      Storage.clear().finally(() => {
-        SecureStoragePlugin.clear().finally(() => {
-          resolve();
-        });
-      });
-    });
+    if (this.platformService.isNativePlatform) {
+      return this.clearAppStorage();
+    } else {
+      return this.clearWebStorage();
+    }
   }
 
-  private async platformReady() {
-    return await this.platform.ready();
+  private async clearAppStorage(): Promise<void> {
+    try {
+      await Storage.clear();
+      await SecureStoragePlugin.clear();
+      return Promise.resolve();
+    } catch (error) {
+      
+    }
+  } 
+
+  private clearWebStorage(): Promise<void> {
+    localStorage.clear();
+    this.secureWebStorage.clear();
+    return Promise.resolve();
   }
 
 }

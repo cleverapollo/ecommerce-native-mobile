@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, pipe } from 'rxjs';
-import { Platform } from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 import { StorageService, StorageKeys } from './storage.service';
 import { CacheService } from 'ionic-cache';
 import { HTTP } from '@ionic-native/http/ngx';
 import { LogService } from './log.service';
-import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { AuthService } from '@core/api/auth.service';
 import { SignInResponse, SignupRequest } from '@core/models/signup.model';
 import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
@@ -16,6 +14,10 @@ import { environment, SERVER_URL } from '@env/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { Device } from '@capacitor/device';
+import { DefaultPlatformService } from './platform.service';
+import { CustomError } from '@core/error';
+import firebase from 'firebase/app';
+import { FirebaseService } from './firebase.service';
 
 export interface AppAuthenticationService {
   signup(signupRequest: SignupRequest): Promise<void>;
@@ -25,7 +27,7 @@ export interface AppAuthenticationService {
   appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}>;
   wanticSignIn(): Promise<SignInResponse>;
   logout(): Promise<void>;
-  getFirebaseIdToken(forceRefresh: boolean): Promise<string>;
+  setupFirebaseIdToken(forceRefresh: boolean): Promise<string>;
   sendVerificationMail(): Promise<any>;
   resetPassword(email: string): Promise<void>;
   updateEmailVerificationStatus(emailVerified: boolean): void;
@@ -44,59 +46,50 @@ export class AuthenticationService implements AppAuthenticationService {
 
   constructor(
     private storageService: StorageService, 
-    private platform: Platform,
+    private platformService: DefaultPlatformService,
     private cache: CacheService,
     private nativeHttpClient: HTTP,
     private logger: LogService,
-    private firebaseAuthentication: FirebaseAuthentication,
     private authApiService: AuthService,
     private facebook: Facebook,
     private googlePlus: GooglePlus,
     private signInWithApple: SignInWithApple,
+    private firebaseService: FirebaseService
   ) { 
-    if (this.platform.is('capacitor')) {
-      this.configFirebaseAuthentication();
-      this.getFirebaseIdToken(false);
-      this.loadUserData();
-    } else {
-      this.isAuthenticated.next(false);
-    }
+  
+    this.firebaseService.setLanguageCode('de-DE');
+    this.setupFirebaseIdToken(false);
+    this.setupOnAuthStateChangedListener();
   }
 
-  private configFirebaseAuthentication() {
-    this.firebaseAuthentication.setLanguageCode('de-DE');
-  }
-
-  private loadUserData() {
-    this.firebaseAuthentication.onAuthStateChanged().subscribe(userInfo => {
-      this.logger.info('user info', userInfo);
-      if (userInfo) {
-        this.storageService.set(StorageKeys.FIREBASE_USER_INFO, userInfo, true);
-        this.userInfo.next(userInfo);
-        this.storageService.get<boolean>(StorageKeys.FIREBASE_EMAIL_VERIFIED, true).then(isEmailVerified => {
-          if (isEmailVerified !== null) {
-            this.isEmailVerified.next(isEmailVerified);
-          } else {
-            this.isEmailVerified.next(userInfo.emailVerified);
-          }
-        }, error => {
-          this.logger.error(error);
-          this.isEmailVerified.next(userInfo.emailVerified);
-        })
-      } else {
-        this.userInfo.next(null);
-        this.storageService.set(StorageKeys.FIREBASE_USER_INFO, null, true);
+  private async setupOnAuthStateChangedListener() {
+    this.firebaseService.onAuthStateChanged().subscribe(user => {
+      if (user) {
+        this.updateEmailVerificationState(user);
       }
+      this.storageService.set(StorageKeys.FIREBASE_USER_INFO, user, true);
+      this.userInfo.next(user);
     })
+  }
+
+  private async updateEmailVerificationState(user: firebase.User | any) {
+    try {
+      const isEmailVerified = await this.storageService.get<boolean>(StorageKeys.FIREBASE_EMAIL_VERIFIED, true);
+      const nextValue = isEmailVerified !== null ? isEmailVerified : user.emailVerified
+      this.isEmailVerified.next(nextValue);
+    } catch (error) {
+      this.logger.error(error);
+      this.isEmailVerified.next(user.emailVerified);
+    }
   }
 
   async logout(): Promise<void> {
     try {
       await this.storageService.clear();
       await this.cache.clearAll();
-      this.removeAuthorizationHeaderForNativeHttpClient();
+      await this.firebaseService.signOut();
+      this.updateAuthorizationHeaderForNativeHttpClient(null);
       this.isAuthenticated.next(false);
-      await this.firebaseAuthentication.signOut();
       return Promise.resolve();
     } catch (error) {
       this.logger.error(error);
@@ -104,16 +97,10 @@ export class AuthenticationService implements AppAuthenticationService {
     }
   }
 
-  private updateAuthorizationHeaderForNativeHttpClient(token: string) {
-    if (this.platform.is('capacitor') && token) {
-      this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', `Bearer ${token}`);
-    }
-  }
-
-  private removeAuthorizationHeaderForNativeHttpClient() {
-    if (this.platform.is('capacitor')) {
-      this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', null);
-    }
+  private updateAuthorizationHeaderForNativeHttpClient(token: string | null) {
+    if (!this.platformService.isNativePlatform) { return }
+    const value = token ? `Bearer ${token}` : null;
+    this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', value);
   }
 
   async signup(signupRequest: SignupRequest) {
@@ -134,8 +121,8 @@ export class AuthenticationService implements AppAuthenticationService {
       const signInResponse = await this.authApiService.signInWithEmailAndPassword(signInRequest).toPromise();
 
       // firebase sign in
-      await this.firebaseAuthentication.signInWithEmailAndPassword(email, password);
-      await this.getFirebaseIdToken(true);
+      await this.firebaseService.signInWithEmailAndPassword(email, password);
+      await this.setupFirebaseIdToken(true);
       await this.storageService.set(StorageKeys.CREDENTIALS, { email: email, password: password }, true);
 
       return Promise.resolve(signInResponse);
@@ -178,7 +165,7 @@ export class AuthenticationService implements AppAuthenticationService {
       if (facebookLoginResponse.status === 'connected') {
         if (accessToken) {
           // firebase sign in
-          await this.firebaseAuthentication.signInWithFacebook(accessToken);
+          await this.firebaseService.signInWithFacebook(accessToken);
 
           // wantic sign in 
           const wanticSignInResponse = await this.wanticSignIn();
@@ -214,7 +201,7 @@ export class AuthenticationService implements AppAuthenticationService {
 
       // firebase sign in
       if (idToken && accessToken) {
-        await this.firebaseAuthentication.signInWithGoogle(idToken, accessToken);
+        await this.firebaseService.signInWithGoogle(idToken, accessToken);
       } else {
         const error = 'idToken or accessToken missing ';
         this.logger.error(error, idToken, accessToken);
@@ -258,7 +245,7 @@ export class AuthenticationService implements AppAuthenticationService {
       });
 
       // firebase sign in
-      await this.firebaseAuthentication.signInWithApple(appleSignInResponse.identityToken);
+      await this.firebaseService.signInWithApple(appleSignInResponse.identityToken);
 
       // wantic sign in
       const wanticSignInResponse = await this.wanticSignIn();
@@ -286,14 +273,14 @@ export class AuthenticationService implements AppAuthenticationService {
         return Promise.reject(error);
       }
     }
-    const error = 'email or uid missing ';
-    this.logger.error(error, userInfo);
+    const error = new CustomError(CustomError.Type.SignInError, 'email or uid missing ');
+    this.logger.error(error.message, userInfo);
     return Promise.reject(error);
   }
 
-  async getFirebaseIdToken(forceRefresh: boolean = false): Promise<string> {
+  async setupFirebaseIdToken(forceRefresh: boolean = false): Promise<string> {
     try {
-      const idToken = await this.firebaseAuthentication.getIdToken(forceRefresh);
+      let idToken: string = await this.firebaseService.getIdToken(forceRefresh);
       await this.updateToken(idToken);
       return Promise.resolve(idToken);
     } catch (error) {
@@ -325,13 +312,13 @@ export class AuthenticationService implements AppAuthenticationService {
   }
 
   sendVerificationMail(): Promise<any> {
-    return this.firebaseAuthentication.sendEmailVerification();
+    return this.firebaseService.sendEmailVerification();
   }
 
   resetPassword(email: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.authApiService.resetPassword(email).toPromise().then(() => {
-        this.firebaseAuthentication.sendPasswordResetEmail(email).then(resolve, reject);
+        this.firebaseService.sendPasswordResetEmail(email).then(resolve, reject);
       }, reject)
     })
   }
@@ -366,14 +353,4 @@ export class AuthenticationService implements AppAuthenticationService {
     }
   }
 
-}
-
-enum FirebaseAuthErrorCode {
-  emailAlreadyInUse = 'auth/email-already-in-use',
-  invalidEmail = 'auth/invalid-email',
-  operationNotAllowed = 'auth/operation-not-allowed',
-  weakPassword = 'auth/weak-password',
-  userDisabled = 'auth/user-disabled',
-  userNotFound = 'auth/user-not-found',
-  wrongPassword = 'auth/wrong-password'
 }
