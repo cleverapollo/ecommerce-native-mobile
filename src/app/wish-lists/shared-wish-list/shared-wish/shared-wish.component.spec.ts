@@ -77,7 +77,7 @@ describe('SharedWishComponent', () => {
     storageService.getResult = true;
     
     fixture.detectChanges();
-    tick();
+    tick(3000);
 
     expect(component.isCancellable).toBeTruthy();
     expect(component.isReservable).toBeFalsy();
