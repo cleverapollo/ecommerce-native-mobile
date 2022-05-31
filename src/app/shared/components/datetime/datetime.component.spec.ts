@@ -1,18 +1,18 @@
-import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { IonDatetime, IonicModule, IonInput, IonModal } from '@ionic/angular';
-
+import { IonicModule, IonInput } from '@ionic/angular';
 import { DatetimeComponent } from './datetime.component';
 
 describe('DatetimeComponent', () => {
   let component: DatetimeComponent;
   let fixture: ComponentFixture<DatetimeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DatetimeComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      declarations: [ 
+        DatetimeComponent 
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DatetimeComponent);
@@ -27,6 +27,25 @@ describe('DatetimeComponent', () => {
     expect(component.label).toBeUndefined();
     expect(component.placeholder).toBeUndefined();
   });
+
+  describe('value', () => {
+
+    it('is the selected date', () => {
+      component.selectedDate = '2022-04-13T17:28:16+0000'
+      fixture.detectChanges();
+      expect(component.value).toEqual(component.selectedDate)
+    })
+
+    it('is the initial date', () => {
+      component.initialDate = '2022-04-13T17:28:16+0000'
+      fixture.detectChanges();
+      expect(component.value).toEqual(component.initialDate)
+    })
+
+    it('is the current date', () => {
+      expect(component.value).toEqual(new Date().toISOString())
+    })
+  })
 
   describe('label', () => {
 
@@ -56,7 +75,22 @@ describe('DatetimeComponent', () => {
     })
   })
 
+  describe('max date', () => {
+
+    it('returns min date + 10 years', () => {
+
+      component.minDate = '2022-05-31T17:48:41.568Z'
+      fixture.detectChanges();
+
+      expect(component.maxDate).toEqual('2032-05-31T17:48:41.568Z')
+    })
+  })
+
   describe('onDateChanged', () => {
+
+    beforeEach(() => {
+      component.datetime = jasmine.createSpyObj('datetime', ['confirm'])
+    })
    
     it('updates the selected date and the formatted date', () => {
       const spy = spyOn(component, 'propagateChange');
@@ -65,6 +99,7 @@ describe('DatetimeComponent', () => {
       expect(component.selectedDate).toEqual('2022-04-13T17:28:16+0000');
       expect(component.formattedDate).toEqual('13.04.2022');
       expect(spy).toHaveBeenCalled();
+      expect(component.datetime.confirm).toHaveBeenCalledWith(true)
     });
 
     it('resets selected and formatted date if new value is undefined', () => {
@@ -75,6 +110,7 @@ describe('DatetimeComponent', () => {
       expect(component.selectedDate).toBeUndefined();
       expect(component.formattedDate).toBeUndefined();
       expect(spy).toHaveBeenCalled();
+      expect(component.datetime.confirm).toHaveBeenCalledWith(true)
     });
 
     it('resets selected and formatted date if new value is null', () => {
@@ -85,6 +121,7 @@ describe('DatetimeComponent', () => {
       expect(component.selectedDate).toBeNull();
       expect(component.formattedDate).toBeNull();
       expect(spy).toHaveBeenCalled();
+      expect(component.datetime.confirm).toHaveBeenCalledWith(true)
     });
 
   }); 

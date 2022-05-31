@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonDatetime } from '@ionic/angular';
-import { format, parseISO } from 'date-fns';
+import { addYears, format, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-datetime',
@@ -32,6 +32,16 @@ export class DatetimeComponent implements OnInit, ControlValueAccessor {
 
   formattedDate: string | null | undefined;
 
+  get value(): null | string {
+    return this.selectedDate ?? this.initialDate ?? new Date().toISOString();
+  }
+
+  get maxDate(): string {
+    const min = new Date(this.minDate) ?? new Date();
+    const max = addYears(min, 10);
+    return max.toISOString();
+  }
+
   // ISO 8601 datetime string
   get selectedDate(): null | string | undefined {
     return this._selectedDate;
@@ -56,16 +66,7 @@ export class DatetimeComponent implements OnInit, ControlValueAccessor {
 
   onDateChanged(isoDateString: string) {
     this.selectedDate = isoDateString;
-  }
-
-  confirm() {
     this.datetime.confirm(true);
-  }
-
-  reset() {
-    this.selectedDate = null;
-    this.datetime.reset();
-    this.datetime.cancel(true);
   }
 
   // ControlValueAccessor
