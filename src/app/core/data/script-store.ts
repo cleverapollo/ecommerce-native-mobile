@@ -11,5 +11,5 @@ export interface Script {
 
 export const ScriptStore: Script[] = [
   { name: ScriptName.HOTJAR, src: `${ASSETS_PATH}/scripts/hotjar.js`},
-  { name: ScriptName.GTM, src: `${ASSETS_PATH}/scripts/gtm.js'`}
+  { name: ScriptName.GTM, src: `${ASSETS_PATH}/scripts/gtm.js`}
 ];
