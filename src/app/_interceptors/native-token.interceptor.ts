@@ -32,7 +32,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         const isConfirmPasswordReset = request.url.includes('/confirm-password-reset');
         const isGoogleApiRequest = request.url.startsWith('https://identitytoolkit.googleapis.com');
 
-        if (this.platform.isNativePlatform) {
+        if (!this.platform.isNativePlatform) {
             return next.handle(request);
         }
         if (isLoginRequest || isGoogleApiRequest || isConfirmPasswordReset || isSignupRequest) {
