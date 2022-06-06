@@ -10,7 +10,6 @@ import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { SERVER_URL } from '@env/environment';
-import { DefaultPlatformService } from '@core/services/platform.service';
 
 @Injectable()
 export class NativeTokenInterceptor implements HttpInterceptor {
@@ -21,7 +20,6 @@ export class NativeTokenInterceptor implements HttpInterceptor {
     private tokenRefreshed$ = this.tokenRefreshedSource.asObservable();
 
     constructor(
-        private platform: DefaultPlatformService, 
         private router: Router,
         private authService: AuthenticationService
     ) { }
@@ -31,10 +29,6 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         const isSignupRequest = request.url.includes('/signup');
         const isConfirmPasswordReset = request.url.includes('/confirm-password-reset');
         const isGoogleApiRequest = request.url.startsWith('https://identitytoolkit.googleapis.com');
-
-        if (!this.platform.isNativePlatform) {
-            return next.handle(request);
-        }
         if (isLoginRequest || isGoogleApiRequest || isConfirmPasswordReset || isSignupRequest) {
             return next.handle(request);
         }
