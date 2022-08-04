@@ -15,7 +15,7 @@ export class UserInitialsComponent implements OnInit {
 
   ngOnInit() {}
 
-  get initials(): String {
+  get initials(): string {
     let initials = this.firstName?.charAt(0);
     if (this.lastName) {
       initials += `${this.lastName.charAt(0)}`;

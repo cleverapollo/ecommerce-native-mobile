@@ -3,8 +3,8 @@ import { PriceDto } from '@core/models/wish-list.model';
 
 export class FriendWishList {
     id: string;
-    name: String;
-    date: String;
+    name: string;
+    date: string;
     wishes: Array<FriendWish> = [];
     owners: Array<UserDto> = [];
 }
@@ -17,7 +17,7 @@ export class FriendWish {
     note?: string;
     price: PriceDto;
     productUrl: string;
-    imageUrl: String;
+    imageUrl: string;
     reservedByFriend: boolean;
     bought: boolean;
     isFavorite: boolean;

@@ -108,13 +108,15 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
     this.subscription?.unsubscribe();
   }
 
-  writeValue(selectedOption: WishListSelectOptionDto | String): void {
-    if (selectedOption !== undefined) {
-      if (selectedOption instanceof WishListSelectOptionDto) {
-        this.wishListId = selectedOption.id;
-      } else if (selectedOption instanceof String || typeof selectedOption === 'string') {
-        this.wishListId = String(selectedOption);
-      }
+  writeValue(selectedOption: WishListSelectOptionDto | string): void {
+    if (!selectedOption) {
+      return;
+    }
+
+    if (selectedOption instanceof WishListSelectOptionDto) {
+      this.wishListId = selectedOption.id;
+    } else if (typeof selectedOption === 'string') {
+      this.wishListId = selectedOption;
     }
   }
   registerOnChange(fn: any): void {

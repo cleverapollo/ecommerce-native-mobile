@@ -31,7 +31,7 @@ export class WishShopInfoComponent implements OnInit {
     return cssClass;
   }
 
-  get shopLogoUrl(): String {
+  get shopLogoUrl(): string | null {
     return null;
   }
 

@@ -23,7 +23,7 @@ export class WishListCreateUpdatePage implements OnInit {
 
   form: FormGroup;
   /** ISO Date string */
-  minDate: String;
+  minDate: string;
 
   get title(): string {
     return  this.isUpdatePage ? 'Wunschliste bearbeiten' : 'Neue Wunschliste hinzufügen';

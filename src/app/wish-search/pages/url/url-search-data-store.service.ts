@@ -3,7 +3,7 @@ import { SearchResultItem } from '@core/models/search-result-item';
 import { PriceDto } from '@core/models/wish-list.model';
 
 export class URLSearchFormData {
-  imageUrl: String;
+  imageUrl: string;
   name: string;
   price: PriceDto;
   wishListId: string;

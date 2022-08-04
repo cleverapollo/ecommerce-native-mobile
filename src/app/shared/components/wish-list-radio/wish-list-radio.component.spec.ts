@@ -123,7 +123,7 @@ describe('WishListRadioComponent', () => {
     })
 
     it('should change wish list id if input is string', () => {
-      const uuid: String = 'c8d4b4dd-1a61-4edc-bfea-8556b4896aa2';
+      const uuid: string = 'c8d4b4dd-1a61-4edc-bfea-8556b4896aa2';
       component.writeValue(uuid);
       expect(component.wishListId).toBe('c8d4b4dd-1a61-4edc-bfea-8556b4896aa2');
     });

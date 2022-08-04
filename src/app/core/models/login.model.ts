@@ -12,9 +12,9 @@ export interface WanticJwtToken {
 }
 
 export interface UpdatePasswordRequest {
-    currentPassword: String;
-    newPassword: String;
-    newPasswordConfirmed: String;
+    currentPassword: string;
+    newPassword: string;
+    newPasswordConfirmed: string;
 }
 
 export interface ChangePasswordRequest {

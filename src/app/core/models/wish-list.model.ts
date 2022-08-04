@@ -20,14 +20,14 @@ export class WishDto {
     note?: string;
     price: PriceDto;
     productUrl: string;
-    imageUrl: String;
+    imageUrl: string;
     isReserved?: boolean;
     isFavorite = false;
 }
 
 export class WishListSelectOptionDto {
     id: string;
-    name: String;
+    name: string;
 
     constructor(id: string, name: string) {
         this.id = id;

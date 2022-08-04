@@ -9,10 +9,10 @@ export class SearchResultItem {
     asin: string;
     name: string;
     price: PriceDto;
-    imageUrl: String;
+    imageUrl: string;
     productUrl: string;
 
-    constructor(asin: string, name: string, imageUrl: String, productUrl: string, price: PriceDto | number, id?: number) {
+    constructor(asin: string, name: string, imageUrl: string, productUrl: string, price: PriceDto | number, id?: number) {
         this.asin = asin;
         this.name = name;
         this.imageUrl = imageUrl;

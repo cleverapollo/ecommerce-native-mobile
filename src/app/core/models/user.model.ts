@@ -2,8 +2,8 @@ import { AbstractControl } from '@angular/forms';
 import { AuthProvider } from './signup.model';
 
 export class UserProfile {
-    firstName: String;
-    lastName: String;
+    firstName: string;
+    lastName: string;
     birthday: Date;
     email: EmailDto;
     authProvider: AuthProvider;
@@ -25,8 +25,8 @@ export enum InvitationStatus {
 }
 
 export class UserDto {
-    firstName: String;
-    lastName: String;
+    firstName: string;
+    lastName: string;
     emailVerificationStatus: EmailVerificationStatus;
 }
 
@@ -39,9 +39,9 @@ export class UserWishListDto {
 }
 
 export class UserSearchResult {
-    public firstName: String;
-    public email: String;
-    public imageUrl: String = null;
+    public firstName: string;
+    public email: string;
+    public imageUrl: string = null;
     public userExists: boolean;
 }
 

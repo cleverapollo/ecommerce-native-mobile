@@ -37,7 +37,7 @@ export class AuthService {
     return this.apiService.post<SignInResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/signin-email-password`, signInRequest);
   }
 
-  resetPassword(email: String): Observable<void> {
+  resetPassword(email: string): Observable<void> {
     return this.apiService.post<void>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/reset-password`, {
       email
     });
