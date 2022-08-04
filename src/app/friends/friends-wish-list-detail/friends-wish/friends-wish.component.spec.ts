@@ -63,7 +63,7 @@ describe('FriendsWishComponent', () => {
 
     it('should reserve a wish', fakeAsync(() => {
       const expectedWish = WishListTestDataUtils.fakeReserveStateChange(wishKindle, false);
-      const outputSpy = spyOn(component.onWishPurchased, 'emit');
+      const outputSpy = spyOn(component.wishPurchase, 'emit');
 
       wishApiService.reserveWishResponse = of(expectedWish);
       component.reserve();

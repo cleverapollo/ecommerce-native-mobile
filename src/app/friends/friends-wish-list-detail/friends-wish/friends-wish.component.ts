@@ -16,7 +16,7 @@ import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.se
 export class FriendsWishComponent implements OnInit {
 
   @Input() wish: FriendWish;
-  @Output() onWishPurchased: EventEmitter<FriendWish> = new EventEmitter<FriendWish>();
+  @Output() wishPurchase: EventEmitter<FriendWish> = new EventEmitter<FriendWish>();
 
   get isDebugInfoVisible(): boolean {
     return environment.backendType === BackendConfigType.beta ||
@@ -52,7 +52,7 @@ export class FriendsWishComponent implements OnInit {
   reserve() {
     this.wishApiService.reserveWish(this.wish.id).subscribe((response: FriendWish) => {
       this.wish = response;
-      this.onWishPurchased.emit(response);
+      this.wishPurchase.emit(response);
     });
   }
 
