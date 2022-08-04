@@ -1,25 +1,25 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SearchQuery, SearchResultDataService, SearchType } from '@core/services/search-result-data.service';
-import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WishDto, WishListDto } from '@core/models/wish-list.model';
-import { IonInfiniteScroll, Platform } from '@ionic/angular';
-import { LogService } from '@core/services/log.service';
-import { SearchService } from '@core/api/search.service';
-import { PagingService } from '@core/services/paging.service';
-import { first } from 'rxjs/operators';
 import { Keyboard } from '@capacitor/keyboard';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { CustomValidation } from '@shared/custom-validation';
+import { SearchService } from '@core/api/search.service';
+import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
+import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { LogService } from '@core/services/log.service';
+import { PagingService } from '@core/services/paging.service';
+import { SearchQuery, SearchResultDataService, SearchType } from '@core/services/search-result-data.service';
+import { IonInfiniteScroll, Platform } from '@ionic/angular';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
+import { CustomValidation } from '@shared/custom-validation';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-amazon-search-results',
   templateUrl: './amazon-search-results.page.html',
   styleUrls: ['./amazon-search-results.page.scss'],
 })
-export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit {
+export class AmazonSearchResultsPage implements OnInit, AfterViewInit {
 
   private _results: SearchResultItem[] = [];
 
@@ -85,8 +85,6 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
     private pagingService: PagingService,
     private analyticsService: AnalyticsService
   ) { }
-
-  ngOnDestroy(): void {}
 
   ngOnInit() {
     this.analyticsService.setFirebaseScreenName('search');

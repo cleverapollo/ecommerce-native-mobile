@@ -1,4 +1,4 @@
-import { Component, ContentChild, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, ContentChild, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 
@@ -14,7 +14,7 @@ import { IonInput } from '@ionic/angular';
     }
   ]
 })
-export class ShowHidePasswordComponent implements OnInit, ControlValueAccessor {
+export class ShowHidePasswordComponent implements ControlValueAccessor {
 
   @ContentChild(IonInput) input: IonInput;
 
@@ -35,8 +35,6 @@ export class ShowHidePasswordComponent implements OnInit, ControlValueAccessor {
   onTouched: any = (_: any) => { };
 
   constructor() { }
-
-  ngOnInit() {}
 
   toggleShow() {
     this.showPassword = !this.showPassword;

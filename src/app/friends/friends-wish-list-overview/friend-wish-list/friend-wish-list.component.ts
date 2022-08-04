@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FriendWishList } from '../friends-wish-list-overview.model';
 
 @Component({
@@ -7,7 +7,7 @@ import { FriendWishList } from '../friends-wish-list-overview.model';
   templateUrl: './friend-wish-list.component.html',
   styleUrls: ['./friend-wish-list.component.scss'],
 })
-export class FriendWishListComponent implements OnInit {
+export class FriendWishListComponent {
 
   @Input() wishList: FriendWishList;
 
@@ -20,8 +20,5 @@ export class FriendWishListComponent implements OnInit {
   }
 
   constructor(private datePipe: DatePipe) { }
-
-  ngOnInit() {}
-
 
 }

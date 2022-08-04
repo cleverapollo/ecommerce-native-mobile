@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserApiService } from '@core/api/user-api.service';
 import { LogService } from '@core/services/log.service';
+import { DefaultPlatformService } from '@core/services/platform.service';
+import { ASSETS_IMAGES_PATH } from '@core/ui.constants';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { DefaultPlatformService } from '@core/services/platform.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ASSETS_IMAGES_PATH } from '@core/ui.constants';
+import { first } from 'rxjs/operators';
 
 class WanticSlideItem {
   imgSrc: string;
@@ -20,7 +20,7 @@ class WanticSlideItem {
   templateUrl: './share-extension-explanation.component.html',
   styleUrls: ['./share-extension-explanation.component.scss'],
 })
-export class ShareExtensionExplanationComponent implements OnInit {
+export class ShareExtensionExplanationComponent {
 
   @ViewChild(IonSlides) slides: IonSlides;
 
@@ -99,8 +99,6 @@ export class ShareExtensionExplanationComponent implements OnInit {
       },
     ]
   }
-
-  ngOnInit() {}
 
   slideNext() {
     this.showBackButton = true;

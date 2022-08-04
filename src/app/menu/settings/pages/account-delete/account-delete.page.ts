@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserApiService } from '@core/api/user-api.service';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './account-delete.page.html',
   styleUrls: ['./account-delete.page.scss'],
 })
-export class AccountDeletePage implements OnInit {
+export class AccountDeletePage {
 
   mailToString = 'mailto:support@wantic.io?subject=Wantic%20-%20Account%20l%C3%B6schen'
 
@@ -35,8 +35,6 @@ export class AccountDeletePage implements OnInit {
     private logger: LogService,
     private analyticsService: AnalyticsService
   ) { }
-
-  ngOnInit() {}
 
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('profile_settings-delete_account');

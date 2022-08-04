@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonDatetime } from '@ionic/angular';
 import { addYears, format, parseISO } from 'date-fns';
@@ -15,7 +15,7 @@ import { addYears, format, parseISO } from 'date-fns';
     }
   ]
 })
-export class DatetimeComponent implements OnInit, ControlValueAccessor {
+export class DatetimeComponent implements ControlValueAccessor {
 
   @ViewChild(IonDatetime) datetime: IonDatetime;
 
@@ -59,8 +59,6 @@ export class DatetimeComponent implements OnInit, ControlValueAccessor {
   private _selectedDate: string;
 
   constructor() { }
-
-  ngOnInit() { }
 
   // ion-datetime
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UrlTree } from '@angular/router';
 import { NavigationService } from '@core/services/navigation.service';
 
@@ -7,7 +7,7 @@ import { NavigationService } from '@core/services/navigation.service';
   templateUrl: './nav-toolbar.component.html',
   styleUrls: ['./nav-toolbar.component.scss'],
 })
-export class NavToolbarComponent implements OnInit {
+export class NavToolbarComponent {
 
   @Input() skipToPath?: string | any[] | UrlTree;
   @Input() backNavigationPath?: string | any[] | UrlTree;
@@ -25,8 +25,6 @@ export class NavToolbarComponent implements OnInit {
   }
 
   constructor(private navigationService: NavigationService) { }
-
-  ngOnInit() { }
 
   goBack() {
     this.navigationService.back(this.backNavigationPath);

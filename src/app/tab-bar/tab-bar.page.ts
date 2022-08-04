@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { IonTabs, NavController } from '@ionic/angular';
 
@@ -7,7 +7,7 @@ import { IonTabs, NavController } from '@ionic/angular';
   templateUrl: './tab-bar.page.html',
   styleUrls: ['./tab-bar.page.scss'],
 })
-export class TabBarPage implements OnInit, OnDestroy {
+export class TabBarPage {
 
   @ViewChild(IonTabs)
   public tabs: IonTabs;
@@ -16,10 +16,6 @@ export class TabBarPage implements OnInit, OnDestroy {
     private navController: NavController,
     private searchResultDataService: SearchResultDataService
   ) { }
-
-  ngOnInit() {}
-
-  ngOnDestroy() {}
 
   onTabButtonClicked() {
     const selectedTab = this.tabs.getSelected();

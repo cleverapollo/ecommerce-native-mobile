@@ -1,19 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-initials',
   templateUrl: './user-initials.component.html',
   styleUrls: ['./user-initials.component.scss'],
 })
-export class UserInitialsComponent implements OnInit {
+export class UserInitialsComponent {
 
   @Input() firstName = '';
-
   @Input() lastName = '';
 
   constructor() { }
-
-  ngOnInit() {}
 
   get initials(): string {
     let initials = this.firstName?.charAt(0);

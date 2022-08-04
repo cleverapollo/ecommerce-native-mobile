@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { WishDto } from '@core/models/wish-list.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { WishDto } from '@core/models/wish-list.model';
   templateUrl: './wish.component.html',
   styleUrls: ['./wish.component.scss'],
 })
-export class WishComponent implements OnInit {
+export class WishComponent {
 
   @Input() wish: WishDto;
   @Input() showReservedWishes: boolean;
@@ -16,7 +16,5 @@ export class WishComponent implements OnInit {
   }
 
   constructor() { }
-
-  ngOnInit() {}
 
 }

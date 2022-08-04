@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { WishDto } from '@core/models/wish-list.model';
 import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 
@@ -14,7 +14,7 @@ export interface WishShopInfoComponentStyles {
   templateUrl: './wish-shop-info.component.html',
   styleUrls: ['./wish-shop-info.component.scss'],
 })
-export class WishShopInfoComponent implements OnInit {
+export class WishShopInfoComponent {
 
   @Input() wish: WishDto | FriendWish;
   @Input() styles: WishShopInfoComponentStyles = this.defaultStyles;
@@ -56,7 +56,5 @@ export class WishShopInfoComponent implements OnInit {
   }
 
   constructor() { }
-
-  ngOnInit() {}
 
 }

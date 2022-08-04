@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { WishDto, WishListDto } from '@core/models/wish-list.model';
+import { Component, Input } from '@angular/core';
+import { WishListDto } from '@core/models/wish-list.model';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 
 @Component({
@@ -7,14 +7,12 @@ import { WishImageComponentStyles } from '@shared/components/wish-image/wish-ima
   templateUrl: './wish-list.component.html',
   styleUrls: ['./wish-list.component.scss'],
 })
-export class WishListComponent implements OnInit {
+export class WishListComponent {
 
   @Input() wishList: WishListDto
   @Input() index: number;
 
   constructor() {}
-
-  ngOnInit() {}
 
   get side(): string {
     if (this.index % 2 === 0) {

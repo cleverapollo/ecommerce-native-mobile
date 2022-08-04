@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AnalyticsService } from '@core/services/analytics.service';
-import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
-import { LogService } from '@core/services/log.service';
-import { SplashScreen } from '@capacitor/splash-screen'
-import { AuthenticationService } from '@core/services/authentication.service';
-import { AuthProvider, SignInResponse, SignupRequestSocialLogin } from '@core/models/signup.model';
-import { UserApiService } from '@core/api/user-api.service';
-import { first } from 'rxjs/operators';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { AuthService } from '@core/api/auth.service';
-import { UserService } from '@core/services/user.service';
-import { LoadingService } from '@core/services/loading.service';
+import { UserApiService } from '@core/api/user-api.service';
+import { AuthProvider, SignInResponse, SignupRequestSocialLogin } from '@core/models/signup.model';
 import { UserProfile } from '@core/models/user.model';
-import { CoreToastService } from '@core/services/toast.service';
+import { AnalyticsService } from '@core/services/analytics.service';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { LoadingService } from '@core/services/loading.service';
+import { LogService } from '@core/services/log.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
+import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
+import { CoreToastService } from '@core/services/toast.service';
+import { UserService } from '@core/services/user.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-start',
   templateUrl: './start.page.html',
   styleUrls: ['./start.page.scss'],
 })
-export class StartPage implements OnInit {
+export class StartPage {
 
   get showAppleSignIn(): boolean {
     return this.platformService.isIOS;
@@ -45,8 +45,6 @@ export class StartPage implements OnInit {
     private platformService: DefaultPlatformService,
     public privacyPolicyService: PrivacyPolicyService
   ) { }
-
-  ngOnInit() {}
 
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('logon');

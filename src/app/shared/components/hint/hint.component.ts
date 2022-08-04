@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 export type HintType = 'default' | 'success' | 'danger' | 'info';
 export class HintConfig {
@@ -16,13 +16,11 @@ export class HintConfig {
   templateUrl: './hint.component.html',
   styleUrls: ['./hint.component.scss'],
 })
-export class HintComponent implements OnInit {
+export class HintComponent {
 
   @Input() config: HintConfig
 
   constructor() { }
-
-  ngOnInit() {}
 
 }
 

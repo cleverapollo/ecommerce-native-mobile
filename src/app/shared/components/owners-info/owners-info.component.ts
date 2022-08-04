@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserDto } from '@core/models/user.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { UserDto } from '@core/models/user.model';
   templateUrl: './owners-info.component.html',
   styleUrls: ['./owners-info.component.scss'],
 })
-export class OwnersInfoComponent implements OnInit {
+export class OwnersInfoComponent {
 
   @Input() owners: Array<UserDto> = new Array<UserDto>();
   @Input() showOnlyInitials = false;
@@ -24,7 +24,5 @@ export class OwnersInfoComponent implements OnInit {
   }
 
   constructor() { }
-
-  ngOnInit() {}
 
 }

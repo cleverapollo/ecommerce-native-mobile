@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchResultItem } from '@core/models/search-result-item';
 import { BrowserService } from '@core/services/browser.service';
 
@@ -7,14 +7,12 @@ import { BrowserService } from '@core/services/browser.service';
   templateUrl: './search-result.component.html',
   styleUrls: ['./search-result.component.scss'],
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultComponent {
 
   @Input() wish: SearchResultItem
   @Output() selectWish = new EventEmitter<SearchResultItem>();
 
   constructor(private browserService: BrowserService) { }
-
-  ngOnInit() {}
 
   addWish() {
     this.selectWish.emit(this.wish);

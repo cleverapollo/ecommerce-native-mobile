@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnalyticsService } from '@core/services/analytics.service';
 
@@ -7,11 +7,9 @@ import { AnalyticsService } from '@core/services/analytics.service';
   templateUrl: './signup-completed.page.html',
   styleUrls: ['./signup-completed.page.scss'],
 })
-export class SignupCompletedPage implements OnInit {
+export class SignupCompletedPage {
 
   constructor(private router: Router, private analyticsService: AnalyticsService) { }
-
-  ngOnInit() {}
 
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('signup-complete');
