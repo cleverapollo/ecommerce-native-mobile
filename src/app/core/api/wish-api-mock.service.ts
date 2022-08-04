@@ -6,7 +6,7 @@ export class WishApiMockService implements WishApi {
 
     createWishResponse: Observable<WishDto> = null;
     getWishByIdResponse: Observable<WishDto> = null;
-    reserveWishResponse: Observable<Object> = null;
+    reserveWishResponse: Observable<object> = null;
     updateResponse: Observable<WishDto> = null;
 
     createWish(wish: WishDto): Observable<WishDto> {
@@ -15,7 +15,7 @@ export class WishApiMockService implements WishApi {
     getWishById(wishId: string): Observable<WishDto> {
         return this.getWishByIdResponse;
     }
-    reserveWish(wishId: string): Observable<Object> {
+    reserveWish(wishId: string): Observable<object> {
         return this.reserveWishResponse;
     }
     update(updatedWish: WishDto): Observable<WishDto> {

@@ -95,13 +95,13 @@ export class UserApiService {
     );
   }
 
-  updatePassword(updatePasswordRequest: UpdatePasswordRequest): Observable<Object> {
+  updatePassword(updatePasswordRequest: UpdatePasswordRequest): Observable<any> {
     return this.apiService.put(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/update-password`, updatePasswordRequest).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
-  changePassword(changewPasswordRequest: ChangePasswordRequest): Observable<Object> {
+  changePassword(changewPasswordRequest: ChangePasswordRequest): Observable<any> {
     return this.apiService.post(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/change-password`, changewPasswordRequest).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );

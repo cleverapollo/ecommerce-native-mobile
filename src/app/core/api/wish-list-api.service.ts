@@ -13,8 +13,8 @@ export interface WishListApi {
   getWishLists() : Observable<Array<WishListDto>>;
   getWishList(id: string): Observable<WishListDto>;
   update(wishList: WishListUpdateRequest): Observable<WishListDto>;
-  delete(id: string): Observable<Object>;
-  removeWish(wish: WishDto): Observable<Object>;
+  delete(id: string): Observable<object>;
+  removeWish(wish: WishDto): Observable<object>;
 }
 @Injectable({
   providedIn: 'root'
@@ -55,13 +55,13 @@ export class WishListApiService implements WishListApi {
     );
   }
 
-  delete(id: string): Observable<Object> {
+  delete(id: string): Observable<any> {
     return this.apiService.delete(`${ApiVersion.v1}/${WishListApiService.REST_END_POINT}/${id}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
-  removeWish(wish: WishDto): Observable<Object> {
+  removeWish(wish: WishDto): Observable<any> {
     return this.apiService.delete(`${ApiVersion.v1}/${WishListApiService.REST_END_POINT}/${wish.wishListId}/wishes/${wish.id}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );

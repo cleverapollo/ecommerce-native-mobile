@@ -9,7 +9,7 @@ import { ApiVersion } from './api-version';
 export interface WishApi {
   createWish(wish: WishDto): Observable<WishDto>;
   getWishById(wishId: string) : Observable<WishDto>;
-  reserveWish(wishId: string) : Observable<Object>;
+  reserveWish(wishId: string) : Observable<object>;
   update(updatedWish: WishDto) : Observable<WishDto>;
 }
 @Injectable({
@@ -33,7 +33,7 @@ export class WishApiService implements WishApi {
     );
   }
 
-  reserveWish(wishId: string) : Observable<Object> {
+  reserveWish(wishId: string) : Observable<any> {
     return this.apiService.patch(`${ApiVersion.v1}/${WishApiService.REST_END_POINT}/${wishId}/reserve`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );

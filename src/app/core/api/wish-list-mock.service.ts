@@ -10,8 +10,8 @@ export class WishListApiMockService implements WishListApi {
     getWishListsResponse: Observable<WishListDto[]>;
     getWishListResponse: Observable<WishListDto>;
     updateResponse: Observable<WishListDto>;
-    deleteResponse: Observable<Object>;
-    removeResponse: Observable<Object>;
+    deleteResponse: Observable<object>;
+    removeResponse: Observable<object>;
 
     acceptInvitation(id: string): Promise<void> {
         return this.acceptInvitationResponse;
