@@ -24,8 +24,8 @@ export class ShareExtensionExplanationComponent implements OnInit {
 
   @ViewChild(IonSlides) slides: IonSlides;
 
-  showBackButton: boolean = false;
-  showCompleteButton: boolean = false;
+  showBackButton = false;
+  showCompleteButton = false;
 
   get slidesItems(): Array<WanticSlideItem> {
     let items = [];
@@ -51,21 +51,21 @@ export class ShareExtensionExplanationComponent implements OnInit {
       {
         imgSrc: `${ASSETS_IMAGES_PATH}/onboarding-slide-android-1.png`,
         imgAlt: 'Onboarding Slide 1', // ToDo: improve description
-        description: this.domSanitzer.bypassSecurityTrustHtml(`Springe in deinen Browser und 
-          füge Wünsche aus deinem liebsten 
+        description: this.domSanitzer.bypassSecurityTrustHtml(`Springe in deinen Browser und
+          füge Wünsche aus deinem liebsten
           Onlineshop über dieses Icon <ion-icon color="primary" name="ellipsis-vertical-outline"></ion-icon> hinzu.`)
       },
       {
         imgSrc: `${ASSETS_IMAGES_PATH}/onboarding-slide-android-2.png`,
         imgAlt: 'Onboarding Slide 2', // ToDo: improve description
-        description: this.domSanitzer.bypassSecurityTrustHtml(`Drücke dann auf Teilen <ion-icon color="primary" name="share-social-outline"></ion-icon>, 
-          um unsere App auf deinem 
+        description: this.domSanitzer.bypassSecurityTrustHtml(`Drücke dann auf Teilen <ion-icon color="primary" name="share-social-outline"></ion-icon>,
+          um unsere App auf deinem
           Smartphone auswählen zu können.`)
       },
       {
         imgSrc: `${ASSETS_IMAGES_PATH}/onboarding-slide-android-3.png`,
         imgAlt: 'Onboarding Slide 3', // ToDo: improve description
-        description: this.domSanitzer.bypassSecurityTrustHtml(`Gehe in deinem App-Menü bis ganz nach  
+        description: this.domSanitzer.bypassSecurityTrustHtml(`Gehe in deinem App-Menü bis ganz nach
           rechts & wähle unter &bdquo;Mehr&ldquo; wantic aus. `)
       },
       {
@@ -76,7 +76,7 @@ export class ShareExtensionExplanationComponent implements OnInit {
     ];
   }
 
-  private get iOSSlides(): WanticSlideItem[] { 
+  private get iOSSlides(): WanticSlideItem[] {
     return [
       {
         imgSrc: `${ASSETS_IMAGES_PATH}/onboarding-slide-1.png`,
@@ -129,7 +129,7 @@ export class ShareExtensionExplanationComponent implements OnInit {
   }
 
   completeOnboarding() {
-    let request = this.getRequest();
+    const request = this.getRequest();
     if (request === null) {
       return;
     }

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ShowHidePasswordComponent } from './show-hide-password.component';
@@ -7,7 +7,7 @@ describe('ShowHidePasswordComponent', () => {
   let component: ShowHidePasswordComponent;
   let fixture: ComponentFixture<ShowHidePasswordComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ShowHidePasswordComponent ],
       imports: [IonicModule.forRoot()]

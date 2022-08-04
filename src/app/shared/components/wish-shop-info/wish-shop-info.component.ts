@@ -27,7 +27,7 @@ export class WishShopInfoComponent implements OnInit {
     let cssClass = 'fill-gray';
     if (this.wish?.isFavorite) {
       cssClass = 'fill-primary';
-    } 
+    }
     return cssClass;
   }
 
@@ -37,20 +37,20 @@ export class WishShopInfoComponent implements OnInit {
 
   private get defaultStyles(): WishShopInfoComponentStyles {
     return {
-      shopInfoOverlay: { 
+      shopInfoOverlay: {
         'min-width':  '42px',
         'min-height': '39px',
         'text-align': 'center',
         'margin-top': '-2px' // - var(--wish-card-border-width);
       },
-      iconStar: { 
-        'font-size': '13px' 
+      iconStar: {
+        'font-size': '13px'
       },
-      shopLogoContainer: { 
+      shopLogoContainer: {
       },
-      priceInfo: { 
+      priceInfo: {
         'letter-spacing': '-0.46px',
-        'font': 'normal normal 900 13px/20px Roboto'
+        font: 'normal normal 900 13px/20px Roboto'
       }
     }
   }

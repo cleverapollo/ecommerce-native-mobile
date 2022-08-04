@@ -1,4 +1,4 @@
-import { Storage } from "./storage.service";
+import { Storage } from './storage.service';
 
 export class MockStorageService implements Storage {
 

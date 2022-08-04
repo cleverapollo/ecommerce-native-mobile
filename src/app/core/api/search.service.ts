@@ -17,7 +17,7 @@ export class SearchService {
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
   searchForItems(keywords: string, page: number): Observable<SearchResult> {
-    let queryParams = new HttpParams()
+    const queryParams = new HttpParams()
       .set('keywords', keywords)
       .set('page', page.toString())
     return this.apiService.get<SearchResult>(`${ApiVersion.v1}/${SearchService.REST_END_POINT}`, queryParams).pipe(

@@ -27,16 +27,16 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
     }
     return dateString;
   }
-  
+
   private wishListId: string;
 
   // subscriptions
   private loadWishListSubscription: Subscription = null;
   private routeParamSubscription: Subscription = null;
   private forceRefreshWishListSubscription: Subscription = null;
-  
+
   constructor(
-    private navController: NavController, 
+    private navController: NavController,
     private route: ActivatedRoute,
     private router: Router,
     private sharedWishListStore: FriendWishListStoreService,
@@ -79,7 +79,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
       this.wishList.wishes[index] = updatedWish;
       this.sharedWishListStore.updateCachedWishList(this.wishList);
     }
-  } 
+  }
 
   async showDeleteAlert() {
     const numberOfReservedWishes = this.wishList.wishes.map(wish => wish.bought).length;
@@ -91,7 +91,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
       message += '<br><br>'
       message += `<strong>Hinweis:</strong> Du hast noch Wünsche für dich reserviert.
       Die Reservierungen bleiben auch nach dem Verlassen der Wunschliste bestehen.
-      ` // ToDo: add pluralized message 
+      ` // ToDo: add pluralized message
     }
     const alert = await this.alertService.createDeleteAlert(header, message, this.onDeleteConfirmation);
     alert.present();

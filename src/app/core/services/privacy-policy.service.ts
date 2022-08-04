@@ -6,15 +6,15 @@ import { BrowserService } from './browser.service';
 })
 export class PrivacyPolicyService {
 
-  constructor(private browserService: BrowserService) { 
+  constructor(private browserService: BrowserService) {
   }
 
   showPrivacyPolicy() {
-    this.browserService.openInAppBrowser("https://www.wantic.io/datenschutz/");
+    this.browserService.openInAppBrowser('https://www.wantic.io/datenschutz/');
   }
 
   showImprint() {
-    this.browserService.openInAppBrowser("https://www.wantic.io/impressum/");
+    this.browserService.openInAppBrowser('https://www.wantic.io/impressum/');
   }
 
 }

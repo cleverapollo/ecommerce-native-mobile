@@ -6,7 +6,7 @@ export class PriceDto {
     displayString: string;
 
     static fromAmount(amount: number) {
-        let price = new PriceDto();
+        const price = new PriceDto();
         price.amount = amount;
         price.currency = '€'
         return price;
@@ -22,7 +22,7 @@ export class WishDto {
     productUrl: string;
     imageUrl: String;
     isReserved?: boolean;
-    isFavorite: boolean = false;
+    isFavorite = false;
 }
 
 export class WishListSelectOptionDto {

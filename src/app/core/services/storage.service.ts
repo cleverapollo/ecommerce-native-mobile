@@ -41,7 +41,7 @@ export class StorageService implements Storage {
   constructor(
     private platform: Platform,
     private platformService: DefaultPlatformService,
-    private logger: LogService) { 
+    private logger: LogService) {
       this.setupSecureWebStorage();
   }
 
@@ -107,11 +107,11 @@ export class StorageService implements Storage {
       } catch (error) {
         return Promise.resolve(null);
       }
-  
+
       if (cachedObject.value.length <= 0) {
         return Promise.resolve(null);
       }
-    
+
       try {
         const jsonObject = JSON.parse(cachedObject.value);
         return Promise.resolve(jsonObject);
@@ -143,7 +143,7 @@ export class StorageService implements Storage {
 
   private setSecure(storageKey: string, value: any) {
     if (this.platformService.isNativePlatform) {
-      SecureStoragePlugin.set({ key: storageKey, value: value })
+      SecureStoragePlugin.set({ key: storageKey, value })
         .then(this.logger.log, this.logger.error);
     } else {
       this.secureWebStorage.setItem(storageKey, value);
@@ -152,7 +152,7 @@ export class StorageService implements Storage {
 
   private setPublic(storageKey: string, value: any) {
     if (this.platformService.isNativePlatform) {
-      Storage.set({ key: storageKey, value: value });
+      Storage.set({ key: storageKey, value });
     } else {
       localStorage.setItem(storageKey, JSON.stringify(value));
     }
@@ -205,9 +205,9 @@ export class StorageService implements Storage {
       await SecureStoragePlugin.clear();
       return Promise.resolve();
     } catch (error) {
-      
+
     }
-  } 
+  }
 
   private clearWebStorage(): Promise<void> {
     localStorage.clear();

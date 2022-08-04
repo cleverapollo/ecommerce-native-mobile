@@ -30,19 +30,19 @@ export class ScriptService {
   }
 
   load(...scripts: ScriptName[]): Promise<ScriptLoadingResult[]> {
-    var promises: any[] = [];
+    const promises: any[] = [];
     scripts.forEach((script) => promises.push(this.loadScript(script)));
     return Promise.all(promises);
   }
 
   loadScript(name: ScriptName): Promise<ScriptLoadingResult> {
     return new Promise((resolve, reject) => {
-      //resolve if already loaded
+      // resolve if already loaded
       if (this.scripts[name].loaded) {
         resolve({ script: name, status: ScriptLoadingStatus.ALREADY_LOADED });
       } else {
-        //load script
-        let script = document.createElement('script');
+        // load script
+        const script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = this.scripts[name].src;
         script.onload = () => {

@@ -15,7 +15,7 @@ import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
 export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
 
   wishLists: FriendWishList[] = [];
-  
+
   private forceRefreshWishLists = false;
 
   // subscriptions
@@ -24,7 +24,7 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
   private forceRefreshWishListsSubscription: Subscription = null;
 
   constructor(
-    private navContoller: NavController, 
+    private navContoller: NavController,
     private route: ActivatedRoute,
     private router: Router,
     private friendWishListStore: FriendWishListStoreService,

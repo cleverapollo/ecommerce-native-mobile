@@ -1,7 +1,7 @@
-import { WishListDto, WishDto } from "@core/models/wish-list.model";
-import { WishListCreateRequest, WishListUpdateRequest } from "@wishLists/wish-list-create-update/wish-list-create-update.model";
-import { Observable, of } from "rxjs";
-import { WishListStore } from "./wish-list-store.service";
+import { WishListDto, WishDto } from '@core/models/wish-list.model';
+import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
+import { Observable, of } from 'rxjs';
+import { WishListStore } from './wish-list-store.service';
 
 export class MockWishListStoreService implements WishListStore {
 

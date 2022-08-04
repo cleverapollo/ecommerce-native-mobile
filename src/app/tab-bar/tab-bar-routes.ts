@@ -4,7 +4,7 @@ export enum TabBarRoute {
     WISH_SEARCH,
     MENU
   }
-  
+
   export function getTaBarPath(tab: TabBarRoute, fullPath: boolean): string {
     switch (tab) {
       case TabBarRoute.HOME:
@@ -19,4 +19,3 @@ export enum TabBarRoute {
         break;
     }
   }
-  

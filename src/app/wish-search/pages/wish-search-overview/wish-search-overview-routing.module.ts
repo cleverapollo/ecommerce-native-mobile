@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '@guards/auth.guard';
 
 import { WishSearchOverviewPage } from './wish-search-overview.page';
 
@@ -11,22 +10,26 @@ const routes: Routes = [
   },
   {
     path: 'search-by-amazon',
-    loadChildren: () => import('@wishSearch/pages/amazon/amazon-search-results/amazon-search-results.module').then( m => m.WishSearchResultsPageModule)
+    loadChildren: () => import('@wishSearch/pages/amazon/amazon-search-results/amazon-search-results.module')
+      .then( m => m.WishSearchResultsPageModule)
   },
   {
     path: 'search-by-url',
     children: [
       {
         path: 'select-image',
-        loadChildren: () => import('@wishSearch/pages/url/wish-search-url-result-images/wish-search-url-result-images.module').then( m => m.WishSearchUrlResultImagesPageModule)
+        loadChildren: () => import('@wishSearch/pages/url/wish-search-url-result-images/wish-search-url-result-images.module')
+          .then( m => m.WishSearchUrlResultImagesPageModule)
       },
       {
         path: 'edit-details',
-        loadChildren: () => import('@wishSearch/pages/url/wish-search-url-result-details/wish-search-url-result-details.module').then( m => m.WishSearchUrlResultDetailsPageModule)
+        loadChildren: () => import('@wishSearch/pages/url/wish-search-url-result-details/wish-search-url-result-details.module')
+          .then( m => m.WishSearchUrlResultDetailsPageModule)
       },
       {
         path: 'select-wish-list',
-        loadChildren: () => import('@wishSearch/pages/url/wish-search-url-result-wish-list/wish-search-url-result-wish-list.module').then( m => m.WishSearchUrlResultWishListPageModule)
+        loadChildren: () => import('@wishSearch/pages/url/wish-search-url-result-wish-list/wish-search-url-result-wish-list.module')
+          .then( m => m.WishSearchUrlResultWishListPageModule)
       },
     ]
   }

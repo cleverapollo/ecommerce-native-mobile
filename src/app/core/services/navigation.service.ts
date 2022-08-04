@@ -8,17 +8,17 @@ import { NavController } from '@ionic/angular';
 export class NavigationService {
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private navController: NavController) { 
+    private navController: NavController) {
   }
 
   removeQueryParamFromCurrentRoute(queryParam: string) {
-    let queryParams = {}
+    const queryParams = {}
     queryParams[`${queryParam}`] = null
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
-      queryParams: queryParams,
+      queryParams,
       queryParamsHandling: 'merge'
     })
   }

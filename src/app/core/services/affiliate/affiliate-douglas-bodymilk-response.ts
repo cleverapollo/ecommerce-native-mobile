@@ -28,25 +28,25 @@ export default `<!doctype html>
 <div id="background"></div>
 <div id="container">
 	<div id="header" role="banner">
-		
+
 			<div id="headerContainer">
 				<img id="nscLogo" src="/core/img/logo.png" />
 				                	<a href="http://www.douglas.de"><img align="right" id="douglasLogo" class="logo" src="/project/douglas/img/logo.gif" /></a>
                 			</div>
-		
-		
+
+
 			<div id="topnavigation">
 	<ul>
 							<li class="active"><a href="/?client=douglas&l=de&clicktag=https://www.awin1.com/awclick.php?gid=362940&mid=10076&awinaffid=813821&linkid=2383202&clickref=&clickref2=&p=&mod=deeplink">Deeplink Generator</a></li>
 			</ul>
-</div>		
+</div>
 	</div>
 	<!-- end of #header -->
 	<div id="main" role="main">
 		<div id="mainColumn">
-			
+
 			<h2>Deeplink Generator</h2>
-				
+
 				<p>Bauen Sie in nur zwei Schritten aus einer beliebigen URL Ihrer Webseite einen funktionierenden Deeplink zur gew&uuml;nschten Zielseite.</p>
 								<ul>
 								<li>Komplette URL der Seite auf die Sie verlinken m&ouml;chten kopieren und in das Feld einfügen.</li>
@@ -55,7 +55,7 @@ export default `<!doctype html>
 								</ul>
 								<br />
 				<hr class="blue" />
-			
+
 							<div class="box">
 					<form id="formDeeplink">
 						<label for="clientURL">URL zur Zielseite</label>
@@ -71,7 +71,7 @@ export default `<!doctype html>
 								<input type="text" id="zpar1" name="zpar1" value="" placeholder="clickref2" style="width:200px"/>
 																										<br /><br /><input type="submit" id="submit" value="Go" />
 							<input type="hidden" name="language" value="de" /><input type="hidden" name="client" value="douglas" /><input type="hidden" id="reqcountry" name="l" value="de" /><input type="hidden" name="clicktag" value="https://www.awin1.com/awclick.php?gid=362940&mid=10076&awinaffid=813821&linkid=2383202&clickref=&clickref2=&p=" /><input type="hidden" name="nw" value="fiw1" />
-											</form>			
+											</form>
 				</div>
 							<div id="previewBox" class="box" style="display: none;">
 			<h4>Quellcode</h4>
@@ -93,10 +93,10 @@ export default `<!doctype html>
   <p>The requested URL <code>/urlshortener/v1/url</code> was not found on this server.  <ins>That’s all we know.</ins>
 </textarea> -->
 																<br /><br /><button id="copy-button" data-clipboard-text="code" title="In die Zwischenablage kopieren">In die Zwischenablage kopieren</button>
-						
+
 						<!-- <br /><br /><button onmouseleave="hideToolTip(this)" id="copy-button2" type="button" class="code" data-clipboard-target="#code" title="In die Zwischenablage kopieren">In die Zwischenablage kopieren</button> -->
-						
-						 
+
+
                             <script src="/core/js/jquery.min.js" type="text/javascript"></script>
 							<script type="text/javascript">
 							var clip = new ZeroClipboard( document.getElementById("copy-button"), {
@@ -107,29 +107,29 @@ export default `<!doctype html>
 							});
 
 							//var clipboardCode = new Clipboard('.code');
-							
+
 							//clipboardCode.on('success', function(e) {
-                            //$('#copy-button2').tooltip({title: "Copied.", trigger: "manual"}); 
-                            //$('#copy-button2').tooltip('show');	
+                            //$('#copy-button2').tooltip({title: "Copied.", trigger: "manual"});
+                            //$('#copy-button2').tooltip('show');
                             //alert("test1");
                             //});
                             //clipboardCode.on('error', function(e) {
-                            //$('#copy-button2').tooltip({title: "Error.", trigger: "manual"}); 
+                            //$('#copy-button2').tooltip({title: "Error.", trigger: "manual"});
                             //$('#copy-button2').tooltip('show');
                             //alert("test2");
                             //});
-                            
+
                             //function hideToolTip(btn) {
                                 //$('#copy-button2').tooltip('hide');
                             //}
-							
-							
+
+
 							</script>
-						
+
 												</div>
 				<input type="hidden" id="previewEnabled" value="true" />
 		<input type="hidden" id="client" value="douglas" />
-	
+
 			<input type="hidden" id="clientName" value="false" />
 		</div>
 		<!-- end of #right -->
@@ -137,10 +137,10 @@ export default `<!doctype html>
 	</div>
 	<!-- end of #main -->
 	<div id="footer">
-		
+
 			<div id="footerNavigation">
-					
-				
+
+
 				<form action="/" name="formLanguage" method="get">
 					Sprache:&nbsp;<select name="language" id="languageChanger" onchange="document.formLanguage.submit()">
 						<option value="de" selected="selected">Deutsch</option>
@@ -154,11 +154,11 @@ export default `<!doctype html>
 					</select>
 					<input type="hidden" name="client" value="douglas" /><input type="hidden" id="reqcountry" name="l" value="de" /><input type="hidden" name="clicktag" value="https://www.awin1.com/awclick.php?gid=362940&mid=10076&awinaffid=813821&linkid=2383202&clickref=&clickref2=&p=" /><input type="hidden" name="nw" value="fiw1" />
 				</form>
-								
+
 				&copy; 2021 Resolution Media M&uuml;nchen GmbH | <a class="button2 footer" href="https://resolutionmedia.com/de/de/impressum-datenschutz/">Impressum</a>
-				
+
 			</div>
-		
+
 	</div>
 	<!-- end of #footer -->
 	<!-- dialog messages -->
@@ -178,8 +178,8 @@ export default `<!doctype html>
 		$LAB
 		//.script("//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js").wait()
 		//.script("//ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js")
-										
-		
+
+
 	.wait(function(){
 		$( "#accordion" ).accordion({
 			autoHeight: false,

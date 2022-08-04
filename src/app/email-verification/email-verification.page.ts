@@ -12,8 +12,8 @@ import { Device } from '@capacitor/device'
 export class EmailVerificationPage implements OnInit {
 
   emailVerificationStatus: PublicEmailVerificationStatus;
-  mailToString = "mailto:support@wantic.io?subject=Fehler%20bei%20der%20E-Mail%20Bestätigung"
-  showButton: boolean = false;
+  mailToString = 'mailto:support@wantic.io?subject=Fehler%20bei%20der%20E-Mail%20Bestätigung'
+  showButton = false;
 
   get verified() {
     return this.emailVerificationStatus === PublicEmailVerificationStatus.VERIFIED;
@@ -32,7 +32,7 @@ export class EmailVerificationPage implements OnInit {
   }
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private analyticsService: AnalyticsService
   ) { }
 

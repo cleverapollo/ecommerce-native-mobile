@@ -49,7 +49,7 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
   private queryParamSubscription: Subscription;
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private authApi: AuthService,
     private api: UserApiService,
     private navController: NavController,
@@ -66,8 +66,8 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
     this.canShowBackToLoginButton = deviceInfo.platform === 'ios' || deviceInfo.platform === 'android';
     this.passwordChanged = false;
     this.queryParamSubscription = this.activatedRoute.queryParams.subscribe(params => {
-      this.token = params['token'];
-      this.oobCode = params['oobCode'];
+      this.token = params.token;
+      this.oobCode = params.oobCode;
     });
     this.initForm();
   }
@@ -89,7 +89,7 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
       ])
       ],
       confirm: [null, Validators.compose([Validators.required])]
-    }, { 
+    }, {
       validator: CustomValidation.passwordMatchValidator
     })
   }
@@ -98,7 +98,7 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
     if (this.oobCode) {
       this.resetPassword();
     } else if (this.token) {
-      let request: ChangePasswordRequest = {
+      const request: ChangePasswordRequest = {
         password: this.form.controls.value.value,
         passwordConfirmed: this.form.controls.confirm.value,
         token: this.token
@@ -117,8 +117,8 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
       const verifyEmailResponse = await this.googleApiService.verifyPasswortResetCode(this.oobCode).toPromise();
       this.authApi.confirmPasswordReset({
         email: verifyEmailResponse.email,
-        oobCode: this.oobCode, 
-        newPassword: newPassword
+        oobCode: this.oobCode,
+        newPassword
       }).pipe(first()).subscribe(responseBody => {
         this.logger.debug(responseBody);
         this.passwordChanged = true;

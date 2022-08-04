@@ -15,8 +15,8 @@ export class AlertService {
 
   createDeleteAlert(header: string, message: string, confirmDeletionHandler: alertCompletionHandler): Promise<HTMLIonAlertElement> {
     return this.alertController.create({
-      header: header,
-      message: message,
+      header,
+      message,
       buttons: [
         {
           text: 'Ja',

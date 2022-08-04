@@ -13,7 +13,7 @@ export class FileService {
 
   private get fileReader(): FileReader {
     const fileReader = new FileReader();
-    const zoneOriginalInstance = (fileReader as any)["__zone_symbol__originalInstance"];
+    const zoneOriginalInstance = (fileReader as any).__zone_symbol__originalInstance;
     return zoneOriginalInstance || fileReader;
   }
 
@@ -22,7 +22,7 @@ export class FileService {
   }
 
   async getTextContentFromFileInAssetFolder(fileName: string, subDir?: string): Promise<string> {
-    let filePath = this.createFilePath(fileName, subDir);
+    const filePath = this.createFilePath(fileName, subDir);
     try {
       const dirExists = await this.file.checkDir(this.applicationDirectoryPath, this.assetPath);
       if (dirExists) {
@@ -64,7 +64,7 @@ export class FileService {
   private async readFileContent(fileEntry: FileEntry): Promise<string> {
     return new Promise((resolve, reject) => {
       fileEntry.file((file: any) => {
-        this.logger.debug("FileReader read as text ");
+        this.logger.debug('FileReader read as text ');
         const reader = this.fileReader;
         reader.onloadstart = (event) => {
           this.logger.debug('file reader on load start ...', event);
@@ -76,7 +76,7 @@ export class FileService {
             this.logger.debug('result is array buffer');
             reject();
           }
-          this.logger.debug("Successful file read: " + result);
+          this.logger.debug('Successful file read: ' + result);
           resolve(result as string);
         };
         reader.onerror = (error) => {

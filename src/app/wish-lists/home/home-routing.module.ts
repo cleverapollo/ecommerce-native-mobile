@@ -18,23 +18,27 @@ const routes: Routes = [
       {
         path: 'wish-list-overview',
         canActivate: [AuthGuard],
-        loadChildren: () => import('@wishLists/wish-list-overview/wish-list-overview.module').then( m => m.WishListOverviewPageModule)
+        loadChildren: () => import('@wishLists/wish-list-overview/wish-list-overview.module')
+          .then( m => m.WishListOverviewPageModule)
       },
       {
         path: 'wish-list-new',
-        canActivate: [AuthGuard], 
-        loadChildren: () => import('@wishLists/wish-list-create-update/wish-list-create-update.module').then( m => m.WishListCreateUpdatePageModule)
+        canActivate: [AuthGuard],
+        loadChildren: () => import('@wishLists/wish-list-create-update/wish-list-create-update.module')
+          .then( m => m.WishListCreateUpdatePageModule)
       },
       {
         path: 'wish-list/:wishListId',
         canActivate: [AuthGuard],
         resolve: { wishList: WishListResolver },
-        loadChildren: () => import('@wishLists/wish-list-detail/wish-list-detail.module').then( m => m.WishListDetailPageModule)
+        loadChildren: () => import('@wishLists/wish-list-detail/wish-list-detail.module')
+          .then( m => m.WishListDetailPageModule)
       },
       {
         path: 'wish-new',
         canActivate: [AuthGuard],
-        loadChildren: () => import('@wishLists/wish-create-update/wish-create-update.module').then( m => m.WishCreateUpdatePageModule)
+        loadChildren: () => import('@wishLists/wish-create-update/wish-create-update.module')
+          .then( m => m.WishCreateUpdatePageModule)
       },
     ]
   },

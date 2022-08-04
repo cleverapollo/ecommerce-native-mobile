@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { GoogleApiService } from '@core/api/google-api.service';
 import { UserApiService } from '@core/api/user-api.service';
-import { UserManagementActionMode, VerifyEmailErrorCode, VerifyEmailResponse } from '@core/models/google-api.model';
+import { VerifyEmailErrorCode, VerifyEmailResponse } from '@core/models/google-api.model';
 import { PublicEmailVerificationStatus } from '@core/models/user.model';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LogService } from '@core/services/log.service';
@@ -11,21 +11,21 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DeviceInfo, Device } from '@capacitor/device'
 import { CoreToastService } from '@core/services/toast.service';
-import { StorageService } from '@core/services/storage.service';
 
 @Injectable()
-export class EmailVerificationStatusResolver implements Resolve<Promise<PublicEmailVerificationStatus> | Observable<PublicEmailVerificationStatus>> {
-  
+export class EmailVerificationStatusResolver implements Resolve<
+    Promise<PublicEmailVerificationStatus> | Observable<PublicEmailVerificationStatus>
+  > {
+
   private deviceInfo: DeviceInfo;
-  
+
   constructor(
-    private userApiService: UserApiService, 
-    private googleApiService: GoogleApiService, 
+    private userApiService: UserApiService,
+    private googleApiService: GoogleApiService,
     private authService: AuthenticationService,
     private toastService: CoreToastService,
     private router: Router,
-    private logger: LogService,
-    private storageService: StorageService
+    private logger: LogService
   ) {
     this.init();
   }

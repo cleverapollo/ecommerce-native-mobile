@@ -17,7 +17,7 @@ export class UrlSearchDataStoreService {
   searchResultItem?: SearchResultItem;
   formData: URLSearchFormData;
 
-  constructor() { 
+  constructor() {
     this.reset();
   }
 

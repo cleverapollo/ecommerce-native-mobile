@@ -83,7 +83,9 @@ export class WishCreateUpdatePage implements OnInit {
   }
 
   private setupViewData() {
-    this.wish = this.route.snapshot.data.wish ? this.route.snapshot.data.wish : this.router.getCurrentNavigation()?.extras.state.searchResult;
+    this.wish = this.route.snapshot.data.wish ?
+      this.route.snapshot.data.wish :
+      this.router.getCurrentNavigation()?.extras.state.searchResult;
     this.wishList = this.route.snapshot.data.wishList;
   }
 
@@ -97,22 +99,22 @@ export class WishCreateUpdatePage implements OnInit {
     const name = this.wish?.name ? this.wish.name : '';
     const price = this.wish?.price.amount ? this.wish.price.amount : 0.00;
     this.form = this.formBuilder.group({
-      'wishListId': this.formBuilder.control(wishListId, {
+      wishListId: this.formBuilder.control(wishListId, {
         validators: [Validators.required]
       }),
-      'name': this.formBuilder.control(name, {
+      name: this.formBuilder.control(name, {
         validators: [Validators.required, Validators.maxLength(255)],
         updateOn: 'blur'
       }),
-      'note': this.formBuilder.control(this.wish?.note, {
+      note: this.formBuilder.control(this.wish?.note, {
         validators: [Validators.maxLength(255)],
         updateOn: 'blur'
       }),
-      'price': this.formBuilder.control(this.formatAmount(price), {
+      price: this.formBuilder.control(this.formatAmount(price), {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
-      'isFavorite': this.formBuilder.control(this.wish?.isFavorite ?? false)
+      isFavorite: this.formBuilder.control(this.wish?.isFavorite ?? false)
     });
   }
 
@@ -161,21 +163,22 @@ export class WishCreateUpdatePage implements OnInit {
       await this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
       this.navigateToWishListDetailPage(this.wish.wishListId);
     } catch (error) {
+      const message = 'Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.'
       this.loadingService.dismissLoadingSpinner();
-      this.toastService.presentErrorToast('Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.');
+      this.toastService.presentErrorToast(message);
     }
   }
 
   private logAddToWishListEvent(wish: WishDto) {
     this.analyticsService.logAppsflyerEvent('af_add_to_wishlist', {
-      'af_price': wish.price.amount,
-      'af_content_id': wish.asin,
-      'af_currency': wish.price.currency
+      af_price: wish.price.amount,
+      af_content_id: wish.asin,
+      af_currency: wish.price.currency
     });
     this.analyticsService.logFirebaseEvent('add_to_wishlist', {
-      'content_id': wish.asin,
-      'value': wish.price.amount,
-      'currency': wish.price.currency,
+      content_id: wish.asin,
+      value: wish.price.amount,
+      currency: wish.price.currency,
     });
   }
 

@@ -1,5 +1,5 @@
-import { AbstractControl } from "@angular/forms";
-import { AuthProvider } from "./signup.model";
+import { AbstractControl } from '@angular/forms';
+import { AuthProvider } from './signup.model';
 
 export class UserProfile {
     firstName: String;
@@ -58,7 +58,7 @@ export enum PublicEmailVerificationStatus {
 
 export enum Gender {
     MALE = 'MALE',
-    FEMALE = 'FEMALE', 
+    FEMALE = 'FEMALE',
     DIVERSE = 'DIVERSE'
 }
 export class UserRegistration {

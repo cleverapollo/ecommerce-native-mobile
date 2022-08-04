@@ -20,17 +20,17 @@ export class UserProfileStore {
   private readonly CACHE_GROUP_KEY = 'user';
 
   constructor(
-    private cache: CacheService, 
+    private cache: CacheService,
     private api: UserApiService,
     private logger: LogService
-  ) 
+  )
   {}
 
   loadUserProfile(forceRefresh: boolean = false): Observable<UserProfile> {
-    let request = this.api.getProfile();
+    const request = this.api.getProfile();
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.CACHE_KEY, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
-    } 
+    }
     return this.cache.loadFromObservable(this.CACHE_KEY, request, this.CACHE_GROUP_KEY)
   }
 
@@ -60,7 +60,7 @@ export class UserProfileStore {
     const ttl = 60 * 60 * 24 * 7; // 1 week in seconds
     const request = this.api.downloadProfileImage(url);
     const keyForCaching = cacheKey ? cacheKey : url;
-    if (forceRefresh) { 
+    if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(keyForCaching, request, this.CACHE_GROUP_KEY, ttl, 'all');
     }
     return this.cache.loadFromObservable(keyForCaching, request, this.CACHE_GROUP_KEY, ttl);

@@ -1,5 +1,5 @@
-import { LoginResponse } from "./login.model";
-import { Gender, UserProfile } from "./user.model";
+import { LoginResponse } from './login.model';
+import { Gender, UserProfile } from './user.model';
 
 export enum AuthProvider {
     APPLE = 'APPLE',

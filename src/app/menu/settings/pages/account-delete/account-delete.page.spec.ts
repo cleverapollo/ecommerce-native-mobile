@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { AccountDeletePage } from './account-delete.page';
@@ -7,7 +7,7 @@ describe('AccountDeletePage', () => {
   let component: AccountDeletePage;
   let fixture: ComponentFixture<AccountDeletePage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AccountDeletePage ],
       imports: [IonicModule.forRoot()]

@@ -16,10 +16,10 @@ export class AffiliateLinkService {
   }
 
   constructor(
-    private defaultService: AffiliateDefaultService, 
+    private defaultService: AffiliateDefaultService,
     private douglasService: AffiliateDouglasService,
     private logger: LogService
-  ) { 
+  ) {
   }
 
   createAffiliateLink(productUrlString: string): Promise<string> {

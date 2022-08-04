@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockAlertService } from '@core/services/alert-mock.service';
@@ -20,12 +20,12 @@ import { DatePipe } from '@angular/common';
 
 describe('FriendsWishListDetailPage', () => {
 
-  let navController: NavController = jasmine.createSpyObj('navController', ['navigateBack']);
-  let sharedWishListStore: MockFriendWishListStoreService = new MockFriendWishListStoreService();
-  let analyticsService: AnalyticsService = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
-  let alertService: AppAlertService = new MockAlertService();
-  let loadingService: AppLoadingService = new MockLoadingService();
-  let toastService: ToastService = new MockToastService();
+  const navController: NavController = jasmine.createSpyObj('navController', ['navigateBack']);
+  const sharedWishListStore: MockFriendWishListStoreService = new MockFriendWishListStoreService();
+  const analyticsService: AnalyticsService = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
+  const alertService: AppAlertService = new MockAlertService();
+  const loadingService: AppLoadingService = new MockLoadingService();
+  const toastService: ToastService = new MockToastService();
 
   let paramMapMock: ParamMap;
   let paramMapSubscription: Subscription;
@@ -38,7 +38,7 @@ describe('FriendsWishListDetailPage', () => {
   let fixture: ComponentFixture<FriendsWishListDetailPage>;
   let router: Router;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     createParamMapSpy();
 
     TestBed.configureTestingModule({
@@ -99,7 +99,7 @@ describe('FriendsWishListDetailPage', () => {
     it('should subscribe sharedWishListStore loadWishList', () => {
       const observable = new Observable<FriendWishList>();
       const observableSpy = spyOn(observable, 'subscribe');
-      
+
       spyOn(sharedWishListStore, 'loadWishList').and.returnValue(observable);
 
       component.ionViewWillEnter();
@@ -111,7 +111,7 @@ describe('FriendsWishListDetailPage', () => {
   describe('ngOnDestroy', () => {
     it('should unsubscribe param map subscription', () => {
       component.ngOnDestroy();
-  
+
       expect(paramMapSubscription.unsubscribe).toHaveBeenCalled();
     });
 
@@ -124,17 +124,17 @@ describe('FriendsWishListDetailPage', () => {
       spyOn(observable, 'subscribe').and.callFake((fn: any): Subscription => {
         return subscription;
       });
-      
+
       component.ionViewWillEnter();
 
       component.ngOnDestroy();
-  
+
       expect(subscription.unsubscribe).toHaveBeenCalled();
     });
 
     it('should unsubscribe sharedWishListStore loadWishList subscription (force refresh)', () => {
       component.wishList = WishListTestData.sharedWishListWedding;
-      
+
       const observable = new Observable<FriendWishList>();
       const subscription = new Subscription();
       spyOn(sharedWishListStore, 'loadWishList').and.returnValue(observable);
@@ -143,12 +143,12 @@ describe('FriendsWishListDetailPage', () => {
       spyOn(observable, 'subscribe').and.callFake((fn: any): Subscription => {
         return subscription;
       });
-      
+
       component.forceRefresh({ target: {
         complete() { }
       }});
       component.ngOnDestroy();
-  
+
       expect(subscription.unsubscribe).toHaveBeenCalled();
     });
   });
@@ -172,36 +172,36 @@ describe('FriendsWishListDetailPage', () => {
       let completed = false;
       const loadWishListSpy = spyOn(sharedWishListStore, 'loadWishList');
       loadWishListSpy.and.returnValue(of(WishListTestData.sharedWishListWedding));
-  
+
       component.wishList = WishListTestData.sharedWishListWedding;
       component.forceRefresh({ target: {
         complete() { completed = true; }
       }});
-  
+
       tick();
-  
+
       expect(loadWishListSpy).toHaveBeenCalledWith('2', true);
       expect(completed).toBeTruthy();
-  
+
       flush();
     }));
-  
+
     it('should cancel loading spinner of ion-refresher if something goes wrong', fakeAsync(() => {
       let completed = false;
       const loadWishListSpy = spyOn(sharedWishListStore, 'loadWishList');
       loadWishListSpy.and.returnValue(throwError('A backend error occured!'));
-  
+
       component.wishList = WishListTestData.sharedWishListWedding;
       component.forceRefresh({ target: {
         complete() { completed = true; }
       }});
-  
+
       tick();
-  
+
       expect(loadWishListSpy).toHaveBeenCalledWith('2', true);
       expect(completed).toBeTruthy();
       expect(component.wishList).not.toBeNull();
-  
+
       flush();
     }));
   });
@@ -209,25 +209,25 @@ describe('FriendsWishListDetailPage', () => {
   describe('updateWish', () => {
     it('should update a wish', () => {
       const updateCachedWishListSpy = spyOn(sharedWishListStore, 'updateCachedWishList');
-      let updatedWish = WishListTestData.sharedWishKindle;
+      const updatedWish = WishListTestData.sharedWishKindle;
       updatedWish.name = 'Updated Name';
       component.wishList = WishListTestData.sharedWishListWedding;
-  
+
       expect(component.wishList.wishes[1].name).toEqual('Kindle');
-  
+
       component.updateWish(updatedWish);
-  
+
       expect(component.wishList.wishes[1].name).toEqual('Updated Name');
       expect(updateCachedWishListSpy).toHaveBeenCalledWith(component.wishList);
     });
-  
+
     it('should not throw or modify wish list', () => {
       const updateCachedWishListSpy = spyOn(sharedWishListStore, 'updateCachedWishList');
       const unknownWish = WishListTestData.sharedWishVanityUnit;
-  
+
       component.wishList = WishListTestData.sharedWishListWedding;
       component.updateWish(unknownWish);
-  
+
       expect(updateCachedWishListSpy).not.toHaveBeenCalled();
     });
   });
@@ -248,24 +248,24 @@ describe('FriendsWishListDetailPage', () => {
     it('should show delete alert', fakeAsync(() => {
       sharedWishListStore.removeWishListByIdResponse = Promise.resolve();
       component.showDeleteAlert();
-  
+
       tick();
-  
+
       expect(showLoadingServiceSpy).toHaveBeenCalledTimes(1);
       expect(dismissLoadingServiceSpy).toHaveBeenCalledTimes(1);
       expect(navigateSpy).toHaveBeenCalledWith('/secure/friends-home/friends-wish-list-overview?forceRefresh=true');
 
       flush();
     }));
-  
+
     it('should dismiss the loading spinner if something goes wrong', fakeAsync(() => {
       // fake error response
       sharedWishListStore.removeWishListByIdResponse = Promise.reject();
-  
+
       component.showDeleteAlert();
-  
+
       tick();
-      
+
       expect(showLoadingServiceSpy).toHaveBeenCalledTimes(1);
       expect(dismissLoadingServiceSpy).toHaveBeenCalledTimes(1);
       expect(navigateSpy).not.toHaveBeenCalled();

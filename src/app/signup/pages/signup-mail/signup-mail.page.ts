@@ -62,9 +62,9 @@ export class SignupMailPage implements OnInit {
       lastName: this.formBuilder.control(signupRequest?.lastName ?? null, {
         updateOn: 'blur'
       }),
-      email: [signupRequest?.email ?? null, { 
-        validators: [Validators.required, CustomValidation.email], 
-        updateOn: 'blur' 
+      email: [signupRequest?.email ?? null, {
+        validators: [Validators.required, CustomValidation.email],
+        updateOn: 'blur'
       }],
       password: this.formBuilder.group({
         value: [null, { validators: Validators.compose([
@@ -73,11 +73,11 @@ export class SignupMailPage implements OnInit {
           Validators.minLength(8)
         ]), updateOn: 'blur' }
         ],
-        confirm: [null, { 
+        confirm: [null, {
           validators: Validators.compose([Validators.required]),
           updateOn: 'blur'
         }]
-      }, { 
+      }, {
         validator: CustomValidation.passwordMatchValidator
       })
     });
@@ -88,7 +88,7 @@ export class SignupMailPage implements OnInit {
   }
 
   next() {
-    if (this.form.valid) { 
+    if (this.form.valid) {
       this.signup();
     } else {
       CustomValidation.validateFormGroup(this.form);
@@ -134,21 +134,21 @@ export class SignupMailPage implements OnInit {
   handleKeyboardEventOnEmailInput(keyCode: number) {
     this.setFocusToNextInputFieldOnEnter(keyCode, 'password');
    }
-  
+
    handleKeyboardEventOnPasswordInput(keyCode: number) {
     this.setFocusToNextInputFieldOnEnter(keyCode, 'passwordConfirm');
    }
 
    private setFocusToNextInputFieldOnEnter(keyCode: number, inputName: string) {
-    if (keyCode == 13) { 
+    if (keyCode === 13) {
       this.inputs.find((input) => {
         return input.name === inputName;
       }).setFocus();
-    }    
+    }
   }
-  
+
    handleKeyboardEventOnPasswordConfirmInput(keyCode: number) {
-     if (keyCode == 13) {
+     if (keyCode === 13) {
       Keyboard.hide();
      }
    }

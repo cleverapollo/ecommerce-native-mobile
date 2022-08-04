@@ -22,9 +22,9 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   wishList: WishListDto
   wish: WishDto;
-  
+
   get isDebugInfoVisible(): boolean {
-    return environment.backendType === BackendConfigType.beta ||  
+    return environment.backendType === BackendConfigType.beta ||
       environment.backendType === BackendConfigType.dev;
   }
 
@@ -34,41 +34,33 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   get shopInfoComponentStyles(): WishShopInfoComponentStyles {
     return {
-      shopInfoOverlay: { 
+      shopInfoOverlay: {
         'min-width': '59px'
       },
-      iconStar: { 
-        'font-size': '19px' 
+      iconStar: {
+        'font-size': '19px'
       },
-      shopLogoContainer: { 
-        'max-height': '21px', 
-        'margin-top': '4px', 
-        'margin-bottom': '4px' 
+      shopLogoContainer: {
+        'max-height': '21px',
+        'margin-top': '4px',
+        'margin-bottom': '4px'
       },
-      priceInfo: { 
-        'letter-spacing': '-0.63px', 
-        'font': 'normal normal 900 18px/20px Roboto' 
+      priceInfo: {
+        'letter-spacing': '-0.63px',
+        font: 'normal normal 900 18px/20px Roboto'
       }
     }
   }
 
   get wishImageComponentStyles(): WishImageComponentStyles {
-    let style  = {};
+    const style: { height?: string } = {};
     if (!this.wish.imageUrl) {
-      style['height'] = '70%';
+      style.height = '70%';
     }
     return { img: style };
   }
 
-  cssClass(first: boolean, last: boolean) {
-    return {
-      'standalone': this.wishListOwnerCount == 1,
-      'first': this.wishListOwnerCount > 1 && first,
-      'last': this.wishListOwnerCount > 1 && last
-    }
-  }
-
-  private affiliateLink: string = '';
+  private affiliateLink = '';
   private loadWishSubscription: Subscription;
 
   constructor(
@@ -129,5 +121,13 @@ export class WishDetailPage implements OnInit, OnDestroy {
     });
     await modal.present();
   }
- 
+
+  cssClass(first: boolean, last: boolean) {
+    return {
+      standalone: this.wishListOwnerCount === 1,
+      first: this.wishListOwnerCount > 1 && first,
+      last: this.wishListOwnerCount > 1 && last
+    }
+  }
+
 }

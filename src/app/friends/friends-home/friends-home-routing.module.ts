@@ -17,12 +17,14 @@ const routes: Routes = [
       {
         path: 'friends-wish-list-overview',
         canActivate: [AuthGuard],
-        loadChildren: () => import('@friends/friends-wish-list-overview/friends-wish-list-overview.module').then( m => m.FriendsWishListOverviewPageModule)
+        loadChildren: () => import('@friends/friends-wish-list-overview/friends-wish-list-overview.module')
+          .then( m => m.FriendsWishListOverviewPageModule)
       },
       {
         path: 'wish-list/:wishListId',
         canActivate: [AuthGuard],
-        loadChildren: () => import('@friends/friends-wish-list-detail/friends-wish-list-detail.module').then( m => m.FriendsWishListDetailPageModule)
+        loadChildren: () => import('@friends/friends-wish-list-detail/friends-wish-list-detail.module')
+          .then( m => m.FriendsWishListDetailPageModule)
       },
     ]
   }

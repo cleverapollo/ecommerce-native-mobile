@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { PasswordUpdatePage } from './password-update.page';
@@ -7,7 +7,7 @@ describe('PasswordUpdatePage', () => {
   let component: PasswordUpdatePage;
   let fixture: ComponentFixture<PasswordUpdatePage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PasswordUpdatePage ],
       imports: [IonicModule.forRoot()]

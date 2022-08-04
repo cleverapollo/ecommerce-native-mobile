@@ -13,7 +13,7 @@ export class AffiliateLinkDebugInfoComponent implements OnInit {
 
   @Input() wish: WishDto | FriendWish;
 
-  affiliateLink: string = ''
+  affiliateLink = ''
 
   constructor(private affiliateLinkService: AffiliateLinkService, private modalController: ModalController) { }
 

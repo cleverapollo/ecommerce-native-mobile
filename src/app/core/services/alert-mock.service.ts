@@ -1,18 +1,4 @@
-import { alertCompletionHandler, AppAlertService } from "./alert.service";
-
-export class MockAlertService implements AppAlertService {
-
-    private alertController =  new MockAlertController();
-
-    createDeleteAlert(header: string, message: string, confirmDeletionHandler: alertCompletionHandler): Promise<HTMLIonAlertElement> {
-        const alert = this.alertController.create({ header: header, message: message });
-        alert.then(() => {
-            confirmDeletionHandler(true);
-        });
-        return alert;
-    }
-}
-
+import { alertCompletionHandler, AppAlertService } from './alert.service';
 export class MockAlert {
     public visible: boolean;
     public header: string;
@@ -54,5 +40,18 @@ export class MockAlertController {
             return null;
         }
         return this.created[this.created.length - 1];
+    }
+}
+
+export class MockAlertService implements AppAlertService {
+
+    private alertController = new MockAlertController();
+
+    createDeleteAlert(header: string, message: string, confirmDeletionHandler: alertCompletionHandler): Promise<HTMLIonAlertElement> {
+        const alert = this.alertController.create({ header, message });
+        alert.then(() => {
+            confirmDeletionHandler(true);
+        });
+        return alert;
     }
 }

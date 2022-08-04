@@ -16,10 +16,10 @@ export class WishListComponent implements OnInit {
 
   ngOnInit() {}
 
-  get side() : String {
-    if (this.index % 2 == 0) {
+  get side(): string {
+    if (this.index % 2 === 0) {
       return 'right';
-    } else if (this.index % 2 == 1) {
+    } else if (this.index % 2 === 1) {
       return 'left';
     } else {
       return 'center';
@@ -29,10 +29,10 @@ export class WishListComponent implements OnInit {
   get wishImageStyle(): WishImageComponentStyles {
     return {
       errorImg: {
-        'padding': '5px' 
+        padding: '5px'
       },
       placeholderImg: {
-        'padding': '5px' 
+        padding: '5px'
       }
     }
   }

@@ -7,9 +7,9 @@ import { AffiliateDataStoreService } from './affiliate-data-store.service';
 
 describe('AffiliateDataStoreService', () => {
 
-  let api: any;
-  let cache: any;
-  let logger: any;
+  const api = {};
+  const cache = {};
+  const logger = {};
   let service: AffiliateDataStoreService;
 
   beforeEach(() => {

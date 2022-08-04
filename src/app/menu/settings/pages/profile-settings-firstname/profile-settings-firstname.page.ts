@@ -28,13 +28,13 @@ export class ProfileSettingsFirstnamePage implements OnInit {
   }
 
   constructor(
-    private loadingService: LoadingService, 
-    private formBuilder: FormBuilder, 
+    private loadingService: LoadingService,
+    private formBuilder: FormBuilder,
     private api: UserApiService,
     private userProfileStore: UserProfileStore,
     private toastService: CoreToastService,
     private analyticsService: AnalyticsService
-  ) 
+  )
   { }
 
   ngOnInit() {

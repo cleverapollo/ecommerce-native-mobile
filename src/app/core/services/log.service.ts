@@ -22,6 +22,14 @@ export class LogService implements Logger {
     return this.ngxLogger ? this.ngxLogger : console;
   }
 
+  private static createLogMessage(message: any, emoji: string) {
+    let errorMessage = message;
+    if (typeof errorMessage === 'string') {
+      errorMessage = `${emoji} ${message}`;
+    }
+    return errorMessage;
+  }
+
   trace(message: any, ...additional: any[]): void {
     let logger: NGXLogger | Console = console;
     if (this) {
@@ -80,14 +88,6 @@ export class LogService implements Logger {
     if (this) {
       this.ngxLogger ? this.ngxLogger.fatal(message, additional) : console.error(message, additional);
     }
-  }
-
-  private static createLogMessage(message: any, emoji: string) {
-    let errorMessage = message;
-    if (typeof errorMessage === 'string') {
-      errorMessage = `${emoji} ${message}`;
-    }
-    return errorMessage;
   }
 }
 

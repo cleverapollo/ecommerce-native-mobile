@@ -35,11 +35,11 @@ export class WishListStoreService implements WishListStore {
   }
 
   private cacheKeyWish(id: string): string {
-   return `getWish${id}` 
+   return `getWish${id}`
   }
 
   constructor(
-    private wishListApiService: WishListApiService, 
+    private wishListApiService: WishListApiService,
     private wishApiService: WishApiService,
     private cache: CacheService,
     private logger: LogService
@@ -52,10 +52,10 @@ export class WishListStoreService implements WishListStore {
   // WISH LISTS
 
   loadWishLists(forceRefresh: boolean = false): Observable<Array<WishListDto>> {
-    let request = this.wishListApiService.getWishLists() as Observable<Array<WishListDto>>;
+    const request = this.wishListApiService.getWishLists() as Observable<Array<WishListDto>>;
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
-    } 
+    }
     return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY)
   }
 
@@ -66,10 +66,10 @@ export class WishListStoreService implements WishListStore {
   // WISH LIST
 
   loadWishList(id: string, forceRefresh: boolean = false): Observable<WishListDto> {
-    let request = this.wishListApiService.getWishList(id);
+    const request = this.wishListApiService.getWishList(id);
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
-    } 
+    }
     return this.cache.loadFromObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY)
   }
 
@@ -87,7 +87,7 @@ export class WishListStoreService implements WishListStore {
 
     try {
       const wishLists: WishListDto[] = await this.cache.getItem(this.CACHE_KEY_WISH_LISTS);
-      const wishListIndex = wishLists.findIndex( w => w.id == id);
+      const wishListIndex = wishLists.findIndex( w => w.id === id);
       if (wishListIndex !== -1) {
         wishLists.splice(wishListIndex, 1);
         return this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
@@ -113,7 +113,7 @@ export class WishListStoreService implements WishListStore {
     try {
       await this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
       const wishLists = await this.cache.getItem(this.CACHE_KEY_WISH_LISTS);
-      const wishListIndex = wishLists.findIndex((w: WishListDto) => w.id == wishList.id);
+      const wishListIndex = wishLists.findIndex((w: WishListDto) => w.id === wishList.id);
       if (wishListIndex !== -1) {
         wishLists[wishListIndex] = wishList;
         this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
@@ -160,7 +160,7 @@ export class WishListStoreService implements WishListStore {
       await this.clearWishLists();
       return createdWish;
     } catch (error) {
-      throw error; 
+      throw error;
     }
   }
 
@@ -170,15 +170,15 @@ export class WishListStoreService implements WishListStore {
       await this.updateCachedWish(updatedWish);
       return updatedWish;
     } catch (error) {
-      throw error; 
+      throw error;
     }
   }
 
   loadWish(id: string, forceRefresh: boolean = false): Observable<WishDto> {
-    let request = this.wishApiService.getWishById(id);
+    const request = this.wishApiService.getWishById(id);
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWish(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
-    } 
+    }
     return this.cache.loadFromObservable(this.cacheKeyWish(id), request, this.CACHE_GROUP_KEY)
   }
 
@@ -186,7 +186,7 @@ export class WishListStoreService implements WishListStore {
     try {
       await this.cache.saveItem(this.cacheKeyWish(wish.id), wish, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
       const wishList = await this.cache.getItem(this.cacheKeyWishList(wish.wishListId));
-      const wishIndex = wishList.wishes.findIndex((w: WishListDto) => w.id == wish.id);
+      const wishIndex = wishList.wishes.findIndex((w: WishListDto) => w.id === wish.id);
       if (wishIndex !== -1) {
         wishList.wishes[wishIndex] = wish;
         this.updatedCachedWishList(wishList);
@@ -208,7 +208,7 @@ export class WishListStoreService implements WishListStore {
     try {
       await this.cache.removeItem(this.cacheKeyWish(wish.id));
       const wishList: WishListDto = await this.cache.getItem(this.cacheKeyWishList(wish.wishListId));
-      const wishIndex = wishList.wishes.findIndex(w => w.id == wish.id);
+      const wishIndex = wishList.wishes.findIndex(w => w.id === wish.id);
       if (wishIndex !== -1) {
         wishList.wishes.splice(wishIndex, 1);
         this.updatedCachedWishList(wishList);

@@ -22,7 +22,7 @@ export class WishSearchUrlResultImagesPage implements OnInit, OnDestroy {
 
   products: SearchResultItem[] = [];
   selectedProduct: SearchResultItem;
-  selectedIndex: number = -1;
+  selectedIndex = -1;
 
   constructor(
     private router: Router,

@@ -12,10 +12,10 @@ import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-lis
 export class AffiliateDefaultService implements AffiliateService {
 
   constructor(
-    private logger: LogService, 
-    private affiliateDataStore: AffiliateDataStoreService) 
+    private logger: LogService,
+    private affiliateDataStore: AffiliateDataStoreService)
     { }
-  
+
   supportsDomain(domain: string): boolean {
     let support = false;
     const affiliateProgrammes = this.affiliateDataStore.affiliateProgrammes;
@@ -39,7 +39,7 @@ export class AffiliateDefaultService implements AffiliateService {
     let affiliateLink = productUrlString;
     let affiliateProgramme = null;
     let productUrl: URL = null;
-    
+
     try {
       productUrl = new URL(productUrlString);
       const domain = productUrl.hostname.startsWith('www.') ? productUrl.hostname.substring(4) : productUrl.hostname;
@@ -78,18 +78,18 @@ export class AffiliateDefaultService implements AffiliateService {
   private buildAffiliateLinkForProgramme(programme: AffiliateProgramme, productUrl: URL): string {
     let affiliateLink = programme.deeplinkTemplate;
 
-    if (affiliateLink.includes('${QUERY_PARAM_SEPERATOR}tag=') && productUrl.searchParams.has('tag')) { 
+    if (affiliateLink.includes('${QUERY_PARAM_SEPERATOR}tag=') && productUrl.searchParams.has('tag')) {
       productUrl.searchParams.delete('tag');
     }
 
     affiliateLink = affiliateLink.replace('${ADVERTISER_ID}', programme.advertiserId);
     affiliateLink = affiliateLink.replace('${PRODUCT_URL}', productUrl.toString());
-    
+
     affiliateLink = this.replaceEncodedProductUrl(affiliateLink, productUrl);
     if (affiliateLink === null) {
       return productUrl.toString();
     }
-    
+
     affiliateLink = affiliateLink.replace('${QUERY_PARAM_SEPERATOR}', productUrl.search ? '&' : '?');
 
     return affiliateLink;

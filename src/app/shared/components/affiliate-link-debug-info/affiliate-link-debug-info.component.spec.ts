@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 
@@ -6,17 +6,17 @@ import { AffiliateLinkDebugInfoComponent } from './affiliate-link-debug-info.com
 
 describe('AffiliateLinkDebugInfoComponent', () => {
 
-  let affiliateService: any = {
+  const affiliateService: any = {
     createAffiliateLink(): Promise<string> {
       return Promise.resolve('affiliateLink');
     }
   };
-  let modalController: any;
+  const modalController: any = {};
 
   let component: AffiliateLinkDebugInfoComponent;
   let fixture: ComponentFixture<AffiliateLinkDebugInfoComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AffiliateLinkDebugInfoComponent ],
       imports: [IonicModule.forRoot()],

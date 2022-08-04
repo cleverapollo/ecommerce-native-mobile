@@ -16,7 +16,7 @@ export class AffiliateDouglasService implements AffiliateService {
   constructor(private httpClient: HttpClient, private logger: LogService, private platformService: DefaultPlatformService) { }
 
   supportsDomain(domain: string): boolean {
-    return domain === AffiliateDouglasService.DOUGLAS_DOMAIN 
+    return domain === AffiliateDouglasService.DOUGLAS_DOMAIN
       && this.platformService.isNativePlatform // web request is blocked by CORS;
   }
 
@@ -32,7 +32,7 @@ export class AffiliateDouglasService implements AffiliateService {
       const requestURL = this.createRequestURL(productUrlString);
       this.httpClient.get(requestURL, {
         headers: {
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+          Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
         },
         responseType: 'text'
       }).pipe(first()).subscribe( generatorResult => {
@@ -57,15 +57,15 @@ export class AffiliateDouglasService implements AffiliateService {
   }
 
   private removeImageElementsFromGeneratorResult(generatorResult: string) {
-    return generatorResult.replace(/<img[^>]*>/g,"");
+    return generatorResult.replace(/<img[^>]*>/g,'');
   }
 
   private parseAffiliateLinkFromGeneratorResult(generatorResult: string): string | null {
     const resultAsHtml = this.createHTMLElementFromHTMLString(generatorResult);
     const textareas = resultAsHtml.getElementsByTagName('textarea');
     let result: string | null = null;
-    
-    for (let textarea of textareas) {
+
+    for (const textarea of textareas) {
       const decodedAnchorHTMLString = textarea.innerHTML
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
@@ -97,13 +97,13 @@ export class AffiliateDouglasService implements AffiliateService {
   }
 
   private createHTMLElementFromHTMLString(htmlString: string): HTMLElement {
-    let htmlElement = document.createElement('html');
+    const htmlElement = document.createElement('html');
     htmlElement.innerHTML = htmlString.trim();
     return htmlElement;
   }
 
   private createHTMLAnchorElementFromHTMLString(htmlString: string): HTMLAnchorElement {
-    let htmlElement = document.createElement('div');
+    const htmlElement = document.createElement('div');
     htmlElement.innerHTML = htmlString.trim();
     return htmlElement.firstChild as HTMLAnchorElement;
   }

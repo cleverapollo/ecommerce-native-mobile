@@ -23,9 +23,9 @@ export class SharedWishListPage implements OnInit {
     }
     return dateString;
   }
-  
+
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private analyticsService: AnalyticsService,
     private publicResourceApiService: PublicResourceApiService,
     private datePipe: DatePipe
@@ -41,7 +41,8 @@ export class SharedWishListPage implements OnInit {
   }
 
   updateWishList(updatedWish: FriendWish) {
-    const wishIndex = this.wishList.wishes.findIndex((w: FriendWish) => w.id == updatedWish.id);
+    const wishIndex = this.wishList.wishes
+      .findIndex((w: FriendWish) => w.id === updatedWish.id);
     if (wishIndex !== -1) {
       this.wishList.wishes[wishIndex] = updatedWish;
     } else {

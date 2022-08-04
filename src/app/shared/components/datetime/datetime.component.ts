@@ -8,7 +8,7 @@ import { addYears, format, parseISO } from 'date-fns';
   templateUrl: './datetime.component.html',
   styleUrls: ['./datetime.component.scss'],
   providers: [
-    { 
+    {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => DatetimeComponent),
       multi: true
@@ -24,7 +24,7 @@ export class DatetimeComponent implements OnInit, ControlValueAccessor {
   /** Stacked label for the input. */
   @Input() label: string | undefined;
   /** Disables the date selection */
-  @Input() disabled: boolean = false;
+  @Input() disabled = false;
   /** Min Date to select. Earlier dates are disabled. */
   @Input() minDate: string | undefined;
   /** Date which is preselected in the modal. */
@@ -49,10 +49,10 @@ export class DatetimeComponent implements OnInit, ControlValueAccessor {
 
   set selectedDate(isoDateString: null | string | undefined) {
 
-    this._selectedDate = isoDateString;    
+    this._selectedDate = isoDateString;
     this.propagateChange(this._selectedDate);
-    this.formattedDate = isoDateString ? 
-      format(parseISO(isoDateString), 'dd.MM.yyyy') : 
+    this.formattedDate = isoDateString ?
+      format(parseISO(isoDateString), 'dd.MM.yyyy') :
       isoDateString;
   }
 

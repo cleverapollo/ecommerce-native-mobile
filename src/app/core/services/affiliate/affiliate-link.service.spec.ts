@@ -7,19 +7,19 @@ import { AffiliateLinkService } from './affiliate-link.service';
 
 describe('AffiliateLinkService', () => {
   let service: AffiliateLinkService;
-  let douglasAffiliateMockService: AffiliateService = {
-    supportsDomain: function (domain: string): boolean {
+  const douglasAffiliateMockService: AffiliateService = {
+    supportsDomain: (domain: string): boolean => {
       return domain === 'douglas.de';
     },
-    createAffiliateLink: function (productUrlString: string): Promise<string> {
+    createAffiliateLink(productUrlString: string): Promise<string>{
       return Promise.resolve('https://www.affiliate-link/douglas')
     },
   };
-  let defaultAffiliateMockService: AffiliateService = {
-    supportsDomain: function (domain: string): boolean {
+  const defaultAffiliateMockService: AffiliateService = {
+    supportsDomain(domain: string): boolean {
       return domain === 'amazon.de';
     },
-    createAffiliateLink: function (productUrlString: string): Promise<string> {
+    createAffiliateLink(productUrlString: string): Promise<string> {
       return Promise.resolve('https://www.affiliate-link/amazon')
     },
   };

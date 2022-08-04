@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { IonicModule } from '@ionic/angular';
@@ -7,12 +7,12 @@ import { SignupCompletedPage } from './signup-completed.page';
 
 describe('SignupCompletedPage', () => {
 
-  let analyticsService: any;
+  const analyticsService: any ={};
 
   let component: SignupCompletedPage;
   let fixture: ComponentFixture<SignupCompletedPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SignupCompletedPage ],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],

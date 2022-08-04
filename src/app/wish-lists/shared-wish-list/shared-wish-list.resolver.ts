@@ -9,9 +9,9 @@ import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish
 
 @Injectable()
 export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList }>> {
-  
+
   constructor(
-    private wishListApi: WishListApiService, 
+    private wishListApi: WishListApiService,
     private publicResourceApiService: PublicResourceApiService,
     private platformService: DefaultPlatformService,
     private friendWishListStore: FriendWishListStoreService,
@@ -35,7 +35,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
           }
         } else {
           const wishList = await this.publicResourceApiService.getSharedWishList(wishListId).toPromise();
-          resolve({ wishList: wishList });
+          resolve({ wishList });
         }
       } catch (error) {
         reject(error)
@@ -46,7 +46,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
   private async isFriendWishList(wishListId: string) {
     try {
       const wishLists = await this.friendWishListStore.loadWishLists().toPromise();
-      const wishList = wishLists.find((wishList) => wishList.id === wishListId);
+      const wishList = wishLists.find((w) => w.id === wishListId);
       return wishList !== undefined;
     } catch (error) {
       return false;
@@ -56,7 +56,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
   private async isOwnWishList(wishListId: string) {
     try {
       const wishLists = await this.wishListStore.loadWishLists().toPromise();
-      const wishList = wishLists.find((wishList) => wishList.id === wishListId);
+      const wishList = wishLists.find((w) => w.id === wishListId);
       return wishList !== undefined;
     } catch (error) {
       return false;

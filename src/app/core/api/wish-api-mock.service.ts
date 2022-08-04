@@ -1,6 +1,6 @@
-import { WishDto } from "@core/models/wish-list.model";
-import { Observable } from "rxjs";
-import { WishApi } from "./wish-api.service";
+import { WishDto } from '@core/models/wish-list.model';
+import { Observable } from 'rxjs';
+import { WishApi } from './wish-api.service';
 
 export class WishApiMockService implements WishApi {
 

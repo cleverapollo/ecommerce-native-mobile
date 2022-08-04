@@ -21,7 +21,7 @@ export class ApiErrorHandlerService {
       } else {
         this.logger.log(`error status : ${error.status} ${error.statusText}`);
         if (getSpecificServerError) {
-          let specificErrorMessage = getSpecificServerError(error);
+          const specificErrorMessage = getSpecificServerError(error);
           if (specificErrorMessage) {
             errorMessage = specificErrorMessage;
           }

@@ -1,6 +1,6 @@
-import { FriendWishList } from "@friends/friends-wish-list-overview/friends-wish-list-overview.model";
-import { Observable, of } from "rxjs";
-import { FriendWishListStore } from "./friend-wish-list-store.service";
+import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { Observable, of } from 'rxjs';
+import { FriendWishListStore } from './friend-wish-list-store.service';
 
 export class MockFriendWishListStoreService implements FriendWishListStore {
 

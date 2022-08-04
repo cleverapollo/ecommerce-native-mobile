@@ -30,7 +30,7 @@ export class LastNameUpdatePage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private api: UserApiService,
     private userProfileStore: UserProfileStore,
     private loadingService: LoadingService,

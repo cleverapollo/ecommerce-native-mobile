@@ -31,14 +31,14 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private userProfileStore: UserProfileStore,
     private analyticsService: AnalyticsService,
     private logger: LogService
   ) { }
 
   async ngOnInit() {
-    this.profile = this.route.snapshot?.data?.profile 
+    this.profile = this.route.snapshot?.data?.profile
     this.showPasswordChangeLink = this.profile.authProvider === AuthProvider.WANTIC;
     this.userCanChangeEmail = this.profile.authProvider === AuthProvider.WANTIC;
   }

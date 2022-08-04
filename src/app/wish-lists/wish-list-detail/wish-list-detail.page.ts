@@ -23,7 +23,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   private loadWishListSubscription: Subscription;
 
   wishList: WishListDto;
-  showBackButton: boolean = true;
+  showBackButton = true;
 
   get wishListOwnerCount(): number {
     return this.wishList?.owners?.length || 0;
@@ -35,9 +35,9 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   cssClass(first: boolean, last: boolean) {
     return {
-      'standalone': this.wishListOwnerCount == 1,
-      'first': this.wishListOwnerCount > 1 && first,
-      'last': this.wishListOwnerCount > 1 && last
+      standalone: this.wishListOwnerCount === 1,
+      first: this.wishListOwnerCount > 1 && first,
+      last: this.wishListOwnerCount > 1 && last
     }
   }
 
@@ -63,7 +63,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     })
   }
 
-  ionViewWillEnter() { 
+  ionViewWillEnter() {
     this.wishListStore.loadWishList(this.wishList.id).subscribe( wishList => {
       this.wishList = wishList;
     })

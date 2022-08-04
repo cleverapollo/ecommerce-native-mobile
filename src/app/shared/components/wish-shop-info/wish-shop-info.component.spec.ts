@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { WishDto } from '@core/models/wish-list.model';
 import { WishListTestData } from '@core/test/wish-list-data';
@@ -9,32 +9,32 @@ import { WishShopInfoComponent, WishShopInfoComponentStyles } from './wish-shop-
 describe('WishShopInfoComponent', () => {
   let component: WishShopInfoComponent;
   let fixture: ComponentFixture<WishShopInfoComponent>;
-  let noStyles: WishShopInfoComponentStyles = {
+  const noStyles: WishShopInfoComponentStyles = {
     shopInfoOverlay: { },
     iconStar: { },
     shopLogoContainer: { },
     priceInfo: { }
   }
-  let exampleStyle: WishShopInfoComponentStyles = {
-    shopInfoOverlay: { 
-      'min-width': '59px', 
-      'min-height': '77px' 
+  const exampleStyle: WishShopInfoComponentStyles = {
+    shopInfoOverlay: {
+      'min-width': '59px',
+      'min-height': '77px'
     },
-    iconStar: { 
-      'font-size': '19px' 
+    iconStar: {
+      'font-size': '19px'
     },
-    shopLogoContainer: { 
-      'max-height': '21px', 
-      'margin-top': '4px', 
-      'margin-bottom': '4px' 
+    shopLogoContainer: {
+      'max-height': '21px',
+      'margin-top': '4px',
+      'margin-bottom': '4px'
     },
-    priceInfo: { 
-      'letter-spacing': '-0.7px', 
-      'font': 'normal normal 900 20px/20px Roboto' 
+    priceInfo: {
+      'letter-spacing': '-0.7px',
+      font: 'normal normal 900 20px/20px Roboto'
     }
   }
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WishShopInfoComponent ],
       imports: [IonicModule.forRoot()]

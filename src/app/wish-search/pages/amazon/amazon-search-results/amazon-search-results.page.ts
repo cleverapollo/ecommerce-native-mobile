@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchQuery, SearchResultDataService, SearchType } from '@core/services/search-result-data.service';
 import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
-import { ProductSearchService } from '@core/services/product-search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { IonInfiniteScroll, Platform } from '@ionic/angular';
@@ -27,23 +26,23 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   set results(value) {
     this.loading = false;
     this._results = value;
-  } 
+  }
   get results(): SearchResultItem[] {
     return this._results
   };
 
-  loading: Boolean;
+  loading = false;
   searchSuggestions = [
-    "Spiegel Bestseller",
-    "Baby Geschenk",
-    "Reiseführer",
-    "Holzspielzeug",
-    "Puzzle Spiele",
-    "Hundespielzeug",
-    "Bio Tee",
-    "Kinderbuch ab 2 Jahre",
-    "Nachtlicht Kinder",
-    "Kugelbahn Holz"
+    'Spiegel Bestseller',
+    'Baby Geschenk',
+    'Reiseführer',
+    'Holzspielzeug',
+    'Puzzle Spiele',
+    'Hundespielzeug',
+    'Bio Tee',
+    'Kinderbuch ab 2 Jahre',
+    'Nachtlicht Kinder',
+    'Kugelbahn Holz'
   ]
 
   get validationMessages(): ValidationMessages {
@@ -55,11 +54,11 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
     }
   };
 
-  page: number = 1;
-  maxPageCount: number = 1;
+  page = 1;
+  maxPageCount = 1;
 
   searchByAmazonApiForm: FormGroup;
-  removeSearchResultsAfterLeavingPage: boolean = true;
+  removeSearchResultsAfterLeavingPage = true;
 
   get showBackButton(): boolean {
     return this.router.url !== '/secure/wish-search';
@@ -76,8 +75,7 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor(
-    private productSearchService: ProductSearchService,    
-    private searchService: SearchService, 
+    private searchService: SearchService,
     private formBuilder: FormBuilder,
     private searchResultDataService: SearchResultDataService,
     private router: Router,
@@ -148,27 +146,27 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
 
   private logSearchResultEvent(searchResult: SearchResult) {
     this.analyticsService.logAppsflyerEvent('af_search', {
-      'af_search_string': this.keywords,
-      'af_content_list': searchResult.items.map(item => item.asin)
+      af_search_string: this.keywords,
+      af_content_list: searchResult.items.map(item => item.asin)
     });
     this.analyticsService.logFirebaseEvent('search', {
-      'search_term': this.keywords,
-      'items': searchResult.items.map(item => {
+      search_term: this.keywords,
+      items: searchResult.items.map(item => {
         return {
-          'item_id': item.asin,
-          'item_name': item.name,
-          'price': item.price
+          item_id: item.asin,
+          item_name: item.name,
+          price: item.price
         };
       })
     });
   }
 
   private logSearchEvent() {
-    this.analyticsService.logAppsflyerEvent('af_search', { 
-      'af_search_string': this.keywords 
+    this.analyticsService.logAppsflyerEvent('af_search', {
+      af_search_string: this.keywords
     });
-    this.analyticsService.logFirebaseEvent('search', { 
-      'search_term': this.keywords 
+    this.analyticsService.logFirebaseEvent('search', {
+      search_term: this.keywords
     });
   }
 
@@ -193,7 +191,7 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   }
 
   navigateToWishNewPage(item: SearchResultItem) {
-    let wish = SearchResultItemMapper.map(item, new WishDto());
+    const wish = SearchResultItemMapper.map(item, new WishDto());
     const wishList: WishListDto = this.route.snapshot.data.wishList;
     if (wishList) {
       wish.wishListId = wishList.id;
@@ -230,7 +228,7 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
     this.searchResultDataService.update(searchQuery);
   }
 
-  private createForm(value: String) {
+  private createForm(value: string) {
     this.searchByAmazonApiForm = this.formBuilder.group({
       keywords: [value, {
         validators: [Validators.required, Validators.minLength(2)],

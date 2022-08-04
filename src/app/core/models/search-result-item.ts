@@ -23,7 +23,7 @@ export class SearchResultItem {
             this.price = price;
         } else if (typeof price === 'number') {
             const priceAmnout = price as number;
-            let priceDto = new PriceDto();
+            const priceDto = new PriceDto();
             priceDto.amount = priceAmnout;
             priceDto.currency = '€';
             this.price = priceDto;

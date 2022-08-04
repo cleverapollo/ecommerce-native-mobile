@@ -9,10 +9,10 @@ import { AutoLoginGuard } from '@guards/auto-login.guard';
 import { FirebaseRouteGuard } from '@guards/firebase-route.guard';
 
 const routes: Routes = [
-  { 
-    path: '', 
-    redirectTo: 'start', 
-    pathMatch: 'full' 
+  {
+    path: '',
+    redirectTo: 'start',
+    pathMatch: 'full'
   },
   {
     path: 'login',

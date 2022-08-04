@@ -26,9 +26,9 @@ export const environment: EnvironmentConfig = {
   googleSignInAndroidClientId: ''
 };
 
-export const SERVER_URL = ''; 
+export const SERVER_URL = '';
 export const APP_URL = '';
-export const WHITELISTED_DOMAINS = []; 
+export const WHITELISTED_DOMAINS = [];
 export const appVersion = packageJson.version;
 
 /*

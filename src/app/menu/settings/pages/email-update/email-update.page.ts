@@ -24,7 +24,7 @@ export class EmailUpdatePage implements OnInit {
 
   form: FormGroup;
   userProfile: UserProfile;
-  
+
   get validationMessages(): ValidationMessages {
     return {
       email: [
@@ -47,7 +47,7 @@ export class EmailUpdatePage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private api: UserApiService,
     private logger: LogService,
     private loadingService: LoadingService,
@@ -101,7 +101,7 @@ export class EmailUpdatePage implements OnInit {
           this.logger.error(error);
           this.handleReAuthError(busyIndicator);
         });
-      }, 
+      },
       error: errorResponse => {
         this.handleErrorResponse(errorResponse);
         this.loadingService.dismissLoadingSpinner(busyIndicator);

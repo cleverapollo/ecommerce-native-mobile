@@ -15,9 +15,9 @@ export class ApiService {
   private clientInfoHeader?: string;
 
   constructor(
-    private httpClient: HttpClient, 
+    private httpClient: HttpClient,
     private logger: LogService,
-    private platformService: DefaultPlatformService) { 
+    private platformService: DefaultPlatformService) {
     this.initClientInfoHeader();
   }
 
@@ -28,7 +28,7 @@ export class ApiService {
   post<T>(url: string, body: any) : Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
-      headers: headers,
+      headers,
       responseType: 'json'
     });
   }
@@ -36,7 +36,7 @@ export class ApiService {
   put<T>(url: string, body: any) : Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.put<T>(`${SERVER_URL}/${url}`, body, {
-      headers: headers,
+      headers,
       responseType: 'json'
     });
   }
@@ -44,7 +44,7 @@ export class ApiService {
   patch<T>(url: string, body?: any | null) : Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.patch<T>(`${SERVER_URL}/${url}`, body, {
-      headers: headers,
+      headers,
       responseType: 'json'
     });
   }
@@ -52,7 +52,7 @@ export class ApiService {
   delete<T>(url: string) : Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.delete<T>(`${SERVER_URL}/${url}`, {
-      headers: headers,
+      headers,
       responseType: 'json'
     });
   }
@@ -60,19 +60,19 @@ export class ApiService {
   get<T>(url: string, queryParams?: HttpParams) : Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.get<T>(`${SERVER_URL}/${url}`, {
-      headers: headers,
+      headers,
       responseType: 'json',
       params: queryParams
     });
   }
 
   uploadFile<T>(url: string, formData: FormData) {
-    let headers = new HttpHeaders();
+    const headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'multipart/form-data');
 
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, formData, {
-      headers: headers,
+      headers,
       responseType: 'json'
     });
   }
@@ -97,10 +97,10 @@ export class ApiService {
   }
 
   private async setupClientInfoHeader() {
-    let platform: string = 'unknown';
-    let osVersion: string = '0.0.0';
-    let version: string = appVersion;
-    let locale: string = 'de_DE';
+    let platform = 'unknown';
+    let osVersion = '0.0.0';
+    let version = appVersion;
+    let locale = 'de_DE';
 
     if (this.platformService.isNativePlatform) {
       const appInfo = await App.getInfo();

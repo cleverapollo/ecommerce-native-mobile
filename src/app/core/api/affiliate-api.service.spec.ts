@@ -7,7 +7,7 @@ import { ApiService } from './api.service';
 
 describe('AffiliateApiService', () => {
 
-  let apiServiceMock = {
+  const apiServiceMock = {
     get() : Observable<AffiliateProgramme[]> {
       return from([])
     }

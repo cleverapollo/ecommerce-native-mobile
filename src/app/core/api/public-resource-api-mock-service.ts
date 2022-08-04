@@ -1,7 +1,7 @@
-import { SearchResult } from "@core/models/search-result-item";
-import { FriendWish, FriendWishList } from "@friends/friends-wish-list-overview/friends-wish-list-overview.model";
-import { Observable, of, throwError } from "rxjs";
-import { PublicResourceApi } from "./public-resource-api.service";
+import { SearchResult } from '@core/models/search-result-item';
+import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { Observable, of, throwError } from 'rxjs';
+import { PublicResourceApi } from './public-resource-api.service';
 
 export class PublicResourceApiMockService implements PublicResourceApi {
 
@@ -34,5 +34,5 @@ export class PublicResourceApiMockService implements PublicResourceApi {
         }
         return of(this.searchForItemsResult);
     }
-  
+
   }

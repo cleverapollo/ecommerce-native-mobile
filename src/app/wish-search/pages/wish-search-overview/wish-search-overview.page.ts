@@ -22,7 +22,7 @@ import { environment } from '@env/environment';
   styleUrls: ['./wish-search-overview.page.scss'],
 })
 export class WishSearchOverviewPage implements OnInit {
-  
+
   get validationMessages(): ValidationMessages {
     return {
       keywords: [
@@ -50,9 +50,9 @@ export class WishSearchOverviewPage implements OnInit {
 
   searchByAmazonApiForm: FormGroup;
   searchByURLForm: FormGroup;
-  
+
   constructor(
-    private productSearchService: ProductSearchService, 
+    private productSearchService: ProductSearchService,
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -66,13 +66,13 @@ export class WishSearchOverviewPage implements OnInit {
 
   ngOnInit() {
     this.searchByAmazonApiForm = this.formBuilder.group({
-      keywords: [null, { 
+      keywords: [null, {
         validators: [Validators.required, Validators.minLength(2)],
         updateOn: 'submit'
        }]
     });
     this.searchByURLForm = this.formBuilder.group({
-      url: [null, { 
+      url: [null, {
         validators: [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')],
         updateOn: 'submit'
        }]

@@ -8,10 +8,10 @@ export class CustomValidation {
         // if control is empty return no error
         return null;
       }
-  
+
       // test the value of the control against the regexp supplied
       const valid = regex.test(control.value);
-  
+
       // if true, return no error (no error), else return error passed in the second parameter
       return valid ? null : error;
     };
@@ -23,7 +23,7 @@ export class CustomValidation {
         const hasCapitalCase = /[A-Z]/.test(control.value);
         const hasSmallCase = /[a-z]/.test(control.value);
         const isValid = hasNumber && hasCapitalCase && hasSmallCase;
-    
+
         return isValid ? null : error;
       };
   }
@@ -47,7 +47,7 @@ export class CustomValidation {
     return null;
   }
 
-  static valueHasChanged(control: AbstractControl): ValidationErrors | null { 
+  static valueHasChanged(control: AbstractControl): ValidationErrors | null {
     return control.dirty ? null : {
       valueHasNotChanged: true
     }
@@ -55,12 +55,12 @@ export class CustomValidation {
 
 
   static validateFormGroup(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => { 
-      const control = formGroup.get(field);   
-      if (control instanceof FormGroup) { 
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormGroup) {
         this.validateFormGroup(control);
       }
-      control.markAsTouched({ onlySelf: true });      
+      control.markAsTouched({ onlySelf: true });
     });
   }
 

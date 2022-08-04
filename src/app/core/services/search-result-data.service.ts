@@ -8,10 +8,10 @@ export enum SearchType {
 }
 export class SearchQuery {
   results: SearchResultItem[] = [];
-  searchTerm: string = '';
+  searchTerm = '';
   type: SearchType = SearchType.AMAZON_API;
-  pageCount: number = 1;
-  totalResultCount: number = 0;
+  pageCount = 1;
+  totalResultCount = 0;
 }
 
 @Injectable({
@@ -24,7 +24,7 @@ export class SearchResultDataService {
   private _lastSearchQuery: BehaviorSubject<SearchQuery> = new BehaviorSubject(new SearchQuery());
   $lastSearchQuery = this._lastSearchQuery.asObservable();
 
-  constructor(private cache: CacheService) { 
+  constructor(private cache: CacheService) {
     this.cache.itemExists(this.CACHE_KEY).then( exists => {
       if (exists) {
         this.cache.getItem(this.CACHE_KEY).then(( query => {

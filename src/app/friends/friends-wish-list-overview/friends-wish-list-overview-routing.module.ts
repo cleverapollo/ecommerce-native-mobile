@@ -12,7 +12,8 @@ const routes: Routes = [
   {
     path: 'friends-wish-list-detail',
     canActivate: [AuthGuard],
-    loadChildren: () => import('@friends/friends-wish-list-detail/friends-wish-list-detail.module').then( m => m.FriendsWishListDetailPageModule)
+    loadChildren: () => import('@friends/friends-wish-list-detail/friends-wish-list-detail.module')
+      .then( m => m.FriendsWishListDetailPageModule)
   },
 ];
 

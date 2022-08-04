@@ -1,14 +1,9 @@
-import { HttpBackend, HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, forwardRef, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { FormBuilder, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { WishApiMockService } from '@core/api/wish-api-mock.service';
-import { WishApi, WishApiService } from '@core/api/wish-api.service';
-import { WishListApiService } from '@core/api/wish-list-api.service';
-import { WishListApiMockService } from '@core/api/wish-list-mock.service';
 import { WishDto } from '@core/models/wish-list.model';
 import { MockAlertService } from '@core/services/alert-mock.service';
 import { AlertService, AppAlertService } from '@core/services/alert.service';
@@ -17,7 +12,6 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { MockLoadingService } from '@core/services/loading-mock.service';
 import { AppLoadingService, LoadingService } from '@core/services/loading.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
-import { MockToastService } from '@core/services/toast-mock.service';
 import { CoreToastService, ToastService } from '@core/services/toast.service';
 import { MockWishListStoreService } from '@core/services/wish-list-store-mock.service';
 import { WishListStore, WishListStoreService } from '@core/services/wish-list-store.service';
@@ -26,7 +20,7 @@ import { IonicModule } from '@ionic/angular';
 import { SharedModule } from '@shared/shared.module';
 import { CacheModule } from 'ionic-cache';
 import { LoggerConfig, LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { WishCreateUpdatePage } from './wish-create-update.page';
 
 
@@ -38,36 +32,36 @@ describe('WishCreateUpdatePage', () => {
 
   let component: WishCreateUpdatePage;
   let fixture: ComponentFixture<WishCreateUpdatePage>;
-  const defaultSnapshotData: any = {'wishList': WishListTestData.wishListBirthday};
+  const defaultSnapshotData: any = {wishList: WishListTestData.wishListBirthday};
   let snapshotData: any = defaultSnapshotData;
 
   const loggerConfig: LoggerConfig = {
     level: NgxLoggerLevel.DEBUG,
   };
-  let authService: MockAuthService = new MockAuthService();
+  const authService: MockAuthService = new MockAuthService();
 
-  let activatedRoute: any = {snapshot: {data: snapshotData}}; 
+  const activatedRoute: any = {snapshot: {data: snapshotData}};
   let router: Router;
-  let alertService: AppAlertService = new MockAlertService();
-  let wishListStore: WishListStore = new MockWishListStoreService();
-  let searchResultDataService: SearchResultDataService = jasmine.createSpyObj('searchResultDataService', ['clear']);
-  let loadingService: AppLoadingService = new MockLoadingService();
-  let toastService: ToastService = jasmine.createSpyObj('toastService', ['presentSuccessToast', 'presentErrorToast']);
-  let analyticsService: AnalyticsService = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName', 'logAppsflyerEvent', 'logFirebaseEvent']);
+  const alertService: AppAlertService = new MockAlertService();
+  const wishListStore: WishListStore = new MockWishListStoreService();
+  const searchResultDataService: SearchResultDataService = jasmine.createSpyObj('searchResultDataService', ['clear']);
+  const loadingService: AppLoadingService = new MockLoadingService();
+  const toastService: ToastService = jasmine.createSpyObj('toastService', ['presentSuccessToast', 'presentErrorToast']);
+  const analyticsService: AnalyticsService = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName', 'logAppsflyerEvent', 'logFirebaseEvent']);
 
   function configureTestingModule(newSnapshotData: any = defaultSnapshotData) {
     snapshotData = newSnapshotData;
     TestBed.configureTestingModule({
       declarations: [ WishCreateUpdatePage ],
       imports: [
-        IonicModule.forRoot(), 
+        IonicModule.forRoot(),
         LoggerModule.forRoot(loggerConfig),
         CacheModule.forRoot({ keyPrefix: 'wantic-unit-test-app-cache' }),
         RouterTestingModule,
         ReactiveFormsModule,
         FormsModule,
         SharedModule,
-        HttpClientTestingModule 
+        HttpClientTestingModule
       ],
       providers: [
         FormBuilder,
@@ -123,10 +117,10 @@ describe('WishCreateUpdatePage', () => {
       expect(formControls.isFavorite.valid).toBeTruthy();
     });
   });
-  
+
   describe('ionViewDidEnter', () => {
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       configureTestingModule();
     }))
 
@@ -187,8 +181,8 @@ describe('WishCreateUpdatePage', () => {
     })
 
     it('should create a wish', fakeAsync(() => {
-      // given 
-      let wish = new WishDto();
+      // given
+      const wish = new WishDto();
       wish.wishListId = '1';
       component.wish = wish
 
@@ -219,14 +213,14 @@ describe('WishCreateUpdatePage', () => {
       expect(showLoadingServiceSpy).toHaveBeenCalled();
       expect(searchResultDataService.clear).toHaveBeenCalled();
       expect(analyticsService.logAppsflyerEvent).toHaveBeenCalledWith('af_add_to_wishlist', {
-        'af_price': 469.00,
-        'af_content_id': undefined,
-        'af_currency': '€'
+        af_price: 469.00,
+        af_content_id: undefined,
+        af_currency: '€'
       });
       expect(analyticsService.logFirebaseEvent).toHaveBeenCalledWith('add_to_wishlist',{
-        'content_id':undefined,
-        'value': 469.00,
-        'currency': '€'
+        content_id: undefined,
+        value: 469.00,
+        currency: '€'
       });
       expect(toastService.presentSuccessToast).toHaveBeenCalled();
       expect(navigateSpy).toHaveBeenCalledWith('/secure/home/wish-list/1?forceRefresh=true');
@@ -379,7 +373,7 @@ describe('WishCreateUpdatePage', () => {
 
       flush();
     }));
-    
+
     it('should show user feedback on error when deleting a wish', fakeAsync(() => {
       // given
       component.wish = WishListTestData.wishBoschWasher;
@@ -394,7 +388,7 @@ describe('WishCreateUpdatePage', () => {
       expect(toastService.presentErrorToast).toHaveBeenCalled();
       expect(navigateSpy).not.toHaveBeenCalled();
       expect(dismissLoadingServiceSpy).toHaveBeenCalled();
-      
+
       flush();
     }));
   });

@@ -6,8 +6,8 @@ import { PublicResourceApiService } from './public-resource-api.service';
 
 describe('PublicResourceApiService', () => {
 
-  let apiService: any; 
-  let errorHandler: any;
+  const apiService = {};
+  const errorHandler = {};
 
   beforeEach(() => TestBed.configureTestingModule({
     providers: [

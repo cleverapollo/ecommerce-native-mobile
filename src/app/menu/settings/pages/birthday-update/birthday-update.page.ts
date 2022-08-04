@@ -28,14 +28,14 @@ export class BirthdayUpdatePage implements OnInit {
   }
 
   constructor(
-    private loadingService: LoadingService, 
+    private loadingService: LoadingService,
     private toastService: CoreToastService,
-    private formBuilder: FormBuilder, 
-    private api: UserApiService, 
+    private formBuilder: FormBuilder,
+    private api: UserApiService,
     private logger: LogService,
     private userProfileStore: UserProfileStore,
     private analyticsService: AnalyticsService
-  ) 
+  )
   { }
 
   ngOnInit() {
@@ -88,7 +88,7 @@ export class BirthdayUpdatePage implements OnInit {
       await this.userProfileStore.updateCachedUserProfile(updatedProfile);
     } catch (error) {
       this.logger.error('Error while updating user profile in cache.');
-    } 
+    }
   }
 
   private timestampToISO(timestamp: string | Date): string {

@@ -92,7 +92,7 @@ export class FirebaseService implements FirebaseControllable {
   onAuthStateChanged(): Observable<any | firebase.User> {
     if (this.platform.isNativePlatform) {
       return this.nativeAuth.onAuthStateChanged()
-    } else {      
+    } else {
       return new Observable<firebase.User>(observer => {
         this.angularAuth.onAuthStateChanged(observer.next, observer.error, observer.complete);
       });
@@ -125,7 +125,7 @@ export class FirebaseService implements FirebaseControllable {
 
   private signInNotSupportedError(providerName: string): CustomError {
     return new CustomError(
-      CustomError.Type.NotSupportedWebFeature, 
+      CustomError.Type.NotSupportedWebFeature,
       `SignIn with ${providerName} is not supported yet`
     );
   }

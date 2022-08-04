@@ -10,8 +10,8 @@ describe('DatetimeComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [IonicModule.forRoot()],
-      declarations: [ 
-        DatetimeComponent 
+      declarations: [
+        DatetimeComponent
       ]
     }).compileComponents();
 
@@ -91,7 +91,7 @@ describe('DatetimeComponent', () => {
     beforeEach(() => {
       component.datetime = jasmine.createSpyObj('datetime', ['confirm'])
     })
-   
+
     it('updates the selected date and the formatted date', () => {
       const spy = spyOn(component, 'propagateChange');
       component.onDateChanged('2022-04-13T17:28:16+0000');
@@ -124,7 +124,7 @@ describe('DatetimeComponent', () => {
       expect(component.datetime.confirm).toHaveBeenCalledWith(true)
     });
 
-  }); 
+  });
 
   describe('setDisabledState', () => {
 

@@ -13,7 +13,7 @@ export class TabBarPage implements OnInit, OnDestroy {
   public tabs: IonTabs;
 
   constructor(
-    private navController: NavController, 
+    private navController: NavController,
     private searchResultDataService: SearchResultDataService
   ) { }
 

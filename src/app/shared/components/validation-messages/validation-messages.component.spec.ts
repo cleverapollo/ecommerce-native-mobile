@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ValidationMessagesComponent } from './validation-messages.component';
@@ -7,7 +7,7 @@ describe('ValidationMessagesComponent', () => {
   let component: ValidationMessagesComponent;
   let fixture: ComponentFixture<ValidationMessagesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ValidationMessagesComponent ],
       imports: [IonicModule.forRoot()]

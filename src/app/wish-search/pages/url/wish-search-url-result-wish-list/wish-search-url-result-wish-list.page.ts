@@ -33,7 +33,7 @@ export class WishSearchUrlResultWishListPage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private analyticsService: AnalyticsService,
     private router: Router,
     private wishService: WishApiService,
@@ -48,7 +48,7 @@ export class WishSearchUrlResultWishListPage implements OnInit {
     this.selectedProduct = this.router.getCurrentNavigation().extras?.state?.selectedProduct;
     this.webPageCrawler.closeInAppBrowser();
     this.form = this.formBuilder.group({
-      'wishListId': this.formBuilder.control(null, {
+      wishListId: this.formBuilder.control(null, {
         validators: [Validators.required]
       })
     });
@@ -85,17 +85,17 @@ export class WishSearchUrlResultWishListPage implements OnInit {
       })
     });
   }
-  
+
   private logAddToWishListEvent(wish: WishDto) {
     this.analyticsService.logAppsflyerEvent('af_add_to_wishlist', {
-      'af_price': wish.price.amount,
-      'af_content_id': wish.asin,
-      'af_currency': wish.price.currency
+      af_price: wish.price.amount,
+      af_content_id: wish.asin,
+      af_currency: wish.price.currency
     });
     this.analyticsService.logFirebaseEvent('add_to_wishlist', {
-      'content_id': wish.asin,
-      'value': wish.price.amount,
-      'currency': wish.price.currency,
+      content_id: wish.asin,
+      value: wish.price.amount,
+      currency: wish.price.currency,
     });
   }
 

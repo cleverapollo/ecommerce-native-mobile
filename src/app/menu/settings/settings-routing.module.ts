@@ -10,27 +10,33 @@ const routes: Routes = [
   },
   {
     path: 'profile-settings-firstname',
-    loadChildren: () => import('./pages/profile-settings-firstname/profile-settings-firstname.module').then( m => m.ProfileSettingsFirstnamePageModule)
+    loadChildren: () => import('./pages/profile-settings-firstname/profile-settings-firstname.module')
+      .then( m => m.ProfileSettingsFirstnamePageModule)
   },
   {
     path: 'last-name-update',
-    loadChildren: () => import('./pages/last-name-update/last-name-update.module').then( m => m.LastNameUpdatePageModule)
+    loadChildren: () => import('./pages/last-name-update/last-name-update.module')
+      .then( m => m.LastNameUpdatePageModule)
   },
   {
     path: 'birthday-update',
-    loadChildren: () => import('./pages/birthday-update/birthday-update.module').then( m => m.BirthdayUpdatePageModule)
+    loadChildren: () => import('./pages/birthday-update/birthday-update.module')
+      .then( m => m.BirthdayUpdatePageModule)
   },
   {
     path: 'email-update',
-    loadChildren: () => import('./pages/email-update/email-update.module').then( m => m.EmailUpdatePageModule)
+    loadChildren: () => import('./pages/email-update/email-update.module')
+      .then( m => m.EmailUpdatePageModule)
   },
   {
     path: 'password-update',
-    loadChildren: () => import('./pages/password-update/password-update.module').then( m => m.PasswordUpdatePageModule)
+    loadChildren: () => import('./pages/password-update/password-update.module')
+      .then( m => m.PasswordUpdatePageModule)
   },
   {
     path: 'account-delete',
-    loadChildren: () => import('./pages/account-delete/account-delete.module').then( m => m.AccountDeletePageModule)
+    loadChildren: () => import('./pages/account-delete/account-delete.module')
+      .then( m => m.AccountDeletePageModule)
   },
 ];
 

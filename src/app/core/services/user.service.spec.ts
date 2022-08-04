@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 
 describe('UserService', () => {
 
-  let facebook: any;
+  const facebook: any = {};
   let service: UserService;
 
   beforeEach(() => {

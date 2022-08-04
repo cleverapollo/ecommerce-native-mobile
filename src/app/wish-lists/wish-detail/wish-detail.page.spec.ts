@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WishDto } from '@core/models/wish-list.model';
@@ -17,35 +17,35 @@ describe('WishDetailPage', () => {
   let component: WishDetailPage;
   let fixture: ComponentFixture<WishDetailPage>;
 
-  let browserService: any = jasmine.createSpyObj('browserService', ['openInAppBrowser']);  
-  let navController = jasmine.createSpyObj('navController', ['back']);
-  let route = {
+  const browserService: any = jasmine.createSpyObj('browserService', ['openInAppBrowser']);
+  const navController = jasmine.createSpyObj('navController', ['back']);
+  const route = {
     snapshot: {
       data: {
-        'wishList': WishListTestData.wishListBirthday,
-        'wish': WishListTestData.wishBoschWasher
+        wishList: WishListTestData.wishListBirthday,
+        wish: WishListTestData.wishBoschWasher
       }
     }
   };
-  let wishListStore: any = {
+  const wishListStore: any = {
     loadWish(wishListId: string, forceRefresh: boolean): Observable<WishDto> {
       return of(WishListTestData.wishBoschWasher)
     }
   };
-  let analyticsService = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
-  let affiliateLinkService: AffiliateService = {
-    createAffiliateLink: function (productUrlString: string): Promise<string> {
+  const analyticsService = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
+  const affiliateLinkService: AffiliateService = {
+    createAffiliateLink(productUrlString: string): Promise<string> {
       return Promise.resolve('https://www.affiliate-link.de/product-id')
     },
-    supportsDomain: function (domain: string): boolean {
+    supportsDomain(domain: string): boolean {
       return true;
     }
   };
-  let modalController: any = {
+  const modalController: any = {
     create(opts): Promise<any> { return Promise.resolve(); }
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WishDetailPage ],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],

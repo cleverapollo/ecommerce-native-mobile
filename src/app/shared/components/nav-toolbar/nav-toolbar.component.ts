@@ -11,9 +11,9 @@ export class NavToolbarComponent implements OnInit {
 
   @Input() skipToPath?: string | any[] | UrlTree;
   @Input() backNavigationPath?: string | any[] | UrlTree;
-  @Input() showBackButton: boolean = true;
+  @Input() showBackButton = true;
 
-  @Input() disableNextButton: boolean = false;
+  @Input() disableNextButton = false;
   @Output() onNextButtonClicked = new EventEmitter();
 
   get canSkip(): boolean {

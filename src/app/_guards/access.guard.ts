@@ -13,8 +13,8 @@ export class AccessGuard implements CanActivate  {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (!environment.production) {
       return true;
-    }  
+    }
     return this.platform.is('hybrid');
   }
-  
+
 }

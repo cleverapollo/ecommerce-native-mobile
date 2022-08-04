@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { PublicResourceApiMockService } from '@core/api/public-resource-api-mock-service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { BrowserService } from '@core/services/browser.service';
@@ -15,13 +15,13 @@ describe('SharedWishComponent', () => {
   let component: SharedWishComponent;
   let fixture: ComponentFixture<SharedWishComponent>;
 
-  let browserService: any = jasmine.createSpyObj('browserService', ['openInAppBrowser']);
-  let modalController: any;
+  const browserService: any = jasmine.createSpyObj('browserService', ['openInAppBrowser']);
+  const modalController: any = {};
   let storageService: MockStorageService = new MockStorageService();
   let publicResourceApiService: PublicResourceApiMockService = new PublicResourceApiMockService();
-  let toastServiceSpy = jasmine.createSpyObj('toastService', ['presentSuccessToast', 'presentErrorToast']);
+  const toastServiceSpy = jasmine.createSpyObj('toastService', ['presentSuccessToast', 'presentErrorToast']);
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SharedWishComponent ],
       imports: [IonicModule.forRoot()],
@@ -59,7 +59,7 @@ describe('SharedWishComponent', () => {
   it('should init with the correct values for wish amazon kindle (reserved by friend)', fakeAsync(() => {
     component.wish = WishListTestData.sharedWishKindle;
     storageService.getResult = null;
-    
+
     fixture.detectChanges();
     tick();
 
@@ -75,7 +75,7 @@ describe('SharedWishComponent', () => {
   it('should init with the correct values for wish amazon kindle (reserved by himself)', fakeAsync(() => {
     component.wish = WishListTestData.sharedWishKindle;
     storageService.getResult = true;
-    
+
     fixture.detectChanges();
     tick(3000);
 
@@ -92,7 +92,7 @@ describe('SharedWishComponent', () => {
   it('should init with the correct values for wish wallet', () => {
     component.wish = WishListTestData.sharedWishWallet;
     fixture.detectChanges();
-    
+
     expect(component.isCancellable).toBeTruthy();
     expect(component.isReservable).toBeFalsy();
     expect(component.isStateChangeable).toBeTruthy();
@@ -111,10 +111,10 @@ describe('SharedWishComponent', () => {
     storageService.getResult = true;
     fixture.detectChanges();
     tick();
-    
+
     spyOn(storageService, 'set');
     spyOn(component.onWishStateChanged, 'emit');
-    
+
     component.reserve();
 
     expect(SharedWishListState[component.state]).toBe(SharedWishListState[SharedWishListState.CANCELLABLE]);
@@ -123,7 +123,7 @@ describe('SharedWishComponent', () => {
     expect(component.onWishStateChanged.emit).toHaveBeenCalledWith(expectedResult);
 
     flush();
-    
+
   }));
 
   it('shouldn\'t change the state if wish reservation failed', fakeAsync(() => {
@@ -135,10 +135,10 @@ describe('SharedWishComponent', () => {
     storageService.getResult = true;
     fixture.detectChanges();
     tick();
-    
+
     spyOn(storageService, 'set');
     spyOn(component.onWishStateChanged, 'emit');
-    
+
     component.reserve();
 
     expect(SharedWishListState[component.state]).toBe(SharedWishListState[SharedWishListState.RESERVABLE]);
@@ -147,7 +147,7 @@ describe('SharedWishComponent', () => {
     expect(component.onWishStateChanged.emit).not.toHaveBeenCalled();
 
     flush();
-    
+
   }));
 
   it('should cancel a wish', fakeAsync(() => {
@@ -159,10 +159,10 @@ describe('SharedWishComponent', () => {
     component.wish = testWish;
     fixture.detectChanges();
     tick();
-    
+
     spyOn(storageService, 'remove');
     spyOn(component.onWishStateChanged, 'emit');
-    
+
     component.cancelReservation();
 
     expect(SharedWishListState[component.state]).toBe(SharedWishListState[SharedWishListState.RESERVABLE]);
@@ -182,10 +182,10 @@ describe('SharedWishComponent', () => {
     storageService.getResult = true;
     fixture.detectChanges();
     tick();
-    
+
     spyOn(storageService, 'remove');
     spyOn(component.onWishStateChanged, 'emit');
-    
+
     component.cancelReservation();
 
     expect(SharedWishListState[component.state]).toBe(SharedWishListState[SharedWishListState.CANCELLABLE]);

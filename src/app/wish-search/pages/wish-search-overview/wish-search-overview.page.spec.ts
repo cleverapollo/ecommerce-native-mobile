@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { WishSearchOverviewPage } from './wish-search-overview.page';
@@ -7,7 +7,7 @@ describe('WishSearchSelectionPage', () => {
   let component: WishSearchOverviewPage;
   let fixture: ComponentFixture<WishSearchOverviewPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WishSearchOverviewPage ],
       imports: [IonicModule.forRoot()]

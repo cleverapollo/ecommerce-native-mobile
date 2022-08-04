@@ -13,7 +13,7 @@ describe('AffiliateDouglasService', () => {
   let service: AffiliateDouglasService;
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
-  let platformService: PlatformMockService = new PlatformMockService();
+  const platformService: PlatformMockService = new PlatformMockService();
 
   beforeEach(() => {
     platformService.setupIOS(); // simulate any native platform

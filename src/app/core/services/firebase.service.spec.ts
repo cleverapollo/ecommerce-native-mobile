@@ -6,11 +6,11 @@ import { DefaultPlatformService, PlatformMockService } from './platform.service'
 
 describe('FirebaseService', () => {
 
-  let angularFireAuthMock;
-  let nativeAuthMock;
+  const angularFireAuthMock = {};
+  const nativeAuthMock = {};
 
   let service: FirebaseService;
-  let platformService: PlatformMockService = new PlatformMockService();
+  const platformService: PlatformMockService = new PlatformMockService();
 
   beforeEach(() => {
     TestBed.configureTestingModule({

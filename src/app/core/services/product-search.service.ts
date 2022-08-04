@@ -14,7 +14,7 @@ export class ProductSearchService {
     private searchResultDataService: SearchResultDataService,
     private searchService: SearchService,
     private webPageCrawler: WebPageCrawlerService
-  ) { 
+  ) {
   }
 
   searchByUrl(url: string): Observable<SearchResultItem[]> {

@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-export type HintType = "default" | "success" | "danger" | "info";
+export type HintType = 'default' | 'success' | 'danger' | 'info';
 export class HintConfig {
   type: HintType;
-  text: String
+  text: string
 
-  constructor(type: HintType, text: String) {
+  constructor(type: HintType, text: string) {
     this.type = type;
     this.text = text;
   }
@@ -26,5 +26,5 @@ export class HintComponent implements OnInit {
 
 }
 
-export const hintConfigForSuccessResponse = new HintConfig("success", "Deine Änderungen wurden erfolgreich gespeichert!");
-export const hintConfigForErrorResponse = new HintConfig("danger", "Deine Änderungen konnten leider nicht gespeichert werdem!");
+export const hintConfigForSuccessResponse = new HintConfig('success', 'Deine Änderungen wurden erfolgreich gespeichert!');
+export const hintConfigForErrorResponse = new HintConfig('danger', 'Deine Änderungen konnten leider nicht gespeichert werdem!');

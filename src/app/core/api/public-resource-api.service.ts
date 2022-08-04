@@ -29,7 +29,8 @@ export class PublicResourceApiService implements PublicResourceApi {
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
   getSharedWishList(wishListId: string): Observable<FriendWishList> {
-    return this.apiService.get<FriendWishList>(`${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists/${wishListId}`).pipe(
+    const uri = `${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists/${wishListId}`;
+    return this.apiService.get<FriendWishList>(uri).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
@@ -42,18 +43,24 @@ export class PublicResourceApiService implements PublicResourceApi {
     return this.createRequestForWishReservationStateChange(wishListId, wishId, StateChangeAction.CANCEL);
   }
 
-  private createRequestForWishReservationStateChange(wishListId: string, wishId: string, action: StateChangeAction): Observable<FriendWish> {
+  private createRequestForWishReservationStateChange(
+    wishListId: string, 
+    wishId: string, 
+    action: StateChangeAction
+  ): Observable<FriendWish> {
     const actionString = StateChangeAction[action];
-    return this.apiService.patch<FriendWish>(`${ApiVersion.v2}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists/${wishListId}/wish/${wishId}?action=${actionString}`).pipe(
+    const uri = `${ApiVersion.v2}/${PublicResourceApiService.REST_END_POINT}/shared-wish-lists/${wishListId}/wish/${wishId}?action=${actionString}`;
+    return this.apiService.patch<FriendWish>(uri).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   searchForItems(keywords: string, page: number): Observable<SearchResult> {
-    let queryParams = new HttpParams()
+    const queryParams = new HttpParams()
       .set('keywords', keywords)
-      .set('page', page.toString())
-    return this.apiService.get<SearchResult>(`${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/product-search`, queryParams).pipe(
+      .set('page', page.toString());
+    const uri = `${ApiVersion.v1}/${PublicResourceApiService.REST_END_POINT}/product-search`;
+    return this.apiService.get<SearchResult>(uri, queryParams).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

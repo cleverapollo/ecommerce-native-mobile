@@ -15,11 +15,11 @@ export class DefaultPlatformService implements PlatformService {
 
   constructor(private platform: Platform) { }
 
-  get isIOS(): boolean { 
+  get isIOS(): boolean {
     return this.platform.is('hybrid') && this.platform.is('ios');
   }
 
-  get isAndroid(): boolean { 
+  get isAndroid(): boolean {
     return this.platform.is('hybrid') && this.platform.is('android');
   }
 
@@ -34,7 +34,7 @@ export class DefaultPlatformService implements PlatformService {
   isReady(): Promise<string> {
     return this.platform.ready();
   }
-  
+
 }
 
 export class PlatformMockService implements PlatformService {
@@ -77,5 +77,5 @@ export class PlatformMockService implements PlatformService {
     this._isAndroid = false;
     this._isWeb = true;
   }
-  
+
 }

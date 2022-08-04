@@ -1,4 +1,4 @@
-import { ASSETS_PATH } from "@core/ui.constants";
+import { ASSETS_PATH } from '@core/ui.constants';
 
 export enum ScriptName {
   HOTJAR, GTM

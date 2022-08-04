@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { WishApiMockService } from '@core/api/wish-api-mock.service';
 import { WishApiService } from '@core/api/wish-api.service';
 import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
@@ -17,18 +17,18 @@ describe('FriendsWishComponent', () => {
 
   const wishKindle = WishListTestData.sharedWishKindle;
 
-  let browserService: BrowserService = jasmine.createSpyObj('browserService', ['openSystemBrowser']);  
-  let wishApiService: WishApiMockService = new WishApiMockService();
-  let affiliateService: any = {
-    createAffiliateLink: function (productUrlString: string): Promise<string> {
+  const browserService: BrowserService = jasmine.createSpyObj('browserService', ['openSystemBrowser']);
+  const wishApiService: WishApiMockService = new WishApiMockService();
+  const affiliateService: any = {
+    createAffiliateLink: (productUrlString: string): Promise<string> => {
       return Promise.resolve('https://www.affiliate-link.de/product-id')
     }
   };
-  let modalController: any = {
+  const modalController: any = {
     create(opts): Promise<any> { return Promise.resolve(); }
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FriendsWishComponent ],
       imports: [IonicModule.forRoot()],
@@ -43,7 +43,7 @@ describe('FriendsWishComponent', () => {
 
     fixture = TestBed.createComponent(FriendsWishComponent);
     component = fixture.componentInstance;
-    
+
     component.wish = wishKindle;
     fixture.detectChanges();
   }));
@@ -58,7 +58,7 @@ describe('FriendsWishComponent', () => {
       expect(browserService.openSystemBrowser).toHaveBeenCalledWith('https://www.affiliate-link.de/product-id');
     })
   });
-  
+
   describe('reserve', () => {
 
     it('should reserve a wish', fakeAsync(() => {

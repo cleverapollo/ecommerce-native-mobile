@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { WishListApiService } from '@core/api/wish-list-api.service';
@@ -20,11 +20,11 @@ describe('WishListRadioComponent', () => {
   let component: WishListRadioComponent;
   let fixture: ComponentFixture<WishListRadioComponent>;
 
-  let wishListStoreService: MockWishListStoreService = new MockWishListStoreService();
-  let wishListApiService: WishListApiMockService = new WishListApiMockService();
-  let logger = jasmine.createSpyObj('logger', ['error']);
+  const wishListStoreService: MockWishListStoreService = new MockWishListStoreService();
+  const wishListApiService: WishListApiMockService = new WishListApiMockService();
+  const logger = jasmine.createSpyObj('logger', ['error']);
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WishListRadioComponent ],
       imports: [IonicModule.forRoot(), LoggerTestingModule],
@@ -157,7 +157,7 @@ describe('WishListRadioComponent', () => {
       wishes: [],
       creatorEmail: 'max@mustermann.de',
       owners: [
-        { 
+        {
           firstName:  'Max',
           email: 'max@mustermann.de',
           emailVerificationStatus: EmailVerificationStatus.VERIFIED,
@@ -332,7 +332,7 @@ describe('WishListRadioComponent', () => {
     function queryHtmlElements() {
       buttonEnableEditMode = fixture.nativeElement.querySelector('.button-enable-edit-mode');
       hintNoWishLists = fixture.nativeElement.querySelector('.hint-no-wish-lists');
-      radioWishListOptions = fixture.debugElement.queryAll(By.css('.radio-wish-list-option')); 
+      radioWishListOptions = fixture.debugElement.queryAll(By.css('.radio-wish-list-option'));
       form = fixture.nativeElement.querySelector('.form-create-new-wish-list');
     }
   });

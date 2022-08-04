@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private navController: NavController,
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private logger: LogService,
     private toastService: CoreToastService,
@@ -71,7 +71,7 @@ export class LoginPage implements OnInit {
     }
     const spinner = await this.loadingService.createLoadingSpinner();
     await spinner.present();
-    
+
     try {
       const input = this.loginForm.value as LoginForm;
       await this.authService.emailPasswordSignIn(input.email, input.password);

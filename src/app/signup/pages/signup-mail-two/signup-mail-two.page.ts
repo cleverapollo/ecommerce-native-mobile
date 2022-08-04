@@ -41,8 +41,8 @@ export class SignupMailTwoPage implements OnInit {
   }
 
   /**
-   * Update event of the gender radio element. 
-   * @param event onChange event of the element. 
+   * Update event of the gender radio element.
+   * @param event onChange event of the element.
    */
   updateGender(event) {
     this.gender = event.target.value as Gender;
@@ -50,7 +50,7 @@ export class SignupMailTwoPage implements OnInit {
 
   /**
    * Updates entered values by user and navigates to the next page.
-   * @returns Default Promise from an async method. 
+   * @returns Default Promise from an async method.
    */
   async next(): Promise<void> {
     const loadingSpinner = await this.loadingService.createLoadingSpinner();
@@ -66,8 +66,8 @@ export class SignupMailTwoPage implements OnInit {
   /**
    * Navigates either to the last signup page or directly to the dashboard.
    * This depends on the email verfication state.
-   * 
-   * @returns Default Promise from an async method. 
+   *
+   * @returns Default Promise from an async method.
    */
   private async navigateToNextPage(): Promise<void> {
     if (this.authService.isEmailVerified.value) {
@@ -79,8 +79,8 @@ export class SignupMailTwoPage implements OnInit {
 
   /**
    * Save value for birthday if it was entered by user.
-   * 
-   * @returns Default Promise from an async method. 
+   *
+   * @returns Default Promise from an async method.
    */
   private async saveBirthdayIfNeeded(): Promise<void> {
     const birthdayFormControl = this.form.controls.date;
@@ -102,8 +102,8 @@ export class SignupMailTwoPage implements OnInit {
 
   /**
    * Save value for gender if it was entered by user.
-   * 
-   * @returns Default Promise from an async method.  
+   *
+   * @returns Default Promise from an async method.
    */
   private async saveGenderIfNeeded(): Promise<void> {
     this.logger.info('gender', this.gender);

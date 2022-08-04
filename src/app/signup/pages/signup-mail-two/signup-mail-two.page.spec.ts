@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserApiService } from '@core/api/user-api.service';
@@ -14,23 +14,23 @@ import { SignupMailTwoPage } from './signup-mail-two.page';
 
 describe('SignupMailTwoPage', () => {
 
-  let formBuilder: any = {
+  const formBuilder: any = {
     group() {  },
     control() {}
   }
 
-  let logger: LogService;
-  let analyticsService: AnalyticsService;
-  let loadingService: LoadingService;
-  let toastService: CoreToastService;
-  let userApiService: UserApiService;
-  let authService: AuthenticationService;
-  let privacyPolicyService: PrivacyPolicyService;
+  const logger: any = {};
+  const analyticsService: any = {};
+  const loadingService: any = {};
+  const toastService: any = {};
+  const userApiService: any = {};
+  const authService: any = {};
+  const privacyPolicyService: any = {};
 
   let component: SignupMailTwoPage;
   let fixture: ComponentFixture<SignupMailTwoPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SignupMailTwoPage ],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],

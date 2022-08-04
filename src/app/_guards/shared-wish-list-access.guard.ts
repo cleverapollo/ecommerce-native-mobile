@@ -12,21 +12,24 @@ import { APP_URL } from 'src/environments/environment';
 export class SharedWishListAccessGuard implements CanActivate {
 
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     private platform: Platform,
     private browserService: BrowserService
     ) {
 
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     return this.canLoad(this.getResolvedUrl(route));
   }
 
   private async canLoad(urlString: string) {
     if (!this.platform.is('hybrid')) {
       return true
-    } 
+    }
 
     if (this.authService.isAuthenticated) {
       return true;
@@ -41,5 +44,5 @@ export class SharedWishListAccessGuard implements CanActivate {
         .map(v => v.url.map(segment => segment.toString()).join('/'))
         .join('/');
     }
-  
+
 }

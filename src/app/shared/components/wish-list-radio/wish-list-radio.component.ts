@@ -13,7 +13,7 @@ import { first } from 'rxjs/operators';
   templateUrl: './wish-list-radio.component.html',
   styleUrls: ['./wish-list-radio.component.scss'],
   providers: [
-    { 
+    {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => WishListRadioComponent),
       multi: true
@@ -22,21 +22,16 @@ import { first } from 'rxjs/operators';
 })
 export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
-  @Input()
-  _wishListId: string;
+  @Input() _wishListId: string;
 
-  @Input()
-  initialValue: string;
-
-  propagateChange = (_: any) => {};
-  onTouched: any = (_: any) => { };
+  @Input() initialValue: string;
 
   form: FormGroup;
-  isEditMode: boolean = false;
+  isEditMode = false;
   wishListSelectOptions: Array<WishListSelectOptionDto> = [];
   subscription: Subscription;
 
-  private _requestIsRunning: boolean = false;
+  private _requestIsRunning = false;
 
   get showSaveWishListButton(): boolean {
     return this.isEditMode && !this.requestIsRunning;
@@ -80,7 +75,7 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
     private wishListApi: WishListApiService,
     private formBuilder: FormBuilder,
     private logger: LogService
-  ) { 
+  ) {
   }
 
   ngOnInit() {
@@ -103,7 +98,7 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
 
   private initForm(): FormGroup {
     return this.formBuilder.group({
-      'name': this.formBuilder.control('', {
+      name: this.formBuilder.control('', {
         validators: [Validators.required]
       })
     })
@@ -163,7 +158,7 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
   }
 
   private addWishListSelectOption(newSelectOption: WishListSelectOptionDto) {
-    let clonedWishLists = [];
+    const clonedWishLists = [];
     this.wishListSelectOptions.forEach(val => clonedWishLists.push(Object.assign({}, val)));
     clonedWishLists.push(newSelectOption);
     clonedWishLists.sort(this.sortWishListsByName);
@@ -177,5 +172,8 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
   private sortWishListsByName(wishListA: WishListSelectOptionDto, wishListB: WishListSelectOptionDto) {
     return wishListA.name.localeCompare(wishListB.name.toString());
   }
+
+  propagateChange = (_: any) => {};
+  onTouched: any = (_: any) => { };
 
 }

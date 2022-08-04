@@ -27,17 +27,17 @@ export class FriendWishListStoreService implements FriendWishListStore {
   }
 
   constructor(
-    private sharedWishListApiService: SharedWishListApiService, 
+    private sharedWishListApiService: SharedWishListApiService,
     private cache: CacheService,
     private logger: LogService
   ) { }
 
   loadWishLists(forceRefresh: boolean = false): Observable<Array<FriendWishList>> {
-    let request = this.sharedWishListApiService.getWishLists() as Observable<Array<FriendWishList>>;
+    const request = this.sharedWishListApiService.getWishLists() as Observable<Array<FriendWishList>>;
     if (forceRefresh) {
       this.logger.log('force refresh');
       return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
-    } 
+    }
     return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY)
   }
 
@@ -53,14 +53,14 @@ export class FriendWishListStoreService implements FriendWishListStore {
     const request = this.sharedWishListApiService.getWishListById(id);
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
-    } 
+    }
     return this.cache.loadFromObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY)
   }
 
   updateCachedWishList(wishList: FriendWishList): void {
     this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
     this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: FriendWishList[]) => {
-      const wishListIndex = wishLists.findIndex( w => w.id == wishList.id);
+      const wishListIndex = wishLists.findIndex( w => w.id === wishList.id);
       if (wishListIndex !== -1) {
         wishLists[wishListIndex] = wishList;
         this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);

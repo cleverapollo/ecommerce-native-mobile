@@ -32,7 +32,7 @@ export class MenuPage implements OnInit {
   }
 
   showFaqPage() {
-    this.browserService.openInAppBrowser("https://www.wantic.io/faq");
+    this.browserService.openInAppBrowser('https://www.wantic.io/faq');
   }
 
   logout() {

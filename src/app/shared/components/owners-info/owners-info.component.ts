@@ -9,7 +9,7 @@ import { UserDto } from '@core/models/user.model';
 export class OwnersInfoComponent implements OnInit {
 
   @Input() owners: Array<UserDto> = new Array<UserDto>();
-  @Input() showOnlyInitials: boolean = false;
+  @Input() showOnlyInitials = false;
 
   get wishListOwnerCount(): number {
     return this.owners.length;
@@ -17,9 +17,9 @@ export class OwnersInfoComponent implements OnInit {
 
   cssClass(first: boolean, last: boolean) {
     return {
-      'standalone': this.wishListOwnerCount == 1,
-      'first': this.wishListOwnerCount > 1 && first,
-      'last': this.wishListOwnerCount > 1 && last
+      standalone: this.wishListOwnerCount === 1,
+      first: this.wishListOwnerCount > 1 && first,
+      last: this.wishListOwnerCount > 1 && last
     }
   }
 

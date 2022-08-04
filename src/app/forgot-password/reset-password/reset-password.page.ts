@@ -29,7 +29,7 @@ export class ResetPasswordPage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private logger: LogService,
     private analyticsService: AnalyticsService,

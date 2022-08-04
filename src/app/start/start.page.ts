@@ -31,9 +31,9 @@ export class StartPage implements OnInit {
   get showGooglePlusSignIn(): boolean {
     return this.platformService.isIOS || this.platformService.isAndroid;
   }
-  
+
   constructor(
-    private analyticsService: AnalyticsService, 
+    private analyticsService: AnalyticsService,
     private logger: LogService,
     private router: Router,
     private userApiService: UserApiService,
@@ -83,7 +83,7 @@ export class StartPage implements OnInit {
       if (typeof error === 'string') {
         this.toastService.presentErrorToast(error);
       }
-    } 
+    }
   }
 
   async signupWithGoogle() {
@@ -142,12 +142,12 @@ export class StartPage implements OnInit {
     }
 
     return {
-      uid: uid,
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
+      uid,
+      email,
+      firstName,
+      lastName,
       agreedToPrivacyPolicyAt: new Date(),
-      authProvider: authProvider,
+      authProvider,
     };
   }
 
@@ -155,8 +155,8 @@ export class StartPage implements OnInit {
     if (!user?.lastName) {
       return new Promise((resolve) => {
         this.userApiService.partialUpdateLastName(lastName).pipe(first()).subscribe({
-          next: user => {
-            this.logger.debug('updated last name successful', user);
+          next: u => {
+            this.logger.debug('updated last name successful', u);
           },
           error: this.logger.error,
           complete: resolve
@@ -171,8 +171,8 @@ export class StartPage implements OnInit {
     if (user?.firstName === '') {
       return new Promise((resolve) => {
         this.userApiService.partialUpdateFirstName(firstName).pipe(first()).subscribe({
-          next: user => {
-            this.logger.debug('updated last name successful', user);
+          next: u => {
+            this.logger.debug('updated last name successful', u);
           },
           error: this.logger.error,
           complete: resolve

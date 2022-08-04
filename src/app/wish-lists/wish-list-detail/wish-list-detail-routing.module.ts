@@ -14,17 +14,20 @@ const routes: Routes = [
     path: 'wish/:wishId',
     canActivate: [AuthGuard],
     resolve: { wish: WishResolver },
-    loadChildren: () => import('@wishLists/wish-detail/wish-detail.module').then( m => m.WishDetailPageModule)
+    loadChildren: () => import('@wishLists/wish-detail/wish-detail.module')
+      .then( m => m.WishDetailPageModule)
   },
   {
     path: 'edit',
     canActivate: [AuthGuard],
-    loadChildren: () => import('@wishLists/wish-list-create-update/wish-list-create-update.module').then( m => m.WishListCreateUpdatePageModule)
+    loadChildren: () => import('@wishLists/wish-list-create-update/wish-list-create-update.module')
+      .then( m => m.WishListCreateUpdatePageModule)
   },
   {
     path: 'wish-search',
     canActivate: [AuthGuard],
-    loadChildren: () => import('@wishSearch/pages/wish-search-overview/wish-search-overview.module').then( m => m.WishSearchSelectionPageModule)
+    loadChildren: () => import('@wishSearch/pages/wish-search-overview/wish-search-overview.module')
+      .then( m => m.WishSearchSelectionPageModule)
   }
 ];
 

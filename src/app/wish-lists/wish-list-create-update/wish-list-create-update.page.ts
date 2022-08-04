@@ -30,7 +30,7 @@ export class WishListCreateUpdatePage implements OnInit {
   }
 
   get buttonTitle(): string {
-    return this.isUpdatePage ? 'Änderungen speichern' : 'Wunschliste anlegen' 
+    return this.isUpdatePage ? 'Änderungen speichern' : 'Wunschliste anlegen'
   }
 
   get screenName(): string {
@@ -40,7 +40,7 @@ export class WishListCreateUpdatePage implements OnInit {
   get isUpdatePage(): boolean {
     return (this.wishList && this.wishList.id) ? true : false;
   }
-  
+
   get validationMessages(): ValidationMessages {
     return {
       name: [
@@ -57,21 +57,21 @@ export class WishListCreateUpdatePage implements OnInit {
     let partner = null;
     if (owners && owners.length > 1 && this.userEmail) {
       partner = owners.filter(userWishList => {
-        return userWishList.email != this.userEmail;
+        return userWishList.email !== this.userEmail;
       })[0];
     }
     return partner;
   }
 
   get isCreator(): boolean {
-    return this.userEmail == this.wishList.creatorEmail;
+    return this.userEmail === this.wishList.creatorEmail;
   }
 
   private wishList: WishListDto;
   private userEmail: string;
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private navController: NavController,
     private alertService: AlertService,
     private toastService: CoreToastService,
@@ -95,11 +95,11 @@ export class WishListCreateUpdatePage implements OnInit {
     this.userEmail = userProfile.email.value;
   }
 
-  async ionViewWillEnter() { 
+  async ionViewWillEnter() {
     if (this.isUpdatePage) {
       this.wishList = await this.wishListStore.loadWishList(this.wishList.id).toPromise();
       this.setupForm();
-    } 
+    }
   }
 
   ionViewDidEnter() {
@@ -149,12 +149,12 @@ export class WishListCreateUpdatePage implements OnInit {
     const date = this.wishList?.date ? new Date(this.wishList.date).toISOString() : '';
     const showReservedWishes = this.wishList?.showReservedWishes ? this.wishList?.showReservedWishes : false;
     this.form = this.formBuilder.group({
-      'name': this.formBuilder.control(name, {
+      name: this.formBuilder.control(name, {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
-      'date': this.formBuilder.control(date),
-      'showReservedWishes': this.formBuilder.control(showReservedWishes)
+      date: this.formBuilder.control(date),
+      showReservedWishes: this.formBuilder.control(showReservedWishes)
     });
   }
 

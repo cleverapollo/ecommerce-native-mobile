@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -7,21 +7,21 @@ import {
   HttpResponse,
   HttpHeaders,
   HttpErrorResponse
-} from "@angular/common/http";
-import { Observable, from } from "rxjs";
-import { HTTP, HTTPResponse } from "@ionic-native/http/ngx";
+} from '@angular/common/http';
+import { Observable, from } from 'rxjs';
+import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
 import { LogService } from '@core/services/log.service';
-import { DefaultPlatformService } from "@core/services/platform.service";
+import { DefaultPlatformService } from '@core/services/platform.service';
 
 type HttpMethod =
-  | "get"
-  | "post"
-  | "put"
-  | "patch"
-  | "head"
-  | "delete"
-  | "upload"
-  | "download";
+  | 'get'
+  | 'post'
+  | 'put'
+  | 'patch'
+  | 'head'
+  | 'delete'
+  | 'upload'
+  | 'download';
 
 type NativeHttpRequestOptions = {
   method: 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete' | 'options' | 'upload' | 'download';
@@ -43,9 +43,9 @@ type NativeHttpRequestOptions = {
 
 @Injectable()
 export class NativeHttpInterceptor implements HttpInterceptor {
-  
+
   constructor(
-    private nativeHttp: HTTP, 
+    private nativeHttp: HTTP,
     private platform: DefaultPlatformService,
     private logger: LogService
   ) {}
@@ -91,13 +91,13 @@ export class NativeHttpInterceptor implements HttpInterceptor {
   }
 
   private async sendRequest(request: HttpRequest<any>, headers: {}): Promise<HTTPResponse> {
-    const method = <HttpMethod>request.method.toLowerCase();
+    const method = request.method.toLowerCase() as HttpMethod;
     const url = this.createEncodedUrlFromRequest(request);
     this.logRequestBody(request);
 
-    let options: NativeHttpRequestOptions = {
-      method: method,
-      headers: headers,
+    const options: NativeHttpRequestOptions = {
+      method,
+      headers,
       serializer: 'json',
       data: request.body
     }
@@ -125,7 +125,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     const body = this.parseBodyFromResponseAsJson(nativeHttpResponse);
     const responseHeaders = this.createResponseHeaders(nativeHttpResponse);
     const response = new HttpResponse({
-      body: body,
+      body,
       status: nativeHttpResponse.status,
       headers: responseHeaders,
       url: nativeHttpResponse.url
@@ -147,11 +147,11 @@ export class NativeHttpInterceptor implements HttpInterceptor {
   }
 
   private createResponseHeaders(nativeHttpResponse) {
-    let responseHeaders = new HttpHeaders();
+    const responseHeaders = new HttpHeaders();
     for (const header in nativeHttpResponse.headers) {
       if (nativeHttpResponse.headers.hasOwnProperty(header)) {
         const value = nativeHttpResponse.headers[header];
-        responseHeaders.set("header", value);
+        responseHeaders.set('header', value);
       }
     }
     return responseHeaders;
@@ -170,27 +170,27 @@ export class NativeHttpInterceptor implements HttpInterceptor {
   // logging
 
   private logUrl(url: string) {
-    this.logger.info("— Request url");
+    this.logger.info('— Request url');
     this.logger.info(url);
   }
 
   private logRequestBody(request: HttpRequest<any>) {
-    this.logger.info("— Request body");
+    this.logger.info('— Request body');
     this.logger.info(request.body);
   }
 
   private logRequestHeaders(request: HttpRequest<any>) {
-    this.logger.info("— Request headers");
+    this.logger.info('— Request headers');
     this.logger.info(request.headers);
   }
 
   private logResponse(response: HttpResponse<any>) {
-    this.logger.info("— Response success");
+    this.logger.info('— Response success');
     this.logger.info(response);
   }
 
   private logError(error: any) {
-    this.logger.error("— Response error");
+    this.logger.error('— Response error');
     this.logger.error(error);
   }
 }

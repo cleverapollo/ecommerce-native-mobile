@@ -23,13 +23,13 @@ enum ImageType {
 export class WishImageComponent implements OnInit {
 
   @Input() src?: string;
-  @Input() alt: string = 'Produktbild';
+  @Input() alt = 'Produktbild';
   @Input() imgClass?: string;
   @Input() styles: WishImageComponentStyles = {};
 
   private imgType: ImageType = ImageType.NONE;
 
-  isLoading: boolean = true;
+  isLoading = true;
 
   get imgStyles(): CSSStyle {
     const fallback = {};
@@ -38,7 +38,7 @@ export class WishImageComponent implements OnInit {
         return fallback;
       case ImageType.WISH_IMAGE:
         return this.styles.img || fallback;
-      case ImageType.PLACEHOLDER: 
+      case ImageType.PLACEHOLDER:
         return this.styles.placeholderImg || fallback;
       case ImageType.ERROR:
         return this.styles.errorImg || fallback;
@@ -47,7 +47,7 @@ export class WishImageComponent implements OnInit {
 
   constructor(private logger: LogService) {}
 
-  ngOnInit() { 
+  ngOnInit() {
     this.logger.debug('onStart', this.src);
     if (this.src) {
       this.imgType = ImageType.WISH_IMAGE

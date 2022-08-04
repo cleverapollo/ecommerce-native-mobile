@@ -24,20 +24,20 @@ export class SharedWishComponent implements OnInit {
 
   @Input() wish: FriendWish;
   @Input() wishList: FriendWishList;
-  @Input() readonly: boolean = false;
+  @Input() readonly = false;
   @Output() onWishStateChanged: EventEmitter<FriendWish> = new EventEmitter<FriendWish>();
 
   state: SharedWishListState = SharedWishListState.LOADING;
 
   get isDebugInfoVisible(): boolean {
-    return environment.backendType === BackendConfigType.beta ||  
+    return environment.backendType === BackendConfigType.beta ||
       environment.backendType === BackendConfigType.dev;
   }
 
   get cssClassWishReservedState(): string {
-    if (this.state == SharedWishListState.RESERVED) {
+    if (this.state === SharedWishListState.RESERVED) {
       return 'wish-reserved';
-    } else if (this.state == SharedWishListState.CANCELLABLE) {
+    } else if (this.state === SharedWishListState.CANCELLABLE) {
       return 'wish-bought';
     }
     return null;
@@ -64,7 +64,7 @@ export class SharedWishComponent implements OnInit {
   }
 
   constructor(
-    private browserService: BrowserService, 
+    private browserService: BrowserService,
     private modalController: ModalController,
     private storageService: StorageService,
     private publicResourceApiService: PublicResourceApiService,
@@ -116,7 +116,7 @@ export class SharedWishComponent implements OnInit {
   private createSuccessMessage(): string {
     const defaultMessage = 'Dein Geschenk ist nun für dich reserviert';
     let message = defaultMessage;
-    if (this.wishList.owners.length && this.wishList.owners.length == 1) {
+    if (this.wishList.owners.length && this.wishList.owners.length === 1) {
       const owner = this.wishList.owners[0];
       message = `Toll, dass du ${ owner.firstName }s Wunsch erfüllst. ${ owner.firstName } wird sich sehr freuen. ${defaultMessage}`;
     }

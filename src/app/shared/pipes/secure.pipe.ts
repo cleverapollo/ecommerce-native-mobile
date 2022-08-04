@@ -16,7 +16,7 @@ export class SecurePipe implements PipeTransform {
     if (url) {
       const headers = new HttpHeaders()
         .set('Access-Control-Allow-Origin', '*')
-      
+
       // FIXME: check why server sends http instead https
       let modifiedUrl = url;
       if (environment.production) {
@@ -24,7 +24,7 @@ export class SecurePipe implements PipeTransform {
       }
 
       return this.http
-      .get(modifiedUrl, { responseType: 'blob', headers: headers }).pipe(
+      .get(modifiedUrl, { responseType: 'blob', headers }).pipe(
         map(val => this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(val))),
       );
     }

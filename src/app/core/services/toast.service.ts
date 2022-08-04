@@ -30,11 +30,11 @@ export class CoreToastService implements ToastService {
 
   private async presentToast(message: string, color: string, icon: string) {
     const toast = await this.toastController.create({
-      message: message,
-      color: color,
+      message,
+      color,
       duration: CoreToastService.TOAST_DURATION,
       position: 'top',
-      icon: icon
+      icon
     });
     toast.present();
   }

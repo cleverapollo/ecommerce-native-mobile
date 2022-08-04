@@ -1,27 +1,4 @@
-import { AppLoadingService } from "./loading.service";
-
-export class MockLoadingService implements AppLoadingService {
-
-    private loadingController = new MockLoadingController();
-    private loading: MockLoading = null;
-
-    async showLoadingSpinner(): Promise<void> {
-        return Promise.resolve();
-    }
-    async createLoadingSpinner(): Promise<any> {
-        return await this.loadingController.create(null);
-    }
-    async dismissLoadingSpinner(loading?: any): Promise<boolean> {
-        if (loading && loading instanceof MockLoading) {
-            await loading?.dismiss();
-            return Promise.resolve(true);
-        } else if (this.loading) {
-            this.loading.dismiss();
-            return Promise.resolve(true);
-        }
-        return Promise.resolve(false);
-    }
-}
+import { AppLoadingService } from './loading.service';
 
 export class MockLoading {
     public visible: boolean;
@@ -62,5 +39,27 @@ export class MockLoadingController {
             return null;
         }
         return this.created[this.created.length - 1];
+    }
+}
+export class MockLoadingService implements AppLoadingService {
+
+    private loadingController = new MockLoadingController();
+    private loading: MockLoading = null;
+
+    async showLoadingSpinner(): Promise<void> {
+        return Promise.resolve();
+    }
+    async createLoadingSpinner(): Promise<any> {
+        return await this.loadingController.create(null);
+    }
+    async dismissLoadingSpinner(loading?: any): Promise<boolean> {
+        if (loading && loading instanceof MockLoading) {
+            await loading?.dismiss();
+            return Promise.resolve(true);
+        } else if (this.loading) {
+            this.loading.dismiss();
+            return Promise.resolve(true);
+        }
+        return Promise.resolve(false);
     }
 }

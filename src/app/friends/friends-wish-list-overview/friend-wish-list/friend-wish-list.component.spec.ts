@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { FriendWishListComponent } from './friend-wish-list.component';
@@ -7,7 +7,7 @@ describe('FriendWishListComponent', () => {
   let component: FriendWishListComponent;
   let fixture: ComponentFixture<FriendWishListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FriendWishListComponent ],
       imports: [IonicModule.forRoot()]

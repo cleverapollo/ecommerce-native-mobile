@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
 export class WishListOverviewPage implements OnInit, OnDestroy {
 
   wishLists: Array<WishListDto> = new Array();
-  refreshData: boolean = false;
+  refreshData = false;
 
   private loadWishListsSubscription: Subscription;
 

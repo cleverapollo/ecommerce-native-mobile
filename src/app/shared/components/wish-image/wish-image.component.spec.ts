@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogService, StubLogService } from '@core/services/log.service';
 import { WISH_ERROR_IMAGE_ASSET_URL, WISH_PLACEHOLDER_IMAGE_ASSET_URL } from '@core/ui.constants';
 import { IonicModule } from '@ionic/angular';
@@ -10,7 +10,7 @@ describe('ImageComponent', () => {
   let component: WishImageComponent;
   let fixture: ComponentFixture<WishImageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WishImageComponent ],
       providers: [
@@ -38,17 +38,17 @@ describe('ImageComponent', () => {
   describe('onError', () => {
 
     const htmlImage: any = {  };
-    htmlImage.src = "https://www.example.de/image.jpg";
-    htmlImage.alt = "Example description";
+    htmlImage.src = 'https://www.example.de/image.jpg';
+    htmlImage.alt = 'Example description';
 
     const event = {
       target: htmlImage
     }
 
-    it('loads the fallback image', () => {  
+    it('loads the fallback image', () => {
       fixture.detectChanges();
       component.onError(event);
-  
+
       expect(event.target.src).toBe(WISH_ERROR_IMAGE_ASSET_URL);
       expect(event.target.alt).toBe('');
       expect(component.imgClass).toBe('show');
@@ -56,8 +56,8 @@ describe('ImageComponent', () => {
     });
 
     it('adds a css class to the placeholder image', () => {
-      component.src = "https://www.example.de/image.jpg";
-      component.alt = "Example description";
+      component.src = 'https://www.example.de/image.jpg';
+      component.alt = 'Example description';
       component.imgClass = 'test-class';
 
       fixture.detectChanges();

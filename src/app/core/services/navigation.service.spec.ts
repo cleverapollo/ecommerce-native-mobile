@@ -10,7 +10,7 @@ describe('NavigationService', () => {
         RouterTestingModule.withRoutes([])
       ]
     });
-  }) 
+  })
 
   it('should be created', () => {
     const service: NavigationService = TestBed.inject(NavigationService);

@@ -22,11 +22,11 @@ export class AnalyticsService {
   }
 
   constructor(
-    private logger: LogService, 
+    private logger: LogService,
     private platform: Platform,
     private platformService: DefaultPlatformService,
     private angularFireAnalytics: AngularFireAnalytics
-    ) { 
+    ) {
   }
 
   initAppsflyerSdk() {
@@ -45,7 +45,7 @@ export class AnalyticsService {
   }
 
   logFirebaseEvent(eventName: string, params: { [prop: string]: any }) {
-    if (this.platformService.isNativePlatform) { 
+    if (this.platformService.isNativePlatform) {
       this.platform.ready().then(() => {
         FirebaseAnalytics.logEvent({ name: eventName, params});
       })
@@ -57,8 +57,8 @@ export class AnalyticsService {
   logAppsflyerEvent(eventName: string, eventValue: any) {
     if (this.appsflyerConfigExists && this.platformService.isNativePlatform) {
       AppsFlyer.logEvent({
-        eventName: eventName,
-        eventValue: eventValue
+        eventName,
+        eventValue
       });
     }
   }
@@ -66,7 +66,7 @@ export class AnalyticsService {
   setFirebaseScreenName(screenName: string) {
     if (this.platformService.isNativePlatform) {
       FirebaseAnalytics.setScreenName({
-        screenName: screenName
+        screenName
       });
     } else {
       this.angularFireAnalytics.setCurrentScreen(screenName);
@@ -90,14 +90,14 @@ export class AnalyticsService {
 
   logCompleteRegistrationEvent(authProvider: AuthProvider) {
     const authProviderString: string = AuthProvider[authProvider];
-    const eventValue = {'af_registration_method': authProviderString};
+    const eventValue = {af_registration_method: authProviderString};
     this.logAppsflyerEvent('af_complete_registration', eventValue);
-    this.logFirebaseEvent('sign_up', { 'method': authProviderString });
+    this.logFirebaseEvent('sign_up', { method: authProviderString });
   }
 
   logLoginEvent(authProvider: AuthProvider) {
     const authProviderString: string = AuthProvider[authProvider];
     this.logAppsflyerEvent('af_login', null);
-    this.logFirebaseEvent('login', { 'method': authProviderString });
+    this.logFirebaseEvent('login', { method: authProviderString });
   }
 }

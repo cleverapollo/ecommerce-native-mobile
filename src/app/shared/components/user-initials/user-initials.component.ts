@@ -7,11 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class UserInitialsComponent implements OnInit {
 
-  @Input()
-  firstName: String
+  @Input() firstName = '';
 
-  @Input()
-  lastName: String;
+  @Input() lastName = '';
 
   constructor() { }
 

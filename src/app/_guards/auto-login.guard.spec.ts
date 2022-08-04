@@ -7,9 +7,10 @@ import { AutoLoginGuard } from './auto-login.guard';
 
 describe('AutoLoginGuard', () => {
 
-  let authService: AuthenticationService;
-  let router: Router;
-  let logger: LogService;
+  const authService = {};
+  const router = {};
+  const logger = {};
+
   let guard: AutoLoginGuard;
 
   beforeEach(() => {

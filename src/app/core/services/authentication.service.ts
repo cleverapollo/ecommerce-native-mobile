@@ -45,7 +45,7 @@ export class AuthenticationService implements AppAuthenticationService {
   userInfo = new BehaviorSubject<any>(null);
 
   constructor(
-    private storageService: StorageService, 
+    private storageService: StorageService,
     private platformService: DefaultPlatformService,
     private cache: CacheService,
     private nativeHttpClient: HTTP,
@@ -55,8 +55,8 @@ export class AuthenticationService implements AppAuthenticationService {
     private googlePlus: GooglePlus,
     private signInWithApple: SignInWithApple,
     private firebaseService: FirebaseService
-  ) { 
-  
+  ) {
+
     this.firebaseService.setLanguageCode('de-DE');
     this.setupFirebaseIdToken(false);
     this.setupOnAuthStateChangedListener();
@@ -110,20 +110,20 @@ export class AuthenticationService implements AppAuthenticationService {
       await this.sendVerificationMail();
       return Promise.resolve();
     } catch (error) {
-      return Promise.reject(error); 
+      return Promise.reject(error);
     }
   }
 
   async emailPasswordSignIn(email: string, password: string): Promise<SignInResponse> {
     try {
       // wantic sign in
-      const signInRequest = { username: email, password: password };
+      const signInRequest = { username: email, password };
       const signInResponse = await this.authApiService.signInWithEmailAndPassword(signInRequest).toPromise();
 
       // firebase sign in
       await this.firebaseService.signInWithEmailAndPassword(email, password);
       await this.setupFirebaseIdToken(true);
-      await this.storageService.set(StorageKeys.CREDENTIALS, { email: email, password: password }, true);
+      await this.storageService.set(StorageKeys.CREDENTIALS, { email, password }, true);
 
       return Promise.resolve(signInResponse);
     } catch (error) {
@@ -138,7 +138,7 @@ export class AuthenticationService implements AppAuthenticationService {
   }
 
   private getErrorMessageForWanticLogin(error: HttpErrorResponse) {
-    let errorMessage: string = 'Die Anmeldung ist fehlgeschlagen.';
+    let errorMessage = 'Die Anmeldung ist fehlgeschlagen.';
     switch (error.status) {
       case HttpStatusCodes.UNAUTHORIZED:
         errorMessage = 'Du hast dein Passwort falsch eingegeben.';
@@ -161,15 +161,15 @@ export class AuthenticationService implements AppAuthenticationService {
       // facebook sign in
       const facebookLoginResponse = await this.facebook.login(['email', 'public_profile']);
       const accessToken = facebookLoginResponse?.authResponse?.accessToken;
-      
+
       if (facebookLoginResponse.status === 'connected') {
         if (accessToken) {
           // firebase sign in
           await this.firebaseService.signInWithFacebook(accessToken);
 
-          // wantic sign in 
+          // wantic sign in
           const wanticSignInResponse = await this.wanticSignIn();
-          return Promise.resolve({ facebookLoginResponse: facebookLoginResponse, user: wanticSignInResponse.user });
+          return Promise.resolve({ facebookLoginResponse, user: wanticSignInResponse.user });
         } {
           const error = 'no valid access token';
           this.logger.error(error);
@@ -208,9 +208,9 @@ export class AuthenticationService implements AppAuthenticationService {
         return Promise.reject(error);
       }
 
-      // wantic sign in 
+      // wantic sign in
       const wanticSignInResponse = await this.wanticSignIn();
-      return Promise.resolve({ googlePlusLoginResponse: googlePlusLoginResponse, user: wanticSignInResponse.user });
+      return Promise.resolve({ googlePlusLoginResponse, user: wanticSignInResponse.user });
     } catch (error) {
       this.logger.error(error);
       let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
@@ -228,7 +228,7 @@ export class AuthenticationService implements AppAuthenticationService {
     const deviceInfo = await Device.getInfo();
     if (deviceInfo.platform === 'android') {
       signInOptions = {
-        'webClientId': environment.googleSignInAndroidClientId
+        webClientId: environment.googleSignInAndroidClientId
       };
     }
     return signInOptions;
@@ -249,7 +249,7 @@ export class AuthenticationService implements AppAuthenticationService {
 
       // wantic sign in
       const wanticSignInResponse = await this.wanticSignIn();
-      return Promise.resolve({ appleSignInResponse: appleSignInResponse, user: wanticSignInResponse.user });
+      return Promise.resolve({ appleSignInResponse, user: wanticSignInResponse.user });
     } catch (error) {
       this.logger.error(error);
       let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
@@ -280,7 +280,7 @@ export class AuthenticationService implements AppAuthenticationService {
 
   async setupFirebaseIdToken(forceRefresh: boolean = false): Promise<string> {
     try {
-      let idToken: string = await this.firebaseService.getIdToken(forceRefresh);
+      const idToken: string = await this.firebaseService.getIdToken(forceRefresh);
       await this.updateToken(idToken);
       return Promise.resolve(idToken);
     } catch (error) {
@@ -295,7 +295,7 @@ export class AuthenticationService implements AppAuthenticationService {
   private async updateToken(token: string): Promise<void> {
     if (!token) {
       this.isAuthenticated.next(false);
-      return Promise.reject('token to upate is invalid'); 
+      return Promise.reject('token to upate is invalid');
     }
     await this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, token, true);
     this.updateAuthorizationHeaderForNativeHttpClient(token);
@@ -342,7 +342,7 @@ export class AuthenticationService implements AppAuthenticationService {
         const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
         let credentials = null;
         if (email && password) {
-          credentials = {email: email, password: password};
+          credentials = { email, password };
           this.storageService.set(StorageKeys.CREDENTIALS, credentials, true);
         }
         await this.storageService.remove(StorageKeys.LOGIN_EMAIL, true);

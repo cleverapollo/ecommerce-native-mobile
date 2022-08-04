@@ -6,7 +6,7 @@ import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HTTP_INTERCEPTORS, HttpBackend, HttpXhrBackend } from '@angular/common/http';
 import { WishListsResolver } from '@wishLists/home/wish-lists.resolver';
 
@@ -19,7 +19,7 @@ import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { StorageService } from '@core/services/storage.service';
 import { CoreModule } from '@core/core.module';
-import { CacheModule } from "ionic-cache";
+import { CacheModule } from 'ionic-cache';
 import { WishListResolver } from '@wishLists/home/wish-list.resolver';
 import { WishResolver } from '@wishLists/home/wish.resolver';
 import { HTTP } from '@ionic-native/http/ngx';
@@ -69,9 +69,9 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
         deps: [StorageService]
       },
     }),
-    LoggerModule.forRoot({ 
+    LoggerModule.forRoot({
       level: NgxLoggerLevel.DEBUG,
-                    //TRACE     DEBUG       INFO      LOG         WARN       ERROR    FATAL
+                    // TRACE     DEBUG       INFO      LOG         WARN       ERROR    FATAL
       colorScheme: ['#7D3C98', '#17A589', '#1F618D', '#797D7F', '#F39C12', '#E74C3C', '#E74C3C']
     }),
     NativeHttpModule,

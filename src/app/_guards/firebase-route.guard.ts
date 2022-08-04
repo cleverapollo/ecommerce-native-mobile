@@ -10,7 +10,10 @@ export class FirebaseRouteGuard implements CanActivate {
 
   constructor(private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const queryParamMap = route.queryParamMap;
     const mode = queryParamMap.get('mode');
     const oobCode = queryParamMap.get('oobCode');
@@ -31,5 +34,5 @@ export class FirebaseRouteGuard implements CanActivate {
     }
     return Promise.resolve(false);
   }
-  
+
 }

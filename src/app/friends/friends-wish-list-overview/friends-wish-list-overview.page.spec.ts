@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, NavController } from '@ionic/angular';
 
 import { FriendsWishListOverviewPage } from '@friends/friends-wish-list-overview/friends-wish-list-overview.page';
@@ -14,13 +14,13 @@ describe('FriendsWishListOverviewPage', () => {
   let component: FriendsWishListOverviewPage;
   let fixture: ComponentFixture<FriendsWishListOverviewPage>;
 
-  let navContoller: any;
-  let friendWishListStore: any;
-  let analyticsService: AnalyticsService;
+  const navContoller: any = {};
+  const friendWishListStore: any = {};
+  const analyticsService: any = {};
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         FriendsWishListOverviewPage,
         NavToolbarComponent,
         FriendWishListComponent,

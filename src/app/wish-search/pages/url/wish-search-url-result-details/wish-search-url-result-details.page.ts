@@ -34,7 +34,7 @@ export class WishSearchUrlResultDetailsPage implements OnInit {
   }
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private formBuilder: FormBuilder,
     private analyticsService: AnalyticsService,
     private urlSearchDataStore: UrlSearchDataStoreService
@@ -50,11 +50,11 @@ export class WishSearchUrlResultDetailsPage implements OnInit {
     const price = this.selectedProduct?.price?.amount || 0.00;
     const formattedPrice = this.formatAmount(price);
     this.form = this.formBuilder.group({
-      'name': this.formBuilder.control(name, {
+      name: this.formBuilder.control(name, {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
-      'price': this.formBuilder.control(formattedPrice, {
+      price: this.formBuilder.control(formattedPrice, {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
@@ -84,21 +84,21 @@ export class WishSearchUrlResultDetailsPage implements OnInit {
     this.urlSearchDataStore.formData.price = this.createPrice(this.form.controls.price.value);
   }
 
-  private createPrice(amount: number) {
-    let price = new PriceDto();
+  private createPrice(amount: number): PriceDto {
+    const price = new PriceDto();
     price.amount = amount;
     price.currency = '€'
     return price;
   }
 
   setFocusToPriceInputFieldOnEnter(keyCode: number) {
-    if (keyCode == 13) { 
+    if (keyCode === 13) {
       this.priceInput.setFocus();
-    }    
+    }
   }
 
   hideKeyboardOnEnter(keyCode: number) {
-    if (keyCode == 13) { 
+    if (keyCode === 13) {
       Keyboard.hide();
     }
   }

@@ -19,8 +19,8 @@ export class WebPageCrawlerService {
   private browser: InAppBrowserObject;
   private url: string;
   private webCrawlerScriptContent: string = null;
-  private webCrawlerScriptLoading: boolean = false;
-  private loadingComplete: boolean = false;
+  private webCrawlerScriptLoading = false;
+  private loadingComplete = false;
 
   constructor(
     private logger: LogService,
@@ -29,7 +29,7 @@ export class WebPageCrawlerService {
     private searchResultDataService: SearchResultDataService,
     private platformService: DefaultPlatformService,
     private fileService: FileService
-  ) { 
+  ) {
     this._result$ =  new BehaviorSubject([]);
     this.result$ = this._result$.asObservable();
   }
@@ -40,7 +40,7 @@ export class WebPageCrawlerService {
     this.browser = this.inAppBrowser.create(url, '_blank', { location: 'yes', clearcache: 'yes', toolbar: 'no', hidden: 'yes' });
     this.browser.on('loadstart')?.subscribe(event => {
       this.onLoadStart();
-    }, this.handleGeneralError); 
+    }, this.handleGeneralError);
     this.browser.on('exit')?.subscribe(event => {
       this.onBrowserExit();
     }, this.handleGeneralError);
@@ -85,7 +85,7 @@ export class WebPageCrawlerService {
     const subDir = 'scripts';
     if (this.webCrawlerScriptLoading) { return; }
     this.webCrawlerScriptLoading = true;
-    if (this.platformService.isNativePlatform) { 
+    if (this.platformService.isNativePlatform) {
       const content = await this.fileService.getTextContentFromFileInAssetFolder(fileName, subDir);
       this.webCrawlerScriptContent = content;
     } else {
@@ -100,7 +100,7 @@ export class WebPageCrawlerService {
   private iabResolveExecuteScript(code: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.logger.log('execute script ...');
-      this.browser.executeScript({code: code}).then((result) => {
+      this.browser.executeScript({ code }).then((result) => {
         resolve(result);
       }, e => {
         this.logger.error(e);
@@ -124,7 +124,7 @@ export class WebPageCrawlerService {
 
   private async onLoadStart() {
     this.logger.log('start loading ...');
-    
+
   }
 
   private onBrowserExit() {
@@ -154,7 +154,14 @@ export class WebPageCrawlerService {
 
   private mapSearchResultItem(result: any, url?: string) {
     if (result !== null && typeof result === 'object' && result.hasOwnProperty('name') && result.hasOwnProperty('imageUrl')) {
-      const item = new SearchResultItem(result.asin, result.name, result.imageUrl, result.productUrl ? result.productUrl : url, result.price, result.id);
+      const item = new SearchResultItem(
+        result.asin,
+        result.name,
+        result.imageUrl,
+        result.productUrl ? result.productUrl : url,
+        result.price,
+        result.id
+      );
       this.addItem(item);
     } else if (Array.isArray(result)) {
       this.mapSearchResultArray(result as any[], url);

@@ -15,14 +15,14 @@ export const environment: EnvironmentConfig = {
         port: 8080
     },
     firebaseConfig: {
-        apiKey: "AIzaSyDIpjCfUOk-BAs6D7P1UgwMxAUjAzjsHcc",
-        authDomain: "wantic-dev.firebaseapp.com",
-        databaseURL: "https://wantic-dev.firebaseio.com",
-        projectId: "wantic-dev",
-        storageBucket: "wantic-dev.appspot.com",
-        messagingSenderId: "165303834787",
-        appId: "1:165303834787:web:6e136abc3e6200aa330716",
-        measurementId: "G-33SQBGEXZM"
+        apiKey: 'AIzaSyDIpjCfUOk-BAs6D7P1UgwMxAUjAzjsHcc',
+        authDomain: 'wantic-dev.firebaseapp.com',
+        databaseURL: 'https://wantic-dev.firebaseio.com',
+        projectId: 'wantic-dev',
+        storageBucket: 'wantic-dev.appspot.com',
+        messagingSenderId: '165303834787',
+        appId: '1:165303834787:web:6e136abc3e6200aa330716',
+        measurementId: 'G-33SQBGEXZM'
     },
     angularFire: {
         APP_NAME: 'wantic beta',

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserApiService } from '@core/api/user-api.service';
 import { LogService } from '@core/services/log.service';
@@ -10,12 +10,12 @@ import { ShareExtensionExplanationComponent } from './share-extension-explanatio
 
 describe('OnboardingSlidesComponent', () => {
 
-  let modalController
-  let userApiService
-  let logger
-  let userProfileStore
-  let domSanitzer
-  let platformService = {
+  const modalController = {};
+  const userApiService = {};
+  const logger = {};
+  const userProfileStore = {};
+  const domSanitzer = {};
+  const platformService = {
     get isAndroid(): boolean { return false },
     get isIOS(): boolean { return false }
   }
@@ -23,7 +23,7 @@ describe('OnboardingSlidesComponent', () => {
   let component: ShareExtensionExplanationComponent;
   let fixture: ComponentFixture<ShareExtensionExplanationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ShareExtensionExplanationComponent ],
       imports: [IonicModule.forRoot()],

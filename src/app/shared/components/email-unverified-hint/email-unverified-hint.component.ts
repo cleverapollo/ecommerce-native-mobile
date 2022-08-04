@@ -15,8 +15,8 @@ export class EmailUnverifiedHintComponent implements OnInit {
 
   ngOnInit() {
     this.authService.isEmailVerified.subscribe({
-      next: isEmailVerified => { 
-        this.emailVerified = isEmailVerified; 
+      next: isEmailVerified => {
+        this.emailVerified = isEmailVerified;
       }
     })
   }

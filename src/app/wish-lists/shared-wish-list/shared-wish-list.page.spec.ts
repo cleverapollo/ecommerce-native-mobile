@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { PublicResourceApiMockService } from '@core/api/public-resource-api-mock-service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
@@ -17,19 +17,19 @@ describe('SharedWishListPage', () => {
   let component: SharedWishListPage;
   let fixture: ComponentFixture<SharedWishListPage>;
   const wishList = WishListTestData.sharedWishListBirthday;
-  let route = {
+  const route = {
     snapshot: {
       data: {
         data: {
-          wishList: wishList
+          wishList
         }
       }
     }
   }
-  let analyticsServiceSpy = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
+  const analyticsServiceSpy = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
   let publicResourceApiServiceMock = new PublicResourceApiMockService();
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SharedWishListPage, OwnerNamesPipe, OwnersInfoComponent, SortByIsFavoritePipe],
       imports: [IonicModule.forRoot()],
@@ -60,20 +60,20 @@ describe('SharedWishListPage', () => {
     it('should update wish in wish list', () => {
       const wish = component.wishList.wishes[0];
       const updatedWish = WishListTestDataUtils.fakeCancelReservationStateChange(wish);
-  
+
       component.updateWishList(updatedWish);
-  
+
       expect(component.wishList.wishes.includes(updatedWish)).toBeTruthy();
       expect(component.wishList.wishes.includes(wish)).toBeFalsy();
     });
-  
+
     it('should refresh data if update of wish in wish list failed', fakeAsync(() => {
       const weddingWishList = WishListTestData.sharedWishListWedding;
       publicResourceApiServiceMock.getSharedWishListResult = weddingWishList;
-  
+
       component.updateWishList(WishListTestData.sharedWishVanityUnit);
       tick();
-  
+
       expect(component.wishList).toEqual(weddingWishList);
       flush();
     }));

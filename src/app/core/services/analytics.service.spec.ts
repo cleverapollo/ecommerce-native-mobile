@@ -10,12 +10,12 @@ import { DefaultPlatformService } from './platform.service';
 
 describe('AnalyticsService', () => {
 
-  let appsflyer;
-  let logger;
-  let platform;
-  let platformService;
-  let firebaseAnalytics;
-  let angularFireAnalytics;
+  const appsflyer = {};
+  const logger = {};
+  const platform = {};
+  const platformService = {};
+  const firebaseAnalytics = {};
+  const angularFireAnalytics = {};
 
   beforeEach(() => {
     TestBed.configureTestingModule({

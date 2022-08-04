@@ -5,7 +5,7 @@ import { GoogleApiService } from './google-api.service';
 
 describe('GoogleApiService', () => {
 
-  let httpClient: any;
+  const httpClient: any = {};
   let service: GoogleApiService;
 
   beforeEach(() => {

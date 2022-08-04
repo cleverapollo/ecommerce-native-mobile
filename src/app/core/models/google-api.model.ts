@@ -32,7 +32,7 @@ export class VerifyPasswordResetCodeResponse {
 }
 
 export enum VerifyPasswordResetCodeErrorCode {
-    OPERATION_NOT_ALLOWED, 
+    OPERATION_NOT_ALLOWED,
     EXPIRED_OOB_CODE,
     INVALID_OOB_CODE, // code is malformed, expired, or has already been used
 }
@@ -43,7 +43,7 @@ export class ConfirmPasswordResetResponse {
 }
 
 export enum ConfirmPasswordResetErrorCode {
-    OPERATION_NOT_ALLOWED, 
+    OPERATION_NOT_ALLOWED,
     EXPIRED_OOB_CODE,
     INVALID_OOB_CODE, // code is malformed, expired, or has already been used
     USER_DISABLED

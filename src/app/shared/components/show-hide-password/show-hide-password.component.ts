@@ -7,7 +7,7 @@ import { IonInput } from '@ionic/angular';
   templateUrl: './show-hide-password.component.html',
   styleUrls: ['./show-hide-password.component.scss'],
   providers: [
-    { 
+    {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => ShowHidePasswordComponent),
       multi: true

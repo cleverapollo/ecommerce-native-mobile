@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { ApiVersion } from './api-version';
-import { SignupRequestSocialLogin, SignupRequest, SignInRequest, SignupResponse, SignInResponse, SignInRequestEmailPassword, ConfirmPasswordResetRequest, ConfirmPasswordResetResponse } from '@core/models/signup.model';
+import { SignupRequestSocialLogin, SignupRequest, SignInRequest, SignInResponse,
+         SignInRequestEmailPassword, ConfirmPasswordResetRequest, ConfirmPasswordResetResponse } from '@core/models/signup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,12 +39,13 @@ export class AuthService {
 
   resetPassword(email: String): Observable<void> {
     return this.apiService.post<void>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/reset-password`, {
-      email: email
+      email
     });
   }
 
   confirmPasswordReset(requestBody: ConfirmPasswordResetRequest): Observable<ConfirmPasswordResetResponse> {
-    return this.apiService.patch<ConfirmPasswordResetResponse>(`${ApiVersion.v1}/${AuthService.REST_END_POINT}/confirm-password-reset`, requestBody);
+    const uri = `${ApiVersion.v1}/${AuthService.REST_END_POINT}/confirm-password-reset`;
+    return this.apiService.patch<ConfirmPasswordResetResponse>(uri, requestBody);
   }
 
   private errorMessageForRegistrationServerError(error: HttpErrorResponse) {

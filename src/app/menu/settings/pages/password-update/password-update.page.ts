@@ -16,7 +16,7 @@ import { LogService } from '@core/services/log.service';
 export class PasswordUpdatePage implements OnInit {
 
   form: FormGroup;
-  
+
   get validationMessages(): ValidationMessages {
     return {
       currentPassword: [
@@ -35,7 +35,7 @@ export class PasswordUpdatePage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private api: UserApiService,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService,

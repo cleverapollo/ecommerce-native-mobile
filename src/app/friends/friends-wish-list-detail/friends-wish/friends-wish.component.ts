@@ -19,7 +19,7 @@ export class FriendsWishComponent implements OnInit {
   @Output() onWishPurchased: EventEmitter<FriendWish> = new EventEmitter<FriendWish>();
 
   get isDebugInfoVisible(): boolean {
-    return environment.backendType === BackendConfigType.beta ||  
+    return environment.backendType === BackendConfigType.beta ||
       environment.backendType === BackendConfigType.dev;
   }
 
@@ -32,7 +32,7 @@ export class FriendsWishComponent implements OnInit {
     return null;
   }
 
-  private affiliateLink: string = '';
+  private affiliateLink = '';
 
   constructor(
     private browserService: BrowserService,
@@ -46,7 +46,7 @@ export class FriendsWishComponent implements OnInit {
   }
 
   openProductURL() {
-    this.browserService.openSystemBrowser(this.affiliateLink); 
+    this.browserService.openSystemBrowser(this.affiliateLink);
   }
 
   reserve() {
@@ -66,5 +66,5 @@ export class FriendsWishComponent implements OnInit {
     });
     await modal.present();
   }
- 
+
 }
