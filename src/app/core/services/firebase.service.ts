@@ -4,7 +4,7 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ng
 import { DefaultPlatformService } from './platform.service';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { CustomError } from '@core/error';
+import { CustomError, CustomErrorType } from '@core/error';
 import firebase from 'firebase/app';
 
 export interface FirebaseControllable {
@@ -125,7 +125,7 @@ export class FirebaseService implements FirebaseControllable {
 
   private signInNotSupportedError(providerName: string): CustomError {
     return new CustomError(
-      CustomError.Type.NotSupportedWebFeature,
+      CustomErrorType.NotSupportedWebFeature,
       `SignIn with ${providerName} is not supported yet`
     );
   }

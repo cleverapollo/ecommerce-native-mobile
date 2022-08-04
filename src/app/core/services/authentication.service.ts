@@ -15,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { Device } from '@capacitor/device';
 import { DefaultPlatformService } from './platform.service';
-import { CustomError } from '@core/error';
+import { CustomError, CustomErrorType } from '@core/error';
 import firebase from 'firebase/app';
 import { FirebaseService } from './firebase.service';
 
@@ -273,7 +273,7 @@ export class AuthenticationService implements AppAuthenticationService {
         return Promise.reject(error);
       }
     }
-    const error = new CustomError(CustomError.Type.SignInError, 'email or uid missing ');
+    const error = new CustomError(CustomErrorType.SignInError, 'email or uid missing ');
     this.logger.error(error.message, userInfo);
     return Promise.reject(error);
   }
