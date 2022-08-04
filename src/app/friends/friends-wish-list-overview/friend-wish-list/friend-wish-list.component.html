@@ -1,6 +1,6 @@
 <ion-grid>
 
-  <ion-row *ngIf="wishList.owners?.length == 1" class="user-initials-container">
+  <ion-row *ngIf="wishList.owners?.length === 1" class="user-initials-container">
     <ion-col class="centered-user-initials user-initials-overlay">
       <app-user-initials [firstName]="wishList.owners[0].firstName" [lastName]="wishList.owners[0].lastName"></app-user-initials>
     </ion-col>

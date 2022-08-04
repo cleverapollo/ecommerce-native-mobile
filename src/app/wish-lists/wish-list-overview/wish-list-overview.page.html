@@ -6,7 +6,7 @@
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="forceRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher> 
+  </ion-refresher>
 
   <ion-text>
     <h1 class="wantic-page-header ion-text-center">Meine Wunschlisten</h1>
@@ -45,9 +45,9 @@
           </ion-row>
         </ion-grid>
       </ion-col>
-      <ion-col  [ngClass]="{ 'wish-list-right': i % 2 == 0 , 'wish-list-left': i % 2 == 1, 'wish-list-first': i === 0 }" 
+      <ion-col  [ngClass]="{ 'wish-list-right': i % 2 === 0 , 'wish-list-left': i % 2 === 1, 'wish-list-first': i === 0 }"
                 class="wish-list" size="6" size-lg="2"
-                *ngFor="let wishList of wishLists; let i = index;" 
+                *ngFor="let wishList of wishLists; let i = index;"
                 (click)="selectWishList(wishList)">
         <app-wish-list [wishList]="wishList" [index]="i"></app-wish-list>
       </ion-col>

@@ -18,8 +18,8 @@
   <ion-item *ngFor="let option of wishListSelectOptions; let isLast = last;" (click)="wishListId = option.id;" [ngClass]=" {'last-item': isLast }" class="radio-wish-list-option" >
     <ion-label class="radio-option-name">{{ option.name }}</ion-label>
     <ion-avatar slot="end">
-      <img *ngIf="wishListId == option.id" src="assets/icon/checked.svg" alt="checked icon" class="icon-checked" />
-      <img *ngIf="wishListId != option.id" src="assets/icon/unchecked.svg" alt="unchecked icon" class="icon-unchecked" />
+      <img *ngIf="wishListId === option.id" src="assets/icon/checked.svg" alt="checked icon" class="icon-checked" />
+      <img *ngIf="wishListId !== option.id" src="assets/icon/unchecked.svg" alt="unchecked icon" class="icon-unchecked" />
     </ion-avatar>
   </ion-item>
   <!--- hint no wish lists -->
