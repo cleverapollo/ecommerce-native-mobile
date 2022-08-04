@@ -25,7 +25,7 @@ export class SharedWishComponent implements OnInit {
   @Input() wish: FriendWish;
   @Input() wishList: FriendWishList;
   @Input() readonly = false;
-  @Output() onWishStateChanged: EventEmitter<FriendWish> = new EventEmitter<FriendWish>();
+  @Output() wishStateChanged: EventEmitter<FriendWish> = new EventEmitter<FriendWish>();
 
   state: SharedWishListState = SharedWishListState.LOADING;
 
@@ -102,7 +102,7 @@ export class SharedWishComponent implements OnInit {
         this.wish = updatedWish;
         this.state = SharedWishListState.CANCELLABLE;
         this.storageService.set(this.cacheKey, true);
-        this.onWishStateChanged.emit(updatedWish);
+        this.wishStateChanged.emit(updatedWish);
         this.toastService.presentSuccessToast(message);
       },
       error: () => {
@@ -131,7 +131,7 @@ export class SharedWishComponent implements OnInit {
         this.wish = updatedWish;
         this.state = SharedWishListState.RESERVABLE;
         this.storageService.remove(this.cacheKey);
-        this.onWishStateChanged.emit(updatedWish);
+        this.wishStateChanged.emit(updatedWish);
         this.toastService.presentSuccessToast(message);
       },
       error: () => {
