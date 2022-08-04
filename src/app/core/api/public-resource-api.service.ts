@@ -44,8 +44,8 @@ export class PublicResourceApiService implements PublicResourceApi {
   }
 
   private createRequestForWishReservationStateChange(
-    wishListId: string, 
-    wishId: string, 
+    wishListId: string,
+    wishId: string,
     action: StateChangeAction
   ): Observable<FriendWish> {
     const actionString = StateChangeAction[action];
