@@ -14,14 +14,14 @@ export class NavToolbarComponent implements OnInit {
   @Input() showBackButton = true;
 
   @Input() disableNextButton = false;
-  @Output() onNextButtonClicked = new EventEmitter();
+  @Output() nextButtonClick = new EventEmitter();
 
   get canSkip(): boolean {
     return this.skipToPath ? true : false;
   }
 
   get showNextButton(): boolean {
-    return this.onNextButtonClicked?.observers.length > 0 || false;
+    return this.nextButtonClick?.observers.length > 0 || false;
   }
 
   constructor(private navigationService: NavigationService) { }
@@ -40,7 +40,7 @@ export class NavToolbarComponent implements OnInit {
   }
 
   next() {
-    this.onNextButtonClicked.emit();
+    this.nextButtonClick.emit();
   }
 
 }
