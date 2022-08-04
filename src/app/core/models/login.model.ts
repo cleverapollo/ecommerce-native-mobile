@@ -7,8 +7,8 @@ export interface WanticJwtToken {
     emailVerificationStatus: string;
     showOnboardingSlidesIos: boolean;
     accountEnabled: boolean;
-    exp: Number;
-    iat: Number;
+    exp: number;
+    iat: number;
 }
 
 export interface UpdatePasswordRequest {
