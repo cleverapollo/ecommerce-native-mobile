@@ -8,7 +8,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 })
 export class EmailUnverifiedHintComponent implements OnInit {
 
-  emailVerified: Boolean;
+  emailVerified: boolean;
   disableButton = false;
 
   constructor(private authService: AuthenticationService) { }

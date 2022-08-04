@@ -16,7 +16,7 @@ export class AnalyticsService {
 
   analyticsEnabled = true;
 
-  get appsflyerConfigExists(): Boolean {
+  get appsflyerConfigExists(): boolean {
     const appsflyerConfig = environment.appsflyerConfig;
     return appsflyerConfig ? true : false;
   }

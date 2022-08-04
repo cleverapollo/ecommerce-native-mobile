@@ -18,7 +18,7 @@ import { LoadingService } from '@core/services/loading.service';
 })
 export class ResetPasswordPage implements OnInit {
 
-  passwordResetRequestSuccessful: Boolean;
+  passwordResetRequestSuccessful: boolean;
 
   form: FormGroup;
   validationMessages: ValidationMessages = {
