@@ -80,7 +80,7 @@ export class FileService {
           resolve(result as string);
         };
         reader.onerror = (error) => {
-          this.logger.error('file reader on load error ...', event);
+          this.logger.error('file reader on load error ...', error);
           reject(error);
         };
         reader.readAsText(file);
