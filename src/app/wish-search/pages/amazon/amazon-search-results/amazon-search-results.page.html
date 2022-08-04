@@ -19,7 +19,7 @@
         <ion-grid>
           <ion-row>
             <ion-col size="6" *ngFor="let result of results;">
-              <app-search-result [wish]="result" (onSelectWish)="navigateToWishNewPage($event)"></app-search-result>
+              <app-search-result [wish]="result" (selectWish)="navigateToWishNewPage($event)"></app-search-result>
             </ion-col>
           </ion-row>
         </ion-grid>

@@ -10,14 +10,14 @@ import { BrowserService } from '@core/services/browser.service';
 export class SearchResultComponent implements OnInit {
 
   @Input() wish: SearchResultItem
-  @Output() onSelectWish = new EventEmitter<SearchResultItem>();
+  @Output() selectWish = new EventEmitter<SearchResultItem>();
 
   constructor(private browserService: BrowserService) { }
 
   ngOnInit() {}
 
-  selectWish() {
-    this.onSelectWish.emit(this.wish);
+  addWish() {
+    this.selectWish.emit(this.wish);
   }
 
   openProductURL() {
