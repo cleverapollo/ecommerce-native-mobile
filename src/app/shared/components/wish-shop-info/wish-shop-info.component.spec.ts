@@ -57,7 +57,6 @@ describe('WishShopInfoComponent', () => {
       component.wish = wish;
       component.styles = noStyles;
       fixture.detectChanges();
-      component.ngOnInit();
       expect(component.fillIconCSSClass).toBe('fill-gray');
       expect(component.priceDisplayString).toBe('79,99 €');
       expect(component.shopLogoUrl).toBeNull();
@@ -69,7 +68,6 @@ describe('WishShopInfoComponent', () => {
       component.wish = wish;
       component.styles = noStyles;
       fixture.detectChanges();
-      component.ngOnInit();
       expect(component.fillIconCSSClass).toBe('fill-primary');
       expect(component.priceDisplayString).toBe('469,00 €');
       expect(component.shopLogoUrl).toBeNull();
@@ -81,7 +79,6 @@ describe('WishShopInfoComponent', () => {
       component.wish = wish;
       component.styles = noStyles;
       fixture.detectChanges();
-      component.ngOnInit();
       expect(component.fillIconCSSClass).toBe('fill-gray');
       expect(component.priceDisplayString).toBe('79,99 €');
       expect(component.shopLogoUrl).toBeNull();
@@ -93,7 +90,6 @@ describe('WishShopInfoComponent', () => {
       component.wish = wish;
       component.styles = noStyles;
       fixture.detectChanges();
-      component.ngOnInit();
       expect(component.fillIconCSSClass).toBe('fill-primary');
       expect(component.priceDisplayString).toBe('469,00 €');
       expect(component.shopLogoUrl).toBeNull();
