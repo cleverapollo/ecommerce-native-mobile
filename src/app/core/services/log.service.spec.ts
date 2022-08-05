@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { LoggerTestingModule } from 'ngx-logger/testing';
 
-import { LogService } from './log.service';
+import { Logger } from './log.service';
 
-describe('LogService', () => {
+describe('Logger', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       LoggerTestingModule
@@ -11,7 +11,7 @@ describe('LogService', () => {
   }));
 
   it('should be created', () => {
-    const service: LogService = TestBed.inject(LogService);
+    const service: Logger = TestBed.inject(Logger);
     expect(service).toBeTruthy();
   });
 });

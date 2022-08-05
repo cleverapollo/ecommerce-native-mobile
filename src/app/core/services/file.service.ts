@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { File, FileEntry } from '@ionic-native/file/ngx';
-import { LogService } from './log.service';
+import { Logger } from './log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class FileService {
 
   private readonly assetPath = 'public/assets';
 
-  constructor(private file: File, private logger: LogService) { }
+  constructor(private file: File, private logger: Logger) { }
 
   private get fileReader(): FileReader {
     const fileReader = new FileReader();

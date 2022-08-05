@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { AlertService } from '@core/services/alert.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';

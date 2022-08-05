@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { LogService, StubLogService } from '../log.service';
+import { LoggerTestingModule } from 'ngx-logger/testing';
+import { Logger } from '../log.service';
+import { LoggerFake } from '../log.service.mock';
 import { AffiliateDefaultService } from './affiliate-default.service';
 import { AffiliateDouglasService } from './affiliate-douglas.service';
 
@@ -26,10 +28,11 @@ describe('AffiliateLinkService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [LoggerTestingModule],
       providers: [
         { provide: AffiliateDouglasService, useValue: douglasAffiliateMockService },
         { provide: AffiliateDefaultService, useValue: defaultAffiliateMockService },
-        { provide: LogService, useClass: StubLogService }
+        { provide: Logger, useClass: LoggerFake }
       ]
     });
     service = TestBed.inject(AffiliateLinkService);

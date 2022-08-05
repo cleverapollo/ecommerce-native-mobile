@@ -3,9 +3,11 @@ import { AffiliateProgramme } from '@core/models/affiliate.model';
 import { AffiliateDataStoreService } from '../../data/affiliate-data-store.service';
 
 import { AffiliateDefaultService } from './affiliate-default.service';
-import { LogService, StubLogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { LoggerFake } from '../log.service.mock';
+import { LoggerTestingModule } from 'ngx-logger/testing';
 
 class MockAffiliateDataStoreService {
 
@@ -290,9 +292,10 @@ describe('AffiliateDefaultService', () => {
 
   function configureModule(programmes: AffiliateProgramme[]) {
     TestBed.configureTestingModule({
+      imports: [LoggerTestingModule],
       providers: [{
-        provide: LogService,
-        useClass: StubLogService
+        provide: Logger,
+        useClass: LoggerFake
       }, {
         provide: AffiliateDataStoreService,
         useValue: new MockAffiliateDataStoreService(programmes)

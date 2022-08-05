@@ -8,7 +8,7 @@ import { CoreToastService } from '@core/services/toast.service';
 import { UpdateEmailChangeRequest, UserProfile } from '@core/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { first } from 'rxjs/operators';
@@ -49,7 +49,7 @@ export class EmailUpdatePage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private api: UserApiService,
-    private logger: LogService,
+    private logger: Logger,
     private loadingService: LoadingService,
     private toastService: CoreToastService,
     private userProfileStore: UserProfileStore,

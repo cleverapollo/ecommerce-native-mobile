@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AffiliateApiService } from '@core/api/affiliate-api.service';
 import { AffiliateProgramme } from '@core/models/affiliate.model';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { CacheService } from 'ionic-cache';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class AffiliateDataStoreService {
   affiliateProgrammes$: Observable<AffiliateProgramme[]>;
   private _affiliateProgrammes$: BehaviorSubject<AffiliateProgramme[]>;
 
-  constructor(private api: AffiliateApiService, private cache: CacheService, private logger: LogService) {
+  constructor(private api: AffiliateApiService, private cache: CacheService, private logger: Logger) {
     this._affiliateProgrammes$ = new BehaviorSubject([]);
     this.affiliateProgrammes$ = this._affiliateProgrammes$.asObservable();
   }

@@ -6,7 +6,7 @@ import { Gender } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { CoreToastService } from '@core/services/toast.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class SignupMailTwoPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private logger: LogService,
+    private logger: Logger,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService,
     private toastService: CoreToastService,

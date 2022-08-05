@@ -4,7 +4,7 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { CacheService } from 'ionic-cache';
 import { WishApiService } from '@core/api/wish-api.service';
 import { Observable } from 'rxjs';
-import { LogService } from './log.service';
+import { Logger } from './log.service';
 import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
 
 export interface WishListStore {
@@ -42,7 +42,7 @@ export class WishListStoreService implements WishListStore {
     private wishListApiService: WishListApiService,
     private wishApiService: WishApiService,
     private cache: CacheService,
-    private logger: LogService
+    private logger: Logger
   ) { }
 
   clear(): Promise<any> {

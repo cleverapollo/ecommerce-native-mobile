@@ -3,7 +3,7 @@ import { SharedWishListApiService } from '@core/api/shared-wish-list-api.service
 import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { CacheService } from 'ionic-cache';
 import { Observable } from 'rxjs';
-import { LogService } from './log.service';
+import { Logger } from './log.service';
 
 export interface FriendWishListStore {
   loadWishLists(forceRefresh: boolean): Observable<Array<FriendWishList>>;
@@ -29,7 +29,7 @@ export class FriendWishListStoreService implements FriendWishListStore {
   constructor(
     private sharedWishListApiService: SharedWishListApiService,
     private cache: CacheService,
-    private logger: LogService
+    private logger: Logger
   ) { }
 
   loadWishLists(forceRefresh: boolean = false): Observable<Array<FriendWishList>> {

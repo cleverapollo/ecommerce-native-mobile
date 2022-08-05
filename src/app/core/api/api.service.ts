@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { appVersion, SERVER_URL } from 'src/environments/environment';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { Device } from '@capacitor/device';
 import { App } from '@capacitor/app';
 import { DefaultPlatformService } from '@core/services/platform.service';
@@ -16,7 +16,7 @@ export class ApiService {
 
   constructor(
     private httpClient: HttpClient,
-    private logger: LogService,
+    private logger: Logger,
     private platformService: DefaultPlatformService) {
     this.initClientInfoHeader();
   }

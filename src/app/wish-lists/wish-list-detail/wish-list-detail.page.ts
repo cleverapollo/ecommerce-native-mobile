@@ -6,7 +6,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { Share } from '@capacitor/share';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { NavigationService } from '@core/services/navigation.service';
 import { Subscription } from 'rxjs';
 import { APP_URL } from 'src/environments/environment';
@@ -47,7 +47,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     private navigationService: NavigationService,
     private wishListStore: WishListStoreService,
     private userProfileStore: UserProfileStore,
-    private logger: LogService,
+    private logger: Logger,
     private analyticsService: AnalyticsService
   ) { }
 

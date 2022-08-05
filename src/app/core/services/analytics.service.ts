@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 
 import { AFInit, AppsFlyer } from 'appsflyer-capacitor-plugin';
 import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
-import { LogService } from './log.service';
+import { Logger } from './log.service';
 import { AuthProvider } from '@core/models/signup.model';
 import { Platform } from '@ionic/angular';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
@@ -22,7 +22,7 @@ export class AnalyticsService {
   }
 
   constructor(
-    private logger: LogService,
+    private logger: Logger,
     private platform: Platform,
     private platformService: DefaultPlatformService,
     private angularFireAnalytics: AngularFireAnalytics

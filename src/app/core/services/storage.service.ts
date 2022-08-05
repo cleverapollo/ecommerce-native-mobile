@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 import 'capacitor-secure-storage-plugin';
-import { LogService } from './log.service';
+import { Logger } from './log.service';
 import { Storage } from '@capacitor/storage';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 import { DefaultPlatformService } from './platform.service';
@@ -41,7 +41,7 @@ export class StorageService implements Storage {
   constructor(
     private platform: Platform,
     private platformService: DefaultPlatformService,
-    private logger: LogService) {
+    private logger: Logger) {
       this.setupSecureWebStorage();
   }
 

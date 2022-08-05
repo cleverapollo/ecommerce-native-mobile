@@ -6,7 +6,7 @@ import { SearchService } from '@core/api/search.service';
 import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
 import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { PagingService } from '@core/services/paging.service';
 import { SearchQuery, SearchResultDataService, SearchType } from '@core/services/search-result-data.service';
 import { IonInfiniteScroll, Platform } from '@ionic/angular';
@@ -81,7 +81,7 @@ export class AmazonSearchResultsPage implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     public platform: Platform,
-    private logger: LogService,
+    private logger: Logger,
     private pagingService: PagingService,
     private analyticsService: AnalyticsService
   ) { }

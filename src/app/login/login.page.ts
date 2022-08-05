@@ -5,7 +5,7 @@ import { NavController } from '@ionic/angular';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { CustomValidation } from '@shared/custom-validation';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
     private navController: NavController,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
-    private logger: LogService,
+    private logger: Logger,
     private toastService: CoreToastService,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService

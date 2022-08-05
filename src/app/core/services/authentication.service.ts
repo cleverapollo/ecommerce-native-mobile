@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { StorageService, StorageKeys } from './storage.service';
 import { CacheService } from 'ionic-cache';
 import { HTTP } from '@ionic-native/http/ngx';
-import { LogService } from './log.service';
+import { Logger } from './log.service';
 import { AuthService } from '@core/api/auth.service';
 import { SignInResponse, SignupRequest } from '@core/models/signup.model';
 import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
@@ -49,7 +49,7 @@ export class AuthenticationService implements AppAuthenticationService {
     private platformService: DefaultPlatformService,
     private cache: CacheService,
     private nativeHttpClient: HTTP,
-    private logger: LogService,
+    private logger: Logger,
     private authApiService: AuthService,
     private facebook: Facebook,
     private googlePlus: GooglePlus,

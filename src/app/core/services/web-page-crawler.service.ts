@@ -4,7 +4,7 @@ import { SearchResultItem } from '@core/models/search-result-item';
 import { InAppBrowser, InAppBrowserEvent, InAppBrowserObject } from '@ionic-native/in-app-browser/ngx';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { FileService } from './file.service';
-import { LogService } from './log.service';
+import { Logger } from './log.service';
 import { DefaultPlatformService } from './platform.service';
 import { SearchQuery, SearchResultDataService, SearchType } from './search-result-data.service';
 
@@ -23,7 +23,7 @@ export class WebPageCrawlerService {
   private loadingComplete = false;
 
   constructor(
-    private logger: LogService,
+    private logger: Logger,
     private http: HttpClient,
     private inAppBrowser: InAppBrowser,
     private searchResultDataService: SearchResultDataService,

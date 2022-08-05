@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LogService } from '../log.service';
+import { Logger } from '../log.service';
 import { AffiliateDefaultService } from './affiliate-default.service';
 import { AffiliateDouglasService } from './affiliate-douglas.service';
 
@@ -18,7 +18,7 @@ export class AffiliateLinkService {
   constructor(
     private defaultService: AffiliateDefaultService,
     private douglasService: AffiliateDouglasService,
-    private logger: LogService
+    private logger: Logger
   ) {
   }
 

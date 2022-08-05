@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { WISH_ERROR_IMAGE_ASSET_URL, WISH_PLACEHOLDER_IMAGE_ASSET_URL } from '@core/ui.constants';
 
 export interface WishImageComponentStyles {
@@ -45,7 +45,7 @@ export class WishImageComponent implements OnInit {
     }
   }
 
-  constructor(private logger: LogService) {}
+  constructor(private logger: Logger) {}
 
   ngOnInit() {
     this.logger.debug('onStart', this.src);

@@ -2,7 +2,7 @@ import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishListSelectOptionDto } from '@core/models/wish-list.model';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { WishListCreateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
 import { Subscription } from 'rxjs';
@@ -74,7 +74,7 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
     private wishListStore: WishListStoreService,
     private wishListApi: WishListApiService,
     private formBuilder: FormBuilder,
-    private logger: LogService
+    private logger: Logger
   ) {
   }
 

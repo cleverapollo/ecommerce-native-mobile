@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 
 import { AutoLoginGuard } from './auto-login.guard';
 
@@ -18,7 +18,7 @@ describe('AutoLoginGuard', () => {
       providers: [
         { provide: AuthenticationService, useValue: authService },
         { provide: Router, useValue: router },
-        { provide: LogService, useValue: logger }
+        { provide: Logger, useValue: logger }
       ]
     });
     guard = TestBed.inject(AutoLoginGuard);

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthProvider } from '@core/models/signup.model';
 import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { UserProfileStore } from './user-profile-store.service';
@@ -34,7 +34,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private userProfileStore: UserProfileStore,
     private analyticsService: AnalyticsService,
-    private logger: LogService
+    private logger: Logger
   ) { }
 
   async ngOnInit() {

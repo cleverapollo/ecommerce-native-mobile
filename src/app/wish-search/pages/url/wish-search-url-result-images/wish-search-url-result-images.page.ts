@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angula
 import { Router } from '@angular/router';
 import { SearchResultItem } from '@core/models/search-result-item';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { ProductSearchService } from '@core/services/product-search.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { WebPageCrawlerService } from '@core/services/web-page-crawler.service';
@@ -26,7 +26,7 @@ export class WishSearchUrlResultImagesPage implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private logger: LogService,
+    private logger: Logger,
     private changeDetector: ChangeDetectorRef,
     private analyticsService: AnalyticsService,
     private urlSearchDataStore: UrlSearchDataStoreService,

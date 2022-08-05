@@ -6,7 +6,7 @@ import { UserApiService } from '@core/api/user-api.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 
 @Component({
   selector: 'app-password-update',
@@ -40,7 +40,7 @@ export class PasswordUpdatePage implements OnInit {
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService,
     private toastService: CoreToastService,
-    private logger: LogService
+    private logger: Logger
   ) {}
 
   ngOnInit() {

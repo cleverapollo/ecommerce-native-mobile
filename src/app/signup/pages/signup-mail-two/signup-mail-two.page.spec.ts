@@ -5,7 +5,7 @@ import { UserApiService } from '@core/api/user-api.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { IonicModule } from '@ionic/angular';
@@ -36,7 +36,7 @@ describe('SignupMailTwoPage', () => {
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         { provide: FormBuilder, useValue: formBuilder },
-        { provide: LogService, useValue: logger },
+        { provide: Logger, useValue: logger },
         { provide: AnalyticsService, useValue: analyticsService },
         { provide: LoadingService, useValue: loadingService },
         { provide: CoreToastService, useValue: toastService },

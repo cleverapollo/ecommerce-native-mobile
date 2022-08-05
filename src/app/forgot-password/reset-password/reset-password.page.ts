@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
 import { CustomValidation } from '@shared/custom-validation';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { CoreToastService } from '@core/services/toast.service';
@@ -31,7 +31,7 @@ export class ResetPasswordPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
-    private logger: LogService,
+    private logger: Logger,
     private analyticsService: AnalyticsService,
     private toastService: CoreToastService,
     private loadingService: LoadingService

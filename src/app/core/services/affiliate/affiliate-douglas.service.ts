@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { DefaultPlatformService } from '../platform.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class AffiliateDouglasService implements AffiliateService {
   private static WANTIC_AFFILIATE_ID = '813821';
   private static DOUGLAS_AWIN_PROGRAM_ID = '10076';
 
-  constructor(private httpClient: HttpClient, private logger: LogService, private platformService: DefaultPlatformService) { }
+  constructor(private httpClient: HttpClient, private logger: Logger, private platformService: DefaultPlatformService) { }
 
   supportsDomain(domain: string): boolean {
     return domain === AffiliateDouglasService.DOUGLAS_DOMAIN

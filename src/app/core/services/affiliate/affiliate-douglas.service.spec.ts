@@ -3,11 +3,13 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 
 import { AffiliateDouglasService } from './affiliate-douglas.service';
 import { HttpClient } from '@angular/common/http';
-import { LogService, StubLogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 
 import bodyMilkGeneratorResult from './affiliate-douglas-bodymilk-response';
 import parfumeGeneratorResult from './affiliate-douglas-parfum-response';
 import { DefaultPlatformService, PlatformMockService } from '../platform.service';
+import { LoggerFake } from '../log.service.mock';
+import { LoggerTestingModule } from 'ngx-logger/testing';
 
 describe('AffiliateDouglasService', () => {
   let service: AffiliateDouglasService;
@@ -19,9 +21,9 @@ describe('AffiliateDouglasService', () => {
     platformService.setupIOS(); // simulate any native platform
 
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ],
+      imports: [ HttpClientTestingModule, LoggerTestingModule ],
       providers: [ {
-        provide: LogService, useClass: StubLogService,
+        provide: Logger, useClass: LoggerFake,
       }, {
         provide: DefaultPlatformService, useValue: platformService
       }]

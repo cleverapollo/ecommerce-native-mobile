@@ -1,7 +1,7 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserApiService } from '@core/api/user-api.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
@@ -30,7 +30,7 @@ describe('OnboardingSlidesComponent', () => {
       providers: [
         { provide: ModalController, useValue: modalController },
         { provide: UserApiService, useValue: userApiService },
-        { provide: LogService, useValue: logger },
+        { provide: Logger, useValue: logger },
         { provide: UserProfileStore, useValue: userProfileStore },
         { provide: DomSanitizer, useValue: domSanitzer },
         { provide: DefaultPlatformService, useValue: platformService },

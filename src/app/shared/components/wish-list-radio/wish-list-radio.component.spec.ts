@@ -6,7 +6,7 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishListApiMockService } from '@core/api/wish-list-mock.service';
 import { EmailVerificationStatus, InvitationStatus } from '@core/models/user.model';
 import { WishListDto, WishListSelectOptionDto } from '@core/models/wish-list.model';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { MockWishListStoreService } from '@core/services/wish-list-store-mock.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { WishListTestData } from '@core/test/wish-list-data';
@@ -32,7 +32,7 @@ describe('WishListRadioComponent', () => {
         FormBuilder,
         { provide: WishListApiService, useValue: wishListApiService },
         { provide: WishListStoreService, useValue: wishListStoreService },
-        { provide: LogService, useValue: logger }
+        { provide: Logger, useValue: logger }
       ]
     }).compileComponents();
 

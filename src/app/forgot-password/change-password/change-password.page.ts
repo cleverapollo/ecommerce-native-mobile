@@ -9,7 +9,7 @@ import { ChangePasswordRequest } from '@core/models/login.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { GoogleApiService } from '@core/api/google-api.service';
 import { first } from 'rxjs/operators';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '@core/api/auth.service';
 import { LoadingService } from '@core/services/loading.service';
@@ -57,7 +57,7 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
     private analyticsService: AnalyticsService,
     private googleApiService: GoogleApiService,
     private loadingService: LoadingService,
-    private logger: LogService,
+    private logger: Logger,
     private toastService: CoreToastService
   ) { }
 

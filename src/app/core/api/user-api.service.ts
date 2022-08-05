@@ -6,7 +6,7 @@ import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto,
 import { UpdatePasswordRequest, ChangePasswordRequest, LoginResponse } from '@core/models/login.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { ApiVersion } from './api-version';
 
@@ -20,7 +20,7 @@ export class UserApiService {
   constructor(
     private apiService: ApiService,
     private errorHandler: ApiErrorHandlerService,
-    private logger: LogService
+    private logger: Logger
   ) { }
 
   deleteUser(): Observable<void> {

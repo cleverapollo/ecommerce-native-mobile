@@ -8,7 +8,7 @@ import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { CoreToastService } from '@core/services/toast.service';
@@ -34,7 +34,7 @@ export class StartPage {
 
   constructor(
     private analyticsService: AnalyticsService,
-    private logger: LogService,
+    private logger: Logger,
     private router: Router,
     private userApiService: UserApiService,
     private authService: AuthenticationService,

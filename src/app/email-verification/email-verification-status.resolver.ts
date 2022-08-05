@@ -6,7 +6,7 @@ import { UserApiService } from '@core/api/user-api.service';
 import { VerifyEmailErrorCode, VerifyEmailResponse } from '@core/models/google-api.model';
 import { PublicEmailVerificationStatus } from '@core/models/user.model';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DeviceInfo, Device } from '@capacitor/device'
@@ -25,7 +25,7 @@ export class EmailVerificationStatusResolver implements Resolve<
     private authService: AuthenticationService,
     private toastService: CoreToastService,
     private router: Router,
-    private logger: LogService
+    private logger: Logger
   ) {
     this.init();
   }

@@ -8,7 +8,7 @@ import { CoreToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserProfile } from '@core/models/user.model';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 
 @Component({
   selector: 'app-birthday-update',
@@ -32,7 +32,7 @@ export class BirthdayUpdatePage implements OnInit {
     private toastService: CoreToastService,
     private formBuilder: FormBuilder,
     private api: UserApiService,
-    private logger: LogService,
+    private logger: Logger,
     private userProfileStore: UserProfileStore,
     private analyticsService: AnalyticsService
   )

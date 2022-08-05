@@ -1,8 +1,9 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogService, StubLogService } from '@core/services/log.service';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Logger } from '@core/services/log.service';
+import { LoggerFake } from '@core/services/log.service.mock';
 import { WISH_ERROR_IMAGE_ASSET_URL, WISH_PLACEHOLDER_IMAGE_ASSET_URL } from '@core/ui.constants';
 import { IonicModule } from '@ionic/angular';
+import { LoggerTestingModule } from 'ngx-logger/testing';
 
 import { WishImageComponent } from './wish-image.component';
 
@@ -15,11 +16,11 @@ describe('ImageComponent', () => {
       declarations: [ WishImageComponent ],
       providers: [
         {
-          provide: LogService,
-          useClass: StubLogService
+          provide: Logger,
+          useClass: LoggerFake
         },
       ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), LoggerTestingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(WishImageComponent);

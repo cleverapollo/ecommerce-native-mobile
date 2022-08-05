@@ -6,7 +6,7 @@ import { Style, StatusBar } from '@capacitor/status-bar';
 import { App } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { UserManagementActionMode } from '@core/models/google-api.model';
@@ -29,7 +29,7 @@ export class AppComponent {
     private cache: CacheService,
     private zone: NgZone,
     private router: Router,
-    private logger: LogService,
+    private logger: Logger,
     private authService: AuthenticationService,
     private analyticsService: AnalyticsService,
     private affiliateDataStore: AffiliateDataStoreService,

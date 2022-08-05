@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductSearchService } from '@core/services/product-search.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { ModalController } from '@ionic/angular';
 import { LoadingService } from '@core/services/loading.service';
 import { ShareExtensionExplanationComponent } from '../../share-extension-explanation/share-extension-explanation.component';
@@ -56,7 +56,7 @@ export class WishSearchOverviewPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private logger: LogService,
+    private logger: Logger,
     public platformService: DefaultPlatformService,
     private loadingService: LoadingService,
     private userProfileStore: UserProfileStore,

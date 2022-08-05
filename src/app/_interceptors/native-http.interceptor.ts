@@ -10,7 +10,7 @@ import {
 } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
 
 type HttpMethod =
@@ -47,7 +47,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
   constructor(
     private nativeHttp: HTTP,
     private platform: DefaultPlatformService,
-    private logger: LogService
+    private logger: Logger
   ) {}
 
   public intercept(

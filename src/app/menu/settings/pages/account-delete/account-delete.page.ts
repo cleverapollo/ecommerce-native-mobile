@@ -5,7 +5,7 @@ import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { NavController } from '@ionic/angular';
@@ -32,7 +32,7 @@ export class AccountDeletePage {
     private navController: NavController,
     private loadingService: LoadingService,
     private toastService: CoreToastService,
-    private logger: LogService,
+    private logger: Logger,
     private analyticsService: AnalyticsService
   ) { }
 

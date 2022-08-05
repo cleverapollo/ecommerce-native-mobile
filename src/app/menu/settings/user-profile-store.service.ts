@@ -3,7 +3,7 @@ import { UserProfile } from '@core/models/user.model';
 import { from, Observable } from 'rxjs';
 import { UserApiService } from '@core/api/user-api.service';
 import { CacheService } from 'ionic-cache';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 
 export interface StoredUserProfile {
   item: UserProfile;
@@ -22,7 +22,7 @@ export class UserProfileStore {
   constructor(
     private cache: CacheService,
     private api: UserApiService,
-    private logger: LogService
+    private logger: Logger
   )
   {}
 

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserApiService } from '@core/api/user-api.service';
-import { LogService } from '@core/services/log.service';
+import { Logger } from '@core/services/log.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { ASSETS_IMAGES_PATH } from '@core/ui.constants';
 import { IonSlides, ModalController } from '@ionic/angular';
@@ -40,7 +40,7 @@ export class ShareExtensionExplanationComponent {
   constructor(
     private modalController: ModalController,
     private userApiService: UserApiService,
-    private logger: LogService,
+    private logger: Logger,
     private userProfileStore: UserProfileStore,
     private domSanitzer: DomSanitizer,
     public platformService: DefaultPlatformService
