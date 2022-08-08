@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Script, ScriptName, ScriptStore } from '@core/data/script-store';
+import { BackendConfigType } from '@env/backend-config-type';
+import { environment } from '@env/environment';
+import { DefaultPlatformService } from './platform.service';
 
 export enum ScriptLoadingStatus {
   LOADED, ALREADY_LOADED, ERROR
@@ -16,8 +19,10 @@ export class ScriptService {
 
   private scripts: { [name: number]: { src: string, loaded: boolean}  } = {};
 
-  constructor() {
-    this.initScripts();
+  constructor(private platform: DefaultPlatformService) {
+    if (this.platform.isWeb && environment.backendType == BackendConfigType.prod) {
+      this.initScripts();
+    }
   }
 
   private initScripts() {
