@@ -45,7 +45,11 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "crypto-js",
+              "secure-web-storage"
+            ]
           },
           "configurations": {
             "production": {
