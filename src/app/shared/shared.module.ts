@@ -17,7 +17,6 @@ import { ShowHidePasswordComponent } from './components/show-hide-password/show-
 import { AffiliateLinkDebugInfoComponent } from './components/affiliate-link-debug-info/affiliate-link-debug-info.component';
 import { WishImageComponent } from './components/wish-image/wish-image.component';
 import { WishShopInfoComponent } from './components/wish-shop-info/wish-shop-info.component';
-import { SortByIsFavoritePipe } from './pipes/sort-by-is-favorite.pipe';
 import { DatetimeComponent } from './components/datetime/datetime.component';
 
 @NgModule({
@@ -37,8 +36,7 @@ import { DatetimeComponent } from './components/datetime/datetime.component';
     UserInitialsComponent,
     WishListRadioComponent,
     WishShopInfoComponent,
-    TruncateNamePipe,
-    SortByIsFavoritePipe
+    TruncateNamePipe
   ],
   imports: [
     CommonModule,
@@ -61,7 +59,6 @@ import { DatetimeComponent } from './components/datetime/datetime.component';
     ReactiveFormsModule,
     SearchResultComponent,
     ShowHidePasswordComponent,
-    SortByIsFavoritePipe,
     TruncateNamePipe,
     UserInitialsComponent,
     WishListRadioComponent,

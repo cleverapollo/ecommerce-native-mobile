@@ -8,7 +8,7 @@ import { FriendWishListStoreService } from '@core/services/friend-wish-list-stor
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { NavController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 export class FriendsWishListDetailPage implements OnInit, OnDestroy {
 
   wishList: FriendWishList;
+  wishes$: Observable<FriendWish[]> = of([]);
 
   get date(): string {
     let dateString  = 'noch kein Datum festgelegt';
@@ -49,6 +50,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.routeParamSubscription = this.route.paramMap.subscribe(paramMap => {
       this.wishListId = paramMap.get('wishListId');
+      this.wishes$ = this.sharedWishListStore.loadWishes(this.wishListId);
     })
   }
 

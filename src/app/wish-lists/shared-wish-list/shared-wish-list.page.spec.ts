@@ -4,12 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { PublicResourceApiMockService } from '@core/api/public-resource-api-mock-service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { MockFriendWishListStoreService } from '@core/services/friend-wish-list-store-mock.service';
+import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { WishListTestDataUtils } from '@core/test/wish-list-data.utils';
 import { IonicModule } from '@ionic/angular';
 import { OwnersInfoComponent } from '@shared/components/owners-info/owners-info.component';
 import { OwnerNamesPipe } from '@shared/pipes/owner-names.pipe';
-import { SortByIsFavoritePipe } from '@shared/pipes/sort-by-is-favorite.pipe';
 
 import { SharedWishListPage } from './shared-wish-list.page';
 
@@ -27,16 +28,18 @@ describe('SharedWishListPage', () => {
     }
   }
   const analyticsServiceSpy = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
+  const friendWishListStoreMock = new MockFriendWishListStoreService();
   let publicResourceApiServiceMock = new PublicResourceApiMockService();
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharedWishListPage, OwnerNamesPipe, OwnersInfoComponent, SortByIsFavoritePipe],
+      declarations: [ SharedWishListPage, OwnerNamesPipe, OwnersInfoComponent],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: AnalyticsService, useValue: analyticsServiceSpy },
         { provide: PublicResourceApiService, useValue: publicResourceApiServiceMock },
         { provide: ActivatedRoute, useValue: route },
+        { provide: FriendWishListStoreService, useValue: friendWishListStoreMock },
         DatePipe
       ]
     }).compileComponents();

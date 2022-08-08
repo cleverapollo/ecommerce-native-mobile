@@ -8,7 +8,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { Logger } from '@core/services/log.service';
 import { NavigationService } from '@core/services/navigation.service';
-import { Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { APP_URL } from 'src/environments/environment';
 import { AnalyticsService } from '@core/services/analytics.service';
 
@@ -23,6 +23,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
   private loadWishListSubscription: Subscription;
 
   wishList: WishListDto;
+  wishes$:  Observable<WishDto[]> = of([]);
   showBackButton = true;
 
   get wishListOwnerCount(): number {
@@ -53,6 +54,7 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
+    this.wishes$ = this.wishListStore.loadWishes(this.wishList.id);
     this.queryParamSubscription = this.route.queryParamMap.subscribe(queryParamMap => {
       if (Boolean(queryParamMap.get('forceRefresh'))) {
         this.wishListStore.loadWishList(this.wishList.id, true).subscribe({

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AnalyticsService } from '@core/services/analytics.service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
+import { AnalyticsService } from '@core/services/analytics.service';
+import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
+import { Observable, of } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { FriendWishList, FriendWish } from '@core/models/wish-list.model';
@@ -15,6 +17,7 @@ export class SharedWishListPage implements OnInit {
 
   data: { wishList: FriendWishList };
   wishList: FriendWishList;
+  wishes$: Observable<FriendWish[]> = of([]);
 
   get date(): string {
     let dateString  = 'noch kein Datum festgelegt';
@@ -28,12 +31,14 @@ export class SharedWishListPage implements OnInit {
     private route: ActivatedRoute,
     private analyticsService: AnalyticsService,
     private publicResourceApiService: PublicResourceApiService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private friendWishListStore: FriendWishListStoreService
   ) { }
 
   ngOnInit() {
     this.data = this.route.snapshot.data.data;
     this.wishList = this.data.wishList;
+    this.wishes$ = this.friendWishListStore.loadWishes(this.wishList.id);
   }
 
   ionViewDidEnter() {

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { SharedWishListApiService } from '@core/api/shared-wish-list-api.service';
-import { FriendWishList } from '@core/models/wish-list.model';
+import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
+import { sortWishesByIsFavorite } from '@core/wish-list.utils';
 import { CacheService } from 'ionic-cache';
 import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Logger } from './log.service';
 
 export interface FriendWishListStore {
-  loadWishLists(forceRefresh: boolean): Observable<Array<FriendWishList>>;
+  loadWishLists(forceRefresh: boolean): Observable<FriendWishList[]>;
   loadWishList(id: string, forceRefresh: boolean): Observable<FriendWishList>;
   removeWishListById(wishListId: string): Promise<void>;
   removeCachedWishLists(): Promise<void>;
@@ -32,13 +34,25 @@ export class FriendWishListStoreService implements FriendWishListStore {
     private logger: Logger
   ) { }
 
-  loadWishLists(forceRefresh: boolean = false): Observable<Array<FriendWishList>> {
-    const request = this.sharedWishListApiService.getWishLists() as Observable<Array<FriendWishList>>;
+  loadWishLists(forceRefresh: boolean = false): Observable<FriendWishList[]> {
+    const request = this.sharedWishListApiService.getWishLists() as Observable<FriendWishList[]>;
     if (forceRefresh) {
-      this.logger.log('force refresh');
-      return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
+      return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all');
     }
-    return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY)
+    return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY);
+  }
+
+  loadWishes(wishListId: string): Observable<FriendWish[]> {
+    return this.loadWishList(wishListId, false).pipe(
+      map(wishList => {
+        const wishes = wishList.wishes;
+        return wishes.sort(sortWishesByIsFavorite);
+      }),
+      catchError(error => {
+        this.logger.error(error);
+        return [];
+      })
+    )
   }
 
   removeWishListById(wishListId: string): Promise<void> {

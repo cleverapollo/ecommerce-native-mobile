@@ -6,9 +6,11 @@ import { WishApiService } from '@core/api/wish-api.service';
 import { Observable } from 'rxjs';
 import { Logger } from './log.service';
 import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
+import { sortWishesByIsFavorite } from '@core/wish-list.utils';
+import { map, catchError } from 'rxjs/operators';
 
 export interface WishListStore {
-  loadWishLists(forceRefresh: boolean): Observable<Array<WishListDto>>;
+  loadWishLists(forceRefresh: boolean): Observable<WishListDto[]>;
   loadWishList(id: string, forceRefresh: boolean): Observable<WishListDto>;
   loadWish(id: string, forceRefresh: boolean): Observable<WishDto>;
   createWish(wish: WishDto): Promise<WishDto>;
@@ -51,12 +53,25 @@ export class WishListStoreService implements WishListStore {
 
   // WISH LISTS
 
-  loadWishLists(forceRefresh: boolean = false): Observable<Array<WishListDto>> {
-    const request = this.wishListApiService.getWishLists() as Observable<Array<WishListDto>>;
+  loadWishLists(forceRefresh: boolean = false): Observable<WishListDto[]> {
+    const request = this.wishListApiService.getWishLists() as Observable<WishListDto[]>;
     if (forceRefresh) {
       return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
     }
     return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY)
+  }
+
+  loadWishes(wishListId: string): Observable<WishDto[]> {
+    return this.loadWishList(wishListId, false).pipe(
+      map(wishList => {
+        const wishes = wishList.wishes;
+        return wishes.sort(sortWishesByIsFavorite);
+      }),
+      catchError(error => {
+        this.logger.error(error);
+        return [];
+      })
+    )
   }
 
   clearWishLists(): Promise<void> {
