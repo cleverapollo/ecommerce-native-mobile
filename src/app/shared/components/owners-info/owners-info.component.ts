@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserDto } from '@core/models/user.model';
+import { UserDto, UserWishListDto } from '@core/models/user.model';
 
 @Component({
   selector: 'app-owners-info',
@@ -8,7 +8,7 @@ import { UserDto } from '@core/models/user.model';
 })
 export class OwnersInfoComponent {
 
-  @Input() owners: Array<UserDto> = new Array<UserDto>();
+  @Input() owners: Array<UserDto | UserWishListDto> = [];
   @Input() showOnlyInitials = false;
 
   get wishListOwnerCount(): number {

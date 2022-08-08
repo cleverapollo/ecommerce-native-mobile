@@ -59,15 +59,15 @@ export class WishImageComponent implements OnInit {
     this.imgClass = this.imgClass ? this.imgClass + ' hide' : 'hide';
   }
 
-  onError(event: { target: HTMLImageElement }) {
+  onError(event: { target: EventTarget }) {
     this.logger.debug('onError', event);
     this.onComplete();
     this.imgType = ImageType.ERROR;
-    event.target.src = WISH_ERROR_IMAGE_ASSET_URL;
-    event.target.alt = ''; // ToDo
+    (event.target as HTMLImageElement).src = WISH_ERROR_IMAGE_ASSET_URL;
+    (event.target as HTMLImageElement).alt = ''; // ToDo
   }
 
-  onLoad(event: { target: HTMLImageElement }) {
+  onLoad(event: { target: EventTarget }) {
     this.logger.debug('onLoad', event);
     this.onComplete();
   }
