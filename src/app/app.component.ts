@@ -15,6 +15,7 @@ import { DefaultPlatformService } from '@core/services/platform.service';
 import { ScriptLoadingStatus, ScriptService } from '@core/services/script.service';
 import { ScriptName } from '@core/data/script-store';
 import { Storage } from '@capacitor/storage';
+import { BackendConfigType } from '@env/backend-config-type';
 
 @Component({
   selector: 'app-root',
@@ -71,6 +72,9 @@ export class AppComponent {
   }
 
   private loadWebAppScripts() {
+    if (environment.backendType !== BackendConfigType.prod) {
+      return;
+    }
     this.scriptService.load(ScriptName.HOTJAR, ScriptName.GTM).then( results => {
       results.forEach( result => {
         this.logger.debug(`loaded script ${ScriptName[result.script]} with status ${ScriptLoadingStatus[result.status]}`, result);
