@@ -48,7 +48,7 @@ export class StorageService implements Storage {
   private setupSecureWebStorage() {
     this.secureWebStorage = new SecureStorage(localStorage, {
       hash: function hash(key): any {
-        key = CryptoJS.SHA256(key, SECRET_KEY);
+        key = CryptoJS.HmacSHA256(key, SECRET_KEY);
         return key.toString();
       },
       // Encrypt the localstorage data

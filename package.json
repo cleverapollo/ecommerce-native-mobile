@@ -112,6 +112,7 @@
     "@cypress/schematic": "^1.6.0",
     "@ionic/angular-toolkit": "^2.3.3",
     "@ionic/cli": "^6.18.1",
+    "@types/crypto-js": "^4.1.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "^2.0.10",
     "@types/node": "~12.12.6",
