@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AffiliateProgramme } from '@core/models/affiliate.model';
-import { WishDto } from '@core/models/wish-list.model';
+import { FriendWish, WishDto } from '@core/models/wish-list.model';
 import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
 import { Logger } from '../log.service';
-import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 
 
 @Injectable({

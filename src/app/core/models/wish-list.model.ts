@@ -1,4 +1,4 @@
-import { UserWishListDto } from './user.model';
+import { UserDto, UserWishListDto } from './user.model';
 
 export class PriceDto {
     amount: number;
@@ -57,4 +57,24 @@ export class WishListRegistration {
 
 export class SharedWishListLink {
     value: string;
+}
+export class FriendWishList {
+    id: string;
+    name: string;
+    date: string;
+    wishes: Array<FriendWish> = [];
+    owners: Array<UserDto> = [];
+}
+export class FriendWish {
+    id: string;
+    asin?: string;
+    wishListId: string;
+    name: string;
+    note?: string;
+    price: PriceDto;
+    productUrl: string;
+    imageUrl: string;
+    reservedByFriend: boolean;
+    bought: boolean;
+    isFavorite: boolean;
 }

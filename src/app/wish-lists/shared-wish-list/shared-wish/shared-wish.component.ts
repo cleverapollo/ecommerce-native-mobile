@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { BrowserService } from '@core/services/browser.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
@@ -10,6 +9,7 @@ import { PublicResourceApiService } from '@core/api/public-resource-api.service'
 import { first } from 'rxjs/operators';
 import { CoreToastService } from '@core/services/toast.service';
 import { WISH_ERROR_IMAGE_ASSET_URL } from '@core/ui.constants';
+import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 
 export enum SharedWishListState {
   CANCELLABLE, RESERVABLE, RESERVED, LOADING

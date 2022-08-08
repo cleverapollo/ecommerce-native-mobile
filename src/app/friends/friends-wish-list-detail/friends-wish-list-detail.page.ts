@@ -1,15 +1,14 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FriendWishList, FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
-import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
-import { AnalyticsService } from '@core/services/analytics.service';
-import { Logger } from '@core/services/log.service';
+import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 import { AlertService } from '@core/services/alert.service';
+import { AnalyticsService } from '@core/services/analytics.service';
+import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
+import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-friends-wish-list-detail',

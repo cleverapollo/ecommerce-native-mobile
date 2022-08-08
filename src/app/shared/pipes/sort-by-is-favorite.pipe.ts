@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { WishDto } from '@core/models/wish-list.model';
-import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWish, WishDto } from '@core/models/wish-list.model';
 
 // FIXME: Style 04-13 Do not add filtering and sorting logic to pipes
 @Pipe({

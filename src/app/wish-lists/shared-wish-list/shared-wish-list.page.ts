@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ActivatedRoute } from '@angular/router';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { first } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { FriendWishList, FriendWish } from '@core/models/wish-list.model';
 
 @Component({
   selector: 'app-shared-wish-list',

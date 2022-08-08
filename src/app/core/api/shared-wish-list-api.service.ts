@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
 import { ApiVersion } from './api-version';
+import { FriendWishList } from '@core/models/wish-list.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWish } from "@core/models/wish-list.model";
 
 export class WishListTestDataUtils {
 

@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SearchResult } from '@core/models/search-result-item';
-import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWishList, FriendWish } from '@core/models/wish-list.model';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiErrorHandlerService } from './api-error-handler.service';

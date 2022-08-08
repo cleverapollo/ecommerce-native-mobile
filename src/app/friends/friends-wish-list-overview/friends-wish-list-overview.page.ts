@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { Subscription } from 'rxjs';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
+import { FriendWishList } from '@core/models/wish-list.model';
 
 @Component({
   selector: 'app-friends-wish-list-overview',

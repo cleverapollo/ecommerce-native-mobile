@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WishApiService } from '@core/api/wish-api.service';
-import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWish } from '@core/models/wish-list.model';
+import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
 import { BrowserService } from '@core/services/browser.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
 import { ModalController } from '@ionic/angular';
 import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
-import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
 
 @Component({
   selector: 'app-friends-wish',

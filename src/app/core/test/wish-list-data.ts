@@ -1,5 +1,4 @@
-import { WishDto, WishListDto } from '@core/models/wish-list.model';
-import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWish, FriendWishList, WishDto, WishListDto } from '@core/models/wish-list.model';
 
 export class WishListTestData {
 

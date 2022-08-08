@@ -1,4 +1,5 @@
-import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+
+import { FriendWishList } from '@core/models/wish-list.model';
 import { Observable, of } from 'rxjs';
 import { FriendWishListStore } from './friend-wish-list-store.service';
 

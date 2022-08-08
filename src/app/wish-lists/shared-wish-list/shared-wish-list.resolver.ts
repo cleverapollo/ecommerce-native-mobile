@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { WishListApiService } from '@core/api/wish-list-api.service';
+import { FriendWishList } from '@core/models/wish-list.model';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
 
 @Injectable()
 export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList }>> {

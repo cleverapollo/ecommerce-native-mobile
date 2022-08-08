@@ -1,6 +1,9 @@
-import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { DatePipe } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FriendWishList } from '@core/models/wish-list.model';
 import { MockAlertService } from '@core/services/alert-mock.service';
 import { AlertService, AppAlertService } from '@core/services/alert.service';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -10,13 +13,10 @@ import { MockLoadingService } from '@core/services/loading-mock.service';
 import { AppLoadingService, LoadingService } from '@core/services/loading.service';
 import { MockToastService } from '@core/services/toast-mock.service';
 import { CoreToastService, ToastService } from '@core/services/toast.service';
-import { IonicModule, NavController } from '@ionic/angular';
-import { FriendsWishListDetailPage } from './friends-wish-list-detail.page';
 import { WishListTestData } from '@core/test/wish-list-data';
-import { NextObserver, Observable, Observer, of, PartialObserver, Subscription, throwError } from 'rxjs';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
-import { DatePipe } from '@angular/common';
+import { IonicModule, NavController } from '@ionic/angular';
+import { Observable, of, Subscription, throwError } from 'rxjs';
+import { FriendsWishListDetailPage } from './friends-wish-list-detail.page';
 
 describe('FriendsWishListDetailPage', () => {
 

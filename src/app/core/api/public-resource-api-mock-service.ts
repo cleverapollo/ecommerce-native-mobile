@@ -1,5 +1,5 @@
 import { SearchResult } from '@core/models/search-result-item';
-import { FriendWish, FriendWishList } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWishList, FriendWish } from '@core/models/wish-list.model';
 import { Observable, of, throwError } from 'rxjs';
 import { PublicResourceApi } from './public-resource-api.service';
 

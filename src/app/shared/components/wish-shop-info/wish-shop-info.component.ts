@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { WishDto } from '@core/models/wish-list.model';
-import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWish, WishDto } from '@core/models/wish-list.model';
 
 export interface WishShopInfoComponentStyles {
   shopInfoOverlay: CSSStyle;

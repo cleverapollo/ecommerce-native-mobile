@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { WishDto } from '@core/models/wish-list.model';
-import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+import { FriendWish, WishDto } from '@core/models/wish-list.model';
 import { ModalController } from '@ionic/angular';
 import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
 

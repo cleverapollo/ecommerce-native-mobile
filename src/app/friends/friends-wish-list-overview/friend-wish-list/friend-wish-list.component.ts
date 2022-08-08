@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FriendWishList } from '../friends-wish-list-overview.model';
+import { FriendWishList } from '@core/models/wish-list.model';
 
 @Component({
   selector: 'app-friend-wish-list',
