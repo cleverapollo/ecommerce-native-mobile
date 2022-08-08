@@ -8,7 +8,7 @@ import { CustomError, CustomErrorType } from '@core/error';
 import firebase from 'firebase/app';
 
 export interface FirebaseControllable {
-  getIdToken(forceRefresh: boolean): Promise<string>
+  getIdToken(forceRefresh: boolean): Promise<string | null>
   onAuthStateChanged(): Observable<any | firebase.User>
   sendEmailVerification():  Promise<any>;
   sendPasswordResetEmail(email: string): Promise<any>;
@@ -72,12 +72,12 @@ export class FirebaseService implements FirebaseControllable {
     }
   }
 
-  async getIdToken(forceRefresh: boolean): Promise<string> {
+  async getIdToken(forceRefresh: boolean): Promise<string | null> {
     if (this.platform.isNativePlatform) {
       return this.nativeAuth.getIdToken(forceRefresh);
     } else {
       const authState = await this.getAuthState();
-      return await authState.getIdToken(forceRefresh);
+      return await authState?.getIdToken(forceRefresh) ?? null;
     }
   }
 

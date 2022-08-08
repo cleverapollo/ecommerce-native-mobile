@@ -278,10 +278,12 @@ export class AuthenticationService implements AppAuthenticationService {
     return Promise.reject(error);
   }
 
-  async setupFirebaseIdToken(forceRefresh: boolean = false): Promise<string> {
+  async setupFirebaseIdToken(forceRefresh: boolean = false): Promise<string | null> {
     try {
-      const idToken: string = await this.firebaseService.getIdToken(forceRefresh);
-      await this.updateToken(idToken);
+      const idToken = await this.firebaseService.getIdToken(forceRefresh);
+      if (idToken) {
+        await this.updateToken(idToken);
+      }
       return Promise.resolve(idToken);
     } catch (error) {
       this.logger.error('failed to refresh firebase id token', error);
