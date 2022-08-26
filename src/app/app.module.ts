@@ -1,44 +1,43 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { HttpBackend, HttpXhrBackend, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { HTTP_INTERCEPTORS, HttpBackend, HttpXhrBackend } from '@angular/common/http';
-import { WishListsResolver } from '@wishLists/home/wish-lists.resolver';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 import { registerLocaleData } from '@angular/common';
-import localeDe from '@angular/common/locales/de'
+import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { UserProfileResolver } from '@shared/user-profile.resolver';
-import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
-import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
-import { StorageService } from '@core/services/storage.service';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { CoreModule } from '@core/core.module';
-import { CacheModule } from 'ionic-cache';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { StorageService } from '@core/services/storage.service';
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { UserProfileResolver } from '@shared/user-profile.resolver';
 import { WishListResolver } from '@wishLists/home/wish-list.resolver';
 import { WishResolver } from '@wishLists/home/wish.resolver';
-import { HTTP } from '@ionic-native/http/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
+import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
+import { CacheModule } from 'ionic-cache';
+import { NativeHttpBackend, NativeHttpFallback, NativeHttpModule } from 'ionic-native-http-connection-backend';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
+import { environment } from '../environments/environment';
+import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 import { NativeHttpInterceptor } from './_interceptors/native-http.interceptor';
 import { NativeTokenInterceptor } from './_interceptors/native-token.interceptor';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
-import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
-import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
-import { Facebook } from '@ionic-native/facebook/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { AuthenticationService } from '@core/services/authentication.service';
-import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
-import { AngularFireModule } from '@angular/fire';
-import { IonicStorageModule } from '@ionic/storage-angular';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -92,7 +91,6 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     UserTrackingService,
     ScreenTrackingService,
     WishResolver,
-    WishListsResolver,
     WishListResolver,
     { provide: APP_NAME, useValue: environment.angularFire.APP_NAME },
     { provide: APP_VERSION, useValue: environment.angularFire.APP_VERSION },
