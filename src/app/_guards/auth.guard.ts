@@ -16,6 +16,9 @@ export class AuthGuard implements CanActivate {
       filter(isAuthenticated => { return isAuthenticated !== null }),
       take(1),
       map(isAuthenticated => {
+        if (isAuthenticated === null) {
+          return false;
+        }
         return isAuthenticated;
       })
     )
