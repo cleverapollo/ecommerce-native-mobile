@@ -8,7 +8,7 @@ import { ValidationMessages, ValidationMessage } from '@shared/components/valida
 import { ChangePasswordRequest } from '@core/models/login.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { GoogleApiService } from '@core/api/google-api.service';
-import { first } from 'rxjs/operators';
+import { finalize, first } from 'rxjs/operators';
 import { Logger } from '@core/services/log.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '@core/api/auth.service';
@@ -16,6 +16,7 @@ import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { Device } from '@capacitor/device';
 import { Subscription } from 'rxjs';
+import { ConfirmPasswordResetRequest } from '@core/models/signup.model';
 
 @Component({
   selector: 'app-change-password',
@@ -111,30 +112,36 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
 
   async resetPassword() {
     const newPassword = this.form.controls.value.value;
-    const spinner = await this.loadingService.createLoadingSpinner();
-    spinner.present();
+
     try {
+      await this.loadingService.showLoadingSpinner();
       const verifyEmailResponse = await this.googleApiService.verifyPasswortResetCode(this.oobCode).toPromise();
-      this.authApi.confirmPasswordReset({
+      const requestBody: ConfirmPasswordResetRequest = {
         email: verifyEmailResponse.email,
         oobCode: this.oobCode,
         newPassword
-      }).pipe(first()).subscribe(responseBody => {
-        this.logger.debug(responseBody);
-        this.passwordChanged = true;
-        this.toastService.presentSuccessToast('Dein Passwort wurde erfolgreich geändert.');
-      }, error => {
-        this.logger.error(error);
-        this.passwordChanged = false;
-        this.toastService.presentErrorToast('Beim Ändern deines Passworts ist ein Fehler aufgetreten.');
-      }, () => {
-        this.loadingService.dismissLoadingSpinner(spinner);
-      })
+      }
+      this.authApi.confirmPasswordReset(requestBody).pipe(
+        first(),
+        finalize(() => {
+          this.loadingService.stopLoadingSpinner();
+        })).subscribe({
+          next: responseBody => {
+            this.logger.debug(responseBody);
+            this.passwordChanged = true;
+            this.toastService.presentSuccessToast('Dein Passwort wurde erfolgreich geändert.');
+          },
+          error: error => {
+            this.logger.error(error);
+            this.passwordChanged = false;
+            this.toastService.presentErrorToast('Beim Ändern deines Passworts ist ein Fehler aufgetreten.');
+          }
+        })
     } catch (error) {
       const errorMessage = this.getErrorMessage(error);
       this.logger.error(errorMessage);
       this.passwordChanged = false;
-      this.loadingService.dismissLoadingSpinner(spinner);
+      this.loadingService.stopLoadingSpinner();
       this.toastService.presentErrorToast('Beim Ändern deines Passworts ist ein Fehler aufgetreten.');
     }
   }

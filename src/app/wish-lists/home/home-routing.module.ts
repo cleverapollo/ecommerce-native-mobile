@@ -24,8 +24,8 @@ const routes: Routes = [
       {
         path: 'wish-list-new',
         canActivate: [AuthGuard],
-        loadChildren: () => import('@wishLists/wish-list-create-update/wish-list-create-update.module')
-          .then( m => m.WishListCreateUpdatePageModule)
+        loadChildren: () => import('@wishLists/wish-list-create/wish-list-create.module')
+          .then( m => m.WishListCreatePageModule)
       },
       {
         path: 'wish-list/:wishListId',

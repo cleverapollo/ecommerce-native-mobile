@@ -69,18 +69,17 @@ export class LoginPage implements OnInit {
       CustomValidation.validateFormGroup(this.loginForm);
       return;
     }
-    const spinner = await this.loadingService.createLoadingSpinner();
-    await spinner.present();
+    const input = this.loginForm.value as LoginForm;
 
     try {
-      const input = this.loginForm.value as LoginForm;
+      await this.loadingService.showLoadingSpinner();
       await this.authService.emailPasswordSignIn(input.email, input.password);
-      this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');
+      await this.loadingService.stopLoadingSpinner();
+      await this.toastService.presentSuccessToast('Deine Anmeldung war erfolgreich!');
       this.analyticsService.logLoginEvent(AuthProvider.WANTIC);
-      this.loadingService.dismissLoadingSpinner(spinner);
       this.navToHome();
     } catch (errorMessage) {
-      this.loadingService.dismissLoadingSpinner(spinner);
+      this.loadingService.stopLoadingSpinner();
       this.toastService.presentErrorToast(errorMessage);
     }
   }

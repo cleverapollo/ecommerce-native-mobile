@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ProductSearchService } from '@core/services/product-search.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Logger } from '@core/services/log.service';
-import { ModalController } from '@ionic/angular';
-import { LoadingService } from '@core/services/loading.service';
-import { ShareExtensionExplanationComponent } from '../../share-extension-explanation/share-extension-explanation.component';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { AnalyticsService } from '@core/services/analytics.service';
-import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Device } from '@capacitor/device';
+import { AnalyticsService } from '@core/services/analytics.service';
+import { LoadingService } from '@core/services/loading.service';
+import { Logger } from '@core/services/log.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
-import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
-import { first } from 'rxjs/operators';
+import { ProductSearchService } from '@core/services/product-search.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
+import { ModalController } from '@ionic/angular';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
+import { first } from 'rxjs/operators';
+import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
+import { ShareExtensionExplanationComponent } from '../../share-extension-explanation/share-extension-explanation.component';
 
 @Component({
   selector: 'app-wish-search-overview',
@@ -55,7 +55,6 @@ export class WishSearchOverviewPage implements OnInit {
     private productSearchService: ProductSearchService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,
     private logger: Logger,
     public platformService: DefaultPlatformService,
     private loadingService: LoadingService,
@@ -99,19 +98,21 @@ export class WishSearchOverviewPage implements OnInit {
     modal.present();
   }
 
-  searchByAmazonApi() {
+  async searchByAmazonApi() {
     if (this.searchByAmazonApiForm.invalid) {
       return;
     }
-    this.loadingService.showLoadingSpinner();
-    this.productSearchService.searchByAmazonApi(this.keywords, 1).then(searchResults => {
-      const targetUrl = `${getTaBarPath(TabBarRoute.WISH_SEARCH, true)}/search-by-amazon`
-      this.router.navigateByUrl(targetUrl).then(() => {
-        this.searchByAmazonApiForm.reset();
-      });
-    }, this.logger.error).finally(() => {
-      this.loadingService.dismissLoadingSpinner();
-    });
+
+    const targetUrl = `${getTaBarPath(TabBarRoute.WISH_SEARCH, true)}/search-by-amazon`;
+    try {
+      await this.loadingService.showLoadingSpinner();
+      await this.productSearchService.searchByAmazonApi(this.keywords, 1);
+      await this.loadingService.stopLoadingSpinner();
+      await this.router.navigateByUrl(targetUrl);
+      this.searchByAmazonApiForm.reset();
+    } catch (error) {
+      await this.loadingService.stopLoadingSpinner();
+    }
   }
 
   searchByURL() {

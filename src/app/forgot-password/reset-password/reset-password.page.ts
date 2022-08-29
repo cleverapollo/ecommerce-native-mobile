@@ -49,30 +49,30 @@ export class ResetPasswordPage implements OnInit {
   }
 
   async resetPassword() {
-    const loadingSpinner = await this.loadingService.createLoadingSpinner();
-    await loadingSpinner.present();
-
+    await this.loadingService.showLoadingSpinner();
     this.authService.resetPassword(this.form.controls.email.value).then(() => {
       this.passwordResetRequestSuccessful = true;
     }, error => {
       this.logger.error(error);
-      let errorMessage = 'Beim Zurücksetzen deines Passworts ist ein Fehler aufgetreten.';
-      if (typeof error === 'string') {
-        const userDoesNotExist = 'There is no user record corresponding to this identifier. The user may have been deleted.';
-        if (error === userDoesNotExist) {
-          errorMessage = 'Ein Benutzer mit angegebener E-Mail-Adresse existiert nicht.';
-        }
-      } else if (error instanceof HttpErrorResponse) {
-        switch (error.status) {
-          case HttpStatusCodes.NOT_FOUND:
-            errorMessage = 'Ein Benutzer mit der angegebenen E-Mail-Adresse wurde nicht gefunden.';
-            break;
-        }
-      }
-      this.toastService.presentErrorToast(errorMessage);
+      this.handleError(error);
     }).finally(() => {
-      this.loadingService.dismissLoadingSpinner(loadingSpinner);
+      this.loadingService.stopLoadingSpinner();
     });
   }
-
+  private handleError(error: string | HttpErrorResponse) {
+    let errorMessage = 'Beim Zurücksetzen deines Passworts ist ein Fehler aufgetreten.';
+    if (typeof error === 'string') {
+      const userDoesNotExist = 'There is no user record corresponding to this identifier. The user may have been deleted.';
+      if (error === userDoesNotExist) {
+        errorMessage = 'Ein Benutzer mit angegebener E-Mail-Adresse existiert nicht.';
+      }
+    } else if (error instanceof HttpErrorResponse) {
+      switch (error.status) {
+        case HttpStatusCodes.NOT_FOUND:
+          errorMessage = 'Ein Benutzer mit der angegebenen E-Mail-Adresse wurde nicht gefunden.';
+          break;
+      }
+    }
+    this.toastService.presentErrorToast(errorMessage);
+  }
 }

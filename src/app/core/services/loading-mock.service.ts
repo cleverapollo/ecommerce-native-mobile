@@ -44,22 +44,16 @@ export class MockLoadingController {
 export class MockLoadingService implements AppLoadingService {
 
     private loadingController = new MockLoadingController();
-    private loading: MockLoading = null;
+    private loading?: MockLoading | null;
 
     async showLoadingSpinner(): Promise<void> {
+        this.loading = await this.loadingController.create(null);
         return Promise.resolve();
     }
-    async createLoadingSpinner(): Promise<any> {
-        return await this.loadingController.create(null);
-    }
-    async dismissLoadingSpinner(loading?: any): Promise<boolean> {
-        if (loading && loading instanceof MockLoading) {
-            await loading?.dismiss();
-            return Promise.resolve(true);
-        } else if (this.loading) {
-            this.loading.dismiss();
-            return Promise.resolve(true);
+    async stopLoadingSpinner(): Promise<void> {
+        if (this.loading) {
+            await this.loading?.dismiss();
         }
-        return Promise.resolve(false);
+        return Promise.resolve();
     }
 }

@@ -82,7 +82,7 @@ h1.wantic-page-header {
     margin-bottom: 26px;
 }
 
-// toolbar 
+// toolbar
 
 .wantic-toolbar {
     --background: var(--wantic-background-color-rgb);
@@ -176,7 +176,7 @@ ion-datetime::part(placeholder) {
     font-family: 'Roboto';
 }*/
 
-ion-item {   
+ion-item {
     .calendar-icon {
         height: 20px;
         width: 20px;
@@ -213,13 +213,13 @@ form {
         margin-right: var(--wantic-margin);
         margin-bottom: 15px;
         ion-input, ion-datetime, ion-textarea, ion-select {
-            height: 48px; 
+            height: 48px;
             border-radius: 50pt;
             background: white;
             --padding-end: 21.8px !important;
             font-weight: normal !important;
         }
-        ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty, 
+        ion-input.ion-invalid.ion-touched, ion-input.ion-invalid.ion-dirty,
         ion-textarea.ion-invalid.ion-touched, ion-textarea.ion-invalid.ion-dirty,
         ion-searchbar.ion-invalid.ion-touched, ion-searchbar.ion-invalid.ion-dirty {
             border: 2px solid var(--ion-color-primary);
@@ -338,7 +338,7 @@ ion-modal.wantic-modal-auto-height {
     }
 }
 // md, lg, xl
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
     .wantic-modal.wantic-modal-large {
         --height:80%;
     }
@@ -348,7 +348,7 @@ ion-modal.wantic-modal-auto-height {
     --width: 90%;
 }
 
-// registration 
+// registration
 
 .subtext {
     color: var(--ion-color-tertiary);
@@ -401,7 +401,7 @@ ion-header {
 }
 
 
-// 
+//
 .wish-list-detail-container {
     ion-avatar {
         display: inline-block;
@@ -534,4 +534,8 @@ ion-card {
 
 .position-absolute {
     position: absolute;
+}
+
+ion-button.no-margin-bottom {
+    margin-bottom: 10px;
 }

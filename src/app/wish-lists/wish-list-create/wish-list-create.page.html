@@ -1,0 +1,34 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar></app-nav-toolbar>
+  <app-email-unverified-hint></app-email-unverified-hint>
+</ion-header>
+
+<ion-content>
+  <h1 class="ion-text-center wantic-page-header">Neue Wunschliste hinzufügen</h1>
+
+  <form [formGroup]="form" *ngIf="form">
+    <div class="wtc-label-container">
+      <label class="wtc-label-stacked">Name der Wunschliste</label>
+    </div>
+    <ion-item lines="none">
+      <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name" clearInput="true" autocapitalize="true" enterkeyhint="next" inputmode="text" required="true" spellcheck="true"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
+
+    <app-datetime formControlName="date" placeholder="Datum des Ereignisses" label="Datum" [minDate]="minDate" [maxDate]="maxDate"></app-datetime>
+
+    <ion-item lines="none" class="toggleContainer">
+      <ion-label class="ion-text-wrap" [ngClass]="classForToggleLabel">Ich möchte sehen, welche Wünsche geschenkt werden</ion-label>
+      <ion-toggle slot="end" name="showReservedWishes" color="primary" formControlName="showReservedWishes"></ion-toggle>
+    </ion-item>
+
+    <ion-button (click)="create()" expand="block" class="wantic-margin-right-left wantic-save-button no-margin-bottom button-save-changes">
+      Wunschliste anlegen
+    </ion-button>
+    <ion-button class="wantic-save-button" (click)="goBack()" color="primary" fill="outline" expand="block">
+      ABBRECHEN
+    </ion-button>
+
+  </form>
+
+</ion-content>

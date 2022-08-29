@@ -13,6 +13,7 @@ import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule } from '@ionic/angular';
 import { LoggerTestingModule } from 'ngx-logger/testing';
 import { of, throwError } from 'rxjs';
+import { finalize, first } from 'rxjs/operators';
 
 import { WishListRadioComponent } from './wish-list-radio.component';
 
@@ -46,74 +47,103 @@ describe('WishListRadioComponent', () => {
   });
 
   describe('ngOnInit', () => {
-    it('should init if no wish lists are available', () => {
-      wishListStoreService.wishLists = [];
+
+    it('inits if no wish lists are available', waitForAsync(() => {
+      wishListStoreService.wishLists.next([]);
 
       fixture.detectChanges();
       component.ngOnInit();
 
-      expect(component.hasNoWishLists).toBeTruthy();
       expect(component.isEditMode).toBeFalsy();
       expect(component.requestIsRunning).toBeFalsy();
       expect(component.showForm).toBeFalsy();
       expect(component.showLoading).toBeFalsy();
       expect(component.showSaveWishListButton).toBeFalsy();
-      expect(component.subscription).not.toBeNull();
-      expect(component.wishListSelectOptions).toEqual([]);
-      expect(component._wishListId).toBeUndefined();
-    });
+      expect(component._wishListId).toBeNull();
 
-    it('should init first wish list if only one wish list is available', () => {
-      wishListStoreService.wishLists = [WishListTestData.wishListBirthday];
+      component.wishListSelectOptions$.pipe(
+        first()
+      ).subscribe({
+        next: options => {
+          expect(options).toEqual([])
+        }
+      })
+    }));
+
+    it('should init first wish list if only one wish list is available', waitForAsync(() => {
+      wishListStoreService.wishLists.next([WishListTestData.wishListBirthday]);
 
       fixture.detectChanges();
       component.ngOnInit();
 
-      expect(component.hasNoWishLists).toBeFalsy();
       expect(component.isEditMode).toBeFalsy();
       expect(component.requestIsRunning).toBeFalsy();
       expect(component.showForm).toBeFalsy();
       expect(component.showLoading).toBeFalsy();
       expect(component.showSaveWishListButton).toBeFalsy();
-      expect(component.subscription).not.toBeNull();
-      expect(component.wishListSelectOptions).toEqual([new WishListSelectOptionDto('1', 'Geburtstag')]);
       expect(component._wishListId).toBe('1');
-    });
 
-    it('should init first wish list if at least two wish lists are available and no init value is given', () => {
-      wishListStoreService.wishLists = [WishListTestData.wishListBirthday, WishListTestData.wishListWedding];
+      component.wishListSelectOptions$.pipe(
+        first()
+      ).subscribe({
+        next: options => {
+          expect(options).toEqual([
+            new WishListSelectOptionDto('1', 'Geburtstag')
+          ])
+        }
+      })
+    }));
+
+    it('should init first wish list if at least two wish lists are available and no init value is given', waitForAsync(() => {
+      wishListStoreService.wishLists.next([WishListTestData.wishListBirthday, WishListTestData.wishListWedding]);
 
       fixture.detectChanges();
       component.ngOnInit();
 
-      expect(component.hasNoWishLists).toBeFalsy();
       expect(component.isEditMode).toBeFalsy();
       expect(component.requestIsRunning).toBeFalsy();
       expect(component.showForm).toBeFalsy();
       expect(component.showLoading).toBeFalsy();
       expect(component.showSaveWishListButton).toBeFalsy();
-      expect(component.subscription).not.toBeNull();
-      expect(component.wishListSelectOptions).toEqual([new WishListSelectOptionDto('1', 'Geburtstag'), new WishListSelectOptionDto('2', 'Hochzeit')]);
       expect(component._wishListId).toBe('1');
-    });
 
-    it('should init second wish list if two wish lists are available and init value equals id of second wish list', () => {
-      wishListStoreService.wishLists = [WishListTestData.wishListBirthday, WishListTestData.wishListWedding];
+      component.wishListSelectOptions$.pipe(
+        first()
+      ).subscribe({
+        next: options => {
+          expect(options).toEqual([
+            new WishListSelectOptionDto('1', 'Geburtstag'),
+            new WishListSelectOptionDto('2', 'Hochzeit')
+          ])
+        }
+      })
+    }));
+
+    it('should init second wish list if two wish lists are available and init value equals id of second wish list', waitForAsync(() => {
+      wishListStoreService.wishLists.next([WishListTestData.wishListBirthday, WishListTestData.wishListWedding]);
 
       component.initialValue = '2';
       fixture.detectChanges();
       component.ngOnInit();
 
-      expect(component.hasNoWishLists).toBeFalsy();
       expect(component.isEditMode).toBeFalsy();
       expect(component.requestIsRunning).toBeFalsy();
       expect(component.showForm).toBeFalsy();
       expect(component.showLoading).toBeFalsy();
       expect(component.showSaveWishListButton).toBeFalsy();
-      expect(component.subscription).not.toBeNull();
-      expect(component.wishListSelectOptions).toEqual([new WishListSelectOptionDto('1', 'Geburtstag'), new WishListSelectOptionDto('2', 'Hochzeit')]);
       expect(component._wishListId).toBe('2');
-    });
+
+      component.wishListSelectOptions$.pipe(
+        first()
+      ).subscribe({
+        next: options => {
+          expect(options).toEqual([
+            new WishListSelectOptionDto('1', 'Geburtstag'),
+            new WishListSelectOptionDto('2', 'Hochzeit')
+          ])
+        }
+      })
+    }));
   })
 
   describe('writeValue', () => {
@@ -171,30 +201,20 @@ describe('WishListRadioComponent', () => {
       fixture.detectChanges();
     })
 
-    it('should trigger a new request to save a new wish list', fakeAsync(() => {
-      const wishListApiSpy = spyOn(wishListApiService, 'create').and.returnValue(of(createdWishList));
+    it('triggers a new request to save a new wish list', fakeAsync(() => {
       component.form.controls.name.setValue('My new wish list');
-      component.wishListSelectOptions = [
+      component.wishListSelectOptions$ = of([
         new WishListSelectOptionDto('b3ae13e3-1104-4e99-a51e-cb9396fc12c9', 'Birthday'),
         new WishListSelectOptionDto('b2d93763-135a-42e9-bbfc-6eb87effc347', 'Wedding'),
         new WishListSelectOptionDto('546466c5-24dc-4bd1-8ac3-46bde5bc4628', 'X-mas'),
-      ]
+      ])
 
       component.createNewWishList();
       tick();
 
       expect(component.isEditMode).toBeFalsy();
-      expect(component.wishListId).toBe('54052bb8-51e8-4cdb-8abd-b753d5721603');
-      expect(wishListApiSpy).toHaveBeenCalledWith({
-        name: 'My new wish list',
-        showReservedWishes: false
-      });
-      expect(component.wishListSelectOptions).toEqual([
-        jasmine.objectContaining({id: 'b3ae13e3-1104-4e99-a51e-cb9396fc12c9', name: 'Birthday'}),
-        jasmine.objectContaining({id: '54052bb8-51e8-4cdb-8abd-b753d5721603', name: 'My new wish list'}),
-        jasmine.objectContaining({id: 'b2d93763-135a-42e9-bbfc-6eb87effc347', name: 'Wedding'}),
-        jasmine.objectContaining({id: '546466c5-24dc-4bd1-8ac3-46bde5bc4628', name: 'X-mas'}),
-      ]);
+      expect(component.wishListId).toBeDefined();
+      expect(component.wishListId).not.toBeNull();
       expect(component.form.controls.name.value).toBeNull();
       expect(component.requestIsRunning).toBeFalsy();
 
@@ -210,8 +230,8 @@ describe('WishListRadioComponent', () => {
       expect(wishListApiSpy).not.toHaveBeenCalled();
     }));
 
-    it('should log error if server request failed', fakeAsync(() => {
-      const wishListApiSpy = spyOn(wishListApiService, 'create').and.returnValue(throwError('something went wrong'));
+    it('logs error if server request failed', fakeAsync(() => {
+      const wishListApiSpy = spyOn(wishListStoreService, 'createWishList').and.returnValue(throwError('something went wrong'));
       component.form.controls.name.setValue('Christmas 2022');
 
       component.createNewWishList();
@@ -251,7 +271,7 @@ describe('WishListRadioComponent', () => {
 
     it('should render button to enable edit mode', () => {
       component.isEditMode = false;
-      component.wishListSelectOptions = [];
+      component.wishListSelectOptions$ = of([]);
 
       fixture.detectChanges();
       queryHtmlElements();
@@ -274,7 +294,7 @@ describe('WishListRadioComponent', () => {
 
     it('should show a hint if no wish lists are available', () => {
       component.isEditMode = true;
-      component.wishListSelectOptions = [];
+      component.wishListSelectOptions$ = of([]);
 
       fixture.detectChanges();
       queryHtmlElements();
@@ -284,11 +304,11 @@ describe('WishListRadioComponent', () => {
 
 
     it('should render a list of wish list names', () => {
-      component.wishListSelectOptions = [
+      component.wishListSelectOptions$ = of([
         new WishListSelectOptionDto('b3ae13e3-1104-4e99-a51e-cb9396fc12c9', 'Birthday'),
         new WishListSelectOptionDto('b2d93763-135a-42e9-bbfc-6eb87effc347', 'Wedding'),
         new WishListSelectOptionDto('546466c5-24dc-4bd1-8ac3-46bde5bc4628', 'X-mas'),
-      ];
+      ]);
       fixture.detectChanges();
       queryHtmlElements();
 
@@ -297,11 +317,11 @@ describe('WishListRadioComponent', () => {
     });
 
     it('should render the selected item in the list', () => {
-      component.wishListSelectOptions = [
+      component.wishListSelectOptions$ = of([
         new WishListSelectOptionDto('b3ae13e3-1104-4e99-a51e-cb9396fc12c9', 'Birthday'),
         new WishListSelectOptionDto('b2d93763-135a-42e9-bbfc-6eb87effc347', 'Wedding'),
         new WishListSelectOptionDto('546466c5-24dc-4bd1-8ac3-46bde5bc4628', 'X-mas'),
-      ];
+      ]);
       component.wishListId = 'b2d93763-135a-42e9-bbfc-6eb87effc347';
 
       fixture.detectChanges();

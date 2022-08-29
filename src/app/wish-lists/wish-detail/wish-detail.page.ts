@@ -7,11 +7,12 @@ import { BrowserService } from '@core/services/browser.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
-import { ModalController } from '@ionic/angular';
+import { ModalController, RefresherCustomEvent } from '@ionic/angular';
 import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 import { WishShopInfoComponentStyles } from '@shared/components/wish-shop-info/wish-shop-info.component';
 import { Subscription } from 'rxjs';
+import { finalize, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wish-detail',
@@ -20,7 +21,7 @@ import { Subscription } from 'rxjs';
 })
 export class WishDetailPage implements OnInit, OnDestroy {
 
-  wishList: WishListDto
+  wishList: WishListDto;
   wish: WishDto;
 
   get isDebugInfoVisible(): boolean {
@@ -49,11 +50,11 @@ export class WishDetailPage implements OnInit, OnDestroy {
         'letter-spacing': '-0.63px',
         font: 'normal normal 900 18px/20px Roboto'
       }
-    }
+    };
   }
 
   get wishImageComponentStyles(): WishImageComponentStyles {
-    const style: { height?: string } = {};
+    const style: { height?: string; } = {};
     if (!this.wish.imageUrl) {
       style.height = '70%';
     }
@@ -61,7 +62,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   private affiliateLink = '';
-  private loadWishSubscription: Subscription;
+  private subscription?: Subscription;
 
   constructor(
     private browserService: BrowserService,
@@ -70,16 +71,25 @@ export class WishDetailPage implements OnInit, OnDestroy {
     private analyticsService: AnalyticsService,
     private affiliateLinkService: AffiliateLinkService,
     private modalController: ModalController
-    ) { }
+  ) { }
 
   async ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
     this.wish = this.route.snapshot.data.wish;
     this.affiliateLink = await this.affiliateLinkService.createAffiliateLink(this.wish.productUrl);
-  }
 
-  ionViewWillEnter() {
-    this.loadWish();
+    this.subscription = this.wishListStore.wishLists.subscribe({
+      next: wishLists => {
+        const wishList = wishLists.find(w => w.id === this.wishList.id);
+        if (wishList) {
+          this.wishList = wishList;
+          const wish = this.wishList.wishes.find(w => w.id === this.wish.id);
+          if (wish) {
+            this.wish = wish;
+          }
+        }
+      }
+    })
   }
 
   ionViewDidEnter() {
@@ -87,28 +97,25 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.loadWishSubscription?.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   openProductURL() {
     this.browserService.openInAppBrowser(this.affiliateLink);
   }
 
-  forceRefresh(event) {
-    this.loadWishSubscription = this.wishListStore.loadWish(this.wish.id, true).subscribe({
+  forceRefresh(event: Event) {
+    const refresherEvent = event as RefresherCustomEvent;
+    this.wishListStore.loadWish(this.wish.id, true).pipe(
+      first(),
+      finalize(() => {
+        refresherEvent.target.complete();
+      })
+    ).subscribe({
       next: wish => {
         this.wish = wish;
-        event.target.complete();
-      },
-      error: error => {
-        event.target.complete();
       }
     });
-  }
-
-  private async loadWish() {
-    const wish = await this.wishListStore.loadWish(this.wish.id).toPromise();
-    this.wish = wish;
   }
 
   async showDebugInfo() {
@@ -127,7 +134,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
       standalone: this.wishListOwnerCount === 1,
       first: this.wishListOwnerCount > 1 && first,
       last: this.wishListOwnerCount > 1 && last
-    }
+    };
   }
 
 }

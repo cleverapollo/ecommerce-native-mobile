@@ -98,8 +98,7 @@ export class StartPage {
   }
 
   private async signIn(signInResponse: SignInResponse, firstName: string, lastName: string, authProvider: AuthProvider) {
-    const spinner = await this.loadingService.createLoadingSpinner();
-    await spinner.present();
+    await this.loadingService.showLoadingSpinner();
 
     const userIsRegistered = signInResponse.user !== null;
     if (userIsRegistered) {
@@ -121,7 +120,7 @@ export class StartPage {
       }
     }
 
-    this.loadingService.dismissLoadingSpinner(spinner);
+    this.loadingService.stopLoadingSpinner();
   }
 
   // helper methods

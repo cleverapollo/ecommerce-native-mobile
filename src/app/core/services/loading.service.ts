@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { Logger } from './log.service';
 
 export interface AppLoadingService {
   showLoadingSpinner(): Promise<void>;
-  createLoadingSpinner(): Promise<HTMLIonLoadingElement>;
-  dismissLoadingSpinner(loading?: HTMLIonLoadingElement): Promise<boolean>;
+  stopLoadingSpinner(): Promise<void>;
 }
 
 @Injectable({
@@ -12,34 +12,45 @@ export interface AppLoadingService {
 })
 export class LoadingService {
 
-  constructor(private loadingController: LoadingController) { }
+  private loader: HTMLIonLoadingElement | null = null;
+  private isLoading = false;
+
+  constructor(
+    private loadingController: LoadingController,
+    private logger: Logger
+  ) { }
 
   async showLoadingSpinner(): Promise<void> {
-    let loading = await this.loadingController.getTop();
-    if (!loading) {
-      loading = await this.createLoadingSpinner();
+    if (this.isLoading) {
+      this.logger.debug('Spinner is already presented!');
+      return Promise.resolve();
     }
-    loading.present();
+
+    try {
+      this.loader = await this.loadingController.create({
+        spinner: 'circles',
+        translucent: true
+      });
+      await this.loader.present()
+      this.isLoading = true;
+      return Promise.resolve();
+    } catch (error) {
+      this.logger.error(error);
+      this.loader = null;
+      this.isLoading = false;
+      return Promise.resolve();
+    }
   }
 
-  async createLoadingSpinner(): Promise<HTMLIonLoadingElement> {
-    return this.loadingController.create({
-      spinner: 'circles',
-      translucent: true
-    })
-  }
-
-  async dismissLoadingSpinner(loading?: HTMLIonLoadingElement): Promise<boolean> {
-    if (loading) {
-      return await loading.dismiss()
-    } else {
-      const topLoadingElement = await this.loadingController.getTop();
-      if (topLoadingElement) {
-        return await topLoadingElement.dismiss();
-      } else {
-        return Promise.resolve(true);
-      }
+  async stopLoadingSpinner(): Promise<void> {
+    if (!this.isLoading) {
+      this.logger.debug('Spinner isn\'t presented!');
+      return Promise.resolve();
     }
+    await this.loader?.dismiss();
+    this.loader = null;
+    this.isLoading = false;
+    return Promise.resolve();
   }
 
 }

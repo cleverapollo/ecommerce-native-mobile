@@ -53,14 +53,11 @@ export class SignupMailTwoPage implements OnInit {
    * @returns Default Promise from an async method.
    */
   async next(): Promise<void> {
-    const loadingSpinner = await this.loadingService.createLoadingSpinner();
-    loadingSpinner.present();
-
+    await this.loadingService.showLoadingSpinner();
     await this.saveGenderIfNeeded();
     await this.saveBirthdayIfNeeded();
     await this.navigateToNextPage();
-
-    this.loadingService.dismissLoadingSpinner(loadingSpinner);
+    await this.loadingService.stopLoadingSpinner();
   }
 
   /**

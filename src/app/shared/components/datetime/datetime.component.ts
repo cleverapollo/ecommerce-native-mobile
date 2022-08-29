@@ -1,7 +1,8 @@
 import { Component, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Logger } from '@core/services/log.service';
 import { IonDatetime } from '@ionic/angular';
-import { addYears, format, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-datetime',
@@ -17,7 +18,7 @@ import { addYears, format, parseISO } from 'date-fns';
 })
 export class DatetimeComponent implements ControlValueAccessor {
 
-  @ViewChild(IonDatetime) datetime: IonDatetime;
+  @ViewChild(IonDatetime) datetime?: IonDatetime;
 
   /** Placeholder for the input */
   @Input() placeholder: string | undefined;
@@ -27,44 +28,43 @@ export class DatetimeComponent implements ControlValueAccessor {
   @Input() disabled = false;
   /** Min Date to select. Earlier dates are disabled. */
   @Input() minDate: string | undefined;
+  /** Max Date to select. Later dates are disabled. */
+  @Input() maxDate: string | undefined;
   /** Date which is preselected in the modal. */
-  @Input() initialDate: null | string | undefined;
+  @Input() initialDate: null | string | string[] | undefined;
 
-  formattedDate: string | null | undefined;
+  formattedDate: null | string | string[] | undefined;
 
-  get value(): null | string {
+  get value(): null | string | string[] | undefined {
     return this.selectedDate ?? this.initialDate ?? new Date().toISOString();
   }
 
-  get maxDate(): string {
-    const min = new Date(this.minDate) ?? new Date();
-    const max = addYears(min, 10);
-    return max.toISOString();
-  }
-
   // ISO 8601 datetime string
-  get selectedDate(): null | string | undefined {
+  get selectedDate(): null | string | string[] | undefined {
     return this._selectedDate;
   }
 
-  set selectedDate(isoDateString: null | string | undefined) {
+  set selectedDate(isoDateString: null | string | string[] | undefined) {
 
     this._selectedDate = isoDateString;
     this.propagateChange(this._selectedDate);
-    this.formattedDate = isoDateString ?
+
+    if (typeof isoDateString === 'string') {
+      this.formattedDate = isoDateString ?
       format(parseISO(isoDateString), 'dd.MM.yyyy') :
       isoDateString;
+    }
   }
 
-  private _selectedDate: string;
+  private _selectedDate: null | string | string[] | undefined;
 
-  constructor() { }
+  constructor(private logger: Logger) { }
 
   // ion-datetime
 
-  onDateChanged(isoDateString: string) {
+  onDateChanged(isoDateString: null | string | string[] | undefined) {
     this.selectedDate = isoDateString;
-    this.datetime.confirm(true);
+    this.datetime?.confirm(true);
   }
 
   // ControlValueAccessor

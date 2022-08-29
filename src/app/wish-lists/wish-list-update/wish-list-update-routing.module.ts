@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { WishListCreateUpdatePage } from './wish-list-create-update.page';
+import { WishListUpdatePage } from './wish-list-update.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: WishListCreateUpdatePage
+    component: WishListUpdatePage
   }
 ];
 

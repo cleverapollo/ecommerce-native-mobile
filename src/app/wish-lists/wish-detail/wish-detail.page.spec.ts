@@ -1,15 +1,14 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { WishDto } from '@core/models/wish-list.model';
 import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { BrowserService } from '@core/services/browser.service';
-import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { MockWishListStoreService } from '@core/services/wish-list-store-mock.service';
+import { WishListStore, WishListStoreService } from '@core/services/wish-list-store.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule, ModalController, NavController } from '@ionic/angular';
-import { from, Observable, of } from 'rxjs';
 
 import { WishDetailPage } from './wish-detail.page';
 
@@ -27,11 +26,7 @@ describe('WishDetailPage', () => {
       }
     }
   };
-  const wishListStore: any = {
-    loadWish(wishListId: string, forceRefresh: boolean): Observable<WishDto> {
-      return of(WishListTestData.wishBoschWasher)
-    }
-  };
+  const wishListStoreSpy: WishListStore = new MockWishListStoreService();
   const analyticsService = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
   const affiliateLinkService: AffiliateService = {
     createAffiliateLink(productUrlString: string): Promise<string> {
@@ -53,7 +48,7 @@ describe('WishDetailPage', () => {
         { provide: ActivatedRoute, useValue: route },
         { provide: AffiliateLinkService, useValue: affiliateLinkService },
         { provide: AnalyticsService, useValue: analyticsService },
-        { provide: WishListStoreService, useValue: wishListStore },
+        { provide: WishListStoreService, useValue: wishListStoreSpy },
         { provide: NavController, useValue: navController },
         { provide: BrowserService, useValue: browserService },
         { provide: ModalController, useValue: modalController }
@@ -76,14 +71,6 @@ describe('WishDetailPage', () => {
       expect(analyticsService.setFirebaseScreenName).toHaveBeenCalledWith('wishlist-wish');
     })
   });
-
-  describe('ionViewWillEnter', () => {
-    it('should load wish data', () => {
-      const wishListStoreSpy = spyOn(wishListStore, 'loadWish').and.returnValue(of());
-      component.ionViewWillEnter();
-      expect(wishListStoreSpy).toHaveBeenCalledWith('1');
-    });
-  })
 
   describe('openProductURL', () => {
     it('should open product url in browser', () => {

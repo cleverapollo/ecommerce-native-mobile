@@ -241,11 +241,11 @@ describe('FriendsWishListDetailPage', () => {
     beforeEach(() => {
       navigateSpy = spyOn(router, 'navigateByUrl');
       showLoadingServiceSpy = spyOn(loadingService, 'showLoadingSpinner');
-      dismissLoadingServiceSpy = spyOn(loadingService, 'dismissLoadingSpinner');
+      dismissLoadingServiceSpy = spyOn(loadingService, 'stopLoadingSpinner');
       component.wishList = new FriendWishList();
     })
 
-    it('should show delete alert', fakeAsync(() => {
+    it('shows delete alert', fakeAsync(() => {
       sharedWishListStore.removeWishListByIdResponse = Promise.resolve();
       component.showDeleteAlert();
 
@@ -258,7 +258,8 @@ describe('FriendsWishListDetailPage', () => {
       flush();
     }));
 
-    it('should dismiss the loading spinner if something goes wrong', fakeAsync(() => {
+    it('dismisses the loading spinner if something goes wrong', fakeAsync(() => {
+      dismissLoadingServiceSpy.and.returnValue(Promise.resolve());
       // fake error response
       sharedWishListStore.removeWishListByIdResponse = Promise.reject();
 

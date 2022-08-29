@@ -4,7 +4,7 @@
 </ion-header>
 
 <ion-content>
-  <h1 class="ion-text-center wantic-page-header">{{ title }}</h1>
+  <h1 class="ion-text-center wantic-page-header">Wunschliste bearbeiten</h1>
 
   <form [formGroup]="form" *ngIf="form">
     <div class="wtc-label-container">
@@ -15,21 +15,18 @@
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 
-    <app-datetime formControlName="date" placeholder="Datum des Ereignisses" label="Datum" [minDate]="minDate"></app-datetime>
+    <app-datetime formControlName="date" placeholder="Datum des Ereignisses" label="Datum" [minDate]="minDate" [maxDate]="maxDate"></app-datetime>
 
     <ion-item lines="none" class="toggleContainer">
-      <ion-label class="ion-text-wrap" [ngClass]="{ 'toggle-checked': form.get('showReservedWishes').value, 'toggle-unchecked': !form.get('showReservedWishes').value }">Ich möchte sehen, welche Wünsche geschenkt werden</ion-label>
+      <ion-label class="ion-text-wrap" [ngClass]="classForToggleLabel">Ich möchte sehen, welche Wünsche geschenkt werden</ion-label>
       <ion-toggle slot="end" name="showReservedWishes" color="primary" formControlName="showReservedWishes"></ion-toggle>
     </ion-item>
 
-    <ion-button *ngIf="form" (click)="createOrUpdateWishList()" expand="block" class="wantic-margin-right-left wantic-save-button no-margin-bottom button-save-changes">
-      {{ buttonTitle }}
+    <ion-button (click)="update()" expand="block" class="wantic-margin-right-left wantic-save-button no-margin-bottom button-save-changes">
+      Änderungen speichern
     </ion-button>
-    <ion-button *ngIf="isUpdatePage && isCreator" class="wantic-save-button" (click)="deleteWishList()" color="primary" fill="outline" expand="block">
+    <ion-button class="wantic-save-button" (click)="deleteWishList()" color="primary" fill="outline" expand="block">
       WUNSCHLISTE LÖSCHEN
-    </ion-button>
-    <ion-button *ngIf="!isUpdatePage" class="wantic-save-button" (click)="goBack()" color="primary" fill="outline" expand="block">
-      ABBRECHEN
     </ion-button>
 
   </form>

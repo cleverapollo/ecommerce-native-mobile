@@ -2,8 +2,10 @@
   <!--- form to create wish list -->
   <form *ngIf="showForm" (ngSubmit)="createNewWishList()" style="overflow-y: scroll;" class="form-create-new-wish-list">
     <ion-item [formGroup]="form" class="first-item input-wish-list-name">
-      <ion-input name="name" formControlName="name" placeholder="Gib einen Namen ein" enterkeyhint="done" autocapitalize="on" clear-input="true" inputmode="text" required="true"></ion-input>
-      <ion-button type="submit" *ngIf="showSaveWishListButton" size="small" color="dark" [disabled]="form.invalid" class="save-wish-list-button">Fertig</ion-button>
+      <ion-input name="name" formControlName="name" placeholder="Gib einen Namen ein" enterkeyhint="done"
+        autocapitalize="on" clear-input="true" inputmode="text" required="true"></ion-input>
+      <ion-button type="submit" *ngIf="showSaveWishListButton" size="small" color="dark" [disabled]="form.invalid"
+        class="save-wish-list-button">Fertig</ion-button>
       <ion-spinner *ngIf="showLoading" color="primary"></ion-spinner>
     </ion-item>
   </form>
@@ -14,18 +16,28 @@
       Neue Wunschliste anlegen
     </ion-label>
   </ion-item>
-  <!--- wish list items -->
-  <ion-item *ngFor="let option of wishListSelectOptions; let isLast = last;" (click)="wishListId = option.id;" [ngClass]=" {'last-item': isLast }" class="radio-wish-list-option" >
-    <ion-label class="radio-option-name">{{ option.name }}</ion-label>
-    <ion-avatar slot="end">
-      <img *ngIf="wishListId === option.id" src="assets/icon/checked.svg" alt="checked icon" class="icon-checked" />
-      <img *ngIf="wishListId !== option.id" src="assets/icon/unchecked.svg" alt="unchecked icon" class="icon-unchecked" />
-    </ion-avatar>
-  </ion-item>
-  <!--- hint no wish lists -->
-  <ion-item *ngIf="hasNoWishLists" class="last-item hint-no-wish-lists" >
-    <ion-label class="label-font-style">
-      Du hast noch keine Wunschlisten angelegt.
-    </ion-label>
-  </ion-item>
+  <ng-container *ngIf="wishListSelectOptions$ | async as wishLists">
+    <ng-container *ngIf="wishLists.length; else noWishLists">
+    <!--- wish list items -->
+    <ion-item  *ngFor="let option of wishLists; let isLast = last;"
+          (click)="wishListId = option.id;"
+          [ngClass]=" {'last-item': isLast }"
+          class="radio-wish-list-option">
+      <ion-label class="radio-option-name">{{ option.name }}</ion-label>
+      <ion-avatar slot="end">
+        <img *ngIf="wishListId === option.id" src="assets/icon/checked.svg" alt="checked icon" class="icon-checked" />
+        <img *ngIf="wishListId !== option.id" src="assets/icon/unchecked.svg" alt="unchecked icon"
+          class="icon-unchecked" />
+      </ion-avatar>
+    </ion-item>
+    </ng-container>
+    <ng-template #noWishLists>
+      <!--- hint no wish lists -->
+      <ion-item class="last-item hint-no-wish-lists">
+        <ion-label class="label-font-style">
+          Du hast noch keine Wunschlisten angelegt.
+        </ion-label>
+      </ion-item>
+    </ng-template>
+  </ng-container>
 </ion-list>

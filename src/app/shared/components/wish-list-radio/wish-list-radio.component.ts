@@ -1,12 +1,11 @@
-import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishListSelectOptionDto } from '@core/models/wish-list.model';
 import { Logger } from '@core/services/log.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { WishListCreateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
-import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { sortWishListsByName } from '@core/wish-list.utils';
+import { Observable, of } from 'rxjs';
+import { finalize, first, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wish-list-radio',
@@ -20,18 +19,14 @@ import { first } from 'rxjs/operators';
     }
   ]
 })
-export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class WishListRadioComponent implements OnInit, ControlValueAccessor {
 
-  @Input() _wishListId: string;
+  @Input() _wishListId: string | null = null;
+  @Input() initialValue: string | null = null;
 
-  @Input() initialValue: string;
-
-  form: FormGroup;
+  form = new FormGroup({});
   isEditMode = false;
-  wishListSelectOptions: Array<WishListSelectOptionDto> = [];
-  subscription: Subscription;
-
-  private _requestIsRunning = false;
+  wishListSelectOptions$: Observable<WishListSelectOptionDto[]> = of([]);
 
   get showSaveWishListButton(): boolean {
     return this.isEditMode && !this.requestIsRunning;
@@ -43,10 +38,6 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
 
   get showForm(): boolean {
     return this.form && this.isEditMode;
-  }
-
-  get hasNoWishLists(): boolean {
-    return this.wishListSelectOptions.length === 0;
   }
 
   get requestIsRunning(): boolean {
@@ -61,51 +52,57 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
     }
   }
 
-  get wishListId(): string {
+  get wishListId(): string | null {
     return this._wishListId;
   }
 
-  set wishListId(wishListId: string) {
+  set wishListId(wishListId: string | null) {
     this._wishListId = wishListId;
     this.propagateChange(this._wishListId);
   }
 
+  private _requestIsRunning = false;
+
   constructor(
     private wishListStore: WishListStoreService,
-    private wishListApi: WishListApiService,
     private formBuilder: FormBuilder,
     private logger: Logger
   ) {
   }
 
   ngOnInit() {
-    this.form = this.initForm();
-    this.initWishListSelectOptions();
+    this.setupForm();
+    this.setupWishListId();
+    this.setupData();
   }
 
-  private initWishListSelectOptions() {
-    this.subscription = this.wishListStore.loadWishLists().subscribe(wishLists => {
-      this.wishListSelectOptions = wishLists
-        .map(wishList => WishListSelectOptionDto.forWishList(wishList))
-        .sort(this.sortWishListsByName)
-      if (this.initialValue) {
-        this.wishListId = this.initialValue;
-      } else {
-        this.wishListId = this.wishListSelectOptions[0]?.id;
-      }
-    });
-  }
-
-  private initForm(): FormGroup {
-    return this.formBuilder.group({
+  private setupForm() {
+    this.form = this.formBuilder.group({
       name: this.formBuilder.control('', {
         validators: [Validators.required]
       })
     })
   }
 
-  ngOnDestroy() {
-    this.subscription?.unsubscribe();
+  private setupWishListId() {
+    if (this.initialValue) {
+      this.wishListId = this.initialValue;
+    }
+  }
+
+  private setupData() {
+    this.wishListSelectOptions$ = this.wishListStore.wishLists.pipe(
+      map(wishLists => {
+        return wishLists
+          .map(wishList => WishListSelectOptionDto.forWishList(wishList))
+          .sort(sortWishListsByName);
+      }),
+      tap(wishLists => {
+        if (this.wishListId === null) {
+          this.wishListId = wishLists[0]?.id ?? null;
+        }
+      })
+    );
   }
 
   writeValue(selectedOption: WishListSelectOptionDto | string): void {
@@ -134,45 +131,29 @@ export class WishListRadioComponent implements OnInit, OnDestroy, ControlValueAc
     if (nameControl.invalid) {
       return;
     }
-    const request: WishListCreateRequest = {
+    this.requestIsRunning = true;
+    this.wishListStore.createWishList({
       name: nameControl.value,
       showReservedWishes: false
-    }
-    this.requestIsRunning = true;
-    this.wishListApi.create(request).pipe(first()).subscribe({
-      next: wishList => {
-        const newSelectOption = WishListSelectOptionDto.forWishList(wishList);
-        this.wishListStore.clear().finally(() => {
-          this.addWishListSelectOption(newSelectOption);
-
-          this.wishListId = wishList.id;
-          this.isEditMode = false;
-          this.requestIsRunning = false;
-
-          nameControl.reset();
-        });
+    }).pipe(
+      first(),
+      finalize(() => {
+        this.requestIsRunning = false;
+      })
+    ).subscribe({
+      next: newWishList => {
+        this.wishListId = newWishList.id;
+        this.isEditMode = false;
+        nameControl.reset();
       },
       error: error => {
-        this.logger.error(error);
-        this.requestIsRunning = false;
+        this.logger.error(error)
       }
-    });
-  }
-
-  private addWishListSelectOption(newSelectOption: WishListSelectOptionDto) {
-    const clonedWishLists = [];
-    this.wishListSelectOptions.forEach(val => clonedWishLists.push(Object.assign({}, val)));
-    clonedWishLists.push(newSelectOption);
-    clonedWishLists.sort(this.sortWishListsByName);
-    this.wishListSelectOptions = clonedWishLists;
+    })
   }
 
   enableEditMode() {
     this.isEditMode = true;
-  }
-
-  private sortWishListsByName(wishListA: WishListSelectOptionDto, wishListB: WishListSelectOptionDto) {
-    return wishListA.name.localeCompare(wishListB.name.toString());
   }
 
   propagateChange = (_: any) => {};

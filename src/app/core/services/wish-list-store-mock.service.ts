@@ -1,16 +1,21 @@
-import { WishListDto, WishDto } from '@core/models/wish-list.model';
-import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
-import { Observable, of } from 'rxjs';
+import { EmailVerificationStatus, InvitationStatus } from '@core/models/user.model';
+import { WishDto, WishListCreateRequest, WishListDto, WishListUpdateRequest } from '@core/models/wish-list.model';
+import { BehaviorSubject, defer, Observable, of } from 'rxjs';
+import * as uuid from 'uuid';
 import { WishListStore } from './wish-list-store.service';
 
 export class MockWishListStoreService implements WishListStore {
 
-    wishLists: WishListDto[] = [];
+    wishLists: BehaviorSubject<WishListDto[]>;
     wishlist: WishListDto = new WishListDto();
     wish: WishDto = new WishDto();
 
+    constructor(wishLists: WishListDto[] = []) {
+        this.wishLists =  new BehaviorSubject<WishListDto[]>(wishLists);
+    }
+
     loadWishLists(forceRefresh: boolean): Observable<WishListDto[]> {
-        return of(this.wishLists);
+        return this.wishLists;
     }
     loadWishList(id: string, forceRefresh: boolean): Observable<WishListDto> {
         return of(this.wishlist);
@@ -21,23 +26,43 @@ export class MockWishListStoreService implements WishListStore {
     clearWishLists(): Promise<void> {
         return Promise.resolve();
     }
-    createWish(wish: WishDto): Promise<WishDto> {
-        return Promise.resolve(wish);
+    createWish(wish: WishDto): Observable<WishDto> {
+        return of(wish);
     }
-    createWishList(wish: WishListCreateRequest): Promise<WishListDto> {
-        return Promise.resolve(this.wishlist);
+    createWishList(data: WishListCreateRequest): Observable<WishListDto> {
+        const wishList: WishListDto = {
+            id: uuid.v4(),
+            name: data.name,
+            date: data.date,
+            showReservedWishes: data.showReservedWishes,
+            wishes: [],
+            creatorEmail: 'max@mustermann.de',
+            owners: [
+                {
+                    firstName: 'Max',
+                    lastName: 'Mustermann',
+                    email: 'max@mustermann.de',
+                    emailVerificationStatus: EmailVerificationStatus.VERIFIED,
+                    invitationStatus: InvitationStatus.ACCEPTED
+                }
+            ]
+        }
+        const wishLists = this.wishLists.getValue();
+        wishLists.push(wishList);
+        this.wishLists.next(wishLists);
+        return of(wishList);
     }
-    removeWish(wish: WishDto): Promise<void> {
+    removeWish(wish: WishDto): Observable<void> {
+        return of();
+    }
+    cacheWishList(wishList: WishListDto): Promise<void> {
         return Promise.resolve();
     }
-    updatedCachedWishList(wishList: WishListDto): Promise<void> {
-        return Promise.resolve();
+    updateWish(wish: WishDto): Observable<WishDto> {
+        return of(wish);
     }
-    updateWish(wish: WishDto): Promise<WishDto> {
-        return Promise.resolve(wish);
-    }
-    updateWishList(wishList: WishListUpdateRequest): Promise<WishListDto> {
-        return Promise.resolve(this.wishlist);
+    updateWishList(wishList: WishListUpdateRequest): Observable<WishListDto> {
+        return of(this.wishlist);
     }
     saveWishListToCache(wishList: WishListDto): Promise<void> {
         return Promise.resolve();

@@ -6,6 +6,8 @@ import { FriendWishList } from '@core/models/wish-list.model';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { of } from 'rxjs';
+import { catchError, map, take } from 'rxjs/operators';
 
 @Injectable()
 export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList }>> {
@@ -53,14 +55,12 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
     }
   }
 
-  private async isOwnWishList(wishListId: string) {
-    try {
-      const wishLists = await this.wishListStore.loadWishLists().toPromise();
-      const wishList = wishLists.find((w) => w.id === wishListId);
-      return wishList !== undefined;
-    } catch (error) {
-      return false;
-    }
+  private async isOwnWishList(wishListId: string): Promise<boolean> {
+    return this.wishListStore.loadWishList(wishListId).pipe(
+      take(1),
+      catchError(() => { return of(false); }),
+      map(wishList => { return wishList !== null; })
+    ).toPromise();
   }
 
 }

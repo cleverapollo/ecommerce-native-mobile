@@ -96,9 +96,8 @@ export class SignupMailPage implements OnInit {
   }
 
   async signup() {
-    const loadingSpinner = await this.loadingService.createLoadingSpinner();
-    loadingSpinner.present();
-    const signupRequest: SignupRequest = this.createSignupRequestBody();
+    await this.loadingService.showLoadingSpinner();
+    const signupRequest = this.createSignupRequestBody();
     this.authService.signup(signupRequest).then(() => {
       this.analyticsService.logCompleteRegistrationEvent(AuthProvider.WANTIC);
       this.router.navigateByUrl('signup/signup-mail-two', { replaceUrl: true });
@@ -107,7 +106,7 @@ export class SignupMailPage implements OnInit {
         this.toastService.presentErrorToast(error);
       }
     }).finally(() => {
-      this.loadingService.dismissLoadingSpinner(loadingSpinner);
+      this.loadingService.stopLoadingSpinner();
     })
   }
 

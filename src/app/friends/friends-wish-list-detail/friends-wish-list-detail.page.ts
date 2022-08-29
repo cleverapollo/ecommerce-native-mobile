@@ -98,15 +98,17 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
     alert.present();
   }
 
-  private onDeleteConfirmation = () => {
-    this.loadingService.showLoadingSpinner();
-    this.sharedWishListStore.removeWishListById(this.wishListId).then(() => {
-      this.loadingService.dismissLoadingSpinner();
-      this.toastService.presentSuccessToast('Du hast die Wunschliste erfolgreich verlassen.');
-      this.router.navigateByUrl('/secure/friends-home/friends-wish-list-overview?forceRefresh=true');
-    }, () => {
-      this.loadingService.dismissLoadingSpinner();
-    });
+  private onDeleteConfirmation = async () => {
+    try {
+      await this.loadingService.showLoadingSpinner();
+      await this.sharedWishListStore.removeWishListById(this.wishListId);
+      await this.loadingService.stopLoadingSpinner();
+      await this.toastService.presentSuccessToast('Du hast die Wunschliste erfolgreich verlassen.');
+      return await this.router.navigateByUrl('/secure/friends-home/friends-wish-list-overview?forceRefresh=true');
+    } catch (error) {
+      this.loadingService.stopLoadingSpinner().catch(() => Promise.resolve());
+      return Promise.resolve();
+    }
   }
 
   forceRefresh(event: any) {

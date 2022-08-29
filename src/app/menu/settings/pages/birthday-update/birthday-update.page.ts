@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserApiService } from '@core/api/user-api.service';
-import { UserProfileStore } from '../../user-profile-store.service';
-import { LoadingService } from '@core/services/loading.service';
-import { CoreToastService } from '@core/services/toast.service';
-import { CustomValidation } from '@shared/custom-validation';
-import { AnalyticsService } from '@core/services/analytics.service';
 import { UserProfile } from '@core/models/user.model';
+import { AnalyticsService } from '@core/services/analytics.service';
+import { LoadingService } from '@core/services/loading.service';
 import { Logger } from '@core/services/log.service';
+import { CoreToastService } from '@core/services/toast.service';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
+import { CustomValidation } from '@shared/custom-validation';
+import { subYears } from 'date-fns';
+import { finalize, first } from 'rxjs/operators';
+import { UserProfileStore } from '../../user-profile-store.service';
 
 @Component({
   selector: 'app-birthday-update',
@@ -18,6 +20,11 @@ import { Logger } from '@core/services/log.service';
 export class BirthdayUpdatePage implements OnInit {
 
   form: FormGroup;
+
+  get maxDate(): string {
+    const now = new Date();
+    return subYears(now, 6).toISOString();
+  }
 
   get validationMessages(): ValidationMessages {
     return {
@@ -65,18 +72,21 @@ export class BirthdayUpdatePage implements OnInit {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
-    this.loadingService.showLoadingSpinner();
 
     // Update value in DB
     let updatedProfile: UserProfile;
     try {
-      updatedProfile = await this.api.partialUpdateBirthday(this.form.controls.birthday.value).toPromise();
-      await this.loadingService.dismissLoadingSpinner();
+      await this.loadingService.showLoadingSpinner();
+      updatedProfile = await this.api.partialUpdateBirthday(this.form.controls.birthday.value).pipe(
+        first(),
+        finalize(() => {
+          this.loadingService.stopLoadingSpinner();
+        })
+      ).toPromise();
       await this.toastService.presentSuccessToast('Dein Geburtsdatum wurde erfolgreich aktualisiert.');
     } catch (error) {
       this.logger.error(error);
       this.toastService.presentErrorToast('Dein Geburtsdatum konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.');
-      this.loadingService.dismissLoadingSpinner();
       return
     }
 

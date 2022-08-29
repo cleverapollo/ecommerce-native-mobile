@@ -1,18 +1,18 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { WishListCreateUpdatePage } from './wish-list-create-update.page';
+import { WishListUpdatePage } from './wish-list-update.page';
 
 describe('WishListCreateUpdatePage', () => {
-  let component: WishListCreateUpdatePage;
-  let fixture: ComponentFixture<WishListCreateUpdatePage>;
+  let component: WishListUpdatePage;
+  let fixture: ComponentFixture<WishListUpdatePage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishListCreateUpdatePage ],
+      declarations: [ WishListUpdatePage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WishListCreateUpdatePage);
+    fixture = TestBed.createComponent(WishListUpdatePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

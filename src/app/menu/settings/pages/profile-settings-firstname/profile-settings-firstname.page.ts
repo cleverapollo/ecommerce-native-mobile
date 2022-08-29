@@ -7,6 +7,7 @@ import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { finalize, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-settings-firstname',
@@ -51,25 +52,26 @@ export class ProfileSettingsFirstnamePage implements OnInit {
     this.analyticsService.setFirebaseScreenName('profile_settings-first_name');
   }
 
-  saveChanges() {
+  async saveChanges() {
     if (this.form.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
 
-    this.loadingService.showLoadingSpinner();
-    this.api.partialUpdateFirstName(this.form.controls.firstName.value).toPromise()
-      .then(updatedProfile => {
-        this.form.controls.firstName.reset(updatedProfile.firstName);
-        this.userProfileStore.updateCachedUserProfile(updatedProfile);
-        this.toastService.presentSuccessToast('Dein Vorname wurde erfolgreich aktualisiert.')
-      })
-      .catch(error => {
-        this.toastService.presentErrorToast('Dein Vorname konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.')
-      })
-      .finally(() => {
-        this.loadingService.dismissLoadingSpinner();
-      })
+    try {
+      await this.loadingService.showLoadingSpinner();
+      const updatedProfile = await this.api.partialUpdateFirstName(this.form.controls.firstName.value).pipe(
+        first(),
+        finalize(() => {
+          this.loadingService.stopLoadingSpinner();
+        })
+      ).toPromise();
+      this.form.controls.firstName.reset(updatedProfile.firstName);
+      this.userProfileStore.updateCachedUserProfile(updatedProfile);
+      this.toastService.presentSuccessToast('Dein Vorname wurde erfolgreich aktualisiert.');
+    } catch (error) {
+      this.toastService.presentErrorToast('Dein Vorname konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.');
+    }
   }
 
 }

@@ -64,7 +64,7 @@
     "@ionic-native/http": "^5.36.0",
     "@ionic-native/in-app-browser": "^5.36.0",
     "@ionic-native/sign-in-with-apple": "^5.36.0",
-    "@ionic/angular": "^6.0.16",
+    "@ionic/angular": "^6.2.4",
     "@ionic/storage": "^2.3.1",
     "@ionic/storage-angular": "^3.0.6",
     "appsflyer-capacitor-plugin": "^6.5.2",

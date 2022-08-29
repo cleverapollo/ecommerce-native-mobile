@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { UserApiService } from '@core/api/user-api.service';
-import { CustomValidation } from '@shared/custom-validation';
-import { LoadingService } from '@core/services/loading.service';
-import { CoreToastService } from '@core/services/toast.service';
-import { UpdateEmailChangeRequest, UserProfile } from '@core/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { HttpStatusCodes } from '@core/models/http-status-codes';
-import { Logger } from '@core/services/log.service';
-import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { AnalyticsService } from '@core/services/analytics.service';
-import { first } from 'rxjs/operators';
-import { AuthenticationService } from '@core/services/authentication.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserApiService } from '@core/api/user-api.service';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
+import { UpdateEmailChangeRequest, UserProfile } from '@core/models/user.model';
+import { AnalyticsService } from '@core/services/analytics.service';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { LoadingService } from '@core/services/loading.service';
+import { Logger } from '@core/services/log.service';
+import { CoreToastService } from '@core/services/toast.service';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
+import { CustomValidation } from '@shared/custom-validation';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-email-update',
@@ -86,34 +86,36 @@ export class EmailUpdatePage implements OnInit {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
-    const busyIndicator = await this.loadingService.createLoadingSpinner();
-    busyIndicator.present();
+    await this.loadingService.showLoadingSpinner();
+
     const requestBody = new UpdateEmailChangeRequest(this.form.controls);
-    this.api.updateEmailChangeRequest(requestBody).pipe(first()).subscribe({
+    this.api.updateEmailChangeRequest(requestBody).pipe(
+      first()
+    ).subscribe({
       next: () => {
         this.form.controls.email.reset(this.email);
         this.authService.emailPasswordSignIn(this.email, this.password).then(() => {
           this.authService.sendVerificationMail().finally(() => {
             this.authService.updateEmailVerificationStatus(false);
-            this.loadingService.dismissLoadingSpinner(busyIndicator);
+            this.loadingService.stopLoadingSpinner();
           });
         }, error => {
           this.logger.error(error);
-          this.handleReAuthError(busyIndicator);
+          this.handleReAuthError();
         });
       },
       error: errorResponse => {
         this.handleErrorResponse(errorResponse);
-        this.loadingService.dismissLoadingSpinner(busyIndicator);
+        this.loadingService.stopLoadingSpinner();
       }
     });
   }
 
-  private async handleReAuthError(busyIndicator: HTMLIonLoadingElement) {
+  private async handleReAuthError() {
     await this.authService.logout();
     await this.router.navigateByUrl('/login', { state: { email: this.email } });
     this.toastService.presentSuccessToast('Deine E-Mail-Adresse wurde erfolgreich geändert. Melde dich nun mit deiner neuen E-Mail-Adresse erneut an.')
-    this.loadingService.dismissLoadingSpinner(busyIndicator);
+    this.loadingService.stopLoadingSpinner();
   }
 
   private handleErrorResponse(errorResponse: any) {

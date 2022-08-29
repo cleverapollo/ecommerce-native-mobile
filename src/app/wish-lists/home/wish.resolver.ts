@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { WishDto } from '@core/models/wish-list.model';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
-export class WishResolver implements Resolve<Observable<WishDto>> {
+export class WishResolver implements Resolve<Observable<WishDto | null>> {
   constructor(private wishListStore: WishListStoreService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const wishId = route.paramMap.get('wishId');
-    return this.wishListStore.loadWish(wishId);
+    if (wishId) {
+      return this.wishListStore.loadWish(wishId);
+    }
+    return of(null);
   }
 }

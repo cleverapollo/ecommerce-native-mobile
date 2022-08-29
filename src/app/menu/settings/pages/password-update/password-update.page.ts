@@ -7,6 +7,7 @@ import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { Logger } from '@core/services/log.service';
+import { finalize, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-password-update',
@@ -79,22 +80,24 @@ export class PasswordUpdatePage implements OnInit {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
-    const busyIndicator = await this.loadingService.createLoadingSpinner();
-    busyIndicator.present();
 
     try {
+      await this.loadingService.showLoadingSpinner();
       await this.api.updatePassword({
         currentPassword: this.form.controls.currentPassword.value,
         newPassword: this.form.controls.value.value,
         newPasswordConfirmed: this.form.controls.confirm.value
-      }).toPromise();
+      }).pipe(
+        first(),
+        finalize(() => {
+          this.loadingService.stopLoadingSpinner();
+        })
+      ).toPromise();
       this.form.reset();
       this.toastService.presentSuccessToast('Dein Passwort wurde erfolgreich geändert.')
     } catch (error) {
       this.logger.error(error);
     }
-
-    this.loadingService.dismissLoadingSpinner(busyIndicator);
   }
 
 }

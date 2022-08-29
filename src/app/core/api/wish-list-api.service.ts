@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { WishListCreateRequest, WishListUpdateRequest } from '@wishLists/wish-list-create-update/wish-list-create-update.model';
 import { Observable } from 'rxjs';
-import { WishListDto, WishDto } from '@core/models/wish-list.model';
+import { WishListDto, WishDto, WishListCreateRequest, WishListUpdateRequest } from '@core/models/wish-list.model';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { catchError } from 'rxjs/operators';
 import { ApiVersion } from './api-version';

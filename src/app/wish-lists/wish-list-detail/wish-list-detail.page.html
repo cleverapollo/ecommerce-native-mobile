@@ -22,18 +22,18 @@
     <a routerLink="/secure/wish-search">
       <ion-icon src="assets/icon/plus.svg" ></ion-icon>
     </a>
-    <a role="button" (click)="editWishList()">
+    <a role="button" [routerLink]="['edit']">
       <ion-icon src="assets/icon/pencil.svg"></ion-icon>
     </a>
-    <a role="button" (click)="shareWishList()">
+    <a role="button" (click)="share()">
       <ion-icon src="assets/icon/share.svg"></ion-icon>
     </a>
   </section>
 
   <ion-grid>
     <ion-row>
-      <ion-col (click)="selectWish(wish)" size="6" *ngFor="let wish of wishes$ | async">
-        <app-wish [wish]="wish" [showReservedWishes]="showReservedWishes"></app-wish>
+      <ion-col size="6" *ngFor="let wish of wishes; trackBy:trackByWishId" [routerLink]="['wish', wish.id]">
+        <app-wish [wish]="wish" [showReservedWishes]="wishList.showReservedWishes"></app-wish>
       </ion-col>
     </ion-row>
   </ion-grid>

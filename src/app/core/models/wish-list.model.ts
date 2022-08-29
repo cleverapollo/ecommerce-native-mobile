@@ -78,3 +78,21 @@ export class FriendWish {
     bought: boolean;
     isFavorite: boolean;
 }
+
+export interface WishListCreateRequest {
+    name: string;
+    date?: Date;
+    showReservedWishes: boolean;
+}
+
+export interface WishListUpdateRequest {
+    id: string;
+    name: string;
+    date?: Date;
+    showReservedWishes: boolean;
+}
+
+export interface InvitePartnerRequest {
+    name: string;
+    email: string;
+}

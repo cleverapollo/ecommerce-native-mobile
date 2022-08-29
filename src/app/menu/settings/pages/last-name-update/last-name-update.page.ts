@@ -1,14 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserApiService } from '@core/api/user-api.service';
-import { UserProfileStore } from '../../user-profile-store.service';
-import { Subscription } from 'rxjs';
-import { HintConfig, hintConfigForSuccessResponse, hintConfigForErrorResponse } from '@shared/components/hint/hint.component';
+import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
-import { AnalyticsService } from '@core/services/analytics.service';
+import { finalize, first } from 'rxjs/operators';
+import { UserProfileStore } from '../../user-profile-store.service';
 
 @Component({
   selector: 'app-last-name-update',
@@ -57,25 +56,25 @@ export class LastNameUpdatePage implements OnInit {
     this.analyticsService.setFirebaseScreenName('profile_settings-last_name');
   }
 
-  saveChanges() {
+  async saveChanges() {
     if (this.form.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
 
-    this.loadingService.showLoadingSpinner();
-    this.api.partialUpdateLastName(this.form.controls.lastName.value).toPromise()
-      .then( updatedProfile => {
-        this.form.controls.lastName.reset(updatedProfile.lastName);
-        this.userProfileStore.updateCachedUserProfile(updatedProfile);
-        this.toastService.presentSuccessToast('Dein Nachname wurde erfolgreich aktualisiert.');
-      })
-      .catch( error => {
-        this.toastService.presentErrorToast('Dein Nachname konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.');
-      })
-      .finally(() => {
-        this.loadingService.dismissLoadingSpinner();
-      })
+    try {
+      await this.loadingService.showLoadingSpinner();
+      const updatedProfile = await this.api.partialUpdateLastName(this.form.controls.lastName.value).pipe(
+        first(),
+        finalize(() => {
+          this.loadingService.stopLoadingSpinner();
+        })
+      ).toPromise();
+      this.userProfileStore.updateCachedUserProfile(updatedProfile);
+      this.toastService.presentSuccessToast('Dein Nachname wurde erfolgreich aktualisiert.');
+    } catch (error) {
+      this.toastService.presentErrorToast('Dein Nachname konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.');
+    }
   }
 
 }

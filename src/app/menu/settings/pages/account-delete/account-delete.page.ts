@@ -9,7 +9,7 @@ import { Logger } from '@core/services/log.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { NavController } from '@ionic/angular';
-import { first } from 'rxjs/operators';
+import { finalize, first } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -41,9 +41,13 @@ export class AccountDeletePage {
   }
 
   async deleteAccount() {
-    const loadingSpinner = await this.loadingService.createLoadingSpinner();
-    await loadingSpinner.present();
-    this.userApiService.deleteUser().pipe(first()).subscribe({
+    await this.loadingService.showLoadingSpinner();
+    this.userApiService.deleteUser().pipe(
+      first(),
+      finalize(() => {
+        this.loadingService.stopLoadingSpinner();
+      })
+    ).subscribe({
       next: () => {
         this.toastService.presentSuccessToast('Dein Account wurde erfolgreich gelöscht!');
         this.authService.logout().finally(() => {
@@ -60,9 +64,6 @@ export class AccountDeletePage {
           }
         }
         this.toastService.presentErrorToast(errorMessage);
-      },
-      complete: () => {
-        this.loadingService.dismissLoadingSpinner(loadingSpinner);
       }
     })
   }

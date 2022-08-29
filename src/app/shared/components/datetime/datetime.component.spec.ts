@@ -75,17 +75,6 @@ describe('DatetimeComponent', () => {
     })
   })
 
-  describe('max date', () => {
-
-    it('returns min date + 10 years', () => {
-
-      component.minDate = '2022-05-31T17:48:41.568Z'
-      fixture.detectChanges();
-
-      expect(component.maxDate).toEqual('2032-05-31T17:48:41.568Z')
-    })
-  })
-
   describe('onDateChanged', () => {
 
     beforeEach(() => {

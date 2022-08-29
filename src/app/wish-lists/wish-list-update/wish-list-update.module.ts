@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { IonicModule } from '@ionic/angular';
 
-import { WishListNewPageRoutingModule } from './wish-list-create-update-routing.module';
+import { WishListNewPageRoutingModule } from './wish-list-update-routing.module';
 
-import { WishListCreateUpdatePage } from './/wish-list-create-update.page';
+import { WishListUpdatePage } from './wish-list-update.page';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
@@ -15,6 +15,6 @@ import { SharedModule } from '@shared/shared.module';
     WishListNewPageRoutingModule,
     SharedModule
   ],
-  declarations: [WishListCreateUpdatePage]
+  declarations: [WishListUpdatePage]
 })
-export class WishListCreateUpdatePageModule {}
+export class WishListUpdatePageModule {}

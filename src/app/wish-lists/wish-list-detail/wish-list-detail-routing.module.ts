@@ -20,8 +20,8 @@ const routes: Routes = [
   {
     path: 'edit',
     canActivate: [AuthGuard],
-    loadChildren: () => import('@wishLists/wish-list-create-update/wish-list-create-update.module')
-      .then( m => m.WishListCreateUpdatePageModule)
+    loadChildren: () => import('@wishLists/wish-list-update/wish-list-update.module')
+      .then( m => m.WishListUpdatePageModule)
   },
   {
     path: 'wish-search',

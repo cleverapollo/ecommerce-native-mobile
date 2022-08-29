@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { WishListDto, WishDto } from '@core/models/wish-list.model';
+import { Component, OnDestroy, OnInit, TrackByFunction } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { Share } from '@capacitor/share';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { Logger } from '@core/services/log.service';
-import { NavigationService } from '@core/services/navigation.service';
-import { Observable, of, Subscription } from 'rxjs';
-import { APP_URL } from 'src/environments/environment';
+import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { Logger } from '@core/services/log.service';
+import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { sortWishesByIsFavorite } from '@core/wish-list.utils';
+import { RefresherCustomEvent } from '@ionic/angular';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { Subscription } from 'rxjs';
+import { finalize, first } from 'rxjs/operators';
+import { APP_URL } from 'src/environments/environment';
 
 @Component({
   selector: 'app-wish-list-detail',
@@ -19,33 +20,21 @@ import { AnalyticsService } from '@core/services/analytics.service';
 })
 export class WishListDetailPage implements OnInit, OnDestroy {
 
-  private queryParamSubscription: Subscription;
-  private loadWishListSubscription: Subscription;
-
-  wishList: WishListDto;
-  wishes$:  Observable<WishDto[]> = of([]);
   showBackButton = true;
+  wishList = new WishListDto();
 
-  get wishListOwnerCount(): number {
-    return this.wishList?.owners?.length || 0;
+  get wishes(): WishDto[] {
+    const wishes = this.wishList.wishes;
+    wishes.sort(sortWishesByIsFavorite);
+    return wishes;
   }
 
-  get showReservedWishes(): boolean {
-    return this.wishList?.showReservedWishes || false;
-  }
+  trackByWishId: TrackByFunction<WishDto> = (idx, wish) => wish.id;
 
-  cssClass(first: boolean, last: boolean) {
-    return {
-      standalone: this.wishListOwnerCount === 1,
-      first: this.wishListOwnerCount > 1 && first,
-      last: this.wishListOwnerCount > 1 && last
-    }
-  }
+  private subscription?: Subscription;
 
   constructor(
-    private navController: NavController,
     private route: ActivatedRoute,
-    private navigationService: NavigationService,
     private wishListStore: WishListStoreService,
     private userProfileStore: UserProfileStore,
     private logger: Logger,
@@ -54,20 +43,13 @@ export class WishListDetailPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.wishList = this.route.snapshot.data.wishList;
-    this.wishes$ = this.wishListStore.loadWishes(this.wishList.id);
-    this.queryParamSubscription = this.route.queryParamMap.subscribe(queryParamMap => {
-      if (Boolean(queryParamMap.get('forceRefresh'))) {
-        this.wishListStore.loadWishList(this.wishList.id, true).subscribe({
-          next: wishList => this.wishList = wishList,
-          complete: () => this.navigationService.removeQueryParamFromCurrentRoute('forceRefresh')
-        })
+    this.subscription = this.wishListStore.wishLists.subscribe({
+      next: wishLists => {
+        const wishList = wishLists.find(w => w.id === this.wishList.id);
+        if (wishList) {
+          this.wishList = wishList;
+        }
       }
-    })
-  }
-
-  ionViewWillEnter() {
-    this.wishListStore.loadWishList(this.wishList.id).subscribe( wishList => {
-      this.wishList = wishList;
     })
   }
 
@@ -78,54 +60,31 @@ export class WishListDetailPage implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.queryParamSubscription.unsubscribe();
-    this.loadWishListSubscription?.unsubscribe();
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
-  selectWish(wish: WishDto) {
-    this.navController.navigateForward(`secure/home/wish-list/${this.wishList.id}/wish/${wish.id}`);
-  }
-
-  goBack() {
-    this.navController.back();
-  }
-
-  goToSearchSelectionPage() {
-    this.navController.navigateForward('secure/home/wish-search-overview');
-  }
-
-  editWishList() {
-    this.navController.navigateForward(`secure/home/wish-list/${this.wishList.id}/edit`);
-  }
-
-  async shareWishList() {
+  async share() {
     const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
     const message = `Hurra, ${userProfile.firstName} möchte feiern. 🥳 Sieh dir die Wunschliste „${this.wishList.name}“ an und finde ein Geschenk.🎁🤩`;
-    const link = this.createLinkForSocialSharing();
+    const link = `${APP_URL}/meine-wunschliste/${this.wishList.id}`;
     Share.share({
       title: 'Einladung zur Wunschliste',
       text: message,
-      url: this.createLinkForSocialSharing()
+      url: link
     }).catch(reason => {
       this.logger.debug(link, reason);
     });
   }
 
-  private createLinkForSocialSharing(appUrl: string = APP_URL, wishListId: string = this.wishList.id) {
-    return `${appUrl}/meine-wunschliste/${wishListId}`
-  }
-
-  forceRefresh(event) {
-    this.loadWishListSubscription = this.wishListStore.loadWishList(this.wishList.id, true).subscribe({
-      next: wishList => {
-        this.wishList = wishList;
-        event.target.complete();
-      },
-      error: error => {
-        event.target.complete();
-      }
-    });
+  async forceRefresh(event: Event) {
+    const refresherEvent = event as RefresherCustomEvent;
+    await this.wishListStore.loadWishList(this.wishList.id, true).pipe(
+      first(),
+      finalize(() => {
+        refresherEvent.target.complete();
+      })
+    ).toPromise();
   }
 
 }

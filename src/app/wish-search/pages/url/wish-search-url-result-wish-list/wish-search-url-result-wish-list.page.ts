@@ -6,11 +6,11 @@ import { SearchResultItem } from '@core/models/search-result-item';
 import { WishDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
-import { CoreToastService, ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { WebPageCrawlerService } from '@core/services/web-page-crawler.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
-import { first } from 'rxjs/operators';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
+import { finalize, first, tap } from 'rxjs/operators';
 import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
 import { UrlSearchDataStoreService } from '../url-search-data-store.service';
 
@@ -68,22 +68,24 @@ export class WishSearchUrlResultWishListPage implements OnInit {
       wishListId: this.form.controls.wishListId.value,
       isFavorite: false
     }
-    this.loadingService.showLoadingSpinner().finally(() => {
-      this.wishService.createWish(wish).pipe(first()).subscribe(createdWish => {
-        this.logAddToWishListEvent(createdWish);
-        this.urlSearchDataStore.reset();
-        this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
-        this.wishListStore.clearWishLists().finally(() => {
-          this.loadingService.dismissLoadingSpinner().finally(() => {
-            this.navigateToWishListDetailPage(createdWish.wishListId);
-          });
-        });
-      }, e => {
-        this.loadingService.dismissLoadingSpinner().finally(() => {
-          this.toastService.presentErrorToast('Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.');
-        });
-      })
-    });
+
+    try {
+      await this.loadingService.showLoadingSpinner();
+      const createdWish = await this.wishService.createWish(wish).pipe(
+        first(),
+        tap(wish => {
+          this.logAddToWishListEvent(wish);
+          this.urlSearchDataStore.reset();
+        }),
+        finalize(() => {
+          this.loadingService.stopLoadingSpinner();
+        })
+      ).toPromise();
+      await this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
+      this.navigateToWishListDetailPage(createdWish.wishListId);
+    } catch (error) {
+      this.toastService.presentErrorToast('Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.');
+    }
   }
 
   private logAddToWishListEvent(wish: WishDto) {
