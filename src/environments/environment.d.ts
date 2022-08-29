@@ -20,7 +20,7 @@ export interface EnvironmentConfig {
         appId: string,
         measurementId?: string // only configured if analytics is enabled
     },
-    angularFire?: {
+    angularFire: {
         APP_NAME: string,
         APP_VERSION: string,
         DEBUG_MODE: boolean

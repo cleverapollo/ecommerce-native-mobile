@@ -9,8 +9,8 @@ import { ValidationMessage } from './validation-message';
 })
 export class ValidationMessagesComponent {
 
-  @Input() control: AbstractControl
-  @Input() validationMessages: ValidationMessage[]
+  @Input() control: AbstractControl | null = null;
+  @Input() validationMessages: ValidationMessage[] = [];
 
   constructor() { }
 

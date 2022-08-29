@@ -1,6 +1,6 @@
 <div class="validation-errors wantic-margin-right-left">
   <ng-container *ngFor="let validation of validationMessages">
-    <p class="error-message" *ngIf="control.hasError(validation.type) && (control.dirty || control.touched)">
+    <p class="error-message" *ngIf="control?.hasError(validation.type) && (control?.dirty || control?.touched)">
       <ion-text color="primary">{{ validation.message }}</ion-text>
     </p>
   </ng-container>

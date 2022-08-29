@@ -5,6 +5,7 @@ import { EnvironmentConfig } from './environment.d';
 import packageJson from '../../package.json';
 import { BackendConfigType } from './backend-config-type';
 
+export const appVersion = packageJson.version;
 export const environment: EnvironmentConfig = {
   backendType: BackendConfigType.unknown,
   production: false,
@@ -23,13 +24,17 @@ export const environment: EnvironmentConfig = {
     appId: '',
     measurementId: ''
   },
+  angularFire: {
+    APP_NAME: 'wantic',
+    APP_VERSION: appVersion,
+    DEBUG_MODE: false
+  },
   googleSignInAndroidClientId: ''
 };
 
 export const SERVER_URL = '';
 export const APP_URL = '';
 export const WHITELISTED_DOMAINS = [];
-export const appVersion = packageJson.version;
 
 /*
  * For easier debugging in development mode, you can import the following file
