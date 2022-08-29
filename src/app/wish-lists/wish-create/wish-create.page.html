@@ -4,7 +4,7 @@
 </ion-header>
 
 <ion-content>
-  <h1 class="ion-text-center wantic-page-header">{{ title }}</h1>
+  <h1 class="ion-text-center wantic-page-header">Wunsch hinzufügen</h1>
 
   <div class="image-container">
     <app-wish-image [src]="wish?.imageUrl" [styles]="wishImagesStyles"></app-wish-image>
@@ -48,11 +48,8 @@
 
   </form>
 
-  <ion-button *ngIf="form" class="wantic-save-button save-wish-button" (click)="createOrUpdateWish()" color="primary" expand="block">
+  <ion-button *ngIf="form" class="wantic-save-button save-wish-button" (click)="create()" color="primary" expand="block">
     WUNSCH SPEICHERN
-  </ion-button>
-  <ion-button *ngIf="form && isUpdatePage" class="wantic-save-button" (click)="deleteWish()" color="primary" expand="block" fill="outline">
-    WUNSCH LÖSCHEN
   </ion-button>
 
 </ion-content>

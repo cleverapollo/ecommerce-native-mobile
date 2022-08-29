@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { WishCreateUpdatePage } from './wish-create-update.page';
+import { WishUpdatePage } from './wish-update.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: WishCreateUpdatePage
+    component: WishUpdatePage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class WishNewPageRoutingModule {}
+export class WishUpdatePageRoutingModule {}

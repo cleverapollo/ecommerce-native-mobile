@@ -1,0 +1,60 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar></app-nav-toolbar>
+  <app-email-unverified-hint></app-email-unverified-hint>
+</ion-header>
+
+<ion-content>
+  <h1 class="ion-text-center wantic-page-header">Wunsch bearbeiten</h1>
+
+  <div class="image-container">
+    <app-wish-image [src]="wish?.imageUrl" [styles]="wishImagesStyles"></app-wish-image>
+  </div>
+
+  <form [formGroup]="form" *ngIf="wish">
+
+    <!--name-->
+    <ion-item lines="none">
+      <ion-label position="stacked">Name</ion-label>
+      <ion-textarea formControlName="name" auto-grow="true" required="true" maxlength="255" [(ngModel)]="wish.name"></ion-textarea>
+    </ion-item>
+    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
+
+    <!--note-->
+    <ion-item lines="none">
+      <ion-label position="stacked">Notiz</ion-label>
+      <ion-textarea formControlName="note" name="note" rows="3" spellcheck="true" maxlength="255" [(ngModel)]="wish.note"></ion-textarea>
+    </ion-item>
+    <app-validation-messages [control]="form.get('note')" [validationMessages]="validationMessages.note"></app-validation-messages>
+
+    <!--price-->
+    <ion-item lines="none">
+      <ion-label position="stacked">Preis (in €)</ion-label>
+      <ion-input type="number" inputmode="decimal" min="0" formControlName="price" clearInput="true" required="true"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('price')" [validationMessages]="validationMessages.price"></app-validation-messages>
+
+    <!--favorite-->
+    <ion-item lines="none">
+      <ion-label class="font-favorite-toggle-header">Wunsch als Favorit <br> kennzeichnen</ion-label>
+      <ion-toggle slot="end" name="isFavorite" color="primary" formControlName="isFavorite" [(ngModel)]="wish.isFavorite"></ion-toggle>
+    </ion-item>
+
+    <!--wish list id-->
+    <section lines="none">
+      <p class="wantic-margin-right-left font-wish-list-header">Wunschliste</p>
+      <app-wish-list-radio formControlName="wishListId" [initialValue]="form.get('wishListId').value"></app-wish-list-radio>
+      <app-validation-messages [control]="form.get('wishListId')" [validationMessages]="validationMessages.wishListId"></app-validation-messages>
+    </section>
+
+  </form>
+
+  <ng-container *ngIf="form">
+    <ion-button class="wantic-save-button save-wish-button" (click)="update()" color="primary" expand="block">
+      WUNSCH SPEICHERN
+    </ion-button>
+    <ion-button class="wantic-save-button" (click)="deleteWish()" color="primary" expand="block" fill="outline">
+      WUNSCH LÖSCHEN
+    </ion-button>
+  </ng-container>
+
+</ion-content>

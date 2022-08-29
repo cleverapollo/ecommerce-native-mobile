@@ -1,31 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WishListDto, WishDto, PriceDto } from '@core/models/wish-list.model';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { PriceDto, WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AlertService } from '@core/services/alert.service';
-import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { SearchResultDataService } from '@core/services/search-result-data.service';
-import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
-import { LoadingService } from '@core/services/loading.service';
-import { CoreToastService } from '@core/services/toast.service';
-import { CustomValidation } from '@shared/custom-validation';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
+import { LoadingService } from '@core/services/loading.service';
 import { NavigationService } from '@core/services/navigation.service';
-import { concatMap, finalize, first, map } from 'rxjs/operators';
+import { CoreToastService } from '@core/services/toast.service';
+import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
+import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
+import { CustomValidation } from '@shared/custom-validation';
 import { from } from 'rxjs';
+import { concatMap, finalize, first, map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-wish-create-update',
-  templateUrl: './wish-create-update.page.html',
-  styleUrls: ['./wish-create-update.page.scss'],
+  selector: 'app-wish-update',
+  templateUrl: './wish-update.page.html',
+  styleUrls: ['./wish-update.page.scss'],
 })
-export class WishCreateUpdatePage implements OnInit {
+export class WishUpdatePage implements OnInit {
 
-  wish: WishDto = new WishDto();
-  wishList: WishListDto = new WishListDto();
-  wishListIdChanged = false;
+  wish = new WishDto();
+  wishList = new WishListDto();
 
   form: FormGroup | undefined;
   get validationMessages(): ValidationMessages {
@@ -46,18 +43,6 @@ export class WishCreateUpdatePage implements OnInit {
     }
   }
 
-  get title(): string {
-    return this.isUpdatePage ? 'Wunsch bearbeiten' : 'Wunsch hinzufügen';
-  }
-
-  get screenName(): string {
-    return this.isUpdatePage ? 'wish_settings' : 'wish_add';
-  }
-
-  get isUpdatePage(): boolean {
-    return (this.wish && this.wish.id) ? true : false;
-  }
-
   get wishImagesStyles(): WishImageComponentStyles {
     return {
       img: {
@@ -73,7 +58,6 @@ export class WishCreateUpdatePage implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private wishListStore: WishListStoreService,
-    private searchResultDataService: SearchResultDataService,
     private loadingService: LoadingService,
     private toastService: CoreToastService,
     private analyticsService: AnalyticsService,
@@ -93,12 +77,7 @@ export class WishCreateUpdatePage implements OnInit {
   }
 
   private setupForm() {
-    let wishListId = null;
-    if (this.isUpdatePage) {
-      wishListId = this.wish.wishListId;
-    } else if (this.wishList) {
-      wishListId = this.wishList.id;
-    }
+    const wishListId = this.wish?.wishListId;
     const name = this.wish?.name ? this.wish.name : '';
     const price = this.wish?.price.amount ? this.wish.price.amount : 0.00;
     this.form = this.formBuilder.group({
@@ -122,10 +101,10 @@ export class WishCreateUpdatePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.analyticsService.setFirebaseScreenName(this.screenName);
+    this.analyticsService.setFirebaseScreenName('wish_settings');
   }
 
-  async createOrUpdateWish() {
+  async update(): Promise<void> {
     if (this.form?.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;
@@ -133,15 +112,6 @@ export class WishCreateUpdatePage implements OnInit {
 
     this.wish.price = PriceDto.fromAmount(this.form?.controls.price.value);
 
-    if (this.isUpdatePage) {
-      this.updateWish();
-    } else {
-      this.wish.wishListId = this.form?.controls.wishListId.value;
-      this.createWish();
-    }
-  }
-
-  private async updateWish(): Promise<void> {
     let observable = this.wishListStore.updateWish(this.wish);
     const currentWishListId = this.wish.wishListId;
     const selectedWishListId = this.form?.controls.wishListId.value;
@@ -175,49 +145,6 @@ export class WishCreateUpdatePage implements OnInit {
         this.toastService.presentErrorToast(message);
       }
     })
-  }
-
-  private async createWish(){
-    await this.loadingService.showLoadingSpinner();
-    this.wishListStore.createWish(this.wish).pipe(
-      first(),
-      finalize(() => {
-        this.loadingService.stopLoadingSpinner();
-      })
-    ).subscribe({
-      next: createdWish => {
-        this.searchResultDataService.clear();
-        this.logAddToWishListEvent(createdWish);
-        this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
-        this.navigateToWishListDetailPage(this.wish.wishListId);
-      },
-      error: _ => {
-        const message = 'Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.'
-        this.toastService.presentErrorToast(message);
-      }
-    })
-  }
-
-  private logAddToWishListEvent(wish: WishDto) {
-    this.analyticsService.logAppsflyerEvent('af_add_to_wishlist', {
-      af_price: wish.price.amount,
-      af_content_id: wish.asin,
-      af_currency: wish.price.currency
-    });
-    this.analyticsService.logFirebaseEvent('add_to_wishlist', {
-      content_id: wish.asin,
-      value: wish.price.amount,
-      currency: wish.price.currency,
-    });
-  }
-
-  private async navigateToWishListDetailPage(wishListId: string): Promise<boolean> {
-    const wishSearchTabPath = getTaBarPath(TabBarRoute.WISH_SEARCH, true);
-    const url = `/secure/home/wish-list/${wishListId}?forceRefresh=true`;
-    if (this.router.url.includes(wishSearchTabPath)) {
-      return this.router.navigateByUrl(wishSearchTabPath);
-    }
-    return this.router.navigateByUrl(url);
   }
 
   async deleteWish(): Promise<void> {

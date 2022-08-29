@@ -37,8 +37,8 @@ const routes: Routes = [
       {
         path: 'wish-new',
         canActivate: [AuthGuard],
-        loadChildren: () => import('@wishLists/wish-create-update/wish-create-update.module')
-          .then( m => m.WishCreateUpdatePageModule)
+        loadChildren: () => import('@wishLists/wish-create/wish-create.module')
+          .then( m => m.WishCreatePageModule)
       },
     ]
   },
