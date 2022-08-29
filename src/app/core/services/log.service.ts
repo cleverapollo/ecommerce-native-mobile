@@ -14,6 +14,9 @@ export class Logger {
   constructor(private ngxLogger: NGXLogger) { }
 
   get logger(): NGXLogger | Console {
+    if (!this) {
+      return console;
+    }
     return this.ngxLogger ? this.ngxLogger : console;
   }
 
@@ -26,78 +29,75 @@ export class Logger {
   }
 
   trace(message: any, ...additional: any[]): void {
+    if (!this) {
+      return;
+    }
     if (!this.isEnabled) {
       return;
     }
-    let logger: NGXLogger | Console = console;
-    if (this) {
-      logger = this.logger;
-    }
     const logMessage = Logger.createLogMessage(message, '🟣');
-    logger && additional?.length > 0 ? logger.trace(logMessage, additional) : logger.trace(logMessage);
+    this.logger && additional?.length > 0 ? this.logger.trace(logMessage, additional) : this.logger.trace(logMessage);
   }
 
   debug(message: any, ...additional: any[]): void {
+    if (!this) {
+      return;
+    }
     if (!this.isEnabled) {
       return;
     }
-    let logger: NGXLogger | Console = console;
-    if (this) {
-      logger = this.logger;
-    }
     const logMessage = Logger.createLogMessage(message, '🐞');
-    logger && additional?.length > 0 ? logger.debug(logMessage, additional) : logger.debug(logMessage);
+    this.logger && additional?.length > 0 ? this.logger.debug(logMessage, additional) : this.logger.debug(logMessage);
   }
 
   info(message: any, ...additional: any[]): void {
+    if (!this) {
+      return;
+    }
     if (!this.isEnabled) {
       return;
     }
-    let logger: NGXLogger | Console = console;
-    if (this) {
-      logger = this.logger;
-    }
     const logMessage = Logger.createLogMessage(message, '🟢');
-    logger && additional?.length > 0 ? logger.info(logMessage, additional) : logger.info(logMessage);
+    this.logger && additional?.length > 0 ? this.logger.info(logMessage, additional) : this.logger.info(logMessage);
   }
 
   log(message: any, ...additional: any[]): void {
+    if (!this) {
+      return;
+    }
     if (!this.isEnabled) {
       return;
     }
-    let logger: NGXLogger | Console = console;
-    if (this) {
-      logger = this.logger;
-    }
     const logMessage = Logger.createLogMessage(message, '🟢');
-    logger && additional?.length > 0 ? logger.log(logMessage, additional) : logger.log(logMessage);
+    this.logger && additional?.length > 0 ? this.logger.log(logMessage, additional) : this.logger.log(logMessage);
   }
 
   warn(message: any, ...additional: any[]): void {
+    if (!this) {
+      return;
+    }
     if (!this.isEnabled) {
       return;
     }
-    let logger: NGXLogger | Console = console;
-    if (this) {
-      logger = this.logger;
-    }
     const logMessage = Logger.createLogMessage(message, '🟡');
-    logger && additional?.length > 0 ? logger.warn(logMessage, additional) : logger.warn(logMessage);
+    this.logger && additional?.length > 0 ? this.logger.warn(logMessage, additional) : this.logger.warn(logMessage);
   }
 
   error(message: any, ...additional: any[]): void {
+    if (!this) {
+      return;
+    }
     if (!this.isEnabled) {
       return;
     }
-    let logger: NGXLogger | Console = console;
-    if (this) {
-      logger = this.logger;
-    }
     const logMessage = Logger.createLogMessage(message, '🔴');
-    logger && additional?.length > 0 ? logger.error(logMessage, additional) : logger.error(logMessage);
+    this.logger && additional?.length > 0 ? this.logger.error(logMessage, additional) : this.logger.error(logMessage);
   }
 
   fatal(message: any, ...additional: any[]): void {
+    if (!this) {
+      return;
+    }
     if (!this.isEnabled) {
       return;
     }
