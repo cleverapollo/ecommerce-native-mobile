@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Logger } from '@core/services/log.service';
 import { WISH_ERROR_IMAGE_ASSET_URL, WISH_PLACEHOLDER_IMAGE_ASSET_URL } from '@core/ui.constants';
 
 export interface WishImageComponentStyles {
@@ -45,10 +44,9 @@ export class WishImageComponent implements OnInit {
     }
   }
 
-  constructor(private logger: Logger) {}
+  constructor() {}
 
   ngOnInit() {
-    this.logger.debug('onStart', this.src);
     if (this.src) {
       this.imgType = ImageType.WISH_IMAGE
     } else {
@@ -60,7 +58,6 @@ export class WishImageComponent implements OnInit {
   }
 
   onError(event: { target: EventTarget }) {
-    this.logger.debug('onError', event);
     this.onComplete();
     this.imgType = ImageType.ERROR;
     (event.target as HTMLImageElement).src = WISH_ERROR_IMAGE_ASSET_URL;
@@ -68,7 +65,6 @@ export class WishImageComponent implements OnInit {
   }
 
   onLoad(event: { target: EventTarget }) {
-    this.logger.debug('onLoad', event);
     this.onComplete();
   }
 
