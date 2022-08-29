@@ -4,17 +4,14 @@ import { Router } from '@angular/router';
 import { Device } from '@capacitor/device';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
-import { Logger } from '@core/services/log.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { ProductSearchService } from '@core/services/product-search.service';
-import { BackendConfigType } from '@env/backend-config-type';
-import { environment } from '@env/environment';
 import { ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
-import { first } from 'rxjs/operators';
+import { finalize, first } from 'rxjs/operators';
 import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
-import { ShareExtensionExplanationComponent } from '../../share-extension-explanation/share-extension-explanation.component';
+import { ShareExtensionExplanationComponent } from '../share-extension-explanation/share-extension-explanation.component';
 
 @Component({
   selector: 'app-wish-search-overview',
@@ -23,39 +20,25 @@ import { ShareExtensionExplanationComponent } from '../../share-extension-explan
 })
 export class WishSearchOverviewPage implements OnInit {
 
+  form: FormGroup;
+
   get validationMessages(): ValidationMessages {
     return {
       keywords: [
         new ValidationMessage('required', 'Bitte gib einen Suchbegriff ein.'),
         new ValidationMessage('minlength', 'Bitte gib min. 2 Zeichen an.')
-      ],
-      url: [
-        new ValidationMessage('required', 'Bitte gib zunächst eine URL ein.'),
-        new ValidationMessage('pattern', 'Die eingegebene URL ist ungültig. Bitte überprüfe deine Eingabe.')
       ]
     }
   };
 
   get keywords(): string {
-    return this.searchByAmazonApiForm?.controls.keywords.value ?? null;
+    return this.form?.controls.keywords.value ?? null;
   }
-
-  get url(): string {
-    return this.searchByURLForm?.controls.url.value ?? null;
-  }
-
-  get showUrlSearch(): boolean {
-    return environment.backendType !== BackendConfigType.prod;
-  }
-
-  searchByAmazonApiForm: FormGroup;
-  searchByURLForm: FormGroup;
 
   constructor(
     private productSearchService: ProductSearchService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private logger: Logger,
     public platformService: DefaultPlatformService,
     private loadingService: LoadingService,
     private userProfileStore: UserProfileStore,
@@ -64,18 +47,7 @@ export class WishSearchOverviewPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.searchByAmazonApiForm = this.formBuilder.group({
-      keywords: [null, {
-        validators: [Validators.required, Validators.minLength(2)],
-        updateOn: 'submit'
-       }]
-    });
-    this.searchByURLForm = this.formBuilder.group({
-      url: [null, {
-        validators: [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')],
-        updateOn: 'submit'
-       }]
-    });
+    this.setupForm();
   }
 
   async ionViewDidEnter() {
@@ -99,29 +71,32 @@ export class WishSearchOverviewPage implements OnInit {
   }
 
   async searchByAmazonApi() {
-    if (this.searchByAmazonApiForm.invalid) {
+    if (this.form.invalid) {
       return;
     }
 
-    const targetUrl = `${getTaBarPath(TabBarRoute.WISH_SEARCH, true)}/search-by-amazon`;
-    try {
-      await this.loadingService.showLoadingSpinner();
-      await this.productSearchService.searchByAmazonApi(this.keywords, 1);
-      await this.loadingService.stopLoadingSpinner();
-      await this.router.navigateByUrl(targetUrl);
-      this.searchByAmazonApiForm.reset();
-    } catch (error) {
-      await this.loadingService.stopLoadingSpinner();
-    }
+    await this.loadingService.showLoadingSpinner();
+    this.productSearchService.searchByAmazonApi(this.keywords, 1).pipe(
+      first(),
+      finalize(() => {
+        this.loadingService.stopLoadingSpinner();
+      })
+    ).subscribe({
+      next: _ => {
+        const targetUrl = `${getTaBarPath(TabBarRoute.WISH_SEARCH, true)}/search-by-amazon`;
+        this.form.reset();
+        this.router.navigateByUrl(targetUrl);
+      }
+    })
   }
 
-  searchByURL() {
-    const targetUrl = `${getTaBarPath(TabBarRoute.WISH_SEARCH, true)}/search-by-url/select-image`
-    this.productSearchService.searchByUrl(this.url).pipe(first()).subscribe(searchResults => {
-      this.router.navigateByUrl(targetUrl).then(() => {
-        this.searchByURLForm.reset();
-      });
-    }, this.logger.error)
+  private setupForm() {
+    this.form = this.formBuilder.group({
+      keywords: [null, {
+        validators: [Validators.required, Validators.minLength(2)],
+        updateOn: 'submit'
+       }]
+    });
   }
 
 }

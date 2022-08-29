@@ -31,7 +31,7 @@ const routes: Routes = [
       {
         path: getTaBarPath(TabBarRoute.WISH_SEARCH, false),
         canActivate: [AuthGuard],
-        loadChildren: () => import('@wishSearch/pages/wish-search-overview/wish-search-overview.module')
+        loadChildren: () => import('@wishSearch/wish-search-overview/wish-search-overview.module')
           .then( m => m.WishSearchSelectionPageModule)
       },
       {

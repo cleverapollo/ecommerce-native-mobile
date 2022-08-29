@@ -7,7 +7,7 @@ import { WishSearchSelectionPageRoutingModule } from './wish-search-overview-rou
 
 import { WishSearchOverviewPage } from './wish-search-overview.page';
 import { SharedModule } from '@shared/shared.module';
-import { ShareExtensionExplanationComponent } from '../../share-extension-explanation/share-extension-explanation.component';
+import { ShareExtensionExplanationComponent } from '../share-extension-explanation/share-extension-explanation.component';
 
 @NgModule({
   imports: [
