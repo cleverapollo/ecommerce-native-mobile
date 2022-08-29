@@ -5,9 +5,10 @@ import { AffiliateDataStoreService } from '../../data/affiliate-data-store.servi
 import { AffiliateDefaultService } from './affiliate-default.service';
 import { Logger } from '@core/services/log.service';
 import { WishListTestData } from '@core/test/wish-list-data';
-import { FriendWish } from '@friends/friends-wish-list-overview/friends-wish-list-overview.model';
+
 import { LoggerFake } from '../log.service.mock';
 import { LoggerTestingModule } from 'ngx-logger/testing';
+import { FriendWish } from '@core/models/wish-list.model';
 
 class MockAffiliateDataStoreService {
 
@@ -25,14 +26,14 @@ describe('AffiliateDefaultService', () => {
   const affiliateProgrammes = [
     {
        advertiserId:'9074',
-       deeplinkTemplate:'awinDeeplinkTemplate',
+       deeplinkTemplate: awinDeeplinkTemplate,
        validDomains:[
           'nordicnest.de'
        ]
     },
     {
        advertiserId:'11730',
-       deeplinkTemplate:'awinDeeplinkTemplate',
+       deeplinkTemplate: awinDeeplinkTemplate,
        validDomains:[
           'vertbaudet.de',
           'vb-deutschland.de'
@@ -40,42 +41,42 @@ describe('AffiliateDefaultService', () => {
     },
     {
        advertiserId:'12181',
-       deeplinkTemplate:'awinDeeplinkTemplate',
+       deeplinkTemplate: awinDeeplinkTemplate,
        validDomains:[
           'pinkmilk.de'
        ]
     },
     {
        advertiserId:'13931',
-       deeplinkTemplate:'awinDeeplinkTemplate',
+       deeplinkTemplate: awinDeeplinkTemplate,
        validDomains:[
           'littlehipstar.com'
        ]
     },
     {
        advertiserId:'14336',
-       deeplinkTemplate:'awinDeeplinkTemplate',
+       deeplinkTemplate: awinDeeplinkTemplate,
        validDomains:[
           'otto.de'
        ]
     },
     {
        advertiserId:'14474',
-       deeplinkTemplate:'awinDeeplinkTemplate',
+       deeplinkTemplate: awinDeeplinkTemplate,
        validDomains:[
           'hessnatur.com'
        ]
     },
     {
        advertiserId:'14824',
-       deeplinkTemplate:'awinDeeplinkTemplate',
+       deeplinkTemplate: awinDeeplinkTemplate,
        validDomains:[
           'babymarkt.de'
        ]
     },
     {
        advertiserId:'15084',
-       deeplinkTemplate:'awinDeeplinkTemplate',
+       deeplinkTemplate: awinDeeplinkTemplate,
        validDomains:[
           'waschbaer.de',
           'waschbaer.at'
@@ -83,28 +84,28 @@ describe('AffiliateDefaultService', () => {
     },
     {
        advertiserId:'20180',
-       deeplinkTemplate:'awinDeeplinkTemplate',
+       deeplinkTemplate: awinDeeplinkTemplate,
        validDomains:[
           'pearlco.de'
        ]
     },
     {
        advertiserId:'6724',
-       deeplinkTemplate:'adcellDeeplinkTemplate',
+       deeplinkTemplate: adcellDeeplinkTemplate,
        validDomains:[
           'aromamanufaktur.com'
        ]
     },
     {
        advertiserId:'6619',
-       deeplinkTemplate:'adcellDeeplinkTemplate',
+       deeplinkTemplate: adcellDeeplinkTemplate,
        validDomains:[
           'hempamed.de'
        ]
     },
     {
        advertiserId:'4760',
-       deeplinkTemplate:'adcellDeeplinkTemplate',
+       deeplinkTemplate: adcellDeeplinkTemplate,
        validDomains:[
           'klaraseats.com'
        ]
