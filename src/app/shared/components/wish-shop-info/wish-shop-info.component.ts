@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FriendWish, WishDto } from '@core/models/wish-list.model';
+import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { finalize, first } from 'rxjs/operators';
 
 export interface WishShopInfoComponentStyles {
   shopInfoOverlay: CSSStyle;
@@ -17,6 +19,7 @@ export class WishShopInfoComponent {
 
   @Input() wish: WishDto | FriendWish;
   @Input() styles: WishShopInfoComponentStyles = this.defaultStyles;
+  @Input() toggleIsFavorite = false;
 
   get priceDisplayString(): string {
     return this.wish?.price?.displayString || 'Lädt ...';
@@ -54,6 +57,30 @@ export class WishShopInfoComponent {
     }
   }
 
-  constructor() { }
+  private isUpdating = false;
+
+  constructor(
+    private wishListStore: WishListStoreService
+  ) { }
+
+  onStarIconClicked() {
+    if (!this.toggleIsFavorite || this.isUpdating) {
+      return;
+    }
+    const wish = {...this.wish};
+    wish.isFavorite = !this.wish.isFavorite;
+
+    this.isUpdating = true;
+    this.wishListStore.updateWish(wish).pipe(
+      first(),
+      finalize(() => {
+        this.isUpdating = false;
+      })
+    ).subscribe({
+      next: updatedWish => {
+        this.wish = updatedWish;
+      }
+    });
+  }
 
 }

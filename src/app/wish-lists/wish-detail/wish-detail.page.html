@@ -17,7 +17,7 @@
   </section>
 
   <ion-card>
-    <app-wish-shop-info [wish]="wish" [styles]="shopInfoComponentStyles">
+    <app-wish-shop-info [wish]="wish" [styles]="shopInfoComponentStyles" [toggleIsFavorite]="true">
       <div class="position-absolute product-image-container" (click)="openProductURL()">
         <app-wish-image [src]="wish.imageUrl" [alt]="wish.name" [styles]="wishImageComponentStyles"></app-wish-image>
       </div>
