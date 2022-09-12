@@ -539,3 +539,16 @@ ion-card {
 ion-button.no-margin-bottom {
     margin-bottom: 10px;
 }
+
+// masonry
+
+.masonry {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+    margin: var(--masonry-gap-half);
+
+    .brick {
+        position: relative;
+        margin: var(--masonry-gap-half);
+    }
+}

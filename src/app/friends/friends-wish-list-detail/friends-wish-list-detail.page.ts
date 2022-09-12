@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 import { AlertService } from '@core/services/alert.service';
@@ -8,14 +8,19 @@ import { FriendWishListStoreService } from '@core/services/friend-wish-list-stor
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { NavController } from '@ionic/angular';
+import { Masonry } from '@shared/masonry';
 import { Observable, of, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
   templateUrl: './friends-wish-list-detail.page.html',
   styleUrls: ['./friends-wish-list-detail.page.scss'],
 })
-export class FriendsWishListDetailPage implements OnInit, OnDestroy {
+export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewChecked {
+
+  @ViewChild('masonry') masonry: ElementRef<HTMLDivElement>;
+  @ViewChildren('bricks') masonryBricks: QueryList<ElementRef<HTMLDivElement>>;
 
   wishList: FriendWishList;
   wishes$: Observable<FriendWish[]> = of([]);
@@ -27,6 +32,8 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
     }
     return dateString;
   }
+
+  trackByWishId: TrackByFunction<FriendWish> = (idx, wish) => wish.id;
 
   private wishListId: string;
 
@@ -52,6 +59,11 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
       this.wishListId = paramMap.get('wishListId');
       this.wishes$ = this.sharedWishListStore.loadWishes(this.wishListId);
     })
+  }
+
+  ngAfterViewChecked(): void {
+    const masonry = new Masonry(this.masonry, this.masonryBricks);
+    masonry.resizeBricks();
   }
 
   ionViewWillEnter() {
@@ -112,13 +124,15 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event: any) {
-    this.forceRefreshWishListSubscription = this.sharedWishListStore.loadWishList(this.wishList.id, true).subscribe({
+    this.forceRefreshWishListSubscription = this.sharedWishListStore.loadWishList(this.wishList.id, true)
+    .pipe(
+      finalize(() => {
+        event.target.complete();
+      })
+    )
+    .subscribe({
       next: wishList => {
         this.wishList = wishList;
-        event.target.complete();
-      },
-      error: () => {
-        event.target.complete();
       }
     });
   }

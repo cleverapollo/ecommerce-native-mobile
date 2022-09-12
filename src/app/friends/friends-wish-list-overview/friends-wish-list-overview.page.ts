@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
 import { FriendWishList } from '@core/models/wish-list.model';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-friends-wish-list-overview',
@@ -62,13 +63,15 @@ export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
   }
 
   forceRefresh(event) {
-    this.forceRefreshWishListsSubscription = this.friendWishListStore.loadWishLists(true).subscribe({
+    this.forceRefreshWishListsSubscription = this.friendWishListStore.loadWishLists(true)
+    .pipe(
+      finalize(() => {
+        event.target.complete();
+      })
+    )
+    .subscribe({
       next: wishLists => {
         this.wishLists = wishLists;
-        event.target.complete();
-      },
-      error: () => {
-        event.target.complete();
       }
     });
   }

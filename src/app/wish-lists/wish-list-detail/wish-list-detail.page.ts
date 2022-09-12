@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TrackByFunction } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Share } from '@capacitor/share';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -9,6 +9,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { sortWishesByIsFavorite } from '@core/wish-list.utils';
 import { RefresherCustomEvent } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { Masonry } from '@shared/masonry';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 import { APP_URL } from 'src/environments/environment';
@@ -18,7 +19,10 @@ import { APP_URL } from 'src/environments/environment';
   templateUrl: './wish-list-detail.page.html',
   styleUrls: ['./wish-list-detail.page.scss'],
 })
-export class WishListDetailPage implements OnInit, OnDestroy {
+export class WishListDetailPage implements OnInit, OnDestroy, AfterViewChecked {
+
+  @ViewChild('masonry') masonry: ElementRef<HTMLDivElement>;
+  @ViewChildren('bricks') masonryBricks: QueryList<ElementRef<HTMLDivElement>>;
 
   showBackButton = true;
   wishList = new WishListDto();
@@ -50,7 +54,12 @@ export class WishListDetailPage implements OnInit, OnDestroy {
           this.wishList = wishList;
         }
       }
-    })
+    });
+  }
+
+  ngAfterViewChecked(): void {
+    const masonry = new Masonry(this.masonry, this.masonryBricks);
+    masonry.resizeBricks();
   }
 
   ionViewDidEnter() {

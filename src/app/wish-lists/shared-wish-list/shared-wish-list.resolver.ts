@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { WishListApiService } from '@core/api/wish-list-api.service';
-import { FriendWishList } from '@core/models/wish-list.model';
+import { FriendWishList, WishListDto } from '@core/models/wish-list.model';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 
 @Injectable()
-export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList }>> {
+export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList}>> {
 
   constructor(
     private wishListApi: WishListApiService,
@@ -25,27 +25,52 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
     return new Promise<{ wishList: FriendWishList }>(async (resolve, reject) => {
       const wishListId = route.paramMap.get('wishListId');
       try {
+
         if (this.platformService.isNativePlatform) {
-          if (await this.isFriendWishList(wishListId)) {
-            this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`)
-          } else if (await this.isOwnWishList(wishListId)) {
-            this.router.navigateByUrl(`/secure/home/wish-list/${wishListId}`)
-          } else {
-            this.wishListApi.acceptInvitation(wishListId).finally(() => {
-              this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}?forceRefresh=true`);
-            });
-          }
-        } else {
-          const wishList = await this.publicResourceApiService.getSharedWishList(wishListId).toPromise();
-          resolve({ wishList });
+          await this.navigateToDetailPage(wishListId);
+          return;
         }
+
+        const wishList = await this.publicResourceApiService.getSharedWishList(wishListId).toPromise();
+        resolve({ wishList });
       } catch (error) {
         reject(error)
       }
     });
   }
 
-  private async isFriendWishList(wishListId: string) {
+  /**
+   * Navigates the user to the detail page of the wish list.
+   * Currently this pages are only activated for iOS and Android.
+   * @param wishListId Id of the wish list to load.
+   * @returns A Promise that resolves to 'true' when navigation succeeds,
+   * to 'false' when navigation fails, or is rejected on error.
+   */
+  private async navigateToDetailPage(wishListId: string): Promise<boolean> {
+    try {
+      const isSharedWishList = await this.isSharedWishList(wishListId);
+      if (isSharedWishList) {
+        return await this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`);
+      }
+
+      const isCreatedWishList = await this.isCreatedWishList(wishListId);
+      if (isCreatedWishList) {
+        return await this.router.navigateByUrl(`/secure/home/wish-list/${wishListId}`);
+      }
+
+      await this.wishListApi.acceptInvitation(wishListId);
+      return await this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}?forceRefresh=true`);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * Is this a wish list from a friend?
+   * @param wishListId Id of the wish list.
+   * @returns True or false
+   */
+  private async isSharedWishList(wishListId: string): Promise<boolean> {
     try {
       const wishLists = await this.friendWishListStore.loadWishLists().toPromise();
       const wishList = wishLists.find((w) => w.id === wishListId);
@@ -55,12 +80,19 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
     }
   }
 
-  private async isOwnWishList(wishListId: string): Promise<boolean> {
-    return this.wishListStore.loadWishList(wishListId).pipe(
-      take(1),
-      catchError(() => { return of(false); }),
-      map(wishList => { return wishList !== null; })
-    ).toPromise();
+  /**
+   * Is this a wish list created by the user?
+   * @param wishListId Id of the wish list.
+   * @returns True or false
+   */
+  private async isCreatedWishList(wishListId: string): Promise<boolean> {
+    try {
+      const wishLists = await this.wishListStore.loadWishLists().toPromise();
+      const wishList = wishLists.find((w) => w.id === wishListId);
+      return wishList !== undefined;
+    } catch (error) {
+      return false;
+    }
   }
 
 }

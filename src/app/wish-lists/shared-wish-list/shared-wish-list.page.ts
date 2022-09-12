@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { AfterViewChecked, Component, ElementRef, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
+import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
+import { Masonry } from '@shared/masonry';
 import { Observable, of } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
-import { FriendWishList, FriendWish } from '@core/models/wish-list.model';
 
 @Component({
   selector: 'app-shared-wish-list',
   templateUrl: './shared-wish-list.page.html',
   styleUrls: ['./shared-wish-list.page.scss'],
 })
-export class SharedWishListPage implements OnInit {
+export class SharedWishListPage implements OnInit, AfterViewChecked {
+
+  @ViewChild('masonry') masonry: ElementRef<HTMLDivElement>;
+  @ViewChildren('bricks') masonryBricks: QueryList<ElementRef<HTMLDivElement>>;
 
   data: { wishList: FriendWishList };
   wishList: FriendWishList;
@@ -27,6 +31,8 @@ export class SharedWishListPage implements OnInit {
     return dateString;
   }
 
+  trackByWishId: TrackByFunction<FriendWish> = (idx, wish) => wish.id;
+
   constructor(
     private route: ActivatedRoute,
     private analyticsService: AnalyticsService,
@@ -39,6 +45,11 @@ export class SharedWishListPage implements OnInit {
     this.data = this.route.snapshot.data.data;
     this.wishList = this.data.wishList;
     this.wishes$ = this.friendWishListStore.loadWishes(this.wishList.id);
+  }
+
+  ngAfterViewChecked(): void {
+    const masonry = new Masonry(this.masonry, this.masonryBricks);
+    masonry.resizeBricks();
   }
 
   ionViewDidEnter() {
@@ -56,7 +67,11 @@ export class SharedWishListPage implements OnInit {
   }
 
   private refreshData() {
-    this.publicResourceApiService.getSharedWishList(this.wishList.id).pipe(first()).subscribe(wishList => {
+    this.publicResourceApiService.getSharedWishList(this.wishList.id)
+    .pipe(
+      first()
+    )
+    .subscribe(wishList => {
       this.wishList = wishList;
     })
   }
