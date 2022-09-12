@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SecurePipe } from './pipes/secure.pipe';
 import { OwnerNamesPipe } from './pipes/owner-names.pipe';
 import { IonicModule } from '@ionic/angular';
-import { HintComponent } from './components/hint/hint.component';
 import { EmailUnverifiedHintComponent } from './components/email-unverified-hint/email-unverified-hint.component';
 import { ValidationMessagesComponent } from './components/validation-messages/validation-messages.component';
 import { NavToolbarComponent } from './components/nav-toolbar/nav-toolbar.component';
@@ -29,7 +28,6 @@ import { DatetimeComponent } from './components/datetime/datetime.component';
     OwnerNamesPipe,
     ValidationMessagesComponent,
     EmailUnverifiedHintComponent,
-    HintComponent,
     NavToolbarComponent,
     SearchResultComponent,
     ShowHidePasswordComponent,
@@ -53,7 +51,6 @@ import { DatetimeComponent } from './components/datetime/datetime.component';
     OwnerNamesPipe,
     ValidationMessagesComponent,
     EmailUnverifiedHintComponent,
-    HintComponent,
     NavToolbarComponent,
     FormsModule,
     ReactiveFormsModule,
