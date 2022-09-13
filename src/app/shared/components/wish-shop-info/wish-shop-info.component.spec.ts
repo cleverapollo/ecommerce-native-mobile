@@ -1,6 +1,8 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { WishDto } from '@core/models/wish-list.model';
+import { MockWishListStoreService } from '@core/services/wish-list-store-mock.service';
+import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule } from '@ionic/angular';
 
@@ -33,11 +35,15 @@ describe('WishShopInfoComponent', () => {
       font: 'normal normal 900 20px/20px Roboto'
     }
   }
+  const wishListStoreMock = new MockWishListStoreService();
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WishShopInfoComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [
+        { provide: WishListStoreService, useValue: wishListStoreMock }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(WishShopInfoComponent);

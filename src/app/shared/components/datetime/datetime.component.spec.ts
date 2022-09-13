@@ -93,7 +93,6 @@ describe('DatetimeComponent', () => {
 
     it('resets selected and formatted date if new value is undefined', () => {
       const spy = spyOn(component, 'propagateChange');
-      component.onDateChanged('2022-04-13T17:28:16+0000');
       component.onDateChanged(undefined);
 
       expect(component.selectedDate).toBeUndefined();
@@ -104,11 +103,10 @@ describe('DatetimeComponent', () => {
 
     it('resets selected and formatted date if new value is null', () => {
       const spy = spyOn(component, 'propagateChange');
-      component.onDateChanged('2022-04-13T17:28:16+0000');
       component.onDateChanged(null);
 
       expect(component.selectedDate).toBeNull();
-      expect(component.formattedDate).toBeNull();
+      expect(component.formattedDate).toBeUndefined();
       expect(spy).toHaveBeenCalled();
       expect(component.datetime.confirm).toHaveBeenCalledWith(true)
     });

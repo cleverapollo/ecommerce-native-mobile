@@ -86,6 +86,7 @@ describe('WishListOverviewPage', () => {
     });
 
     it('loads affiliate programmes if data is empty', () => {
+      (affiliateDataStoreSpy.affiliateProgrammes as any) = [];
       component.ionViewWillEnter();
       expect(affiliateDataStoreSpy.loadData).toHaveBeenCalledTimes(1);
     });

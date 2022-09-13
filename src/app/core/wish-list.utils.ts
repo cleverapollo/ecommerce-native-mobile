@@ -9,7 +9,7 @@ export function sortWishListsByName(wishListA: WishListSelectOptionDto | WishDto
   return wishListA.name.localeCompare(wishListB.name.toString());
 }
 
-export function sortWishListsByDate(wishListA: WishListDto, wishListB: WishListDto): number {
+export function sortWishListsByDate(wishListA: WishListDto, wishListB: WishListDto, today: Date = new Date()): number {
   const dateA = wishListA.date;
   const dateB = wishListB.date;
 
@@ -17,11 +17,11 @@ export function sortWishListsByDate(wishListA: WishListDto, wishListB: WishListD
     return sortWishListsByName(wishListA, wishListB);
   }
 
-  if (!dateA || isPast(dateA)) {
+  if (!dateA || isPast(dateA, today)) {
     return 1;
   }
 
-  if (!dateB || isPast(dateB)) {
+  if (!dateB || isPast(dateB, today)) {
     return -1;
   }
 

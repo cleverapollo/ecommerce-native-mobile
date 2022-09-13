@@ -139,8 +139,9 @@ describe('Wish list utils', () => {
         ]
 
         it('sorts wish lists by date', () => {
-            const sorted = wishLists.sort(sortWishListsByDate);
-            console.log(sorted.map(w => w.date?.toISOString()))
+            const sorted = wishLists.sort((a, b) => {
+                return sortWishListsByDate(a,b,today)
+            });
             expect(sorted).toEqual([
                 wishListToday,
                 wishListFuture,

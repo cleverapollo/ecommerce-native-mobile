@@ -1,6 +1,5 @@
 import { Component, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Logger } from '@core/services/log.service';
 import { IonDatetime } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
 
@@ -58,7 +57,7 @@ export class DatetimeComponent implements ControlValueAccessor {
 
   private _selectedDate: null | string | string[] | undefined;
 
-  constructor(private logger: Logger) { }
+  constructor() { }
 
   // ion-datetime
 

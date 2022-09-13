@@ -10,7 +10,7 @@ import { CoreToastService } from '@core/services/toast.service';
 import { NavController } from '@ionic/angular';
 import { Masonry } from '@shared/masonry';
 import { Observable, of, Subscription } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
@@ -40,7 +40,6 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   // subscriptions
   private loadWishListSubscription: Subscription = null;
   private routeParamSubscription: Subscription = null;
-  private forceRefreshWishListSubscription: Subscription = null;
 
   constructor(
     private navController: NavController,
@@ -79,7 +78,6 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   ngOnDestroy() {
     this.routeParamSubscription?.unsubscribe();
     this.loadWishListSubscription?.unsubscribe();
-    this.forceRefreshWishListSubscription?.unsubscribe();
   }
 
   goBack() {
@@ -124,8 +122,9 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   }
 
   forceRefresh(event: any) {
-    this.forceRefreshWishListSubscription = this.sharedWishListStore.loadWishList(this.wishList.id, true)
+    this.sharedWishListStore.loadWishList(this.wishList.id, true)
     .pipe(
+      first(),
       finalize(() => {
         event.target.complete();
       })

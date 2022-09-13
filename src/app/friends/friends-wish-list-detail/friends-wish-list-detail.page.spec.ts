@@ -131,26 +131,6 @@ describe('FriendsWishListDetailPage', () => {
 
       expect(subscription.unsubscribe).toHaveBeenCalled();
     });
-
-    it('should unsubscribe sharedWishListStore loadWishList subscription (force refresh)', () => {
-      component.wishList = WishListTestData.sharedWishListWedding;
-
-      const observable = new Observable<FriendWishList>();
-      const subscription = new Subscription();
-      spyOn(sharedWishListStore, 'loadWishList').and.returnValue(observable);
-
-      spyOn(subscription, 'unsubscribe').and.callThrough();
-      spyOn(observable, 'subscribe').and.callFake((fn: any): Subscription => {
-        return subscription;
-      });
-
-      component.forceRefresh({ target: {
-        complete() { }
-      }});
-      component.ngOnDestroy();
-
-      expect(subscription.unsubscribe).toHaveBeenCalled();
-    });
   });
 
   describe('ionViewDidEnter', () => {
@@ -182,25 +162,6 @@ describe('FriendsWishListDetailPage', () => {
 
       expect(loadWishListSpy).toHaveBeenCalledWith('2', true);
       expect(completed).toBeTruthy();
-
-      flush();
-    }));
-
-    it('should cancel loading spinner of ion-refresher if something goes wrong', fakeAsync(() => {
-      let completed = false;
-      const loadWishListSpy = spyOn(sharedWishListStore, 'loadWishList');
-      loadWishListSpy.and.returnValue(throwError('A backend error occured!'));
-
-      component.wishList = WishListTestData.sharedWishListWedding;
-      component.forceRefresh({ target: {
-        complete() { completed = true; }
-      }});
-
-      tick();
-
-      expect(loadWishListSpy).toHaveBeenCalledWith('2', true);
-      expect(completed).toBeTruthy();
-      expect(component.wishList).not.toBeNull();
 
       flush();
     }));
