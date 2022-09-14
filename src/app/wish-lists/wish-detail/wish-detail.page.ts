@@ -23,6 +23,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   wishList: WishListDto;
   wish: WishDto;
+  wishIsUpdating: boolean = false;
 
   get isDebugInfoVisible(): boolean {
     return environment.backendType === BackendConfigType.beta ||
@@ -54,7 +55,10 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   get wishImageComponentStyles(): WishImageComponentStyles {
-    const style: { height?: string; } = {};
+    const style: {
+      height?: string;
+      padding: string;
+    } = { padding: '10px' };
     if (!this.wish.imageUrl) {
       style.height = '70%';
     }
@@ -135,6 +139,10 @@ export class WishDetailPage implements OnInit, OnDestroy {
       first: this.wishListOwnerCount > 1 && first,
       last: this.wishListOwnerCount > 1 && last
     };
+  }
+
+  onWishUpdate(isUpdating: boolean) {
+    this.wishIsUpdating = isUpdating;
   }
 
 }

@@ -1,7 +1,12 @@
 <div class="wish-info-overlay-container" >
   <ng-content></ng-content>
   <div class="position-absolute shop-info-overlay" [ngStyle]="styles.shopInfoOverlay">
-    <ion-icon class="icon-star" [ngClass]="fillIconCSSClass" [ngStyle]="styles.iconStar" src="assets/icon/star.svg" alt="Stern" (click)="onStarIconClicked()"></ion-icon>
+    <ion-icon class="icon-star" src="assets/icon/star.svg" alt="Stern"
+              *ngIf="!isUpdating"
+              [ngClass]="fillIconCSSClass"
+              [ngStyle]="styles.iconStar"
+              (click)="onStarIconClicked()"></ion-icon>
+    <ion-spinner *ngIf="isUpdating" name="bubbles" color="primary"></ion-spinner>
     <div *ngIf="shopLogoUrl" class="shop-logo-container" [ngStyle]="styles.shopLogoContainer">
       <ion-icon class="shop-logo" [src]="shopLogoUrl"></ion-icon>
     </div>

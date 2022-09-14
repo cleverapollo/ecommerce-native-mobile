@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PriceDto, WishDto, WishListDto } from '@core/models/wish-list.model';
@@ -11,7 +11,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 import { CustomValidation } from '@shared/custom-validation';
-import { from } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { concatMap, finalize, first, map } from 'rxjs/operators';
 
 @Component({
@@ -19,7 +19,7 @@ import { concatMap, finalize, first, map } from 'rxjs/operators';
   templateUrl: './wish-update.page.html',
   styleUrls: ['./wish-update.page.scss'],
 })
-export class WishUpdatePage implements OnInit {
+export class WishUpdatePage implements OnInit, OnDestroy {
 
   wish = new WishDto();
   wishList = new WishListDto();
@@ -52,6 +52,8 @@ export class WishUpdatePage implements OnInit {
     };
   }
 
+  private subscription?: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -67,6 +69,11 @@ export class WishUpdatePage implements OnInit {
   ngOnInit() {
     this.setupViewData();
     this.setupForm();
+    this.listenForChanges();
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   private setupViewData() {
@@ -74,6 +81,26 @@ export class WishUpdatePage implements OnInit {
       this.route.snapshot.data.wish :
       this.router.getCurrentNavigation()?.extras?.state?.searchResult;
     this.wishList = this.route.snapshot.data.wishList;
+  }
+
+  private listenForChanges() {
+    this.subscription = this.wishListStore.wishLists.subscribe(wishLists => {
+      const wish = this.findWish(wishLists);
+      if (wish) {
+        this.wish = wish;
+      }
+    });
+  }
+
+  private findWish(wishLists: WishListDto[]): WishDto | undefined {
+    const wishList = this.findWishList(wishLists);
+    if (wishList) {
+      return wishList.wishes.find(w => w.id === this.wish.id);
+    }
+  }
+
+  private findWishList(wishLists: WishListDto[]): WishListDto | undefined {
+    return wishLists.find(w => w.id === this.wishList.id);
   }
 
   private setupForm() {
@@ -136,13 +163,12 @@ export class WishUpdatePage implements OnInit {
       })
     ).subscribe({
       next: updatedWish => {
-        this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich aktualisiert.');
+        this.toastService.presentSuccessToast('Wunsch aktualisiert.');
         const url = `/secure/home/wish-list/${updatedWish.wishListId}`;
         this.navigationService.back(url);
       },
       error: _ => {
-        const message = 'Bei der Aktualisierung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.';
-        this.toastService.presentErrorToast(message);
+        this.toastService.presentErrorToast('Fehler beim Aktualisieren');
       }
     })
   }

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FriendWish, WishDto } from '@core/models/wish-list.model';
+import { CoreToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { finalize, first } from 'rxjs/operators';
 
@@ -20,6 +21,8 @@ export class WishShopInfoComponent {
   @Input() wish: WishDto | FriendWish;
   @Input() styles: WishShopInfoComponentStyles = this.defaultStyles;
   @Input() toggleIsFavorite = false;
+
+  @Output() wishUpdate = new EventEmitter<boolean>();
 
   get priceDisplayString(): string {
     return this.wish?.price?.displayString || 'Lädt ...';
@@ -57,10 +60,19 @@ export class WishShopInfoComponent {
     }
   }
 
-  private isUpdating = false;
+  private _isUpdating = false;
+
+  set isUpdating(value: boolean) {
+    this._isUpdating = value;
+    this.wishUpdate.next(value);
+  }
+  get isUpdating(): boolean {
+    return this._isUpdating;
+  }
 
   constructor(
-    private wishListStore: WishListStoreService
+    private wishListStore: WishListStoreService,
+    private toastService: CoreToastService
   ) { }
 
   onStarIconClicked() {
@@ -79,6 +91,10 @@ export class WishShopInfoComponent {
     ).subscribe({
       next: updatedWish => {
         this.wish = updatedWish;
+        this.toastService.presentSuccessToast('Wunsch aktualisiert');
+      },
+      error: () => {
+        this.toastService.presentErrorToast('Fehler beim Aktualisieren');
       }
     });
   }
