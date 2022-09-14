@@ -1,12 +1,6 @@
 img {
     max-height: 100%;
-    margin: auto;
-}
-
-div {
-    display: flex;
-    justify-content: center;
-    height: 100%;
+    object-fit: scale-down;
 }
 
 ion-spinner {

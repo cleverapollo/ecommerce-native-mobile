@@ -1,27 +1,3 @@
-@media (max-height: 568px) {
-    ion-card {
-        div.product-image-container { 
-            height: 195px;
-        }
-    }
-}
-
-@media (min-height: 569px) and (max-height: 667px) {
-    ion-card {
-        div.product-image-container { 
-            height: 290px;
-        }
-    }
-}
-
-@media (min-height: 668px) {
-    ion-card {
-        div.product-image-container { 
-            height: 350px;
-        }
-    }
-}
-
 ion-card {
     background-color: white;
     height: auto;
@@ -45,7 +21,7 @@ ion-card {
         }
     }
     ion-card-content {
-        border-top: 2px dashed #F0EDE3;
+        border-top: 1px dashed #F0EDE3;
         padding: 10px;
         div.wish-description {
             width: 85%;

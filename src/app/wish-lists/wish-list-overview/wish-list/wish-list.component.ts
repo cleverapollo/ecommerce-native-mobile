@@ -26,6 +26,11 @@ export class WishListComponent {
 
   get wishImageStyle(): WishImageComponentStyles {
     return {
+      container: {
+        display: 'flex',
+        'justify-content': 'center',
+        height: '100%'
+      },
       errorImg: {
         padding: '5px'
       },

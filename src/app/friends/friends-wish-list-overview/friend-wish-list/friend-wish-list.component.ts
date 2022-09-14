@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FriendWishList } from '@core/models/wish-list.model';
+import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 
 @Component({
   selector: 'app-friend-wish-list',
@@ -17,6 +18,14 @@ export class FriendWishListComponent {
       dateString = this.datePipe.transform(this.wishList.date.toString());
     }
     return dateString;
+  }
+
+  readonly wishComponentStyles: WishImageComponentStyles = {
+    container: {
+      display: 'flex',
+      'justify-content': 'center',
+      height: '100%'
+    },
   }
 
   constructor(private datePipe: DatePipe) { }

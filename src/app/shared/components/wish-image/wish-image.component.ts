@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { WISH_ERROR_IMAGE_ASSET_URL, WISH_PLACEHOLDER_IMAGE_ASSET_URL } from '@core/ui.constants';
 
 export interface WishImageComponentStyles {
+  container?: CSSStyle;
   img?: CSSStyle;
   placeholderImg?: CSSStyle;
   errorImg?: CSSStyle;

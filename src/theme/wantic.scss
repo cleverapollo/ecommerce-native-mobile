@@ -168,14 +168,6 @@ ion-input, ion-select, ion-textarea {
     }
 }
 
-/*
-ion-datetime::part(placeholder) {
-    font-style: italic;
-    color: var(--ion-color-secondary);
-    margin: auto;
-    font-family: 'Roboto';
-}*/
-
 ion-item {
     .calendar-icon {
         height: 20px;
@@ -425,9 +417,9 @@ ion-header {
 }
 
 div.divide {
-    border: 2px dashed #F0EDE3;
-    margin-right: 25%;
-    margin-left: 25%;
+    border: 1px dashed #F0EDE3;
+    margin-right: 20%;
+    margin-left: 20%;
     margin-top: 15px;
     margin-bottom: 15px;
 }
@@ -471,9 +463,9 @@ div.divide {
 }
 
 .image-container {
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-bottom: 15px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 5px;
     text-align: center;
     ion-img {
         width: 50%;
@@ -551,4 +543,17 @@ ion-button.no-margin-bottom {
         position: relative;
         margin: var(--masonry-gap-half);
     }
+}
+
+// toast
+
+ion-toast.custom-toast {
+    --border-radius: 41px;
+  }
+
+ion-toast.custom-toast::part(message) {
+    text-align: center;
+    text-transform: uppercase;
+    font: normal normal bold 10px/13px Roboto;
+    letter-spacing: 1px;
 }
