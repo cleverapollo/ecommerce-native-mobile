@@ -22,7 +22,7 @@
     <!--note-->
     <ion-item lines="none">
       <ion-label position="stacked">Notiz</ion-label>
-      <ion-textarea formControlName="note" name="note" rows="3" spellcheck="true" maxlength="255" [(ngModel)]="wish.note"></ion-textarea>
+      <ion-textarea formControlName="note" name="note" auto-grow="true" rows="3" spellcheck="true" maxlength="255" [(ngModel)]="wish.note"></ion-textarea>
     </ion-item>
     <app-validation-messages [control]="form.get('note')" [validationMessages]="validationMessages.note"></app-validation-messages>
 
