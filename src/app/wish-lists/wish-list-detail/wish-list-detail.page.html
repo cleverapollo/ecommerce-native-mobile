@@ -31,8 +31,10 @@
   </section>
 
   <div class="masonry" #masonry>
-    <div class="brick" *ngFor="let wish of wishes; trackBy:trackByWishId" [routerLink]="['wish', wish.id]" #bricks>
-      <app-wish [wish]="wish" [showReservedWishes]="wishList.showReservedWishes"></app-wish>
+    <div class="brick" *ngFor="let wish of wishes; trackBy:trackByWishId" #bricks>
+      <app-wish [wish]="wish"
+                [showReservedWishes]="wishList.showReservedWishes"
+                (selected)="navigateToWishDetailPage(wish)"></app-wish>
     </div>
   </div>
 

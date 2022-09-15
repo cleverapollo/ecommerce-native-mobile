@@ -7,6 +7,7 @@ import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
 import { ModalController } from '@ionic/angular';
 import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
+import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 
 @Component({
   selector: 'app-friends-wish',
@@ -30,6 +31,15 @@ export class FriendsWishComponent implements OnInit {
       return 'wish-bought';
     }
     return null;
+  }
+
+  get imgStyles(): WishImageComponentStyles {
+    return {
+      img: {
+        'min-height': '107px',
+        'max-height': '245px'
+      }
+    }
   }
 
   private affiliateLink = '';

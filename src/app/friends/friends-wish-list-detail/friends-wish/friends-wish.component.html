@@ -1,7 +1,9 @@
 <ion-card class="wish-border" [ngClass]="{ 'wish-bought-border': wish.bought }">
   <app-wish-shop-info [wish]="wish">
     <div class="image-container" (click)="openProductURL()" [ngClass]="cssClassWishReservedState">
-      <app-wish-image [src]="wish.imageUrl" [alt]="wish.name"></app-wish-image>
+      <app-wish-image [src]="wish.imageUrl"
+                      [alt]="wish.name"
+                      [styles]="imgStyles"></app-wish-image>
     </div>
   </app-wish-shop-info>
   <ion-card-content>
@@ -41,7 +43,7 @@
             </ion-button>
           </ion-col>
         </ion-row>
-      </ion-grid>    
+      </ion-grid>
     </div>
   </ion-card-content>
 </ion-card>

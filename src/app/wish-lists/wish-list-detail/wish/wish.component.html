@@ -1,14 +1,16 @@
 <ion-card [ngClass]="{ 'wish-reserved': showReservedState }">
-  <app-wish-shop-info [wish]="wish">
-    <div class="image-container">
-      <app-wish-image [src]="wish.imageUrl" [alt]="wish.name"></app-wish-image>
+  <app-wish-shop-info [wish]="wish" [toggleIsFavorite]="true">
+    <div class="image-container" (click)="itemClick()">
+      <app-wish-image [src]="wish.imageUrl"
+                      [alt]="wish.name"
+                      [styles]="imgStyles"></app-wish-image>
     </div>
   </app-wish-shop-info>
-  <ion-card-content>
+  <ion-card-content (click)="itemClick()">
     <div class="wish-name truncate-name">{{ wish.name }}</div>
     <div class="wish-note" *ngIf="wish?.note">{{ wish.note }}</div>
   </ion-card-content>
 </ion-card>
-<div *ngIf="showReservedState" class="wish-reserved-image-container">
+<div *ngIf="showReservedState" class="wish-reserved-image-container" (click)="itemClick()">
   <img src="assets/icon/wish-reserved.svg" alt="Graue, ovale Form auf dem 'Leider schon vergriffen' zu lesen ist."/>
 </div>
