@@ -55,14 +55,25 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   get wishImageComponentStyles(): WishImageComponentStyles {
-    const style: {
-      height?: string;
-      padding: string;
-    } = { padding: '10px' };
+    const img: CSSStyle = {
+      padding: '10px',
+      margin: 'auto',
+      top: '0',
+      left: '0',
+      right: '0',
+      bottom: '0'
+    };
     if (!this.wish.imageUrl) {
-      style.height = '70%';
+      img.height = '70%';
     }
-    return { img: style };
+    return {
+      img,
+      container: {
+        display: 'flex',
+        'justify-content': 'center',
+        height: '100%'
+      }
+    };
   }
 
   private affiliateLink = '';
