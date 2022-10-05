@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PublicResourceApiService } from '@core/api/public-resource-api.service';
+import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 import { BrowserService } from '@core/services/browser.service';
+import { StorageService } from '@core/services/storage.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
 import { ModalController } from '@ionic/angular';
 import { AffiliateLinkDebugInfoComponent } from '@shared/components/affiliate-link-debug-info/affiliate-link-debug-info.component';
-import { StorageService } from '@core/services/storage.service';
-import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { first } from 'rxjs/operators';
-import { CoreToastService } from '@core/services/toast.service';
-import { WISH_ERROR_IMAGE_ASSET_URL } from '@core/ui.constants';
-import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 
 export enum SharedWishListState {
   CANCELLABLE, RESERVABLE, RESERVED, LOADING
@@ -141,10 +140,6 @@ export class SharedWishComponent implements OnInit {
       }
     })
   }
-
-  imgOnErrorHandler(event) {
-    event.target.src = WISH_ERROR_IMAGE_ASSET_URL;
- }
 
   async showDebugInfo() {
     const modal = await this.modalController.create({
