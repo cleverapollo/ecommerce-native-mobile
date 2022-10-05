@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { SharedWishListApiService } from '@core/api/shared-wish-list-api.service';
 import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 import { sortWishesByIsFavorite } from '@core/wish-list.utils';
@@ -6,6 +7,7 @@ import { CacheService } from 'ionic-cache';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Logger } from './log.service';
+import { DefaultPlatformService } from './platform.service';
 
 export interface FriendWishListStore {
   loadWishLists(forceRefresh: boolean): Observable<FriendWishList[]>;
@@ -25,11 +27,17 @@ export class FriendWishListStoreService implements FriendWishListStore {
   private readonly CACHE_KEY_WISH_LISTS = 'friendWishLists'
 
   private cacheKeyWishList(id: string): string {
-    return `getFriendWishList${id}`
+    return `getFriendWishList${id}`;
+  }
+
+  private cacheKeyPublicWishList(id: string): string {
+    return `publicSharedWishList${id}`;
   }
 
   constructor(
     private sharedWishListApiService: SharedWishListApiService,
+    private publicResourceApiService: PublicResourceApiService,
+    private platformService: DefaultPlatformService,
     private cache: CacheService,
     private logger: Logger
   ) { }
@@ -64,11 +72,16 @@ export class FriendWishListStoreService implements FriendWishListStore {
   }
 
   loadWishList(id: string, forceRefresh: boolean = false): Observable<FriendWishList> {
-    const request = this.sharedWishListApiService.getWishListById(id);
-    if (forceRefresh) {
-      return this.cache.loadFromDelayedObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
+    let request = this.sharedWishListApiService.getWishListById(id);
+    let cacheKey = this.cacheKeyWishList(id);
+    if (this.platformService.isWeb) {
+      request = this.publicResourceApiService.getSharedWishList(id);
+      cacheKey = this.cacheKeyPublicWishList(id);
     }
-    return this.cache.loadFromObservable(this.cacheKeyWishList(id), request, this.CACHE_GROUP_KEY)
+    if (forceRefresh) {
+      return this.cache.loadFromDelayedObservable(cacheKey, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
+    }
+    return this.cache.loadFromObservable(cacheKey, request, this.CACHE_GROUP_KEY)
   }
 
   updateCachedWishList(wishList: FriendWishList): void {

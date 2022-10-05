@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
@@ -36,7 +35,6 @@ export class SharedWishListPage implements OnInit, AfterViewChecked {
   constructor(
     private route: ActivatedRoute,
     private analyticsService: AnalyticsService,
-    private publicResourceApiService: PublicResourceApiService,
     private datePipe: DatePipe,
     private friendWishListStore: FriendWishListStoreService
   ) { }
@@ -67,11 +65,10 @@ export class SharedWishListPage implements OnInit, AfterViewChecked {
   }
 
   private refreshData() {
-    this.publicResourceApiService.getSharedWishList(this.wishList.id)
+    this.friendWishListStore.loadWishList(this.wishList.id, true)
     .pipe(
       first()
-    )
-    .subscribe(wishList => {
+    ).subscribe(wishList => {
       this.wishList = wishList;
     })
   }
