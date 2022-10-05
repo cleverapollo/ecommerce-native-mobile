@@ -16,9 +16,11 @@
 
   <div class="divide"></div>
 
-   <div class="masonry" #masonry>
-    <div class="brick" *ngFor="let wish of wishes$ | async; trackBy:trackByWishId" #bricks>
-      <app-shared-wish [wish]="wish" [wishList]="wishList" (wishStateChanged)="updateWishList($event)"></app-shared-wish>
+  <div class="grid-centered">
+    <div class="masonry" #masonry>
+      <div class="brick" *ngFor="let wish of wishes$ | async; trackBy:trackByWishId" #bricks>
+        <app-shared-wish [wish]="wish" [wishList]="wishList" (wishStateChanged)="updateWishList($event)"></app-shared-wish>
+      </div>
     </div>
   </div>
 
