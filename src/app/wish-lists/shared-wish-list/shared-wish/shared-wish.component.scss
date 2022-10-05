@@ -4,8 +4,18 @@ ion-grid {
         padding-left: 0;
         padding-right: 0;
     }
+    ion-row.row-multiple-buttons {
+        margin-top: 5px;
+        ion-col {
+            --ion-grid-column-padding: 0;
+        }
+    }
 }
 
 .image-container {
     cursor: pointer;
+}
+
+ion-card-content {
+    padding: 5px !important;
 }

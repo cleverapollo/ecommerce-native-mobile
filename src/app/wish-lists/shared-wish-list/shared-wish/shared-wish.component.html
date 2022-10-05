@@ -9,7 +9,7 @@
     <div class="wish-note shared-wish-note" *ngIf="wish?.note">{{ wish.note }}</div>
     <div *ngIf="!readonly">
       <ion-grid>
-        <ion-row *ngIf="isStateChangeable || isLoading">
+        <ion-row *ngIf="isStateChangeable || isLoading" class="row-multiple-buttons">
           <ion-col sizeMd="6" class="col-left">
             <ion-button class="give-button action-button action-button-left" *ngIf="isReservable" fill="outline" color="tertiary" expand="block" name="action-reserve-wish"
               (click)="reserve()">
