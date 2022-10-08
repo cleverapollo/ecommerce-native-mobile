@@ -233,6 +233,15 @@ export class WishListStoreService implements WishListStore {
   }
 
   /**
+   * Links a wish list of a friend to shared wish lists.
+   * @param wishListId Id of FriendWishList
+   * @returns Promise when the action is completed.
+   */
+  followWishList(wishListId: string): Promise<void> {
+    return this.wishListApiService.acceptInvitation(wishListId);
+  }
+
+  /**
    * Removes a wish from cache and subject.
    * @param wish A wish to remove.
    * @returns Promise

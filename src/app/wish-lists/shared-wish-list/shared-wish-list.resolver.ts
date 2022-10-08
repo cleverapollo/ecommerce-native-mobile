@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { PublicResourceApiService } from '@core/api/public-resource-api.service';
-import { WishListApiService } from '@core/api/wish-list-api.service';
 import { FriendWishList } from '@core/models/wish-list.model';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
@@ -11,8 +9,6 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList}>> {
 
   constructor(
-    private wishListApi: WishListApiService,
-    private publicResourceApiService: PublicResourceApiService,
     private platformService: DefaultPlatformService,
     private friendWishListStore: FriendWishListStoreService,
     private wishListStore: WishListStoreService,
@@ -29,7 +25,7 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
           return;
         }
 
-        const wishList = await this.publicResourceApiService.getSharedWishList(wishListId).toPromise();
+        const wishList = await this.friendWishListStore.loadWishList(wishListId).toPromise();
         resolve({ wishList });
       } catch (error) {
         reject(error)
@@ -56,7 +52,8 @@ export class SharedWishListResolver implements Resolve<Promise<{ wishList: Frien
         return await this.router.navigateByUrl(`/secure/home/wish-list/${wishListId}`);
       }
 
-      await this.wishListApi.acceptInvitation(wishListId);
+      await this.wishListStore.followWishList(wishListId);
+      await this.friendWishListStore.removeCachedWishLists();
       return await this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}?forceRefresh=true`);
     } catch (error) {
       return Promise.reject(error);
