@@ -1,4 +1,6 @@
-platform :ios, '12.0'
+require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
+
+platform :ios, '13.0'
 use_frameworks!
 
 # workaround to avoid Xcode caching of Pods that requires
@@ -52,9 +54,11 @@ target 'Share Beta' do
   share_extension_pods
 end
 
-deployment_target = '12.0'
+deployment_target = '13.0'
 
 post_install do |installer|
+  assertDeploymentTarget(installer)
+
     installer.generated_projects.each do |project|
         project.targets.each do |target|
             target.build_configurations.each do |config|

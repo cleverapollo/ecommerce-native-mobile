@@ -13,8 +13,8 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     registerPlugin(FirebaseAnalytics.class);
+    super.onCreate(savedInstanceState);
 
     ServiceWorkerController swController = ServiceWorkerController.getInstance();
     swController.setServiceWorkerClient(new ServiceWorkerClient() {

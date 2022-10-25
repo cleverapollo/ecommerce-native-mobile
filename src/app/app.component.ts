@@ -14,7 +14,7 @@ import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.servi
 import { DefaultPlatformService } from '@core/services/platform.service';
 import { ScriptLoadingStatus, ScriptService } from '@core/services/script.service';
 import { ScriptName } from '@core/data/script-store';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import { BackendConfigType } from '@env/backend-config-type';
 
 @Component({
@@ -87,7 +87,7 @@ export class AppComponent {
    */
   private setupNativeApp() {
     // migrate Capacitor 2 data to Capator 3 data
-    Storage.migrate();
+    Preferences.migrate();
 
     this.setupStatusBar();
     // handle universal links
