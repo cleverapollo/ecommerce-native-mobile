@@ -3,7 +3,7 @@ import { Platform } from '@ionic/angular';
 
 import 'capacitor-secure-storage-plugin';
 import { Logger } from './log.service';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 import { DefaultPlatformService } from './platform.service';
 import SecureStorage from 'secure-web-storage';
@@ -84,7 +84,7 @@ export class StorageService implements Storage {
   private async getPublic<T>(storageKey: string): Promise<T> {
     if (this.platformService.isNativePlatform) {
       try {
-        const cachedObject = await Storage.get({ key: storageKey });
+        const cachedObject = await Preferences.get({ key: storageKey });
         if (cachedObject?.value?.length > 0) {
           return JSON.parse(cachedObject.value);
         } else {
@@ -152,7 +152,7 @@ export class StorageService implements Storage {
 
   private setPublic(storageKey: string, value: any) {
     if (this.platformService.isNativePlatform) {
-      Storage.set({ key: storageKey, value });
+      Preferences.set({ key: storageKey, value });
     } else {
       localStorage.setItem(storageKey, JSON.stringify(value));
     }
@@ -183,7 +183,7 @@ export class StorageService implements Storage {
 
   private removePublic(storageKey: string) {
     if (this.platformService.isNativePlatform) {
-      Storage.remove({ key: storageKey })
+      Preferences.remove({ key: storageKey })
     } else {
       localStorage.removeItem(storageKey);
     }
@@ -201,7 +201,7 @@ export class StorageService implements Storage {
 
   private async clearAppStorage(): Promise<void> {
     try {
-      await Storage.clear();
+      await Preferences.clear();
       await SecureStoragePlugin.clear();
       return Promise.resolve();
     } catch (error) {
