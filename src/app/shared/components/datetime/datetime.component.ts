@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, ViewChild } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonDatetime } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
@@ -15,9 +15,9 @@ import { format, parseISO } from 'date-fns';
     }
   ]
 })
-export class DatetimeComponent implements ControlValueAccessor {
+export class DatetimeComponent implements OnInit, ControlValueAccessor {
 
-  @ViewChild(IonDatetime) datetime?: IonDatetime;
+  @ViewChild('modalDatetime') datetime?: IonDatetime;
 
   /** Placeholder for the input */
   @Input() placeholder: string | undefined;
@@ -33,10 +33,8 @@ export class DatetimeComponent implements ControlValueAccessor {
   @Input() initialDate: null | string | string[] | undefined;
 
   formattedDate: null | string | string[] | undefined;
-
-  get value(): null | string | string[] | undefined {
-    return this.selectedDate ?? this.initialDate ?? new Date().toISOString();
-  }
+  value: null | string | string[] | undefined;
+  isModalOpen: boolean = false;
 
   // ISO 8601 datetime string
   get selectedDate(): null | string | string[] | undefined {
@@ -48,10 +46,16 @@ export class DatetimeComponent implements ControlValueAccessor {
     this._selectedDate = isoDateString;
     this.propagateChange(this._selectedDate);
 
-    if (typeof isoDateString === 'string') {
+    if (typeof isoDateString === 'string' && isoDateString) {
       this.formattedDate = isoDateString ?
-      format(parseISO(isoDateString), 'dd.MM.yyyy') :
-      isoDateString;
+        format(parseISO(isoDateString), 'dd.MM.yyyy') :
+        isoDateString;
+      this.value = isoDateString;
+    }
+
+    if (!isoDateString) {
+      this.formattedDate = '';
+      this.setDefaultValue();
     }
   }
 
@@ -59,11 +63,40 @@ export class DatetimeComponent implements ControlValueAccessor {
 
   constructor() { }
 
-  // ion-datetime
+  ngOnInit(): void {
+    this.setDefaultValue();
+  }
 
-  onDateChanged(isoDateString: null | string | string[] | undefined) {
-    this.selectedDate = isoDateString;
-    this.datetime?.confirm(true);
+  clearInput() {
+    this.selectedDate = null;
+    this.setDefaultValue();
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  confirmValue() {
+    this.datetime?.confirm(true).then(() => {
+      this.selectedDate = this.value;
+      this.isModalOpen = false;
+    });
+  }
+
+  private setDefaultValue() {
+    if (this.selectedDate) {
+      this.value = this.selectedDate;
+    } else if (this.initialDate) {
+      this.value = this.initialDate;
+    } else if (this.minDate) {
+      this.value = this.minDate;
+    } else {
+      this.value = new Date().toISOString();
+    }
   }
 
   // ControlValueAccessor
