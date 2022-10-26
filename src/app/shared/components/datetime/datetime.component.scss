@@ -14,6 +14,7 @@ ion-modal {
 
         ion-datetime {
             border-radius: 8px;
+            padding: 8px !important;
         }
     }
 }
@@ -25,5 +26,8 @@ ion-item {
     ion-icon {
         margin-right: 16px;
         margin-left: 0;
+    }
+    ion-icon.clear-input-icon {
+        font-size: 10px;
     }
 }
