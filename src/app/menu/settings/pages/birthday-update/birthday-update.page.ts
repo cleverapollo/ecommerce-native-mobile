@@ -91,7 +91,10 @@ export class BirthdayUpdatePage implements OnInit {
     }
 
     // Update value in Form
-    this.form.controls.birthday.reset(this.timestampToISO(updatedProfile.birthday));
+    if (updatedProfile.birthday) {
+      const isoDate = this.timestampToISO(updatedProfile.birthday);
+      this.form.controls.birthday.reset(isoDate);
+    }
 
     // Update value in Cache
     try {
