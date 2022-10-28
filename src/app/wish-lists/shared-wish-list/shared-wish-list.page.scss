@@ -55,23 +55,30 @@ ion-toolbar {
     margin-top: 16px;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
     div.grid-centered {
         margin-right: 10%;
         margin-left: 10%;
     }
 }
 
-@media (min-width: 1800px) {
+@media (min-width: 1200px) {
     div.grid-centered {
         margin-right: 15%;
         margin-left: 15%;
     }
 }
 
+@media (min-width: 1800px) {
+    div.grid-centered {
+        margin-right: 25%;
+        margin-left: 25%;
+    }
+}
+
 @media (min-width: 2400px) {
     div.grid-centered {
-        margin-right: 20%;
-        margin-left: 20%;
+        margin-right: 32%;
+        margin-left: 32%;
     }
 }
