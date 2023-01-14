@@ -90,7 +90,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.github.corouteam:GlideToVectorYou:v2.0.0'
+    implementation 'com.github.2coffees1team:GlideToVectorYou:v2.0.0'
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
