@@ -27,9 +27,11 @@ export class NativeTokenInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
         const isLoginRequest = request.url.includes('/signin');
         const isSignupRequest = request.url.includes('/signup');
+        const isResetPasswordRequest = request.url.includes('/reset-password');
         const isConfirmPasswordReset = request.url.includes('/confirm-password-reset');
         const isGoogleApiRequest = request.url.startsWith('https://identitytoolkit.googleapis.com');
-        if (isLoginRequest || isGoogleApiRequest || isConfirmPasswordReset || isSignupRequest) {
+
+        if (isLoginRequest || isGoogleApiRequest || isResetPasswordRequest || isConfirmPasswordReset || isSignupRequest) {
             return next.handle(request);
         }
         return from(this.handle(request, next));
