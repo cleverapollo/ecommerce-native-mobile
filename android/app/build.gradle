@@ -21,8 +21,8 @@ android {
         applicationId "io.wantic.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 202210251
-        versionName "1.5.1"
+        versionCode 202301141
+        versionName "1.5.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
     }
