@@ -12,7 +12,6 @@ import io.wantic.app.share.models.WishList
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
 
 class WishListApiService(private val requestQueue: RequestQueue): WishListApi {
 
@@ -29,7 +28,7 @@ class WishListApiService(private val requestQueue: RequestQueue): WishListApi {
             { response ->
                 Log.d(LOG_TAG, "Response: %s".format(response.toString()))
                 val wishLists = ArrayList<WishList>()
-                for (index in 0..response.length()) {
+                for (index in 0 until response.length()) {
                     try {
                         val jsonObject = response.getJSONObject(index)
                         val uuid = UUID.fromString(jsonObject.getString("id"))
