@@ -144,8 +144,10 @@ class SelectWishListActivity : AppCompatActivity() {
 
     private fun setupWishListListView() {
         textViewNoWishListsHint = findViewById(R.id.hint_no_wish_lists)
+        wishListArrayAdapter = WishListArrayAdapter(applicationContext, this.wishLists)
 
         wishListListView = findViewById(R.id.wish_list_list_view)
+        wishListListView.adapter = wishListArrayAdapter
         wishListListView.choiceMode = CHOICE_MODE_SINGLE
         wishListListView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -260,18 +262,13 @@ class SelectWishListActivity : AppCompatActivity() {
 
     private fun loadWishLists(idToken: String) {
         loadingSpinner.visibility = VISIBLE
-        this.wishListApiService.getWishLists(idToken) { wishLists, error ->
+        this.wishListApiService.getWishLists(idToken) { items, error ->
             loadingSpinner.visibility = GONE
             when {
-                wishLists != null -> {
-                    if (wishLists.isNotEmpty()) {
-                        this.wishLists = wishLists
-                        wishListArrayAdapter = WishListArrayAdapter(applicationContext, wishLists)
-                        wishListListView.adapter = wishListArrayAdapter
-                        checkFirstWishListItem()
-                    } else {
-                        this.wishLists = ArrayList()
-                    }
+                items != null -> {
+                    this.wishLists = items
+                    updateWishLists(this.wishLists)
+                    checkFirstWishListItem()
                 }
                 error != null -> {
                     Log.e(LOG_TAG, "Response error: $error")
@@ -284,6 +281,14 @@ class SelectWishListActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun updateWishLists(wishLists: ArrayList<WishList>) {
+        wishListArrayAdapter.clear()
+        for (wishList in wishLists) {
+            wishListArrayAdapter.insert(wishList, wishListArrayAdapter.count)
+        }
+        wishListArrayAdapter.notifyDataSetChanged()
     }
 
     private fun openDeepLink(url: String) {
@@ -330,6 +335,7 @@ class SelectWishListActivity : AppCompatActivity() {
     }
 
     private fun checkFirstWishListItem() {
+        if (this.wishLists.isEmpty()) { return }
         wishListListView.setItemChecked(0, true)
         wish = Wish.create(this.productInfo, wishLists[0].id)
     }
