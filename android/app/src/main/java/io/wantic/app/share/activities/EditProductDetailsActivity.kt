@@ -229,7 +229,7 @@ class EditProductDetailsActivity : AppCompatActivity() {
         // create close button
         val closeButton: ImageButton = toolbar.findViewById(R.id.toolbarCloseButton)
         closeButton.setOnClickListener {
-            finishAffinity()
+            finishAndRemoveTask()
         }
     }
 
