@@ -11,7 +11,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity.CENTER_HORIZONTAL
 import android.view.View
-import android.webkit.*
+import android.webkit.WebView
 import android.widget.*
 import android.widget.LinearLayout.VERTICAL
 import androidx.appcompat.app.AlertDialog
@@ -25,7 +25,11 @@ import androidx.gridlayout.widget.GridLayout.CENTER
 import io.wantic.app.R
 import io.wantic.app.share.core.analytics.AnalyticsTracking
 import io.wantic.app.share.core.analytics.GoogleAnalytics
+import io.wantic.app.share.core.data.FileHandler
+import io.wantic.app.share.core.data.FileHandling
 import io.wantic.app.share.core.ui.media.*
+import io.wantic.app.share.core.web.WebChromeClient
+import io.wantic.app.share.core.web.WebViewClient
 import io.wantic.app.share.models.*
 import io.wantic.app.share.utils.*
 import kotlin.math.ceil
@@ -52,6 +56,7 @@ class SelectProductImageActivity : AppCompatActivity() {
     private lateinit var actionButton: Button
     private lateinit var incomingHandler: Handler
     private lateinit var analytics: AnalyticsTracking
+    private lateinit var fileHandler: FileHandling
 
     private var graphicsHandler: GraphicsHandling = GraphicsHandler(
         BitmapGraphicsHandler(), VectorGraphicsHandler(this)
@@ -59,8 +64,6 @@ class SelectProductImageActivity : AppCompatActivity() {
 
     private var selectedView: SelectedProductImageView = SelectedProductImageView()
     private var shareResultParser: ShareResultParsing = ShareResultParser
-
-    private var webViewSuccess = true
     private var shareResult: ShareResult? = null
 
     // life cycle
@@ -74,6 +77,7 @@ class SelectProductImageActivity : AppCompatActivity() {
 
         loadingSpinner = findViewById(R.id.loading_spinner)
         analytics = GoogleAnalytics.init()
+        fileHandler = FileHandler(this);
 
         if (intent?.action == Intent.ACTION_SEND) {
             startLoading()
@@ -119,7 +123,8 @@ class SelectProductImageActivity : AppCompatActivity() {
         if (textContent != null) {
             shareResult = shareResultParser.parseTextToShareResult(textContent)
             if (shareResult != null) {
-                this.initWebView(shareResult!!.productURLString)
+                val url = shareResult!!.productURLString
+                this.initWebView(url)
             } else {
                 stopLoading()
                 showNoImagesFoundFeedback()
@@ -165,7 +170,7 @@ class SelectProductImageActivity : AppCompatActivity() {
             var productInfo: ProductInfo? = null
             if (webCrawlerResult != null) {
                 val webImage = webCrawlerResult!!.images.find {
-                    it.id == selectedView.imageView?.tag ?: false
+                    it.id == (selectedView.imageView?.tag ?: false)
                 }
                 productInfo = webImage?.let { it1 ->
                     ProductInfo(
@@ -185,7 +190,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         // create close button
         val closeButton: ImageButton = toolbar.findViewById(R.id.toolbarCloseButton)
         closeButton.setOnClickListener {
-            finishAffinity()
+            finishAndRemoveTask()
         }
     }
 
@@ -234,70 +239,21 @@ class SelectProductImageActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun initWebView(productUrlString: String) {
+    private fun initWebView(url: String) {
         webView = findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         webView.settings.loadsImagesAutomatically = true
         WebView.setWebContentsDebuggingEnabled(true)
 
+        val code = fileHandler.loadFileAsText("web-crawler.js")
+        assert(code.isNotEmpty())
+
         webView.addJavascriptInterface(AndroidJSInterface(this), "Android")
-        webView.webViewClient = createWebViewClient()
-        webView.webChromeClient = createWebChromeClient()
-        webView.loadUrl(productUrlString)
+        webView.webViewClient = WebViewClient(this, code, url)
+        webView.webChromeClient = WebChromeClient
+        webView.loadUrl(url)
     }
-
-    private fun createWebChromeClient() = object : WebChromeClient() {
-        override fun onProgressChanged(view: WebView?, newProgress: Int) {
-            Log.d(LOG_TAG, "onProgressChanged = progress: $newProgress")
-            super.onProgressChanged(view, newProgress)
-        }
-    }
-
-    private fun createWebViewClient() = object : WebViewClient() {
-
-        override fun onPageFinished(view: WebView?, url: String?) {
-            Log.d(LOG_TAG, "onPageFinished")
-            val self = this@SelectProductImageActivity
-            if (webViewSuccess) {
-                val jsonString = self.loadJsFileContent()
-                view?.evaluateJavascript(jsonString, null)
-            } else {
-                assert(shareResult != null)
-                val productInfo = ProductInfo(-1, "", null, shareResult!!.productURLString)
-                navigateForward(productInfo)
-            }
-        }
-
-        override fun onReceivedError(
-            view: WebView?,
-            request: WebResourceRequest?,
-            error: WebResourceError?
-        ) {
-            if (error != null) {
-                Log.e(LOG_TAG, "web page onReceivedError ${error.errorCode}")
-            }
-            webViewSuccess = false
-            super.onReceivedError(view, request, error)
-        }
-
-        override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
-            // avoid following redirects
-            Log.d(LOG_TAG, "web page shouldOverrideUrlLoading $url")
-            if (url != null) {
-                view.loadUrl(url)
-            }
-            return false // then it is not handled by default action
-        }
-    }
-
-    private fun loadJsFileContent(): String {
-        val fileName = "web-crawler.js"
-        return application.assets.open(fileName).bufferedReader().use {
-            it.readText()
-        }
-    }
-
 
     override fun onStart() {
         super.onStart()
