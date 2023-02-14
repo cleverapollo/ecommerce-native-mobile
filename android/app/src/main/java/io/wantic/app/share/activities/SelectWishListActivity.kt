@@ -12,9 +12,7 @@ import android.widget.AbsListView.CHOICE_MODE_SINGLE
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.android.volley.RequestQueue
 import com.android.volley.TimeoutError
-import com.android.volley.toolbox.Volley
 import io.wantic.app.R
 import io.wantic.app.share.adapters.WishListArrayAdapter
 import io.wantic.app.share.core.analytics.AnalyticsTracking
@@ -25,10 +23,8 @@ import io.wantic.app.share.core.ui.media.*
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.Wish
 import io.wantic.app.share.models.WishList
-import io.wantic.app.share.network.WishApi
-import io.wantic.app.share.network.WishApiService
-import io.wantic.app.share.network.WishListApi
-import io.wantic.app.share.network.WishListApiService
+import io.wantic.app.share.network.NetworkService
+import io.wantic.app.share.network.RestApi
 import io.wantic.app.share.utils.AlertService
 import io.wantic.app.share.utils.AuthService
 import io.wantic.app.share.utils.CircleTransform
@@ -42,9 +38,7 @@ class SelectWishListActivity : AppCompatActivity() {
     }
 
     // network
-    private lateinit var requestQueue: RequestQueue
-    private lateinit var wishListApiService: WishListApi
-    private lateinit var wishApiService: WishApi
+    private var api: RestApi = NetworkService(this)
     private lateinit var analytics: AnalyticsTracking
 
     // auth
@@ -136,10 +130,7 @@ class SelectWishListActivity : AppCompatActivity() {
     }
 
     private fun setupNetworkServices() {
-        requestQueue = Volley.newRequestQueue(this)
         this.analytics = GoogleAnalytics.init()
-        this.wishListApiService = WishListApiService(requestQueue)
-        this.wishApiService = WishApiService(requestQueue)
     }
 
     private fun setupWishListListView() {
@@ -262,7 +253,7 @@ class SelectWishListActivity : AppCompatActivity() {
 
     private fun loadWishLists(idToken: String) {
         loadingSpinner.visibility = VISIBLE
-        this.wishListApiService.getWishLists(idToken) { items, error ->
+        this.api.getWishLists(idToken) { items, error ->
             loadingSpinner.visibility = GONE
             when {
                 items != null -> {
@@ -302,7 +293,7 @@ class SelectWishListActivity : AppCompatActivity() {
 
     private fun saveWishList(idToken: String, wishListName: String) {
         loadingSpinner.visibility = VISIBLE
-        this.wishListApiService.createNewWishList(idToken, wishListName) { wishList, error ->
+        this.api.createNewWishList(idToken, wishListName) { wishList, error ->
             loadingSpinner.visibility = GONE
             toggleNewWishListUIElements()
             when {
@@ -343,7 +334,7 @@ class SelectWishListActivity : AppCompatActivity() {
     private fun saveWish(idToken: String, wish: Wish) {
         if (this.wish == null) { return }
         loadingSpinner.visibility = VISIBLE
-        this.wishApiService.saveWish(idToken, wish) { successfullySaved, error ->
+        this.api.saveWish(idToken, wish) { successfullySaved, error ->
             loadingSpinner.visibility = GONE
             when {
                 successfullySaved -> {
