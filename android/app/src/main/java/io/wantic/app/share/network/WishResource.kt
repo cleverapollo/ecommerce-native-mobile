@@ -1,7 +1,6 @@
 package io.wantic.app.share.network
 
 import android.util.Log
-import com.android.volley.RequestQueue
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import io.wantic.app.AppConfig
@@ -9,18 +8,18 @@ import io.wantic.app.share.models.Wish
 import org.json.JSONException
 import org.json.JSONObject
 
-class WishApiService(private val requestQueue: RequestQueue): WishApi {
+class WishResource {
 
     companion object {
-        private const val LOG_TAG = "WishApiService"
+        private const val LOG_TAG = "WishResource"
         private const val RESOURCE_URI = "v1/wishes"
     }
 
     private val url: String = "${AppConfig.backendUrl}/$RESOURCE_URI"
 
-    override fun saveWish(idToken: String, wish: Wish, completionHandler: (successfullySaved: Boolean, error: VolleyError?) -> Unit) {
+    fun saveWish(idToken: String, wish: Wish, completionHandler: (successfullySaved: Boolean, error: VolleyError?) -> Unit): JsonObjectRequest {
         val data = createJsonObject(wish)
-        val request = object : JsonObjectRequest(
+        return object : JsonObjectRequest(
             Method.POST, url, data,
             {  response ->
                 Log.d(LOG_TAG, "Response: %s".format(response.toString()))
@@ -35,7 +34,6 @@ class WishApiService(private val requestQueue: RequestQueue): WishApi {
                 return AppConfig.createRequestHeaders(idToken)
             }
         }
-        requestQueue.add(request)
     }
 
     private fun createJsonObject(wish: Wish): JSONObject {
