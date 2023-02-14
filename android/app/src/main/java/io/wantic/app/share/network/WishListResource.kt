@@ -1,7 +1,6 @@
 package io.wantic.app.share.network
 
 import android.util.Log
-import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonArrayRequest
@@ -13,17 +12,17 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-class WishListApiService(private val requestQueue: RequestQueue): WishListApi {
+class WishListResource {
 
     companion object {
-        private const val LOG_TAG = "WishListApiService"
+        private const val LOG_TAG = "WishListResource"
         private const val RESOURCE_URI = "v1/wish-lists"
     }
 
     private val url: String = "${AppConfig.backendUrl}/$RESOURCE_URI"
 
-    override fun getWishLists(idToken: String, completionHandler: (wishLists: ArrayList<WishList>?, error: VolleyError?) -> Unit) {
-        val request =  object : JsonArrayRequest(
+    fun getWishLists(idToken: String, completionHandler: (wishLists: ArrayList<WishList>?, error: VolleyError?) -> Unit): JsonArrayRequest {
+        return object : JsonArrayRequest(
             Method.GET, url, null,
             { response ->
                 Log.d(LOG_TAG, "Response: %s".format(response.toString()))
@@ -50,15 +49,13 @@ class WishListApiService(private val requestQueue: RequestQueue): WishListApi {
                 return AppConfig.createRequestHeaders(idToken)
             }
         }
-        requestQueue.add(request)
-
     }
 
-    override fun createNewWishList(idToken: String, wishListName: String, completionHandler: (wishList: WishList?, error: VolleyError?) -> Unit) {
+    fun createNewWishList(idToken: String, wishListName: String, completionHandler: (wishList: WishList?, error: VolleyError?) -> Unit): JsonObjectRequest {
         val requestBody = JSONObject()
         requestBody.put("name", wishListName);
         requestBody.put("showReservedWishes", false);
-        val request = object : JsonObjectRequest(Method.POST, url, requestBody,
+        return object : JsonObjectRequest(Method.POST, url, requestBody,
             Response.Listener { response ->
                 val gson = Gson()
                 val jsonString = String.format(response.toString())
@@ -73,7 +70,6 @@ class WishListApiService(private val requestQueue: RequestQueue): WishListApi {
                 return AppConfig.createRequestHeaders(idToken)
             }
         }
-        requestQueue.add(request)
     }
 
 }
