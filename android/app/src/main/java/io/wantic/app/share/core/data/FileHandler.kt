@@ -1,9 +1,9 @@
 package io.wantic.app.share.core.data
 
-import android.app.Activity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 
-class FileHandler(val context: Activity) : FileHandling {
+class FileHandler(val activity: AppCompatActivity) : FileHandling {
 
     companion object {
         private const val LOG_TAG = "FileHandler"
@@ -11,7 +11,7 @@ class FileHandler(val context: Activity) : FileHandling {
 
     override fun loadFileAsText(fileName: String): String {
         return try {
-            context.application.assets.open(fileName).bufferedReader().use {
+            activity.application.assets.open(fileName).bufferedReader().use {
                 it.readText()
             }
         } catch (ex: Exception) {

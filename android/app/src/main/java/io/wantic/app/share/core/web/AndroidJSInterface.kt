@@ -1,4 +1,4 @@
-package io.wantic.app.share.utils
+package io.wantic.app.share.core.web
 
 import android.os.Handler
 import android.util.Log
@@ -9,7 +9,7 @@ import io.wantic.app.share.models.WebImage
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
-class AndroidJSInterface(var context: SelectProductImageActivity) {
+class AndroidJSInterface(var activity: SelectProductImageActivity) {
 
     companion object {
         const val LOG_TAG = "AndroidJSInterface"
@@ -18,15 +18,16 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
     @JavascriptInterface
     fun onProductInfosLoaded(webCrawlerResultJsonString: String) {
         Log.d(LOG_TAG, "onProductInfosLoaded $webCrawlerResultJsonString")
-        if (context.webCrawlerResult != null) {
+        val activity = getContext() ?: return
+        if (activity.webCrawlerResult != null) {
             Log.d(LOG_TAG, "webCrawlerResult already set $webCrawlerResultJsonString")
             return
         }
         try {
-            context.webCrawlerResult = Json.decodeFromString(webCrawlerResultJsonString)
-            context.infoLoaded = true
+            activity.webCrawlerResult = Json.decodeFromString(webCrawlerResultJsonString)
+            activity.infoLoaded = true
             hideLoadingSpinner()
-            if (this.context.webCrawlerResult!!.images.isEmpty()) {
+            if (activity.webCrawlerResult!!.images.isEmpty()) {
                 onImagesNotFound()
             } else {
                 displayLoadedImages()
@@ -47,12 +48,13 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
     @JavascriptInterface
     fun onProductInfoLoaded(webImageJsonString: String) {
         Log.d(LOG_TAG, "onProductInfoLoaded $webImageJsonString")
+        val activity = getContext() ?: return
         val webImage: WebImage = Json.decodeFromString(webImageJsonString)
-        val itemExists = context.webCrawlerResult!!.images.any { image -> image.id == webImage.id }
+        val itemExists = activity.webCrawlerResult!!.images.any { image -> image.id == webImage.id }
         if (!itemExists) {
-            val mainHandler = Handler(this.context.mainLooper)
+            val mainHandler = Handler(activity.mainLooper)
             val runnable = Runnable {
-                this@AndroidJSInterface.context.addNewProductInfoItem(webImage)
+                activity.addNewProductInfoItem(webImage)
             }
             mainHandler.post(runnable)
         }
@@ -64,23 +66,35 @@ class AndroidJSInterface(var context: SelectProductImageActivity) {
     }
 
     private fun displayLoadedImages() {
-        val mainHandler = Handler(this.context.mainLooper)
+        val activity = getContext() ?: return
+        val mainHandler = Handler(activity.mainLooper)
         val runnable = Runnable {
             Log.d(LOG_TAG, "initGridLayout from displayLoadedImages")
-            this@AndroidJSInterface.context.initGridLayout(this.context.webCrawlerResult!!.images)
+            activity.initGridLayout(activity.webCrawlerResult!!.images)
         }
         mainHandler.post(runnable)
     }
 
     private fun onImagesNotFound() {
-        this@AndroidJSInterface.context.navigateForward(null)
+        val activity = getContext() ?: return
+        activity.navigateForward(null)
     }
 
     private fun hideLoadingSpinner() {
-        val mainHandler = Handler(this.context.mainLooper)
+        val activity = getContext() ?: return
+        val mainHandler = Handler(activity.mainLooper)
         val runnable = Runnable {
-            this@AndroidJSInterface.context.loadingSpinner.visibility = View.GONE
+            activity.loadingSpinner.visibility = View.GONE
         }
         mainHandler.post(runnable)
+    }
+
+    private fun getContext(): SelectProductImageActivity? {
+        val activity = this@AndroidJSInterface.activity
+        if (activity.isDestroyed) {
+            Log.d(LOG_TAG, "Activity ${activity.localClassName} is destroyed")
+            return null
+        }
+        return activity
     }
 }
