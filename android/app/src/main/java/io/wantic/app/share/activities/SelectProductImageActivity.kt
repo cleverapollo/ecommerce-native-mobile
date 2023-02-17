@@ -28,10 +28,14 @@ import io.wantic.app.share.core.analytics.GoogleAnalytics
 import io.wantic.app.share.core.data.FileHandler
 import io.wantic.app.share.core.data.FileHandling
 import io.wantic.app.share.core.ui.media.*
+import io.wantic.app.share.core.web.AndroidJSInterface
 import io.wantic.app.share.core.web.WebChromeClient
 import io.wantic.app.share.core.web.WebViewClient
 import io.wantic.app.share.models.*
-import io.wantic.app.share.utils.*
+import io.wantic.app.share.utils.AlertService
+import io.wantic.app.share.utils.AuthService
+import io.wantic.app.share.utils.ShareResultParser
+import io.wantic.app.share.utils.ShareResultParsing
 import kotlin.math.ceil
 
 
