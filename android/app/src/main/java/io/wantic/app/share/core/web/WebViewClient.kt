@@ -10,7 +10,7 @@ import io.wantic.app.share.activities.SelectProductImageActivity
 import io.wantic.app.share.models.ProductInfo
 
 class WebViewClient(
-    private val context: SelectProductImageActivity,
+    private val activity: SelectProductImageActivity,
     private val script: String,
     private val sharedUrl: String
     ) : WebViewClient() {
@@ -53,11 +53,15 @@ class WebViewClient(
     }
 
     private fun handleLoadingError() {
-        val fetchedImages = context.webCrawlerResult?.images ?: listOf()
+        if (activity.isDestroyed) {
+            redirectUrl = null
+            return
+        }
+        val fetchedImages = activity.webCrawlerResult?.images ?: listOf()
         if (fetchedImages.isEmpty()) {
             Log.d(LOG_TAG, "Skipped JS evaluation due to error")
             val productInfo = ProductInfo(-1, "", null, sharedUrl)
-            context.navigateForward(productInfo)
+            activity.navigateForward(productInfo)
         }
         redirectUrl = null
     }
