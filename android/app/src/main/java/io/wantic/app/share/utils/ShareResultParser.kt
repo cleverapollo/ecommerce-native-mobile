@@ -64,7 +64,9 @@ object ShareResultParser : ShareResultParsing {
         while (m.find()) {
             val url: String = m.group()
             Log.d(LOG_TAG, "URL extracted: $url")
-            links.add(url)
+            if (url.startsWith("http")) {
+                links.add(url)
+            }
         }
         return links.toTypedArray()
     }
