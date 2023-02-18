@@ -1,4 +1,4 @@
-package io.wantic.app.share.utils
+package io.wantic.app.share.core.ui
 
 import android.app.Activity
 import android.widget.Toast

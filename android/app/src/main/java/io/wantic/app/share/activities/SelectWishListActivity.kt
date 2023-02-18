@@ -25,10 +25,10 @@ import io.wantic.app.share.models.Wish
 import io.wantic.app.share.models.WishList
 import io.wantic.app.share.network.NetworkService
 import io.wantic.app.share.network.RestApi
-import io.wantic.app.share.utils.AlertService
+import io.wantic.app.share.core.ui.AlertService
 import io.wantic.app.share.utils.AuthService
 import io.wantic.app.share.utils.CircleTransform
-import io.wantic.app.share.utils.ToastService
+import io.wantic.app.share.core.ui.ToastService
 
 
 class SelectWishListActivity : AppCompatActivity() {

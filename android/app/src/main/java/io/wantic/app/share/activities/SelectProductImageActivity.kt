@@ -28,6 +28,7 @@ import io.wantic.app.share.core.analytics.GoogleAnalytics
 import io.wantic.app.share.core.data.FileHandler
 import io.wantic.app.share.core.data.FileHandling
 import io.wantic.app.share.core.extensions.isInForeground
+import io.wantic.app.share.core.ui.AlertService
 import io.wantic.app.share.core.ui.media.*
 import io.wantic.app.share.core.web.AndroidJSInterface
 import io.wantic.app.share.core.web.WebChromeClient
