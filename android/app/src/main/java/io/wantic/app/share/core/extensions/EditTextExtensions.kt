@@ -1,6 +1,8 @@
-package io.wantic.app.share.utils
+package io.wantic.app.share.core.extensions
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.view.MotionEvent
 import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 
@@ -38,5 +40,22 @@ fun EditText.makeClearableEditText(
 fun EditText.makeClearableEditText(onIsNotEmpty: (() -> Unit)?, onCleared: (() -> Unit)?) {
     compoundDrawables[COMPOUND_DRAWABLE_RIGHT_INDEX]?.let { clearDrawable ->
         makeClearableEditText(onIsNotEmpty, onCleared, clearDrawable)
+    }
+}
+
+@SuppressLint("ClickableViewAccessibility")
+fun EditText.onRightDrawableClicked(onClicked: (view: EditText) -> Unit) {
+    this.setOnTouchListener { v, event ->
+        var hasConsumed = false
+        if (v is EditText) {
+            if (event.x >= v.width - v.totalPaddingRight) {
+                if (event.action == MotionEvent.ACTION_UP) {
+                    onClicked(this)
+                    performClick()
+                }
+                hasConsumed = true
+            }
+        }
+        hasConsumed
     }
 }
