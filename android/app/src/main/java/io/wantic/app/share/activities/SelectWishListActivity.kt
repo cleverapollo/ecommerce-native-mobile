@@ -287,7 +287,7 @@ class SelectWishListActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_VIEW, webpage)
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
-            finishAndRemoveTask()
+            finishAffinity()
         }
     }
 
@@ -370,7 +370,7 @@ class SelectWishListActivity : AppCompatActivity() {
                 openDeepLink("${appLinkScheme}://secure/home/wish-list/${wish.wishListId}?forceRefresh=true")
             }
             .setNeutralButton(R.string.button_label_done) { _, _ ->
-                finishAndRemoveTask()
+                finishAffinity()
             }
             .show()
     }
