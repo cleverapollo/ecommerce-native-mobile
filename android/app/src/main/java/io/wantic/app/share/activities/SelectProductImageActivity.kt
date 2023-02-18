@@ -30,9 +30,7 @@ import io.wantic.app.share.core.data.FileHandling
 import io.wantic.app.share.core.extensions.isInForeground
 import io.wantic.app.share.core.ui.AlertService
 import io.wantic.app.share.core.ui.media.*
-import io.wantic.app.share.core.web.AndroidJSInterface
-import io.wantic.app.share.core.web.WebChromeClient
-import io.wantic.app.share.core.web.WebViewClient
+import io.wantic.app.share.core.web.*
 import io.wantic.app.share.models.*
 import io.wantic.app.share.utils.*
 import kotlin.math.ceil

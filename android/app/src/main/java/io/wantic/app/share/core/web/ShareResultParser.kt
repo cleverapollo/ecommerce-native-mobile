@@ -1,4 +1,4 @@
-package io.wantic.app.share.utils
+package io.wantic.app.share.core.web
 
 import android.util.Log
 import android.util.Patterns
