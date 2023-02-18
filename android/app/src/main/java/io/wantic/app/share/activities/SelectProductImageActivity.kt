@@ -194,7 +194,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         // create close button
         val closeButton: ImageButton = toolbar.findViewById(R.id.toolbarCloseButton)
         closeButton.setOnClickListener {
-            finishAndRemoveTask()
+            finishAffinity()
         }
     }
 
