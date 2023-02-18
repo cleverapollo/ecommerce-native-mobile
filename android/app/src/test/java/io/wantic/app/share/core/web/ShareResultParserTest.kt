@@ -1,4 +1,4 @@
-package io.wantic.app.share.utils
+package io.wantic.app.share.core.web
 
 import io.wantic.app.share.models.ShareResult
 import org.junit.Assert
