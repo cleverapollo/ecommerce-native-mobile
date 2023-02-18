@@ -23,7 +23,7 @@ import io.wantic.app.share.core.ui.media.VectorGraphicsHandler
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.ShareResult
 import io.wantic.app.share.utils.DecimalDigitsInputFilter
-import io.wantic.app.share.utils.onRightDrawableClicked
+import io.wantic.app.share.core.extensions.onRightDrawableClicked
 import java.text.DecimalFormatSymbols
 
 
