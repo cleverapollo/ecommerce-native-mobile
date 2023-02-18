@@ -27,15 +27,13 @@ import io.wantic.app.share.core.analytics.AnalyticsTracking
 import io.wantic.app.share.core.analytics.GoogleAnalytics
 import io.wantic.app.share.core.data.FileHandler
 import io.wantic.app.share.core.data.FileHandling
+import io.wantic.app.share.core.extensions.isInForeground
 import io.wantic.app.share.core.ui.media.*
 import io.wantic.app.share.core.web.AndroidJSInterface
 import io.wantic.app.share.core.web.WebChromeClient
 import io.wantic.app.share.core.web.WebViewClient
 import io.wantic.app.share.models.*
-import io.wantic.app.share.utils.AlertService
-import io.wantic.app.share.utils.AuthService
-import io.wantic.app.share.utils.ShareResultParser
-import io.wantic.app.share.utils.ShareResultParsing
+import io.wantic.app.share.utils.*
 import kotlin.math.ceil
 
 
@@ -50,15 +48,15 @@ class SelectProductImageActivity : AppCompatActivity() {
 
     lateinit var loadingSpinner: ProgressBar
 
-    var infoLoaded = false
     var webCrawlerResult: WebCrawlerResult? = null
 
     // private
 
     private lateinit var webView: WebView
+    private lateinit var webViewClient: WebViewClient
     private lateinit var gridLayout: GridLayout
     private lateinit var actionButton: Button
-    private lateinit var incomingHandler: Handler
+    private lateinit var messageHandler: Handler
     private lateinit var analytics: AnalyticsTracking
     private lateinit var fileHandler: FileHandling
 
@@ -85,8 +83,8 @@ class SelectProductImageActivity : AppCompatActivity() {
 
         if (intent?.action == Intent.ACTION_SEND) {
             startLoading()
-            incomingHandler = initIncomingHandler()
-            incomingHandler.sendMessageDelayed(Message(), 30000)
+            messageHandler = MessageHandler(this)
+            messageHandler.sendMessageDelayed(Message(), 30000)
 
             when {
                 intent.type?.startsWith("text/") == true -> {
@@ -104,22 +102,6 @@ class SelectProductImageActivity : AppCompatActivity() {
             }
         } else {
             showNoImagesFoundFeedback()
-        }
-    }
-
-    private fun initIncomingHandler() = object : Handler(mainLooper) {
-        override fun handleMessage(msg: Message) {
-            val self = this@SelectProductImageActivity
-            if (self.loadingSpinner.visibility != View.GONE) {
-                self.stopLoading()
-                if (self.webCrawlerResult != null) {
-                    if (self.webCrawlerResult!!.images.isEmpty()) {
-                        self.navigateForward(null)
-                    }
-                } else {
-                    self.navigateForward(null)
-                }
-            }
         }
     }
 
@@ -143,7 +125,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         loadingSpinner.visibility = View.VISIBLE
     }
 
-    private fun stopLoading() {
+    fun stopLoading() {
         loadingSpinner.visibility = View.GONE
     }
 
@@ -167,35 +149,36 @@ class SelectProductImageActivity : AppCompatActivity() {
         // create action button
         actionButton = toolbar.findViewById(R.id.toolbarActionButton)
         actionButton.text = resources.getString(R.string.toolbar_button_next)
+        actionButton.setOnClickListener(onNextButtonTapped())
 
         disableButton(actionButton)
-
-        actionButton.setOnClickListener {
-            var productInfo: ProductInfo? = null
-            if (webCrawlerResult != null) {
-                val webImage = webCrawlerResult!!.images.find {
-                    it.id == (selectedView.imageView?.tag ?: false)
-                }
-                productInfo = webImage?.let { it1 ->
-                    ProductInfo(
-                        it1.id,
-                        it1.name.ifEmpty { webCrawlerResult!!.title },
-                        webImage.url,
-                        webCrawlerResult!!.url,
-                        webCrawlerResult!!.price,
-                        false,
-                        null
-                    )
-                }
-            }
-            navigateForward(productInfo)
-        }
 
         // create close button
         val closeButton: ImageButton = toolbar.findViewById(R.id.toolbarCloseButton)
         closeButton.setOnClickListener {
             finishAffinity()
         }
+    }
+
+    private fun onNextButtonTapped(): (View) -> Unit = {
+        var productInfo: ProductInfo? = null
+        if (webCrawlerResult != null) {
+            val webImage = webCrawlerResult!!.images.find {
+                it.id == (selectedView.imageView?.tag ?: false)
+            }
+            productInfo = webImage?.let { it1 ->
+                ProductInfo(
+                    it1.id,
+                    it1.name.ifEmpty { webCrawlerResult!!.title },
+                    webImage.url,
+                    webCrawlerResult!!.url,
+                    webCrawlerResult!!.price,
+                    false,
+                    null
+                )
+            }
+        }
+        navigateForward(productInfo)
     }
 
     fun navigateForward(productInfo: ProductInfo?) {
@@ -229,6 +212,7 @@ class SelectProductImageActivity : AppCompatActivity() {
             val url = shareResult!!.productURLString
             fallback = ProductInfo(id, name, null, url)
         }
+        Log.d(LOG_TAG, "Fallback created $fallback")
         return fallback
     }
 
@@ -252,11 +236,29 @@ class SelectProductImageActivity : AppCompatActivity() {
 
         val code = fileHandler.loadFileAsText("web-crawler.js")
         assert(code.isNotEmpty())
+        webViewClient = WebViewClient(this, code, url)
 
         webView.addJavascriptInterface(AndroidJSInterface(this), "Android")
-        webView.webViewClient = WebViewClient(this, code, url)
+        webView.webViewClient = webViewClient
         webView.webChromeClient = WebChromeClient
         webView.loadUrl(url)
+    }
+
+    /**
+     * Reloads the web page and delays content scraping by 3 seconds.
+     */
+    fun retryCrawling() {
+        Log.d(LOG_TAG, "Retry crawling")
+        if (!this::webViewClient.isInitialized || !this::webView.isInitialized) {
+            Log.d(LOG_TAG, "Retry stopped, web view or client is not initialized")
+            return
+        }
+        if (!this.isInForeground()) {
+            Log.d(LOG_TAG, "Activity is not in foreground, skip processing.")
+            return
+        }
+        webViewClient.scrapeWithDelay = true
+        webView.post { webView.reload() }
     }
 
     override fun onStart() {
