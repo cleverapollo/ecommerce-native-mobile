@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.webkit.JavascriptInterface
 import io.wantic.app.share.activities.SelectProductImageActivity
+import io.wantic.app.share.core.extensions.isInForeground
 import io.wantic.app.share.models.WebImage
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -15,29 +16,48 @@ class AndroidJSInterface(var activity: SelectProductImageActivity) {
         const val LOG_TAG = "AndroidJSInterface"
     }
 
+    private var retryAllowed = true
+
     @JavascriptInterface
     fun onProductInfosLoaded(webCrawlerResultJsonString: String) {
         Log.d(LOG_TAG, "onProductInfosLoaded $webCrawlerResultJsonString")
         val activity = getContext() ?: return
-        if (activity.webCrawlerResult != null) {
-            Log.d(LOG_TAG, "webCrawlerResult already set $webCrawlerResultJsonString")
+
+        // Avoid side effects
+        if (activity.webCrawlerResult != null && activity.webCrawlerResult!!.images.isNotEmpty()) {
+            Log.w(LOG_TAG, "Images already loaded, skip further processing")
             return
         }
+
         try {
             activity.webCrawlerResult = Json.decodeFromString(webCrawlerResultJsonString)
-            activity.infoLoaded = true
-            hideLoadingSpinner()
-            if (activity.webCrawlerResult!!.images.isEmpty()) {
-                onImagesNotFound()
-            } else {
-                displayLoadedImages()
-            }
         } catch (ex: Exception) {
             val localizedMessage = ex.localizedMessage
             if (localizedMessage != null) {
                 Log.e(LOG_TAG, localizedMessage)
             }
+            hideLoadingSpinner()
+            return
         }
+
+        // Best case scenario
+        if (activity.webCrawlerResult!!.images.isNotEmpty()) {
+            hideLoadingSpinner()
+            displayLoadedImages()
+            return
+        }
+
+        // Retry crawling with a delay
+        if (retryAllowed) {
+            retryAllowed = false
+            activity.retryCrawling()
+            return
+        }
+
+        // In the worst case proceed with fallback
+        hideLoadingSpinner()
+        navigateForwardWithFallback()
+        return
     }
 
     @JavascriptInterface
@@ -75,7 +95,7 @@ class AndroidJSInterface(var activity: SelectProductImageActivity) {
         mainHandler.post(runnable)
     }
 
-    private fun onImagesNotFound() {
+    private fun navigateForwardWithFallback() {
         val activity = getContext() ?: return
         activity.navigateForward(null)
     }
@@ -91,8 +111,8 @@ class AndroidJSInterface(var activity: SelectProductImageActivity) {
 
     private fun getContext(): SelectProductImageActivity? {
         val activity = this@AndroidJSInterface.activity
-        if (activity.isDestroyed) {
-            Log.d(LOG_TAG, "Activity ${activity.localClassName} is destroyed")
+        if (!activity.isInForeground()) {
+            Log.d(LOG_TAG, "Activity ${activity.localClassName} is not in foreground")
             return null
         }
         return activity
