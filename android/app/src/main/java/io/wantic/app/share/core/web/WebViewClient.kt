@@ -14,7 +14,8 @@ import io.wantic.app.share.models.ProductInfo
 class WebViewClient(
     private val activity: SelectProductImageActivity,
     private val script: String,
-    private val sharedUrl: String
+    private val sharedUrl: String,
+    private val handler: Handler = Handler(activity.mainLooper)
 ) : WebViewClient() {
 
     companion object {
@@ -49,6 +50,11 @@ class WebViewClient(
             return
         }
 
+        if (view == null) {
+            Log.e(LOG_TAG, "Can't evaluate Javascript on unavailable WebView")
+            return
+        }
+
         scrapeContentFromWebPage(view)
     }
 
@@ -59,7 +65,6 @@ class WebViewClient(
         }
         val fetchedImages = activity.webCrawlerResult?.images ?: listOf()
         if (fetchedImages.isEmpty()) {
-            Log.d(LOG_TAG, "Skipped Javascript evaluation due to error")
             val productInfo = ProductInfo(-1, "", null, sharedUrl)
             activity.navigateForwardThreadSafe(productInfo)
         }
@@ -88,13 +93,9 @@ class WebViewClient(
         return false // avoid redirecting
     }
 
-    private fun scrapeContentFromWebPage(view: WebView?) {
+    private fun scrapeContentFromWebPage(view: WebView) {
         if (!loadingCompleted()) {
             Log.d(LOG_TAG, "Skipped Javascript evaluation. Waiting for redirect url ...")
-            return
-        }
-        if (view == null) {
-            Log.e(LOG_TAG, "Can't evaluate Javascript on unavailable WebView")
             return
         }
         if (!canContinue()) {
@@ -104,7 +105,7 @@ class WebViewClient(
         if (scrapeWithDelay) {
             Log.d(LOG_TAG, "Evaluating Javascript after 3 seconds")
             // Wait until web page has loaded the content.
-            Handler(activity.mainLooper).postDelayed(
+            handler.postDelayed(
                 {
                     Log.d(LOG_TAG, "Evaluating Javascript ...")
                     view.evaluateJavascript(script, null)
