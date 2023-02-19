@@ -61,7 +61,7 @@ class WebViewClient(
         if (fetchedImages.isEmpty()) {
             Log.d(LOG_TAG, "Skipped Javascript evaluation due to error")
             val productInfo = ProductInfo(-1, "", null, sharedUrl)
-            activity.navigateForward(productInfo)
+            activity.navigateForwardThreadSafe(productInfo)
         }
         redirectUrl = null
     }
@@ -137,11 +137,11 @@ class WebViewClient(
     }
 
     private fun isRedirecting(): Boolean {
-        return redirectUrl != null;
+        return redirectUrl != null
     }
 
     private fun loadingCompleted(): Boolean {
-        return !isRedirecting();
+        return !isRedirecting()
     }
 
 }

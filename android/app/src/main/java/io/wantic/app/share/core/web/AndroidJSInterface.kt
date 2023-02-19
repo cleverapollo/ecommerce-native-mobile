@@ -1,11 +1,10 @@
 package io.wantic.app.share.core.web
 
-import android.os.Handler
 import android.util.Log
-import android.view.View
 import android.webkit.JavascriptInterface
 import io.wantic.app.share.activities.SelectProductImageActivity
 import io.wantic.app.share.core.extensions.isInForeground
+import io.wantic.app.share.models.WebCrawlerResult
 import io.wantic.app.share.models.WebImage
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -29,19 +28,19 @@ class AndroidJSInterface(var activity: SelectProductImageActivity) {
             return
         }
 
+        val webCrawlerResult: WebCrawlerResult
+
         try {
-            activity.webCrawlerResult = Json.decodeFromString(webCrawlerResultJsonString)
+            webCrawlerResult = Json.decodeFromString(webCrawlerResultJsonString)
+            activity.webCrawlerResult = webCrawlerResult
         } catch (ex: Exception) {
-            val localizedMessage = ex.localizedMessage
-            if (localizedMessage != null) {
-                Log.e(LOG_TAG, localizedMessage)
-            }
+            logExceptionMessage(ex)
             hideLoadingSpinner()
             return
         }
 
         // Best case scenario
-        if (activity.webCrawlerResult!!.images.isNotEmpty()) {
+        if (webCrawlerResult.images.isNotEmpty()) {
             hideLoadingSpinner()
             displayLoadedImages()
             return
@@ -69,44 +68,42 @@ class AndroidJSInterface(var activity: SelectProductImageActivity) {
     fun onProductInfoLoaded(webImageJsonString: String) {
         Log.d(LOG_TAG, "onProductInfoLoaded $webImageJsonString")
         val activity = getContext() ?: return
-        val webImage: WebImage = Json.decodeFromString(webImageJsonString)
-        val itemExists = activity.webCrawlerResult!!.images.any { image -> image.id == webImage.id }
+        val webImage: WebImage
+
+        try {
+            webImage = Json.decodeFromString(webImageJsonString)
+        } catch (ex: Exception) {
+            logExceptionMessage(ex)
+            return
+        }
+
+        val webCrawlerResult = activity.webCrawlerResult ?: return
+        val itemExists = webCrawlerResult.images.any { image -> image.id == webImage.id }
         if (!itemExists) {
-            val mainHandler = Handler(activity.mainLooper)
-            val runnable = Runnable {
-                activity.addNewProductInfoItem(webImage)
-            }
-            mainHandler.post(runnable)
+            activity.addNewProductInfoItemThreadSafe(webImage)
+        } else {
+            Log.d(LOG_TAG, "Web image with id ${webImage.id} already exists.")
         }
     }
 
     @JavascriptInterface
     fun log(debugMessage: String) {
-        Log.d(LOG_TAG, debugMessage);
+        Log.d(LOG_TAG, debugMessage)
     }
 
     private fun displayLoadedImages() {
         val activity = getContext() ?: return
-        val mainHandler = Handler(activity.mainLooper)
-        val runnable = Runnable {
-            Log.d(LOG_TAG, "initGridLayout from displayLoadedImages")
-            activity.initGridLayout(activity.webCrawlerResult!!.images)
-        }
-        mainHandler.post(runnable)
+        activity.initGridLayoutThreadSafe()
     }
 
     private fun navigateForwardWithFallback() {
         val activity = getContext() ?: return
-        activity.navigateForward(null)
+        activity.navigateForwardThreadSafe(null)
     }
 
     private fun hideLoadingSpinner() {
         val activity = getContext() ?: return
-        val mainHandler = Handler(activity.mainLooper)
-        val runnable = Runnable {
-            activity.loadingSpinner.visibility = View.GONE
-        }
-        mainHandler.post(runnable)
+        activity.stopLoadingThreadSafe()
     }
 
     private fun getContext(): SelectProductImageActivity? {
@@ -116,5 +113,12 @@ class AndroidJSInterface(var activity: SelectProductImageActivity) {
             return null
         }
         return activity
+    }
+
+    private fun logExceptionMessage(ex: Exception) {
+        val localizedMessage = ex.localizedMessage
+        if (localizedMessage != null) {
+            Log.e(LOG_TAG, localizedMessage)
+        }
     }
 }

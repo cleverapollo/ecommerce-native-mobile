@@ -32,13 +32,13 @@ class MessageHandler(private val activity: SelectProductImageActivity) :
 
         if (activity.webCrawlerResult == null) {
             Log.d(LOG_TAG, "No content was scraped, continue with fallback")
-            activity.navigateForward(null)
+            activity.navigateForwardThreadSafe(null)
             return
         }
 
         if (activity.webCrawlerResult!!.images.isEmpty()) {
             Log.d(LOG_TAG, "No images were scraped, continue with fallback")
-            activity.navigateForward(null)
+            activity.navigateForwardThreadSafe(null)
             return
         }
 

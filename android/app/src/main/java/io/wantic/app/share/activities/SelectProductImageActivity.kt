@@ -32,7 +32,8 @@ import io.wantic.app.share.core.ui.AlertService
 import io.wantic.app.share.core.ui.media.*
 import io.wantic.app.share.core.web.*
 import io.wantic.app.share.models.*
-import io.wantic.app.share.utils.*
+import io.wantic.app.share.utils.AuthService
+import io.wantic.app.share.utils.MessageHandler
 import kotlin.math.ceil
 
 
@@ -78,7 +79,7 @@ class SelectProductImageActivity : AppCompatActivity() {
 
         loadingSpinner = findViewById(R.id.loading_spinner)
         analytics = GoogleAnalytics.init()
-        fileHandler = FileHandler(this);
+        fileHandler = FileHandler(this)
 
         if (intent?.action == Intent.ACTION_SEND) {
             startLoading()
@@ -126,6 +127,12 @@ class SelectProductImageActivity : AppCompatActivity() {
 
     fun stopLoading() {
         loadingSpinner.visibility = View.GONE
+    }
+
+    fun stopLoadingThreadSafe() {
+        Handler(mainLooper).post {
+            stopLoading()
+        }
     }
 
     private fun showNoImagesFoundFeedback() {
@@ -180,7 +187,13 @@ class SelectProductImageActivity : AppCompatActivity() {
         navigateForward(productInfo)
     }
 
-    fun navigateForward(productInfo: ProductInfo?) {
+    fun navigateForwardThreadSafe(productInfo: ProductInfo?) {
+        Handler(mainLooper).post {
+            navigateForward(productInfo)
+        }
+    }
+
+    private fun navigateForward(productInfo: ProductInfo?) {
         val fallback: ProductInfo? = createFallBack()
         var productInfoExtra: ProductInfo? = null
         if (productInfo != null) {
@@ -274,7 +287,7 @@ class SelectProductImageActivity : AppCompatActivity() {
         analytics.logScreenEvent("share_extension-picture")
     }
 
-    fun addNewProductInfoItem(webImage: WebImage) {
+    private fun addNewProductInfoItem(webImage: WebImage) {
         var currentList: MutableList<WebImage> = mutableListOf()
         if (this.webCrawlerResult != null) {
             currentList = this.webCrawlerResult!!.images.toMutableList()
@@ -298,7 +311,20 @@ class SelectProductImageActivity : AppCompatActivity() {
         }
     }
 
-    fun initGridLayout(webImages: List<WebImage>) {
+    fun addNewProductInfoItemThreadSafe(webImage: WebImage) {
+        Handler(mainLooper).post {
+            addNewProductInfoItem(webImage)
+        }
+    }
+
+    fun initGridLayoutThreadSafe() {
+        Handler(mainLooper).post {
+            Log.d(LOG_TAG,"initGridLayoutThreadSafe")
+            initGridLayout(webCrawlerResult!!.images)
+        }
+    }
+
+    private fun initGridLayout(webImages: List<WebImage>) {
         val rowCount = calculateRowCount(webImages.size)
 
         Log.d(
