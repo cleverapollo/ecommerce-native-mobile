@@ -96,6 +96,8 @@ dependencies {
     implementation 'com.github.2coffees1team:GlideToVectorYou:v2.0.0'
 
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "io.mockk:mockk-android:$mockkVersion"
+    testImplementation "io.mockk:mockk-agent:$mockkVersion"
 
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
