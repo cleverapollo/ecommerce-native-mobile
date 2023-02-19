@@ -6,20 +6,18 @@ import io.mockk.junit4.MockKRule
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
+import io.wantic.app.share.BaseUnitTest
 import io.wantic.app.share.activities.SelectProductImageActivity
 import io.wantic.app.share.core.extensions.isInForeground
 import io.wantic.app.share.models.WebCrawlerResult
 import io.wantic.app.share.models.WebImage
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.io.File
-import java.nio.charset.Charset
 
-class AndroidJSInterfaceTest {
+class AndroidJSInterfaceTest : BaseUnitTest() {
 
     @get:Rule
     val mockkRule = MockKRule(this)
@@ -55,7 +53,6 @@ class AndroidJSInterfaceTest {
         verify(exactly = 0) { activityMock.retryCrawling() }
         verify(exactly = 0) { activityMock.initGridLayoutThreadSafe() }
         verify(exactly = 0) { activityMock.navigateForwardThreadSafe(any()) }
-        // verify(exactly = 0) { activityMock.addNewProductInfoItemThreadSafe(any()) }
     }
 
     @Test
@@ -135,7 +132,8 @@ class AndroidJSInterfaceTest {
 
     @Test
     fun onProductInfoLoaded_returnsIfItemsAlreadyExist() {
-        val webCrawlerResult: WebCrawlerResult = Json.decodeFromString(loadFileAsText("amazon-product.json"))
+        val webCrawlerResult: WebCrawlerResult =
+            Json.decodeFromString(loadFileAsText("amazon-product.json"))
         val webImage = loadFileAsText("amazon-product-image-20.json")
 
         every { activityMock.webCrawlerResult } returns webCrawlerResult
@@ -147,7 +145,8 @@ class AndroidJSInterfaceTest {
 
     @Test
     fun onProductInfoLoaded_callsAddNewProductInfoItemThreadSafe() {
-        val webCrawlerResult: WebCrawlerResult = Json.decodeFromString(loadFileAsText("amazon-product.json"))
+        val webCrawlerResult: WebCrawlerResult =
+            Json.decodeFromString(loadFileAsText("amazon-product.json"))
         val webImage = loadFileAsText("amazon-product-image-new.json")
 
         every { activityMock.webCrawlerResult } returns webCrawlerResult
@@ -155,14 +154,6 @@ class AndroidJSInterfaceTest {
         androidJSInterface.onProductInfoLoaded(webImage)
 
         verify(exactly = 1) { activityMock.addNewProductInfoItemThreadSafe(any()) }
-    }
-
-    private fun loadFileAsText(fileName: String): String {
-        val resource = javaClass.classLoader?.getResource(fileName)
-        Assert.assertNotNull(resource)
-        val file = File(resource!!.path)
-        Assert.assertNotNull(file)
-        return file.readText(Charset.forName("UTF-8"))
     }
 
 }
