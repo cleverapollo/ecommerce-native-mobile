@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TrackByFunction, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchResult, SearchResultItem } from '@core/models/search-result-item';
@@ -71,6 +71,8 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   set keywords(keywords: string) {
     this.form.controls.keywords.setValue(keywords);
   }
+
+  trackByAsin: TrackByFunction<SearchResultItem> = (idx, result) => result.asin;
 
   private _results: SearchResultItem[] = [];
   private _clearCache = true;

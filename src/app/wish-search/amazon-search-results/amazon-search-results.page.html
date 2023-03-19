@@ -18,7 +18,7 @@
       <ion-col size-lg="6">
         <ion-grid>
           <ion-row>
-            <ion-col size="6" *ngFor="let result of results;">
+            <ion-col size="6" *ngFor="let result of results; trackBy:trackByAsin">
               <app-search-result [wish]="result" (selectWish)="navigateToWishNewPage($event)"></app-search-result>
             </ion-col>
           </ion-row>
