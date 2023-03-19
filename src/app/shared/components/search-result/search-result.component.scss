@@ -3,10 +3,10 @@ ion-card {
     background: white;
     div.image-container {
         height: 165px;
+        max-height: 165px;
         text-align: center;
-        app-wish-image > img {
-            padding-top: 16px;
-            max-height: 162px;
+        app-wish-image {
+            max-height: inherit;
         }
     }
 }
