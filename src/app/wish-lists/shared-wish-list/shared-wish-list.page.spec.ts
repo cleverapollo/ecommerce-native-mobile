@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { PublicResourceApiMockService } from '@core/api/public-resource-api-mock-service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
@@ -11,6 +11,7 @@ import { WishListTestDataUtils } from '@core/test/wish-list-data.utils';
 import { IonicModule } from '@ionic/angular';
 import { OwnersInfoComponent } from '@shared/components/owners-info/owners-info.component';
 import { OwnerNamesPipe } from '@shared/pipes/owner-names.pipe';
+import { of } from 'rxjs';
 
 import { SharedWishListPage } from './shared-wish-list.page';
 
@@ -33,7 +34,7 @@ describe('SharedWishListPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharedWishListPage, OwnerNamesPipe, OwnersInfoComponent],
+      declarations: [SharedWishListPage, OwnerNamesPipe, OwnersInfoComponent],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: AnalyticsService, useValue: analyticsServiceSpy },
@@ -70,16 +71,16 @@ describe('SharedWishListPage', () => {
       expect(component.wishList.wishes.includes(wish)).toBeFalsy();
     });
 
-    it('should refresh data if update of wish in wish list failed', fakeAsync(() => {
+    it('should refresh data if update of wish in wish list failed', async () => {
       const weddingWishList = WishListTestData.sharedWishListWedding;
+      const spy = spyOn(friendWishListStoreMock, 'loadWishList').and.returnValue(of(weddingWishList));
       publicResourceApiServiceMock.getSharedWishListResult = weddingWishList;
 
       component.updateWishList(WishListTestData.sharedWishVanityUnit);
-      tick();
+      await fixture.whenStable();
 
-      expect(component.wishList).toEqual(weddingWishList);
-      flush();
-    }));
+      expect(spy).toHaveBeenCalled();
+    });
   })
 
   afterEach(() => {

@@ -7,7 +7,7 @@ import { LoadingService } from '@core/services/loading.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 import { CustomValidation } from '@shared/custom-validation';
 import { finalize, first } from 'rxjs/operators';
@@ -63,47 +63,15 @@ export class WishCreatePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.setupViewData();
-    this.setupForm();
-  }
-
-  private setupViewData() {
-    this.wish = this.route.snapshot.data.wish ?
-      this.route.snapshot.data.wish :
-      this.router.getCurrentNavigation()?.extras?.state?.searchResult;
-    this.wishList = this.route.snapshot.data.wishList;
-  }
-
-  private setupForm() {
-    const wishListId = this.wishList?.id;
-    const name = this.wish?.name ? this.wish.name : '';
-    const price = this.wish?.price.amount ? this.wish.price.amount : 0.00;
-
-    this.form = this.formBuilder.group({
-      wishListId: this.formBuilder.control(wishListId, {
-        validators: [Validators.required]
-      }),
-      name: this.formBuilder.control(name, {
-        validators: [Validators.required, Validators.maxLength(255)],
-        updateOn: 'blur'
-      }),
-      note: this.formBuilder.control(this.wish?.note, {
-        validators: [Validators.maxLength(255)],
-        updateOn: 'blur'
-      }),
-      price: this.formBuilder.control(this.formatAmount(price), {
-        validators: [Validators.required],
-        updateOn: 'blur'
-      }),
-      isFavorite: this.formBuilder.control(this.wish?.isFavorite ?? false)
-    });
+    this._setupViewData();
+    this._setupForm();
   }
 
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('wish_add');
   }
 
-  async create(){
+  async create() {
     if (this.form?.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;
@@ -121,9 +89,9 @@ export class WishCreatePage implements OnInit {
     ).subscribe({
       next: createdWish => {
         this.searchResultDataService.clear();
-        this.logAddToWishListEvent(createdWish);
+        this.analyticsService.logAddToWishListEvent(createdWish);
         this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
-        this.navigateToWishListDetailPage(this.wish.wishListId);
+        this._navigateToWishListDetailPage(this.wish.wishListId);
       },
       error: _ => {
         const message = 'Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.'
@@ -132,20 +100,7 @@ export class WishCreatePage implements OnInit {
     })
   }
 
-  private logAddToWishListEvent(wish: WishDto) {
-    this.analyticsService.logAppsflyerEvent('af_add_to_wishlist', {
-      af_price: wish.price.amount,
-      af_content_id: wish.asin,
-      af_currency: wish.price.currency
-    });
-    this.analyticsService.logFirebaseEvent('add_to_wishlist', {
-      content_id: wish.asin,
-      value: wish.price.amount,
-      currency: wish.price.currency,
-    });
-  }
-
-  private async navigateToWishListDetailPage(wishListId: string): Promise<boolean> {
+  private async _navigateToWishListDetailPage(wishListId: string): Promise<boolean> {
     const wishSearchTabPath = getTaBarPath(TabBarRoute.WISH_SEARCH, true);
     const url = `/secure/home/wish-list/${wishListId}?forceRefresh=true`;
     if (this.router.url.includes(wishSearchTabPath)) {
@@ -154,7 +109,39 @@ export class WishCreatePage implements OnInit {
     return this.router.navigateByUrl(url);
   }
 
-  private formatAmount(amount: number): string {
+  private _setupViewData() {
+    this.wish = this.route.snapshot.data.wish ?
+      this.route.snapshot.data.wish :
+      this.router.getCurrentNavigation()?.extras?.state?.searchResult;
+    this.wishList = this.route.snapshot.data.wishList;
+  }
+
+  private _setupForm() {
+    const wishListId = this.wishList?.id;
+    const name = this.wish?.name ? this.wish.name : '';
+    const price = this.wish?.price.amount ? this.wish.price.amount : 0.00;
+
+    this.form = this.formBuilder.group({
+      wishListId: this.formBuilder.control(wishListId, {
+        validators: [Validators.required]
+      }),
+      name: this.formBuilder.control(name, {
+        validators: [Validators.required, Validators.maxLength(255)],
+        updateOn: 'blur'
+      }),
+      note: this.formBuilder.control(this.wish?.note, {
+        validators: [Validators.maxLength(255)],
+        updateOn: 'blur'
+      }),
+      price: this.formBuilder.control(this._formatAmount(price), {
+        validators: [Validators.required],
+        updateOn: 'blur'
+      }),
+      isFavorite: this.formBuilder.control(this.wish?.isFavorite ?? false)
+    });
+  }
+
+  private _formatAmount(amount: number): string {
     return (Math.round(amount * 100) / 100).toFixed(2);
   }
 }

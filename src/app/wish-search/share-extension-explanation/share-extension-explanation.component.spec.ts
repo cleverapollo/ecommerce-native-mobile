@@ -1,8 +1,8 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserApiService } from '@core/api/user-api.service';
 import { Logger } from '@core/services/log.service';
-import { DefaultPlatformService } from '@core/services/platform.service';
+import { PlatformService } from '@core/services/platform.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 
@@ -25,7 +25,7 @@ describe('OnboardingSlidesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShareExtensionExplanationComponent ],
+      declarations: [ShareExtensionExplanationComponent],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: ModalController, useValue: modalController },
@@ -33,7 +33,7 @@ describe('OnboardingSlidesComponent', () => {
         { provide: Logger, useValue: logger },
         { provide: UserProfileStore, useValue: userProfileStore },
         { provide: DomSanitizer, useValue: domSanitzer },
-        { provide: DefaultPlatformService, useValue: platformService },
+        { provide: PlatformService, useValue: platformService },
       ]
     }).compileComponents();
 

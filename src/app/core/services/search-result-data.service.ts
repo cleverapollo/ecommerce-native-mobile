@@ -22,12 +22,15 @@ export class SearchResultDataService {
   private readonly CACHE_KEY = 'lastSearchQuery';
 
   private _lastSearchQuery: BehaviorSubject<SearchQuery> = new BehaviorSubject(new SearchQuery());
+
   $lastSearchQuery = this._lastSearchQuery.asObservable();
 
+
+
   constructor(private cache: CacheService) {
-    this.cache.itemExists(this.CACHE_KEY).then( exists => {
+    this.cache.itemExists(this.CACHE_KEY).then(exists => {
       if (exists) {
-        this.cache.getItem(this.CACHE_KEY).then(( query => {
+        this.cache.getItem(this.CACHE_KEY).then((query => {
           this.update(query);
         }));
       }

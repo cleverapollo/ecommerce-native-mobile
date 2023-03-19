@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { App } from '@capacitor/app';
+import { Device } from '@capacitor/device';
+import { Logger } from '@core/services/log.service';
+import { PlatformService } from '@core/services/platform.service';
 import { Observable } from 'rxjs';
 import { appVersion, SERVER_URL } from 'src/environments/environment';
-import { Logger } from '@core/services/log.service';
-import { Device } from '@capacitor/device';
-import { App } from '@capacitor/app';
-import { DefaultPlatformService } from '@core/services/platform.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class ApiService {
   constructor(
     private httpClient: HttpClient,
     private logger: Logger,
-    private platformService: DefaultPlatformService) {
+    private platformService: PlatformService) {
     this.initClientInfoHeader();
   }
 
@@ -25,7 +25,7 @@ export class ApiService {
     this.clientInfoHeader = await this.setupClientInfoHeader();
   }
 
-  post<T>(url: string, body: any) : Observable<T> {
+  post<T>(url: string, body: any): Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
       headers,
@@ -33,7 +33,7 @@ export class ApiService {
     });
   }
 
-  put<T>(url: string, body: any) : Observable<T> {
+  put<T>(url: string, body: any): Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.put<T>(`${SERVER_URL}/${url}`, body, {
       headers,
@@ -41,7 +41,7 @@ export class ApiService {
     });
   }
 
-  patch<T>(url: string, body?: any | null) : Observable<T> {
+  patch<T>(url: string, body?: any | null): Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.patch<T>(`${SERVER_URL}/${url}`, body, {
       headers,
@@ -49,7 +49,7 @@ export class ApiService {
     });
   }
 
-  delete<T>(url: string) : Observable<T> {
+  delete<T>(url: string): Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.delete<T>(`${SERVER_URL}/${url}`, {
       headers,
@@ -57,7 +57,7 @@ export class ApiService {
     });
   }
 
-  get<T>(url: string, queryParams?: HttpParams) : Observable<T> {
+  get<T>(url: string, queryParams?: HttpParams): Observable<T> {
     const headers = this.createDefaultHeaders();
     return this.httpClient.get<T>(`${SERVER_URL}/${url}`, {
       headers,

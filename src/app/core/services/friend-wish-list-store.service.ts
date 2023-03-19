@@ -7,7 +7,7 @@ import { CacheService } from 'ionic-cache';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Logger } from './log.service';
-import { DefaultPlatformService } from './platform.service';
+import { PlatformService } from './platform.service';
 
 export interface FriendWishListStore {
   loadWishLists(forceRefresh: boolean): Observable<FriendWishList[]>;
@@ -37,7 +37,7 @@ export class FriendWishListStoreService implements FriendWishListStore {
   constructor(
     private sharedWishListApiService: SharedWishListApiService,
     private publicResourceApiService: PublicResourceApiService,
-    private platformService: DefaultPlatformService,
+    private platformService: PlatformService,
     private cache: CacheService,
     private logger: Logger
   ) { }
@@ -87,7 +87,7 @@ export class FriendWishListStoreService implements FriendWishListStore {
   updateCachedWishList(wishList: FriendWishList): void {
     this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
     this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: FriendWishList[]) => {
-      const wishListIndex = wishLists.findIndex( w => w.id === wishList.id);
+      const wishListIndex = wishLists.findIndex(w => w.id === wishList.id);
       if (wishListIndex !== -1) {
         wishLists[wishListIndex] = wishList;
         this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);

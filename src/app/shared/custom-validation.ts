@@ -1,4 +1,4 @@
-import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class CustomValidation {
 
@@ -17,15 +17,15 @@ export class CustomValidation {
     };
   }
 
-  static passwordValidator(error: ValidationErrors) : ValidatorFn {
+  static passwordValidator(error: ValidationErrors): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
-        const hasNumber = /\d/.test(control.value);
-        const hasCapitalCase = /[A-Z]/.test(control.value);
-        const hasSmallCase = /[a-z]/.test(control.value);
-        const isValid = hasNumber && hasCapitalCase && hasSmallCase;
+      const hasNumber = /\d/.test(control.value);
+      const hasCapitalCase = /[A-Z]/.test(control.value);
+      const hasSmallCase = /[a-z]/.test(control.value);
+      const isValid = hasNumber && hasCapitalCase && hasSmallCase;
 
-        return isValid ? null : error;
-      };
+      return isValid ? null : error;
+    };
   }
 
   static passwordMatchValidator(control: AbstractControl) {
@@ -43,6 +43,15 @@ export class CustomValidation {
       const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
       const validEmailAdress = emailRegex.test(control.value);
       return validEmailAdress ? null : { email: control.value };
+    }
+    return null;
+  }
+
+  static url(control: AbstractControl): ValidationErrors | null {
+    if (control.value?.length > 0) {
+      const urlRegex = new RegExp(/^https?:\/\/(www\.)?[a-z0-9-]+\.[a-z]{2,}(\/.*)?$/);
+      const validUrl = urlRegex.test(control.value);
+      return validUrl ? null : { url: control.value };
     }
     return null;
   }

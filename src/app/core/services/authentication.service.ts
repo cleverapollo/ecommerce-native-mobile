@@ -1,30 +1,30 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { StorageService, StorageKeys } from './storage.service';
-import { CacheService } from 'ionic-cache';
-import { HTTP } from '@ionic-native/http/ngx';
-import { Logger } from './log.service';
+import { Device } from '@capacitor/device';
 import { AuthService } from '@core/api/auth.service';
+import { CustomError, CustomErrorType } from '@core/error';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { SignInResponse, SignupRequest } from '@core/models/signup.model';
-import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { UserProfile } from '@core/models/user.model';
 import { environment, SERVER_URL } from '@env/environment';
-import { HttpErrorResponse } from '@angular/common/http';
-import { HttpStatusCodes } from '@core/models/http-status-codes';
-import { Device } from '@capacitor/device';
-import { DefaultPlatformService } from './platform.service';
-import { CustomError, CustomErrorType } from '@core/error';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
+import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import firebase from 'firebase/app';
+import { CacheService } from 'ionic-cache';
+import { BehaviorSubject } from 'rxjs';
 import { FirebaseService } from './firebase.service';
+import { Logger } from './log.service';
+import { PlatformService } from './platform.service';
+import { StorageKeys, StorageService } from './storage.service';
 
 export interface AppAuthenticationService {
   signup(signupRequest: SignupRequest): Promise<void>;
   emailPasswordSignIn(email: string, password: string): Promise<SignInResponse>;
-  facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}>;
-  googlePlusSignIn(): Promise<{googlePlusLoginResponse: any, user: UserProfile}>;
-  appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}>;
+  facebookSignIn(): Promise<{ facebookLoginResponse: FacebookLoginResponse, user: UserProfile }>;
+  googlePlusSignIn(): Promise<{ googlePlusLoginResponse: any, user: UserProfile }>;
+  appleSignIn(): Promise<{ appleSignInResponse: AppleSignInResponse, user: UserProfile }>;
   wanticSignIn(): Promise<SignInResponse>;
   logout(): Promise<void>;
   setupFirebaseIdToken(forceRefresh: boolean): Promise<string>;
@@ -32,7 +32,7 @@ export interface AppAuthenticationService {
   resetPassword(email: string): Promise<void>;
   updateEmailVerificationStatus(emailVerified: boolean): void;
   removeDeprecatedAuthToken(): Promise<void>;
-  migrateSavedCredentials(): Promise<{email: string, password: string}>;
+  migrateSavedCredentials(): Promise<{ email: string, password: string }>;
 }
 
 @Injectable({
@@ -46,7 +46,7 @@ export class AuthenticationService implements AppAuthenticationService {
 
   constructor(
     private storageService: StorageService,
-    private platformService: DefaultPlatformService,
+    private platformService: PlatformService,
     private cache: CacheService,
     private nativeHttpClient: HTTP,
     private logger: Logger,
@@ -156,7 +156,7 @@ export class AuthenticationService implements AppAuthenticationService {
     return errorMessage;
   }
 
-  async facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}> {
+  async facebookSignIn(): Promise<{ facebookLoginResponse: FacebookLoginResponse, user: UserProfile }> {
     try {
       // facebook sign in
       const facebookLoginResponse = await this.facebook.login(['email', 'public_profile']);
@@ -191,7 +191,7 @@ export class AuthenticationService implements AppAuthenticationService {
     }
   }
 
-  async googlePlusSignIn(): Promise<{googlePlusLoginResponse: any, user: UserProfile}> {
+  async googlePlusSignIn(): Promise<{ googlePlusLoginResponse: any, user: UserProfile }> {
     try {
       // google plus sign in
       const signInOptions = await this.getSignInOptions();
@@ -234,7 +234,7 @@ export class AuthenticationService implements AppAuthenticationService {
     return signInOptions;
   }
 
-  async appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}> {
+  async appleSignIn(): Promise<{ appleSignInResponse: AppleSignInResponse, user: UserProfile }> {
     try {
       // apple sign in
       const appleSignInResponse = await this.signInWithApple.signin({
@@ -338,20 +338,20 @@ export class AuthenticationService implements AppAuthenticationService {
     return Promise.resolve();
   }
 
-  async migrateSavedCredentials(): Promise<{email: string, password: string}> {
+  async migrateSavedCredentials(): Promise<{ email: string, password: string }> {
     try {
-        const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
-        const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
-        let credentials = null;
-        if (email && password) {
-          credentials = { email, password };
-          this.storageService.set(StorageKeys.CREDENTIALS, credentials, true);
-        }
-        await this.storageService.remove(StorageKeys.LOGIN_EMAIL, true);
-        await this.storageService.remove(StorageKeys.LOGIN_PASSWORD, true);
-        return Promise.resolve(credentials);
+      const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
+      const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
+      let credentials = null;
+      if (email && password) {
+        credentials = { email, password };
+        this.storageService.set(StorageKeys.CREDENTIALS, credentials, true);
+      }
+      await this.storageService.remove(StorageKeys.LOGIN_EMAIL, true);
+      await this.storageService.remove(StorageKeys.LOGIN_PASSWORD, true);
+      return Promise.resolve(credentials);
     } catch (error) {
-        return Promise.resolve(null);
+      return Promise.resolve(null);
     }
   }
 

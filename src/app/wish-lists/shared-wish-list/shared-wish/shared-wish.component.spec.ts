@@ -1,10 +1,10 @@
-import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { PublicResourceApiMockService } from '@core/api/public-resource-api-mock-service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { BrowserService } from '@core/services/browser.service';
-import { StorageService } from '@core/services/storage.service';
 import { MockStorageService } from '@core/services/storage-mock.service';
-import { CoreToastService, ToastService } from '@core/services/toast.service';
+import { StorageService } from '@core/services/storage.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { WishListTestDataUtils } from '@core/test/wish-list-data.utils';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -23,7 +23,7 @@ describe('SharedWishComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharedWishComponent ],
+      declarations: [SharedWishComponent],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: StorageService, useValue: storageService },
@@ -33,9 +33,6 @@ describe('SharedWishComponent', () => {
         { provide: BrowserService, useValue: browserService }
       ]
     }).compileComponents();
-
-;
-
     fixture = TestBed.createComponent(SharedWishComponent);
     component = fixture.componentInstance;
   }));
@@ -126,15 +123,16 @@ describe('SharedWishComponent', () => {
 
   }));
 
-  it('shouldn\'t change the state if wish reservation failed', fakeAsync(() => {
+  it('shouldn\'t change the state if wish reservation failed', async () => {
     const testWish = WishListTestData.sharedWishBoschWasher;
 
     publicResourceApiService.reserveSharedWishResult = null;
     component.wishList = WishListTestData.sharedWishListBirthday;
     component.wish = testWish;
     storageService.getResult = true;
+
     fixture.detectChanges();
-    tick();
+    await fixture.whenStable();
 
     spyOn(storageService, 'set');
     spyOn(component.wishStateChanged, 'emit');
@@ -145,10 +143,7 @@ describe('SharedWishComponent', () => {
     expect(toastServiceSpy.presentErrorToast).toHaveBeenCalledTimes(1);
     expect(storageService.set).not.toHaveBeenCalledWith('sharedWish_1', true);
     expect(component.wishStateChanged.emit).not.toHaveBeenCalled();
-
-    flush();
-
-  }));
+  });
 
   it('should cancel a wish', fakeAsync(() => {
     const testWish = WishListTestData.sharedWishKindle;

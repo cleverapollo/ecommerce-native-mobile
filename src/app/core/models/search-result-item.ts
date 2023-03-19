@@ -22,7 +22,7 @@ export class SearchResultItem {
         if (price instanceof PriceDto) {
             this.price = price;
         } else if (typeof price === 'number') {
-            const priceAmnout = price as number;
+            const priceAmnout = price;
             const priceDto = new PriceDto();
             priceDto.amount = priceAmnout;
             priceDto.currency = '€';
@@ -33,7 +33,7 @@ export class SearchResultItem {
 }
 
 export class SearchResultItemMapper {
-    static map(from: SearchResultItem, to: WishDto) : WishDto  {
+    static map(from: SearchResultItem, to: WishDto): WishDto {
         to.asin = from.asin;
         to.name = from.name
         to.price = from.price
@@ -41,12 +41,4 @@ export class SearchResultItemMapper {
         to.productUrl = from.productUrl
         return to
     }
-}
-
-export interface WebCrawlerResultItem {
-    id: number;
-    imageUrl: string;
-    name: string;
-    price: number;
-    productUrl: string;
 }

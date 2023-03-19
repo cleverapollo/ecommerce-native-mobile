@@ -1,17 +1,12 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpResponse,
-  HttpHeaders,
-  HttpErrorResponse
+  HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor,
+  HttpRequest, HttpResponse
 } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
-import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
+import { Injectable } from '@angular/core';
 import { Logger } from '@core/services/log.service';
-import { DefaultPlatformService } from '@core/services/platform.service';
+import { PlatformService } from '@core/services/platform.service';
+import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
+import { from, Observable } from 'rxjs';
 
 type HttpMethod =
   | 'get'
@@ -26,15 +21,15 @@ type HttpMethod =
 type NativeHttpRequestOptions = {
   method: 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete' | 'options' | 'upload' | 'download';
   data?: {
-      [index: string]: any;
+    [index: string]: any;
   };
   params?: {
-      [index: string]: string | number;
+    [index: string]: string | number;
   };
   serializer?: 'json' | 'urlencoded' | 'utf8' | 'multipart';
   timeout?: number;
   headers?: {
-      [index: string]: string;
+    [index: string]: string;
   };
   filePath?: string | string[];
   name?: string | string[];
@@ -46,9 +41,9 @@ export class NativeHttpInterceptor implements HttpInterceptor {
 
   constructor(
     private nativeHttp: HTTP,
-    private platform: DefaultPlatformService,
+    private platform: PlatformService,
     private logger: Logger
-  ) {}
+  ) { }
 
   public intercept(
     request: HttpRequest<any>,

@@ -8,6 +8,18 @@
     <h1 class="wantic-page-header ion-text-center">Wunsch hinzufügen</h1>
   </ion-text>
 
+  <form [formGroup]="urlForm" (ngSubmit)="searchByUrl()">
+    <p class="wantic-margin-right-left">
+      <ion-icon src="assets/icon/icon-link-1.svg"></ion-icon>&nbsp;URL deines Wunsches einfügen
+    </p>
+    <ion-item lines="none">
+      <ion-input type="text" enterkeyhint="search" placeholder="z.B. www.meinlieblingsshop.de/…" formControlName="url" clearInput="true" inputmode="url" autocomplete="url"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="urlForm.get('url')" [validationMessages]="validationMessages.url"></app-validation-messages>
+  </form>
+
+  <hr />
+
   <form [formGroup]="form" (ngSubmit)="searchByAmazonApi()">
     <p class="wantic-margin-right-left">
       <ion-icon name="logo-amazon"></ion-icon>&nbsp;Was wünschst du dir?<br>
@@ -23,11 +35,11 @@
 
   <div class="wantic-margin-right-left">
     <p>
-      <ion-icon *ngIf="platformService.isIOS" name="share-outline"></ion-icon><ion-icon *ngIf="platformService.isAndroid" src="assets/icon/share-android.svg"></ion-icon>&nbsp;Füge Wünsche direkt aus deinem Browser von allen Webseiten hinzu.
+      <ion-icon *ngIf="isIOS" name="share-outline"></ion-icon><ion-icon *ngIf="isAndroid" src="assets/icon/share-android.svg"></ion-icon>&nbsp;Füge Wünsche direkt aus deinem Browser von allen Webseiten hinzu.
     </p>
     <div class="ion-text-center">
-      <img *ngIf="platformService.isAndroid" src="assets/images/add-wish-share-ext-android.png" alt=""/>
-      <img *ngIf="platformService.isIOS" src="assets/images/add-wish-share-ext-ios.png" alt="" />
+      <img *ngIf="isAndroid" src="assets/images/add-wish-share-ext-android.png" alt=""/>
+      <img *ngIf="isIOS" src="assets/images/add-wish-share-ext-ios.png" alt="" />
     </div>
   </div>
 

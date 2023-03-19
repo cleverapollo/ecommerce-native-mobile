@@ -1,21 +1,20 @@
 import { Component, NgZone } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { environment } from 'src/environments/environment';
-import { CacheService } from 'ionic-cache';
-import { Style, StatusBar } from '@capacitor/status-bar';
-import { App } from '@capacitor/app';
-import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
-import { Logger } from '@core/services/log.service';
-import { AuthenticationService } from '@core/services/authentication.service';
-import { AnalyticsService } from '@core/services/analytics.service';
-import { UserManagementActionMode } from '@core/models/google-api.model';
-import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
-import { DefaultPlatformService } from '@core/services/platform.service';
-import { ScriptLoadingStatus, ScriptService } from '@core/services/script.service';
-import { ScriptName } from '@core/data/script-store';
+import { App } from '@capacitor/app';
 import { Preferences } from '@capacitor/preferences';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
+import { ScriptName } from '@core/data/script-store';
+import { UserManagementActionMode } from '@core/models/google-api.model';
+import { AnalyticsService } from '@core/services/analytics.service';
+import { AuthenticationService } from '@core/services/authentication.service';
+import { Logger } from '@core/services/log.service';
+import { PlatformService } from '@core/services/platform.service';
+import { ScriptLoadingStatus, ScriptService } from '@core/services/script.service';
 import { BackendConfigType } from '@env/backend-config-type';
+import { CacheService } from 'ionic-cache';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -25,8 +24,7 @@ import { BackendConfigType } from '@env/backend-config-type';
 export class AppComponent {
 
   constructor(
-    private platform: Platform,
-    private platformService: DefaultPlatformService,
+    private platformService: PlatformService,
     private cache: CacheService,
     private zone: NgZone,
     private router: Router,
@@ -40,7 +38,7 @@ export class AppComponent {
   }
 
   async setupApp() {
-    await this.platform.ready();
+    await this.platformService.isReady();
     if (this.platformService.isNativePlatform) {
       this.setupNativeApp();
     } else {
@@ -75,8 +73,8 @@ export class AppComponent {
     if (environment.backendType !== BackendConfigType.prod) {
       return;
     }
-    this.scriptService.load(ScriptName.HOTJAR, ScriptName.GTM).then( results => {
-      results.forEach( result => {
+    this.scriptService.load(ScriptName.HOTJAR, ScriptName.GTM).then(results => {
+      results.forEach(result => {
         this.logger.debug(`loaded script ${ScriptName[result.script]} with status ${ScriptLoadingStatus[result.status]}`, result);
       })
     })
@@ -96,7 +94,7 @@ export class AppComponent {
     });
     this.onAppStart();
     // app did become active
-    this.platform.resume.subscribe(() => {
+    this.platformService.resume.subscribe(() => {
       this.onAppResume();
     });
   }

@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { FriendWishList } from '@core/models/wish-list.model';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
-import { DefaultPlatformService } from '@core/services/platform.service';
+import { PlatformService } from '@core/services/platform.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 
 @Injectable()
-export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList}>> {
+export class SharedWishListResolver implements Resolve<Promise<{ wishList: FriendWishList }>> {
 
   constructor(
-    private platformService: DefaultPlatformService,
+    private platformService: PlatformService,
     private friendWishListStore: FriendWishListStoreService,
     private wishListStore: WishListStoreService,
     private router: Router
-    ) {}
+  ) { }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<{ wishList: FriendWishList }> {
     return new Promise<{ wishList: FriendWishList }>(async (resolve, reject) => {

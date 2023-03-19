@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first } from 'rxjs/operators';
 import { Logger } from '@core/services/log.service';
-import { DefaultPlatformService } from '../platform.service';
+import { first } from 'rxjs/operators';
+import { PlatformService } from '../platform.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class AffiliateDouglasService implements AffiliateService {
   private static WANTIC_AFFILIATE_ID = '813821';
   private static DOUGLAS_AWIN_PROGRAM_ID = '10076';
 
-  constructor(private httpClient: HttpClient, private logger: Logger, private platformService: DefaultPlatformService) { }
+  constructor(private httpClient: HttpClient, private logger: Logger, private platformService: PlatformService) { }
 
   supportsDomain(domain: string): boolean {
     return domain === AffiliateDouglasService.DOUGLAS_DOMAIN
@@ -35,7 +35,7 @@ export class AffiliateDouglasService implements AffiliateService {
           Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
         },
         responseType: 'text'
-      }).pipe(first()).subscribe( generatorResult => {
+      }).pipe(first()).subscribe(generatorResult => {
         generatorResult = this.removeImageElementsFromGeneratorResult(generatorResult);
         const affiliateLink = this.parseAffiliateLinkFromGeneratorResult(generatorResult);
         if (affiliateLink === null) {
@@ -57,7 +57,7 @@ export class AffiliateDouglasService implements AffiliateService {
   }
 
   private removeImageElementsFromGeneratorResult(generatorResult: string) {
-    return generatorResult.replace(/<img[^>]*>/g,'');
+    return generatorResult.replace(/<img[^>]*>/g, '');
   }
 
   private parseAffiliateLinkFromGeneratorResult(generatorResult: string): string | null {

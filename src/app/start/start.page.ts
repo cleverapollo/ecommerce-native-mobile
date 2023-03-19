@@ -9,7 +9,7 @@ import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { LoadingService } from '@core/services/loading.service';
 import { Logger } from '@core/services/log.service';
-import { DefaultPlatformService } from '@core/services/platform.service';
+import { PlatformService } from '@core/services/platform.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { UserService } from '@core/services/user.service';
@@ -42,7 +42,7 @@ export class StartPage {
     private userService: UserService,
     private loadingService: LoadingService,
     private toastService: CoreToastService,
-    private platformService: DefaultPlatformService,
+    private platformService: PlatformService,
     public privacyPolicyService: PrivacyPolicyService
   ) { }
 

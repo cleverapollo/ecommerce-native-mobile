@@ -1,44 +1,74 @@
 import { Injectable } from '@angular/core';
-import { SearchResult, SearchResultItem } from '@core/models/search-result-item';
-import { SearchQuery, SearchResultDataService, SearchType } from './search-result-data.service';
 import { SearchService } from '@core/api/search.service';
-import { WebPageCrawlerService } from './web-page-crawler.service';
+import { SearchResult } from '@core/models/search-result-item';
 import { Observable } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { filter, first, tap } from 'rxjs/operators';
+import { SearchQuery, SearchResultDataService, SearchType } from './search-result-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductSearchService {
 
+  get $lastUrlSearchQuery(): Observable<SearchQuery> {
+    return this.searchResultDataService.$lastSearchQuery.pipe(
+      filter(query => query.type === SearchType.URL)
+    );
+  }
+
+  get $lastAmazonSearchQuery(): Observable<SearchQuery> {
+    return this.searchResultDataService.$lastSearchQuery.pipe(
+      filter(query => query.type === SearchType.AMAZON_API)
+    );
+  }
+
+
   constructor(
     private searchResultDataService: SearchResultDataService,
-    private searchService: SearchService,
-    private webPageCrawler: WebPageCrawlerService
+    private searchService: SearchService
   ) {
   }
 
-  searchByUrl(url: string): Observable<SearchResultItem[]> {
-    this.searchResultDataService.clear();
-    this.webPageCrawler.closeInAppBrowser();
-    return this.webPageCrawler.search(url);
-  }
-
-  searchByAmazonApi(keywords: string, page: number): Observable<SearchResult> {
-    return this.searchService.searchForItems(keywords, page).pipe(
+  searchByUrl(url: string): Observable<SearchResult> {
+    return this.searchService.searchByUrl(url).pipe(
       first(),
       tap({
         next: searchResult => {
-          const searchQuery = new SearchQuery();
-          searchQuery.searchTerm = keywords;
-          searchQuery.type = SearchType.AMAZON_API;
-          searchQuery.results = searchResult.items;
-          searchQuery.totalResultCount = searchResult.totalResultCount;
-          searchQuery.pageCount = page;
-          this.searchResultDataService.update(searchQuery);
+          this.updateResults({
+            searchTerm: url,
+            type: SearchType.URL,
+            results: searchResult.items,
+            totalResultCount: searchResult.totalResultCount,
+            pageCount: 1
+          });
         }
       })
     )
+  }
+
+  searchByAmazonApi(keywords: string, page: number): Observable<SearchResult> {
+    return this.searchService.searchByAmazon(keywords, page).pipe(
+      first(),
+      tap({
+        next: searchResult => {
+          this.updateResults({
+            searchTerm: keywords,
+            type: SearchType.AMAZON_API,
+            results: searchResult.items,
+            totalResultCount: searchResult.totalResultCount,
+            pageCount: page
+          });
+        }
+      })
+    )
+  }
+
+  clearResults() {
+    this.searchResultDataService.clear();
+  }
+
+  updateResults(searchQuery: SearchQuery) {
+    this.searchResultDataService.update(searchQuery);
   }
 
 }

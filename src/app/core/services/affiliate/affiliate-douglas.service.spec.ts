@@ -1,15 +1,15 @@
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { AffiliateDouglasService } from './affiliate-douglas.service';
 import { HttpClient } from '@angular/common/http';
 import { Logger } from '@core/services/log.service';
-
+import { LoggerTestingModule } from 'ngx-logger/testing';
+import { LoggerFake } from '../log.service.mock';
+import { PlatformService } from '../platform.service';
+import { PlatformMockService } from '../platform.service.mock';
 import bodyMilkGeneratorResult from './affiliate-douglas-bodymilk-response';
 import parfumeGeneratorResult from './affiliate-douglas-parfum-response';
-import { DefaultPlatformService, PlatformMockService } from '../platform.service';
-import { LoggerFake } from '../log.service.mock';
-import { LoggerTestingModule } from 'ngx-logger/testing';
+import { AffiliateDouglasService } from './affiliate-douglas.service';
 
 describe('AffiliateDouglasService', () => {
   let service: AffiliateDouglasService;
@@ -21,11 +21,11 @@ describe('AffiliateDouglasService', () => {
     platformService.setupIOS(); // simulate any native platform
 
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule, LoggerTestingModule ],
-      providers: [ {
+      imports: [HttpClientTestingModule, LoggerTestingModule],
+      providers: [{
         provide: Logger, useClass: LoggerFake,
       }, {
-        provide: DefaultPlatformService, useValue: platformService
+        provide: PlatformService, useValue: platformService
       }]
     });
     service = TestBed.inject(AffiliateDouglasService);
@@ -40,7 +40,7 @@ describe('AffiliateDouglasService', () => {
   it('should return affiliate link for body milk', (done) => {
     const bodyMilkProductLink = 'https://www.douglas.de/de/p/3000000215?variant=708800';
 
-    service.createAffiliateLink(bodyMilkProductLink).then( affiliateLink => {
+    service.createAffiliateLink(bodyMilkProductLink).then(affiliateLink => {
       expect(affiliateLink).toEqual('https://www.awin1.com/awclick.php?gid=362940&mid=10076&awinaffid=813821&linkid=2383202&clickref=&clickref2=&p=https%3A%2F%2Fa.nonstoppartner.net%2Fa%2F%3Fi%3Dclick%26client%3Ddouglas%26camp%3Dwmgdeep%26nw%3Dfiw1%26l%3Dde%26uri%3DaHR0cHM6Ly93d3cuZG91Z2xhcy5kZS9kZS9wLzMwMDAwMDAyMTU_dmFyaWFudD03MDg4MDA');
       done();
     })
@@ -56,7 +56,7 @@ describe('AffiliateDouglasService', () => {
   it('should return affiliate link for parfume', (done) => {
     const parfumeProductLink = 'https://www.douglas.de/de/p/1001407304';
 
-    service.createAffiliateLink(parfumeProductLink).then( affiliateLink => {
+    service.createAffiliateLink(parfumeProductLink).then(affiliateLink => {
       expect(affiliateLink).toEqual('https://www.awin1.com/awclick.php?gid=362940&mid=10076&awinaffid=813821&linkid=2383202&clickref=&clickref2=&p=https%3A%2F%2Fa.nonstoppartner.net%2Fa%2F%3Fi%3Dclick%26client%3Ddouglas%26camp%3Dwmgdeep%26nw%3Dfiw1%26l%3Dde%26uri%3DaHR0cHM6Ly93d3cuZG91Z2xhcy5kZS9kZS9wLzEwMDE0MDczMDQ');
       done();
     })
@@ -71,7 +71,7 @@ describe('AffiliateDouglasService', () => {
 
   it('should return product link for non Douglas products', (done) => {
     const otherProductLink = 'https://www.some-other-product-link';
-    service.createAffiliateLink(otherProductLink).then( affiliateLink => {
+    service.createAffiliateLink(otherProductLink).then(affiliateLink => {
       expect(affiliateLink).toEqual(otherProductLink);
       done();
     })
@@ -79,7 +79,7 @@ describe('AffiliateDouglasService', () => {
 
   it('should return product link for failing generator request', (done) => {
     const parfumeProductLink = 'https://www.douglas.de/de/p/1001407304';
-    service.createAffiliateLink(parfumeProductLink).then( affiliateLink => {
+    service.createAffiliateLink(parfumeProductLink).then(affiliateLink => {
       expect(affiliateLink).toEqual(parfumeProductLink);
       done();
     });
@@ -94,7 +94,7 @@ describe('AffiliateDouglasService', () => {
 
   it('should return product link if result doesnt contain a affilliate link', (done) => {
     const parfumeProductLink = 'https://www.douglas.de/de/p/1001407304';
-    service.createAffiliateLink(parfumeProductLink).then( affiliateLink => {
+    service.createAffiliateLink(parfumeProductLink).then(affiliateLink => {
       expect(affiliateLink).toEqual(parfumeProductLink);
       done();
     });

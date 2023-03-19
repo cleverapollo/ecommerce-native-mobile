@@ -6,7 +6,7 @@ import { AppsFlyer } from 'appsflyer-capacitor-plugin';
 
 import { AnalyticsService } from './analytics.service';
 import { Logger } from './log.service';
-import { DefaultPlatformService } from './platform.service';
+import { PlatformService } from './platform.service';
 
 describe('AnalyticsService', () => {
 
@@ -23,7 +23,7 @@ describe('AnalyticsService', () => {
         { provide: AppsFlyer, useValue: appsflyer },
         { provide: Logger, useValue: logger },
         { provide: Platform, useValue: platform },
-        { provide: DefaultPlatformService, useValue: platformService },
+        { provide: PlatformService, useValue: platformService },
         { provide: FirebaseAnalytics, useValue: firebaseAnalytics },
         { provide: AngularFireAnalytics, useValue: angularFireAnalytics }
       ]

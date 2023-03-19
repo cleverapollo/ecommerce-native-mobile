@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Keyboard } from '@capacitor/keyboard';
 import { Platform } from '@ionic/angular';
+import { Subject } from 'rxjs';
 
-interface PlatformService {
+export interface OperatingSystem {
   isIOS: boolean;
   isAndroid: boolean;
   isWeb: boolean;
   isNativePlatform: boolean;
   isReady(): Promise<string>;
+  hideKeyBoard(): void;
 }
 @Injectable({
   providedIn: 'root'
 })
-export class DefaultPlatformService implements PlatformService {
+export class PlatformService implements OperatingSystem {
 
   constructor(private platform: Platform) { }
 
@@ -31,51 +34,19 @@ export class DefaultPlatformService implements PlatformService {
     return this.isAndroid || this.isIOS;
   }
 
+  get resume(): Subject<void> {
+    return this.platform.resume;
+  }
+
   isReady(): Promise<string> {
     return this.platform.ready();
   }
 
-}
-
-export class PlatformMockService implements PlatformService {
-
-  private _isIOS: boolean;
-  private _isAndroid: boolean;
-  private _isWeb: boolean;
-
-  get isIOS(): boolean {
-    return this._isIOS;
-  }
-  get isAndroid(): boolean {
-    return this._isAndroid;
-  }
-  get isWeb(): boolean {
-    return this._isWeb;
-  }
-  get isNativePlatform(): boolean {
-    return this.isIOS || this.isAndroid;
-  }
-
-  isReady(): Promise<string> {
-      return Promise.resolve('Platform is ready');
-  }
-
-  setupAndroid() {
-    this._isIOS = false;
-    this._isAndroid = true;
-    this._isWeb = false;
-  }
-
-  setupIOS() {
-    this._isIOS = true;
-    this._isAndroid = false;
-    this._isWeb = false;
-  }
-
-  setupWeb() {
-    this._isIOS = false;
-    this._isAndroid = false;
-    this._isWeb = true;
+  hideKeyBoard(): void {
+    if (!this.isNativePlatform) {
+      return;
+    }
+    Keyboard.hide();
   }
 
 }

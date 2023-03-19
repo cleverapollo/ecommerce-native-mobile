@@ -147,7 +147,7 @@ describe('WishListStoreService', () => {
       wishListApiServiceSpy.getWishLists.and.returnValue(of(cachedWishLists));
       // test
       service.loadWishLists().pipe(first()).subscribe({
-        next (result) {
+        next(result) {
           // check caching
           expect(cacheSpy.removeItem).not.toHaveBeenCalled();
           expect(cacheSpy.loadFromObservable).toHaveBeenCalledTimes(1);
@@ -389,7 +389,7 @@ describe('WishListStoreService', () => {
 
     it('returns updated wish list from backend on caching issues', waitForAsync(() => {
       const wishList = WishListTestData.wishListBirthday;
-      const wishListUpdate = {...wishList, name: 'My updated wish list'};
+      const wishListUpdate = { ...wishList, name: 'My updated wish list' };
 
       wishLists$.next([wishList]);
 
@@ -397,7 +397,7 @@ describe('WishListStoreService', () => {
 
       cacheSpy.saveItem.and.returnValue(Promise.reject());
 
-      const update = { id: wishList.id, showReservedWishes: false, name:  'My updated wish list' };
+      const update = { id: wishList.id, showReservedWishes: false, name: 'My updated wish list' };
       service.updateWishList(update).pipe(
         first()
       ).subscribe({
@@ -545,8 +545,8 @@ describe('WishListStoreService', () => {
       wishApiServiceSpy.createWish.calls.reset();
     });
 
-    it('returns the created wish from backend and saves it to cache', waitForAsync(() => {
-      const createdWish = {...newWish, id: '72480cca-f38e-4427-a18d-1f9247c050ee'};
+    it('returns the created wish from backend and saves it to cache', waitForAsync(async () => {
+      const createdWish = { ...newWish, id: '72480cca-f38e-4427-a18d-1f9247c050ee' };
 
       wishLists$.next([wishList]);
 
@@ -569,7 +569,7 @@ describe('WishListStoreService', () => {
     }));
 
     it('returns created wish if wish can\'t be save to cache', waitForAsync(() => {
-      const createdWish = {...newWish};
+      const createdWish = { ...newWish };
       createdWish.id = '72480cca-f38e-4427-a18d-1f9247c050ee';
 
       wishLists$.next([wishList])
@@ -608,7 +608,7 @@ describe('WishListStoreService', () => {
       const wishList = WishListTestData.wishListBirthday;
       const washer = WishListTestData.wishBoschWasher;
 
-      const updatedWasher = {...washer};
+      const updatedWasher = { ...washer };
       updatedWasher.name = 'Washer Bosch 2022';
 
       wishLists$.next([wishList]);
@@ -633,7 +633,7 @@ describe('WishListStoreService', () => {
 
     it('rejects if there are backend issues', waitForAsync(() => {
       const washer = WishListTestData.wishBoschWasher;
-      const updatedWasher = {...washer};
+      const updatedWasher = { ...washer };
       updatedWasher.name = 'Washer Bosch 2022';
 
       wishApiServiceSpy.update.and.returnValue(throwError(''));
@@ -683,7 +683,7 @@ describe('WishListStoreService', () => {
 
         expect(cacheSpy.saveItem).toHaveBeenCalledTimes(2);
         expect(cacheSpy.saveItem).toHaveBeenCalledWith('getWishList1', wishList, 'wishList', 60 * 60);
-        expect(cacheSpy.saveItem).toHaveBeenCalledWith('getWishLists', [wishList],  'wishList', 60 * 60);
+        expect(cacheSpy.saveItem).toHaveBeenCalledWith('getWishLists', [wishList], 'wishList', 60 * 60);
 
       })
     }));

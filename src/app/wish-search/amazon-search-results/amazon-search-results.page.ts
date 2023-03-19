@@ -1,17 +1,17 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Keyboard } from '@capacitor/keyboard';
-import { SearchService } from '@core/api/search.service';
-import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
-import { WishDto, WishListDto } from '@core/models/wish-list.model';
+import { SearchResult, SearchResultItem } from '@core/models/search-result-item';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { Logger } from '@core/services/log.service';
 import { PagingService } from '@core/services/paging.service';
-import { SearchQuery, SearchResultDataService, SearchType } from '@core/services/search-result-data.service';
-import { IonInfiniteScroll, Platform } from '@ionic/angular';
+import { PlatformService } from '@core/services/platform.service';
+import { ProductSearchService } from '@core/services/product-search.service';
+import { SearchType } from '@core/services/search-result-data.service';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
+import { createNavigationState, isOverviewPage } from '@wishSearch/wish-search.utils';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
@@ -28,7 +28,6 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   maxPageCount = 1;
 
   form: FormGroup;
-  removeSearchResultsAfterLeavingPage = true;
   loading = false;
 
   searchSuggestions = [
@@ -62,7 +61,7 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   };
 
   get showBackButton(): boolean {
-    return this.router.url !== '/secure/wish-search';
+    return !isOverviewPage(this.router.url);
   }
 
   get keywords(): string {
@@ -74,35 +73,35 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   }
 
   private _results: SearchResultItem[] = [];
-  private subscription?: Subscription
+  private _clearCache = true;
+  private _subscription?: Subscription | null = null;
 
   constructor(
-    private searchService: SearchService,
+    private searchService: ProductSearchService,
     private formBuilder: FormBuilder,
-    private searchResultDataService: SearchResultDataService,
     private router: Router,
     private route: ActivatedRoute,
     private logger: Logger,
     private pagingService: PagingService,
     private analyticsService: AnalyticsService,
-    public platform: Platform
+    private platformService: PlatformService
   ) { }
 
   ngOnInit() {
-    this.subscription = this.searchResultDataService.$lastSearchQuery.subscribe(query => {
-      this.createForm(query.searchTerm);
+    this._subscription = this.searchService.$lastAmazonSearchQuery.subscribe(query => {
+      this._createForm(query.searchTerm);
       this.results = query.results;
       this.page = query.pageCount;
       this.maxPageCount = this.pagingService.calcMaxPageCount(query.totalResultCount);
-      this.disableInfitineScrollIfNeeded();
+      this._disableInfitineScrollIfNeeded();
     }, error => {
       this.logger.error(error);
-      this.createForm('');
+      this._createForm('');
     });
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this._subscription?.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -110,13 +109,13 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   }
 
   ionViewDidEnter() {
-    this.analyticsService.setFirebaseScreenName('search');
-    this.removeSearchResultsAfterLeavingPage = true;
+    this.analyticsService.setFirebaseScreenName('search_amazon');
+    this._clearCache = true;
   }
 
   ionViewDidLeave() {
-    if (this.removeSearchResultsAfterLeavingPage) {
-      this.searchResultDataService.clear();
+    if (this._clearCache) {
+      this.searchService.clearResults();
     }
   }
 
@@ -129,58 +128,29 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
     this.page = 1;
     this.infiniteScroll.disabled = false;
     this.loading = true;
-    this.logSearchEvent();
-    this.searchService.searchForItems(this.keywords, this.page).pipe(
+    this.analyticsService.logSearchEvent(this.keywords);
+    this.searchService.searchByAmazonApi(this.keywords, this.page).pipe(
       first(),
       finalize(() => {
-        this.logger.debug('searchByAmazonApi complete');
         this.loading = false;
       })
     ).subscribe({
       next: searchResult => {
         this.results = [];
-        this.logSearchResultEvent(searchResult);
-        this.updateDisplayedSearchResults(searchResult)
-        this.disableInfitineScrollIfNeeded();
-        if (this.platform.is('hybrid')) {
-          Keyboard.hide();
-        }
+        this.analyticsService.logSearchResultEvent(searchResult, this.keywords);
+        this._updateDisplayedSearchResults(searchResult)
+        this._disableInfitineScrollIfNeeded();
+        this.platformService.hideKeyBoard();
       },
       error: this.logger.error
     });
   }
 
-  private logSearchResultEvent(searchResult: SearchResult) {
-    this.analyticsService.logAppsflyerEvent('af_search', {
-      af_search_string: this.keywords,
-      af_content_list: searchResult.items.map(item => item.asin)
-    });
-    this.analyticsService.logFirebaseEvent('search', {
-      search_term: this.keywords,
-      items: searchResult.items.map(item => {
-        return {
-          item_id: item.asin,
-          item_name: item.name,
-          price: item.price
-        };
-      })
-    });
-  }
-
-  private logSearchEvent() {
-    this.analyticsService.logAppsflyerEvent('af_search', {
-      af_search_string: this.keywords
-    });
-    this.analyticsService.logFirebaseEvent('search', {
-      search_term: this.keywords
-    });
-  }
-
   loadMoreSearchResults(event) {
     this.page++;
-    this.searchService.searchForItems(this.keywords, this.page).subscribe({
+    this.searchService.searchByAmazonApi(this.keywords, this.page).subscribe({
       next: searchResult => {
-        this.updateDisplayedSearchResults(searchResult);
+        this._updateDisplayedSearchResults(searchResult);
         if (this.page === this.maxPageCount) {
           // disable infinite scroll
           event.target.disabled = true;
@@ -197,13 +167,11 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   }
 
   navigateToWishNewPage(item: SearchResultItem) {
-    const wish = SearchResultItemMapper.map(item, new WishDto());
-    const wishList: WishListDto = this.route.snapshot.data.wishList;
-    if (wishList) {
-      wish.wishListId = wishList.id;
-    }
-    this.removeSearchResultsAfterLeavingPage = false;
-    this.router.navigate(['wish-new'], {relativeTo: this.route, state: { searchResult: wish }});
+    this._clearCache = false;
+    this.router.navigate(['wish-new'], {
+      relativeTo: this.route,
+      state: createNavigationState(item, this.route.snapshot.data.wishList)
+    });
   }
 
   onSearchSuggestionClick(suggestion: string) {
@@ -211,30 +179,26 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
     this.search();
   }
 
-  private disableInfitineScrollIfNeeded() {
+  private _disableInfitineScrollIfNeeded() {
     if (this.page === this.maxPageCount && this.infiniteScroll) {
       // disable infinite scroll
       this.infiniteScroll.disabled = true;
     }
   }
 
-  private updateDisplayedSearchResults(newSearchResult: SearchResult) {
+  private _updateDisplayedSearchResults(newSearchResult: SearchResult) {
     this.results = this.results.concat(newSearchResult.items);
     this.maxPageCount = this.pagingService.calcMaxPageCount(newSearchResult.totalResultCount);
-    this.saveNewSearchResultState(newSearchResult.totalResultCount);
+    this.searchService.updateResults({
+      searchTerm: this.keywords,
+      type: SearchType.AMAZON_API,
+      results: this.results,
+      totalResultCount: newSearchResult.totalResultCount,
+      pageCount: this.page
+    });
   }
 
-  private saveNewSearchResultState(totalResultCount: number) {
-    const searchQuery = new SearchQuery();
-    searchQuery.searchTerm = this.keywords;
-    searchQuery.type = SearchType.AMAZON_API;
-    searchQuery.results = this.results;
-    searchQuery.totalResultCount = totalResultCount;
-    searchQuery.pageCount = this.page;
-    this.searchResultDataService.update(searchQuery);
-  }
-
-  private createForm(value: string) {
+  private _createForm(value: string) {
     this.form = this.formBuilder.group({
       keywords: [value, {
         validators: [Validators.required, Validators.minLength(2)],

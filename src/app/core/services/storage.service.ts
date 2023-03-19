@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
-import 'capacitor-secure-storage-plugin';
-import { Logger } from './log.service';
 import { Preferences } from '@capacitor/preferences';
+import 'capacitor-secure-storage-plugin';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
-import { DefaultPlatformService } from './platform.service';
+import CryptoJS from 'crypto-js';
 import SecureStorage from 'secure-web-storage';
-import CryptoJS from 'crypto-js'
+import { Logger } from './log.service';
+import { PlatformService } from './platform.service';
 
 const SECRET_KEY = 'wantic_sec';
 
@@ -40,9 +40,9 @@ export class StorageService implements Storage {
 
   constructor(
     private platform: Platform,
-    private platformService: DefaultPlatformService,
+    private platformService: PlatformService,
     private logger: Logger) {
-      this.setupSecureWebStorage();
+    this.setupSecureWebStorage();
   }
 
   private setupSecureWebStorage() {
