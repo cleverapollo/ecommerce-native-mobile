@@ -22,7 +22,6 @@ export class ProductSearchService {
     );
   }
 
-
   constructor(
     private searchResultDataService: SearchResultDataService,
     private searchService: SearchService
@@ -30,7 +29,8 @@ export class ProductSearchService {
   }
 
   searchByUrl(url: string): Observable<SearchResult> {
-    return this.searchService.searchByUrl(url).pipe(
+    const encoded = encodeURI(url);
+    return this.searchService.searchByUrl(encoded).pipe(
       first(),
       tap({
         next: searchResult => {
