@@ -37,39 +37,12 @@ Open a shared wish list of an friend.
 adb.exe -s emulator-5554 shell am start -W -a android.intent.action.VIEW -d wanticbeta://meine-wunschliste/33de35b0-3305-423c-9654-36a92efdf33f io.wantic.app.beta
 ```
 
+## Debugging
+
+Use "io.wantic.app.beta E/Capacitor/Console" as regex in LogCat to see the console output from the app.
+
 # Hosting
 
 - Web: Firebase Hosting
 - iOS: AppStore Connect
 - Android: Google Play Console
-
-# Cordova/Capacitor Plugins
-
-## Authentication
-
-- [Cordova plugin for Firebase Authentication](https://github.com/chemerisuk/cordova-plugin-firebase-authentication)
-- [Google Sign-In Cordova/PhoneGap Plugin](https://github.com/EddyVerbruggen/cordova-plugin-googleplus)
-- [cordova-plugin-facebook-connect](https://github.com/cordova-plugin-facebook-connect/cordova-plugin-facebook-connect)
-- [cordova-plugin-sign-in-with-apple](https://github.com/cordova-plugin-facebook-connect/cordova-plugin-facebook-connect)
-
-## Analytics
-
-- [Cordova AppsFlyer plugin for Android and iOS](https://github.com/AppsFlyerSDK/appsflyer-cordova-plugin)
-- [Cordova plugin for Firebase Analytics](https://github.com/chemerisuk/cordova-plugin-firebase-analytics)
-
-## Network
-
-- [Cordova Advanced HTTP](https://github.com/silkimen/cordova-plugin-advanced-http)
-- [angular-jwt](https://github.com/auth0/angular2-jwt)
-
-## Storage
-
-- [capacitor-secure-storage-plugin](https://github.com/martinkasa/capacitor-secure-storage-plugin)
-- [Ionic cache service](https://github.com/Nodonisko/ionic-cache)
-
-# Sources and references
-
-- [How to Build an Ionic HTTP Loading Interceptor & Retry Logic](https://www.youtube.com/watch?v=IJWCpa_-MeU)
-- [Ionic Development Tips](https://ionicframework.com/docs/developing/tips)
-- [Android: Create Deep Links to App Content](https://developer.android.com/training/app-links/deep-linking)
-
