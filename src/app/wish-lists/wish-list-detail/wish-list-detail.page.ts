@@ -24,7 +24,6 @@ export class WishListDetailPage implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('masonry') masonry: ElementRef<HTMLDivElement>;
   @ViewChildren('bricks') masonryBricks: QueryList<ElementRef<HTMLDivElement>>;
 
-  showBackButton = true;
   wishList = new WishListDto();
 
   get wishes(): WishDto[] {

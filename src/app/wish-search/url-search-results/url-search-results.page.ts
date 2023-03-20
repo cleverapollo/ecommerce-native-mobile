@@ -8,7 +8,7 @@ import { PlatformService } from '@core/services/platform.service';
 import { ProductSearchService } from '@core/services/product-search.service';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
-import { createNavigationState, isOverviewPage } from '@wishSearch/wish-search.utils';
+import { createNavigationState } from '@wishSearch/wish-search.utils';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
@@ -30,10 +30,6 @@ export class UrlSearchResultsPage implements OnInit, OnDestroy {
       ]
     }
   };
-
-  get showBackButton(): boolean {
-    return !isOverviewPage(this.router.url);
-  }
 
   get url(): string | null {
     return this.form?.controls.url.value ?? null;

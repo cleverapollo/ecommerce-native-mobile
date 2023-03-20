@@ -1,9 +1,11 @@
 <ion-grid class="wantic-toolbar">
   <ion-row>
     <ion-col class="wantic-back-button-container">
-      <button class="wantic-back-button" (click)="goBack()" *ngIf="showBackButton">
-        <img src="assets/icon/back_button.svg" alt="Zurück Button" />
-      </button>
+      <ion-toolbar *ngIf="showBackButton">
+        <ion-buttons slot="start">
+          <ion-back-button icon="assets/icon/back_button.svg"></ion-back-button>
+        </ion-buttons>
+      </ion-toolbar>
     </ion-col>
     <ion-col class="wantic-logo-container">
       <img class="wantic-logo" src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />

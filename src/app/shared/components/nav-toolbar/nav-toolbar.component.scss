@@ -7,10 +7,15 @@ ion-grid.wantic-toolbar {
             padding-left: 0;
             padding-top: 0;
             padding-bottom: 0;
-            button.wantic-back-button {
-                padding: 0 0 0 20.5px;
-                background: transparent;
-                height: 60%;
+            ion-toolbar {
+                --padding-top: 0;
+                --background: transparent;
+                ion-buttons {
+                    ion-back-button {
+                        --padding-bottom: 20.5px;
+                        --ripple-color: transparent; 
+                    }
+                }
             }
         }
         ion-col.wantic-logo-container {
@@ -47,14 +52,4 @@ ion-grid.wantic-toolbar {
             }
         }
     }
-}
-
-ion-back-button::part(icon) {
-    height: inherit;
-    width: inherit;
-}
-
-ion-back-button::part(native) {
-    height: inherit;
-    width: inherit;
 }

@@ -11,7 +11,7 @@ import { SearchType } from '@core/services/search-result-data.service';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
-import { createNavigationState, isOverviewPage } from '@wishSearch/wish-search.utils';
+import { createNavigationState } from '@wishSearch/wish-search.utils';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
@@ -59,10 +59,6 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
       ]
     }
   };
-
-  get showBackButton(): boolean {
-    return !isOverviewPage(this.router.url);
-  }
 
   get keywords(): string {
     return this.form.controls.keywords.value;

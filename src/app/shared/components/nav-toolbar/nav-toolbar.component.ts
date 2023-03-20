@@ -10,7 +10,6 @@ import { NavigationService } from '@core/services/navigation.service';
 export class NavToolbarComponent {
 
   @Input() skipToPath?: string | any[] | UrlTree;
-  @Input() backNavigationPath?: string | any[] | UrlTree;
   @Input() showBackButton = true;
 
   @Input() disableNextButton = false;
@@ -25,11 +24,6 @@ export class NavToolbarComponent {
   }
 
   constructor(private navigationService: NavigationService) { }
-
-  goBack() {
-    this.navigationService.back(this.backNavigationPath);
-    this.showBackButton = false;
-  }
 
   skip() {
     if (this.canSkip) {
