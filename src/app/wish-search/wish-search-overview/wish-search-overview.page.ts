@@ -124,7 +124,7 @@ export class WishSearchOverviewPage implements OnInit {
     });
     this.urlForm = this.formBuilder.group({
       url: [null, {
-        validators: [Validators.required, CustomValidation.url],
+        validators: [Validators.required, Validators.pattern(CustomValidation.urlRegex)],
         updateOn: 'submit'
       }]
     });

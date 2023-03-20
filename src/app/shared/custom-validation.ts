@@ -2,6 +2,8 @@ import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angu
 
 export class CustomValidation {
 
+  static urlRegex: RegExp = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+
   static patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
       if (!control.value) {
@@ -43,15 +45,6 @@ export class CustomValidation {
       const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
       const validEmailAdress = emailRegex.test(control.value);
       return validEmailAdress ? null : { email: control.value };
-    }
-    return null;
-  }
-
-  static url(control: AbstractControl): ValidationErrors | null {
-    if (control.value?.length > 0) {
-      const urlRegex = new RegExp(/^https?:\/\/(www\.)?[a-z0-9-]+\.[a-z]{2,}(\/.*)?$/);
-      const validUrl = urlRegex.test(control.value);
-      return validUrl ? null : { url: control.value };
     }
     return null;
   }

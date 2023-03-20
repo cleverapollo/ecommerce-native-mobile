@@ -125,7 +125,7 @@ export class UrlSearchResultsPage implements OnInit, OnDestroy {
   private _setupForm(url?: string) {
     this.form = this.formBuilder.group({
       url: [url, {
-        validators: [Validators.required, CustomValidation.url],
+        validators: [Validators.required, Validators.pattern(CustomValidation.urlRegex)],
         updateOn: 'submit'
       }]
     });
