@@ -10,6 +10,7 @@ import { NavigationService } from '@core/services/navigation.service';
 export class NavToolbarComponent {
 
   @Input() skipToPath?: string | any[] | UrlTree;
+  @Input() defaultHref: string | undefined = undefined;
   @Input() showBackButton = true;
 
   @Input() disableNextButton = false;

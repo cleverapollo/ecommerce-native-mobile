@@ -12,9 +12,17 @@ ion-grid.wantic-toolbar {
                 --background: transparent;
                 ion-buttons {
                     ion-back-button {
-                        --padding-bottom: 20.5px;
                         --ripple-color: transparent; 
                     }
+                    ion-back-button.md {
+                        --padding-bottom: 20.5px;
+                    }
+                    ion-back-button.ios {
+                        --padding-bottom: 11.5px;
+                    }
+                }
+                ion-buttons.ios {
+                    margin-left: 22px;
                 }
             }
         }
