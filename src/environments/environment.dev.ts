@@ -1,6 +1,6 @@
-import { EnvironmentConfig } from './environment.d';
 import packageJson from '../../package.json';
 import { BackendConfigType } from './backend-config-type';
+import { EnvironmentConfig } from './environment.d';
 
 export const appVersion = packageJson.version;
 
@@ -12,7 +12,7 @@ export const environment: EnvironmentConfig = {
         networkProtocol: 'http',
         thirdLevelDomain: '',
         secondLevelDomain: 'localhost', // for android and iOS simulators = 10.0.2.2
-        port: 8080
+        port: 3000
     },
     firebaseConfig: {
         apiKey: 'AIzaSyDIpjCfUOk-BAs6D7P1UgwMxAUjAzjsHcc',
