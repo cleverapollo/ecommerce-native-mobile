@@ -1,12 +1,14 @@
 @import "./wish-list-card.scss";
 @import "./wish-card.scss";
 
+$safeAreaHight: 27px;
+
 ion-header.safe-area-inset-top {
     margin-top: constant(safe-area-inset-top);
     margin-top: env(safe-area-inset-top);
  }
 ion-header.safe-area-inset-top.md {
-    margin-top: 27px
+    margin-top: $safeAreaHight
 }
 
 a.wantic-link {
@@ -549,11 +551,15 @@ ion-button.no-margin-bottom {
 
 ion-toast.custom-toast {
     --border-radius: 41px;
-  }
+}
 
 ion-toast.custom-toast::part(message) {
     text-align: center;
     text-transform: uppercase;
     font: normal normal bold 10px/13px Roboto;
     letter-spacing: 1px;
+}
+
+.md ion-toast.custom-toast {
+    transform: translateY($safeAreaHight) !important;
 }
