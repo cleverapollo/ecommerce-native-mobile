@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { UserProfile } from '@core/models/user.model';
-import { from, Observable } from 'rxjs';
 import { UserApiService } from '@core/api/user-api.service';
-import { CacheService } from 'ionic-cache';
+import { UserProfile } from '@core/models/user.model';
 import { Logger } from '@core/services/log.service';
+import { StorageKeys, StorageService } from '@core/services/storage.service';
+import { CacheService } from 'ionic-cache';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface StoredUserProfile {
   item: UserProfile;
@@ -19,12 +20,16 @@ export class UserProfileStore {
   private readonly CACHE_KEY = 'userProfile'
   private readonly CACHE_GROUP_KEY = 'user';
 
+  isCreatorAccountActive$ = new BehaviorSubject<boolean>(false);
+
   constructor(
-    private cache: CacheService,
-    private api: UserApiService,
-    private logger: Logger
-  )
-  {}
+    private readonly cache: CacheService,
+    private readonly storage: StorageService,
+    private readonly api: UserApiService,
+    private readonly logger: Logger
+  ) {
+    this._initData();
+  }
 
   loadUserProfile(forceRefresh: boolean = false): Observable<UserProfile> {
     const request = this.api.getProfile();
@@ -66,5 +71,15 @@ export class UserProfileStore {
     return this.cache.loadFromObservable(keyForCaching, request, this.CACHE_GROUP_KEY, ttl);
   }
 
+  async toggleIsCreatorAccountActive() {
+    const isCreatorAccountActive = this.isCreatorAccountActive$.value;
+    await this.storage.set(StorageKeys.ACTIVE_CREATOR_ACCOUNT, !isCreatorAccountActive);
+    this.isCreatorAccountActive$.next(!isCreatorAccountActive);
+  }
+
+  private async _initData() {
+    const isCreatorAccountActive = await this.storage.get<string>(StorageKeys.ACTIVE_CREATOR_ACCOUNT)
+    this.isCreatorAccountActive$.next(isCreatorAccountActive === 'true');
+  }
 
 }

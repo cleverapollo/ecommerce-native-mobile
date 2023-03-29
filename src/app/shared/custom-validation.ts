@@ -55,7 +55,6 @@ export class CustomValidation {
     }
   }
 
-
   static validateFormGroup(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);

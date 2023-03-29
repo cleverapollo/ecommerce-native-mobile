@@ -38,4 +38,8 @@ export class NavigationService {
     return this.navController.navigateForward(toPage);
   }
 
+  root(toPage: string | any[] | UrlTree): Promise<boolean> {
+    return this.navController.navigateRoot(toPage);
+  }
+
 }

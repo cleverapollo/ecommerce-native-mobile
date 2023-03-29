@@ -25,6 +25,21 @@ apiFiles.forEach(filePath => {
     server.patch(url, (req, res) => res.send(api));
 });
 
+server.post('/v1/content-creators', (req, res) => {
+    const userName = req.body.userName;
+    if (userName === 'userNameTaken') {
+        res.status(409).send();
+        return;
+    }
+    if (userName === 'max') {
+        res.setHeader('Location', `http://localhost:3000/v1/content-creators/${userName}`);
+        res.status(201).send();
+
+        return;
+    }
+    res.status(500).send();
+});
+
 
 server.listen(3000, () => {
     console.log('JSON server listening on port 3000');

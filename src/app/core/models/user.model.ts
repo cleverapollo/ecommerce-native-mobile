@@ -1,4 +1,5 @@
 import { AbstractControl } from '@angular/forms';
+import { ContentCreatorAccount } from './content-creator.model';
 import { AuthProvider } from './signup.model';
 
 export class UserProfile {
@@ -8,6 +9,7 @@ export class UserProfile {
     email: EmailDto;
     authProvider: AuthProvider;
     userSettings: UserSettingsDto;
+    creatorAccount?: ContentCreatorAccount | null = null;
 }
 export class UserSettingsDto {
     showOnboardingSlidesiOS: boolean;

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { App } from '@capacitor/app';
 import { Device } from '@capacitor/device';
@@ -30,6 +30,15 @@ export class ApiService {
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
       headers,
       responseType: 'json'
+    });
+  }
+
+  postRaw<T>(url: string, body: any): Observable<HttpResponse<T>> {
+    const headers = this.createDefaultHeaders();
+    return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
+      headers,
+      responseType: 'json',
+      observe: 'response'
     });
   }
 

@@ -1,25 +1,44 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NavigationService } from '@core/services/navigation.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
-import { IonTabs, NavController } from '@ionic/angular';
+import { IonTabs } from '@ionic/angular';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tab-bar',
   templateUrl: './tab-bar.page.html',
   styleUrls: ['./tab-bar.page.scss'],
 })
-export class TabBarPage {
+export class TabBarPage implements OnInit, OnDestroy {
 
   @ViewChild(IonTabs)
   public tabs: IonTabs;
 
+  tabHome = 'home';
+  isCreatorAccountActive: boolean = false;
+
+  private subscription: Subscription;
+
   constructor(
-    private navController: NavController,
-    private searchResultDataService: SearchResultDataService
+    private readonly navService: NavigationService,
+    private readonly searchResultDataService: SearchResultDataService,
+    private readonly userStore: UserProfileStore
   ) { }
 
-  onTabButtonClicked() {
-    const selectedTab = this.tabs.getSelected();
-    this.navController.navigateRoot(`secure/${selectedTab}`);
+  ngOnInit(): void {
+    this.subscription = this.userStore.isCreatorAccountActive$.subscribe(isCreatorAccountActive => {
+      this.isCreatorAccountActive = isCreatorAccountActive;
+      this.tabHome = isCreatorAccountActive ? 'product-list-overview' : 'home';
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  onTabButtonClicked(selectedTab: string) {
+    this.navService.root(`secure/${selectedTab}`);
     this.searchResultDataService.clear();
   }
 

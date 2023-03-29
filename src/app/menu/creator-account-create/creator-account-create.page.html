@@ -1,0 +1,114 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar defaultHref="/secure/menu/creator-account-info"></app-nav-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <h1 class="ion-text-center wantic-page-header">Creator Profil erstellen</h1>
+
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createAccount()">
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Name *</ion-label>
+      <ion-input type="text" 
+                  placeholder="Anzeigename"
+                  formControlName="name" 
+                  autocapitalize="true" 
+                  clearInput="true" 
+                  required="true">
+    </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Benutzername *</ion-label>
+      <ion-input type="text" 
+                  placeholder="z.B. dein.name42"
+                  formControlName="userName" 
+                  clearInput="true" 
+                  required="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('userName')" [validationMessages]="validationMessages.userName"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Intro Text *</ion-label>
+      <ion-textarea formControlName="description" 
+                    name="description" 
+                    placeholder="Eine kurze Profilbeschreibung"
+                    auto-grow="true" 
+                    rows="3" 
+                    spellcheck="true" 
+                    maxlength="255" 
+                    required="true">
+      </ion-textarea>
+    </ion-item>
+    <app-validation-messages [control]="form.get('description')" [validationMessages]="validationMessages.description"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-instagram"></ion-icon>&nbsp;Instagram URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://www.instagram.com/dein.name42/"
+                  formControlName="instagramUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('instagramUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-facebook"></ion-icon>&nbsp;Facebook URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://de-de.facebook.com/dein.name42/"
+                  formControlName="facebookUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('facebookUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-youtube"></ion-icon>&nbsp;Youtube URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://www.youtube.com/channel/deinKanal"
+                  formControlName="youtubeUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('youtubeUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-tiktok"></ion-icon>&nbsp;TikTok URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://www.tiktok.com/@dein.name42"
+                  formControlName="tiktokUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('tiktokUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-twitch"></ion-icon>&nbsp;Twitch URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://www.twitch.tv/dein.name42/"
+                  formControlName="twitchUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('twitchUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-twitter"></ion-icon>&nbsp;Twitter URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://twitter.com/dein.name42/"
+                  formControlName="twitterUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('twitterUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block">
+      SPEICHERN
+    </ion-button>
+
+  </form>
+
+</ion-content>

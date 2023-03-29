@@ -12,6 +12,7 @@ import { PlatformService } from './platform.service';
 const SECRET_KEY = 'wantic_sec';
 
 export enum StorageKeys {
+  ACTIVE_CREATOR_ACCOUNT = 'activeCreatorAccount',
   USER_SETTINGS = 'userSettings',
   LOGIN_EMAIL = 'loginEmail', // deprecated
   LOGIN_PASSWORD = 'loginPassword', // deprecated

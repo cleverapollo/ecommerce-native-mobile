@@ -1,0 +1,30 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar [showBackButton]="false"></app-nav-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="forceRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <section *ngIf="account" class="wantic-container">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div>
+        <app-user-initials [firstName]="account.name" size="size-m"></app-user-initials>
+        <p class="name"><strong>{{ account.name }}</strong></p>
+        <p class="user-name">@{{ account.userName }}</p>
+      </div>
+      <button class="share-account" disabled>
+        <span>Profil teilen</span>
+      </button>
+    </div>
+
+    <p>
+      {{ account.description }}
+    </p>
+
+  </section>
+
+  <hr />
+
+</ion-content>

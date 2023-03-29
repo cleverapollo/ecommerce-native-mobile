@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import { TabBarPage } from './tab-bar.page';
 import { AuthGuard } from '@guards/auth.guard';
 import { getTaBarPath, TabBarRoute } from './tab-bar-routes';
+import { TabBarPage } from './tab-bar.page';
 
 
 const routes: Routes = [
@@ -23,21 +23,27 @@ const routes: Routes = [
           .then(m => m.HomePageModule)
       },
       {
+        path: getTaBarPath(TabBarRoute.PRODUCT_LIST_OVERVIEW, false),
+        canActivate: [AuthGuard],
+        loadChildren: () => import('../product-lists/product-list-overview/product-list-overview.module')
+          .then(m => m.ProductListOverviewPageModule)
+      },
+      {
         path: getTaBarPath(TabBarRoute.FRIENDS_HOME, false),
         canActivate: [AuthGuard],
         loadChildren: () => import('@friends/friends-home/friends-home.module')
-          .then( m => m.FriendsHomePageModule)
+          .then(m => m.FriendsHomePageModule)
       },
       {
         path: getTaBarPath(TabBarRoute.WISH_SEARCH, false),
         canActivate: [AuthGuard],
         loadChildren: () => import('@wishSearch/wish-search-overview/wish-search-overview.module')
-          .then( m => m.WishSearchSelectionPageModule)
+          .then(m => m.WishSearchSelectionPageModule)
       },
       {
         path: getTaBarPath(TabBarRoute.MENU, false),
         loadChildren: () => import('../menu/menu.module')
-          .then( m => m.MenuPageModule)
+          .then(m => m.MenuPageModule)
       }
     ]
   }
@@ -47,4 +53,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TabBarPageRoutingModule {}
+export class TabBarPageRoutingModule { }

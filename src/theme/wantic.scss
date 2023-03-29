@@ -23,6 +23,10 @@ a.disabled {
     opacity: 0.45;
 }
 
+button[disabled] {
+    opacity: 0.45;
+}
+
 .wantic-margin-right-left {
     margin-right: var(--wantic-margin);
     margin-left: var(--wantic-margin);
@@ -478,7 +482,7 @@ div.divide {
     }
 }
 
-ion-grid.wantic-container {
+ion-grid.wantic-container, .wantic-container {
     padding-right: var(--wantic-container-spacing);
     padding-left: var(--wantic-container-spacing);
 }
@@ -565,4 +569,12 @@ ion-toast.custom-toast::part(message) {
 
 .md ion-toast.custom-toast {
     transform: translateY($safeAreaHight) !important;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
 }

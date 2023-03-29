@@ -9,6 +9,7 @@ export class UserInitialsComponent {
 
   @Input() firstName = '';
   @Input() lastName = '';
+  @Input() size = 'size-s';
 
   constructor() { }
 

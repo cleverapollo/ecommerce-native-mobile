@@ -2,13 +2,23 @@
     border-radius: 50%;
     background-color: var(--ion-color-primary);
     color: white;
-    height: 40px;
-    width: 40px;
     display: flex; /* or inline-flex */
     align-items: center; 
     justify-content: center;
-    font-size: 16px;
+
     font-weight: 700;
     line-height: 19;
     letter-spacing: 0.8pt;
+}
+
+.size-s {
+    height: 40px;
+    width: 40px;
+    font-size: 16px;
+}
+
+.size-m {
+    height: 60px;
+    width: 60px;
+    font-size: 20px;
 }
