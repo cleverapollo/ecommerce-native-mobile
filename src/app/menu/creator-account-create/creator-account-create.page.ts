@@ -73,7 +73,7 @@ export class CreatorAccountCreatePage implements OnInit {
       name: this.form.controls.name.value,
       userName: this.form.controls.userName.value,
       description: this.form.controls.description.value,
-      socialMedia: {
+      socialMediaLinks: {
         instagramUrl: this.form.controls.instagramUrl.value,
         facebookUrl: this.form.controls.facebookUrl.value,
         youtubeUrl: this.form.controls.youtubeUrl.value,

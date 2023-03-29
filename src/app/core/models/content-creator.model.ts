@@ -2,7 +2,7 @@ export interface ContentCreatorAccount {
     name: string;
     userName: string;
     description: string;
-    socialMedia: {
+    socialMediaLinks: {
         instagramUrl?: string;
         facebookUrl?: string;
         youtubeUrl?: string;
