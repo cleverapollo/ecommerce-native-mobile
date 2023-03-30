@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ionic serve --configuration=dev",
-    "beta-web": "ionic serve --configuration=beta",
+    "start:beta": "ionic serve --configuration=beta",
     "dev-beta-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=beta",
     "dev-beta-android": "npx cap sync android && ionic capacitor run android -l --external --configuration=beta --public-host=192.168.0.251",
     "dev-prod-ios": "npx cap sync && ionic capacitor run ios -l --external --configuration=production",
