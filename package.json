@@ -72,8 +72,6 @@
     "@ionic/storage-angular": "^3.0.6",
     "appsflyer-capacitor-plugin": "^6.5.2",
     "capacitor-secure-storage-plugin": "^0.5.1",
-    "cordova-android": "10.1.1",
-    "cordova-ios": "^6.2.0",
     "cordova-plugin-advanced-http": "^3.3.1",
     "cordova-plugin-facebook-connect": "^3.2.0",
     "cordova-plugin-file": "^6.0.2",
@@ -146,19 +144,6 @@
     "uuid": "^8.3.2"
   },
   "description": "An Ionic project",
-  "cordova": {
-    "plugins": {
-      "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-device": {},
-      "cordova-plugin-advanced-http": {},
-      "cordova-plugin-file": {}
-    },
-    "platforms": [
-      "android",
-      "ios"
-    ]
-  },
   "overrides": {
     "appsflyer-capacitor-plugin": {
       "@capacitor/android": "$@capacitor/android",
