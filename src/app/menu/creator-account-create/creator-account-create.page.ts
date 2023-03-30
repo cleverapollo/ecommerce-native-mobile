@@ -77,9 +77,7 @@ export class CreatorAccountCreatePage implements OnInit {
         instagramUrl: this.form.controls.instagramUrl.value,
         facebookUrl: this.form.controls.facebookUrl.value,
         youtubeUrl: this.form.controls.youtubeUrl.value,
-        tiktokUrl: this.form.controls.tiktokUrl.value,
-        twitchUrl: this.form.controls.twitchUrl.value,
-        twitterUrl: this.form.controls.twitterUrl.value
+        tiktokUrl: this.form.controls.tiktokUrl.value
       }
     }).pipe(
       first(),
@@ -128,9 +126,7 @@ export class CreatorAccountCreatePage implements OnInit {
       instagramUrl: buildSocialMediaUrlControl(),
       facebookUrl: buildSocialMediaUrlControl(),
       youtubeUrl: buildSocialMediaUrlControl(),
-      tiktokUrl: buildSocialMediaUrlControl(),
-      twitchUrl: buildSocialMediaUrlControl(),
-      twitterUrl: buildSocialMediaUrlControl()
+      tiktokUrl: buildSocialMediaUrlControl()
     });
   }
 

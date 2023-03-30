@@ -85,26 +85,6 @@
     </ion-item>
     <app-validation-messages [control]="form.get('tiktokUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
 
-    <ion-item lines="none">
-      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-twitch"></ion-icon>&nbsp;Twitch URL</ion-label>
-      <ion-input type="url" 
-                  placeholder="https://www.twitch.tv/dein.name42/"
-                  formControlName="twitchUrl" 
-                  clearInput="true">
-      </ion-input>
-    </ion-item>
-    <app-validation-messages [control]="form.get('twitchUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
-
-    <ion-item lines="none">
-      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-twitter"></ion-icon>&nbsp;Twitter URL</ion-label>
-      <ion-input type="url" 
-                  placeholder="https://twitter.com/dein.name42/"
-                  formControlName="twitterUrl" 
-                  clearInput="true">
-      </ion-input>
-    </ion-item>
-    <app-validation-messages [control]="form.get('twitterUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
-
     <ion-button type="submit" *ngIf="form" class="wantic-save-button" color="primary" expand="block">
       SPEICHERN
     </ion-button>

@@ -7,7 +7,5 @@ export interface ContentCreatorAccount {
         facebookUrl?: string;
         youtubeUrl?: string;
         tiktokUrl?: string;
-        twitchUrl?: string;
-        twitterUrl?: string;
     }
 }

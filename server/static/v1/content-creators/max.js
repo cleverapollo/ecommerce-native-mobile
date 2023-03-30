@@ -6,8 +6,6 @@ module.exports = {
         instagramUrl: 'https://www.instagram.com/knossi',
         facebookUrl: 'https://de-de.facebook.com/knossi/',
         youtubeUrl: 'https://www.youtube.com/channel/UCtckLvYloMnsey8E5qTwWwA',
-        tiktokUrl: 'https://www.tiktok.com/@therealknossi',
-        twitchUrl: 'https://www.twitch.tv/therealknossi',
-        twitterUrl: 'https://twitter.com/TheRealKnossi'
+        tiktokUrl: 'https://www.tiktok.com/@therealknossi'
     }
 }
