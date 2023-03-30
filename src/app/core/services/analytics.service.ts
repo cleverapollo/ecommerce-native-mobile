@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { AngularFireAnalytics } from '@angular/fire/analytics';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
 import { SearchResult } from '@core/models/search-result-item';
 import { AuthProvider } from '@core/models/signup.model';

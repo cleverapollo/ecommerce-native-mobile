@@ -12,8 +12,8 @@ import { AppComponent } from './app.component';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, ScreenTrackingService, UserTrackingService } from '@angular/fire/compat/analytics';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CoreModule } from '@core/core.module';
 import { AuthenticationService } from '@core/services/authentication.service';
@@ -70,7 +70,7 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     }),
     LoggerModule.forRoot({
       level: NgxLoggerLevel.DEBUG,
-                    // TRACE     DEBUG       INFO      LOG         WARN       ERROR    FATAL
+      // TRACE     DEBUG       INFO      LOG         WARN       ERROR    FATAL
       colorScheme: ['#7D3C98', '#17A589', '#1F618D', '#797D7F', '#F39C12', '#E74C3C', '#E74C3C']
     }),
     NativeHttpModule,
@@ -99,8 +99,8 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     { provide: LOCALE_ID, useValue: 'de' },
     { provide: HTTP_INTERCEPTORS, useClass: NativeTokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: NativeHttpInterceptor, multi: true },
-    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend]},
+    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend] },
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

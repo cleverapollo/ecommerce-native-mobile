@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AngularFireAnalytics } from '@angular/fire/analytics';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 import { Platform } from '@ionic/angular';
 import { AppsFlyer } from 'appsflyer-capacitor-plugin';

@@ -11,7 +11,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
 import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 import { CacheService } from 'ionic-cache';
 import { BehaviorSubject } from 'rxjs';
 import { FirebaseService } from './firebase.service';
