@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpInterceptor
+    HttpHandler,
+    HttpInterceptor, HttpRequest
 } from '@angular/common/http';
-import { Observable, throwError, of, Subject, from } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
-import { HttpStatusCodes } from '@core/models/http-status-codes';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { SERVER_URL } from '@env/environment';
+import { from, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 
 @Injectable()
 export class NativeTokenInterceptor implements HttpInterceptor {
@@ -39,13 +38,15 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     async handle(request: HttpRequest<any>, next: HttpHandler) {
         const authToken = await this.authService.setupFirebaseIdToken(false);
-        request = this.addAuthToken(request, authToken);
+        if (authToken) {
+            request = this.addAuthToken(request, authToken);
+        }
         return next.handle(request).pipe(catchError(error => {
             return this.handleResponseError(error, request, next);
-        })).toPromise();
+        }));
     }
 
-    handleResponseError(error: any, request?: HttpRequest<any>, next?: HttpHandler) {
+    handleResponseError(error: any, request: HttpRequest<any>, next: HttpHandler): Observable<any> {
         // Business error
         if (error.status === 400) {
             // Show message
@@ -59,9 +60,9 @@ export class NativeTokenInterceptor implements HttpInterceptor {
                 }),
                 catchError(e => {
                     if (e.status !== HttpStatusCodes.UNAUTHORIZED) {
-                        return this.handleResponseError(e);
+                        return this.handleResponseError(e, request, next);
                     } else {
-                        this.logout();
+                        return this.logout();
                     }
                 }));
         }
@@ -87,9 +88,11 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         return throwError(error);
     }
 
-    async handleRequestAfterTokenRefresh(request?: HttpRequest<any>, next?: HttpHandler) {
+    async handleRequestAfterTokenRefresh(request: HttpRequest<any>, next: HttpHandler) {
         const authToken = await this.authService.setupFirebaseIdToken(false);
-        request = this.addAuthToken(request, authToken);
+        if (authToken) {
+            request = this.addAuthToken(request, authToken);
+        }
         return next.handle(request).toPromise();
     }
 
@@ -130,6 +133,6 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     async logout() {
         await this.authService.logout();
-        this.router.navigateByUrl('start');
+        return this.router.navigateByUrl('start');
     }
 }

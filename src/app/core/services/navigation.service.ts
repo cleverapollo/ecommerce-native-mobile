@@ -30,7 +30,7 @@ export class NavigationService {
     return new Promise((resolve, reject) => {
       this.navController.pop()
         .then(() => resolve(true))
-        .catch(reject)
+        .catch(() => reject())
     });
   }
 

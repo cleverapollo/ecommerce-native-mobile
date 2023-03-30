@@ -141,7 +141,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     return body;
   }
 
-  private createResponseHeaders(nativeHttpResponse) {
+  private createResponseHeaders(nativeHttpResponse: HTTPResponse) {
     const responseHeaders = new HttpHeaders();
     for (const header in nativeHttpResponse.headers) {
       if (nativeHttpResponse.headers.hasOwnProperty(header)) {

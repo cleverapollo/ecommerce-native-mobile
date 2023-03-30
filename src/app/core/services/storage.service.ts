@@ -145,7 +145,8 @@ export class StorageService implements Storage {
   private setSecure(storageKey: string, value: any) {
     if (this.platformService.isNativePlatform) {
       SecureStoragePlugin.set({ key: storageKey, value })
-        .then(this.logger.log, this.logger.error);
+        .then(result => this.logger.log(result))
+        .catch(error => this.logger.error(error))
     } else {
       this.secureWebStorage.setItem(storageKey, value);
     }

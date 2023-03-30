@@ -27,12 +27,17 @@ export interface AppAuthenticationService {
   appleSignIn(): Promise<{ appleSignInResponse: AppleSignInResponse, user: UserProfile }>;
   wanticSignIn(): Promise<SignInResponse>;
   logout(): Promise<void>;
-  setupFirebaseIdToken(forceRefresh: boolean): Promise<string>;
+  setupFirebaseIdToken(forceRefresh: boolean): Promise<string | null>;
   sendVerificationMail(): Promise<any>;
   resetPassword(email: string): Promise<void>;
   updateEmailVerificationStatus(emailVerified: boolean): void;
   removeDeprecatedAuthToken(): Promise<void>;
-  migrateSavedCredentials(): Promise<{ email: string, password: string }>;
+  migrateSavedCredentials(): Promise<{ email: string, password: string } | null>;
+}
+
+interface SignInError {
+  code: string
+  error: string
 }
 
 @Injectable({
@@ -40,8 +45,8 @@ export interface AppAuthenticationService {
 })
 export class AuthenticationService implements AppAuthenticationService {
 
-  isAuthenticated = new BehaviorSubject<boolean>(null);
-  isEmailVerified = new BehaviorSubject<boolean>(null);
+  isAuthenticated = new BehaviorSubject<boolean | null>(null);
+  isEmailVerified = new BehaviorSubject<boolean | null>(null);
   userInfo = new BehaviorSubject<any>(null);
 
   constructor(
@@ -100,7 +105,7 @@ export class AuthenticationService implements AppAuthenticationService {
   private updateAuthorizationHeaderForNativeHttpClient(token: string | null) {
     if (!this.platformService.isNativePlatform) { return }
     const value = token ? `Bearer ${token}` : null;
-    this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', value);
+    this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', value as any);
   }
 
   async signup(signupRequest: SignupRequest) {
@@ -127,7 +132,7 @@ export class AuthenticationService implements AppAuthenticationService {
 
       return Promise.resolve(signInResponse);
     } catch (error) {
-      let errorMessage = 'Deine Anmeldung ist fehlgeschlagen.'
+      let errorMessage: string | null = 'Deine Anmeldung ist fehlgeschlagen.'
       if (error instanceof HttpErrorResponse) {
         errorMessage = this.getErrorMessageForWanticLogin(error);
       } else if (typeof error === 'string') {
@@ -213,7 +218,7 @@ export class AuthenticationService implements AppAuthenticationService {
       return Promise.resolve({ googlePlusLoginResponse, user: wanticSignInResponse.user });
     } catch (error) {
       this.logger.error(error);
-      let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
+      let errorMessage: string | null = 'Deine Anmeldung ist fehlgeschlagen';
       if (typeof error === 'string' && error === 'The user canceled the sign-in flow.') {
         errorMessage = null;
       } else {
@@ -252,8 +257,9 @@ export class AuthenticationService implements AppAuthenticationService {
       return Promise.resolve({ appleSignInResponse, user: wanticSignInResponse.user });
     } catch (error) {
       this.logger.error(error);
-      let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
-      if (typeof error === 'object' && error?.code === '1001' && error?.error === 'ASAUTHORIZATION_ERROR') {
+      let errorMessage: string | null = 'Deine Anmeldung ist fehlgeschlagen';
+      const signInError = error as SignInError;
+      if (signInError && signInError.code === '1001' && signInError.error === 'ASAUTHORIZATION_ERROR') {
         errorMessage = null;
       } else {
         errorMessage = this.getFirebaseAuthErrorMessage(error);
@@ -305,10 +311,10 @@ export class AuthenticationService implements AppAuthenticationService {
     return Promise.resolve();
   }
 
-  private getFirebaseAuthErrorMessage(error: any): string {
+  private getFirebaseAuthErrorMessage(error: any): string | null {
     let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
     if (error === 'User cancelled.') {
-      errorMessage = null;
+      return null;
     }
     return errorMessage;
   }
@@ -320,8 +326,10 @@ export class AuthenticationService implements AppAuthenticationService {
   resetPassword(email: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.authApiService.resetPassword(email).toPromise().then(() => {
-        this.firebaseService.sendPasswordResetEmail(email).then(resolve, reject);
-      }, reject)
+        this.firebaseService.sendPasswordResetEmail(email)
+          .then(() => resolve())
+          .catch(() => reject())
+      }, () => reject())
     })
   }
 
@@ -338,7 +346,7 @@ export class AuthenticationService implements AppAuthenticationService {
     return Promise.resolve();
   }
 
-  async migrateSavedCredentials(): Promise<{ email: string, password: string }> {
+  async migrateSavedCredentials(): Promise<{ email: string, password: string } | null> {
     try {
       const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
       const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);

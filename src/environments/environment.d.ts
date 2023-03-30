@@ -1,4 +1,6 @@
+
 import { AFInit } from "appsflyer-capacitor-plugin";
+import { FirebaseOptions } from "firebase/app";
 import { BackendConfigType } from "./backend-config-type";
 export interface EnvironmentConfig {
     backendType: BackendConfigType,
@@ -10,16 +12,7 @@ export interface EnvironmentConfig {
         secondLevelDomain: string,
         port?: number
     },
-    firebaseConfig?: {
-        apiKey: string,
-        authDomain: string,
-        databaseURL: string,
-        projectId: string,
-        storageBucket: string,
-        messagingSenderId: string,
-        appId: string,
-        measurementId?: string // only configured if analytics is enabled
-    },
+    firebaseConfig: FirebaseOptions,
     angularFire: {
         APP_NAME: string,
         APP_VERSION: string,
