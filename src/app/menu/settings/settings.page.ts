@@ -5,7 +5,6 @@ import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { Logger } from '@core/services/log.service';
 import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
 import { UserProfileStore } from './user-profile-store.service';
 
 @Component({
@@ -21,6 +20,13 @@ export class SettingsPage implements OnInit, OnDestroy {
   profile: UserProfile;
   showPasswordChangeLink: boolean;
   userCanChangeEmail: boolean;
+  isCreatorAccountActive: boolean = false;
+
+  get title(): string {
+    return this.isCreatorAccountActive ?
+      'Creator Profil bearbeiten' :
+      'Profil bearbeiten';
+  }
 
   get dataForChildRoutes() {
     return {
@@ -41,6 +47,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.profile = this.route.snapshot?.data?.profile
     this.showPasswordChangeLink = this.profile.authProvider === AuthProvider.WANTIC;
     this.userCanChangeEmail = this.profile.authProvider === AuthProvider.WANTIC;
+    this.isCreatorAccountActive = this.userProfileStore.isCreatorAccountActive$.value;
   }
 
   ionViewWillEnter() {

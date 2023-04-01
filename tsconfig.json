@@ -32,6 +32,7 @@
       "@menu/*": ["src/app/menu/*"],
       "@registration/*": ["src/app/registration/*"],
       "@shared/*": ["src/app/shared/*"],
+      "@test/*": ["src/app/test/*"],
       "@wishLists/*": ["src/app/wish-lists/*"],
       "@wishSearch/*": ["src/app/wish-search/*"]
     }

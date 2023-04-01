@@ -12,13 +12,17 @@ export class UserProfile {
     creatorAccount?: ContentCreatorAccount | null = null;
 }
 export class UserSettingsDto {
-    showOnboardingSlidesiOS: boolean;
-    showOnboardingSlidesAndroid: boolean;
+    constructor(
+        public showOnboardingSlidesiOS: boolean,
+        public showOnboardingSlidesAndroid: boolean
+    ) { }
 }
 
 export class EmailDto {
-    value: string;
-    status: EmailVerificationStatus;
+    constructor(
+        public value: string,
+        public status: EmailVerificationStatus
+    ) { }
 }
 
 export enum InvitationStatus {

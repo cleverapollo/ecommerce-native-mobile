@@ -43,7 +43,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         }
         return next.handle(request).pipe(catchError(error => {
             return this.handleResponseError(error, request, next);
-        }));
+        })).toPromise();
     }
 
     handleResponseError(error: any, request: HttpRequest<any>, next: HttpHandler): Observable<any> {

@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border safe-area-inset-top">
-  <app-nav-toolbar></app-nav-toolbar>
+  <app-nav-toolbar defaultHref="/secure/menu"></app-nav-toolbar>
   <app-email-unverified-hint></app-email-unverified-hint>
 </ion-header>
 
@@ -8,9 +8,21 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> 
 
-  <h1 class="ion-text-center wantic-page-header">Profil bearbeiten</h1>
+  <h1 class="ion-text-center wantic-page-header">{{ title }}</h1>
 
-  <ion-list>
+  <ion-list *ngIf="isCreatorAccountActive && profile.creatorAccount">
+
+    <ion-item routerLink="/secure/menu/settings/creator-name-update" [state]="dataForChildRoutes" detail="false">
+      <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
+      <ion-label>
+        <h2>Name</h2>
+        <h3>{{ profile.creatorAccount.name }}</h3>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list *ngIf="!isCreatorAccountActive">
 
     <ion-item routerLink="/secure/menu/settings/profile-settings-firstname" [state]="dataForChildRoutes" detail="false">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>

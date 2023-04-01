@@ -17,6 +17,9 @@ export class MenuPage implements OnInit {
 
   firstName = 'Lädt';
   lastName = '...';
+  creatorName = 'Lädt';
+  displayFirstName = 'Lädt';
+  displayLastName = 'Lädt';
   hasCreatorAccount = false;
   isCreatorAccountActive = false;
 
@@ -63,7 +66,12 @@ export class MenuPage implements OnInit {
     this.firstName = user.firstName;
     this.lastName = user.lastName || '';
     this.hasCreatorAccount = user.creatorAccount ? true : false;
+    if (this.hasCreatorAccount) {
+      this.creatorName = user.creatorAccount.name;
+    }
     this.isCreatorAccountActive = this.userStore.isCreatorAccountActive$.value;
+    this.displayFirstName = this.isCreatorAccountActive ? this.creatorName : this.firstName;
+    this.displayLastName = this.isCreatorAccountActive ? null : this.lastName;
   }
 
 }

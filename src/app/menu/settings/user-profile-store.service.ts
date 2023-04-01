@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserApiService } from '@core/api/user-api.service';
+import { ContentCreatorAccount } from '@core/models/content-creator.model';
 import { UserProfile } from '@core/models/user.model';
 import { Logger } from '@core/services/log.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
@@ -75,6 +76,12 @@ export class UserProfileStore {
     const isCreatorAccountActive = this.isCreatorAccountActive$.value;
     await this.storage.set(StorageKeys.ACTIVE_CREATOR_ACCOUNT, !isCreatorAccountActive);
     this.isCreatorAccountActive$.next(!isCreatorAccountActive);
+  }
+
+  async updateCreatorAccount(creatorAccount: ContentCreatorAccount) {
+    const user = await this.loadUserProfile().toPromise();
+    user.creatorAccount = creatorAccount;
+    return this.updateCachedUserProfile(user);
   }
 
   private async _initData() {

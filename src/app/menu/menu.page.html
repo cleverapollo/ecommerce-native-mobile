@@ -8,10 +8,13 @@
 
   <div class="display-flex align-items-center content-space-evenly wantic-margin-right-left">
     <div>
-      <app-user-initials [firstName]="firstName" [lastName]="lastName" size="size-m"></app-user-initials>
+      <app-user-initials [firstName]="displayFirstName" [lastName]="displayLastName" size="size-m"></app-user-initials>
     </div>
     <div [ngClass]="{ 'ion-text-center': hasCreatorAccount }">
-      <p class="margin-bottom-4"><strong>{{ firstName }}&nbsp;{{ lastName }}</strong></p>
+      <p class="margin-bottom-4">
+        <strong *ngIf="!isCreatorAccountActive">{{ firstName }}&nbsp;{{ lastName }}</strong>
+        <strong *ngIf="hasCreatorAccount && isCreatorAccountActive">{{ creatorName }}</strong>
+      </p>
       <p class="margin-top-4">
         <span *ngIf="!hasCreatorAccount || !isCreatorAccountActive">Standard Profil</span>
         <span *ngIf="hasCreatorAccount && isCreatorAccountActive">Creator Profil</span>
@@ -27,7 +30,10 @@
   <ion-list>
     <ion-item [routerLink]="['settings']" detail="false">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
-      <ion-label class="action-item-without-header">Profil bearbeiten</ion-label>
+      <ion-label class="action-item-without-header">
+        <span *ngIf="!isCreatorAccountActive">Profil bearbeiten</span>
+        <span *ngIf="isCreatorAccountActive">Creator Profil bearbeiten</span>
+      </ion-label>
     </ion-item>
     <ion-item (click)="showFaqPage()" detail="false">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
