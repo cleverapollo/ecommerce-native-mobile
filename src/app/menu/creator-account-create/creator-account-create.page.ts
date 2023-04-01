@@ -19,6 +19,7 @@ import { finalize, first } from 'rxjs/operators';
 export class CreatorAccountCreatePage implements OnInit {
 
   private readonly NAME_MIN_LENGTH = 2;
+  private readonly NAME_MAX_LENGTH = 63;
   private readonly USER_NAME_MIN_LENGTH = 2;
   private readonly DESCRIPTION_MIN_LENGTH = 10;
 
@@ -28,7 +29,8 @@ export class CreatorAccountCreatePage implements OnInit {
     return {
       name: [
         new ValidationMessage('required', 'Bitte gib einen Namen ein.'),
-        new ValidationMessage('minlength', `Dein Name muss aus mindestens ${this.NAME_MIN_LENGTH} Zeichen bestehen.`)
+        new ValidationMessage('minlength', `Dein Name muss aus min. ${this.NAME_MIN_LENGTH} Zeichen bestehen.`),
+        new ValidationMessage('maxlength', `Dein Name darf max. ${this.NAME_MAX_LENGTH} aus Zeichen bestehen.`)
       ],
       userName: [
         new ValidationMessage('required', 'Bitte gib einen Benutzername ein.'),
@@ -112,15 +114,15 @@ export class CreatorAccountCreatePage implements OnInit {
 
     this.form = this.formBuilder.group({
       name: this.formBuilder.control(await this._getFullName(), {
-        validators: [Validators.required, Validators.min(this.NAME_MIN_LENGTH)],
+        validators: [Validators.required, Validators.minLength(this.NAME_MIN_LENGTH), Validators.maxLength(this.NAME_MAX_LENGTH)],
         updateOn: 'submit'
       }),
       userName: this.formBuilder.control('', {
-        validators: [Validators.required, Validators.min(this.USER_NAME_MIN_LENGTH)],
+        validators: [Validators.required, Validators.minLength(this.USER_NAME_MIN_LENGTH)],
         updateOn: 'submit'
       }),
       description: this.formBuilder.control('', {
-        validators: [Validators.required, Validators.min(this.DESCRIPTION_MIN_LENGTH)],
+        validators: [Validators.required, Validators.minLength(this.DESCRIPTION_MIN_LENGTH)],
         updateOn: 'submit'
       }),
       instagramUrl: buildSocialMediaUrlControl(),

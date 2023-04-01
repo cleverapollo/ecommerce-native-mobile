@@ -15,7 +15,8 @@
                   formControlName="name" 
                   autocapitalize="true" 
                   clearInput="true" 
-                  required="true">
+                  required="true",
+                  minlength="2">
     </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
