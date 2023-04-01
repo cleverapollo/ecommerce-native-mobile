@@ -111,7 +111,7 @@
     "@angular/language-service": "^13.3.12",
     "@capacitor/cli": "^4.0.0",
     "@cypress/schematic": "^1.6.0",
-    "@ionic/angular-toolkit": "^2.3.3",
+    "@ionic/angular-toolkit": "^6.1.0",
     "@ionic/cli": "^6.18.1",
     "@types/crypto-js": "^4.1.1",
     "@types/jasmine": "~3.3.8",
