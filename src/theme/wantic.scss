@@ -572,9 +572,9 @@ ion-toast.custom-toast::part(message) {
 }
 
 .display-flex {
-    display: flex;
+    display: flex !important;
 }
 
 .align-items-center {
-    align-items: center;
+    align-items: center !important;
 }
