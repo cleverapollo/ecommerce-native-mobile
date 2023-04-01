@@ -1,0 +1,30 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar defaultHref="/secure/menu/settings"></app-nav-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <h1 class="ion-text-center wantic-page-header">Creator Profil bearbeiten</h1>
+
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveChanges()">
+
+    <ion-item lines="none" counter="true">
+      <ion-label position="stacked">Intro Text</ion-label>
+      <ion-textarea formControlName="description" 
+                    name="description" 
+                    placeholder="Eine kurze Profilbeschreibung"
+                    [autoGrow]="true" 
+                    rows="3" 
+                    [spellcheck]="true" 
+                    maxlength="150" 
+                    [required]="true">
+      </ion-textarea>
+    </ion-item>
+    <app-validation-messages [control]="form.get('description')" [validationMessages]="validationMessages.description"></app-validation-messages>
+
+    <ion-button type="submit" class="wantic-save-button" color="primary" expand="block">
+      ÄNDERUNGEN SPEICHERN
+    </ion-button>
+  </form>
+
+</ion-content>

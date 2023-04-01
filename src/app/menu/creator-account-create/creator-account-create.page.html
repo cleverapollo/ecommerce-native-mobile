@@ -15,7 +15,7 @@
                   formControlName="name" 
                   autocapitalize="true" 
                   clearInput="true" 
-                  required="true",
+                  required="true"
                   minlength="2">
     </ion-input>
     </ion-item>
@@ -32,16 +32,16 @@
     </ion-item>
     <app-validation-messages [control]="form.get('userName')" [validationMessages]="validationMessages.userName"></app-validation-messages>
 
-    <ion-item lines="none">
+    <ion-item lines="none" counter="true">
       <ion-label position="stacked">Intro Text *</ion-label>
       <ion-textarea formControlName="description" 
                     name="description" 
                     placeholder="Eine kurze Profilbeschreibung"
-                    auto-grow="true" 
+                    [autoGrow]="true" 
                     rows="3" 
-                    spellcheck="true" 
-                    maxlength="255" 
-                    required="true">
+                    [spellcheck]="true" 
+                    maxlength="150" 
+                    [required]="true">
       </ion-textarea>
     </ion-item>
     <app-validation-messages [control]="form.get('description')" [validationMessages]="validationMessages.description"></app-validation-messages>

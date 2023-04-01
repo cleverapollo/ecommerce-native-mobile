@@ -21,7 +21,9 @@ export class CreatorAccountCreatePage implements OnInit {
   private readonly NAME_MIN_LENGTH = 2;
   private readonly NAME_MAX_LENGTH = 63;
   private readonly USER_NAME_MIN_LENGTH = 2;
+  private readonly USER_NAME_MAX_LENGTH = 31;
   private readonly DESCRIPTION_MIN_LENGTH = 10;
+  private readonly DESCRIPTION_MAX_LENGTH = 150;
 
   form: FormGroup;
 
@@ -34,11 +36,13 @@ export class CreatorAccountCreatePage implements OnInit {
       ],
       userName: [
         new ValidationMessage('required', 'Bitte gib einen Benutzername ein.'),
-        new ValidationMessage('minlength', `Dein Benutzername muss aus mindestens ${this.NAME_MIN_LENGTH} Zeichen bestehen.`)
+        new ValidationMessage('minlength', `Dein Benutzername muss aus mindestens ${this.USER_NAME_MIN_LENGTH} Zeichen bestehen.`),
+        new ValidationMessage('maxlength', `Dein Benutzername darf max. ${this.USER_NAME_MAX_LENGTH} aus Zeichen bestehen.`)
       ],
       description: [
         new ValidationMessage('required', 'Bitte gib eine kurze Profilbeschreibung ein.'),
-        new ValidationMessage('minlength', `Die Beschreibung muss aus mindestens ${this.NAME_MIN_LENGTH} Zeichen bestehen.`)
+        new ValidationMessage('minlength', `Die Beschreibung muss aus mindestens ${this.DESCRIPTION_MIN_LENGTH} Zeichen bestehen.`),
+        new ValidationMessage('maxlength', `Die Beschreibung darf max. ${this.DESCRIPTION_MAX_LENGTH} aus Zeichen bestehen.`)
       ],
       socialMediaUrl: [
         new ValidationMessage('pattern', 'Bitte gib eine gültige URL an.')
@@ -114,15 +118,27 @@ export class CreatorAccountCreatePage implements OnInit {
 
     this.form = this.formBuilder.group({
       name: this.formBuilder.control(await this._getFullName(), {
-        validators: [Validators.required, Validators.minLength(this.NAME_MIN_LENGTH), Validators.maxLength(this.NAME_MAX_LENGTH)],
+        validators: [
+          Validators.required,
+          Validators.minLength(this.NAME_MIN_LENGTH),
+          Validators.maxLength(this.NAME_MAX_LENGTH)
+        ],
         updateOn: 'submit'
       }),
-      userName: this.formBuilder.control('', {
-        validators: [Validators.required, Validators.minLength(this.USER_NAME_MIN_LENGTH)],
+      userName: this.formBuilder.control(null, {
+        validators: [
+          Validators.required,
+          Validators.minLength(this.USER_NAME_MIN_LENGTH),
+          Validators.maxLength(this.USER_NAME_MAX_LENGTH)
+        ],
         updateOn: 'submit'
       }),
-      description: this.formBuilder.control('', {
-        validators: [Validators.required, Validators.minLength(this.DESCRIPTION_MIN_LENGTH)],
+      description: this.formBuilder.control(null, {
+        validators: [
+          Validators.required,
+          Validators.minLength(this.DESCRIPTION_MIN_LENGTH),
+          Validators.maxLength(this.DESCRIPTION_MAX_LENGTH)
+        ],
         updateOn: 'submit'
       }),
       instagramUrl: buildSocialMediaUrlControl(),

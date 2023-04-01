@@ -1,8 +1,7 @@
 module.exports = {
-    name: 'Max Mustermann',
+    name: 'Maxi',
     userName: 'max',
-    description:
-    'Max "Maxi" Mustermann\n' + 
+    description: 
     'Person des fiktiven Lebens\n' + 
     '👑 Entertainer\n' + 
     '👑 Anfragen: max@wantic.io\n' +
