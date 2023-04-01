@@ -28,7 +28,8 @@ export class CreatorNameUpdatePage implements OnInit {
       name: [
         new ValidationMessage('required', 'Bitte gib einen Namen ein.'),
         new ValidationMessage('minlength', `Dein Name muss aus min. ${this.NAME_MIN_LENGTH} Zeichen bestehen.`),
-        new ValidationMessage('maxlength', `Dein Name darf max. ${this.NAME_MAX_LENGTH} aus Zeichen bestehen.`)
+        new ValidationMessage('maxlength', `Dein Name darf max. ${this.NAME_MAX_LENGTH} aus Zeichen bestehen.`),
+        new ValidationMessage('valueHasNotChanged', 'Der Name hat sich nicht geändert.')
       ]
     }
   }
@@ -54,33 +55,39 @@ export class CreatorNameUpdatePage implements OnInit {
     this.analyticsService.setFirebaseScreenName('profile_settings-creator-name');
   }
 
-  async saveChanges() {
+  saveChanges() {
     if (this.form.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;
     }
 
-    try {
-      await this.loadingService.showLoadingSpinner();
-      const updatedAccount = await this.api.updateName(this.user.creatorAccount.userName, this.formControl.value).pipe(
-        first(),
-        finalize(() => {
-          this.loadingService.stopLoadingSpinner();
-        })
-      ).toPromise();
-      this.formControl.reset(updatedAccount.name);
-      this.userStore.updateCreatorAccount(updatedAccount);
-      this.toastService.presentSuccessToast('Dein Name wurde erfolgreich aktualisiert.');
-    } catch (error) {
-      this.toastService.presentErrorToast('Dein Name konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.');
-    }
+    this.api.updateName(this.user.creatorAccount.userName, this.formControl.value).pipe(
+      first(),
+      finalize(() => {
+        this.loadingService.stopLoadingSpinner();
+      })
+    ).subscribe({
+      next: updatedAccount => {
+        this.formControl.reset(updatedAccount.name);
+        this.userStore.updateCreatorAccount(updatedAccount);
+        this.toastService.presentSuccessToast('Dein Name wurde erfolgreich aktualisiert.');
+      },
+      error: _ => {
+        this.toastService.presentErrorToast('Dein Name konnte nicht aktualisiert werden. Bitte versuche es später noch einmal.');
+      },
+    })
   }
 
   private async _setupForm() {
     this.user = await this.userStore.loadUserProfile().toPromise();
     this.form = this.formBuilder.group({
       name: this.formBuilder.control(this.user.creatorAccount.name ?? '', {
-        validators: [Validators.required, Validators.minLength(this.NAME_MIN_LENGTH), Validators.maxLength(this.NAME_MAX_LENGTH)],
+        validators: [
+          Validators.required,
+          Validators.minLength(this.NAME_MIN_LENGTH),
+          Validators.maxLength(this.NAME_MAX_LENGTH),
+          CustomValidation.valueHasChanged
+        ],
         updateOn: 'submit'
       })
     });
