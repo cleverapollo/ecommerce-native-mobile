@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ContentCreatorAccount } from '@core/models/content-creator.model';
+import { ContentCreatorAccount, SocialMediaLinks } from '@core/models/content-creator.model';
 import { WanticError } from '@core/models/error.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -39,6 +39,13 @@ export class ContentCreatorApiService {
       catchError(error => throwError(new WanticError(error)))
     );
   }
+
+  updateSocialMediaLinks(userName: string, socialMediaLinks: SocialMediaLinks): Observable<ContentCreatorAccount> {
+    return this.apiService.patch<ContentCreatorAccount>(this._buildPatchUrl(userName, 'social-media-links'), socialMediaLinks).pipe(
+      catchError(error => throwError(new WanticError(error)))
+    );
+  }
+
 
   private _buildPatchUrl(userName: string, resource: string): string {
     return `${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}/${userName}/${resource}`;

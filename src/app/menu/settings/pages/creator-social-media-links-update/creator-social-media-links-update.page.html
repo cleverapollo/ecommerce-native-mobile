@@ -1,0 +1,62 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar defaultHref="/secure/menu/settings"></app-nav-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <h1 class="ion-text-center wantic-page-header">Creator Profil bearbeiten</h1>
+
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveChanges()">
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-instagram"></ion-icon>&nbsp;Instagram URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://www.instagram.com/dein.name42/"
+                  formControlName="instagramUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('instagramUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-facebook"></ion-icon>&nbsp;Facebook URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://de-de.facebook.com/dein.name42/"
+                  formControlName="facebookUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('facebookUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-youtube"></ion-icon>&nbsp;Youtube URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://www.youtube.com/channel/deinKanal"
+                  formControlName="youtubeUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('youtubeUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-tiktok"></ion-icon>&nbsp;TikTok URL</ion-label>
+      <ion-input type="url" 
+                  placeholder="https://www.tiktok.com/@dein.name42"
+                  formControlName="tiktokUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('tiktokUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
+
+    <div class="validation-errors wantic-margin-right-left">
+      <p class="error-message hidden-text" [ngClass]="{ 'visible-text': showNoChangesMessage }">
+        <ion-text color="primary">Du hast keine Änderungen vorgenommen.</ion-text>
+      </p>
+    </div>
+
+    <ion-button type="submit" class="wantic-save-button" color="primary" expand="block">
+      ÄNDERUNGEN SPEICHERN
+    </ion-button>
+  </form>
+
+</ion-content>

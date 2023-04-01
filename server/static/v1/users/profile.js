@@ -21,7 +21,7 @@ module.exports = {
         '👑 Anfragen: max@wantic.io\n' +
         '👑 Socials & mehr:\n' +
         'https://wantic.io',
-        socialMedia: {
+        socialMediaLinks: {
             instagramUrl: 'https://www.instagram.com/knossi',
             facebookUrl: 'https://de-de.facebook.com/knossi/',
             youtubeUrl: 'https://www.youtube.com/channel/UCtckLvYloMnsey8E5qTwWwA',

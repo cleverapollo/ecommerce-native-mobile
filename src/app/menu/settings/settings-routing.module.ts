@@ -49,6 +49,10 @@ const routes: Routes = [
     path: 'creator-intro-text-update',
     loadChildren: () => import('./pages/creator-intro-text-update/creator-intro-text-update.module').then( m => m.CreatorIntroTextUpdatePageModule)
   },
+  {
+    path: 'creator-social-media-links-update',
+    loadChildren: () => import('./pages/creator-social-media-links-update/creator-social-media-links-update.module').then( m => m.CreatorSocialMediaLinksUpdatePageModule)
+  },
 
 ];
 

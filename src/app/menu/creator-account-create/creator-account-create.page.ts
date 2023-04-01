@@ -24,6 +24,8 @@ export class CreatorAccountCreatePage implements OnInit {
   private readonly USER_NAME_MAX_LENGTH = 31;
   private readonly DESCRIPTION_MIN_LENGTH = 10;
   private readonly DESCRIPTION_MAX_LENGTH = 150;
+  private readonly URL_MAX_LENGTH = 2048;
+  private readonly URL_MIN_LENGTH = 25;
 
   form: FormGroup;
 
@@ -45,7 +47,9 @@ export class CreatorAccountCreatePage implements OnInit {
         new ValidationMessage('maxlength', `Die Beschreibung darf max. ${this.DESCRIPTION_MAX_LENGTH} aus Zeichen bestehen.`)
       ],
       socialMediaUrl: [
-        new ValidationMessage('pattern', 'Bitte gib eine gültige URL an.')
+        new ValidationMessage('pattern', 'Bitte gib eine gültige URL an.'),
+        new ValidationMessage('maxlength', `Die URL ist zu lang.`),
+        new ValidationMessage('minlength', `Die URL ist zu kurz.`)
       ],
     }
   }
@@ -112,7 +116,11 @@ export class CreatorAccountCreatePage implements OnInit {
   private async _setupForm() {
 
     const buildSocialMediaUrlControl = () => this.formBuilder.control(null, {
-      validators: [Validators.pattern(CustomValidation.urlRegex)],
+      validators: [
+        Validators.pattern(CustomValidation.urlRegex),
+        Validators.maxLength(this.URL_MAX_LENGTH),
+        Validators.minLength(this.URL_MIN_LENGTH)
+      ],
       updateOn: 'submit'
     });
 
