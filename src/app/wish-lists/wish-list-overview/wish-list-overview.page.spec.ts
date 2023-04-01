@@ -1,16 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
 import { AffiliateProgramme } from '@core/models/affiliate.model';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { MockLoadingService } from '@core/services/loading-mock.service';
 import { LoadingService } from '@core/services/loading.service';
 import { MockWishListStoreService } from '@core/services/wish-list-store-mock.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule, NavController } from '@ionic/angular';
-import { of } from 'rxjs';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 
 import { WishListOverviewPage } from './wish-list-overview.page';
 
@@ -19,11 +18,6 @@ class DummyComponent { }
 
 @Component({ selector: 'app-email-unverified-hint', template: '' })
 class EmailUnverifiedHintComponentFake { }
-
-@Component({ selector: 'app-nav-toolbar', template: '' })
-class NavToolbarComponentFake {
-  @Input() showBackButton: boolean = false;
-}
 
 describe('WishListOverviewPage', () => {
   let component: WishListOverviewPage;
