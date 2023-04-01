@@ -8,15 +8,14 @@ import { CoreToastService, ToastService } from '@core/services/toast.service';
 import { IonicModule } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { userMax } from '@test/fixtures/user.fixture';
 import { of } from 'rxjs';
-import { userMax } from 'src/app/test/fixtures/user.fixture';
 
-import { CreatorNameUpdatePage } from './creator-name-update.page';
+import { CreatorUserNameUpdatePage } from './creator-user-name-update.page';
 
-describe('CreatorNameUpdatePage', () => {
-
-  let component: CreatorNameUpdatePage;
-  let fixture: ComponentFixture<CreatorNameUpdatePage>;
+describe('CreatorUserNameUpdatePage', () => {
+  let component: CreatorUserNameUpdatePage;
+  let fixture: ComponentFixture<CreatorUserNameUpdatePage>;
 
   let loadingService: jasmine.SpyObj<LoadingService> = jasmine.createSpyObj('loadingService', ['showLoadingSpinner', 'stopLoadingSpinner']);
   let toastService: ToastService = new MockToastService();
@@ -28,7 +27,7 @@ describe('CreatorNameUpdatePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatorNameUpdatePage, NavToolbarComponentFake],
+      declarations: [CreatorUserNameUpdatePage, NavToolbarComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
         FormBuilder,
@@ -40,7 +39,7 @@ describe('CreatorNameUpdatePage', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CreatorNameUpdatePage);
+    fixture = TestBed.createComponent(CreatorUserNameUpdatePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -53,6 +52,6 @@ describe('CreatorNameUpdatePage', () => {
 
   it('should send a analytics screen event', () => {
     component.ionViewDidEnter();
-    expect(analyticsService.setFirebaseScreenName).toHaveBeenCalledWith('profile_settings-creator-name');
+    expect(analyticsService.setFirebaseScreenName).toHaveBeenCalledWith('profile_settings-creator-user_name');
   })
 });

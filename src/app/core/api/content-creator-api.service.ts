@@ -28,6 +28,12 @@ export class ContentCreatorApiService {
     );
   }
 
+  updateUserName(currentUserName: string, newUserName: string): Observable<ContentCreatorAccount> {
+    return this.apiService.patch<ContentCreatorAccount>(this._buildPatchUrl(currentUserName, 'user-name'), { userName: newUserName }).pipe(
+      catchError(error => throwError(new WanticError(error)))
+    );
+  }
+
   private _buildPatchUrl(userName: string, resource: string): string {
     return `${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}/${userName}/${resource}`;
   }

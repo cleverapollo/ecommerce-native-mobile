@@ -20,6 +20,14 @@
       </ion-label>
     </ion-item>
 
+    <ion-item routerLink="/secure/menu/settings/creator-user-name-update" [state]="dataForChildRoutes" detail="false">
+      <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
+      <ion-label>
+        <h2>Benutzername</h2>
+        <h3>{{ '@' + profile.creatorAccount.userName }}</h3>
+      </ion-label>
+    </ion-item>
+
   </ion-list>
 
   <ion-list *ngIf="!isCreatorAccountActive">

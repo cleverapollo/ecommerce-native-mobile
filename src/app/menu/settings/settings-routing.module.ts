@@ -41,6 +41,10 @@ const routes: Routes = [
     path: 'creator-name-update',
     loadChildren: () => import('./pages/creator-name-update/creator-name-update.module').then( m => m.CreatorNameUpdatePageModule)
   },
+  {
+    path: 'creator-user-name-update',
+    loadChildren: () => import('./pages/creator-user-name-update/creator-user-name-update.module').then( m => m.CreatorUserNameUpdatePageModule)
+  },
 
 ];
 

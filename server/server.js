@@ -40,6 +40,16 @@ server.post('/v1/content-creators', (req, res) => {
     res.status(500).send();
 });
 
+server.patch('/v1/content-creators/max/user-name', (req, res) => {
+    const userName = req.body.userName;
+    if (userName === 'max409') {
+        res.status(409).send();
+        return;
+    }
+    res.status(200).send(
+        require('./static/v1/content-creators/max/user-name')
+    );
+});
 
 server.listen(3000, () => {
     console.log('JSON server listening on port 3000');
