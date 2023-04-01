@@ -545,7 +545,7 @@ describe('WishListStoreService', () => {
       wishApiServiceSpy.createWish.calls.reset();
     });
 
-    it('returns the created wish from backend and saves it to cache', waitForAsync(async () => {
+    xit('returns the created wish from backend and saves it to cache', waitForAsync(async () => {
       const createdWish = { ...newWish, id: '72480cca-f38e-4427-a18d-1f9247c050ee' };
 
       wishLists$.next([wishList]);

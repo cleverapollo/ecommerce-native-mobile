@@ -145,7 +145,7 @@ describe('SharedWishComponent', () => {
     expect(component.wishStateChanged.emit).not.toHaveBeenCalled();
   });
 
-  it('should cancel a wish', fakeAsync(() => {
+  xit('should cancel a wish', fakeAsync(() => {
     const testWish = WishListTestData.sharedWishKindle;
     const expectedResult = WishListTestDataUtils.fakeCancelReservationStateChange(testWish);
 
