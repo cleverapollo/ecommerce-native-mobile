@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { CreatorSearchPage } from './creator-search.page';
 
@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: CreatorSearchPage
+  },
+  {
+    path: 'creator-detail',
+    loadChildren: () => import('./../creator-detail/creator-detail.module').then(m => m.CreatorDetailPageModule)
   }
 ];
 
@@ -14,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CreatorSearchPageRoutingModule {}
+export class CreatorSearchPageRoutingModule { }

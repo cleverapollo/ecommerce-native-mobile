@@ -1,0 +1,27 @@
+p {
+    margin-top: 8px;
+}
+
+p.name {
+    margin-bottom: 4px;
+}
+
+p.user-name {
+    margin-top: 4px;
+}
+
+.share-account {
+    color: white;
+    font-family: 'Roboto';
+    font-size: 10px;
+    text-transform: uppercase;
+    height: 50px;
+    border-radius: 50pt;
+    letter-spacing: 1pt;
+    background: var(--ion-color-tertiary);
+    box-shadow: none;
+    span {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

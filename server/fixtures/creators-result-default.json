@@ -6,10 +6,15 @@
       "socialMediaLinks": {}
     },
     {
-      "name": "Max 'Maxi' Mustermann",
+      "name": "Max \"Maxi\" Mustermann",
       "userName": "maxi",
-      "description": "",
-      "socialMediaLinks": {}
+      "description": "Max \"Maxi\" Mustermann\nPerson des fiktiven Lebens\n👑 Entertainer\n👑 Anfragen: max@wantic.io\n👑 Socials & mehr:\nhttps://wantic.io",
+      "socialMediaLinks": {
+          "instagramUrl": "https://www.instagram.com/knossi",
+          "facebookUrl": "https://de-de.facebook.com/knossi/",
+          "youtubeUrl": "https://www.youtube.com/channel/UCtckLvYloMnsey8E5qTwWwA",
+          "tiktokUrl": "https://www.tiktok.com/@therealknossi"
+      }
     },
     {
       "name": "Knossi",

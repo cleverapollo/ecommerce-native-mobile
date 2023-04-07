@@ -1,0 +1,17 @@
+<div *ngIf="account" class="wantic-container">
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+    <div>
+      <app-user-initials [firstName]="account.name" size="size-m"></app-user-initials>
+      <p class="name"><strong>{{ account.name }}</strong></p>
+      <p class="user-name">@{{ account.userName }}</p>
+    </div>
+    <button *ngIf="showShareButton" class="share-account">
+      <span>Profil teilen</span>
+    </button>
+  </div>
+
+  <p class="white-space-pre-line">
+    {{ account.description }}
+  </p>
+
+</div>

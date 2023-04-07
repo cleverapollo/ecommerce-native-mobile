@@ -1,34 +1,34 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { CreatorService } from '@core/services/creator.service';
 import { IonicModule } from '@ionic/angular';
-import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { CreatorComponent } from '@shared/components/creator/creator.component';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { creatorMax } from '@test/fixtures/user.fixture';
 import { of } from 'rxjs';
 
-import { ProductListOverviewPage } from './product-list-overview.page';
+import { CreatorDetailPage } from './creator-detail.page';
 
-describe('ProductListOverviewPage', () => {
-  let component: ProductListOverviewPage;
-  let fixture: ComponentFixture<ProductListOverviewPage>;
+describe('CreatorDetailPage', () => {
+  let component: CreatorDetailPage;
+  let fixture: ComponentFixture<CreatorDetailPage>;
 
-  const analyticsService = {};
-  let userProfileStore = {
-    loadUserProfile: () => of(new UserProfile())
+  let analyticsService: AnalyticsService;
+  let creatorService: Partial<CreatorService> = {
+    selectedCreator$: of(creatorMax)
   };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ProductListOverviewPage, NavToolbarComponentFake, CreatorComponent],
+      declarations: [CreatorDetailPage, NavToolbarComponentFake, CreatorComponent],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: AnalyticsService, useValue: analyticsService },
-        { provide: UserProfileStore, useValue: userProfileStore }
+        { provide: CreatorService, useValue: creatorService }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ProductListOverviewPage);
+    fixture = TestBed.createComponent(CreatorDetailPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

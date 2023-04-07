@@ -1,8 +1,10 @@
 import { Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
 import { ContentCreatorAccount } from '@core/models/content-creator.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { CreatorService } from '@core/services/creator.service';
 import { PagingService } from '@core/services/paging.service';
 import { InfiniteScrollCustomEvent, IonInfiniteScroll } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
@@ -28,7 +30,10 @@ export class CreatorSearchPage implements OnInit {
   constructor(
     private readonly analyticsService: AnalyticsService,
     private readonly pagingService: PagingService,
-    private readonly creatorApiService: ContentCreatorApiService
+    private readonly creatorApiService: ContentCreatorApiService,
+    private readonly creatorService: CreatorService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -41,6 +46,7 @@ export class CreatorSearchPage implements OnInit {
         }
       },
     })
+    this.creatorService.setSelectedCreator(null);
   }
 
   ionViewDidEnter() {
@@ -87,6 +93,9 @@ export class CreatorSearchPage implements OnInit {
 
   selectItem(creator: ContentCreatorAccount) {
     this.analyticsService.logSelectItemEvent(creator.userName, 'Content Creators');
+    this.creatorService.setSelectedCreator(creator);
+    console.log(creator);
+    this.router.navigate(['creator-detail'], { relativeTo: this.route });
   }
 
   private _resetResult() {
