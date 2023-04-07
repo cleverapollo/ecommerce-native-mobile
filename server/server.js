@@ -25,6 +25,41 @@ apiFiles.forEach(filePath => {
     server.patch(url, (req, res) => res.send(api));
 });
 
+server.get('/v1/content-creators', (req, res) => {
+    const searchTerm = req.query.searchTerm.toLowerCase();
+    if (searchTerm === 'error') {
+        res.status(500).send();
+        return;
+    }
+    if (searchTerm === '10') {
+        res.status(200).send(require('./fixtures/creators-result-10.json'));
+        return;
+    }
+    if (searchTerm === '17') {
+        res.status(200).send(require('./fixtures/creators-result-17.json'));
+        return;
+    }
+    if (searchTerm === '100') {
+        res.status(200).send(require('./fixtures/creators-result-100.json'));
+        return;
+    }
+    if (searchTerm === '1000') {
+        res.status(200).send(require('./fixtures/creators-result-1000.json'));
+        return;
+    }
+    if (searchTerm === 'noresults') {
+        res.status(200).send([]);
+        return;
+    }
+    if (searchTerm === 'delay') {
+        setTimeout((() => {
+            res.status(200).send(require('./fixtures/creators-result-default.json'));
+          }), 2000);
+        return;
+    }
+    res.status(200).send(require('./fixtures/creators-result-default.json'));
+});
+
 server.post('/v1/content-creators', (req, res) => {
     const userName = req.body.userName;
     if (userName === 'userNameTaken') {

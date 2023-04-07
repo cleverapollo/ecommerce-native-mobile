@@ -29,6 +29,11 @@ const routes: Routes = [
           .then(m => m.ProductListOverviewPageModule)
       },
       {
+        path: getTaBarPath(TabBarRoute.CREATOR_SEARCH, false),
+        canActivate: [AuthGuard],
+        loadChildren: () => import('../creator/creator-search/creator-search.module').then(m => m.CreatorSearchPageModule)
+      },
+      {
         path: getTaBarPath(TabBarRoute.FRIENDS_HOME, false),
         canActivate: [AuthGuard],
         loadChildren: () => import('@friends/friends-home/friends-home.module')

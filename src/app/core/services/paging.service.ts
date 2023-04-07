@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class PagingService {
 
-  private static MAX_ITEMS_PER_PAGE = 10;
-  private static MAX_PAGES = 10;
+  static MAX_ITEMS_PER_PAGE = 10;
+  static MAX_PAGES = 10;
 
   calcMaxPageCount(totalResultCount: number) {
     const pageCount = Math.ceil(totalResultCount / PagingService.MAX_ITEMS_PER_PAGE)

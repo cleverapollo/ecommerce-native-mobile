@@ -6,6 +6,10 @@
       <ion-icon class="icon-home" src="assets/icon/tab-icon-home.svg"></ion-icon>
     </ion-tab-button>
 
+    <ion-tab-button tab="creator-search" (click)="onTabButtonClicked(tabHome)" *ngIf="!isCreatorAccountActive">
+      <ion-icon name="search-outline"></ion-icon>
+    </ion-tab-button>
+
     <ion-tab-button tab="wish-search" (click)="onTabButtonClicked('wish-search')">
       <ion-icon class="icon-add" src="assets/icon/tab-icon-add.svg" ></ion-icon>
     </ion-tab-button>

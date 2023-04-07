@@ -16,7 +16,7 @@ import { PlatformService } from './platform.service';
 })
 export class AnalyticsService {
 
-  analyticsEnabled = true;
+  analyticsEnabled = environment.production;
 
   get appsflyerConfigExists(): boolean {
     const appsflyerConfig = environment.appsflyerConfig;
@@ -140,5 +140,12 @@ export class AnalyticsService {
       value: wish.price.amount,
       currency: wish.price.currency,
     });
+  }
+
+  logSelectItemEvent(itemName: string, listName: string) {
+    this.logFirebaseEvent('select_item', {
+      items: [itemName],
+      item_list_name: listName
+    })
   }
 }
