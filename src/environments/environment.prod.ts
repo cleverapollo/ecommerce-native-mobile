@@ -1,10 +1,10 @@
-import { EnvironmentConfig } from './environment.d';
 import packageJson from '../../package.json';
 import { BackendConfigType } from './backend-config-type';
+import { EnvironmentConfig } from './environment.d';
 
 export const appVersion = packageJson.version;
 
-export const environment : EnvironmentConfig = {
+export const environment: EnvironmentConfig = {
   backendType: BackendConfigType.prod,
   production: true,
   debugMessage: 'running on prod environment',
@@ -32,7 +32,15 @@ export const environment : EnvironmentConfig = {
     devKey: 's8xKbYNUpxszQP8CWguA5L',
     appID: '1536006626',
     isDebug: false
-  }
+  },
+  android: {
+    packageName: 'io.wantic.app'
+  },
+  ios: {
+    bundleId: 'io.wantic.app',
+    appStoreId: 'id1536006626'
+  },
+  dynamicLinksDomain: 'https://wantic.page.link' // ToDo
 };
 
 const serverConfig = environment.serverConfig;

@@ -9,6 +9,7 @@ import { ScriptName } from '@core/data/script-store';
 import { UserManagementActionMode } from '@core/models/google-api.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
+import { FirebaseService } from '@core/services/firebase.service';
 import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { ScriptLoadingStatus, ScriptService } from '@core/services/script.service';
@@ -32,7 +33,8 @@ export class AppComponent {
     private authService: AuthenticationService,
     private analyticsService: AnalyticsService,
     private affiliateDataStore: AffiliateDataStoreService,
-    private scriptService: ScriptService
+    private scriptService: ScriptService,
+    private firebaseService: FirebaseService
   ) {
     this.setupApp();
   }
@@ -47,6 +49,7 @@ export class AppComponent {
     this.setupCache();
     this.analyticsService.initAppsflyerSdk();
     this.setupAffiliateData();
+    this.firebaseService.listenToDeepLinkOpen();
     this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
   }
 

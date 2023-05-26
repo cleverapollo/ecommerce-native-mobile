@@ -68,6 +68,10 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'creator/:userName',
+    loadChildren: () => import('./creator/creator-detail-public/creator-detail-public.module').then(m => m.CreatorDetailPublicPageModule)
+  }
 ];
 
 @NgModule({

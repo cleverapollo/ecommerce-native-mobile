@@ -19,5 +19,13 @@ export interface EnvironmentConfig {
         DEBUG_MODE: boolean
     },
     googleSignInAndroidClientId?: string,
-    appsflyerConfig?: AFInit
+    appsflyerConfig?: AFInit,
+    android: {
+        packageName: string;
+    },
+    ios: {
+        bundleId: string,
+        appStoreId: string
+    },
+    dynamicLinksDomain: string
 }

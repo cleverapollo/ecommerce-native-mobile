@@ -25,3 +25,13 @@ p.user-name {
         padding-right: 10px;
     }
 }
+
+ion-avatar {
+    height: 60px;
+    width: 60px;
+}
+
+ion-item {
+    --padding-start: 0;
+    --padding-end: 0;
+}

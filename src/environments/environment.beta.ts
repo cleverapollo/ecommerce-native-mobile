@@ -1,12 +1,12 @@
-import { EnvironmentConfig } from './environment.d';
 import packageJson from '../../package.json';
 import { BackendConfigType } from './backend-config-type';
+import { EnvironmentConfig } from './environment.d';
 
 export const appVersion = packageJson.version;
 
 export const environment: EnvironmentConfig = {
     backendType: BackendConfigType.beta,
-    production: true,
+    production: false,
     debugMessage: 'running on beta environment',
     serverConfig: {
         networkProtocol: 'https',
@@ -32,7 +32,15 @@ export const environment: EnvironmentConfig = {
         devKey: 's8xKbYNUpxszQP8CWguA5L',
         appID: '1560563821',
         isDebug: true
-    }
+    },
+    android: {
+        packageName: 'io.wantic.app.beta'
+    },
+    ios: {
+        bundleId: 'io.wantic.app-beta',
+        appStoreId: 'id1536006626'
+    },
+    dynamicLinksDomain: 'https://wantic.page.link'
 };
 
 const serverConfig = environment.serverConfig;

@@ -1,11 +1,13 @@
-<div *ngIf="account" class="wantic-container">
+<div *ngIf="account && !isLoading" class="wantic-container">
   <div style="display: flex; align-items: center; justify-content: space-between;">
     <div>
       <app-user-initials [firstName]="account.name" size="size-m"></app-user-initials>
-      <p class="name"><strong>{{ account.name }}</strong></p>
-      <p class="user-name">@{{ account.userName }}</p>
+      <div>
+        <p class="name"><strong>{{ account.name }}</strong></p>
+        <p class="user-name">@{{ account.userName }}</p>
+      </div>
     </div>
-    <button *ngIf="showShareButton" class="share-account">
+    <button *ngIf="showShareButton" class="share-account" (click)="shareAccount()">
       <span>Profil teilen</span>
     </button>
   </div>
@@ -15,3 +17,34 @@
   </p>
 
 </div>
+
+<ion-list class="wantic-container" *ngIf="isLoading">
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+    </ion-avatar>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>
+      <h3>
+        <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+      </h3>
+      <p>
+        <ion-skeleton-text [animated]="true" style="width: 20%;"></ion-skeleton-text>
+      </p>
+    </ion-label>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>
+      <h3>
+        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+      </h3>
+      <p>
+        <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+      </p>
+      <p>
+        <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+      </p>
+    </ion-label>
+  </ion-item>
+</ion-list>

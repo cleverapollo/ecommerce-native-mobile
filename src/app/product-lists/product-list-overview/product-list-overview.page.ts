@@ -11,6 +11,7 @@ import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 export class ProductListOverviewPage implements OnInit {
 
   account: ContentCreatorAccount | null = null;
+  isLoading = false;
 
   constructor(
     private readonly userProfileStore: UserProfileStore,
@@ -18,6 +19,7 @@ export class ProductListOverviewPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this._loadCreatorAccount();
   }
 
@@ -27,13 +29,19 @@ export class ProductListOverviewPage implements OnInit {
 
   async forceRefresh(event: Event) {
     const target = event.target as HTMLIonRefresherElement;
+    this.isLoading = true;
     await this._loadCreatorAccount(true);
     target.complete();
   }
 
   private async _loadCreatorAccount(forceRefresh: boolean = false) {
-    const userProfile = await this.userProfileStore.loadUserProfile(forceRefresh).toPromise();
-    this.account = userProfile.creatorAccount || null;
+    try {
+      const userProfile = await this.userProfileStore.loadUserProfile(forceRefresh).toPromise();
+      this.account = userProfile.creatorAccount || null;
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+    }
   }
 
 }

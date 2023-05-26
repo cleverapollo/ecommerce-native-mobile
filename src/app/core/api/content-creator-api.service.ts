@@ -22,6 +22,12 @@ export class ContentCreatorApiService {
     );
   }
 
+  getAccountByUserName(userName: string): Observable<ContentCreatorAccount> {
+    return this.apiService.get<ContentCreatorAccount>(`${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}/${userName}/`).pipe(
+      catchError(error => throwError(new WanticError(error)))
+    );
+  }
+
   searchForAccounts(searchTerm: string): Observable<ContentCreatorAccount[]> {
     return this.apiService.get<ContentCreatorAccount[]>(`${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}?searchTerm=${searchTerm}`).pipe(
       catchError(error => throwError(new WanticError(error)))

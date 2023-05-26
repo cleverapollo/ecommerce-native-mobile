@@ -30,6 +30,14 @@ export const environment: EnvironmentConfig = {
         DEBUG_MODE: true
     },
     googleSignInAndroidClientId: '165303834787-52s37du1t3jvojlfm0tscgopttu27p03.apps.googleusercontent.com',
+    android: {
+        packageName: 'io.wantic.app.beta'
+    },
+    ios: {
+        bundleId: 'io.wantic.app-beta',
+        appStoreId: 'id1536006626'
+    },
+    dynamicLinksDomain: 'https://wantic.page.link'
 };
 
 const serverConfig = environment.serverConfig;

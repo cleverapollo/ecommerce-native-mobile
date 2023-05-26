@@ -94,7 +94,6 @@ export class CreatorSearchPage implements OnInit {
   selectItem(creator: ContentCreatorAccount) {
     this.analyticsService.logSelectItemEvent(creator.userName, 'Content Creators');
     this.creatorService.setSelectedCreator(creator);
-    console.log(creator);
     this.router.navigate(['creator-detail'], { relativeTo: this.route });
   }
 

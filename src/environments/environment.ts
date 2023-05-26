@@ -1,9 +1,9 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-import { EnvironmentConfig } from './environment.d';
 import packageJson from '../../package.json';
 import { BackendConfigType } from './backend-config-type';
+import { EnvironmentConfig } from './environment.d';
 
 export const appVersion = packageJson.version;
 export const environment: EnvironmentConfig = {
@@ -29,7 +29,15 @@ export const environment: EnvironmentConfig = {
     APP_VERSION: appVersion,
     DEBUG_MODE: false
   },
-  googleSignInAndroidClientId: ''
+  googleSignInAndroidClientId: '',
+  android: {
+    packageName: ''
+  },
+  ios: {
+    bundleId: '',
+    appStoreId: ''
+  },
+  dynamicLinksDomain: ''
 };
 
 export const SERVER_URL = '';

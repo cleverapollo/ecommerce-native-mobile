@@ -1,0 +1,14 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <ion-toolbar class="ion-text-center">
+    <img src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <p *ngIf="errorMessage" class="ion-text-center wantic-info-box">
+    {{ errorMessage }}
+  </p>
+  <app-creator [account]="account" [(isLoading)]="isLoading"></app-creator>
+
+</ion-content>

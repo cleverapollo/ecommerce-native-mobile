@@ -32,6 +32,9 @@ project(':capacitor-splash-screen').projectDir = new File('../node_modules/@capa
 include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacitor/status-bar/android')
 
+include ':pantrist-capacitor-firebase-dynamic-links'
+project(':pantrist-capacitor-firebase-dynamic-links').projectDir = new File('../node_modules/@pantrist/capacitor-firebase-dynamic-links/android')
+
 include ':appsflyer-capacitor-plugin'
 project(':appsflyer-capacitor-plugin').projectDir = new File('../node_modules/appsflyer-capacitor-plugin/android')
 

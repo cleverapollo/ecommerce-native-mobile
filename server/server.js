@@ -60,6 +60,25 @@ server.get('/v1/content-creators', (req, res) => {
     res.status(200).send(require('./fixtures/creators-result-default.json'));
 });
 
+server.get('/v1/content-creators/:userName', (req, res) => {
+    const userName = req.params.userName.toLowerCase();
+    if (userName === 'error') {
+        res.status(500).send();
+        return;
+    }
+    if (userName === 'notfound') {
+        res.status(404).send();
+        return;
+    }
+    if (userName === 'delay') {
+        setTimeout((() => {
+            res.status(200).send(require('./fixtures/creator.json'));
+          }), 2000);
+        return;
+    }
+    res.status(200).send(require('./fixtures/creator.json'));
+});
+
 server.post('/v1/content-creators', (req, res) => {
     const userName = req.body.userName;
     if (userName === 'userNameTaken') {

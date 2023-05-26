@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
-import { from, Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 
 type HttpMethod =
   | 'get'
@@ -171,21 +171,21 @@ export class NativeHttpInterceptor implements HttpInterceptor {
 
   private logRequestBody(request: HttpRequest<any>) {
     this.logger.info('— Request body');
-    this.logger.info(request.body);
+    this.logger.info(JSON.stringify(request.body));
   }
 
   private logRequestHeaders(request: HttpRequest<any>) {
     this.logger.info('— Request headers');
-    this.logger.info(request.headers);
+    this.logger.info(JSON.stringify(request.headers));
   }
 
   private logResponse(response: HttpResponse<any>) {
     this.logger.info('— Response success');
-    this.logger.info(response);
+    this.logger.info(JSON.stringify(response));
   }
 
   private logError(error: any) {
     this.logger.error('— Response error');
-    this.logger.error(error);
+    this.logger.error(JSON.stringify(error));
   }
 }

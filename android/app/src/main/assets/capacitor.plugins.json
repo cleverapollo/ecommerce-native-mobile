@@ -40,6 +40,10 @@
 		"classpath": "com.capacitorjs.plugins.statusbar.StatusBarPlugin"
 	},
 	{
+		"pkg": "@pantrist/capacitor-firebase-dynamic-links",
+		"classpath": "com.pantrist.firebase.dynamiclinks.CapacitorFirebaseDynamicLinks"
+	},
+	{
 		"pkg": "appsflyer-capacitor-plugin",
 		"classpath": "capacitor.plugin.appsflyer.sdk.AppsFlyerPlugin"
 	},
