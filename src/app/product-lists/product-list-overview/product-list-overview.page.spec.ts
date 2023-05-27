@@ -3,10 +3,10 @@ import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { IonicModule } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { CreatorComponent } from '@shared/components/creator/creator.component';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 import { of } from 'rxjs';
 
+import { CreatorComponentFake } from '@test/components/creator.component.mock';
 import { ProductListOverviewPage } from './product-list-overview.page';
 
 describe('ProductListOverviewPage', () => {
@@ -20,7 +20,7 @@ describe('ProductListOverviewPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ProductListOverviewPage, NavToolbarComponentFake, CreatorComponent],
+      declarations: [ProductListOverviewPage, NavToolbarComponentFake, CreatorComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: AnalyticsService, useValue: analyticsService },

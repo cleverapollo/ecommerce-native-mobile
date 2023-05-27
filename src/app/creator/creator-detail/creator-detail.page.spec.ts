@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { CreatorService } from '@core/services/creator.service';
 import { IonicModule } from '@ionic/angular';
-import { CreatorComponent } from '@shared/components/creator/creator.component';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 import { creatorMax } from '@test/fixtures/user.fixture';
 import { of } from 'rxjs';
 
+import { CreatorComponentFake } from '@test/components/creator.component.mock';
 import { CreatorDetailPage } from './creator-detail.page';
 
 describe('CreatorDetailPage', () => {
@@ -20,7 +20,7 @@ describe('CreatorDetailPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatorDetailPage, NavToolbarComponentFake, CreatorComponent],
+      declarations: [CreatorDetailPage, NavToolbarComponentFake, CreatorComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: AnalyticsService, useValue: analyticsService },
