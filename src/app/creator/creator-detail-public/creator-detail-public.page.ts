@@ -4,6 +4,7 @@ import { ContentCreatorApiService } from '@core/api/content-creator-api.service'
 import { ContentCreatorAccount } from '@core/models/content-creator.model';
 import { WanticError } from '@core/models/error.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { PlatformService } from '@core/services/platform.service';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -18,17 +19,20 @@ export class CreatorDetailPublicPage implements OnInit, OnDestroy {
   account: ContentCreatorAccount | null = null;
   errorMessage = '';
   isLoading = false;
+  defaultHref: string | undefined = undefined;
 
   private subscription: Subscription;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly analyticsService: AnalyticsService,
-    private readonly creatorApi: ContentCreatorApiService
+    private readonly creatorApi: ContentCreatorApiService,
+    private readonly platformService: PlatformService
   ) { }
 
   ngOnInit() {
     this.userName = this.route.snapshot.paramMap.get('userName');
+    this.defaultHref = this.platformService.isWeb ? undefined : 'start';
     this._loadCreator();
   }
 
