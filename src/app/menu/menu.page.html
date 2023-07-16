@@ -8,7 +8,8 @@
 
   <div class="display-flex align-items-center content-space-evenly wantic-margin-right-left">
     <div>
-      <app-user-initials [firstName]="displayFirstName" [lastName]="displayLastName" size="size-m"></app-user-initials>
+      <app-user-initials *ngIf="!image" [firstName]="displayFirstName" [lastName]="displayLastName" size="size-m"></app-user-initials>
+      <app-photo *ngIf="image" [src]="image" [readOnly]="true" size="s"></app-photo>
     </div>
     <div [ngClass]="{ 'ion-text-center': hasCreatorAccount }">
       <p class="margin-bottom-4">

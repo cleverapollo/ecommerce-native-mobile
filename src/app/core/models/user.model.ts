@@ -7,6 +7,7 @@ export class UserProfile {
     lastName: string;
     birthday: Date;
     email: EmailDto;
+    hasImage: boolean;
     authProvider: AuthProvider;
     userSettings: UserSettingsDto;
     creatorAccount?: ContentCreatorAccount | null = null;

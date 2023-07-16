@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { SettingsPageRoutingModule } from './settings-routing.module';
 
-import { SettingsPage } from './settings.page';
 import { SharedModule } from '@shared/shared.module';
+import { SettingsPage } from './settings.page';
 
 @NgModule({
   imports: [
@@ -19,4 +19,4 @@ import { SharedModule } from '@shared/shared.module';
   ],
   declarations: [SettingsPage]
 })
-export class SettingsPageModule {}
+export class SettingsPageModule { }

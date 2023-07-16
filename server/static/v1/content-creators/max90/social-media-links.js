@@ -1,6 +1,6 @@
 module.exports = {
     name: 'Maxi',
-    userName: 'max',
+    userName: 'max90',
     description: 
     'Max "Maxi" Mustermann\n' + 
     'Person des fiktiven Lebens\n' + 
@@ -9,9 +9,9 @@ module.exports = {
     '👑 Socials & mehr:\n' +
     'https://wantic.io',
     socialMediaLinks: {
-        instagramUrl: 'https://www.instagram.com/knossi',
-        facebookUrl: 'https://de-de.facebook.com/knossi/',
-        youtubeUrl: 'https://www.youtube.com/channel/UCtckLvYloMnsey8E5qTwWwA',
-        tiktokUrl: 'https://www.tiktok.com/@therealknossi'
+        instagramUrl: 'https://www.instagram.com/wantic.io/?hl=de',
+        facebookUrl: 'https://m.facebook.com/wantic.io/',
+        youtubeUrl: null,
+        tiktokUrl: null
     }
 }

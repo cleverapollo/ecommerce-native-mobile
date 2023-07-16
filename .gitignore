@@ -34,3 +34,8 @@ npm-debug.log*
 # firebase
 
 .firebase
+
+# mock server
+
+/server/uploads/*
+!/server/uploads/knossi.jpg

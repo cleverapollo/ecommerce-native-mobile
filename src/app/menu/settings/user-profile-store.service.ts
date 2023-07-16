@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
 import { UserApiService } from '@core/api/user-api.service';
 import { ContentCreatorAccount } from '@core/models/content-creator.model';
 import { UserProfile } from '@core/models/user.model';
@@ -6,10 +7,18 @@ import { Logger } from '@core/services/log.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { CacheService } from 'ionic-cache';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { first, mergeMap, tap } from 'rxjs/operators';
 
-export interface StoredUserProfile {
-  item: UserProfile;
-  modifiedAt: Date;
+enum ItemKeys {
+  userProfile = 'userProfile',
+  userImage = 'userImage',
+  creatorImage = 'creatorImage'
+}
+
+const cacheObject = {
+  ttl: 60 * 60,
+  itemKey: ItemKeys.userProfile,
+  groupKey: 'user'
 }
 
 @Injectable({
@@ -17,59 +26,93 @@ export interface StoredUserProfile {
 })
 export class UserProfileStore {
 
-  private readonly CACHE_DEFAULT_TTL = 60 * 60;
-  private readonly CACHE_KEY = 'userProfile'
-  private readonly CACHE_GROUP_KEY = 'user';
-
   isCreatorAccountActive$ = new BehaviorSubject<boolean>(false);
+  user$ = new BehaviorSubject<UserProfile | null>(null);
+  creatorImage$ = new BehaviorSubject<Blob | null>(null);
+  userImage$ = new BehaviorSubject<Blob | null>(null);
 
   constructor(
-    private readonly cache: CacheService,
-    private readonly storage: StorageService,
-    private readonly api: UserApiService,
-    private readonly logger: Logger
+    private cache: CacheService,
+    private storage: StorageService,
+    private api: UserApiService,
+    private creatorApi: ContentCreatorApiService,
+    private logger: Logger
   ) {
     this._initData();
   }
 
   loadUserProfile(forceRefresh: boolean = false): Observable<UserProfile> {
-    const request = this.api.getProfile();
-    if (forceRefresh) {
-      return this.cache.loadFromDelayedObservable(this.CACHE_KEY, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
-    }
-    return this.cache.loadFromObservable(this.CACHE_KEY, request, this.CACHE_GROUP_KEY)
+    const request = this.api.getProfile().pipe(
+      tap(user => this.user$.next(user))
+    );
+    return forceRefresh ?
+      this.cache.loadFromDelayedObservable(cacheObject.itemKey, request, cacheObject.groupKey, cacheObject.ttl, 'all') :
+      this.cache.loadFromObservable(cacheObject.itemKey, request, cacheObject.groupKey);
   }
 
-  async updateCachedUserProfile(userProfile: UserProfile): Promise<any> {
+  async updateUserImage(file: FormData, filePath: string, fileName: string): Promise<void> {
+    await this.api.updateImage(file, filePath, fileName);
+    await this.cache.removeItem(ItemKeys.userImage);
+    await this.cache.removeItem(ItemKeys.userProfile);
+  }
 
-    // try to update cached profile
+  downloadUserImage(forceRefresh: boolean = false): Observable<Blob> {
+    const request = this.api.getImage().pipe(
+      tap(blob => this.userImage$.next(blob))
+    );
+    return forceRefresh ?
+      this.cache.loadFromDelayedObservable(ItemKeys.userImage, request, cacheObject.groupKey, cacheObject.ttl, 'all') :
+      this.cache.loadFromObservable(ItemKeys.userImage, request, cacheObject.groupKey);
+  }
+
+  deleteUserImage(): Observable<void> {
+    return this.api.deleteImage().pipe(
+      mergeMap(async user => {
+        await this.updateCachedUserProfile(user);
+        await this.cache.removeItem(ItemKeys.userImage);
+        this.userImage$.next(null);
+      })
+    );
+  }
+
+  downloadCreatorImage(forceRefresh: boolean = false): Observable<Blob> {
+    const request = this.creatorApi.getImage().pipe(
+      tap(blob => this.creatorImage$.next(blob))
+    )
+    return forceRefresh ?
+      this.cache.loadFromDelayedObservable(ItemKeys.creatorImage, request, cacheObject.groupKey, cacheObject.ttl, 'all') :
+      this.cache.loadFromObservable(ItemKeys.creatorImage, request, cacheObject.groupKey);
+  }
+
+  async updateCreatorImage(file: FormData, filePath: string, fileName: string): Promise<void> {
+    await this.creatorApi.updateImage(file, filePath, fileName);
+    await this.cache.removeItem(ItemKeys.creatorImage);
+    await this.cache.removeItem(ItemKeys.userProfile);
+  }
+
+  deleteCreatorImage(): Observable<void> {
+    return this.creatorApi.deleteImage().pipe(
+      mergeMap(async account => {
+        await this.updateCreatorAccount(account);
+        await this.cache.removeItem(ItemKeys.creatorImage);
+        this.creatorImage$.next(null);
+      })
+    );
+  }
+
+  async updateCachedUserProfile(userProfile: UserProfile): Promise<void> {
     try {
-      return await this.cache.saveItem(this.CACHE_KEY, userProfile, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
+      await this.cache.saveItem(cacheObject.itemKey, userProfile, cacheObject.groupKey, cacheObject.ttl);
+      this.user$.next(userProfile);
     } catch (error) {
       this.logger.error(error);
-    }
-
-    // try to remove item from cache
-    try {
-      return await this.cache.removeItem(this.CACHE_KEY);
-    } catch (error) {
-      this.logger.error(error);
-      return Promise.reject(error);
+      return this.removeCachedUserProfile();
     }
   }
 
-  removeCachedUserProfile(): Promise<any> {
-    return this.cache.removeItem(this.CACHE_KEY)
-  }
-
-  loadImage(url: string, forceRefresh: boolean = false, cacheKey?: string): Observable<Blob> {
-    const ttl = 60 * 60 * 24 * 7; // 1 week in seconds
-    const request = this.api.downloadProfileImage(url);
-    const keyForCaching = cacheKey ? cacheKey : url;
-    if (forceRefresh) {
-      return this.cache.loadFromDelayedObservable(keyForCaching, request, this.CACHE_GROUP_KEY, ttl, 'all');
-    }
-    return this.cache.loadFromObservable(keyForCaching, request, this.CACHE_GROUP_KEY, ttl);
+  async removeCachedUserProfile(): Promise<void> {
+    await this.cache.removeItem(cacheObject.itemKey);
+    return this.user$.next(null);
   }
 
   async toggleIsCreatorAccountActive() {
@@ -84,9 +127,17 @@ export class UserProfileStore {
     return this.updateCachedUserProfile(user);
   }
 
-  private async _initData() {
-    const isCreatorAccountActive = await this.storage.get<string>(StorageKeys.ACTIVE_CREATOR_ACCOUNT)
+  private async _initData(): Promise<void> {
+    const isCreatorAccountActive = await this.storage.get<string>(StorageKeys.ACTIVE_CREATOR_ACCOUNT);
     this.isCreatorAccountActive$.next(isCreatorAccountActive === 'true');
+
+    this.loadUserProfile().pipe(
+      first()
+    ).subscribe({
+      next: user => {
+        this.user$.next(user);
+      }
+    })
   }
 
 }

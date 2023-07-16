@@ -38,7 +38,7 @@ export class AffiliateDataStoreService {
       this.CACHE_GROUP_KEY,
       this.CACHE_DEFAULT_TTL
     ).toPromise();
-    this.logger.debug('loaded affiliate programmes ', cachedData);
+    this.logger.debug('loaded affiliate programmes ', JSON.stringify(cachedData));
     this.setAffiliateProgrammes(cachedData);
   }
 

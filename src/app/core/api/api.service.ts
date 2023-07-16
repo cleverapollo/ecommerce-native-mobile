@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 import { App } from '@capacitor/app';
+import { CapacitorHttp } from '@capacitor/core';
 import { Device } from '@capacitor/device';
 import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { Observable } from 'rxjs';
-import { appVersion, SERVER_URL } from 'src/environments/environment';
+import { SERVER_URL, appVersion } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class ApiService {
 
   constructor(
     private httpClient: HttpClient,
+    private nativeHttpClient: HTTP,
     private logger: Logger,
     private platformService: PlatformService) {
     this.initClientInfoHeader();
@@ -75,19 +78,25 @@ export class ApiService {
     });
   }
 
-  uploadFile<T>(url: string, formData: FormData) {
-    const headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'multipart/form-data');
-
-    return this.httpClient.post<T>(`${SERVER_URL}/${url}`, formData, {
-      headers,
-      responseType: 'json'
+  async uploadFile(url: string, formData: FormData, filePath: string, fileName: string): Promise<void> {
+    await CapacitorHttp.post({
+      url: `${SERVER_URL}/${url}`,
+      data: formData,
+      headers: {
+        Authorization: this.nativeHttpClient.getHeaders(SERVER_URL)['Authorization'],
+        'Content-Type': 'multipart/form-data',
+        enctype: 'multipart/form-data',
+        'Wantic-Client-Info': this.clientInfoHeader
+      }
     });
   }
 
   downloadFile(url: string): Observable<Blob> {
-    return this.httpClient.get(url, {
+    const headers = new HttpHeaders({
+      'Wantic-Client-Info': this.clientInfoHeader
+    });
+    return this.httpClient.get(`${SERVER_URL}/${url}`, {
+      headers,
       responseType: 'blob'
     });
   }
@@ -106,7 +115,7 @@ export class ApiService {
   }
 
   private async setupClientInfoHeader() {
-    let platform = 'unknown';
+    let platform = 'web';
     let osVersion = '0.0.0';
     let version = appVersion;
     let locale = 'de_DE';
@@ -120,8 +129,6 @@ export class ApiService {
       osVersion = deviceInfo.osVersion;
       version = appInfo.version;
       locale = languageCode.value;
-    } else {
-      platform = 'web';
     }
 
     const headerValue = `platform=${platform}; osVersion=${osVersion}; appVersion=${version}; locale=${locale};`

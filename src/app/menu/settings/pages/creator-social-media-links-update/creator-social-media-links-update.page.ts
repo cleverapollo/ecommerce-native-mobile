@@ -80,7 +80,7 @@ export class CreatorSocialMediaLinksUpdatePage implements OnInit {
     }
     this.showNoChangesMessage = false;
 
-    this.api.updateSocialMediaLinks(this.user.creatorAccount.userName, {
+    this.api.updateSocialMediaLinks({
       instagramUrl: this.instagramUrlformControl.value,
       facebookUrl: this.facebookUrlformControl.value,
       youtubeUrl: this.youtubeUrlformControl.value,

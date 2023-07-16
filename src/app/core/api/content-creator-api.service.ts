@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ContentCreatorAccount, SocialMediaLinks } from '@core/models/content-creator.model';
+import { ContentCreatorAccount, NewCreator, SocialMediaLinks } from '@core/models/content-creator.model';
 import { WanticError } from '@core/models/error.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -12,10 +12,11 @@ import { ApiService } from './api.service';
 export class ContentCreatorApiService {
 
   private static REST_END_POINT = 'content-creators';
+  private static PUBLIC_REST_END_POINT = 'public/content-creators';
 
   constructor(private apiService: ApiService) { }
 
-  createAccount(data: ContentCreatorAccount): Observable<string> {
+  createAccount(data: NewCreator): Observable<string> {
     return this.apiService.postRaw<void>(`${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}`, data).pipe(
       catchError(error => throwError(new WanticError(error))),
       map(response => response.headers.get('Location'))
@@ -23,44 +24,70 @@ export class ContentCreatorApiService {
   }
 
   getAccountByUserName(userName: string): Observable<ContentCreatorAccount> {
-    return this.apiService.get<ContentCreatorAccount>(`${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}/${userName}/`).pipe(
+    return this.apiService.get<ContentCreatorAccount>(`${ApiVersion.v1}/${ContentCreatorApiService.PUBLIC_REST_END_POINT}/${userName}/`).pipe(
       catchError(error => throwError(new WanticError(error)))
     );
   }
 
   searchForAccounts(searchTerm: string): Observable<ContentCreatorAccount[]> {
-    return this.apiService.get<ContentCreatorAccount[]>(`${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}?searchTerm=${searchTerm}`).pipe(
+    return this.apiService.get<ContentCreatorAccount[]>(`${ApiVersion.v1}/${ContentCreatorApiService.PUBLIC_REST_END_POINT}?searchTerm=${searchTerm}`).pipe(
       catchError(error => throwError(new WanticError(error)))
     );
   }
 
-  updateName(userName: string, name: string): Observable<ContentCreatorAccount> {
-    return this.apiService.patch<ContentCreatorAccount>(this._buildPatchUrl(userName, 'name'), { name }).pipe(
+  updateName(name: string): Observable<ContentCreatorAccount> {
+    return this.apiService.patch<ContentCreatorAccount>(this._buildUrl('name'), { name }).pipe(
       catchError(error => throwError(new WanticError(error)))
     );
   }
 
-  updateUserName(currentUserName: string, newUserName: string): Observable<ContentCreatorAccount> {
-    return this.apiService.patch<ContentCreatorAccount>(this._buildPatchUrl(currentUserName, 'user-name'), { userName: newUserName }).pipe(
+  updateUserName(newUserName: string): Observable<ContentCreatorAccount> {
+    return this.apiService.patch<ContentCreatorAccount>(this._buildUrl('user-name'), { userName: newUserName }).pipe(
       catchError(error => throwError(new WanticError(error)))
     );
   }
 
-  updateDescription(userName: string, description: string): Observable<ContentCreatorAccount> {
-    return this.apiService.patch<ContentCreatorAccount>(this._buildPatchUrl(userName, 'description'), { description }).pipe(
+  updateDescription(description: string): Observable<ContentCreatorAccount> {
+    return this.apiService.patch<ContentCreatorAccount>(this._buildUrl('description'), { description }).pipe(
       catchError(error => throwError(new WanticError(error)))
     );
   }
 
-  updateSocialMediaLinks(userName: string, socialMediaLinks: SocialMediaLinks): Observable<ContentCreatorAccount> {
-    return this.apiService.patch<ContentCreatorAccount>(this._buildPatchUrl(userName, 'social-media-links'), socialMediaLinks).pipe(
+  updateSocialMediaLinks(socialMediaLinks: SocialMediaLinks): Observable<ContentCreatorAccount> {
+    return this.apiService.patch<ContentCreatorAccount>(this._buildUrl('social-media-links'), socialMediaLinks).pipe(
       catchError(error => throwError(new WanticError(error)))
     );
   }
 
+  getImage(): Observable<Blob> {
+    return this.apiService.downloadFile(this._buildUrl('image')).pipe(
+      catchError(error => throwError(new WanticError(error)))
+    );
+  }
 
-  private _buildPatchUrl(userName: string, resource: string): string {
-    return `${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}/${userName}/${resource}`;
+  getImageByUserName(userName: string): Observable<Blob> {
+    return this.apiService.downloadFile(this._buildPublicUrl(userName, 'image')).pipe(
+      catchError(error => throwError(new WanticError(error)))
+    );
+  }
+
+  updateImage(file: FormData, filePath: string, fileName: string): Promise<void> {
+    return this.apiService.uploadFile(this._buildUrl('image'), file, filePath, fileName);
+    // return this.apiService.uploadFile(this._buildUrl('image'), file, filePath, fileName);
+  }
+
+  deleteImage(): Observable<ContentCreatorAccount> {
+    return this.apiService.delete<ContentCreatorAccount>(this._buildUrl('image')).pipe(
+      catchError(error => throwError(new WanticError(error)))
+    );
+  }
+
+  private _buildPublicUrl(userName: string, resource: string): string {
+    return `${ApiVersion.v1}/${ContentCreatorApiService.PUBLIC_REST_END_POINT}/${userName}/${resource}`;
+  }
+
+  private _buildUrl(resource: string): string {
+    return `${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}/${resource}`;
   }
 
 }

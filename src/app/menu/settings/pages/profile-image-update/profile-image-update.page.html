@@ -1,0 +1,12 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar defaultHref="/secure/menu/settings"></app-nav-toolbar>
+  <app-email-unverified-hint></app-email-unverified-hint>
+</ion-header>
+
+<ion-content>
+
+  <h1 class="ion-text-center wantic-page-header">Profil bearbeiten</h1>
+
+  <app-photo [src]="image$ | async" [fileName]="fileName" (fileChanged)="onFileChanged($event)" (fileDeleted)="onFileDelete()"></app-photo>
+
+</ion-content>

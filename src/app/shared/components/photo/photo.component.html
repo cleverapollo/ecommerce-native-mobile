@@ -1,0 +1,42 @@
+<!--<ion-item lines="none">
+  <ion-avatar slot="start">
+    <ion-img [src]="src"></ion-img>
+  </ion-avatar>
+  <ion-button slot="end" (click)="selectImage()"> 
+    <ion-icon slot="start" name="camera"></ion-icon>
+    Bearbeiten
+  </ion-button>
+</ion-item>-->
+
+<div class="container">
+  <div class="avatar" [style]="style" [ngClass]="sizeCssClass" appBackgroundImage [src]="src | secure"></div>
+  <div *ngIf="!readOnly">
+    <ion-button slot="end" class="wantic-save-button" id="open-modal"> 
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Bearbeiten
+    </ion-button>
+  </div>
+</div>
+
+<p>
+  <span *ngIf="showError">Dein Bild ist zu groß</span>
+</p>
+
+<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+  <ng-template>
+    <ion-content>
+      <ion-item lines="none" class="margin-top-8" button (click)="pickImageFromGallery()">
+        <ion-icon name="image-outline" color="dark" class="margin-right-8"></ion-icon>
+        <ion-label>Aus Bibliothek auswählen</ion-label>
+      </ion-item>
+      <ion-item lines="none"  button (click)="takePhoto()">
+        <ion-icon name="camera-outline" color="dark" class="margin-right-8"></ion-icon>
+        <ion-label>Foto aufnehmen</ion-label>
+      </ion-item>
+      <ion-item lines="none"  button (click)="deletePhoto()">
+        <ion-icon name="trash-outline" color="primary" class="margin-right-8"></ion-icon>
+        <ion-label>Aktuelles Bild entfernen</ion-label>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -1,6 +1,6 @@
 module.exports = {
     name: 'Max Mustermann',
-    userName: 'max',
+    userName: 'max90',
     description:
     'Max "Maxi" Mustermann\n' + 
     'Person des fiktiven Lebens\n' + 

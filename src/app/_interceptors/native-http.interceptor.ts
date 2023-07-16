@@ -49,11 +49,11 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!this.platform.isNativePlatform) {
-      return next.handle(request);
-    }
-
-    return from(this.handleNativeRequest(request));
+    const handleNativeRequest = this.platform.isNativePlatform &&
+      !(request.body instanceof FormData)
+    return handleNativeRequest ?
+      from(this.handleNativeRequest(request)) :
+      next.handle(request);
   }
 
   private async handleNativeRequest(
@@ -63,12 +63,13 @@ export class NativeHttpInterceptor implements HttpInterceptor {
 
     try {
       await this.platform.isReady();
-      const nativeHttpResponse = await this.sendRequest(request, headers);
-      const response = this.createResponse(nativeHttpResponse);
-      return Promise.resolve(response);
+      const nativeHttpResponse = await this.sendRequest(request, headers)
+        .then();
+      return this.createResponse(nativeHttpResponse);
     } catch (error) {
       if (!error.status) {
-        return Promise.reject(error);
+        this.logError(error);
+        throw error;
       }
       const response = this.createErrorResponse(error);
       return Promise.reject(response);
@@ -94,19 +95,19 @@ export class NativeHttpInterceptor implements HttpInterceptor {
       method,
       headers,
       serializer: 'json',
-      data: request.body
+      data: request.body,
+      responseType: request.responseType
     }
+
     if (request.body === null) {
       options.serializer = 'utf8';
       options.data = 'null' as any;
-    } else if (request.body instanceof FormData) {
-      options.serializer = 'multipart';
     }
 
-    return await this.nativeHttp.sendRequest(url, options);
+    return this.nativeHttp.sendRequest(url, options);
   }
 
-  private createEncodedUrlFromRequest(request: HttpRequest<any>) {
+  private createEncodedUrlFromRequest(request: HttpRequest<any>): string {
     const queryParams = request.params?.toString();
     let url = request.url;
     if (queryParams && queryParams.length > 0) {
@@ -116,13 +117,12 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     return url;
   }
 
-  private createResponse(nativeHttpResponse: HTTPResponse) {
+  private createResponse(nativeHttpResponse: HTTPResponse): HttpResponse<any> {
     const body = this.parseBodyFromResponseAsJson(nativeHttpResponse);
-    const responseHeaders = this.createResponseHeaders(nativeHttpResponse);
     const response = new HttpResponse({
       body,
       status: nativeHttpResponse.status,
-      headers: responseHeaders,
+      headers: new HttpHeaders(nativeHttpResponse.headers),
       url: nativeHttpResponse.url
     });
     this.logResponse(response);
@@ -141,17 +141,6 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     return body;
   }
 
-  private createResponseHeaders(nativeHttpResponse: HTTPResponse) {
-    const responseHeaders = new HttpHeaders();
-    for (const header in nativeHttpResponse.headers) {
-      if (nativeHttpResponse.headers.hasOwnProperty(header)) {
-        const value = nativeHttpResponse.headers[header];
-        responseHeaders.set('header', value);
-      }
-    }
-    return responseHeaders;
-  }
-
   private createErrorResponse(error: any) {
     this.logError(error);
     return new HttpErrorResponse({
@@ -165,27 +154,26 @@ export class NativeHttpInterceptor implements HttpInterceptor {
   // logging
 
   private logUrl(url: string) {
-    this.logger.info('— Request url');
-    this.logger.info(url);
+    this.logger.info('— Request url', url);
   }
 
   private logRequestBody(request: HttpRequest<any>) {
     this.logger.info('— Request body');
-    this.logger.info(JSON.stringify(request.body));
+    this.logger.info(request.body);
   }
 
   private logRequestHeaders(request: HttpRequest<any>) {
     this.logger.info('— Request headers');
-    this.logger.info(JSON.stringify(request.headers));
+    this.logger.info(request.headers);
   }
 
   private logResponse(response: HttpResponse<any>) {
-    this.logger.info('— Response success');
-    this.logger.info(JSON.stringify(response));
+    this.logger.info('— Response');
+    this.logger.info(response);
   }
 
   private logError(error: any) {
     this.logger.error('— Response error');
-    this.logger.error(JSON.stringify(error));
+    this.logger.error(error);
   }
 }

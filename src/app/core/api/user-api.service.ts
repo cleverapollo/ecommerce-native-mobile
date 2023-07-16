@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
-import { Observable } from 'rxjs';
-import { UserProfile, PublicEmailVerificationStatus, EmailVerificationDto,
-         UpdateEmailChangeRequest, AccountDto, Gender } from '@core/models/user.model';
-import { UpdatePasswordRequest, ChangePasswordRequest, LoginResponse } from '@core/models/login.model';
-import { ApiErrorHandlerService } from './api-error-handler.service';
-import { catchError } from 'rxjs/operators';
-import { Logger } from '@core/services/log.service';
+import { WanticError } from '@core/models/error.model';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
+import { ChangePasswordRequest, LoginResponse, UpdatePasswordRequest } from '@core/models/login.model';
+import {
+  AccountDto,
+  EmailVerificationDto,
+  Gender,
+  PublicEmailVerificationStatus,
+  UpdateEmailChangeRequest,
+  UserProfile
+} from '@core/models/user.model';
+import { Logger } from '@core/services/log.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ApiErrorHandlerService } from './api-error-handler.service';
 import { ApiVersion } from './api-version';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,24 +30,33 @@ export class UserApiService {
     private logger: Logger
   ) { }
 
+  get apiV1(): string {
+    return `${ApiVersion.v1}/${UserApiService.REST_END_POINT}`
+  }
+
+  get apiV2(): string {
+    return `${ApiVersion.v2}/${UserApiService.REST_END_POINT}`
+  }
+
+
   deleteUser(): Observable<void> {
-    return this.apiService.patch<void>(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/delete-account`);
+    return this.apiService.patch<void>(`${this.apiV2}/delete-account`);
   }
 
   getProfile(): Observable<UserProfile> {
-    return this.apiService.get<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile`).pipe(
+    return this.apiService.get<UserProfile>(`${this.apiV1}/profile`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   partialUpdateFirebaseUid(uid: string): Observable<void> {
-    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/firebase-uid`, { uid }).pipe(
+    return this.apiService.patch<void>(`${this.apiV1}/profile/firebase-uid`, { uid }).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   partialUpdateFirstName(firstName: string): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/first-name`, {
+    return this.apiService.patch<UserProfile>(`${this.apiV1}/profile/first-name`, {
       firstName
     }).pipe(
       catchError(error => this.errorHandler.handleError(error))
@@ -48,7 +64,7 @@ export class UserApiService {
   }
 
   partialUpdateLastName(lastName: string): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/last-name`, {
+    return this.apiService.patch<UserProfile>(`${this.apiV1}/profile/last-name`, {
       lastName
     }).pipe(
       catchError(error => this.errorHandler.handleError(error))
@@ -56,7 +72,7 @@ export class UserApiService {
   }
 
   partialUpdateBirthday(birthday: Date): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/birthday`, {
+    return this.apiService.patch<UserProfile>(`${this.apiV1}/profile/birthday`, {
       birthday
     }).pipe(
       catchError(error => this.errorHandler.handleError(error))
@@ -64,7 +80,7 @@ export class UserApiService {
   }
 
   partialUpdateGender(gender: Gender): Observable<UserProfile> {
-    return this.apiService.patch<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/gender`, {
+    return this.apiService.patch<UserProfile>(`${this.apiV1}/profile/gender`, {
       gender
     }).pipe(
       catchError(error => this.errorHandler.handleError(error))
@@ -72,93 +88,83 @@ export class UserApiService {
   }
 
   partialUpdateEmail(emailVerficationToken: string): Observable<LoginResponse> {
-    return this.apiService.patch<LoginResponse>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile/email`,  {
+    return this.apiService.patch<LoginResponse>(`${this.apiV1}/profile/email`, {
       emailVerficationToken
     });
   }
 
-  updateEmailChangeRequest(requestBody: UpdateEmailChangeRequest): Observable<void> {
-    return this.apiService.put<void>(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/profile/email`, requestBody).pipe(
-      catchError(error => this.errorHandler.handleError(error))
+  getImage(): Observable<Blob> {
+    return this.apiService.downloadFile(`${this.apiV1}/profile/image`).pipe(
+      catchError(error => throwError(new WanticError(error)))
     );
   }
 
-  partialUpdateProfileImage(formData: FormData): Observable<UserProfile> {
-    return this.apiService.uploadFile<UserProfile>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile-image`, formData).pipe(
+  updateImage(file: FormData, filePath: string, fileName: string): Promise<void> {
+    return this.apiService.uploadFile(`${this.apiV1}/profile/image`, file, filePath, fileName);
+  }
+
+  deleteImage(): Observable<UserProfile> {
+    return this.apiService.delete<UserProfile>(`${this.apiV1}/profile/image`).pipe(
+      catchError(error => throwError(new WanticError(error)))
+    );
+  }
+
+  updateEmailChangeRequest(requestBody: UpdateEmailChangeRequest): Observable<void> {
+    return this.apiService.put<void>(`${this.apiV2}/profile/email`, requestBody).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   resetPassword(email: string) {
-    return this.apiService.post(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/reset-password`, { email }).pipe(
+    return this.apiService.post(`${this.apiV1}/reset-password`, { email }).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   updatePassword(updatePasswordRequest: UpdatePasswordRequest): Observable<any> {
-    return this.apiService.put(`${ApiVersion.v2}/${UserApiService.REST_END_POINT}/update-password`, updatePasswordRequest).pipe(
+    return this.apiService.put(`${this.apiV2}/update-password`, updatePasswordRequest).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
   changePassword(changewPasswordRequest: ChangePasswordRequest): Observable<any> {
-    return this.apiService.post(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/change-password`, changewPasswordRequest).pipe(
+    return this.apiService.post(`${this.apiV1}/change-password`, changewPasswordRequest).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }
 
-  downloadProfileImage(url: string): Observable<Blob> {
-    return this.apiService.downloadFile(url,).pipe(
-      catchError(error => this.errorHandler.handleError(error))
-    );
-  }
-
-  deleteProfileImage(fileName: string) {
-    return this.apiService.delete(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/profile-image/${fileName}`).pipe(
-      catchError(error => this.errorHandler.handleError(error))
-    );
-  }
-
-  verifyEmail(emailVerficationToken: string): Promise<PublicEmailVerificationStatus> {
-    return new Promise((resolve) => {
-      return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/email-verification`, {
+  async verifyEmail(emailVerficationToken: string): Promise<PublicEmailVerificationStatus> {
+    try {
+      await this.apiService.patch<void>(`${this.apiV1}/email-verification`, {
         emailVerficationToken
-      }).toPromise().then(() => {
-        resolve(PublicEmailVerificationStatus.VERIFIED);
-      }, error => {
-        if (error.error instanceof ErrorEvent) {
-          this.logger.log(`Error: ${error.error.message}`);
-          resolve(PublicEmailVerificationStatus.ERROR);
-        } else {
-          this.logger.log(`error status : ${error.status} ${error.statusText}`);
-          if (error.status === HttpStatusCodes.UNAUTHORIZED) {
-            resolve(PublicEmailVerificationStatus.TOKEN_EXPIRED);
-          } else {
-            resolve(PublicEmailVerificationStatus.ERROR);
-          }
-        }
-      })
-    });
+      }).toPromise()
+      return PublicEmailVerificationStatus.VERIFIED;
+    } catch (error) {
+      if (error?.status === HttpStatusCodes.UNAUTHORIZED) {
+        return PublicEmailVerificationStatus.TOKEN_EXPIRED;
+      }
+      return PublicEmailVerificationStatus.ERROR
+    }
   }
 
   getEmailVerificationStatus(): Observable<EmailVerificationDto> {
-    return this.apiService.get<EmailVerificationDto>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/email-verification`);
+    return this.apiService.get<EmailVerificationDto>(`${this.apiV1}/email-verification`);
   }
 
   updateShowOnboardingSlidesIosState(state: boolean): Observable<void> {
-    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/user-settings/show-onboarding-slides-ios`, {
+    return this.apiService.patch<void>(`${this.apiV1}/user-settings/show-onboarding-slides-ios`, {
       show: state
     });
   }
 
   updateShowOnboardingSlidesAndroidState(state: boolean): Observable<void> {
-    return this.apiService.patch<void>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/user-settings/show-onboarding-slides-android`, {
+    return this.apiService.patch<void>(`${this.apiV1}/user-settings/show-onboarding-slides-android`, {
       show: state
     });
   }
 
   getAccount(): Observable<AccountDto> {
-    return this.apiService.get<AccountDto>(`${ApiVersion.v1}/${UserApiService.REST_END_POINT}/accounts`);
+    return this.apiService.get<AccountDto>(`${this.apiV1}/accounts`);
   }
 
 }

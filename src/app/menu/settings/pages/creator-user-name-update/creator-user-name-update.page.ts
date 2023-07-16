@@ -62,7 +62,7 @@ export class CreatorUserNameUpdatePage implements OnInit {
       return;
     }
 
-    this.api.updateUserName(this.user.creatorAccount.userName, this.formControl.value).pipe(
+    this.api.updateUserName(this.user.creatorAccount.userName).pipe(
       first(),
       finalize(() => {
         this.loadingService.stopLoadingSpinner();

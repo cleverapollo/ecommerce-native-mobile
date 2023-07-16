@@ -1,7 +1,8 @@
 <div *ngIf="account && !isLoading" class="wantic-container">
   <div style="display: flex; align-items: center; justify-content: space-between;">
     <div>
-      <app-user-initials [firstName]="account.name" size="size-m"></app-user-initials>
+      <app-user-initials *ngIf="!image" [firstName]="account.name" size="size-m"></app-user-initials>
+      <app-photo *ngIf="image" [src]="image" [readOnly]="true" size="s"></app-photo>
       <div>
         <p class="name"><strong>{{ account.name }}</strong></p>
         <p class="user-name">@{{ account.userName }}</p>

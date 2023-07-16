@@ -6,6 +6,7 @@ module.exports = {
         value: 'mock@wantic.io',
         status: 'ACCEPTED'
     },
+    imagePath: 'http://localhost:3000/download/knossi.jpg',
     authProvider: 'WANTIC',
     userSettings: {
         showOnboardingSlidesiOS: true,
@@ -13,7 +14,7 @@ module.exports = {
     },
     creatorAccount: {
         name: 'Max Mustermann',
-        userName: 'max',
+        userName: 'max90',
         description: 
         'Max "Maxi" Mustermann\n' + 
         'Person des fiktiven Lebens\n' + 

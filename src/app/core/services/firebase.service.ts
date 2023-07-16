@@ -83,10 +83,9 @@ export class FirebaseService implements FirebaseControllable {
   async getIdToken(forceRefresh: boolean): Promise<string | null> {
     if (this.platform.isNativePlatform) {
       return this.nativeAuth.getIdToken(forceRefresh);
-    } else {
-      const authState = await this.getAuthState();
-      return await authState?.getIdToken(forceRefresh) ?? null;
     }
+    const authState = await this.getAuthState();
+    return authState?.getIdToken(forceRefresh) ?? null;
   }
 
   setLanguageCode(languageCode: string): void {
@@ -129,6 +128,7 @@ export class FirebaseService implements FirebaseControllable {
     const config: LinkConfig = {
       domainUriPrefix: 'https://wantic.page.link',
       uri: `${APP_URL}/creator/${creator.userName}`,
+
       androidParameters: {
         packageName: environment.android.packageName,
         fallbackUrl: 'https://wantic.io',

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 import { Preferences } from '@capacitor/preferences';
-import 'capacitor-secure-storage-plugin';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 import CryptoJS from 'crypto-js';
 import SecureStorage from 'secure-web-storage';
@@ -13,16 +12,19 @@ const SECRET_KEY = 'wantic_sec';
 
 export enum StorageKeys {
   ACTIVE_CREATOR_ACCOUNT = 'activeCreatorAccount',
-  USER_SETTINGS = 'userSettings',
-  LOGIN_EMAIL = 'loginEmail', // deprecated
-  LOGIN_PASSWORD = 'loginPassword', // deprecated
-  AUTH_TOKEN = 'auth-token', // deprecated
   CREDENTIALS = 'credentials',
   FIREBASE_ID_TOKEN = 'firebaseIdToken',
   FIREBASE_EMAIL_VERIFIED = 'firebaseEmailVerified',
   FIREBASE_USER_INFO = 'firebaseUserInfo',
-  SHARED_WISH_LIST_EMAIL = 'memberEmail', // deprecated
+  PROFILE_IMAGE = 'profileImage',
   SIGNUP_RESPONSE = 'signupResponse',
+  USER_SETTINGS = 'userSettings',
+
+  // deprecated
+  AUTH_TOKEN = 'auth-token', // deprecated
+  LOGIN_EMAIL = 'loginEmail', // deprecated
+  LOGIN_PASSWORD = 'loginPassword', // deprecated
+  SHARED_WISH_LIST_EMAIL = 'memberEmail', // deprecated
 }
 
 export interface Storage {
@@ -133,62 +135,66 @@ export class StorageService implements Storage {
     try {
       await this.platform.ready();
       if (secure) {
-        this.setSecure(storageKey, value);
+        await this.setSecure(storageKey, value);
       } else {
-        this.setPublic(storageKey, value);
+        await this.setPublic(storageKey, value);
       }
     } catch (error) {
       this.logger.error(error);
+      throw error;
     }
   }
 
-  private setSecure(storageKey: string, value: any) {
+  private async setSecure(storageKey: string, value: any): Promise<void> {
     if (this.platformService.isNativePlatform) {
-      SecureStoragePlugin.set({ key: storageKey, value })
-        .then(result => this.logger.log(result))
-        .catch(error => this.logger.error(error))
+      await SecureStoragePlugin.set({ key: storageKey, value });
     } else {
       this.secureWebStorage.setItem(storageKey, value);
     }
+    return Promise.resolve();
   }
 
-  private setPublic(storageKey: string, value: any) {
+  private setPublic(storageKey: string, value: any): Promise<void> {
     if (this.platformService.isNativePlatform) {
-      Preferences.set({ key: storageKey, value });
+      return Preferences.set({ key: storageKey, value });
     } else {
       localStorage.setItem(storageKey, JSON.stringify(value));
+      return Promise.resolve();
     }
   }
 
   // REMOVE
 
-  async remove(storageKey: string, secure: boolean = false) {
+  async remove(storageKey: string, secure: boolean = false): Promise<void> {
     try {
       await this.platform.ready();
       if (secure) {
-        this.removeSecure(storageKey);
+        await this.removeSecure(storageKey);
       } else {
-        this.removePublic(storageKey);
+        await this.removePublic(storageKey);
       }
     } catch (error) {
       this.logger.error(error);
+      throw error;
     }
   }
 
-  private removeSecure(storageKey: string) {
+  private async removeSecure(storageKey: string): Promise<void> {
     if (this.platformService.isNativePlatform) {
-      SecureStoragePlugin.remove({ key: storageKey });
+      await SecureStoragePlugin.remove({ key: storageKey });
     } else {
       this.secureWebStorage.removeItem(storageKey);
     }
+    return Promise.resolve();
   }
 
-  private removePublic(storageKey: string) {
+  private async removePublic(storageKey: string): Promise<void> {
     if (this.platformService.isNativePlatform) {
-      Preferences.remove({ key: storageKey })
+      await Preferences.remove({ key: storageKey })
     } else {
       localStorage.removeItem(storageKey);
     }
+    return Promise.resolve();
   }
 
   // CLEAR

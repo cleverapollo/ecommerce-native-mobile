@@ -24,6 +24,8 @@ export class Logger {
     let errorMessage = message;
     if (typeof errorMessage === 'string') {
       errorMessage = `${emoji} ${message}`;
+    } else if (typeof errorMessage === 'object') {
+      errorMessage = `${emoji} ${JSON.stringify(message)}`;
     }
     return errorMessage;
   }

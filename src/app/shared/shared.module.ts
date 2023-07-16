@@ -8,6 +8,7 @@ import { DatetimeComponent } from './components/datetime/datetime.component';
 import { EmailUnverifiedHintComponent } from './components/email-unverified-hint/email-unverified-hint.component';
 import { NavToolbarComponent } from './components/nav-toolbar/nav-toolbar.component';
 import { OwnersInfoComponent } from './components/owners-info/owners-info.component';
+import { PhotoComponent } from './components/photo/photo.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { ShowHidePasswordComponent } from './components/show-hide-password/show-hide-password.component';
 import { UserInitialsComponent } from './components/user-initials/user-initials.component';
@@ -15,6 +16,7 @@ import { ValidationMessagesComponent } from './components/validation-messages/va
 import { WishImageComponent } from './components/wish-image/wish-image.component';
 import { WishListRadioComponent } from './components/wish-list-radio/wish-list-radio.component';
 import { WishShopInfoComponent } from './components/wish-shop-info/wish-shop-info.component';
+import { BackgroundImageDirective } from './directives/background-image.directive';
 import { OwnerNamesPipe } from './pipes/owner-names.pipe';
 import { SecurePipe } from './pipes/secure.pipe';
 import { TruncateNamePipe } from './pipes/truncate-name.pipe';
@@ -31,12 +33,14 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
     ValidationMessagesComponent,
     EmailUnverifiedHintComponent,
     NavToolbarComponent,
+    PhotoComponent,
     SearchResultComponent,
     ShowHidePasswordComponent,
     UserInitialsComponent,
     WishListRadioComponent,
     WishShopInfoComponent,
-    TruncateNamePipe
+    TruncateNamePipe,
+    BackgroundImageDirective
   ],
   imports: [
     CommonModule,
@@ -45,6 +49,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
     IonicModule
   ],
   exports: [
+    BackgroundImageDirective,
     CreatorComponent,
     DatetimeComponent,
     SecurePipe,
@@ -55,6 +60,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
     ValidationMessagesComponent,
     EmailUnverifiedHintComponent,
     NavToolbarComponent,
+    PhotoComponent,
     FormsModule,
     ReactiveFormsModule,
     SearchResultComponent,

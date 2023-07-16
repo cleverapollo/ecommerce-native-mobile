@@ -4,8 +4,9 @@ import { EmailDto, EmailVerificationStatus, UserProfile, UserSettingsDto } from 
 
 export const creatorMax: ContentCreatorAccount = {
     name: 'Max Mustermann',
-    userName: 'max',
+    userName: 'max90',
     description: 'Überall dieselbe alte Leier. Das Layout ist fertig, der Text lässt auf sich warten. Damit das Layout nun nicht nackt im Raume steht und sich klein und leer vorkommt, springe ich ein: der Blindtext. Genau zu diesem Zwecke erschaffen, immer im Schatten meines großen Bruders »Lorem Ipsum«, freue ich mich',
+    hasImage: false,
     socialMediaLinks: {
         instagramUrl: 'https://www.instagram.com/knossi',
         facebookUrl: 'https://de-de.facebook.com/knossi/',
@@ -21,5 +22,6 @@ export const userMax: UserProfile = {
     lastName: 'Mustermann',
     userSettings: new UserSettingsDto(true, false),
     birthday: new Date(1990, 5, 12),
-    creatorAccount: creatorMax
+    creatorAccount: creatorMax,
+    hasImage: false
 }

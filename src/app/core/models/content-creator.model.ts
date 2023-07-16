@@ -1,8 +1,16 @@
+export interface NewCreator {
+    name: string;
+    userName: string;
+    description: string;
+    socialMediaLinks: SocialMediaLinks;
+}
+
 export interface ContentCreatorAccount {
     name: string;
     userName: string;
     description: string;
-    socialMediaLinks: SocialMediaLinks
+    socialMediaLinks: SocialMediaLinks;
+    hasImage: boolean;
 }
 
 export interface SocialMediaLinks {

@@ -6,11 +6,11 @@ import { CustomError, CustomErrorType } from '@core/error';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { SignInResponse, SignupRequest } from '@core/models/signup.model';
 import { UserProfile } from '@core/models/user.model';
-import { environment, SERVER_URL } from '@env/environment';
+import { SERVER_URL, environment } from '@env/environment';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
-import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
+import { ASAuthorizationAppleIDRequest, AppleSignInResponse, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import firebase from 'firebase/compat/app';
 import { CacheService } from 'ionic-cache';
 import { BehaviorSubject } from 'rxjs';
@@ -67,6 +67,10 @@ export class AuthenticationService implements AppAuthenticationService {
     this.setupOnAuthStateChangedListener();
   }
 
+  get token(): Promise<string> {
+    return this.firebaseService.getIdToken(false);
+  }
+
   private async setupOnAuthStateChangedListener() {
     this.firebaseService.onAuthStateChanged().subscribe(user => {
       if (user) {
@@ -80,7 +84,7 @@ export class AuthenticationService implements AppAuthenticationService {
   private async updateEmailVerificationState(user: firebase.User | any) {
     try {
       const isEmailVerified = await this.storageService.get<boolean>(StorageKeys.FIREBASE_EMAIL_VERIFIED, true);
-      const nextValue = isEmailVerified !== null ? isEmailVerified : user.emailVerified
+      const nextValue = isEmailVerified ?? user.emailVerified
       this.isEmailVerified.next(nextValue);
     } catch (error) {
       this.logger.error(error);
@@ -218,13 +222,10 @@ export class AuthenticationService implements AppAuthenticationService {
       return Promise.resolve({ googlePlusLoginResponse, user: wanticSignInResponse.user });
     } catch (error) {
       this.logger.error(error);
-      let errorMessage: string | null = 'Deine Anmeldung ist fehlgeschlagen';
       if (typeof error === 'string' && error === 'The user canceled the sign-in flow.') {
-        errorMessage = null;
-      } else {
-        errorMessage = this.getFirebaseAuthErrorMessage(error);
+        return Promise.reject(null);
       }
-      return Promise.reject(errorMessage);
+      return Promise.reject(this.getFirebaseAuthErrorMessage(error));
     }
   }
 
@@ -257,14 +258,11 @@ export class AuthenticationService implements AppAuthenticationService {
       return Promise.resolve({ appleSignInResponse, user: wanticSignInResponse.user });
     } catch (error) {
       this.logger.error(error);
-      let errorMessage: string | null = 'Deine Anmeldung ist fehlgeschlagen';
       const signInError = error as SignInError;
       if (signInError && signInError.code === '1001' && signInError.error === 'ASAUTHORIZATION_ERROR') {
-        errorMessage = null;
-      } else {
-        errorMessage = this.getFirebaseAuthErrorMessage(error);
+        return Promise.reject();
       }
-      return Promise.reject(errorMessage);
+      return Promise.reject(this.getFirebaseAuthErrorMessage(error));
     }
   }
 
@@ -290,7 +288,7 @@ export class AuthenticationService implements AppAuthenticationService {
       if (idToken) {
         await this.updateToken(idToken);
       }
-      return Promise.resolve(idToken);
+      return idToken;
     } catch (error) {
       this.logger.error('failed to refresh firebase id token', error);
       if (this.isAuthenticated.value === null) {

@@ -61,7 +61,7 @@ export class CreatorIntroTextUpdatePage implements OnInit {
       return;
     }
 
-    this.api.updateDescription(this.user.creatorAccount.userName, this.formControl.value).pipe(
+    this.api.updateDescription(this.user.creatorAccount.userName).pipe(
       first(),
       finalize(() => {
         this.loadingService.stopLoadingSpinner();
