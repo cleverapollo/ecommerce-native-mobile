@@ -1,35 +1,33 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 import { App } from '@capacitor/app';
-import { CapacitorHttp } from '@capacitor/core';
 import { Device } from '@capacitor/device';
-import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { Observable } from 'rxjs';
 import { SERVER_URL, appVersion } from 'src/environments/environment';
+
+const MIME_TYPE_JSON = 'application/json';
+const CLIENT_INFO = `platform=web; osVersion=0.0.0; appVersion=${appVersion}; locale=de_DE;`;
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private clientInfoHeader?: string;
+  private clientInfoHeader = CLIENT_INFO;
 
   constructor(
     private httpClient: HttpClient,
-    private nativeHttpClient: HTTP,
-    private logger: Logger,
     private platformService: PlatformService) {
     this.initClientInfoHeader();
   }
 
   private async initClientInfoHeader() {
-    this.clientInfoHeader = await this.setupClientInfoHeader();
+    this.clientInfoHeader = await this._setupClientInfoHeader();
   }
 
   post<T>(url: string, body: any): Observable<T> {
-    const headers = this.createDefaultHeaders();
+    const headers = this._createDefaultHeaders();
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
       headers,
       responseType: 'json'
@@ -37,7 +35,7 @@ export class ApiService {
   }
 
   postRaw<T>(url: string, body: any): Observable<HttpResponse<T>> {
-    const headers = this.createDefaultHeaders();
+    const headers = this._createDefaultHeaders();
     return this.httpClient.post<T>(`${SERVER_URL}/${url}`, body, {
       headers,
       responseType: 'json',
@@ -46,7 +44,7 @@ export class ApiService {
   }
 
   put<T>(url: string, body: any): Observable<T> {
-    const headers = this.createDefaultHeaders();
+    const headers = this._createDefaultHeaders();
     return this.httpClient.put<T>(`${SERVER_URL}/${url}`, body, {
       headers,
       responseType: 'json'
@@ -54,7 +52,7 @@ export class ApiService {
   }
 
   patch<T>(url: string, body?: any | null): Observable<T> {
-    const headers = this.createDefaultHeaders();
+    const headers = this._createDefaultHeaders();
     return this.httpClient.patch<T>(`${SERVER_URL}/${url}`, body, {
       headers,
       responseType: 'json'
@@ -62,7 +60,7 @@ export class ApiService {
   }
 
   delete<T>(url: string): Observable<T> {
-    const headers = this.createDefaultHeaders();
+    const headers = this._createDefaultHeaders();
     return this.httpClient.delete<T>(`${SERVER_URL}/${url}`, {
       headers,
       responseType: 'json'
@@ -70,7 +68,7 @@ export class ApiService {
   }
 
   get<T>(url: string, queryParams?: HttpParams): Observable<T> {
-    const headers = this.createDefaultHeaders();
+    const headers = this._createDefaultHeaders();
     return this.httpClient.get<T>(`${SERVER_URL}/${url}`, {
       headers,
       responseType: 'json',
@@ -78,16 +76,12 @@ export class ApiService {
     });
   }
 
-  async uploadFile(url: string, formData: FormData, filePath: string, fileName: string): Promise<void> {
-    await CapacitorHttp.post({
-      url: `${SERVER_URL}/${url}`,
-      data: formData,
-      headers: {
-        Authorization: this.nativeHttpClient.getHeaders(SERVER_URL)['Authorization'],
-        'Content-Type': 'multipart/form-data',
-        enctype: 'multipart/form-data',
+  uploadFile<T>(url: string, file: ArrayBuffer): Observable<T> {
+    return this.httpClient.post<T>(`${SERVER_URL}/${url}`, file, {
+      headers: new HttpHeaders({
+        'Content-Type': 'image/jpeg',
         'Wantic-Client-Info': this.clientInfoHeader
-      }
+      })
     });
   }
 
@@ -101,39 +95,22 @@ export class ApiService {
     });
   }
 
-  private createDefaultHeaders(): HttpHeaders {
-    if (this.clientInfoHeader) {
-      return (new HttpHeaders())
-        .set('Accept', 'application/json')
-        .set('Content-Type', 'application/json')
-        .set('Wantic-Client-Info', this.clientInfoHeader);
-    } else {
-      return (new HttpHeaders())
-        .set('Accept', 'application/json')
-        .set('Content-Type', 'application/json');
-    }
+  private _createDefaultHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Accept': MIME_TYPE_JSON,
+      'Content-Type': MIME_TYPE_JSON,
+      'Wantic-Client-Info': this.clientInfoHeader
+    });
   }
 
-  private async setupClientInfoHeader() {
-    let platform = 'web';
-    let osVersion = '0.0.0';
-    let version = appVersion;
-    let locale = 'de_DE';
-
+  private async _setupClientInfoHeader(): Promise<string> {
     if (this.platformService.isNativePlatform) {
-      const appInfo = await App.getInfo();
-      const deviceInfo = await Device.getInfo();
-      const languageCode = await Device.getLanguageCode();
-
-      platform = deviceInfo.platform;
-      osVersion = deviceInfo.osVersion;
-      version = appInfo.version;
-      locale = languageCode.value;
+      const { version } = await App.getInfo();
+      const { platform, osVersion } = await Device.getInfo();
+      const { value } = await Device.getLanguageCode();
+      return `platform=${platform}; osVersion=${osVersion}; appVersion=${version}; locale=${value};`;
     }
-
-    const headerValue = `platform=${platform}; osVersion=${osVersion}; appVersion=${version}; locale=${locale};`
-    this.logger.debug(headerValue);
-    return headerValue;
+    return CLIENT_INFO;
   }
 
 }

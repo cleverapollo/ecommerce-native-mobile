@@ -8,6 +8,7 @@ import { PagingService } from '@core/services/paging.service';
 import { IonicModule } from '@ionic/angular';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreatorSearchPage } from './creator-search.page';
 
 describe('CreatorSearchPage', () => {
@@ -26,6 +27,7 @@ describe('CreatorSearchPage', () => {
       declarations: [CreatorSearchPage, NavToolbarComponentFake],
       imports: [
         IonicModule.forRoot(),
+        FormsModule, ReactiveFormsModule,
         RouterTestingModule.withRoutes([]),],
       providers: [
         { provide: AnalyticsService, useValue: analyticsService },

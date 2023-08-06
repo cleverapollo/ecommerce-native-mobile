@@ -11,13 +11,11 @@ import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule, NavController } from '@ionic/angular';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 
+import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
 import { WishListOverviewPage } from './wish-list-overview.page';
 
 @Component({ template: '' })
 class DummyComponent { }
-
-@Component({ selector: 'app-email-unverified-hint', template: '' })
-class EmailUnverifiedHintComponentFake { }
 
 describe('WishListOverviewPage', () => {
   let component: WishListOverviewPage;

@@ -51,9 +51,9 @@ export const loadFileData = async (dirPath: string, fileName: string): Promise<L
     };
 }
 
-export const convertToBlob = async (file: LocalFile) => {
+export const convertToArrayBuffer = async (file: LocalFile): Promise<ArrayBuffer> => {
     const response = await fetch(file.data);
-    return response.blob();
+    return response.arrayBuffer();
 }
 
 export const blobToFormData = (blob: Blob, fileName: string) => {
@@ -62,8 +62,8 @@ export const blobToFormData = (blob: Blob, fileName: string) => {
     return formData;
 }
 
-export const calcBlobSizeInMb = (blob: Blob): number => {
-    return blob.size / 1048576;
+export const getFileSizeInMB = (arrayBuffer: ArrayBuffer): number => {
+    return arrayBuffer.byteLength / (1024 * 1024);
 }
 
 export const checkPhotoPermissions = async (permissionType: CameraPermissionType): Promise<void> => {
@@ -77,9 +77,4 @@ export const checkPhotoPermissions = async (permissionType: CameraPermissionType
     if (status[permissionType] !== 'granted') {
         throw new Error(`User ${status[permissionType]} ${permissionType} permission!`);
     }
-}
-
-export const hasFileExtension = (filePath: string): boolean => {
-    const extension = filePath.substring(filePath.lastIndexOf('.') + 1);
-    return extension.length > 0;
 }

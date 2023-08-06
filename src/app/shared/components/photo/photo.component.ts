@@ -5,7 +5,7 @@ import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { IonModal } from '@ionic/angular';
-import { LocalFile, blobToFormData, calcBlobSizeInMb, checkPhotoPermissions, convertBlobToBase64, convertToBlob, loadFileData, mkdir } from '@shared/helpers/file.helper';
+import { LocalFile, checkPhotoPermissions, convertBlobToBase64, convertToArrayBuffer, getFileSizeInMB, loadFileData, mkdir } from '@shared/helpers/file.helper';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -14,11 +14,6 @@ const FALLBACK_IMG = 'https://ionicframework.com/docs/img/demos/avatar.svg';
 const MAX_FILE_SIZE_MB = 5;
 
 type Image = string | Blob | null;
-export type FileChangeEvent = {
-  formData: FormData,
-  fileName: string,
-  filePath?: string
-}
 
 @Component({
   selector: 'app-photo',
@@ -27,12 +22,12 @@ export type FileChangeEvent = {
 })
 export class PhotoComponent implements OnInit, OnChanges {
 
-  @Input() src: string | Blob | null = null;
+  @Input() src: Image = null;
   @Input() size: 's' | 'm' | 'l' = 'l';
   @Input() readOnly = false;
   @Input() fileName?: string;
 
-  @Output() fileChanged = new EventEmitter<FileChangeEvent>();
+  @Output() fileChanged = new EventEmitter<ArrayBuffer>();
   @Output() fileDeleted = new EventEmitter<void>();
 
   @ViewChild('modal') modal?: IonModal;
@@ -99,14 +94,14 @@ export class PhotoComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (typeof this.image === 'string' || this.image instanceof Blob) {
-      this.fileDeleted.emit();
+    if (this.image['data']) {
+      await this.deleteImage(this.image as any);
       await this.modal?.dismiss();
       return;
     }
 
-    await this.deleteImage(this.image);
-    await this.modal?.dismiss();
+    this.fileDeleted.emit();
+    return this.modal?.dismiss();
   }
 
   private async _selectPhoto(cameraSource: CameraSource) {
@@ -130,21 +125,17 @@ export class PhotoComponent implements OnInit, OnChanges {
 
     const localFileName = await this.savePhoto(photo);
     const localFile = await this.loadFile(localFileName);
-    const blob = await convertToBlob(localFile);
-    const fileSize = calcBlobSizeInMb(blob);
+    const arrayBuffer = await convertToArrayBuffer(localFile);
+    const fileSize = getFileSizeInMB(arrayBuffer);
+    this.logger.debug(`File size ${fileSize} MB`);
 
     if (fileSize > MAX_FILE_SIZE_MB) {
       this.showError = true;
       return;
     }
 
-    this.image = blob;
-    const serverFileName = `${uuidv4()}.${photo.format || 'jpeg'}`;
-    this.fileChanged.emit({
-      formData: blobToFormData(blob, serverFileName),
-      fileName: serverFileName,
-      filePath: photo.path
-    });
+    this.image = new Blob([arrayBuffer]);
+    this.fileChanged.emit(arrayBuffer);
   }
 
   // Create a new file from a capture image
@@ -155,7 +146,8 @@ export class PhotoComponent implements OnInit, OnChanges {
       await Filesystem.writeFile({
         path: `${IMAGE_DIR}/${fileName}`,
         data: base64Data,
-        directory: Directory.Data
+        directory: Directory.Data,
+        recursive: true
       });
       return fileName;
     } catch (error) {

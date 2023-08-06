@@ -1,6 +1,8 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { ValidationMessagesComponentFake } from '@test/components/validation-messages.component.mock';
 import { LoginPage } from './login.page';
 
 describe('LoginPage', () => {
@@ -9,7 +11,7 @@ describe('LoginPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginPage ],
+      declarations: [LoginPage, NavToolbarComponentFake, ValidationMessagesComponentFake],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

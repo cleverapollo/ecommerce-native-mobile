@@ -1,5 +1,5 @@
-import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -12,6 +12,9 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { IonicModule, NavController } from '@ionic/angular';
 import { DatetimeComponent } from '@shared/components/datetime/datetime.component';
 
+import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { ValidationMessagesComponentFake } from '@test/components/validation-messages.component.mock';
 import { WishListCreatePage } from './wish-list-create.page';
 
 describe('WishListCreatePage', () => {
@@ -29,7 +32,7 @@ describe('WishListCreatePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishListCreatePage, DatetimeComponent ],
+      declarations: [WishListCreatePage, DatetimeComponent, NavToolbarComponentFake, EmailUnverifiedHintComponentFake, ValidationMessagesComponentFake],
       imports: [
         IonicModule.forRoot(),
         RouterTestingModule.withRoutes(routes),

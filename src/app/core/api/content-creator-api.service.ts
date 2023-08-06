@@ -71,9 +71,12 @@ export class ContentCreatorApiService {
     );
   }
 
-  updateImage(file: FormData, filePath: string, fileName: string): Promise<void> {
-    return this.apiService.uploadFile(this._buildUrl('image'), file, filePath, fileName);
-    // return this.apiService.uploadFile(this._buildUrl('image'), file, filePath, fileName);
+  async updateImage(file: ArrayBuffer): Promise<void> {
+    try {
+      return await this.apiService.uploadFile<void>(this._buildUrl('image'), file).toPromise();
+    } catch (error) {
+      throw new WanticError(error);
+    }
   }
 
   deleteImage(): Observable<ContentCreatorAccount> {

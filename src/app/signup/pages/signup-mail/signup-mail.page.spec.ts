@@ -1,4 +1,4 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -7,13 +7,15 @@ import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { IonicModule } from '@ionic/angular';
 
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { ValidationMessagesComponentFake } from '@test/components/validation-messages.component.mock';
 import { SignupMailPage } from './signup-mail.page';
 
 describe('SignupMailPage', () => {
 
   const formBuilder: any = {
-    group() {  },
-    control() {}
+    group() { },
+    control() { }
   }
 
   const analyticsService: any = {};
@@ -26,7 +28,7 @@ describe('SignupMailPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SignupMailPage ],
+      declarations: [SignupMailPage, NavToolbarComponentFake, ValidationMessagesComponentFake],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         { provide: FormBuilder, useValue: formBuilder },

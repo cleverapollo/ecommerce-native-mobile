@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute, Routes } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Router, Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WishListApiMockService } from '@core/api/wish-list-mock.service';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -8,10 +8,14 @@ import { MockLoadingService } from '@core/services/loading-mock.service';
 import { LoadingService } from '@core/services/loading.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { MockToastService } from '@core/services/toast-mock.service';
-import { CoreToastService, ToastService } from '@core/services/toast.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { IonicModule } from '@ionic/angular';
 
+import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { ValidationMessagesComponentFake } from '@test/components/validation-messages.component.mock';
+import { WishImageComponentFake } from '@test/components/wish-image.component.mock';
 import { WishCreatePage } from './wish-create.page';
 
 
@@ -31,7 +35,7 @@ describe('WishCreatePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishCreatePage ],
+      declarations: [WishCreatePage, NavToolbarComponentFake, WishImageComponentFake, EmailUnverifiedHintComponentFake, ValidationMessagesComponentFake],
       imports: [
         IonicModule.forRoot(),
         RouterTestingModule.withRoutes(routes),

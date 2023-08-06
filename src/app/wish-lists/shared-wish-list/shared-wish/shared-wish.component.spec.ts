@@ -9,6 +9,8 @@ import { WishListTestData } from '@core/test/wish-list-data';
 import { WishListTestDataUtils } from '@core/test/wish-list-data.utils';
 import { IonicModule, ModalController } from '@ionic/angular';
 
+import { WishImageComponentFake } from '@test/components/wish-image.component.mock';
+import { WishShopInfoComponentFake } from '@test/components/wish-shop-info.component.mock';
 import { SharedWishComponent, SharedWishListState } from './shared-wish.component';
 
 describe('SharedWishComponent', () => {
@@ -23,7 +25,7 @@ describe('SharedWishComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [SharedWishComponent],
+      declarations: [SharedWishComponent, WishImageComponentFake, WishShopInfoComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: StorageService, useValue: storageService },

@@ -18,22 +18,28 @@ type HttpMethod =
   | 'upload'
   | 'download';
 
+type Serializer = 'json' | 'urlencoded' | 'utf8' | 'multipart' | 'raw'
+type ResponseType = 'text' | 'arraybuffer' | 'blob' | 'json';
+type Headers = {
+  [index: string]: string;
+}
+type Params = {
+  [index: string]: string | number;
+}
+type JsonBody = {
+  [index: string]: any;
+}
+
 type NativeHttpRequestOptions = {
-  method: 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete' | 'options' | 'upload' | 'download';
-  data?: {
-    [index: string]: any;
-  };
-  params?: {
-    [index: string]: string | number;
-  };
-  serializer?: 'json' | 'urlencoded' | 'utf8' | 'multipart';
+  method: HttpMethod;
+  data?: JsonBody;
+  params?: Params;
+  serializer?: Serializer;
   timeout?: number;
-  headers?: {
-    [index: string]: string;
-  };
+  headers?: Headers;
   filePath?: string | string[];
   name?: string | string[];
-  responseType?: 'text' | 'arraybuffer' | 'blob' | 'json';
+  responseType?: ResponseType;
 }
 
 @Injectable()
@@ -49,9 +55,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const handleNativeRequest = this.platform.isNativePlatform &&
-      !(request.body instanceof FormData)
-    return handleNativeRequest ?
+    return this.platform.isNativePlatform ?
       from(this.handleNativeRequest(request)) :
       next.handle(request);
   }
@@ -59,37 +63,35 @@ export class NativeHttpInterceptor implements HttpInterceptor {
   private async handleNativeRequest(
     request: HttpRequest<any>
   ): Promise<HttpResponse<any>> {
-    const headers = this.createRequestHeaders(request);
+    const headers = this._createRequestHeaders(request);
 
     try {
       await this.platform.isReady();
-      const nativeHttpResponse = await this.sendRequest(request, headers)
-        .then();
-      return this.createResponse(nativeHttpResponse);
+      return this._createResponse(await this._sendRequest(request, headers));
     } catch (error) {
       if (!error.status) {
-        this.logError(error);
+        this._logError(error);
         throw error;
       }
-      const response = this.createErrorResponse(error);
+      const response = this._createErrorResponse(error);
       return Promise.reject(response);
     }
   }
 
-  private createRequestHeaders(request: HttpRequest<any>) {
+  private _createRequestHeaders(request: HttpRequest<any>): Headers {
     const headerKeys = request.headers.keys();
     const headers = {};
     headerKeys.forEach(key => {
       headers[key] = request.headers.get(key);
     });
-    this.logRequestHeaders(request);
+    this._logRequestHeaders(request);
     return headers;
   }
 
-  private async sendRequest(request: HttpRequest<any>, headers: {}): Promise<HTTPResponse> {
+  private async _sendRequest(request: HttpRequest<any>, headers: {}): Promise<HTTPResponse> {
     const method = request.method.toLowerCase() as HttpMethod;
-    const url = this.createEncodedUrlFromRequest(request);
-    this.logRequestBody(request);
+    const url = this._createEncodedUrlFromRequest(request);
+    this._logRequestBody(request);
 
     const options: NativeHttpRequestOptions = {
       method,
@@ -102,34 +104,36 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     if (request.body === null) {
       options.serializer = 'utf8';
       options.data = 'null' as any;
+    } else if (request.body instanceof ArrayBuffer) {
+      options.serializer = 'raw';
     }
 
     return this.nativeHttp.sendRequest(url, options);
   }
 
-  private createEncodedUrlFromRequest(request: HttpRequest<any>): string {
+  private _createEncodedUrlFromRequest(request: HttpRequest<any>): string {
     const queryParams = request.params?.toString();
     let url = request.url;
     if (queryParams && queryParams.length > 0) {
       url = `${url}?${queryParams.toString()}`;
     }
-    this.logUrl(url);
+    this._logUrl(url);
     return url;
   }
 
-  private createResponse(nativeHttpResponse: HTTPResponse): HttpResponse<any> {
-    const body = this.parseBodyFromResponseAsJson(nativeHttpResponse);
+  private _createResponse(nativeHttpResponse: HTTPResponse): HttpResponse<any> {
+    const body = this._parseBodyFromResponseAsJson(nativeHttpResponse);
     const response = new HttpResponse({
       body,
       status: nativeHttpResponse.status,
       headers: new HttpHeaders(nativeHttpResponse.headers),
       url: nativeHttpResponse.url
     });
-    this.logResponse(response);
+    this._logResponse(response);
     return response;
   }
 
-  private parseBodyFromResponseAsJson(nativeHttpResponse: HTTPResponse) {
+  private _parseBodyFromResponseAsJson(nativeHttpResponse: HTTPResponse) {
     let body = { response: null };
     if (nativeHttpResponse.data) {
       try {
@@ -141,8 +145,8 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     return body;
   }
 
-  private createErrorResponse(error: any) {
-    this.logError(error);
+  private _createErrorResponse(error: any) {
+    this._logError(error);
     return new HttpErrorResponse({
       error: error.error,
       status: error.status,
@@ -153,26 +157,26 @@ export class NativeHttpInterceptor implements HttpInterceptor {
 
   // logging
 
-  private logUrl(url: string) {
+  private _logUrl(url: string): void {
     this.logger.info('— Request url', url);
   }
 
-  private logRequestBody(request: HttpRequest<any>) {
+  private _logRequestBody(request: HttpRequest<unknown>): void {
     this.logger.info('— Request body');
     this.logger.info(request.body);
   }
 
-  private logRequestHeaders(request: HttpRequest<any>) {
+  private _logRequestHeaders(request: HttpRequest<unknown>): void {
     this.logger.info('— Request headers');
     this.logger.info(request.headers);
   }
 
-  private logResponse(response: HttpResponse<any>) {
+  private _logResponse(response: HttpResponse<unknown>): void {
     this.logger.info('— Response');
     this.logger.info(response);
   }
 
-  private logError(error: any) {
+  private _logError(error: unknown): void {
     this.logger.error('— Response error');
     this.logger.error(error);
   }

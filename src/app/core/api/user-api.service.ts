@@ -99,8 +99,12 @@ export class UserApiService {
     );
   }
 
-  updateImage(file: FormData, filePath: string, fileName: string): Promise<void> {
-    return this.apiService.uploadFile(`${this.apiV1}/profile/image`, file, filePath, fileName);
+  async updateImage(file: ArrayBuffer): Promise<void> {
+    try {
+      return await this.apiService.uploadFile<void>(`${this.apiV1}/profile/image`, file).toPromise();
+    } catch (error) {
+      throw new WanticError(error);
+    }
   }
 
   deleteImage(): Observable<UserProfile> {

@@ -1,6 +1,7 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { WishImageComponentFake } from '@test/components/wish-image.component.mock';
 import { FriendWishListComponent } from './friend-wish-list.component';
 
 describe('FriendWishListComponent', () => {
@@ -9,7 +10,7 @@ describe('FriendWishListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FriendWishListComponent ],
+      declarations: [FriendWishListComponent, WishImageComponentFake],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

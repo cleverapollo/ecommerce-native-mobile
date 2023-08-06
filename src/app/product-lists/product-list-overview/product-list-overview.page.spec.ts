@@ -4,9 +4,10 @@ import { AnalyticsService } from '@core/services/analytics.service';
 import { IonicModule } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 import { CreatorComponentFake } from '@test/components/creator.component.mock';
+import { userMax } from '@test/fixtures/user.fixture';
 import { ProductListOverviewPage } from './product-list-overview.page';
 
 describe('ProductListOverviewPage', () => {
@@ -15,7 +16,9 @@ describe('ProductListOverviewPage', () => {
 
   const analyticsService = {};
   let userProfileStore = {
-    loadUserProfile: () => of(new UserProfile())
+    loadUserProfile: () => of(new UserProfile()),
+    user$: new BehaviorSubject(userMax),
+    creatorImage$: new BehaviorSubject(null)
   };
 
   beforeEach(waitForAsync(() => {

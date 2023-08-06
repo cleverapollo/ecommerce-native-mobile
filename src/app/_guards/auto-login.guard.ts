@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { Logger } from '@core/services/log.service';
-import { Observable } from 'rxjs';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { Observable, combineLatest } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 @Injectable({
@@ -10,20 +11,25 @@ import { filter, map, take } from 'rxjs/operators';
 })
 export class AutoLoginGuard implements CanLoad {
 
-  constructor(private authService: AuthenticationService, private router: Router, private logger: Logger) {}
+  constructor(
+    private authService: AuthenticationService,
+    private userService: UserProfileStore,
+    private router: Router,
+    private logger: Logger
+  ) { }
 
-  canLoad(): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authService.isAuthenticated.pipe(
-      filter(isAuthenticated => { return isAuthenticated !== null }),
+  canLoad(): Observable<boolean> {
+    return combineLatest([this.authService.isAuthenticated, this.userService.isCreatorAccountActive$]).pipe(
+      filter(state => { return state[0] !== null }),
       take(1),
-      map(isAuthenticated => {
-        if (isAuthenticated) {
-          this.logger.info('auto login');
-          this.router.navigateByUrl('/secure/home', { replaceUrl: true });
-          return false;
-        } else {
+      map(state => {
+        if (!state[0]) {
           return true;
         }
+        const url = state[1] ? '/secure/product-list-overview' : '/secure/home'
+        this.logger.info('auto login');
+        this.router.navigateByUrl(url, { replaceUrl: true });
+        return false;
       })
     )
   }

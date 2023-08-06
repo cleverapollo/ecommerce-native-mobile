@@ -6,6 +6,7 @@ import { UserInitialsComponent } from '../user-initials/user-initials.component'
 
 import { FirebaseService } from '@core/services/firebase.service';
 import { Logger } from '@core/services/log.service';
+import { PhotoComponentFake } from '@test/components/photo.component.mock';
 import { CreatorComponent } from './creator.component';
 
 describe('CreatorComponent', () => {
@@ -18,7 +19,7 @@ describe('CreatorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatorComponent, UserInitialsComponent],
+      declarations: [CreatorComponent, UserInitialsComponent, PhotoComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: FirebaseService, useValue: firebaseService },

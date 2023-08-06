@@ -1,6 +1,6 @@
 import { DebugElement } from '@angular/core';
-import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { ComponentFixture, TestBed, fakeAsync, flush, tick, waitForAsync } from '@angular/core/testing';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishListApiMockService } from '@core/api/wish-list-mock.service';
@@ -13,7 +13,7 @@ import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule } from '@ionic/angular';
 import { LoggerTestingModule } from 'ngx-logger/testing';
 import { of, throwError } from 'rxjs';
-import { finalize, first } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 import { WishListRadioComponent } from './wish-list-radio.component';
 
@@ -27,8 +27,8 @@ describe('WishListRadioComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishListRadioComponent ],
-      imports: [IonicModule.forRoot(), LoggerTestingModule],
+      declarations: [WishListRadioComponent],
+      imports: [IonicModule.forRoot(), LoggerTestingModule, FormsModule, ReactiveFormsModule],
       providers: [
         FormBuilder,
         { provide: WishListApiService, useValue: wishListApiService },
@@ -188,7 +188,7 @@ describe('WishListRadioComponent', () => {
       creatorEmail: 'max@mustermann.de',
       owners: [
         {
-          firstName:  'Max',
+          firstName: 'Max',
           email: 'max@mustermann.de',
           emailVerificationStatus: EmailVerificationStatus.VERIFIED,
           invitationStatus: InvitationStatus.ACCEPTED

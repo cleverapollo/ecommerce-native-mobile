@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { ValidationMessagesComponentFake } from '@test/components/validation-messages.component.mock';
 import { UrlSearchResultsPage } from './url-search-results.page';
 
 describe('UrlSearchResultsPage', () => {
@@ -9,7 +12,7 @@ describe('UrlSearchResultsPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [UrlSearchResultsPage],
+      declarations: [UrlSearchResultsPage, NavToolbarComponentFake, EmailUnverifiedHintComponentFake, ValidationMessagesComponentFake],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

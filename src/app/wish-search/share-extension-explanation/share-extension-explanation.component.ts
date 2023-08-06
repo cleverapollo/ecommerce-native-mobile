@@ -134,7 +134,7 @@ export class ShareExtensionExplanationComponent {
 
     request.pipe(first()).subscribe({
       next: () => {
-        this.userProfileStore.removeCachedUserProfile().finally(() => {
+        this.userProfileStore.clearUserProfile().finally(() => {
           this.modalController.dismiss();
         });
       },

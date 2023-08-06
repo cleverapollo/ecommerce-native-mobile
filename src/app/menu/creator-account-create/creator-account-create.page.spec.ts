@@ -8,6 +8,8 @@ import { CoreToastService } from '@core/services/toast.service';
 import { IonicModule } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { ValidationMessagesComponentFake } from '@test/components/validation-messages.component.mock';
 import { CreatorAccountCreatePage } from './creator-account-create.page';
 
 describe('CreatorAccountCreatePage', () => {
@@ -23,7 +25,7 @@ describe('CreatorAccountCreatePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatorAccountCreatePage],
+      declarations: [CreatorAccountCreatePage, NavToolbarComponentFake, ValidationMessagesComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
         FormBuilder,

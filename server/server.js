@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const glob = require('glob');
 const cors = require('cors');
+const { randomUUID } = require('crypto');
 
 const upload = multer({ dest: path.resolve(__dirname,'./uploads/') });
 
@@ -21,7 +22,7 @@ server.use(cors());
 // Exclude the file upload route from the bodyParser middleware
 server.use((req, res, next) => {
     const isDownload = req.path.indexOf('download') > -1;
-    if (req.path === '/upload' || isDownload || '/v1/content-creators/max/profile-image') {
+    if (req.path === '/upload' || isDownload || '/v1/content-creators/image') {
       next();
     } else {
       jsonServer.bodyParser(req, res, next);
@@ -131,44 +132,28 @@ server.get('/download/:fileName', (req, res) => {
 })
 
 server.post('/v1/users/profile/image', (req, res) => {
-    if (!req.file) {
-      res.status(400).json({ message: 'No file uploaded' });
-      return;
+    const arrayBuffer = req.body;
+    if (!arrayBuffer?.length) {
+        res.status(400).json({ message: 'No file uploaded'});
+        return;
     }
-  
-    // Store the file reference in the JSON data
-    const file = {
-      id: Date.now(),
-      filename: req.file.filename,
-      originalname: req.file.originalname,
-      mimetype: req.file.mimetype,
-      path: req.file.path,
-    };
 
     const user = require(`./static/v1/users/profile`);
-    user.imagePath = `http://localhost:${port}/download/${file.filename}`;
+    user.imagePath = `http://localhost:${port}/download/${randomUUID()}`;
   
     res.status(200).send(user);
   })
 
-server.post('/v1/content-creators/:userName/profile-image', (req, res) => {
-    const userName = req.params.userName.toLowerCase();
-    if (!req.file) {
-      res.status(400).json({ message: 'No file uploaded' });
-      return;
+server.post('/v1/content-creators/image', (req, res) => {
+    const arrayBuffer = req.body;
+    console.log(req.body);
+    if (!arrayBuffer?.length) {
+        res.status(400).json({ message: 'No file uploaded'});
+        return;
     }
-  
-    // Store the file reference in the JSON data
-    const file = {
-      id: Date.now(),
-      filename: req.file.filename,
-      originalname: req.file.originalname,
-      mimetype: req.file.mimetype,
-      path: req.file.path,
-    };
 
     const user = require(`./static/v1/content-creators/max90/user-name`);
-    user.imagePath = `http://localhost:${port}/download/${file.filename}`;
+    user.imagePath = `http://localhost:${port}/download/${randomUUID()}`;
   
     res.status(200).send(user);
   });

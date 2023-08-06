@@ -10,6 +10,10 @@ import { WishListStore, WishListStoreService } from '@core/services/wish-list-st
 import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule, ModalController, NavController } from '@ionic/angular';
 
+import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { WishImageComponentFake } from '@test/components/wish-image.component.mock';
+import { WishShopInfoComponentFake } from '@test/components/wish-shop-info.component.mock';
 import { WishDetailPage } from './wish-detail.page';
 
 describe('WishDetailPage', () => {
@@ -42,7 +46,7 @@ describe('WishDetailPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishDetailPage ],
+      declarations: [WishDetailPage, NavToolbarComponentFake, WishImageComponentFake, EmailUnverifiedHintComponentFake, WishShopInfoComponentFake],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         { provide: ActivatedRoute, useValue: route },
@@ -53,7 +57,7 @@ describe('WishDetailPage', () => {
         { provide: BrowserService, useValue: browserService },
         { provide: ModalController, useValue: modalController }
       ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(WishDetailPage);

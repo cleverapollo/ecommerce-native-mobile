@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { IonicModule } from '@ionic/angular';
 
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 import { CreatorAccountInfoPage } from './creator-account-info.page';
 
 describe('CreatorAccountInfoPage', () => {
@@ -13,7 +14,7 @@ describe('CreatorAccountInfoPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatorAccountInfoPage],
+      declarations: [CreatorAccountInfoPage, NavToolbarComponentFake],
       imports: [
         IonicModule.forRoot(),
         RouterTestingModule.withRoutes([])

@@ -10,6 +10,8 @@ import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { userMax } from '@test/fixtures/user.fixture';
 import { of } from 'rxjs';
 
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { ValidationMessagesComponentFake } from '@test/components/validation-messages.component.mock';
 import { CreatorSocialMediaLinksUpdatePage } from './creator-social-media-links-update.page';
 
 describe('CreatorSocialMediaLinksUpdatePage', () => {
@@ -26,7 +28,7 @@ describe('CreatorSocialMediaLinksUpdatePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatorSocialMediaLinksUpdatePage],
+      declarations: [CreatorSocialMediaLinksUpdatePage, NavToolbarComponentFake, ValidationMessagesComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
         FormBuilder,

@@ -4,7 +4,6 @@ import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { FileChangeEvent } from '@shared/components/photo/photo.component';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
@@ -40,12 +39,12 @@ export class ProfileImageUpdatePage implements OnInit {
     this.analyticsService.setFirebaseScreenName(screenName);
   }
 
-  async onFileChanged(event: FileChangeEvent): Promise<void> {
+  async onFileChanged(file: ArrayBuffer): Promise<void> {
     try {
       await this.loadingService.showLoadingSpinner();
       this.userStore.isCreatorAccountActive$.value ?
-        await this.userStore.updateCreatorImage(event.formData, event.filePath, event.fileName) :
-        await this.userStore.updateUserImage(event.formData, event.filePath, event.fileName);
+        await this.userStore.updateCreatorImage(file) :
+        await this.userStore.updateUserImage(file);
       await this.loadingService.stopLoadingSpinner();
       return this.toastService.presentSuccessToast('Dein Bild wurde erfolgreich aktualisiert.')
     } catch (error) {

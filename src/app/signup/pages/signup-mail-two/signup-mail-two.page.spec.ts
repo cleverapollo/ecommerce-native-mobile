@@ -1,4 +1,4 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserApiService } from '@core/api/user-api.service';
@@ -10,13 +10,14 @@ import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { IonicModule } from '@ionic/angular';
 
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 import { SignupMailTwoPage } from './signup-mail-two.page';
 
 describe('SignupMailTwoPage', () => {
 
   const formBuilder: any = {
-    group() {  },
-    control() {}
+    group() { },
+    control() { }
   }
 
   const logger: any = {};
@@ -32,7 +33,7 @@ describe('SignupMailTwoPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SignupMailTwoPage ],
+      declarations: [SignupMailTwoPage, NavToolbarComponentFake],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         { provide: FormBuilder, useValue: formBuilder },

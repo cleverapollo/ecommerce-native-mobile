@@ -1,6 +1,8 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 import { WishListDetailPage } from './wish-list-detail.page';
 
 describe('WishListDetailPage', () => {
@@ -9,7 +11,7 @@ describe('WishListDetailPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishListDetailPage ],
+      declarations: [WishListDetailPage, NavToolbarComponentFake, EmailUnverifiedHintComponentFake],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

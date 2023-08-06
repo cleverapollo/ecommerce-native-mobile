@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush, tick, waitForAsync } from '@angular/core/testing';
 import { WishApiMockService } from '@core/api/wish-api-mock.service';
 import { WishApiService } from '@core/api/wish-api.service';
 import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
@@ -9,6 +9,8 @@ import { WishListTestDataUtils } from '@core/test/wish-list-data.utils';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { of } from 'rxjs';
 
+import { WishImageComponentFake } from '@test/components/wish-image.component.mock';
+import { WishShopInfoComponentFake } from '@test/components/wish-shop-info.component.mock';
 import { FriendsWishComponent } from './friends-wish.component';
 
 describe('FriendsWishComponent', () => {
@@ -30,7 +32,7 @@ describe('FriendsWishComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FriendsWishComponent ],
+      declarations: [FriendsWishComponent, WishImageComponentFake, WishShopInfoComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: BrowserService, useValue: browserService },
@@ -38,7 +40,7 @@ describe('FriendsWishComponent', () => {
         { provide: AffiliateLinkService, useValue: affiliateService },
         { provide: ModalController, useValue: modalController }
       ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FriendsWishComponent);

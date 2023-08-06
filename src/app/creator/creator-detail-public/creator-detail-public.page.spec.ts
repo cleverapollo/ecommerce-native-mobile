@@ -7,6 +7,7 @@ import { AnalyticsService } from '@core/services/analytics.service';
 import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { CreatorComponentFake } from '@test/components/creator.component.mock';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 import { creatorMax } from '@test/fixtures/user.fixture';
 import { of } from 'rxjs';
 import { CreatorDetailPublicPage } from './creator-detail-public.page';
@@ -27,7 +28,7 @@ describe('CreatorDetailPublicPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatorDetailPublicPage, CreatorComponentFake],
+      declarations: [CreatorDetailPublicPage, CreatorComponentFake, NavToolbarComponentFake],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         { provide: AnalyticsService, useValue: analyticsService },

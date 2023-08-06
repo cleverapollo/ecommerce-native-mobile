@@ -1,6 +1,7 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { WishImageComponentFake } from '@test/components/wish-image.component.mock';
 import { SearchResultComponent } from './search-result.component';
 
 describe('SearchResultComponent', () => {
@@ -9,7 +10,7 @@ describe('SearchResultComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchResultComponent ],
+      declarations: [SearchResultComponent, WishImageComponentFake],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

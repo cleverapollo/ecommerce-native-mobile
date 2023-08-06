@@ -11,6 +11,7 @@ import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.
 import { userMax } from '@test/fixtures/user.fixture';
 import { of } from 'rxjs';
 
+import { ValidationMessagesComponentFake } from '@test/components/validation-messages.component.mock';
 import { CreatorIntroTextUpdatePage } from './creator-intro-text-update.page';
 
 describe('CreatorIntroTextUpdatePage', () => {
@@ -27,7 +28,7 @@ describe('CreatorIntroTextUpdatePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatorIntroTextUpdatePage, NavToolbarComponentFake],
+      declarations: [CreatorIntroTextUpdatePage, NavToolbarComponentFake, ValidationMessagesComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
         FormBuilder,

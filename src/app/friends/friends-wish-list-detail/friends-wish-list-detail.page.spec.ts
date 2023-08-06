@@ -15,7 +15,9 @@ import { MockToastService } from '@core/services/toast-mock.service';
 import { CoreToastService, ToastService } from '@core/services/toast.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule, NavController } from '@ionic/angular';
-import { Observable, of, Subscription, throwError } from 'rxjs';
+import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { Observable, of, Subscription } from 'rxjs';
 import { FriendsWishListDetailPage } from './friends-wish-list-detail.page';
 
 describe('FriendsWishListDetailPage', () => {
@@ -42,7 +44,7 @@ describe('FriendsWishListDetailPage', () => {
     createParamMapSpy();
 
     TestBed.configureTestingModule({
-      declarations: [ FriendsWishListDetailPage ],
+      declarations: [FriendsWishListDetailPage, NavToolbarComponentFake, EmailUnverifiedHintComponentFake],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         { provide: AnalyticsService, useValue: analyticsService },
@@ -54,7 +56,7 @@ describe('FriendsWishListDetailPage', () => {
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         DatePipe
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     router = TestBed.inject(Router);
@@ -81,7 +83,7 @@ describe('FriendsWishListDetailPage', () => {
     });
 
     activatedRouteStub = {
-        paramMap: paramMapObservable
+      paramMap: paramMapObservable
     };
   }
 
@@ -154,9 +156,11 @@ describe('FriendsWishListDetailPage', () => {
       loadWishListSpy.and.returnValue(of(WishListTestData.sharedWishListWedding));
 
       component.wishList = WishListTestData.sharedWishListWedding;
-      component.forceRefresh({ target: {
-        complete() { completed = true; }
-      }});
+      component.forceRefresh({
+        target: {
+          complete() { completed = true; }
+        }
+      });
 
       tick();
 

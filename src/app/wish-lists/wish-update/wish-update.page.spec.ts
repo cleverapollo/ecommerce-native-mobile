@@ -12,6 +12,10 @@ import { MockWishListStoreService } from '@core/services/wish-list-store-mock.se
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { IonicModule } from '@ionic/angular';
 
+import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { ValidationMessagesComponentFake } from '@test/components/validation-messages.component.mock';
+import { WishImageComponentFake } from '@test/components/wish-image.component.mock';
 import { WishUpdatePage } from './wish-update.page';
 
 describe('WishUpdatePage', () => {
@@ -29,7 +33,7 @@ describe('WishUpdatePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [WishUpdatePage],
+      declarations: [WishUpdatePage, NavToolbarComponentFake, WishImageComponentFake, EmailUnverifiedHintComponentFake, ValidationMessagesComponentFake],
       imports: [
         IonicModule.forRoot(),
         RouterTestingModule.withRoutes(routes),

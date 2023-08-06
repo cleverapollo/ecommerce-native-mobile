@@ -50,10 +50,10 @@ export class UserProfileStore {
       this.cache.loadFromObservable(cacheObject.itemKey, request, cacheObject.groupKey);
   }
 
-  async updateUserImage(file: FormData, filePath: string, fileName: string): Promise<void> {
-    await this.api.updateImage(file, filePath, fileName);
-    await this.cache.removeItem(ItemKeys.userImage);
-    await this.cache.removeItem(ItemKeys.userProfile);
+  async updateUserImage(file: ArrayBuffer): Promise<void> {
+    await this.api.updateImage(file);
+    await this._clearUserImage();
+    return this.clearUserProfile();
   }
 
   downloadUserImage(forceRefresh: boolean = false): Observable<Blob> {
@@ -69,8 +69,7 @@ export class UserProfileStore {
     return this.api.deleteImage().pipe(
       mergeMap(async user => {
         await this.updateCachedUserProfile(user);
-        await this.cache.removeItem(ItemKeys.userImage);
-        this.userImage$.next(null);
+        return this._clearUserImage();
       })
     );
   }
@@ -84,18 +83,17 @@ export class UserProfileStore {
       this.cache.loadFromObservable(ItemKeys.creatorImage, request, cacheObject.groupKey);
   }
 
-  async updateCreatorImage(file: FormData, filePath: string, fileName: string): Promise<void> {
-    await this.creatorApi.updateImage(file, filePath, fileName);
-    await this.cache.removeItem(ItemKeys.creatorImage);
-    await this.cache.removeItem(ItemKeys.userProfile);
+  async updateCreatorImage(file: ArrayBuffer): Promise<void> {
+    await this.creatorApi.updateImage(file);
+    await this._clearCreatorImage();
+    return this.clearUserProfile();
   }
 
   deleteCreatorImage(): Observable<void> {
     return this.creatorApi.deleteImage().pipe(
       mergeMap(async account => {
         await this.updateCreatorAccount(account);
-        await this.cache.removeItem(ItemKeys.creatorImage);
-        this.creatorImage$.next(null);
+        return this._clearCreatorImage();
       })
     );
   }
@@ -106,11 +104,11 @@ export class UserProfileStore {
       this.user$.next(userProfile);
     } catch (error) {
       this.logger.error(error);
-      return this.removeCachedUserProfile();
+      return this.clearUserProfile();
     }
   }
 
-  async removeCachedUserProfile(): Promise<void> {
+  async clearUserProfile(): Promise<void> {
     await this.cache.removeItem(cacheObject.itemKey);
     return this.user$.next(null);
   }
@@ -138,6 +136,16 @@ export class UserProfileStore {
         this.user$.next(user);
       }
     })
+  }
+
+  private async _clearUserImage(): Promise<void> {
+    await this.cache.removeItem(ItemKeys.userImage);
+    this.userImage$.next(null);
+  }
+
+  private async _clearCreatorImage(): Promise<void> {
+    await this.cache.removeItem(ItemKeys.creatorImage);
+    this.creatorImage$.next(null);
   }
 
 }

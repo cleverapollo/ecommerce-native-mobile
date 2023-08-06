@@ -98,7 +98,7 @@ export class CreatorAccountCreatePage implements OnInit {
       next: _ => {
         this.toastService.presentSuccessToast('Dein Creator Profil wurde erfolgreich erstellt.');
         this.userProfileStore.toggleIsCreatorAccountActive();
-        this.userProfileStore.removeCachedUserProfile();
+        this.userProfileStore.clearUserProfile();
         this.navService.root('secure/product-list-overview')
       },
       error: error => {

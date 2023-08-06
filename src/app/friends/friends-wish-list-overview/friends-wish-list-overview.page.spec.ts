@@ -1,14 +1,16 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule, NavController } from '@ionic/angular';
 
-import { FriendsWishListOverviewPage } from '@friends/friends-wish-list-overview/friends-wish-list-overview.page';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
-import { NavToolbarComponent } from '@shared/components/nav-toolbar/nav-toolbar.component';
-import { FriendWishListComponent } from './friend-wish-list/friend-wish-list.component';
+import { FriendsWishListOverviewPage } from '@friends/friends-wish-list-overview/friends-wish-list-overview.page';
 import { EmailUnverifiedHintComponent } from '@shared/components/email-unverified-hint/email-unverified-hint.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NavToolbarComponent } from '@shared/components/nav-toolbar/nav-toolbar.component';
+import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
+import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
+import { FriendWishListComponent } from './friend-wish-list/friend-wish-list.component';
 
 describe('FriendsWishListOverviewPage', () => {
   let component: FriendsWishListOverviewPage;
@@ -24,7 +26,9 @@ describe('FriendsWishListOverviewPage', () => {
         FriendsWishListOverviewPage,
         NavToolbarComponent,
         FriendWishListComponent,
-        EmailUnverifiedHintComponent
+        EmailUnverifiedHintComponent,
+        NavToolbarComponentFake,
+        EmailUnverifiedHintComponentFake
       ],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
@@ -32,7 +36,7 @@ describe('FriendsWishListOverviewPage', () => {
         { provide: FriendWishListStoreService, useValue: friendWishListStore },
         { provide: NavController, useValue: navContoller },
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FriendsWishListOverviewPage);
