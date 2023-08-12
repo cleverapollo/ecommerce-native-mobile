@@ -68,8 +68,8 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     try {
       await this.platform.isReady();
       return this._createResponse(await this._sendRequest(request, headers));
-    } catch (error) {
-      if (!error.status) {
+    } catch (error: any) {
+      if (!error?.status) {
         this._logError(error);
         throw error;
       }
@@ -80,9 +80,12 @@ export class NativeHttpInterceptor implements HttpInterceptor {
 
   private _createRequestHeaders(request: HttpRequest<any>): Headers {
     const headerKeys = request.headers.keys();
-    const headers = {};
+    const headers: Headers = {};
     headerKeys.forEach(key => {
-      headers[key] = request.headers.get(key);
+      const value = request.headers.get(key);
+      if (value) {
+        headers[key] = value;
+      }
     });
     this._logRequestHeaders(request);
     return headers;

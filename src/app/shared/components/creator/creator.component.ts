@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Share } from '@capacitor/share';
 import { ContentCreatorAccount } from '@core/models/content-creator.model';
-import { FirebaseService } from '@core/services/firebase.service';
 import { Logger } from '@core/services/log.service';
+import { APP_URL } from '@env/environment';
 
 @Component({
   selector: 'app-creator',
@@ -11,23 +11,21 @@ import { Logger } from '@core/services/log.service';
 })
 export class CreatorComponent {
 
-  @Input() account: ContentCreatorAccount;
+  @Input() account!: ContentCreatorAccount;
   @Input() image: Blob | null = null;
   @Input() showShareButton: boolean = false;
   @Input() isLoading = false;
 
   @Output() isLoadingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(
-    private firebaseService: FirebaseService,
-    private logger: Logger
-  ) { }
+  constructor(private logger: Logger) { }
 
-  async shareAccount() {
+  async shareAccount(): Promise<void> {
     try {
-      const link = await this.firebaseService.createShortLinkForCreatorAccount(this.account);
       await Share.share({
-        url: link
+        title: `👉 Folge ${this.account.userName} jetzt auf Wantic`,
+        url: `${APP_URL}/creator/${this.account.userName}`,
+        text: `🌟 Entdecke fesselnden Wunschlisten auf Wantic! 📝 Folge @${this.account.userName} und entdecke inspirierende Ideen und Empfehlungen, die deine Neugier wecken werden! 📚✈️📱!`
       })
     } catch (error) {
       this.logger.error(error);

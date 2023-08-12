@@ -9,7 +9,6 @@ import { ScriptName } from '@core/data/script-store';
 import { UserManagementActionMode } from '@core/models/google-api.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { FirebaseService } from '@core/services/firebase.service';
 import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { ScriptLoadingStatus, ScriptService } from '@core/services/script.service';
@@ -33,8 +32,7 @@ export class AppComponent {
     private authService: AuthenticationService,
     private analyticsService: AnalyticsService,
     private affiliateDataStore: AffiliateDataStoreService,
-    private scriptService: ScriptService,
-    private firebaseService: FirebaseService
+    private scriptService: ScriptService
   ) {
     this.setupApp();
   }
@@ -42,23 +40,22 @@ export class AppComponent {
   async setupApp() {
     await this.platformService.isReady();
     if (this.platformService.isNativePlatform) {
-      this.setupNativeApp();
+      this._setupNativeApp();
     } else {
-      this.setupWebApp();
+      this._setupWebApp();
     }
-    this.setupCache();
+    this._setupCache();
     this.analyticsService.initAppsflyerSdk();
-    this.setupAffiliateData();
-    this.firebaseService.listenToDeepLinkOpen();
+    this._setupAffiliateData();
     this.logger.info(`${AppComponent.name}: ${environment.debugMessage}`);
   }
 
-  private setupCache() {
+  private _setupCache(): void {
     this.cache.setDefaultTTL(60 * 60);
     this.cache.setOfflineInvalidate(false);
   }
 
-  private setupAffiliateData() {
+  private _setupAffiliateData() {
     if (this.authService.isAuthenticated.getValue()) {
       this.affiliateDataStore.loadData();
     }
@@ -67,8 +64,8 @@ export class AppComponent {
   /**
    * Setup code that is only relevant for web app.
    */
-  private setupWebApp() {
-    this.migrateCachedCredentials();
+  private _setupWebApp() {
+    this._migrateCachedCredentials();
     this.loadWebAppScripts();
   }
 
@@ -86,23 +83,23 @@ export class AppComponent {
   /**
    * Setup code that is only relevant for ios and android.
    */
-  private setupNativeApp() {
+  private _setupNativeApp() {
     // migrate Capacitor 2 data to Capator 3 data
     Preferences.migrate();
 
-    this.setupStatusBar();
+    this._setupStatusBar();
     // handle universal links
     App.addListener('appUrlOpen', (data: any) => {
-      this.onAppUrlOpen(data);
+      this._onAppUrlOpen(data);
     });
-    this.onAppStart();
+    this._onAppStart();
     // app did become active
     this.platformService.resume.subscribe(() => {
-      this.onAppResume();
+      this._onAppResume();
     });
   }
 
-  private setupStatusBar() {
+  private _setupStatusBar() {
     StatusBar.setStyle({
       style: Style.Light
     });
@@ -111,22 +108,21 @@ export class AppComponent {
     });
   }
 
-  private async onAppStart() {
-    this.migrateCachedCredentials();
+  private _onAppStart(): Promise<void> {
+    return this._migrateCachedCredentials();
   }
 
-  private async onAppResume() {
-    await this.cache.clearGroup('wishList');
+  private _onAppResume(): Promise<unknown> {
+    return this.cache.clearGroup('wishList');
   }
 
-
-  private onAppUrlOpen(data: any) {
+  private _onAppUrlOpen(data: any) {
     this.zone.run(() => {
       const url: URL = new URL(data.url);
       const mode = url.searchParams.get('mode');
       const oobCode = url.searchParams.get('oobCode');
       if (mode && oobCode) {
-        this.handleFirebaseLinks(mode, oobCode);
+        this._handleFirebaseLinks(mode, oobCode);
       } else {
         this.router.navigateByUrl(url.pathname).finally(() => {
           SplashScreen.hide({
@@ -137,7 +133,7 @@ export class AppComponent {
     });
   }
 
-  private handleFirebaseLinks(modeString: string, oobCode: string) {
+  private _handleFirebaseLinks(modeString: string, oobCode: string) {
     const mode: UserManagementActionMode = UserManagementActionMode[modeString];
     if (mode === UserManagementActionMode.resetPassword) {
       this.router.navigateByUrl(`/forgot-password/change-password?oobCode=${oobCode}`).finally(() => {
@@ -154,9 +150,9 @@ export class AppComponent {
     }
   }
 
-  private migrateCachedCredentials() {
-    this.authService.removeDeprecatedAuthToken();
-    this.authService.migrateSavedCredentials();
+  private async _migrateCachedCredentials(): Promise<void> {
+    await this.authService.removeDeprecatedAuthToken();
+    await this.authService.migrateSavedCredentials();
   }
 
 }

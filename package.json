@@ -67,7 +67,6 @@
     "@ionic/pwa-elements": "^3.1.1",
     "@ionic/storage": "^2.3.1",
     "@ionic/storage-angular": "^3.0.6",
-    "@pantrist/capacitor-firebase-dynamic-links": "^4.1.2",
     "appsflyer-capacitor-plugin": "^6.5.2",
     "capacitor-secure-storage-plugin": "^0.5.1",
     "cordova-plugin-advanced-http": "^3.3.1",
