@@ -23,10 +23,10 @@ const routes: Routes = [
           .then(m => m.HomePageModule)
       },
       {
-        path: getTaBarPath(TabBarRoute.PRODUCT_LIST_OVERVIEW, false),
+        path: getTaBarPath(TabBarRoute.PRODUCT_LISTS, false),
         canActivate: [AuthGuard],
-        loadChildren: () => import('../product-lists/product-list-overview/product-list-overview.module')
-          .then(m => m.ProductListOverviewPageModule)
+        loadChildren: () => import('../product-lists/product-lists/product-lists.module')
+          .then(m => m.ProductListsPageModule)
       },
       {
         path: getTaBarPath(TabBarRoute.CREATOR_SEARCH, false),

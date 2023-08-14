@@ -287,8 +287,10 @@ export class AuthenticationService implements AppAuthenticationService {
       const idToken = await this.firebaseService.getIdToken(forceRefresh);
       if (idToken) {
         await this.updateToken(idToken);
+        return idToken;
       }
-      return idToken;
+      this.isAuthenticated.next(false);
+      return null;
     } catch (error) {
       this.logger.error('failed to refresh firebase id token', error);
       if (this.isAuthenticated.value === null) {

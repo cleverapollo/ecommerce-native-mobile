@@ -75,8 +75,7 @@ export class FirebaseService implements FirebaseControllable {
     if (this.platform.isNativePlatform) {
       return this.nativeAuth.getIdToken(forceRefresh);
     }
-    const authState = await this.angularAuth.authState.toPromise();
-    return authState?.getIdToken(forceRefresh) ?? null;
+    return (await this.angularAuth.currentUser)?.getIdToken();
   }
 
   setLanguageCode(languageCode: string): void {

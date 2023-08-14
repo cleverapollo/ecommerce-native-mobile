@@ -4,8 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AffiliateLinkDebugInfoComponent } from './components/affiliate-link-debug-info/affiliate-link-debug-info.component';
 import { CreatorComponent } from './components/creator/creator.component';
+import { DashboardButtonComponent } from './components/dashboard-button/dashboard-button.component';
 import { DatetimeComponent } from './components/datetime/datetime.component';
 import { EmailUnverifiedHintComponent } from './components/email-unverified-hint/email-unverified-hint.component';
+import { ListComponent } from './components/list/list.component';
 import { NavToolbarComponent } from './components/nav-toolbar/nav-toolbar.component';
 import { OwnersInfoComponent } from './components/owners-info/owners-info.component';
 import { PhotoComponent } from './components/photo/photo.component';
@@ -24,6 +26,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
 @NgModule({
   declarations: [
     CreatorComponent,
+    DashboardButtonComponent,
     DatetimeComponent,
     SecurePipe,
     AffiliateLinkDebugInfoComponent,
@@ -40,7 +43,8 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
     WishListRadioComponent,
     WishShopInfoComponent,
     TruncateNamePipe,
-    BackgroundImageDirective
+    BackgroundImageDirective,
+    ListComponent
   ],
   imports: [
     CommonModule,
@@ -51,6 +55,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
   exports: [
     BackgroundImageDirective,
     CreatorComponent,
+    DashboardButtonComponent,
     DatetimeComponent,
     SecurePipe,
     AffiliateLinkDebugInfoComponent,
@@ -68,7 +73,8 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
     TruncateNamePipe,
     UserInitialsComponent,
     WishListRadioComponent,
-    WishShopInfoComponent
+    WishShopInfoComponent,
+    ListComponent
   ]
 })
 export class SharedModule { }

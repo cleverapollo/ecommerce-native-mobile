@@ -1,6 +1,5 @@
 <ion-header class="ion-no-border safe-area-inset-top">
-  <app-nav-toolbar></app-nav-toolbar>
-  <app-email-unverified-hint></app-email-unverified-hint>
+  <app-nav-toolbar defaultHref="secure/product-lists/product-list-overview"></app-nav-toolbar>
 </ion-header>
 
 <ion-content>
@@ -9,17 +8,15 @@
   </ion-refresher>
 
   <section class="ion-text-center wish-list-detail-container">
-    <app-owners-info [owners]="wishList.owners"></app-owners-info>
     <div class="details">
-      <h1 class="wish-list-name">{{ wishList.name }}</h1>
-      <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
+      <h1 class="wish-list-name">{{ productList.name }}</h1>
     </div>
   </section>
 
   <div class="divide"></div>
 
   <section class="ion-text-center list-detail-page-actions">
-    <a routerLink="/secure/wish-search">
+    <a routerLink="/secure/list-search">
       <ion-icon src="assets/icon/plus.svg" ></ion-icon>
     </a>
     <a role="button" [routerLink]="['edit']">
@@ -29,13 +26,5 @@
       <ion-icon src="assets/icon/share.svg"></ion-icon>
     </a>
   </section>
-
-  <div class="masonry" #masonry>
-    <div class="brick" *ngFor="let wish of wishes; trackBy:trackByWishId" #bricks>
-      <app-wish [wish]="wish"
-                [showReservedWishes]="wishList.showReservedWishes"
-                (selected)="navigateToWishDetailPage(wish)"></app-wish>
-    </div>
-  </div>
 
 </ion-content>

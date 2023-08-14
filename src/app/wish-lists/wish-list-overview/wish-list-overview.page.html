@@ -16,31 +16,17 @@
       <ion-col size="6" size-lg="2" class="button-container">
         <ion-grid style="padding: 0">
           <ion-row>
-            <ion-col class="add-wish-button" routerLink="/secure/wish-search" size="12" >
-              <div class="ion-text-center">
-                <div class="add-button-padding">
-                  <div>
-                    <ion-icon class="add-icon" src="assets/icon/plus.svg"></ion-icon>
-                  </div>
-                  <div class="add-button-label">
-                      Wunsch <br>
-                      hinzufügen
-                  </div>
-                </div>
-              </div>
+            <ion-col class="add-list-item-button" routerLink="/secure/wish-search" size="12" >
+              <app-dashboard-button>
+                Wunsch <br>
+                hinzufügen
+              </app-dashboard-button>
             </ion-col>
-            <ion-col class="add-wish-list-button" routerLink="/secure/home/wish-list-new" size="12" >
-              <div class="ion-text-center">
-                <div class="add-button-padding">
-                  <div>
-                    <ion-icon class="add-icon" src="assets/icon/plus.svg"></ion-icon>
-                  </div>
-                  <div class="add-button-label">
-                      Wunschliste <br>
-                      hinzufügen
-                  </div>
-                </div>
-              </div>
+            <ion-col class="add-list-button" routerLink="/secure/home/wish-list-new" size="12" >
+              <app-dashboard-button>
+                Wunschliste <br>
+                hinzufügen
+              </app-dashboard-button>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -49,7 +35,7 @@
                 class="wish-list" size="6" size-lg="2"
                 *ngFor="let wishList of wishLists; let i = index;"
                 (click)="selectWishList(wishList)">
-        <app-wish-list [wishList]="wishList" [index]="i"></app-wish-list>
+        <app-list [list]="wishList" [index]="i"></app-list>
       </ion-col>
     </ion-row>
   </ion-grid>

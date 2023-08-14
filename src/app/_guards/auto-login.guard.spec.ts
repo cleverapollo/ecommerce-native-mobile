@@ -59,7 +59,7 @@ describe('AutoLoginGuard', () => {
       first()
     ).subscribe({
       next: canLoad => {
-        expect(router.navigateByUrl).toHaveBeenCalledWith('/secure/product-list-overview', { replaceUrl: true });
+        expect(router.navigateByUrl).toHaveBeenCalledWith('/secure/product-lists/product-list-overview', { replaceUrl: true });
         expect(canLoad).toBeFalsy();
       },
       error: error => fail(error)

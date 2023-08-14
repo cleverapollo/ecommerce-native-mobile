@@ -1,0 +1,28 @@
+<ion-grid [ngClass]="side">
+  <ion-row class="wish-images-container-top" >
+    <ion-col size="6" class="wish-image-container wish-one">
+      <app-wish-image *ngIf="items.length > 0" [src]="items[0].imageUrl" alt="{{ items[0].name }}" [styles]="itemImageStyle"></app-wish-image>
+    </ion-col>
+    <ion-col size="6" class="wish-image-container">
+      <app-wish-image *ngIf="items.length > 1" [src]="items[1].imageUrl" alt="{{ items[1].name }}" [styles]="itemImageStyle"></app-wish-image>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="6" class="wish-image-container wish-three">
+      <app-wish-image *ngIf="items.length > 2" [src]="items[2].imageUrl" alt="{{ items[2].name }}" [styles]="itemImageStyle"></app-wish-image>
+    </ion-col>
+    <ion-col size="6" class="wish-image-container">
+      <app-wish-image *ngIf="items.length > 3" [src]="items[3].imageUrl" alt="{{ items[3].name }}" [styles]="itemImageStyle"></app-wish-image>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="wish-list-description">
+    <ion-col size="12">
+      <div class="list-name truncate-name">{{ list.name }}</div>
+    </ion-col>
+    <ion-col size="12" class="no-padding-top">
+      <div *ngIf="isWishList" class="wish-list-date">{{ date ? (date | date) : 'kein Datum festgelegt' }}</div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -1,14 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { WishListOverviewPageRoutingModule } from './wish-list-overview-routing.module';
 
-import { WishListOverviewPage } from './wish-list-overview.page';
-import { WishListComponent } from './wish-list/wish-list.component';
 import { SharedModule } from '@shared/shared.module';
+import { WishListOverviewPage } from './wish-list-overview.page';
 
 @NgModule({
   imports: [
@@ -18,6 +17,6 @@ import { SharedModule } from '@shared/shared.module';
     WishListOverviewPageRoutingModule,
     SharedModule
   ],
-  declarations: [WishListOverviewPage, WishListComponent]
+  declarations: [WishListOverviewPage]
 })
-export class WishListOverviewPageModule {}
+export class WishListOverviewPageModule { }

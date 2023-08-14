@@ -1,10 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContentCreatorAccount } from '@core/models/content-creator.model';
+import { ProductList } from '@core/models/product-list.model';
 import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
+import { LoadingService } from '@core/services/loading.service';
+import { ProductListStoreService } from '@core/services/product-list-store.service';
+import { NavController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { Subscription, combineLatest } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, finalize, first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list-overview',
@@ -16,17 +20,22 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
   account: ContentCreatorAccount | null = null;
   image: Blob | null = null;
   isLoading = false;
+  productLists: ProductList[] = [];
 
   private subscription: Subscription = new Subscription();
 
   constructor(
     private userStore: UserProfileStore,
-    private analyticsService: AnalyticsService
+    private productListStore: ProductListStoreService,
+    private analyticsService: AnalyticsService,
+    private navController: NavController,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
     this.isLoading = true;
     this.subscription.add(this._setupData());
+    this._loadProductLists();
   }
 
   ionViewDidEnter() {
@@ -35,6 +44,18 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  selectProductList(productList: ProductList) {
+    this.navController.navigateForward(`secure/product-lists/product-list/${productList.id}`);
+  }
+
+  getClass(listIndex: number) {
+    return {
+      'product-list-right': listIndex % 2 === 0,
+      'product-list-left': listIndex % 2 === 1,
+      'product-list-first': listIndex === 0
+    }
   }
 
   async forceRefresh(event: Event): Promise<void> {
@@ -58,6 +79,20 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     })
+  }
+
+  private async _loadProductLists(): Promise<void> {
+    await this.loadingService.showLoadingSpinner();
+    this.subscription.add(this.productListStore.getAll(false).pipe(
+      first(),
+      finalize(() => {
+        this.loadingService.stopLoadingSpinner();
+      })
+    ).subscribe({
+      next: productLists => {
+        this.productLists = productLists;
+      }
+    }));
   }
 
 }

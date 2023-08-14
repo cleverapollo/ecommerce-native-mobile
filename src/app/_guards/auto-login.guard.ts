@@ -27,7 +27,7 @@ export class AutoLoginGuard implements CanLoad {
           this.logger.info('no auto login');
           return true;
         }
-        const url = state[1] ? '/secure/product-list-overview' : '/secure/home'
+        const url = state[1] ? '/secure/product-lists/product-list-overview' : '/secure/home'
         this.logger.info('auto login');
         this.router.navigateByUrl(url, { replaceUrl: true });
         return false;

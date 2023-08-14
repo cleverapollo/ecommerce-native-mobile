@@ -1,0 +1,26 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar defaultHref="secure/product-lists/product-list-overview"></app-nav-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 class="ion-text-center wantic-page-header">Neue Liste hinzufügen</h1>
+
+  <form [formGroup]="form">
+    <div class="wtc-label-container">
+      <label class="wtc-label-stacked">Name der Liste</label>
+    </div>
+    <ion-item lines="none">
+      <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name" clearInput="true" autocapitalize="true" enterkeyhint="next" inputmode="text" required="true" spellcheck="true"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
+
+    <ion-button (click)="create()" expand="block" class="wantic-margin-right-left wantic-save-button no-margin-bottom button-save-changes">
+      Liste anlegen
+    </ion-button>
+    <ion-button class="wantic-save-button" (click)="goBack()" color="primary" fill="outline" expand="block">
+      ABBRECHEN
+    </ion-button>
+
+  </form>
+
+</ion-content>

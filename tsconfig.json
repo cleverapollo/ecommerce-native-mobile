@@ -30,6 +30,7 @@
       "@friends/*": ["src/app/friends/*"],
       "@guards/*": ["src/app/_guards/*"],
       "@menu/*": ["src/app/menu/*"],
+      "@productLists/*": ["src/app/product-lists/*"],
       "@registration/*": ["src/app/registration/*"],
       "@shared/*": ["src/app/shared/*"],
       "@test/*": ["src/app/test/*"],
