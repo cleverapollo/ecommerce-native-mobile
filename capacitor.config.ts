@@ -12,6 +12,9 @@ const config: CapacitorConfig = {
       splashImmersive: true
     }
   },
+  server: {
+    androidScheme: "http"
+  },
   cordova: {
     preferences: {
       'ScrollEnabled': 'false',
