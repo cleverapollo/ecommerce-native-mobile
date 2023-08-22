@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ProductListApiService } from '@core/api/product-list-api.service';
-import { ProductList } from '@core/models/product-list.model';
+import { PublicResourceApiService } from '@core/api/public-resource-api.service';
+import { ProductList, SharedProductList } from '@core/models/product-list.model';
 import { CacheService } from 'ionic-cache';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
@@ -19,6 +20,7 @@ export class ProductListStoreService {
 
   constructor(
     private productListApi: ProductListApiService,
+    private publicResourceApi: PublicResourceApiService,
     private cache: CacheService,
     private logger: Logger
   ) { }
@@ -26,6 +28,14 @@ export class ProductListStoreService {
   getById(id: string, forceRefresh: boolean): Observable<ProductList> {
     const request = this.productListApi.getById(id);
     const cacheKey = this.getCacheKey(id);
+    return forceRefresh ?
+      this.cache.loadFromDelayedObservable(cacheKey, request, GROUP_KEY, TTL, 'all') :
+      this.cache.loadFromObservable(cacheKey, request, GROUP_KEY);
+  }
+
+  getSharedListByName(userName: string, listName: string, forceRefresh: boolean = false): Observable<SharedProductList> {
+    const request = this.publicResourceApi.getProductList(userName, listName);
+    const cacheKey = `sharedProductList${listName}By${userName}`;
     return forceRefresh ?
       this.cache.loadFromDelayedObservable(cacheKey, request, GROUP_KEY, TTL, 'all') :
       this.cache.loadFromObservable(cacheKey, request, GROUP_KEY);
