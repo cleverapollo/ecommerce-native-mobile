@@ -3,9 +3,6 @@
 	"appName": "Wantic",
 	"bundledWebRuntime": false,
 	"webDir": "www",
-	"server": {
-		"androidScheme": "http"
-	},
 	"plugins": {
 		"SplashScreen": {
 			"launchAutoHide": false,

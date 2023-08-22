@@ -7,8 +7,15 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.*
 import android.widget.AbsListView.CHOICE_MODE_SINGLE
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -18,17 +25,21 @@ import io.wantic.app.share.adapters.WishListArrayAdapter
 import io.wantic.app.share.core.analytics.AnalyticsTracking
 import io.wantic.app.share.core.analytics.GoogleAnalytics
 import io.wantic.app.share.core.extensions.hideKeyboard
+import io.wantic.app.share.core.ui.AlertService
+import io.wantic.app.share.core.ui.ToastService
 import io.wantic.app.share.core.ui.UIConstants.IMAGE_FALLBACK
-import io.wantic.app.share.core.ui.media.*
+import io.wantic.app.share.core.ui.media.BitmapGraphicsHandler
+import io.wantic.app.share.core.ui.media.GraphicOptions
+import io.wantic.app.share.core.ui.media.GraphicsHandler
+import io.wantic.app.share.core.ui.media.GraphicsHandling
+import io.wantic.app.share.core.ui.media.VectorGraphicsHandler
 import io.wantic.app.share.models.ProductInfo
 import io.wantic.app.share.models.Wish
 import io.wantic.app.share.models.WishList
 import io.wantic.app.share.network.NetworkService
 import io.wantic.app.share.network.RestApi
-import io.wantic.app.share.core.ui.AlertService
 import io.wantic.app.share.utils.AuthService
 import io.wantic.app.share.utils.CircleTransform
-import io.wantic.app.share.core.ui.ToastService
 
 
 class SelectWishListActivity : AppCompatActivity() {
@@ -310,7 +321,7 @@ class SelectWishListActivity : AppCompatActivity() {
                     showErrorAlert(idToken, wishListName)
                 }
                 else -> {
-                    Log.e(LOG_TAG, "Undefined case: wishList: $wishList, error: $error")
+                    Log.e(LOG_TAG, "Undefined case - saveWishList")
                 }
             }
         }
@@ -340,11 +351,11 @@ class SelectWishListActivity : AppCompatActivity() {
                 successfullySaved -> {
                     showSuccessAlert(wish)
                 }
-                !successfullySaved && error != null -> {
+                error != null -> {
                     showErrorAlert(idToken, wish)
                 }
                 else -> {
-                    Log.e(LOG_TAG, "Undefined case: successfullySaved: $successfullySaved, error: $error")
+                    Log.e(LOG_TAG, "Undefined case - saveWish")
                 }
             }
         }

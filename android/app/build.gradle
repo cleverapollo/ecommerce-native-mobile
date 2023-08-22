@@ -1,7 +1,3 @@
-plugins {
-    id "com.starter.easylauncher" version "5.0.0"
-}
-
 apply plugin: 'com.android.application'
 apply from: 'capacitor.build.gradle'
 apply plugin: 'kotlin-android'
@@ -22,8 +18,8 @@ android {
         applicationId "io.wantic.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 202302201
-        versionName "1.5.3"
+        versionCode 202308221
+        versionName "1.5.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
     }
@@ -35,6 +31,9 @@ android {
                 debugSymbolLevel 'SYMBOL_TABLE'
             }
         }
+    }
+    buildFeatures {
+        buildConfig = true
     }
     flavorDimensions "environment"
     productFlavors {
@@ -49,26 +48,6 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
-    }
-}
-
-easylauncher {
-    defaultFlavorNaming true
-
-    buildTypes {
-        debug {
-            filters grayRibbonFilter()
-        }
-        release {}
-    }
-
-    productFlavors {
-        beta {
-            filters grayRibbonFilter()
-        }
-        prod {
-            enable false  //Do not label in production
-        }
     }
 }
 
