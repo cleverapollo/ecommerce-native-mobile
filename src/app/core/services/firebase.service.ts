@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { CustomError, CustomErrorType } from '@core/error';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
-import { DefaultPlatformService } from './platform.service';
+import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { CustomError, CustomErrorType } from '@core/error';
-import firebase from 'firebase/app';
+import { DefaultPlatformService } from './platform.service';
 
 export interface FirebaseControllable {
   getIdToken(forceRefresh: boolean): Promise<string | null>
   onAuthStateChanged(): Observable<any | firebase.User>
-  sendEmailVerification():  Promise<any>;
+  sendEmailVerification(): Promise<any>;
   sendPasswordResetEmail(email: string): Promise<any>;
   setLanguageCode(languageCode: string): void
   signInWithApple(identityToken: string): Promise<any>;
@@ -94,7 +94,7 @@ export class FirebaseService implements FirebaseControllable {
       return this.nativeAuth.onAuthStateChanged()
     } else {
       return new Observable<firebase.User>(observer => {
-        this.angularAuth.onAuthStateChanged(observer.next, observer.error, observer.complete);
+        this.angularAuth.onAuthStateChanged(user => observer.next(user || undefined), error => observer.error(error), () => observer.complete());
       });
     }
   }
