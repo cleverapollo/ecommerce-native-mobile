@@ -1,79 +1,81 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
-import { Subscription } from 'rxjs';
-import { AnalyticsService } from '@core/services/analytics.service';
-import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FriendWishList } from '@core/models/wish-list.model';
-import { finalize } from 'rxjs/operators';
+import { AnalyticsService } from '@core/services/analytics.service';
+import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
+import { LoadingService } from '@core/services/loading.service';
+import { finalize, first } from 'rxjs/operators';
+import { TabBarRoute, getTaBarPath } from 'src/app/tab-bar/tab-bar-routes';
 
 @Component({
   selector: 'app-friends-wish-list-overview',
   templateUrl: './friends-wish-list-overview.page.html',
   styleUrls: ['./friends-wish-list-overview.page.scss'],
 })
-export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
+export class FriendsWishListOverviewPage implements OnInit {
 
   wishLists: FriendWishList[] = [];
 
-  private forceRefreshWishLists = false;
-
-  // subscriptions
-  private queryParamSubscription: Subscription = null;
-  private refreshWishListsSubscription: Subscription = null;
-  private forceRefreshWishListsSubscription: Subscription = null;
+  private isInitialized = false;
 
   constructor(
-    private navContoller: NavController,
-    private route: ActivatedRoute,
     private router: Router,
     private friendWishListStore: FriendWishListStoreService,
-    private analyticsService: AnalyticsService
-  ) {}
+    private analyticsService: AnalyticsService,
+    private loadingService: LoadingService
+  ) { }
 
   ngOnInit() {
-    this.queryParamSubscription = this.route.queryParams.subscribe(queryParams => {
-      if (queryParams.forceRefresh) {
-        this.forceRefreshWishLists = Boolean(queryParams.forceRefresh);
-        this.router.navigate(['.'], { relativeTo: this.route, queryParams: {}}); // remove query params
-      }
+    this.loadWishLists(true);
+  }
+
+  private async loadWishLists(showLoadingSpinner = false) {
+    if (showLoadingSpinner) {
+      await this.loadingService.showLoadingSpinner();
+    }
+
+    this.friendWishListStore.loadWishLists(true).pipe(
+      first(),
+      finalize(() => {
+        this.isInitialized = true;
+        this.loadingService.stopLoadingSpinner();
+      })
+    ).subscribe(wishLists => {
+      this.wishLists = wishLists;
     });
   }
 
   ionViewWillEnter() {
-    this.refreshWishListsSubscription = this.friendWishListStore.loadWishLists(this.forceRefreshWishLists).subscribe(wishLists => {
-      this.forceRefreshWishLists = false;
-      this.wishLists = wishLists;
-    })
+    if (this.isInitialized) {
+      this.loadWishLists();
+    }
   }
 
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('family_friends');
   }
 
-  ngOnDestroy() {
-    this.queryParamSubscription?.unsubscribe();
-    this.refreshWishListsSubscription?.unsubscribe();
-    this.forceRefreshWishListsSubscription?.unsubscribe();
-  }
-
   selectWishList(wishList: FriendWishList) {
-    this.navContoller.navigateForward(`${getTaBarPath(TabBarRoute.FRIENDS_HOME, true)}/wish-list/${wishList.id}`);
+    this.router.navigate([`${getTaBarPath(TabBarRoute.FRIENDS_HOME, true)}/wish-list`, wishList.id], {
+      state: {
+        wishList: wishList
+      }
+    });
   }
 
   forceRefresh(event) {
-    this.forceRefreshWishListsSubscription = this.friendWishListStore.loadWishLists(true)
-    .pipe(
-      finalize(() => {
-        event.target.complete();
-      })
-    )
-    .subscribe({
-      next: wishLists => {
-        this.wishLists = wishLists;
-      }
-    });
+    this.friendWishListStore.loadWishLists(true)
+      .pipe(
+        first(),
+        finalize(() => {
+          event.target.complete();
+        })
+      )
+      .subscribe({
+        next: wishLists => {
+          this.wishLists = wishLists;
+        }
+      });
   }
 
 }

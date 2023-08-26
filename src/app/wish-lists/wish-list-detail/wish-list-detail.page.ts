@@ -1,11 +1,14 @@
+import { DatePipe } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Share } from '@capacitor/share';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { UserWishListDto } from '@core/models/user.model';
 import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { Logger } from '@core/services/log.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { LOADING_STRING, NO_DATE_SELECTED } from '@core/ui.constants';
 import { sortWishesByIsFavorite } from '@core/wish-list.utils';
 import { RefresherCustomEvent } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
@@ -19,23 +22,42 @@ import { APP_URL } from 'src/environments/environment';
   templateUrl: './wish-list-detail.page.html',
   styleUrls: ['./wish-list-detail.page.scss']
 })
-export class WishListDetailPage implements OnInit, OnDestroy, AfterViewChecked {
+export class WishListDetailPage implements OnInit, AfterViewChecked, OnDestroy {
 
   @ViewChild('masonry') masonry: ElementRef<HTMLDivElement>;
   @ViewChildren('bricks') masonryBricks: QueryList<ElementRef<HTMLDivElement>>;
 
   showBackButton = true;
+  wishListId?: string = null;
   wishList = new WishListDto();
 
   get wishes(): WishDto[] {
-    const wishes = this.wishList.wishes;
+    const wishes = this.wishList?.wishes || [];
     wishes.sort(sortWishesByIsFavorite);
     return wishes;
   }
 
+  get owners(): UserWishListDto[] {
+    return this.wishList?.owners || [];
+  }
+
+  get date(): string {
+    let dateString = NO_DATE_SELECTED;
+    if (!this.wishList) {
+      dateString = LOADING_STRING;
+    } else if (this.wishList.date) {
+      dateString = this.datePipe.transform(this.wishList.date.toString());
+    }
+    return dateString;
+  }
+
+  get name(): string {
+    return this.wishList?.name || LOADING_STRING;
+  }
+
   trackByWishId: TrackByFunction<WishDto> = (idx, wish) => wish.id;
 
-  private subscription?: Subscription;
+  private subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -43,19 +65,19 @@ export class WishListDetailPage implements OnInit, OnDestroy, AfterViewChecked {
     private wishListStore: WishListStoreService,
     private userProfileStore: UserProfileStore,
     private logger: Logger,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
-    this.wishList = this.route.snapshot.data.wishList;
-    this.subscription = this.wishListStore.wishLists.subscribe({
-      next: wishLists => {
-        const wishList = wishLists.find(w => w.id === this.wishList.id);
-        if (wishList) {
-          this.wishList = wishList;
-        }
-      }
-    });
+    this.wishList = this.router.getCurrentNavigation()?.extras.state?.wishList;
+    this.subscription.add(this.route.paramMap.subscribe(paramMap => {
+      this.wishListId = paramMap.get('wishListId');
+    }));
+  }
+
+  ionViewWillEnter() {
+    this.refreshWishList(this.wishList?.id || this.wishListId);
   }
 
   ngAfterViewChecked(): void {
@@ -71,7 +93,7 @@ export class WishListDetailPage implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   async share() {
@@ -87,18 +109,34 @@ export class WishListDetailPage implements OnInit, OnDestroy, AfterViewChecked {
     });
   }
 
-  async forceRefresh(event: Event) {
+  forceRefresh(event: Event) {
     const refresherEvent = event as RefresherCustomEvent;
-    await this.wishListStore.loadWishList(this.wishList.id, true).pipe(
+    this.wishListStore.loadWishList(this.wishList.id, true).pipe(
       first(),
       finalize(() => {
         refresherEvent.target.complete();
       })
-    ).toPromise();
+    ).subscribe(wishList => this.wishList = wishList);
   }
 
   navigateToWishDetailPage(wish: WishDto) {
-    this.router.navigate(['wish', wish.id], { relativeTo: this.route })
+    this.router.navigate(['wish', wish.id], {
+      state: {
+        wishList: this.wishList,
+        wish: wish
+      },
+      relativeTo: this.route
+    });
+  }
+
+  private refreshWishList(id: string) {
+    if (!id) {
+      return;
+    }
+
+    this.wishListStore.loadWishList(id, true).pipe(
+      first()
+    ).subscribe(wishList => this.wishList = wishList);
   }
 
 }

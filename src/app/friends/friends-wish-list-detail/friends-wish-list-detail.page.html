@@ -8,12 +8,12 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <section class="ion-text-center wish-list-detail-container" *ngIf="wishList">
+  <section class="ion-text-center wish-list-detail-container">
     <app-owners-info [owners]="wishList.owners"></app-owners-info>
     <div class="details">
-      <p class="wish-list-owner-names">{{ wishList.owners | ownerNames }}</p>
-      <p class="wish-list-name">{{ wishList.name }}</p>
-      <p class="wish-list-date">{{  date }}</p>
+      <p class="wish-list-owner-names">{{ owners | ownerNames }}</p>
+      <p class="wish-list-name">{{ name }}</p>
+      <p class="wish-list-date">{{ date }}</p>
     </div>
     <ion-button class="wantic-save-button leave-wish-list" fill="outline" color="light" (click)="showDeleteAlert()" id="leave-wish-list-button">WUNSCHLISTE VERLASSEN</ion-button>
   </section>
@@ -21,7 +21,7 @@
   <div class="divide"></div>
 
    <div class="masonry" #masonry>
-    <div class="brick" *ngFor="let wish of wishes$ | async; trackBy:trackByWishId" #bricks>
+    <div class="brick" *ngFor="let wish of wishes; trackBy:trackByWishId" #bricks>
       <app-friends-wish [wish]="wish" (wishPurchase)="updateWish($event)"></app-friends-wish>
     </div>
   </div>

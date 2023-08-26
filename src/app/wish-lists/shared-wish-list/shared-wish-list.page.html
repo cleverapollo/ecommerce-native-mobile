@@ -4,12 +4,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="wishList">
+<ion-content >
   <section class="ion-text-center wish-list-detail-container">
-    <app-owners-info [owners]="wishList.owners" [showOnlyInitials]="true"></app-owners-info>
+    <app-owners-info [owners]="owners" [showOnlyInitials]="true"></app-owners-info>
     <div class="details">
-      <p class="wish-list-owner-names">{{ wishList.owners | ownerNames }}</p>
-      <p class="wish-list-name">{{ wishList.name }}</p>
+      <p class="wish-list-owner-names">{{ owners | ownerNames }}</p>
+      <p class="wish-list-name">{{ name }}</p>
       <p class="wish-list-date">{{ date }}</p>
     </div>
   </section>
@@ -18,7 +18,7 @@
 
   <div class="grid-centered">
     <div class="masonry" #masonry>
-      <div class="brick" *ngFor="let wish of wishes$ | async; trackBy:trackByWishId" #bricks>
+      <div class="brick" *ngFor="let wish of wishes; trackBy:trackByWishId" #bricks>
         <app-shared-wish [wish]="wish" [wishList]="wishList" (wishStateChanged)="updateWishList($event)"></app-shared-wish>
       </div>
     </div>

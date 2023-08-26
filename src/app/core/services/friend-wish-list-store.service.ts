@@ -78,16 +78,15 @@ export class FriendWishListStoreService implements FriendWishListStore {
       request = this.publicResourceApiService.getSharedWishList(id);
       cacheKey = this.cacheKeyPublicWishList(id);
     }
-    if (forceRefresh) {
-      return this.cache.loadFromDelayedObservable(cacheKey, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
-    }
-    return this.cache.loadFromObservable(cacheKey, request, this.CACHE_GROUP_KEY)
+    return forceRefresh ?
+      this.cache.loadFromDelayedObservable(cacheKey, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all') :
+      this.cache.loadFromObservable(cacheKey, request, this.CACHE_GROUP_KEY);
   }
 
   updateCachedWishList(wishList: FriendWishList): void {
     this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
     this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: FriendWishList[]) => {
-      const wishListIndex = wishLists.findIndex( w => w.id === wishList.id);
+      const wishListIndex = wishLists.findIndex(w => w.id === wishList.id);
       if (wishListIndex !== -1) {
         wishLists[wishListIndex] = wishList;
         this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
@@ -97,6 +96,21 @@ export class FriendWishListStoreService implements FriendWishListStore {
     }, () => {
       this.removeCachedWishLists();
     });
+  }
+
+  /**
+   * Is this a wish list from a friend?
+   * @param wishListId Id of the wish list.
+   * @returns True or false
+   */
+  async isSharedWishList(wishListId: string): Promise<boolean> {
+    try {
+      const wishLists = await this.loadWishLists().toPromise();
+      const wishList = wishLists.find((w) => w.id === wishListId);
+      return wishList !== undefined;
+    } catch (error) {
+      return false;
+    }
   }
 
 }

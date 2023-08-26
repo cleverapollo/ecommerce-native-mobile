@@ -4,8 +4,8 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 
-import { HttpBackend, HttpXhrBackend, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { HTTP_INTERCEPTORS, HttpBackend, HttpXhrBackend } from '@angular/common/http';
+import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -27,17 +27,14 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { UserProfileResolver } from '@shared/user-profile.resolver';
-import { WishListResolver } from '@wishLists/home/wish-list.resolver';
-import { WishResolver } from '@wishLists/home/wish.resolver';
-import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { CacheModule } from 'ionic-cache';
 import { NativeHttpBackend, NativeHttpFallback, NativeHttpModule } from 'ionic-native-http-connection-backend';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { SERVER_URL, WHITELISTED_DOMAINS } from 'src/environments/environment';
 import { environment } from '../environments/environment';
-import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 import { NativeHttpInterceptor } from './_interceptors/native-http.interceptor';
 import { NativeTokenInterceptor } from './_interceptors/native-token.interceptor';
+import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 
 registerLocaleData(localeDe, 'de', localeDeExtra)
 
@@ -70,7 +67,7 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     }),
     LoggerModule.forRoot({
       level: NgxLoggerLevel.DEBUG,
-                    // TRACE     DEBUG       INFO      LOG         WARN       ERROR    FATAL
+      // TRACE     DEBUG       INFO      LOG         WARN       ERROR    FATAL
       colorScheme: ['#7D3C98', '#17A589', '#1F618D', '#797D7F', '#F39C12', '#E74C3C', '#E74C3C']
     }),
     NativeHttpModule,
@@ -85,13 +82,10 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     File,
     FirebaseAuthentication,
     GooglePlus,
-    SharedWishListResolver,
     SignInWithApple,
     UserProfileResolver,
     UserTrackingService,
     ScreenTrackingService,
-    WishResolver,
-    WishListResolver,
     { provide: APP_NAME, useValue: environment.angularFire.APP_NAME },
     { provide: APP_VERSION, useValue: environment.angularFire.APP_VERSION },
     { provide: DEBUG_MODE, useValue: environment.angularFire.DEBUG_MODE },
@@ -99,8 +93,8 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     { provide: LOCALE_ID, useValue: 'de' },
     { provide: HTTP_INTERCEPTORS, useClass: NativeTokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: NativeHttpInterceptor, multi: true },
-    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend]},
+    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend] },
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,10 +1,12 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AffiliateLinkService } from '@core/services/affiliate/affiliate-link.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { BrowserService } from '@core/services/browser.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { LOADING_STRING, NO_DATE_SELECTED } from '@core/ui.constants';
 import { BackendConfigType } from '@env/backend-config-type';
 import { environment } from '@env/environment';
 import { ModalController, RefresherCustomEvent } from '@ionic/angular';
@@ -24,6 +26,24 @@ export class WishDetailPage implements OnInit, OnDestroy {
   wishList: WishListDto;
   wish: WishDto;
   wishIsUpdating: boolean = false;
+
+  get date(): string {
+    let dateString = NO_DATE_SELECTED;
+    if (!this.wishList) {
+      dateString = LOADING_STRING;
+    } else if (this.wishList.date) {
+      dateString = this.datePipe.transform(this.wishList.date.toString());
+    }
+    return dateString;
+  }
+
+  get wishListName(): string {
+    return this.wishList?.name || LOADING_STRING;
+  }
+
+  get wishName(): string {
+    return this.wish?.name || LOADING_STRING;
+  }
 
   get isDebugInfoVisible(): boolean {
     return environment.backendType === BackendConfigType.beta ||
@@ -63,7 +83,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
       right: '0',
       bottom: '0'
     };
-    if (!this.wish.imageUrl) {
+    if (!this.wish?.imageUrl) {
       img.height = '70%';
     }
     return {
@@ -77,34 +97,35 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   private affiliateLink = '';
-  private subscription?: Subscription;
+  private subscription = new Subscription();
+  private wishListId?: string;
+  private wishId?: string;
 
   constructor(
     private browserService: BrowserService,
     private route: ActivatedRoute,
+    private router: Router,
     private wishListStore: WishListStoreService,
     private analyticsService: AnalyticsService,
     private affiliateLinkService: AffiliateLinkService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private datePipe: DatePipe
   ) { }
 
   async ngOnInit() {
-    this.wishList = this.route.snapshot.data.wishList;
-    this.wish = this.route.snapshot.data.wish;
-    this.affiliateLink = await this.affiliateLinkService.createAffiliateLink(this.wish.productUrl);
+    this.wishList = this.router.getCurrentNavigation()?.extras.state?.wishList;
+    this.wish = this.router.getCurrentNavigation()?.extras.state?.wish;
+    this.affiliateLink = await this.affiliateLinkService.createAffiliateLink(this.wish?.productUrl);
 
-    this.subscription = this.wishListStore.wishLists.subscribe({
-      next: wishLists => {
-        const wishList = wishLists.find(w => w.id === this.wishList.id);
-        if (wishList) {
-          this.wishList = wishList;
-          const wish = this.wishList.wishes.find(w => w.id === this.wish.id);
-          if (wish) {
-            this.wish = wish;
-          }
-        }
-      }
-    })
+    this.subscription.add(this.route.paramMap.subscribe(paramMap => {
+      this.wishListId = paramMap.get('wishListId');
+      this.wishId = paramMap.get('wishId');
+    }));
+  }
+
+  ionViewWillEnter() {
+    this.refreshWish(this.wish?.id || this.wishId);
+    this.refreshWishList(this.wishList?.id || this.wishListId);
   }
 
   ionViewDidEnter() {
@@ -112,7 +133,7 @@ export class WishDetailPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription?.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   openProductURL() {
@@ -154,6 +175,30 @@ export class WishDetailPage implements OnInit, OnDestroy {
 
   onWishUpdate(isUpdating: boolean) {
     this.wishIsUpdating = isUpdating;
+  }
+
+  private refreshWish(id: string) {
+    if (!id) {
+      return;
+    }
+
+    this.wishIsUpdating = true;
+    this.wishListStore.loadWish(id, true).pipe(
+      first(),
+      finalize(() => {
+        this.wishIsUpdating = false;
+      })
+    ).subscribe(wish => this.wish = wish);
+  }
+
+  private refreshWishList(id: string) {
+    if (!id || this.wishList) {
+      return;
+    }
+
+    this.wishListStore.loadWishList(id, true).pipe(
+      first()
+    ).subscribe(wishList => this.wishList = wishList);
   }
 
 }

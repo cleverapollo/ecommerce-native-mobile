@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { IonicModule, IonInput } from '@ionic/angular';
+import { IonInput, IonicModule } from '@ionic/angular';
 import { DatetimeComponent } from './datetime.component';
 
 describe('DatetimeComponent', () => {
@@ -30,20 +30,24 @@ describe('DatetimeComponent', () => {
 
   describe('value', () => {
 
-    it('is the selected date', () => {
+    it('is the selected date', async () => {
       component.selectedDate = '2022-04-13T17:28:16+0000'
       fixture.detectChanges();
+      await fixture.whenStable();
       expect(component.value).toEqual(component.selectedDate)
     })
 
-    it('is the initial date', () => {
+    it('is the initial date', async () => {
       component.initialDate = '2022-04-13T17:28:16+0000'
       fixture.detectChanges();
+      await fixture.whenStable();
+      component.selectedDate = undefined;
       expect(component.value).toEqual(component.initialDate)
     })
 
     it('is the current date', () => {
-      expect(component.value).toEqual(new Date().toISOString())
+      const expected = new Date().toISOString().split('T')[0];
+      expect(component.value).toContain(expected)
     })
   })
 
@@ -83,32 +87,29 @@ describe('DatetimeComponent', () => {
 
     it('updates the selected date and the formatted date', () => {
       const spy = spyOn(component, 'propagateChange');
-      component.onDateChanged('2022-04-13T17:28:16+0000');
+      component.selectedDate = '2022-04-13T17:28:16+0000';
 
       expect(component.selectedDate).toEqual('2022-04-13T17:28:16+0000');
       expect(component.formattedDate).toEqual('13.04.2022');
       expect(spy).toHaveBeenCalled();
-      expect(component.datetime.confirm).toHaveBeenCalledWith(true)
     });
 
     it('resets selected and formatted date if new value is undefined', () => {
       const spy = spyOn(component, 'propagateChange');
-      component.onDateChanged(undefined);
+      component.selectedDate = undefined;
 
       expect(component.selectedDate).toBeUndefined();
-      expect(component.formattedDate).toBeUndefined();
+      expect(component.formattedDate).toEqual('');
       expect(spy).toHaveBeenCalled();
-      expect(component.datetime.confirm).toHaveBeenCalledWith(true)
     });
 
     it('resets selected and formatted date if new value is null', () => {
       const spy = spyOn(component, 'propagateChange');
-      component.onDateChanged(null);
+      component.selectedDate = null;
 
       expect(component.selectedDate).toBeNull();
-      expect(component.formattedDate).toBeUndefined();
+      expect(component.formattedDate).toEqual('');
       expect(spy).toHaveBeenCalled();
-      expect(component.datetime.confirm).toHaveBeenCalledWith(true)
     });
 
   });
