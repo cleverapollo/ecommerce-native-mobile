@@ -1,12 +1,12 @@
-import { EnvironmentConfig } from './environment.d';
 import packageJson from '../../package.json';
 import { BackendConfigType } from './backend-config-type';
+import { EnvironmentConfig } from './environment.d';
 
 export const appVersion = packageJson.version;
 
 export const environment: EnvironmentConfig = {
     backendType: BackendConfigType.beta,
-    production: true,
+    production: false,
     debugMessage: 'running on beta environment',
     serverConfig: {
         networkProtocol: 'https',
