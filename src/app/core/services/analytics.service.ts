@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { FirebaseAnalytics } from '@capacitor-firebase/analytics';
 import { AuthProvider } from '@core/models/signup.model';
 import { AFInit, AppsFlyer } from 'appsflyer-capacitor-plugin';
+import { Analytics, getAnalytics } from 'firebase/analytics';
+import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Logger } from './log.service';
 import { DefaultPlatformService } from './platform.service';
 
@@ -19,10 +21,17 @@ export class AnalyticsService {
     return appsflyerConfig ? true : false;
   }
 
+  private firebaseWebApp: FirebaseApp = null;
+  private firebaseAnalyticsWeb: Analytics = null;
+
   constructor(
     private logger: Logger,
     private platformService: DefaultPlatformService
   ) {
+    if (this.platformService.isWeb) {
+      this.firebaseWebApp = initializeApp(environment.firebaseConfig);
+      this.firebaseAnalyticsWeb = getAnalytics(this.firebaseWebApp);
+    }
   }
 
   initAppsflyerSdk() {

@@ -36,8 +36,11 @@ export class AuthenticationService {
     private firebaseService: FirebaseService
   ) {
     this.firebaseService.setLanguageCode('de-DE');
-    this.setupFirebaseIdToken(false);
-    this.setupOnAuthStateChangedListener();
+
+    if (this.platformService.isNativePlatform) {
+      this.setupFirebaseIdToken(false);
+      this.setupOnAuthStateChangedListener();
+    }
   }
 
   private setupOnAuthStateChangedListener(): Promise<PluginListenerHandle> {
@@ -175,6 +178,10 @@ export class AuthenticationService {
   }
 
   async setupFirebaseIdToken(forceRefresh: boolean = false): Promise<string | null> {
+    if (this.platformService.isWeb) {
+      return null;
+    }
+
     try {
       const idToken = await this.firebaseService.getIdToken(forceRefresh);
       if (idToken) {
