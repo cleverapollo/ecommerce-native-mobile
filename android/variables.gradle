@@ -16,4 +16,6 @@ ext {
     coreSplashScreenVersion = '1.0.0'
     androidxWebkitVersion = '1.6.1'
     mockkVersion = '1.13.4'
+    rgcfaIncludeFacebook = true
+    rgcfaIncludeGoogle = true
 }

@@ -7,7 +7,7 @@ android {
     namespace "io.wantic.app"
     signingConfigs {
         release {
-        storeFile file('F:\\Develope\\wantic-frontend\\android-keystore\\android-upload.keystore')
+            storeFile file('F:\\Develope\\wantic-frontend\\android-keystore\\android-upload.keystore')
             storePassword 'h4BA)]&~Cd}P[\\4W'
             keyAlias 'android-upload'
             keyPassword 'U$8^p2rjcHdpfK*h'
@@ -74,6 +74,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.github.2coffees1team:GlideToVectorYou:v2.0.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:22.1.1'
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation "io.mockk:mockk-android:$mockkVersion"

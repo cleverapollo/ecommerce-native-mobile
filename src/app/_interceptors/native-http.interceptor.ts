@@ -8,9 +8,9 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HTTP, HTTPResponse } from '@awesome-cordova-plugins/http/ngx';
 import { Logger } from '@core/services/log.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
-import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
 import { Observable, from } from 'rxjs';
 
 type HttpMethod =
@@ -191,6 +191,6 @@ export class NativeHttpInterceptor implements HttpInterceptor {
 
   private logError(error: any) {
     this.logger.error('— Response error');
-    this.logger.error(error);
+    this.logger.error(JSON.stringify(error));
   }
 }

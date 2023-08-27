@@ -318,10 +318,6 @@
             }
           }
         },
-        "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {}
-        },
         "cypress-run": {
           "builder": "@cypress/schematic:cypress",
           "options": {

@@ -10,6 +10,9 @@ const config: CapacitorConfig = {
       launchAutoHide: false,
       backgroundColor: '#FF704F',
       splashImmersive: true
+    },
+    FirebaseAuthentication: {
+      providers: ["apple.com", "facebook.com", "google.com"]
     }
   },
   server: {

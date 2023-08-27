@@ -12,19 +12,12 @@ import { AppComponent } from './app.component';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAnalyticsModule, APP_NAME, APP_VERSION, DEBUG_MODE, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { CoreModule } from '@core/core.module';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { StorageService } from '@core/services/storage.service';
-import { Facebook } from '@ionic-native/facebook/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { HTTP } from '@ionic-native/http/ngx';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { UserProfileResolver } from '@shared/user-profile.resolver';
 import { CacheModule } from 'ionic-cache';
@@ -51,8 +44,6 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAnalyticsModule,
     BrowserModule,
     CoreModule,
     CacheModule.forRoot({ keyPrefix: 'wantic-app-cache' }),
@@ -78,17 +69,7 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
     InAppBrowser,
     HTTP,
     EmailVerificationStatusResolver,
-    Facebook,
-    File,
-    FirebaseAuthentication,
-    GooglePlus,
-    SignInWithApple,
     UserProfileResolver,
-    UserTrackingService,
-    ScreenTrackingService,
-    { provide: APP_NAME, useValue: environment.angularFire.APP_NAME },
-    { provide: APP_VERSION, useValue: environment.angularFire.APP_VERSION },
-    { provide: DEBUG_MODE, useValue: environment.angularFire.DEBUG_MODE },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'de' },
     { provide: HTTP_INTERCEPTORS, useClass: NativeTokenInterceptor, multi: true },

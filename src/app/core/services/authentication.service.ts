@@ -1,48 +1,30 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { StorageService, StorageKeys } from './storage.service';
-import { CacheService } from 'ionic-cache';
-import { HTTP } from '@ionic-native/http/ngx';
-import { Logger } from './log.service';
-import { AuthService } from '@core/api/auth.service';
-import { SignInResponse, SignupRequest } from '@core/models/signup.model';
-import { AppleSignInResponse, ASAuthorizationAppleIDRequest, SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { UserProfile } from '@core/models/user.model';
-import { environment, SERVER_URL } from '@env/environment';
 import { HttpErrorResponse } from '@angular/common/http';
-import { HttpStatusCodes } from '@core/models/http-status-codes';
-import { Device } from '@capacitor/device';
-import { DefaultPlatformService } from './platform.service';
+import { Injectable } from '@angular/core';
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+import { FirebaseAuthentication, SignInResult, User } from '@capacitor-firebase/authentication';
+import { PluginListenerHandle } from '@capacitor/core';
+import { AuthService } from '@core/api/auth.service';
 import { CustomError, CustomErrorType } from '@core/error';
-import firebase from 'firebase/app';
+import { HttpStatusCodes } from '@core/models/http-status-codes';
+import { SignInResponse, SignupRequest } from '@core/models/signup.model';
+import { UserProfile } from '@core/models/user.model';
+import { SERVER_URL } from '@env/environment';
+import { CacheService } from 'ionic-cache';
+import { BehaviorSubject } from 'rxjs';
 import { FirebaseService } from './firebase.service';
-
-export interface AppAuthenticationService {
-  signup(signupRequest: SignupRequest): Promise<void>;
-  emailPasswordSignIn(email: string, password: string): Promise<SignInResponse>;
-  facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}>;
-  googlePlusSignIn(): Promise<{googlePlusLoginResponse: any, user: UserProfile}>;
-  appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}>;
-  wanticSignIn(): Promise<SignInResponse>;
-  logout(): Promise<void>;
-  setupFirebaseIdToken(forceRefresh: boolean): Promise<string>;
-  sendVerificationMail(): Promise<any>;
-  resetPassword(email: string): Promise<void>;
-  updateEmailVerificationStatus(emailVerified: boolean): void;
-  removeDeprecatedAuthToken(): Promise<void>;
-  migrateSavedCredentials(): Promise<{email: string, password: string}>;
-}
+import { Logger } from './log.service';
+import { DefaultPlatformService } from './platform.service';
+import { StorageKeys, StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService implements AppAuthenticationService {
+export class AuthenticationService {
 
   isAuthenticated = new BehaviorSubject<boolean>(null);
   isEmailVerified = new BehaviorSubject<boolean>(null);
-  userInfo = new BehaviorSubject<any>(null);
+
+  private firebaseUser = new BehaviorSubject<User>(null);
 
   constructor(
     private storageService: StorageService,
@@ -51,31 +33,28 @@ export class AuthenticationService implements AppAuthenticationService {
     private nativeHttpClient: HTTP,
     private logger: Logger,
     private authApiService: AuthService,
-    private facebook: Facebook,
-    private googlePlus: GooglePlus,
-    private signInWithApple: SignInWithApple,
     private firebaseService: FirebaseService
   ) {
-
     this.firebaseService.setLanguageCode('de-DE');
     this.setupFirebaseIdToken(false);
     this.setupOnAuthStateChangedListener();
   }
 
-  private async setupOnAuthStateChangedListener() {
-    this.firebaseService.onAuthStateChanged().subscribe(user => {
+  private setupOnAuthStateChangedListener(): Promise<PluginListenerHandle> {
+    return FirebaseAuthentication.addListener('authStateChange', state => {
+      const user = state.user;
       if (user) {
         this.updateEmailVerificationState(user);
       }
       this.storageService.set(StorageKeys.FIREBASE_USER_INFO, user, true);
-      this.userInfo.next(user);
-    })
+      this.firebaseUser.next(user);
+    });
   }
 
-  private async updateEmailVerificationState(user: firebase.User | any) {
+  private async updateEmailVerificationState(user: User) {
     try {
       const isEmailVerified = await this.storageService.get<boolean>(StorageKeys.FIREBASE_EMAIL_VERIFIED, true);
-      const nextValue = isEmailVerified !== null ? isEmailVerified : user.emailVerified
+      const nextValue = isEmailVerified ?? user.emailVerified
       this.isEmailVerified.next(nextValue);
     } catch (error) {
       this.logger.error(error);
@@ -116,16 +95,17 @@ export class AuthenticationService implements AppAuthenticationService {
 
   async emailPasswordSignIn(email: string, password: string): Promise<SignInResponse> {
     try {
-      // wantic sign in
-      const signInRequest = { username: email, password };
-      const signInResponse = await this.authApiService.signInWithEmailAndPassword(signInRequest).toPromise();
+      const signInResponse = await this.authApiService.signInWithEmailAndPassword({
+        username: email,
+        password
+      }).toPromise();
 
       // firebase sign in
       await this.firebaseService.signInWithEmailAndPassword(email, password);
       await this.setupFirebaseIdToken(true);
       await this.storageService.set(StorageKeys.CREDENTIALS, { email, password }, true);
 
-      return Promise.resolve(signInResponse);
+      return signInResponse;
     } catch (error) {
       let errorMessage = 'Deine Anmeldung ist fehlgeschlagen.'
       if (error instanceof HttpErrorResponse) {
@@ -156,122 +136,38 @@ export class AuthenticationService implements AppAuthenticationService {
     return errorMessage;
   }
 
-  async facebookSignIn(): Promise<{facebookLoginResponse: FacebookLoginResponse, user: UserProfile}> {
-    try {
-      // facebook sign in
-      const facebookLoginResponse = await this.facebook.login(['email', 'public_profile']);
-      const accessToken = facebookLoginResponse?.authResponse?.accessToken;
-
-      if (facebookLoginResponse.status === 'connected') {
-        if (accessToken) {
-          // firebase sign in
-          await this.firebaseService.signInWithFacebook(accessToken);
-
-          // wantic sign in
-          const wanticSignInResponse = await this.wanticSignIn();
-          return Promise.resolve({ facebookLoginResponse, user: wanticSignInResponse.user });
-        } {
-          const error = 'no valid access token';
-          this.logger.error(error);
-          return Promise.reject(error);
-        }
-      } else if (facebookLoginResponse.status === 'not_authorized') {
-        const error = 'The user has not authorized your application';
-        this.logger.debug(error);
-        return Promise.reject(error);
-      } else {
-        const error = 'The user is not logged in to Faceebook.';
-        this.logger.debug(error);
-        return Promise.reject(error);
-      }
-    } catch (error) {
-      this.logger.error(error);
-      const firebaseAuthErrorMessage = this.getFirebaseAuthErrorMessage(error);
-      return Promise.reject(firebaseAuthErrorMessage);
+  async facebookSignIn(): Promise<{ facebookLoginResponse: SignInResult, user: UserProfile }> {
+    const facebookLoginResponse = await this.firebaseService.signInWithFacebook();
+    const wanticSignInResponse = await this.wanticSignIn();
+    return {
+      facebookLoginResponse,
+      user: wanticSignInResponse.user
     }
   }
 
-  async googlePlusSignIn(): Promise<{googlePlusLoginResponse: any, user: UserProfile}> {
-    try {
-      // google plus sign in
-      const signInOptions = await this.getSignInOptions();
-      const googlePlusLoginResponse = await this.googlePlus.login(signInOptions);
-      const idToken = googlePlusLoginResponse?.idToken;
-      const accessToken = googlePlusLoginResponse?.accessToken;
-
-      // firebase sign in
-      if (idToken && accessToken) {
-        await this.firebaseService.signInWithGoogle(idToken, accessToken);
-      } else {
-        const error = 'idToken or accessToken missing ';
-        this.logger.error(error, idToken, accessToken);
-        return Promise.reject(error);
-      }
-
-      // wantic sign in
-      const wanticSignInResponse = await this.wanticSignIn();
-      return Promise.resolve({ googlePlusLoginResponse, user: wanticSignInResponse.user });
-    } catch (error) {
-      this.logger.error(error);
-      let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
-      if (typeof error === 'string' && error === 'The user canceled the sign-in flow.') {
-        errorMessage = null;
-      } else {
-        errorMessage = this.getFirebaseAuthErrorMessage(error);
-      }
-      return Promise.reject(errorMessage);
+  async googlePlusSignIn(): Promise<{ googlePlusLoginResponse: SignInResult, user: UserProfile }> {
+    const googlePlusLoginResponse = await this.firebaseService.signInWithGoogle();
+    const wanticSignInResponse = await this.wanticSignIn();
+    return {
+      googlePlusLoginResponse,
+      user: wanticSignInResponse.user
     }
   }
 
-  private async getSignInOptions() {
-    let signInOptions = {};
-    const deviceInfo = await Device.getInfo();
-    if (deviceInfo.platform === 'android') {
-      signInOptions = {
-        webClientId: environment.googleSignInAndroidClientId
-      };
-    }
-    return signInOptions;
-  }
-
-  async appleSignIn(): Promise<{appleSignInResponse: AppleSignInResponse, user: UserProfile}> {
-    try {
-      // apple sign in
-      const appleSignInResponse = await this.signInWithApple.signin({
-        requestedScopes: [
-          ASAuthorizationAppleIDRequest.ASAuthorizationScopeFullName,
-          ASAuthorizationAppleIDRequest.ASAuthorizationScopeEmail
-        ]
-      });
-
-      // firebase sign in
-      await this.firebaseService.signInWithApple(appleSignInResponse.identityToken);
-
-      // wantic sign in
-      const wanticSignInResponse = await this.wanticSignIn();
-      return Promise.resolve({ appleSignInResponse, user: wanticSignInResponse.user });
-    } catch (error) {
-      this.logger.error(error);
-      let errorMessage = 'Deine Anmeldung ist fehlgeschlagen';
-      if (typeof error === 'object' && error?.code === '1001' && error?.error === 'ASAUTHORIZATION_ERROR') {
-        errorMessage = null;
-      } else {
-        errorMessage = this.getFirebaseAuthErrorMessage(error);
-      }
-      return Promise.reject(errorMessage);
-    }
+  async appleSignIn(): Promise<{ appleSignInResponse: SignInResult, user: UserProfile }> {
+    const appleSignInResponse = await this.firebaseService.signInWithApple();
+    const wanticSignInResponse = await this.wanticSignIn();
+    return {
+      appleSignInResponse,
+      user: wanticSignInResponse.user
+    };
   }
 
   async wanticSignIn(): Promise<SignInResponse> {
-    const userInfo = this.userInfo.value;
+    const userInfo = this.firebaseUser.value;
     if (userInfo?.uid && userInfo?.email) {
       const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
-      try {
-        const signInResponse = await this.authApiService.signInWithThirdPartyAuthProvider(signInRequestBody).toPromise();
-        return Promise.resolve(signInResponse);
-      } catch (error) {
-        return Promise.reject(error);
-      }
+      return await this.authApiService.signInWithThirdPartyAuthProvider(signInRequestBody).toPromise();
     }
     const error = new CustomError(CustomErrorType.SignInError, 'email or uid missing ');
     this.logger.error(error.message, userInfo);
@@ -284,25 +180,24 @@ export class AuthenticationService implements AppAuthenticationService {
       if (idToken) {
         await this.updateToken(idToken);
       }
-      return Promise.resolve(idToken);
+      return idToken;
     } catch (error) {
       this.logger.error('failed to refresh firebase id token', error);
       if (this.isAuthenticated.value === null) {
         this.isAuthenticated.next(false);
       }
-      return Promise.reject(error);
+      throw error;
     }
   }
 
   private async updateToken(token: string): Promise<void> {
     if (!token) {
       this.isAuthenticated.next(false);
-      return Promise.reject('token to upate is invalid');
+      throw new Error('token to upate is invalid');
     }
     await this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, token, true);
     this.updateAuthorizationHeaderForNativeHttpClient(token);
     this.isAuthenticated.next(true);
-    return Promise.resolve();
   }
 
   private getFirebaseAuthErrorMessage(error: any): string {
@@ -338,20 +233,20 @@ export class AuthenticationService implements AppAuthenticationService {
     return Promise.resolve();
   }
 
-  async migrateSavedCredentials(): Promise<{email: string, password: string}> {
+  async migrateSavedCredentials(): Promise<{ email: string, password: string }> {
     try {
-        const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
-        const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
-        let credentials = null;
-        if (email && password) {
-          credentials = { email, password };
-          this.storageService.set(StorageKeys.CREDENTIALS, credentials, true);
-        }
-        await this.storageService.remove(StorageKeys.LOGIN_EMAIL, true);
-        await this.storageService.remove(StorageKeys.LOGIN_PASSWORD, true);
-        return Promise.resolve(credentials);
+      const email = await this.storageService.get<string>(StorageKeys.LOGIN_EMAIL, true);
+      const password = await this.storageService.get<string>(StorageKeys.LOGIN_PASSWORD, true);
+      let credentials = null;
+      if (email && password) {
+        credentials = { email, password };
+        this.storageService.set(StorageKeys.CREDENTIALS, credentials, true);
+      }
+      await this.storageService.remove(StorageKeys.LOGIN_EMAIL, true);
+      await this.storageService.remove(StorageKeys.LOGIN_PASSWORD, true);
+      return Promise.resolve(credentials);
     } catch (error) {
-        return Promise.resolve(null);
+      return Promise.resolve(null);
     }
   }
 

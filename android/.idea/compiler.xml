@@ -10,6 +10,8 @@
       <module name="android.capacitor-community-firebase-analytics" target="17" />
       <module name="android.capacitor-cordova-android-plugins" target="17" />
       <module name="android.capacitor-device" target="17" />
+      <module name="android.capacitor-firebase-analytics" target="17" />
+      <module name="android.capacitor-firebase-authentication" target="17" />
       <module name="android.capacitor-haptics" target="17" />
       <module name="android.capacitor-keyboard" target="17" />
       <module name="android.capacitor-preferences" target="17" />

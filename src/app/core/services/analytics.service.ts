@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { AFInit, AppsFlyer } from 'appsflyer-capacitor-plugin';
-import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
-import { Logger } from './log.service';
+import { FirebaseAnalytics } from '@capacitor-firebase/analytics';
 import { AuthProvider } from '@core/models/signup.model';
-import { Platform } from '@ionic/angular';
-import { AngularFireAnalytics } from '@angular/fire/analytics';
+import { AFInit, AppsFlyer } from 'appsflyer-capacitor-plugin';
+import { Logger } from './log.service';
 import { DefaultPlatformService } from './platform.service';
 
 @Injectable({
@@ -23,18 +21,16 @@ export class AnalyticsService {
 
   constructor(
     private logger: Logger,
-    private platform: Platform,
-    private platformService: DefaultPlatformService,
-    private angularFireAnalytics: AngularFireAnalytics
-    ) {
+    private platformService: DefaultPlatformService
+  ) {
   }
 
   initAppsflyerSdk() {
-    if (!this.platformService.isNativePlatform) {return}
+    if (!this.platformService.isNativePlatform) { return }
 
     const appsflyerConfig: AFInit = environment.appsflyerConfig;
     if (appsflyerConfig) {
-      AppsFlyer.initSDK(appsflyerConfig).then( res => {
+      AppsFlyer.initSDK(appsflyerConfig).then(res => {
         this.logger.debug(JSON.stringify(res));
         this.logger.info('initialized appsflyer sdk successful');
       }, error => {
@@ -45,13 +41,7 @@ export class AnalyticsService {
   }
 
   logFirebaseEvent(eventName: string, params: { [prop: string]: any }) {
-    if (this.platformService.isNativePlatform) {
-      this.platform.ready().then(() => {
-        FirebaseAnalytics.logEvent({ name: eventName, params});
-      })
-    } else {
-      this.angularFireAnalytics.logEvent(eventName, params);
-    }
+    FirebaseAnalytics.logEvent({ name: eventName, params });
   }
 
   logAppsflyerEvent(eventName: string, eventValue: any) {
@@ -64,33 +54,27 @@ export class AnalyticsService {
   }
 
   setFirebaseScreenName(screenName: string) {
-    if (this.platformService.isNativePlatform) {
-      FirebaseAnalytics.setScreenName({
-        screenName
-      });
-    } else {
-      this.angularFireAnalytics.setCurrentScreen(screenName);
-    }
+    FirebaseAnalytics.setCurrentScreen({
+      screenName
+    });
   }
 
   toggleAnalytics() {
     this.analyticsEnabled = !this.analyticsEnabled;
 
     if (this.platformService.isNativePlatform) {
-      FirebaseAnalytics.setCollectionEnabled({ enabled: this.analyticsEnabled });
       if (this.appsflyerConfigExists) {
         AppsFlyer.stop({
           stop: true
         });
       }
-    } else {
-      this.angularFireAnalytics.setAnalyticsCollectionEnabled(this.analyticsEnabled);
     }
+    FirebaseAnalytics.setEnabled({ enabled: this.analyticsEnabled });
   }
 
   logCompleteRegistrationEvent(authProvider: AuthProvider) {
     const authProviderString: string = AuthProvider[authProvider];
-    const eventValue = {af_registration_method: authProviderString};
+    const eventValue = { af_registration_method: authProviderString };
     this.logAppsflyerEvent('af_complete_registration', eventValue);
     this.logFirebaseEvent('sign_up', { method: authProviderString });
   }
