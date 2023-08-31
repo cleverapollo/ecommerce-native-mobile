@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PriceDto, WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { SearchResultDataService } from '@core/services/search-result-data.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 import { CustomValidation } from '@shared/custom-validation';
 import { finalize, first } from 'rxjs/operators';
-import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
+import { TabBarRoute, getTaBarPath } from 'src/app/tab-bar/tab-bar-routes';
 
 @Component({
   selector: 'app-wish-create',
@@ -58,7 +58,6 @@ export class WishCreatePage implements OnInit {
     private searchResultDataService: SearchResultDataService,
     private analyticsService: AnalyticsService,
     private router: Router,
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder
   ) { }
 
@@ -68,14 +67,13 @@ export class WishCreatePage implements OnInit {
   }
 
   private setupViewData() {
-    this.wish = this.route.snapshot.data.wish ?
-      this.route.snapshot.data.wish :
-      this.router.getCurrentNavigation()?.extras?.state?.searchResult;
-    this.wishList = this.route.snapshot.data.wishList;
+    const state = this.router.getCurrentNavigation()?.extras?.state;
+    this.wish = state?.wish ? state.wish : state?.searchResult;
+    this.wishList = state?.wishList;
   }
 
   private setupForm() {
-    const wishListId = this.wishList?.id;
+    const wishListId = this.wishList?.id || this.wish?.wishListId;
     const name = this.wish?.name ? this.wish.name : '';
     const price = this.wish?.price.amount ? this.wish.price.amount : 0.00;
 
@@ -103,7 +101,7 @@ export class WishCreatePage implements OnInit {
     this.analyticsService.setFirebaseScreenName('wish_add');
   }
 
-  async create(){
+  async create() {
     if (this.form?.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;

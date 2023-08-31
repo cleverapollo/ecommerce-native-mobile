@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Device } from '@capacitor/device';
+import { WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
@@ -10,7 +11,7 @@ import { ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { finalize, first } from 'rxjs/operators';
-import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
+import { TabBarRoute, getTaBarPath } from 'src/app/tab-bar/tab-bar-routes';
 import { ShareExtensionExplanationComponent } from '../share-extension-explanation/share-extension-explanation.component';
 
 @Component({
@@ -35,6 +36,8 @@ export class WishSearchOverviewPage implements OnInit {
     return this.form?.controls.keywords.value ?? null;
   }
 
+  private wishList: WishListDto | null = null;
+
   constructor(
     private productSearchService: ProductSearchService,
     private formBuilder: FormBuilder,
@@ -47,6 +50,7 @@ export class WishSearchOverviewPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.wishList = this.router.getCurrentNavigation()?.extras?.state?.wishList;
     this.setupForm();
   }
 
@@ -85,7 +89,11 @@ export class WishSearchOverviewPage implements OnInit {
       next: _ => {
         const targetUrl = `${getTaBarPath(TabBarRoute.WISH_SEARCH, true)}/search-by-amazon`;
         this.form.reset();
-        this.router.navigateByUrl(targetUrl);
+        this.router.navigateByUrl(targetUrl, {
+          state: {
+            wishList: this.wishList
+          }
+        });
       }
     })
   }
@@ -95,7 +103,7 @@ export class WishSearchOverviewPage implements OnInit {
       keywords: [null, {
         validators: [Validators.required, Validators.minLength(2)],
         updateOn: 'submit'
-       }]
+      }]
     });
   }
 

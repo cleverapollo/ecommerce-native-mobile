@@ -75,6 +75,7 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
 
   private _results: SearchResultItem[] = [];
   private subscription?: Subscription
+  private wishList: WishListDto | null = null;
 
   constructor(
     private searchService: SearchService,
@@ -89,6 +90,7 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   ) { }
 
   ngOnInit() {
+    this.wishList = this.router.getCurrentNavigation()?.extras?.state?.wishList;
     this.subscription = this.searchResultDataService.$lastSearchQuery.subscribe(query => {
       this.createForm(query.searchTerm);
       this.results = query.results;
@@ -198,12 +200,15 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
 
   navigateToWishNewPage(item: SearchResultItem) {
     const wish = SearchResultItemMapper.map(item, new WishDto());
-    const wishList: WishListDto = this.route.snapshot.data.wishList;
-    if (wishList) {
-      wish.wishListId = wishList.id;
-    }
+    wish.wishListId = this.wishList?.id || null;
     this.removeSearchResultsAfterLeavingPage = false;
-    this.router.navigate(['wish-new'], {relativeTo: this.route, state: { searchResult: wish }});
+    this.router.navigate(['wish-new'], {
+      relativeTo: this.route,
+      state: {
+        searchResult: wish,
+        wishList: this.wishList
+      }
+    });
   }
 
   onSearchSuggestionClick(suggestion: string) {

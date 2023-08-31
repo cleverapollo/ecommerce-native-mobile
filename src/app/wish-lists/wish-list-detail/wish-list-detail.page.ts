@@ -129,6 +129,24 @@ export class WishListDetailPage implements OnInit, AfterViewChecked, OnDestroy {
     });
   }
 
+  navigateToWishListEditPage() {
+    this.router.navigate(['edit'], {
+      state: {
+        wishList: this.wishList
+      },
+      relativeTo: this.route
+    });
+  }
+
+  navigateToWishSearchPage() {
+    this.router.navigate(['wish-search'], {
+      state: {
+        wishList: this.wishList
+      },
+      relativeTo: this.route
+    });
+  }
+
   private refreshWishList(id: string) {
     if (!id) {
       return;

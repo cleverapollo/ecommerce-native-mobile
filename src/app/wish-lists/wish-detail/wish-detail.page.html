@@ -29,7 +29,7 @@
           <div class="wish-note own-wish-note" *ngIf="wish?.note">{{ wish.note }}</div>
         </div>
         <div class="ion-text-center edit-wish-button-container">
-          <a *ngIf="!wishIsUpdating" [routerLink]="['./edit']" class="edit-wish-button">
+          <a *ngIf="!wishIsUpdating" (click)="editWish()" class="edit-wish-button">
             <img src="assets/icon/pencil.svg" alt="Icon - Bild bearbeiten"/>
           </a>
           <a *ngIf="wishIsUpdating" class="edit-wish-button disabled">

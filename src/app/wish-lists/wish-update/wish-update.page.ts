@@ -11,7 +11,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 import { CustomValidation } from '@shared/custom-validation';
-import { from, Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { concatMap, finalize, first, map } from 'rxjs/operators';
 
 @Component({
@@ -77,10 +77,9 @@ export class WishUpdatePage implements OnInit, OnDestroy {
   }
 
   private setupViewData() {
-    this.wish = this.route.snapshot.data.wish ?
-      this.route.snapshot.data.wish :
-      this.router.getCurrentNavigation()?.extras?.state?.searchResult;
-    this.wishList = this.route.snapshot.data.wishList;
+    const state = this.router.getCurrentNavigation()?.extras?.state;
+    this.wish = state?.wish ? state.wish : state?.searchResult;
+    this.wishList = state?.wishList;
   }
 
   private listenForChanges() {
@@ -144,7 +143,7 @@ export class WishUpdatePage implements OnInit, OnDestroy {
     const selectedWishListId = this.form?.controls.wishListId.value;
 
     if (currentWishListId !== selectedWishListId) {
-      const wishCopy = {...this.wish};
+      const wishCopy = { ...this.wish };
       wishCopy.wishListId = selectedWishListId;
       observable = this.wishListStore.updateWish(wishCopy).pipe(
         concatMap(updatedWish => {

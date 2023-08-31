@@ -19,10 +19,10 @@
   <div class="divide"></div>
 
   <section class="ion-text-center page-actions">
-    <a routerLink="/secure/wish-search" [class.disabled]="!wishList">
+    <a role="button" (click)="navigateToWishSearchPage()" [class.disabled]="!wishList">
       <ion-icon src="assets/icon/plus.svg" ></ion-icon>
     </a>
-    <a role="button" [routerLink]="['edit']" [class.disabled]="!wishList">
+    <a role="button" (click)="navigateToWishListEditPage()" [class.disabled]="!wishList">
       <ion-icon src="assets/icon/pencil.svg"></ion-icon>
     </a>
     <a role="button" (click)="share()" [class.disabled]="!wishList">

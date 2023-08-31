@@ -177,6 +177,16 @@ export class WishDetailPage implements OnInit, OnDestroy {
     this.wishIsUpdating = isUpdating;
   }
 
+  editWish() {
+    this.router.navigate(['./edit'], {
+      relativeTo: this.route,
+      state: {
+        wish: this.wish,
+        wishList: this.wishList
+      }
+    });
+  }
+
   private refreshWish(id: string) {
     if (!id) {
       return;
