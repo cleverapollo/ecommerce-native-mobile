@@ -7,13 +7,10 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <section class="ion-text-center wish-list-detail-container">
-    <div class="details">
-      <h1 class="wish-list-name">{{ productList.name }}</h1>
-    </div>
+  <section class="ion-text-center">
+    <p class="font-size-18 margin-bottom-2"><strong>{{ productList.name }}</strong></p>
+    <p class="font-size-14 margin-top-2 margin-bottom-20">{{ numberOfProducts }}</p>
   </section>
-
-  <div class="divide"></div>
 
   <section class="ion-text-center list-detail-page-actions">
     <a routerLink="/secure/list-search">

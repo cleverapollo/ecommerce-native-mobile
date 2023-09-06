@@ -36,6 +36,10 @@ export class ProductListDetailPage implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
+  get numberOfProducts(): string {
+    const number = this.productList?.products.length || 0;
+    return number !== 1 ? `${number} Produkte` : '1 Produkt';
+  }
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
