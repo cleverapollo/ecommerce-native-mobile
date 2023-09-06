@@ -15,7 +15,7 @@ export interface SharedProductList {
     name: string;
     products: any[];
     creator: {
-        name: string;
+        userName: string;
         hasImage: boolean;
     }
 }

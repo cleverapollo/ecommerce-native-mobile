@@ -5,13 +5,15 @@
 </ion-header>
 
 <ion-content>
-  <section class="ion-text-center wish-list-detail-container">
-    <div class="details">
-      <p>{{ productList.creator.name }}</p>
-      <p class="wish-list-name">{{ productList.name }}</p>
-    </div>
+
+  <section class="ion-text-center" *ngIf="!errorMessage">
+    <p class="font-size-18 margin-bottom-2"><strong>{{ listName }}</strong></p>
+    <p class="font-size-14 margin-top-2">{{ creatorName }}</p>
+    <p class="font-size-11 color-primary margin-top-11">{{ numberOfProducts }}</p>
   </section>
 
-  <div class="divide"></div>
+  <p class="ion-text-center wantic-info-box" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
 
  </ion-content>

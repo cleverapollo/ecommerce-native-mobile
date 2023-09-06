@@ -15,8 +15,9 @@ import { finalize, first } from 'rxjs/operators';
 export class ProductListSharedPage implements OnInit, OnDestroy {
 
   productList: SharedProductList;
+  errorMessage: string | null = null;
 
-  private subscription: Subscription;
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -25,10 +26,24 @@ export class ProductListSharedPage implements OnInit, OnDestroy {
     private loadingService: LoadingService
   ) { }
 
+  get creatorName(): string {
+    const userName = this.productList?.creator.userName;
+    return userName ? `@${userName}` : 'Lädt';
+  }
+
+  get listName(): string {
+    return this.productList?.name || 'Lädt';
+  }
+
+  get numberOfProducts(): string {
+    const number = this.productList?.products.length || 0;
+    return number !== 1 ? `${number} Produkte` : '1 Produkt';
+  }
+
   ngOnInit() {
-    this.subscription.add(this.route.params.subscribe(params => {
-      const userName = params.get('userName');
-      const listName = params.get('listName');
+    this.subscription.add(this.route.paramMap.subscribe(paramMap => {
+      const userName = paramMap.get('userName');
+      const listName = paramMap.get('listName');
       if (userName && listName) {
         this._loadProductList(userName, listName);
       }
@@ -51,7 +66,10 @@ export class ProductListSharedPage implements OnInit, OnDestroy {
     ).subscribe({
       next: productList => {
         this.productList = productList;
-      }
+      },
+      error: () => {
+        this.errorMessage = 'Die Liste konnte nicht geladen werden.'
+      },
     });
   }
 
