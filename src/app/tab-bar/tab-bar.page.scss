@@ -23,11 +23,14 @@ ion-tabs {
                 width: 29.281px;
                 height: 25.5px;
             }
+            ion-icon.icon-creator-search {
+                stroke: var(--ion-color-secondary);
+            }
         }
         ion-tab-button.tab-selected {
             border-top: 2px solid;
             padding-bottom: 2px;
-            ion-icon.icon-add, ion-icon.icon-friends, ion-icon.icon-home, ion-icon.icon-burger-menu {
+            ion-icon.icon-add, ion-icon.icon-friends, ion-icon.icon-home, ion-icon.icon-burger-menu, ion-icon.icon-creator-search {
                 stroke: var(--ion-color-primary);
             }
         }
