@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Share } from '@capacitor/share';
 import { ContentCreatorAccount } from '@core/models/content-creator.model';
 import { ProductList } from '@core/models/product-list.model';
 import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
+import { Logger } from '@core/services/log.service';
 import { ProductListStoreService } from '@core/services/product-list-store.service';
+import { APP_URL } from '@env/environment';
 import { NavController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { Subscription, combineLatest } from 'rxjs';
@@ -25,6 +28,7 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(
+    private logger: Logger,
     private userStore: UserProfileStore,
     private productListStore: ProductListStoreService,
     private analyticsService: AnalyticsService,
@@ -63,6 +67,18 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
     this.isLoading = true;
     await this.userStore.loadUserProfile(true).toPromise();
     target.complete();
+  }
+
+  async share(): Promise<void> {
+    try {
+      await Share.share({
+        title: `👉 Folge ${this.account.userName} jetzt auf Wantic`,
+        url: `${APP_URL}/creator/${this.account.userName}`,
+        text: `🌟 Entdecke fesselnden Wunschlisten auf Wantic! 📝 Folge @${this.account.userName} und entdecke inspirierende Ideen und Empfehlungen, die deine Neugier wecken werden! 📚✈️📱!`
+      })
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
 
   private _setupData(): Subscription {

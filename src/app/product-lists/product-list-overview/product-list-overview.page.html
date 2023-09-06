@@ -7,9 +7,16 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <app-creator [account]="account" [image]="image" [showShareButton]="true" [(isLoading)]="isLoading"></app-creator>
+  <ion-text>
+    <h1 class="wantic-page-header ion-text-center">Meine Listen</h1>
+  </ion-text>
 
-  <hr />
+  <div class="ion-text-center">
+    <ion-button fill="clear" class="font-size-14" (click)="share()">
+      <ion-icon src="assets/icon/share.svg"></ion-icon>&nbsp;
+      Mein Profil teilen
+    </ion-button>
+  </div>
 
   <ion-grid class="wantic-container">
     <ion-row>
