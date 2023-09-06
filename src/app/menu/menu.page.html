@@ -6,25 +6,20 @@
 <ion-content>
   <h1 class="ion-text-center wantic-page-header">Einstellungen</h1>
 
-  <div class="display-flex align-items-center content-space-evenly wantic-margin-right-left">
-    <div>
+  <div class="display-flex align-items-center wantic-margin-right-left">
+    <div (click)="switchAccount()">
       <app-user-initials *ngIf="!image" [firstName]="displayFirstName" [lastName]="displayLastName" size="size-m"></app-user-initials>
       <app-photo *ngIf="image" [src]="image" [readOnly]="true" size="s"></app-photo>
     </div>
-    <div [ngClass]="{ 'ion-text-center': hasCreatorAccount }">
+    <div class="margin-left-14">
       <p class="margin-bottom-4">
         <strong *ngIf="!isCreatorAccountActive">{{ firstName }}&nbsp;{{ lastName }}</strong>
         <strong *ngIf="hasCreatorAccount && isCreatorAccountActive">{{ creatorName }}</strong>
       </p>
-      <p class="margin-top-4">
-        <span *ngIf="!hasCreatorAccount || !isCreatorAccountActive">Standard Profil</span>
+      <p class="margin-top-4 font-size-11 color-primary">
+        <span *ngIf="!hasCreatorAccount || !isCreatorAccountActive">Privates Profil</span>
         <span *ngIf="hasCreatorAccount && isCreatorAccountActive">Creator Profil</span>
       </p>
-    </div>
-    <div *ngIf="hasCreatorAccount">
-      <ion-button fill="outline" (click)="switchAccount()">
-        <ion-icon slot="icon-only" name="swap-horizontal-outline"></ion-icon>
-      </ion-button>
     </div>
   </div>
 
