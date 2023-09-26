@@ -1,5 +1,5 @@
 <ion-grid [ngClass]="side">
-  <ion-row class="wish-images-container-top" >
+  <ion-row class="wish-images-container-top" (click)="onListSelected()">
     <ion-col size="6" class="wish-image-container wish-one">
       <app-wish-image *ngIf="items.length > 0" [src]="items[0].imageUrl" alt="{{ items[0].name }}" [styles]="itemImageStyle"></app-wish-image>
     </ion-col>
@@ -8,7 +8,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row>
+  <ion-row (click)="onListSelected()">
     <ion-col size="6" class="wish-image-container wish-three">
       <app-wish-image *ngIf="items.length > 2" [src]="items[2].imageUrl" alt="{{ items[2].name }}" [styles]="itemImageStyle"></app-wish-image>
     </ion-col>
@@ -17,12 +17,29 @@
     </ion-col>
   </ion-row>
 
-  <ion-row class="wish-list-description">
+  <ion-row class="wish-list-description" *ngIf="isWishList" (click)="onListSelected()">
     <ion-col size="12">
       <div class="list-name truncate-name">{{ list.name }}</div>
     </ion-col>
     <ion-col size="12" class="no-padding-top">
-      <div *ngIf="isWishList" class="wish-list-date">{{ date ? (date | date) : 'kein Datum festgelegt' }}</div>
+      <div class="wish-list-date">{{ date ? (date | date) : 'kein Datum festgelegt' }}</div>
     </ion-col>
   </ion-row>
+
+  <ion-row class="wish-list-description" *ngIf="isProductList">
+    <ion-col size="8" (click)="onListSelected()">
+      <div  class="list-name truncate-name margin-top-4">{{ list.name }}</div>
+      <div class="wish-list-date" [ngPlural]="items.length">
+        <ng-template ngPluralCase="0">0 Produkte</ng-template>
+        <ng-template ngPluralCase="1">1 Produkt</ng-template>
+        <ng-template ngPluralCase="few">{{ items.length }} Produkte</ng-template>
+      </div>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button fill="clear" class="font-size-14" (click)="share()">
+        <ion-icon src="assets/icon/share.svg"></ion-icon>&nbsp;
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
 </ion-grid>

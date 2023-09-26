@@ -38,9 +38,8 @@
           </ion-row>
         </ion-grid>
       </ion-col>
-      <ion-col [ngClass]="getClass(i)" class="product-list" size="6" size-lg="2" *ngFor="let list of productLists; let i = index;"
-          (click)="selectProductList(list)">
-        <app-list [list]="list" [index]="i"></app-list>
+      <ion-col [ngClass]="getClass(i)" class="product-list" size="6" size-lg="2" *ngFor="let list of productLists; let i = index;">
+        <app-list [list]="list" [index]="i" (listSelected)="selectProductList(list)"></app-list>
       </ion-col>
     </ion-row>
   </ion-grid>
