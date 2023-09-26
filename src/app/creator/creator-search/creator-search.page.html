@@ -20,6 +20,8 @@
     </ion-searchbar>
   </div>
 
+  <hr />
+
   <p [ngPlural]="searchResult.length" *ngIf="!isSearching && searchField.value" class="wantic-margin-right-left ion-text-center font-size-14">
     <ng-template ngPluralCase="=0">Keine Suchergebnisse</ng-template>
     <ng-template ngPluralCase="=1">Ein Suchergebnis</ng-template>
@@ -47,7 +49,8 @@
 
   <ng-container *ngIf="!isSearching">
     <ion-list class="search-results">
-      <ion-item *ngFor="let creator of displayResult; trackBy:trackByUserName" (click)="selectItem(creator)" detail="true" lines="none">
+      <ion-item *ngFor="let creator of displayResult; trackBy:trackByUserName" (click)="selectItem(creator)" lines="none">
+        <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
         <ion-avatar slot="start">
           <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </ion-avatar>
