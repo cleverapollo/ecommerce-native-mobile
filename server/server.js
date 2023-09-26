@@ -44,7 +44,7 @@ apiFiles.forEach(filePath => {
     server.patch(url, (req, res) => res.send(api));
 });
 
-server.get('/v1/content-creators', (req, res) => {
+server.get('/v1/public/content-creators', (req, res) => {
     const searchTerm = req.query.searchTerm.toLowerCase();
     if (searchTerm === 'error') {
         res.status(500).send();
