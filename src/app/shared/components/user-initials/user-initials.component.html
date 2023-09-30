@@ -1,4 +1,4 @@
-<div class="circle" [ngClass]="size">
+<div class="circle" [ngClass]="cssClass">
   <div>{{ initials }}</div>
-  <img class="position-absolute" alt="" src="assets/icon/switch-creator.svg" />
+  <img *ngIf="showSwitchImage" class="position-absolute" alt="" src="assets/icon/switch-creator.svg" />
 </div>
