@@ -14,7 +14,6 @@ export class CreatorComponent {
 
   @Input() account!: ContentCreatorAccount;
   @Input() image: Blob | null = null;
-  @Input() showShareButton: boolean = false;
   @Input() isLoading = false;
 
   @Output() isLoadingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
