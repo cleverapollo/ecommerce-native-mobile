@@ -2,12 +2,12 @@
 
   <ion-tab-bar slot="bottom" *ngIf="!isCreatorAccountActive">
 
-    <ion-tab-button tab="wish-search" (click)="onTabButtonClicked('wish-search')">
-      <ion-icon class="icon-add" src="assets/icon/tab-icon-add.svg" ></ion-icon>
-    </ion-tab-button>
-
     <ion-tab-button [tab]="tabHome" (click)="onTabButtonClicked(tabHome)">
       <ion-icon class="icon-home" src="assets/icon/tab-icon-home.svg"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="wish-search" (click)="onTabButtonClicked('wish-search')">
+      <ion-icon class="icon-add" src="assets/icon/tab-icon-add.svg" ></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button tab="friends-home" (click)="onTabButtonClicked('friends-home')">
@@ -26,12 +26,12 @@
 
   <ion-tab-bar slot="bottom" *ngIf="isCreatorAccountActive">
 
-    <ion-tab-button tab="wish-search" (click)="onTabButtonClicked('wish-search')">
-      <ion-icon class="icon-add" src="assets/icon/tab-icon-add.svg" ></ion-icon>
-    </ion-tab-button>
-
     <ion-tab-button [tab]="tabHome" (click)="onTabButtonClicked(tabHome)">
       <ion-icon class="icon-home" src="assets/icon/tab-icon-home.svg"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="wish-search" (click)="onTabButtonClicked('wish-search')">
+      <ion-icon class="icon-add" src="assets/icon/tab-icon-add.svg" ></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button tab="menu" (click)="onTabButtonClicked('menu')">
