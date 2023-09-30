@@ -1,41 +1,25 @@
 <ion-tabs>
 
-  <ion-tab-bar slot="bottom" *ngIf="!isCreatorAccountActive">
+  <ion-tab-bar slot="bottom" [ngClass]="{ 'border-purple': isCreatorAccountActive  }">
 
-    <ion-tab-button [tab]="tabHome" (click)="onTabButtonClicked(tabHome)">
-      <ion-icon class="icon-home" src="assets/icon/tab-icon-home.svg"></ion-icon>
+    <ion-tab-button [tab]="tabHome" (click)="onTabButtonClicked(tabHome)" [ngClass]="{ 'color-orange': !isCreatorAccountActive, 'color-purple': isCreatorAccountActive  }">
+      <ion-icon class="icon-home" [ngClass]="{ 'stroke-orange': !isCreatorAccountActive, 'stroke-purple': isCreatorAccountActive  }" src="assets/icon/tab-icon-home.svg"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="wish-search" (click)="onTabButtonClicked('wish-search')">
-      <ion-icon class="icon-add" src="assets/icon/tab-icon-add.svg" ></ion-icon>
+    <ion-tab-button tab="wish-search" (click)="onTabButtonClicked('wish-search')" [ngClass]="{ 'color-orange': !isCreatorAccountActive, 'color-purple': isCreatorAccountActive  }">
+      <ion-icon class="icon-add" [ngClass]="{ 'stroke-orange': !isCreatorAccountActive, 'stroke-purple': isCreatorAccountActive  }" src="assets/icon/tab-icon-add.svg" ></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="friends-home" (click)="onTabButtonClicked('friends-home')">
-      <ion-icon class="icon-friends" src="assets/icon/tab-icon-friends.svg"></ion-icon>
+    <ion-tab-button  *ngIf="!isCreatorAccountActive" tab="friends-home" (click)="onTabButtonClicked('friends-home')" [ngClass]="{ 'color-orange': !isCreatorAccountActive, 'color-purple': isCreatorAccountActive  }">
+      <ion-icon class="icon-friends stroke-orange" src="assets/icon/tab-icon-friends.svg"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="creator-search" (click)="onTabButtonClicked(tabHome)">
-      <ion-icon class="icon-creator-search" src="assets/icon/tab-icon-creator-search.svg"></ion-icon>
+    <ion-tab-button  *ngIf="!isCreatorAccountActive" tab="creator-search" (click)="onTabButtonClicked(tabHome)" [ngClass]="{ 'color-orange': !isCreatorAccountActive, 'color-purple': isCreatorAccountActive  }">
+      <ion-icon class="icon-creator-search stroke-orange" src="assets/icon/tab-icon-creator-search.svg"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="menu" (click)="onTabButtonClicked('menu')">
-      <ion-icon class="icon-burger-menu" src="assets/icon/tab-icon-burger-menu.svg"></ion-icon>
-    </ion-tab-button>
-
-  </ion-tab-bar>
-
-  <ion-tab-bar slot="bottom" *ngIf="isCreatorAccountActive">
-
-    <ion-tab-button [tab]="tabHome" (click)="onTabButtonClicked(tabHome)">
-      <ion-icon class="icon-home" src="assets/icon/tab-icon-home.svg"></ion-icon>
-    </ion-tab-button>
-
-    <ion-tab-button tab="wish-search" (click)="onTabButtonClicked('wish-search')">
-      <ion-icon class="icon-add" src="assets/icon/tab-icon-add.svg" ></ion-icon>
-    </ion-tab-button>
-
-    <ion-tab-button tab="menu" (click)="onTabButtonClicked('menu')">
-      <ion-icon class="icon-burger-menu" src="assets/icon/tab-icon-burger-menu.svg"></ion-icon>
+    <ion-tab-button tab="menu" (click)="onTabButtonClicked('menu')" [ngClass]="{ 'color-orange': !isCreatorAccountActive, 'color-purple': isCreatorAccountActive  }">
+      <ion-icon class="icon-burger-menu" [ngClass]="{ 'stroke-orange': !isCreatorAccountActive, 'stroke-purple': isCreatorAccountActive  }" src="assets/icon/tab-icon-burger-menu.svg"></ion-icon>
     </ion-tab-button>
 
   </ion-tab-bar>
