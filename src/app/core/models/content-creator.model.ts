@@ -19,3 +19,10 @@ export interface SocialMediaLinks {
     youtubeUrl?: string;
     tiktokUrl?: string;
 }
+
+export enum SocialMedia {
+    Instagram = 'instagram',
+    Facebook = 'facebook',
+    YouTube = 'youtube',
+    TikTok = 'tiktok'
+}

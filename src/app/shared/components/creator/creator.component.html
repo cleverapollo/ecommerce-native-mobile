@@ -1,21 +1,27 @@
-<div *ngIf="account && !isLoading" class="wantic-container">
-  <div style="display: flex; align-items: center; justify-content: space-between;">
+<div *ngIf="account && !isLoading" class="wantic-container wantic-margin-right-left">
+  <div style="display: flex; align-items: center; justify-content: space-evenly;">
     <div>
       <app-user-initials *ngIf="!image" [firstName]="account.name" size="size-m"></app-user-initials>
       <app-photo *ngIf="image" [src]="image" [readOnly]="true" size="s"></app-photo>
-      <div>
-        <p class="name"><strong>{{ account.name }}</strong></p>
-        <p class="user-name">@{{ account.userName }}</p>
-      </div>
     </div>
-    <button *ngIf="showShareButton" class="share-account" (click)="shareAccount()">
-      <span>Profil teilen</span>
-    </button>
+    <div class="margin-left-8">
+      <p class="name"><strong>{{ account.name }}</strong></p>
+      <p class="user-name">@{{ account.userName }}</p>
+    </div>
+    <ion-button fill="clear" (click)="shareAccount()">
+      <ion-icon src="assets/icon/share.svg"></ion-icon>&nbsp;
+    </ion-button>
   </div>
 
   <p class="white-space-pre-line">
     {{ account.description }}
   </p>
+
+  <div class="ion-text-center" *ngIf="hasAnyLink()">
+    <ion-button fill="clear" id="open-modal">
+      <ion-icon src="assets/icon/icon-link-1.svg" class="social-links-icon"></ion-icon>&nbsp;Social Links
+    </ion-button>
+  </div>
 
 </div>
 
@@ -49,3 +55,31 @@
     </ion-label>
   </ion-item>
 </ion-list>
+
+<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+  <ng-template>
+    <ion-content>
+      <div class="ion-text-center margin-top-30">
+        <ion-icon src="assets/icon/icon-link-1.svg" class="social-links-icon"></ion-icon>&nbsp;<ion-text color="primary"><strong>Social Links</strong></ion-text>
+      </div>
+      <div class="margin-left-32 margin-top-20">
+        <ion-item *ngIf="hasLink('instagram')" lines="none" detail="false" class="margin-top-8" button (click)="openLink('instagram')">
+          <ion-icon name="logo-instagram" color="dark" class="margin-right-8"></ion-icon>
+          <ion-label>Instagram</ion-label>
+        </ion-item>
+        <ion-item *ngIf="hasLink('tiktok')" lines="none" detail="false" button (click)="openLink('tiktok')">
+          <ion-icon name="logo-tiktok" color="dark" class="margin-right-8"></ion-icon>
+          <ion-label>TikTok</ion-label>
+        </ion-item>
+        <ion-item *ngIf="hasLink('youtube')" lines="none" detail="false" button (click)="openLink('youtube')">
+          <ion-icon name="logo-youtube" color="dark" class="margin-right-8"></ion-icon>
+          <ion-label>YouTube</ion-label>
+        </ion-item>
+        <ion-item *ngIf="hasLink('facebook')" lines="none" detail="false" button (click)="openLink('facebook')">
+          <ion-icon name="logo-facebook" color="dark" class="margin-right-8"></ion-icon>
+          <ion-label>Facebook</ion-label>
+        </ion-item>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

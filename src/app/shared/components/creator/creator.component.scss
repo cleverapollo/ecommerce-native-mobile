@@ -35,3 +35,10 @@ ion-item {
     --padding-start: 0;
     --padding-end: 0;
 }
+
+.social-links-icon {
+    stroke: var(--ion-color-primary) !important;
+    width: 13.34px;
+    height: 14.34px;
+    flex-shrink: 0;
+}

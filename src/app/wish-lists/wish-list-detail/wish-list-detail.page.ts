@@ -1,6 +1,5 @@
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Share } from '@capacitor/share';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -9,6 +8,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { sortWishesByIsFavorite } from '@core/wish-list.utils';
 import { RefresherCustomEvent } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { shareLink } from '@shared/helpers/share.helper';
 import { Masonry } from '@shared/masonry';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
@@ -73,16 +73,12 @@ export class WishListDetailPage implements OnInit, OnDestroy, AfterViewChecked {
     this.subscription?.unsubscribe();
   }
 
-  async share() {
+  async share(): Promise<void> {
     const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
     const message = `Hurra, ${userProfile.firstName} möchte feiern. 🥳 Sieh dir die Wunschliste „${this.wishList.name}“ an und finde ein Geschenk.🎁🤩`;
     const link = `${APP_URL}/meine-wunschliste/${this.wishList.id}`;
-    Share.share({
-      title: 'Einladung zur Wunschliste',
-      text: message,
-      url: link
-    }).catch(reason => {
-      this.logger.debug(link, reason);
+    shareLink(link, 'Einladung zur Wunschliste', message).catch(error => {
+      this.logger.error(link, error);
     });
   }
 

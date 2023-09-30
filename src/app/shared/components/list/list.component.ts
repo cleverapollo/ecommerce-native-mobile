@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Share } from '@capacitor/share';
 import { Product, ProductList } from '@core/models/product-list.model';
 import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { Logger } from '@core/services/log.service';
 import { APP_URL } from '@env/environment';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { shareLink } from '@shared/helpers/share.helper';
 import { WishImageComponentStyles } from '../wish-image/wish-image.component';
 
 @Component({
@@ -69,12 +69,8 @@ export class ListComponent {
     const userName = this.userStore.user$.value.creatorAccount?.userName;
     const message = `Folge der Liste "${this.list.name}" von @${userName} auf wantic und lass dich inspirieren! 🥳🎁🤩`;
     const link = `${APP_URL}/creator/${userName}/${this.list.name}`;
-    Share.share({
-      title: `👉 Folge der Liste "${this.list.name}" von @${userName}`,
-      text: message,
-      url: link
-    }).catch(reason => {
-      this.logger.error(link, reason);
+    shareLink(link, `👉 Folge der Liste "${this.list.name}" von @${userName}`, message).catch(error => {
+      this.logger.error(link, error);
     });
   }
 

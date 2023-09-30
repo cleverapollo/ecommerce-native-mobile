@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Share } from '@capacitor/share';
 import { ProductList } from '@core/models/product-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
@@ -9,6 +8,7 @@ import { ProductListStoreService } from '@core/services/product-list-store.servi
 import { APP_URL } from '@env/environment';
 import { RefresherCustomEvent } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { shareLink } from '@shared/helpers/share.helper';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
@@ -62,11 +62,7 @@ export class ProductListDetailPage implements OnInit, OnDestroy {
     const userName = this.userStore.user$.value.creatorAccount.userName;
     const message = `Folge der Liste "${this.productList.name}" von @${userName} auf wantic und lass dich inspirieren! 🥳🎁🤩`;
     const link = `${APP_URL}/creator/${userName}/${this.productList.name}`;
-    Share.share({
-      title: 'Einladung zur Liste',
-      text: message,
-      url: link
-    }).catch(reason => {
+    shareLink(link, 'Einladung zur Liste', message).catch(reason => {
       this.logger.error(link, reason);
     });
   }
