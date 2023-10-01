@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductList } from '@core/models/product-list.model';
+import { Product, ProductList } from '@core/models/product-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { Logger } from '@core/services/log.service';
@@ -9,6 +9,7 @@ import { APP_URL } from '@env/environment';
 import { RefresherCustomEvent } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { shareLink } from '@shared/helpers/share.helper';
+import { Masonry } from '@shared/masonry';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
@@ -17,7 +18,10 @@ import { finalize, first } from 'rxjs/operators';
   templateUrl: './product-list-detail.page.html',
   styleUrls: ['./product-list-detail.page.scss'],
 })
-export class ProductListDetailPage implements OnInit, OnDestroy {
+export class ProductListDetailPage implements OnInit, AfterViewChecked, OnDestroy {
+
+  @ViewChild('masonry') masonry: ElementRef<HTMLDivElement>;
+  @ViewChildren('bricks') masonryBricks: QueryList<ElementRef<HTMLDivElement>>;
 
   productList: ProductList = {
     id: '',
@@ -37,8 +41,12 @@ export class ProductListDetailPage implements OnInit, OnDestroy {
   ) { }
 
   get numberOfProducts(): string {
-    const number = this.productList?.products.length || 0;
+    const number = this.products.length;
     return number !== 1 ? `${number} Produkte` : '1 Produkt';
+  }
+
+  get products(): Product[] {
+    return this.productList?.products || [];
   }
 
   ngOnInit() {
@@ -48,6 +56,11 @@ export class ProductListDetailPage implements OnInit, OnDestroy {
         this._init(id);
       }
     });
+  }
+
+  ngAfterViewChecked(): void {
+    const masonry = new Masonry(this.masonry, this.masonryBricks);
+    masonry.resizeBricks();
   }
 
   ionViewDidEnter() {
@@ -80,6 +93,8 @@ export class ProductListDetailPage implements OnInit, OnDestroy {
       }
     })
   }
+
+  trackById: TrackByFunction<Product> = (idx, product) => product.id;
 
   private async _init(id: string) {
     await this.loadingService.showLoadingSpinner();

@@ -32,7 +32,7 @@
       <div class="wish-list-date" [ngPlural]="items.length">
         <ng-template ngPluralCase="0">0 Produkte</ng-template>
         <ng-template ngPluralCase="1">1 Produkt</ng-template>
-        <ng-template ngPluralCase="few">{{ items.length }} Produkte</ng-template>
+        <ng-template ngPluralCase="other">{{ items.length }} Produkte</ng-template>
       </div>
     </ion-col>
     <ion-col size="4">

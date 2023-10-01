@@ -24,4 +24,10 @@
     </a>
   </section>
 
+  <div class="masonry" #masonry>
+    <div class="brick" *ngFor="let product of products; trackBy:trackById" #bricks>
+      <app-product [product]="product"></app-product>
+    </div>
+  </div>
+
 </ion-content>

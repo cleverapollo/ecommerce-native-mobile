@@ -66,6 +66,7 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
     const target = event.target as HTMLIonRefresherElement;
     this.isLoading = true;
     await this.userStore.loadUserProfile(true).toPromise();
+    await this.productListStore.getAll(true).toPromise();
     target.complete();
   }
 

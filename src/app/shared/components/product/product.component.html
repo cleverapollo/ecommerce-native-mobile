@@ -1,0 +1,24 @@
+<ion-card>
+  <div class="coupon-overlay-container" >
+    <div class="image-container">
+      <app-wish-image [src]="product.imageUrl"
+                      [alt]="product.name"
+                      [styles]="{}"></app-wish-image>
+    </div>
+    <div class="position-absolute coupon-overlay">
+      <div class="price-info" [ngClass]="{ 'margin-top-bottom-9': !product.coupon  }">{{ priceDisplayString }}</div>
+      <ion-icon *ngIf="product.coupon" class="coupon-icon" src="assets/icon/coupon.svg" alt="Code"></ion-icon>
+    </div>
+  </div>
+  <ion-card-content>
+    <div class="font-size-12 truncate-name"><strong>{{ product.name }}</strong></div>
+    <div class="font-size-12 wish-note" *ngIf="product?.note">{{ product.note }}</div>
+    <div *ngIf="product.coupon" class="coupon">
+      <div class="coupon-value"><span *ngIf="product.coupon.value">{{ product.coupon.value }}&nbsp;</span>Gutschein Code:</div>
+      <div *ngIf="product.coupon.code" class="coupon-code">{{ product.coupon.code }}</div>
+      <div *ngIf="product.coupon.expirationDate" class="coupon-expiration-date"><ion-icon name="calendar-outline"></ion-icon>&nbsp;gültig bis {{ product.coupon.expirationDate | date:'dd.MM.yyyy' }}</div>
+    </div>
+  </ion-card-content>
+
+  <ion-button fill="outline" expand="block" shape="round" strong="true">BEARBEITEN</ion-button>
+</ion-card>
