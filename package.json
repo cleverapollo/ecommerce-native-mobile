@@ -1,6 +1,6 @@
 {
   "name": "wantic",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "author": "Tim Fischer",
   "homepage": "https://www.wantic.io",
   "scripts": {
@@ -13,7 +13,7 @@
     "dev-prod-android": "npx cap sync && ionic capacitor run android -l --external --configuration=production",
     "build-beta-ios": "ionic capacitor build ios --configuration=beta && npx cap copy ios && npx cap open ios",
     "build-beta-android": "ionic capacitor build android --configuration=beta && npx cap copy android && npx cap open android",
-    "build-prod-and": "npx cap sync android && ionic capacitor run android --configuration=production",
+    "build-prod-and": "ionic capacitor build android --configuration=production && npx cap copy android && npx cap open android",
     "build-prod-ios": "npm run build && npx cap copy ios &&  npx cap open ios",
     "build-prod-ios-fix-update": "npm run build-prod-ios && cd ios/App/public && zip -r ../wantic.zip ./* -x \"*.DS_Store\"",
     "build": "ionic build --prod",

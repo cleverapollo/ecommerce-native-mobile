@@ -52,12 +52,15 @@ export class SharedWishListAccessGuard implements CanActivate {
    * to 'false' when navigation fails, or is rejected on error.
    */
   private async redirect(wishListId: string): Promise<boolean> {
+    this.logger.info('Redirect to page');
     try {
-      if (this.friendWishListStore.isSharedWishList(wishListId)) {
+      if (await (this.friendWishListStore.isSharedWishList(wishListId))) {
+        this.logger.info('Redirect to shared wish list page');
         return await this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`);
       }
 
-      if (this.wishListStore.isCreatedWishList(wishListId)) {
+      if (await (this.wishListStore.isCreatedWishList(wishListId))) {
+        this.logger.info('Redirect to wish list page');
         return await this.router.navigateByUrl(`/secure/home/wish-list/${wishListId}`);
       }
 

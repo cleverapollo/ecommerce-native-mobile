@@ -63,8 +63,10 @@ export class FriendWishListStoreService implements FriendWishListStore {
     )
   }
 
-  removeWishListById(wishListId: string): Promise<void> {
-    return this.sharedWishListApiService.removeWishListById(wishListId).toPromise();
+  async removeWishListById(wishListId: string): Promise<void> {
+    await this.sharedWishListApiService.removeWishListById(wishListId).toPromise();
+    await this.cache.removeItem(this.cacheKeyWishList(wishListId));
+    return this.removeCachedWishLists();
   }
 
   removeCachedWishLists(): Promise<void> {
