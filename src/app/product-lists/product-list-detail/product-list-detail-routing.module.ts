@@ -15,8 +15,8 @@ const routes: Routes = [
   },
   {
     path: 'product-search',
-    loadChildren: () => import('@wishSearch/wish-search-overview/wish-search-overview.module')
-      .then(m => m.WishSearchSelectionPageModule)
+    loadChildren: () => import('../product-search-overview/product-search-overview.module')
+      .then(m => m.ProductSearchOverviewPageModule)
   },
   {
     path: 'product/:productId',

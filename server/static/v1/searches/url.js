@@ -2,7 +2,6 @@ module.exports =  {
     totalResultCount: 125,
     items: [
         { 
-            asin: 'B075MNCH2Y',
             name: 'Sony RX10 IV',
             price: {
                 amount: 47.49,

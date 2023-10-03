@@ -1,0 +1,51 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar logo="assets/icon/wantic-logo-purple.svg"></app-nav-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 class="wantic-page-header ion-text-center">Produkt auswählen</h1>
+
+  <form [formGroup]="form" (ngSubmit)="search()">
+    <ion-item lines="none">
+      <ion-input type="search" inputmode="search" enterkeyhint="search" placeholder="z.B. Holzspielzeug" formControlName="keywords" clearInput="true"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('keywords')" [validationMessages]="validationMessages.keywords"></app-validation-messages>
+  </form>
+
+  <ion-grid class="ion-center" *ngIf="!loading && results?.length">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" *ngFor="let result of results; trackBy:trackByAsin">
+              <app-search-result [wish]="result" (selectWish)="navigateToProductNewPage($event)"></app-search-result>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list *ngIf="!loading && results?.length === 0" lines="full" class="wantic-margin-right-left search-suggestions">
+    <ion-item *ngFor="let suggestion of searchSuggestions;" (click)="onSearchSuggestionClick(suggestion)">
+      <ion-label>{{ suggestion }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid class="ion-center" *ngIf="loading">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="6"> <ion-skeleton-text animated></ion-skeleton-text></ion-col>
+      <ion-col size="6"> <ion-skeleton-text animated></ion-skeleton-text></ion-col>
+      <ion-col size="6"> <ion-skeleton-text animated></ion-skeleton-text></ion-col>
+      <ion-col size="6"> <ion-skeleton-text animated></ion-skeleton-text></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll (ionInfinite)="loadMoreSearchResults($event)" threshold="25%">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Weitere Suchergebnisse werden geladen ...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

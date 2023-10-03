@@ -28,6 +28,11 @@ const routes: Routes = [
         loadChildren: () => import('../product-list-detail/product-list-detail.module')
           .then(m => m.ProductListDetailPageModule)
       },
+      {
+        path: 'product-search',
+        loadChildren: () => import('../product-search-overview/product-search-overview.module')
+          .then(m => m.ProductSearchOverviewPageModule)
+      },
     ]
   }
 ];

@@ -1,6 +1,7 @@
 export enum TabBarRoute {
   HOME,
   PRODUCT_LISTS,
+  PRODUCT_SEARCH,
   CREATOR_SEARCH,
   FRIENDS_HOME,
   WISH_SEARCH,
@@ -15,6 +16,8 @@ export const getTaBarPath = (tab: TabBarRoute, fullPath: boolean): string => {
       return fullPath ? 'secure/friends-home' : 'friends-home';
     case TabBarRoute.WISH_SEARCH:
       return fullPath ? 'secure/wish-search' : 'wish-search';
+    case TabBarRoute.PRODUCT_SEARCH:
+      return fullPath ? 'secure/product-search' : 'product-search';
     case TabBarRoute.MENU:
       return fullPath ? 'secure/menu' : 'menu';
     case TabBarRoute.PRODUCT_LISTS:
@@ -25,3 +28,5 @@ export const getTaBarPath = (tab: TabBarRoute, fullPath: boolean): string => {
       break;
   }
 }
+
+export const isTabActivated = (route: string, tab: TabBarRoute): boolean => route.includes(getTaBarPath(tab, true))

@@ -17,6 +17,7 @@ export class TabBarPage implements OnInit, OnDestroy {
   public tabs: IonTabs;
 
   tabHome = 'home';
+  tabSearch = 'wish-search';
   isCreatorAccountActive: boolean = false;
 
   private subscription: Subscription;
@@ -31,6 +32,7 @@ export class TabBarPage implements OnInit, OnDestroy {
     this.subscription = this.userStore.isCreatorAccountActive$.subscribe(isCreatorAccountActive => {
       this.isCreatorAccountActive = isCreatorAccountActive;
       this.tabHome = isCreatorAccountActive ? getTaBarPath(TabBarRoute.PRODUCT_LISTS, false) : getTaBarPath(TabBarRoute.HOME, false);
+      this.tabSearch = isCreatorAccountActive ? getTaBarPath(TabBarRoute.PRODUCT_SEARCH, false) : getTaBarPath(TabBarRoute.WISH_SEARCH, false);
     });
   }
 

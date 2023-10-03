@@ -46,6 +46,12 @@ const routes: Routes = [
           .then(m => m.WishSearchSelectionPageModule)
       },
       {
+        path: getTaBarPath(TabBarRoute.PRODUCT_SEARCH, false),
+        canActivate: [AuthGuard],
+        loadChildren: () => import('../product-lists/product-search-overview/product-search-overview.module')
+          .then(m => m.ProductSearchOverviewPageModule)
+      },
+      {
         path: getTaBarPath(TabBarRoute.MENU, false),
         loadChildren: () => import('../menu/menu.module')
           .then(m => m.MenuPageModule)

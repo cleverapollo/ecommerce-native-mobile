@@ -6,7 +6,7 @@
       <ion-icon class="icon-home" [ngClass]="{ 'stroke-orange': !isCreatorAccountActive, 'stroke-purple': isCreatorAccountActive  }" src="assets/icon/tab-icon-home.svg"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="wish-search" (click)="onTabButtonClicked('wish-search')" [ngClass]="{ 'color-orange': !isCreatorAccountActive, 'color-purple': isCreatorAccountActive  }">
+    <ion-tab-button [tab]="tabSearch" (click)="onTabButtonClicked(tabSearch)" [ngClass]="{ 'color-orange': !isCreatorAccountActive, 'color-purple': isCreatorAccountActive  }">
       <ion-icon class="icon-add" [ngClass]="{ 'stroke-orange': !isCreatorAccountActive, 'stroke-purple': isCreatorAccountActive  }" src="assets/icon/tab-icon-add.svg" ></ion-icon>
     </ion-tab-button>
 
