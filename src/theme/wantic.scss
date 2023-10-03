@@ -158,6 +158,10 @@ ion-input, ion-select, ion-textarea {
     font-weight: 300 !important;
 }
 
+ion-input.form-field-creator, ion-select.form-field-creator, ion-textarea.form-field-creator {
+    --placeholder-color: var(--ion-color-secondary-purple) !important;
+}
+
 .toggleContainer {
     font-size: 12px;
     ion-label {

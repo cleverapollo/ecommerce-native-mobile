@@ -1,8 +1,7 @@
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product, ProductList } from '@core/models/product-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { LoadingService } from '@core/services/loading.service';
 import { Logger } from '@core/services/log.service';
 import { ProductListStoreService } from '@core/services/product-list-store.service';
 import { APP_URL } from '@env/environment';
@@ -36,7 +35,7 @@ export class ProductListDetailPage implements OnInit, AfterViewChecked, OnDestro
     private userStore: UserProfileStore,
     private logger: Logger,
     private productListStore: ProductListStoreService,
-    private loadingService: LoadingService,
+    private router: Router,
     private route: ActivatedRoute
   ) { }
 
@@ -51,11 +50,17 @@ export class ProductListDetailPage implements OnInit, AfterViewChecked, OnDestro
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
-      const id = params['productListId'];
-      if (id) {
-        this._init(id);
+      const productListId = params['productListId'];
+      if (productListId) {
+        this._loadProductList(productListId);
       }
     });
+  }
+
+  ionViewWillEnter() {
+    if (this.productList.id) {
+      this._loadProductList(this.productList.id);
+    }
   }
 
   ngAfterViewChecked(): void {
@@ -96,18 +101,18 @@ export class ProductListDetailPage implements OnInit, AfterViewChecked, OnDestro
 
   trackById: TrackByFunction<Product> = (idx, product) => product.id;
 
-  private async _init(id: string) {
-    await this.loadingService.showLoadingSpinner();
-    this.productListStore.getById(id, false).pipe(
-      first(),
-      finalize(() => {
-        this.loadingService.stopLoadingSpinner();
-      })
-    ).subscribe({
-      next: productList => {
-        this.productList = productList;
-      }
+  navigateToProductDetailPage(product: Product) {
+    this.router.navigate(['product', product.id], {
+      relativeTo: this.route,
+      state: { product }
     })
+  }
+
+  private _loadProductList(id: string): void {
+    this.productListStore.getById(id).pipe(first()).subscribe(productList => {
+      this.productList = productList;
+    }
+    )
   }
 
 }

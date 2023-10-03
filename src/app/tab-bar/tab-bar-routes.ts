@@ -7,7 +7,7 @@ export enum TabBarRoute {
   MENU
 }
 
-export function getTaBarPath(tab: TabBarRoute, fullPath: boolean): string {
+export const getTaBarPath = (tab: TabBarRoute, fullPath: boolean): string => {
   switch (tab) {
     case TabBarRoute.HOME:
       return fullPath ? 'secure/home' : 'home';

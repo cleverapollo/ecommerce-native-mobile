@@ -1,0 +1,28 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Logo">
+<g id="Clip path group">
+<mask id="mask0_342_5407" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
+<g id="clippath">
+<path id="Vector" d="M24 48C37.2548 48 48 37.2548 48 24C48 10.7452 37.2548 0 24 0C10.7452 0 0 10.7452 0 24C0 37.2548 10.7452 48 24 48Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_342_5407)">
+<g id="Group">
+<g id="Gruppe_maskieren_3">
+<path id="Pfad_2101" d="M-5.5 42.3198C-5.5 42.3198 12.96 50.1498 19.82 51.0098C26.68 51.8698 32.51 52.2998 48.46 42.3198C64.41 32.3398 75.46 33.6798 75.46 33.6798L74.66 -1.00018L-4.28 -1.68018L-5.5 42.3198Z" fill="url(#paint0_linear_342_5407)"/>
+</g>
+</g>
+</g>
+</g>
+<g id="Gruppe_71">
+<path id="Pfad_25" d="M21.5801 16.6099V15.8599H32.3501V16.6099H30.6401L34.4001 30.6799L38.1201 16.6099H35.2401V15.8599H40.8801V16.6099H39.1201L34.1101 35.7299H28.3901L24.7601 22.9099L20.8301 35.7299H15.2401L9.06005 16.6099H7.18005V15.8599H19.8301V16.6099H17.3201L21.1601 30.7999L24.1601 21.0299L23.1201 16.5999H21.5801V16.6099Z" fill="white"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_342_5407" x1="6.9215" y1="-3.74618" x2="40.1762" y2="56.6726" gradientUnits="userSpaceOnUse">
+<stop stop-color="#ECB8FF"/>
+<stop offset="0.0001" stop-color="#EEBFFF"/>
+<stop offset="1" stop-color="#C263E3"/>
+</linearGradient>
+</defs>
+</svg>

@@ -13,6 +13,16 @@ const routes: Routes = [
     loadChildren: () => import('../product-list-update/product-list-update.module')
       .then(m => m.ProductListUpdatePageModule)
   },
+  {
+    path: 'product-search',
+    loadChildren: () => import('@wishSearch/wish-search-overview/wish-search-overview.module')
+      .then(m => m.WishSearchSelectionPageModule)
+  },
+  {
+    path: 'product/:productId',
+    loadChildren: () => import('../product-update/product-update.module')
+      .then(m => m.ProductUpdatePageModule)
+  },
 ];
 
 @NgModule({

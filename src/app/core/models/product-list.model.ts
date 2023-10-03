@@ -6,6 +6,10 @@ export interface ProductList {
     products: Product[];
 }
 
+export interface ProductListCommand {
+    name: string;
+}
+
 export interface Coupon {
     code: string;
     value: string;
@@ -13,6 +17,7 @@ export interface Coupon {
 }
 
 export interface Product {
+    isFavorite: boolean;
     id?: string;
     name: string;
     url: string;

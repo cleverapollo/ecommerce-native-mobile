@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from '@core/models/product-list.model';
 
 @Component({
@@ -10,10 +10,16 @@ export class ProductComponent implements OnInit {
 
   @Input() product: Product;
 
+  @Output() editButtonClick = new EventEmitter<Product>();
+
   get priceDisplayString(): string {
     return this.product?.price?.displayString || 'Lädt ...';
   }
 
   ngOnInit() { }
+
+  onEditButtonClicked() {
+    this.editButtonClick.emit(this.product);
+  }
 
 }

@@ -11,6 +11,7 @@ import { ListComponent } from './components/list/list.component';
 import { NavToolbarComponent } from './components/nav-toolbar/nav-toolbar.component';
 import { OwnersInfoComponent } from './components/owners-info/owners-info.component';
 import { PhotoComponent } from './components/photo/photo.component';
+import { ProductListRadioComponent } from './components/product-list-radio/product-list-radio.component';
 import { ProductComponent } from './components/product/product.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { ShowHidePasswordComponent } from './components/show-hide-password/show-hide-password.component';
@@ -39,6 +40,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
     NavToolbarComponent,
     PhotoComponent,
     ProductComponent,
+    ProductListRadioComponent,
     SearchResultComponent,
     ShowHidePasswordComponent,
     UserInitialsComponent,
@@ -69,6 +71,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
     NavToolbarComponent,
     PhotoComponent,
     ProductComponent,
+    ProductListRadioComponent,
     FormsModule,
     ReactiveFormsModule,
     SearchResultComponent,

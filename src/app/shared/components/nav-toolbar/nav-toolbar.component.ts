@@ -12,6 +12,7 @@ export class NavToolbarComponent {
   @Input() skipToPath?: string | any[] | UrlTree;
   @Input() defaultHref: string | undefined = undefined;
   @Input() showBackButton = true;
+  @Input() logo = 'assets/icon/wantic-logo.svg';
 
   @Input() disableNextButton = false;
   @Output() nextButtonClick = new EventEmitter();

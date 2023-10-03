@@ -1,10 +1,10 @@
 <div class="wtc-label-container" *ngIf="label">
   <label class="wtc-label-stacked">{{ label }}</label>
 </div>
-<ion-item lines="none" >
+<ion-item lines="none" [ngStyle]="containerStyle">
   <ion-input [placeholder]="placeholder" readonly="true" [value]="formattedDate" (click)="openModal()"></ion-input>
   <ion-icon class="clear-input-icon" slot="end" src="assets/icon/clear-input-icon.svg" (click)="clearInput()" *ngIf="selectedDate"></ion-icon>
-  <ion-icon slot="end" icon="calendar" color="secondary" (click)="openModal()"></ion-icon>
+  <ion-icon slot="end" icon="calendar" [ngClass]="iconColor" (click)="openModal()"></ion-icon>
 </ion-item>
 
 <ion-modal [isOpen]="isModalOpen">
@@ -13,6 +13,7 @@
       <ion-datetime
         #modalDatetime
         presentation="date"
+        [color]="modalColor"
         size="cover"
         locale="de-DE"
         [min]="minDate"
@@ -20,8 +21,8 @@
         [disabled]="disabled"
         [(ngModel)]="value">
         <ion-buttons slot="buttons">
-          <ion-button color="primary" (click)="closeModal()">Abbrechen</ion-button>
-          <ion-button color="primary" (click)="confirmValue()">Übernehmen</ion-button>
+          <ion-button [color]="modalColor" (click)="closeModal()">Abbrechen</ion-button>
+          <ion-button [color]="modalColor" (click)="confirmValue()">Übernehmen</ion-button>
         </ion-buttons>
       </ion-datetime>
     </ion-content>

@@ -13,7 +13,7 @@
     <app-validation-messages [control]="form.get('keywords')" [validationMessages]="validationMessages.keywords"></app-validation-messages>
   </form>
 
-  <ion-grid class="ion-center" *ngIf="!loading && results.length">
+  <ion-grid class="ion-center" *ngIf="!loading && results?.length">
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="6">
         <ion-grid>
@@ -27,7 +27,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list *ngIf="!loading && results.length === 0" lines="full" class="wantic-margin-right-left search-suggestions">
+  <ion-list *ngIf="!loading && results?.length === 0" lines="full" class="wantic-margin-right-left search-suggestions">
     <ion-item *ngFor="let suggestion of searchSuggestions;" (click)="onSearchSuggestionClick(suggestion)">
       <ion-label>{{ suggestion }}</ion-label>
     </ion-item>

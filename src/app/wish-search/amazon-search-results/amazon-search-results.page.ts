@@ -105,7 +105,7 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit() {
-    this.infiniteScroll.disabled = this._results.length === 0;
+    this.infiniteScroll.disabled = this._results?.length === 0;
   }
 
   ionViewDidEnter() {

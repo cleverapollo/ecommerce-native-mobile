@@ -10,6 +10,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 import { CustomValidation } from '@shared/custom-validation';
+import { toDecimal } from '@shared/helpers/math.helper';
 import { finalize, first } from 'rxjs/operators';
 import { TabBarRoute, getTaBarPath } from 'src/app/tab-bar/tab-bar-routes';
 
@@ -131,15 +132,11 @@ export class WishCreatePage implements OnInit {
         validators: [Validators.maxLength(255)],
         updateOn: 'blur'
       }),
-      price: this.formBuilder.control(this._formatAmount(price), {
+      price: this.formBuilder.control(toDecimal(price), {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
       isFavorite: this.formBuilder.control(this.wish?.isFavorite ?? false)
     });
-  }
-
-  private _formatAmount(amount: number): string {
-    return (Math.round(amount * 100) / 100).toFixed(2);
   }
 }

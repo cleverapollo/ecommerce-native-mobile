@@ -10,8 +10,8 @@ import { APP_URL } from '@env/environment';
 import { NavController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { shareLink } from '@shared/helpers/share.helper';
-import { Subscription, combineLatest } from 'rxjs';
-import { filter, finalize, first, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { filter, finalize, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list-overview',
@@ -20,11 +20,9 @@ import { filter, finalize, first, map } from 'rxjs/operators';
 })
 export class ProductListOverviewPage implements OnInit, OnDestroy {
 
-  account: ContentCreatorAccount | null = null;
-  image: Blob | null = null;
-  isLoading = false;
   productLists: ProductList[] = [];
 
+  private account: ContentCreatorAccount | null = null;
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -37,9 +35,8 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.isLoading = true;
-    this.subscription.add(this._setupData());
-    this._loadProductLists();
+    this.subscription.add(this._loadUser());
+    this.subscription.add(this._loadProductLists());
   }
 
   ionViewDidEnter() {
@@ -64,9 +61,8 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
 
   async forceRefresh(event: Event): Promise<void> {
     const target = event.target as HTMLIonRefresherElement;
-    this.isLoading = true;
-    await this.userStore.loadUserProfile(true).toPromise();
-    await this.productListStore.getAll(true).toPromise();
+    this.userStore.loadUserProfile(true).pipe(first()).subscribe();
+    this.productListStore.getAll(true).pipe(first()).subscribe();
     target.complete();
   }
 
@@ -78,34 +74,23 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
     ).catch(error => this.logger.error(error));
   }
 
-  private _setupData(): Subscription {
-    const user$ = this.userStore.user$.pipe(filter((user): user is UserProfile => !!user));
-    return combineLatest([user$, this.userStore.creatorImage$]).pipe(
-      map(result => ({ account: result[0].creatorAccount, image: result[1] }))
-    ).subscribe({
-      next: data => {
-        this.account = data.account;
-        this.image = data.image;
-        this.isLoading = false;
-      },
-      error: _ => {
-        this.isLoading = false;
-      }
-    })
+  private _loadUser(): Subscription {
+    return this.userStore.user$.pipe(
+      filter((user): user is UserProfile => !!user)
+    ).subscribe(user => {
+      this.account = user.creatorAccount;
+    }
+    )
   }
 
-  private async _loadProductLists(): Promise<void> {
-    await this.loadingService.showLoadingSpinner();
-    this.subscription.add(this.productListStore.getAll(false).pipe(
-      first(),
-      finalize(() => {
-        this.loadingService.stopLoadingSpinner();
-      })
-    ).subscribe({
-      next: productLists => {
-        this.productLists = productLists;
-      }
-    }));
+  private _loadProductLists(): Subscription {
+    this.loadingService.showLoadingSpinner().then(() => {
+      this.productListStore.getAll().pipe(
+        first(),
+        finalize(() => this.loadingService.stopLoadingSpinner()
+        )).subscribe();
+    });
+    return this.productListStore.productLists$.subscribe(productLists => this.productLists = productLists);
   }
 
 }

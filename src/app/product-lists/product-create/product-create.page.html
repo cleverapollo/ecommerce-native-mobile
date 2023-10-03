@@ -1,0 +1,97 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar logo="assets/icon/wantic-logo-purple.svg"></app-nav-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 class="ion-text-center wantic-page-header">Produkt hinzufügen</h1>
+
+  <div class="image-container">
+    <app-wish-image [src]="product?.imageUrl" [styles]="imageStyles"></app-wish-image>
+  </div>
+
+  <form [formGroup]="form" *ngIf="form">
+
+    <!--name-->
+    <ion-item lines="none">
+      <ion-label position="stacked">Name *</ion-label>
+      <ion-textarea formControlName="name" auto-grow="true" required="true" maxlength="255" class="form-field-creator"></ion-textarea>
+    </ion-item>
+    <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
+
+    <!--note-->
+    <ion-item lines="none">
+      <ion-label position="stacked">Notiz</ion-label>
+      <ion-textarea class="form-field-creator" formControlName="note" name="note" auto-grow="true" rows="3" spellcheck="true" maxlength="255"></ion-textarea>
+    </ion-item>
+    <app-validation-messages [control]="form.get('note')" [validationMessages]="validationMessages.note"></app-validation-messages>
+
+    <!--price-->
+    <ion-item lines="none">
+      <ion-label position="stacked">Preis (in €) *</ion-label>
+      <ion-input class="form-field-creator" type="number" inputmode="decimal" min="0" formControlName="price" clearInput="true" required="true"></ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('price')" [validationMessages]="validationMessages.price"></app-validation-messages>
+
+    <div formGroupName="coupon">
+      <!--coupon code-->
+      <ion-item lines="none">
+        <ion-label position="stacked">Gutschein-Code</ion-label>
+        <ion-input class="form-field-creator" formControlName="code" clearInput="true"></ion-input>
+      </ion-item>
+      <app-validation-messages [control]="form.get('coupon.code')" [validationMessages]="validationMessages.couponCode"></app-validation-messages>
+
+      <!--coupon value-->
+      <ion-item lines="none">
+        <ion-label position="stacked">Gutschein-Wert</ion-label>
+        <ion-input class="form-field-creator" formControlName="value" clearInput="true"></ion-input>
+      </ion-item>
+      <app-validation-messages [control]="form.get('coupon.value')" [validationMessages]="validationMessages.couponValue"></app-validation-messages>
+
+      <!--coupon expiration date-->
+      <ion-item lines="none">
+        <ion-label position="stacked">Gutschein-Ablaufdatum</ion-label>
+        <app-datetime class="form-field-creator" formControlName="expirationDate" placeholder="31.12.2023" iconColor="color-secondary-purple" modalColor="primary-purple" [containerStyle]="{ 'margin': '0px' }"></app-datetime>
+      </ion-item>
+      <app-validation-messages [control]="form.get('coupon.expirationDate')" [validationMessages]="validationMessages.couponExpirationDate"></app-validation-messages>
+    </div>
+
+    <!--product url-->
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center">URL *</ion-label>
+      <ion-input type="url" required="true" class="form-field-creator"
+                  placeholder="z.B. www.meinlieblingsshop.de/…"
+                  formControlName="productUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('productUrl')" [validationMessages]="validationMessages.productUrl"></app-validation-messages>
+
+    <!--affiliate url-->
+    <ion-item lines="none">
+      <ion-label position="stacked" class="display-flex align-items-center">Affiliate URL</ion-label>
+      <ion-input type="url" class="form-field-creator"
+                  placeholder="z.B. www.meinlieblingsshop.de/…"
+                  formControlName="affiliateUrl" 
+                  clearInput="true">
+      </ion-input>
+    </ion-item>
+    <app-validation-messages [control]="form.get('affiliateUrl')" [validationMessages]="validationMessages.affiliateUrl"></app-validation-messages>
+
+    <!--product list id-->
+    <section lines="none">
+      <p class="wantic-margin-right-left font-wish-list-header">Produktliste</p>
+      <app-product-list-radio formControlName="productListId" [initialValue]="form.get('productListId').value"></app-product-list-radio>
+      <app-validation-messages [control]="form.get('productListId')" [validationMessages]="validationMessages.productListId"></app-validation-messages>
+    </section>
+
+  </form>
+
+  <ng-container *ngIf="form">
+    <div class="primary-purple-gradient">
+      <ion-button class="wantic-save-button save-wish-button" (click)="create()" color="primary-purple" expand="block">
+        PRODUKT SPEICHERN
+      </ion-button>
+    </div>
+  </ng-container>
+
+</ion-content>

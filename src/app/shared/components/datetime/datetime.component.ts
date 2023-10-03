@@ -32,6 +32,10 @@ export class DatetimeComponent implements OnInit, ControlValueAccessor {
   /** Date which is preselected in the modal. */
   @Input() initialDate: null | string | string[] | undefined;
 
+  @Input() containerStyle: CSSStyle = {};
+  @Input() iconColor: string = 'color-secondary';
+  @Input() modalColor: string = 'primary'
+
   formattedDate: null | string | string[] | undefined;
   value: null | string | string[] | undefined;
   isModalOpen: boolean = false;

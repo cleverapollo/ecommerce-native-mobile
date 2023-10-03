@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WanticError } from '@core/models/error.model';
-import { ProductList } from '@core/models/product-list.model';
+import { ProductList, ProductListCommand } from '@core/models/product-list.model';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiVersion } from './api-version';
@@ -15,7 +15,7 @@ export class ProductListApiService {
 
   constructor(private apiService: ApiService,) { }
 
-  create(productList: ProductList): Observable<ProductList> {
+  create(productList: ProductListCommand): Observable<ProductList> {
     return this.apiService.post<ProductList>(`${ApiVersion.v1}/${ProductListApiService.REST_END_POINT}`, productList).pipe(
       catchError(error => { throw new WanticError(error) })
     );

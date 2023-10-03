@@ -1,0 +1,38 @@
+<ion-list>
+  <!--- form to create product list -->
+  <form *ngIf="showForm" (ngSubmit)="createNewProductList()" style="overflow-y: scroll;" class="form-create-new-product-list">
+    <ion-item [formGroup]="form" class="first-item input-product-list-name">
+      <ion-input name="name" formControlName="name" placeholder="Gib einen Namen ein" enterkeyhint="done"
+        autocapitalize="on" clear-input="true" inputmode="text" required="true"></ion-input>
+      <ion-button type="submit" *ngIf="showSaveProductListButton" size="small" color="dark" [disabled]="form.invalid"
+        class="save-product-list-button">Fertig</ion-button>
+      <ion-spinner *ngIf="showLoading" color="primary-purple"></ion-spinner>
+    </ion-item>
+  </form>
+  <!--- button to enable edit mode -->
+  <ion-item *ngIf="!isEditMode" class="first-item button-enable-edit-mode" (click)="enableEditMode()">
+    <ion-icon color="primary-purple" name="add-outline"></ion-icon>
+    <ion-label class="label-font-style">
+      Neue Produktliste anlegen
+    </ion-label>
+  </ion-item>
+  <ng-container *ngIf="productLists.length; else noProductLists">
+    <!--- product list items -->
+    <ion-item class="radio-product-list-option" *ngFor="let option of productLists; let isLast = last;" (click)="writeValue(option.id)" [ngClass]=" {'last-item': isLast }">
+      <ion-label class="radio-option-name">{{ option.name }}</ion-label>
+      <ion-avatar slot="end">
+        <img *ngIf="productListId === option.id" src="assets/icon/checked-purple.svg" alt="checked icon" class="icon-checked" />
+        <img *ngIf="productListId !== option.id" src="assets/icon/unchecked.svg" alt="unchecked icon"
+          class="icon-unchecked" />
+      </ion-avatar>
+    </ion-item>
+    </ng-container>
+    <!--- hint no product lists -->
+    <ng-template #noProductLists>
+      <ion-item class="last-item hint-no-product-lists">
+        <ion-label class="label-font-style">
+          Du hast noch keine Produktlisten angelegt.
+        </ion-label>
+      </ion-item>
+    </ng-template>
+</ion-list>
