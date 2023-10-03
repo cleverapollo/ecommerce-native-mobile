@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UrlTree } from '@angular/router';
 import { NavigationService } from '@core/services/navigation.service';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 
 @Component({
   selector: 'app-nav-toolbar',
   templateUrl: './nav-toolbar.component.html',
   styleUrls: ['./nav-toolbar.component.scss'],
 })
-export class NavToolbarComponent {
+export class NavToolbarComponent implements OnInit {
 
   @Input() skipToPath?: string | any[] | UrlTree;
   @Input() defaultHref: string | undefined = undefined;
@@ -25,7 +26,16 @@ export class NavToolbarComponent {
     return this.nextButtonClick?.observers.length > 0 || false;
   }
 
-  constructor(private navigationService: NavigationService) { }
+  constructor(
+    private navigationService: NavigationService,
+    private userService: UserProfileStore
+  ) { }
+
+  ngOnInit(): void {
+    this.userService.isCreatorAccountActive$.subscribe(isActive => {
+      this.logo = isActive ? 'assets/icon/wantic-logo-purple.svg' : 'assets/icon/wantic-logo.svg'
+    })
+  }
 
   skip() {
     if (this.canSkip) {

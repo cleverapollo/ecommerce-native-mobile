@@ -14,10 +14,12 @@
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 
-    <ion-button (click)="update()" expand="block" class="wantic-margin-right-left wantic-save-button no-margin-bottom button-save-changes">
-      Änderungen speichern
-    </ion-button>
-    <ion-button class="wantic-save-button" (click)="delete()" color="primary" fill="outline" expand="block">
+    <div class="primary-purple-gradient">
+      <ion-button (click)="update()" expand="block" color="primary-purple" class="wantic-margin-right-left wantic-save-button no-margin-bottom button-save-changes">
+        ÄNDERUNGEN SPEICHERN
+      </ion-button>
+    </div>
+    <ion-button class="wantic-save-button" (click)="delete()" color="primary" fill="outline" expand="block" color="primary-purple">
       LISTE LÖSCHEN
     </ion-button>
 

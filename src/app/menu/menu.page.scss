@@ -4,11 +4,26 @@ ion-list {
     margin-top: 20px;
     ion-item {
         --border-style: dashed;
-        --border-color: var(--ion-color-primary);
+        --border-color: var(--ion-color-secondary);
     }
     ion-item::part(native) {
         --padding-start: 0
     }
+}
+
+.new-feat-chip {
+    border-radius: 16px;
+    background: #C263E3;
+    width: 43px;
+    height: 21px;
+    color: #FFF;
+    text-align: center;
+    font-size: 9.5px;
+    letter-spacing: 1.235px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 3px;
 }
 
 .action-item-without-header {

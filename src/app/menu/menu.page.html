@@ -18,36 +18,36 @@
       </p>
       <p class="margin-top-4 font-size-11 color-primary">
         <span *ngIf="!hasCreatorAccount || !isCreatorAccountActive">Privates Profil</span>
-        <span *ngIf="hasCreatorAccount && isCreatorAccountActive">Creator Profil</span>
+        <span *ngIf="hasCreatorAccount && isCreatorAccountActive"><ion-text color="primary-purple">Creator Profil</ion-text></span>
       </p>
     </div>
   </div>
 
   <ion-list>
-    <ion-item [routerLink]="['settings']" detail="false">
+    <ion-item [routerLink]="['settings']" detail="false" [ngClass]="{ 'border-purple': isCreatorAccountActive }">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label class="action-item-without-header">
         <span *ngIf="!isCreatorAccountActive">Profil bearbeiten</span>
         <span *ngIf="isCreatorAccountActive">Creator Profil bearbeiten</span>
       </ion-label>
     </ion-item>
-    <ion-item (click)="showFaqPage()" detail="false">
+    <ion-item (click)="showFaqPage()" detail="false"  [ngClass]="{ 'border-purple': isCreatorAccountActive }">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label class="action-item-without-header">FAQ</ion-label>
     </ion-item>
-    <ion-item (click)="privacyPolicyService.showPrivacyPolicy()" detail="false">
+    <ion-item (click)="privacyPolicyService.showPrivacyPolicy()" detail="false"  [ngClass]="{ 'border-purple': isCreatorAccountActive }">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label class="action-item-without-header">Datenschutz</ion-label>
     </ion-item>
-    <ion-item (click)="privacyPolicyService.showImprint()" detail="false">
+    <ion-item (click)="privacyPolicyService.showImprint()" detail="false"  [ngClass]="{ 'border-purple': isCreatorAccountActive }">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label class="action-item-without-header">Impressum</ion-label>
     </ion-item>
     <ion-item [routerLink]="['creator-account-info']" detail="false" *ngIf="!hasCreatorAccount">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
-      <ion-label class="action-item-without-header">Creator werden</ion-label>
+      <ion-label class="action-item-without-header display-flex align-items-end"><span class="new-feat-chip">NEU</span><span>Creator werden</span></ion-label>
     </ion-item>
-    <ion-item (click)="logout()" detail="false">
+    <ion-item (click)="logout()" detail="false"  [ngClass]="{ 'border-purple': isCreatorAccountActive }">
       <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
       <ion-label class="action-item-without-header">Abmelden</ion-label>
     </ion-item>

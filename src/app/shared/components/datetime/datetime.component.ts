@@ -35,6 +35,7 @@ export class DatetimeComponent implements OnInit, ControlValueAccessor {
   @Input() containerStyle: CSSStyle = {};
   @Input() iconColor: string = 'color-secondary';
   @Input() modalColor: string = 'primary'
+  @Input() inputClass: string = null;
 
   formattedDate: null | string | string[] | undefined;
   value: null | string | string[] | undefined;

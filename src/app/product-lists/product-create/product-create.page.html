@@ -50,7 +50,12 @@
       <!--coupon expiration date-->
       <ion-item lines="none">
         <ion-label position="stacked">Gutschein-Ablaufdatum</ion-label>
-        <app-datetime class="form-field-creator" formControlName="expirationDate" placeholder="31.12.2023" iconColor="color-secondary-purple" modalColor="primary-purple" [containerStyle]="{ 'margin': '0px' }"></app-datetime>
+        <app-datetime class="form-field-creator" formControlName="expirationDate" placeholder="31.12.2023" 
+          iconColor="color-secondary-purple" 
+          modalColor="primary-purple" 
+          inputClass="form-field-creator"
+          [containerStyle]="{ 'margin': '0px' }">
+        </app-datetime>
       </ion-item>
       <app-validation-messages [control]="form.get('coupon.expirationDate')" [validationMessages]="validationMessages.couponExpirationDate"></app-validation-messages>
     </div>
