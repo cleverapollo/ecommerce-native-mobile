@@ -7,7 +7,7 @@
     </div>
     <div class="position-absolute coupon-overlay">
       <div class="price-info" [ngClass]="{ 'margin-top-bottom-9': !product.coupon  }">{{ priceDisplayString }}</div>
-      <ion-icon *ngIf="product.coupon" class="coupon-icon" src="assets/icon/coupon.svg" alt="Code"></ion-icon>
+      <ion-icon *ngIf="product.coupon" class="coupon-icon" [src]="couponIcon" alt="Code"></ion-icon>
     </div>
   </div>
   <ion-card-content>
@@ -15,10 +15,22 @@
     <div class="font-size-12 wish-note" *ngIf="product?.note">{{ product.note }}</div>
     <div *ngIf="product.coupon" class="coupon">
       <div class="coupon-value"><span *ngIf="product.coupon.value">{{ product.coupon.value }}&nbsp;</span>Gutschein Code:</div>
-      <div *ngIf="product.coupon.code" class="coupon-code">{{ product.coupon.code }}</div>
+      <div *ngIf="product.coupon.code" class="coupon-code"><ion-text [color]="codeColor">{{ product.coupon.code }}</ion-text></div>
       <div *ngIf="product.coupon.expirationDate" class="coupon-expiration-date"><ion-icon name="calendar-outline"></ion-icon>&nbsp;gültig bis {{ product.coupon.expirationDate | date:'dd.MM.yyyy' }}</div>
     </div>
   </ion-card-content>
 
-  <ion-button fill="outline" expand="block" shape="round" strong="true" color="primary-purple" (click)="onEditButtonClicked()">BEARBEITEN</ion-button>
+  <ng-container *ngIf="view === 'creator'">
+    <ion-button fill="outline" expand="block" shape="round" strong="true" color="primary-purple" (click)="onEditButtonClicked()">BEARBEITEN</ion-button>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'public'">
+    <ion-button fill="outline" expand="block" shape="round" strong="true" color="black" (click)="onShopButtonClicked()">ZUM SHOP</ion-button>
+  </ng-container>
+
+  <div *ngIf="view === 'search'" class="display-flex align-items-center justify-content-space-evenly">
+    <ion-button fill="outline" shape="round" strong="true" color="black" (click)="onShopButtonClicked()">ZUM SHOP</ion-button>
+    <ion-button fill="outline" shape="round" strong="true" color="primary" (click)="onAddButtonClicked()">SPEICHERN</ion-button>
+  </div>
+
 </ion-card>

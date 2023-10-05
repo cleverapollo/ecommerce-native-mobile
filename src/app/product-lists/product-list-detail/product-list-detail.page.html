@@ -26,7 +26,7 @@
 
   <div class="masonry" #masonry>
     <div class="brick" *ngFor="let product of products; trackBy:trackById" #bricks>
-      <app-product [product]="product" (editButtonClick)="navigateToProductDetailPage(product)"></app-product>
+      <app-product [product]="product" (editButtonClick)="navigateToProductDetailPage(product)" view="creator"></app-product>
     </div>
   </div>
 

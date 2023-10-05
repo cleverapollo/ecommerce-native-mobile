@@ -9,7 +9,6 @@
     .coupon-code {
         font-size: 13px;
         font-weight: bold;
-        color: var(--ion-color-primary-purple);
     }
     .coupon-expiration-date {
         font-size: 10px;
@@ -21,6 +20,8 @@
 
 ion-button {
     font-size: 12px;
+    --padding-start: 8px;
+    --padding-end: 8px;
 }
 
 ion-card-content {

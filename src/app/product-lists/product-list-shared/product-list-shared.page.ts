@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SharedProductList } from '@core/models/product-list.model';
+import { Product, SharedProductList } from '@core/models/product-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { ProductListStoreService } from '@core/services/product-list-store.service';
+import { Masonry } from '@shared/masonry';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
@@ -12,7 +13,10 @@ import { finalize, first } from 'rxjs/operators';
   templateUrl: './product-list-shared.page.html',
   styleUrls: ['./product-list-shared.page.scss'],
 })
-export class ProductListSharedPage implements OnInit, OnDestroy {
+export class ProductListSharedPage implements OnInit, OnDestroy, AfterViewChecked {
+
+  @ViewChild('masonry') masonry: ElementRef<HTMLDivElement>;
+  @ViewChildren('bricks') masonryBricks: QueryList<ElementRef<HTMLDivElement>>;
 
   productList: SharedProductList;
   errorMessage: string | null = null;
@@ -36,9 +40,15 @@ export class ProductListSharedPage implements OnInit, OnDestroy {
   }
 
   get numberOfProducts(): string {
-    const number = this.productList?.products.length || 0;
+    const number = this.products.length;
     return number !== 1 ? `${number} Produkte` : '1 Produkt';
   }
+
+  get products(): Product[] {
+    return this.productList?.products || [];
+  }
+
+  trackById: TrackByFunction<Product> = (idx, product) => product.id;
 
   ngOnInit() {
     this.subscription.add(this.route.paramMap.subscribe(paramMap => {
@@ -52,6 +62,11 @@ export class ProductListSharedPage implements OnInit, OnDestroy {
 
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('shared-productlist')
+  }
+
+  ngAfterViewChecked(): void {
+    const masonry = new Masonry(this.masonry, this.masonryBricks);
+    masonry.resizeBricks();
   }
 
   ngOnDestroy(): void {

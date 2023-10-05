@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from '@core/models/product-list.model';
+import { BrowserService } from '@core/services/browser.service';
 
 @Component({
   selector: 'app-product',
@@ -9,6 +10,7 @@ import { Product } from '@core/models/product-list.model';
 export class ProductComponent implements OnInit {
 
   @Input() product: Product;
+  @Input() view: 'creator' | 'search' | 'public' = 'public';
 
   @Output() editButtonClick = new EventEmitter<Product>();
 
@@ -16,10 +18,28 @@ export class ProductComponent implements OnInit {
     return this.product?.price?.displayString || 'Lädt ...';
   }
 
+  get codeColor(): string {
+    return this.view === 'creator' ? 'primary-purple' : 'primary'
+  }
+
+  get couponIcon(): string {
+    return this.view === 'creator' ? 'assets/icon/coupon-purple.svg' : 'assets/icon/coupon.svg'
+  }
+
+  constructor(private browserService: BrowserService) { }
+
   ngOnInit() { }
 
   onEditButtonClicked() {
     this.editButtonClick.emit(this.product);
+  }
+
+  onShopButtonClicked() {
+    this.browserService.openSystemBrowser(this.product.affiliateUrl || this.product.productUrl);
+  }
+
+  onAddButtonClicked() {
+
   }
 
 }
