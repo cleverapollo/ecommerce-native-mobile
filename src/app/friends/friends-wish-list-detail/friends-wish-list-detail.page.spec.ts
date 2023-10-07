@@ -60,6 +60,16 @@ describe('FriendsWishListDetailPage', () => {
     }).compileComponents();
 
     router = TestBed.inject(Router);
+    spyOn(router, 'getCurrentNavigation').and.callFake(() => {
+      return {
+        extras: {
+          state: {
+            wishList: WishListTestData.sharedWishListWedding
+          }
+        }
+      } as any
+    })
+
     fixture = TestBed.createComponent(FriendsWishListDetailPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -107,31 +117,6 @@ describe('FriendsWishListDetailPage', () => {
       component.ionViewWillEnter();
 
       expect(observableSpy).toHaveBeenCalled();
-    });
-  });
-
-  describe('ngOnDestroy', () => {
-    it('should unsubscribe param map subscription', () => {
-      component.ngOnDestroy();
-
-      expect(paramMapSubscription.unsubscribe).toHaveBeenCalled();
-    });
-
-    it('should unsubscribe sharedWishListStore loadWishList subscription', () => {
-      const observable = new Observable<FriendWishList>();
-      const subscription = new Subscription();
-      spyOn(sharedWishListStore, 'loadWishList').and.returnValue(observable);
-
-      spyOn(subscription, 'unsubscribe').and.callThrough();
-      spyOn(observable, 'subscribe').and.callFake((fn: any): Subscription => {
-        return subscription;
-      });
-
-      component.ionViewWillEnter();
-
-      component.ngOnDestroy();
-
-      expect(subscription.unsubscribe).toHaveBeenCalled();
     });
   });
 
@@ -218,7 +203,7 @@ describe('FriendsWishListDetailPage', () => {
 
       expect(showLoadingServiceSpy).toHaveBeenCalledTimes(1);
       expect(dismissLoadingServiceSpy).toHaveBeenCalledTimes(1);
-      expect(navigateSpy).toHaveBeenCalledWith('/secure/friends-home/friends-wish-list-overview?forceRefresh=true');
+      expect(navigateSpy).toHaveBeenCalledWith('/secure/friends-home/friends-wish-list-overview');
 
       flush();
     }));

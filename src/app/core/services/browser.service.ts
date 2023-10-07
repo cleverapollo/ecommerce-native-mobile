@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { Browser } from '@capacitor/browser';
 
 @Injectable({

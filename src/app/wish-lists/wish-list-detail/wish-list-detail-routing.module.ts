@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import { WishListDetailPage } from './wish-list-detail.page';
 import { AuthGuard } from '@guards/auth.guard';
-import { WishResolver } from '@wishLists/home/wish.resolver';
+import { WishListDetailPage } from './wish-list-detail.page';
 
 const routes: Routes = [
   {
@@ -13,21 +12,20 @@ const routes: Routes = [
   {
     path: 'wish/:wishId',
     canActivate: [AuthGuard],
-    resolve: { wish: WishResolver },
     loadChildren: () => import('@wishLists/wish-detail/wish-detail.module')
-      .then( m => m.WishDetailPageModule)
+      .then(m => m.WishDetailPageModule)
   },
   {
     path: 'edit',
     canActivate: [AuthGuard],
     loadChildren: () => import('@wishLists/wish-list-update/wish-list-update.module')
-      .then( m => m.WishListUpdatePageModule)
+      .then(m => m.WishListUpdatePageModule)
   },
   {
     path: 'wish-search',
     canActivate: [AuthGuard],
     loadChildren: () => import('@wishSearch/wish-search-overview/wish-search-overview.module')
-      .then( m => m.WishSearchSelectionPageModule)
+      .then(m => m.WishSearchSelectionPageModule)
   }
 ];
 
@@ -35,4 +33,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class WishListDetailPageRoutingModule {}
+export class WishListDetailPageRoutingModule { }

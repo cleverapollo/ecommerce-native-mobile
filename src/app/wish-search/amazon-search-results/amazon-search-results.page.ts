@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, TrackByFunction, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SearchResult, SearchResultItem } from '@core/models/search-result-item';
+import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
+import { WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { Logger } from '@core/services/log.service';
 import { PagingService } from '@core/services/paging.service';
@@ -11,7 +12,6 @@ import { SearchType } from '@core/services/search-result-data.service';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
-import { createNavigationState } from '@wishSearch/wish-search.utils';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
@@ -72,7 +72,8 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
 
   private _results: SearchResultItem[] = [];
   private _clearCache = true;
-  private _subscription?: Subscription | null = null;
+  private _subscription: Subscription = new Subscription();
+  private wishList: WishListDto | null = null;
 
   constructor(
     private searchService: ProductSearchService,
@@ -86,7 +87,8 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   ) { }
 
   ngOnInit() {
-    this._subscription = this.searchService.$lastAmazonSearchQuery.subscribe(query => {
+    this.wishList = this.router.getCurrentNavigation()?.extras?.state?.wishList;
+    this._subscription.add(this.searchService.$lastAmazonSearchQuery.subscribe(query => {
       this._createForm(query.searchTerm);
       this.results = query.results;
       this.page = query.pageCount;
@@ -95,11 +97,11 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
     }, error => {
       this.logger.error(error);
       this._createForm('');
-    });
+    }));
   }
 
   ngOnDestroy(): void {
-    this._subscription?.unsubscribe();
+    this._subscription.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -165,10 +167,12 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   }
 
   navigateToWishNewPage(item: SearchResultItem) {
-    this._clearCache = false;
     this.router.navigate(['wish-new'], {
       relativeTo: this.route,
-      state: createNavigationState(item, this.route.snapshot.data.wishList)
+      state: {
+        searchResult: SearchResultItemMapper.map(item, { ...new WishDto(), wishListId: this.wishList?.id || null }),
+        wishList: this.wishList
+      }
     });
   }
 

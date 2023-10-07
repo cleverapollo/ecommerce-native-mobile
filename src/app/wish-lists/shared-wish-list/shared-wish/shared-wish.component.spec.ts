@@ -137,6 +137,7 @@ describe('SharedWishComponent', () => {
     await fixture.whenStable();
 
     spyOn(storageService, 'set');
+    spyOn(storageService, 'remove');
     spyOn(component.wishStateChanged, 'emit');
 
     component.reserve();
@@ -144,6 +145,7 @@ describe('SharedWishComponent', () => {
     expect(SharedWishListState[component.state]).toBe(SharedWishListState[SharedWishListState.RESERVABLE]);
     expect(toastServiceSpy.presentErrorToast).toHaveBeenCalledTimes(1);
     expect(storageService.set).not.toHaveBeenCalledWith('sharedWish_1', true);
+    expect(storageService.remove).toHaveBeenCalledWith('sharedWish_1');
     expect(component.wishStateChanged.emit).not.toHaveBeenCalled();
   });
 

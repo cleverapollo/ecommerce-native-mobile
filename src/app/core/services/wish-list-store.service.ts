@@ -4,7 +4,7 @@ import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishDto, WishListCreateRequest, WishListDto, WishListUpdateRequest } from '@core/models/wish-list.model';
 import { sortWishListsByDate } from '@core/wish-list.utils';
 import { CacheService } from 'ionic-cache';
-import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, from, of, throwError } from 'rxjs';
 import { catchError, concatMap, first, shareReplay, tap } from 'rxjs/operators';
 import { Logger } from './log.service';
 
@@ -242,6 +242,21 @@ export class WishListStoreService implements WishListStore {
   }
 
   /**
+   * Is this a wish list created by the user?
+   * @param wishListId Id of the wish list.
+   * @returns True or false
+   */
+  async isCreatedWishList(wishListId: string): Promise<boolean> {
+    try {
+      const wishLists = await this.loadWishLists().toPromise();
+      const wishList = wishLists.find((w) => w.id === wishListId);
+      return wishList !== undefined;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /**
    * Removes a wish from cache and subject.
    * @param wish A wish to remove.
    * @returns Promise
@@ -440,8 +455,6 @@ export class WishListStoreService implements WishListStore {
     const wishListIndex = wishLists.findIndex(w => w.id === wishList.id);
     if (wishListIndex !== -1) {
       wishLists[wishListIndex] = wishList;
-    } else {
-      this.logger.warn('Wish list doesn\'t exist in subject.');
     }
     return wishLists;
   }
@@ -455,8 +468,6 @@ export class WishListStoreService implements WishListStore {
     const wishListIndex = wishLists.findIndex(w => w.id === wishList.id);
     if (wishListIndex !== -1) {
       wishLists.splice(wishListIndex, 1);
-    } else {
-      this.logger.warn('Wish list doesn\'t exist in subject.');
     }
     return wishLists;
   }

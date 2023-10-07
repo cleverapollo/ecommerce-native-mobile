@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
-import { FirebaseAnalytics } from '@capacitor-community/firebase-analytics';
+import { FirebaseAnalytics } from '@capacitor-firebase/analytics';
 import { SearchResult } from '@core/models/search-result-item';
 import { AuthProvider } from '@core/models/signup.model';
 import { WishDto } from '@core/models/wish-list.model';
-import { Platform } from '@ionic/angular';
 import { AFInit, AppsFlyer } from 'appsflyer-capacitor-plugin';
 import { Logger } from './log.service';
 import { PlatformService } from './platform.service';
@@ -25,11 +23,8 @@ export class AnalyticsService {
 
   constructor(
     private logger: Logger,
-    private platform: Platform,
     private platformService: PlatformService,
-    private angularFireAnalytics: AngularFireAnalytics
-  ) {
-  }
+  ) { }
 
   initAppsflyerSdk() {
     if (!this.platformService.isNativePlatform) { return }
@@ -47,13 +42,7 @@ export class AnalyticsService {
   }
 
   logFirebaseEvent(eventName: string, params: { [prop: string]: any }) {
-    if (this.platformService.isNativePlatform) {
-      this.platform.ready().then(() => {
-        FirebaseAnalytics.logEvent({ name: eventName, params });
-      })
-    } else {
-      this.angularFireAnalytics.logEvent(eventName, params);
-    }
+    FirebaseAnalytics.logEvent({ name: eventName, params });
   }
 
   logAppsflyerEvent(eventName: string, eventValue: any) {
@@ -66,28 +55,22 @@ export class AnalyticsService {
   }
 
   setFirebaseScreenName(screenName: string) {
-    if (this.platformService.isNativePlatform) {
-      FirebaseAnalytics.setScreenName({
-        screenName
-      });
-    } else {
-      this.angularFireAnalytics.setCurrentScreen(screenName);
-    }
+    FirebaseAnalytics.setCurrentScreen({
+      screenName
+    });
   }
 
   toggleAnalytics() {
     this.analyticsEnabled = !this.analyticsEnabled;
 
     if (this.platformService.isNativePlatform) {
-      FirebaseAnalytics.setCollectionEnabled({ enabled: this.analyticsEnabled });
       if (this.appsflyerConfigExists) {
         AppsFlyer.stop({
           stop: true
         });
       }
-    } else {
-      this.angularFireAnalytics.setAnalyticsCollectionEnabled(this.analyticsEnabled);
     }
+    FirebaseAnalytics.setEnabled({ enabled: this.analyticsEnabled });
   }
 
   logCompleteRegistrationEvent(authProvider: AuthProvider) {

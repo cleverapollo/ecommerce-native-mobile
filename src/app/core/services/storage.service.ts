@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 import { Preferences } from '@capacitor/preferences';
+import 'capacitor-secure-storage-plugin';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 import CryptoJS from 'crypto-js';
 import SecureStorage from 'secure-web-storage';

@@ -1,6 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
-import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 import { Platform } from '@ionic/angular';
 import { AppsFlyer } from 'appsflyer-capacitor-plugin';
 
@@ -14,8 +12,6 @@ describe('AnalyticsService', () => {
   const logger = {};
   const platform = {};
   const platformService = {};
-  const firebaseAnalytics = {};
-  const angularFireAnalytics = {};
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,9 +19,7 @@ describe('AnalyticsService', () => {
         { provide: AppsFlyer, useValue: appsflyer },
         { provide: Logger, useValue: logger },
         { provide: Platform, useValue: platform },
-        { provide: PlatformService, useValue: platformService },
-        { provide: FirebaseAnalytics, useValue: firebaseAnalytics },
-        { provide: AngularFireAnalytics, useValue: angularFireAnalytics }
+        { provide: PlatformService, useValue: platformService }
       ]
     })
   });

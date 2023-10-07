@@ -1,124 +1,70 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { CustomError, CustomErrorType } from '@core/error';
-import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
-import firebase from 'firebase/compat/app';
-import { Observable } from 'rxjs';
-import { PlatformService } from './platform.service';
-
-export interface FirebaseControllable {
-  getIdToken(forceRefresh: boolean): Promise<string | null>
-  onAuthStateChanged(): Observable<any | firebase.User>
-  sendEmailVerification(): Promise<any>;
-  sendPasswordResetEmail(email: string): Promise<any>;
-  setLanguageCode(languageCode: string): void
-  signInWithApple(identityToken: string): Promise<any>;
-  signInWithEmailAndPassword(email: string, password: string): Promise<any | firebase.auth.UserCredential>
-  signInWithFacebook(accessToken: string): Promise<any>
-  signInWithGoogle(idToken: string, accessToken: string): Promise<any>
-  signOut(): Promise<any>
-}
+import { FirebaseAuthentication, SignInResult, User } from '@capacitor-firebase/authentication';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FirebaseService implements FirebaseControllable {
-
-  constructor(
-    private platform: PlatformService,
-    private nativeAuth: FirebaseAuthentication,
-    private angularAuth: AngularFireAuth
-  ) { }
+export class FirebaseService {
 
   async sendEmailVerification(): Promise<any> {
-    if (this.platform.isNativePlatform) {
-      return this.nativeAuth.sendEmailVerification();
-    } else {
-      const authState = await this.angularAuth.authState.toPromise();
-      return authState?.sendEmailVerification();
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return;
     }
+    await FirebaseAuthentication.sendEmailVerification();
   }
 
-  sendPasswordResetEmail(email: string): Promise<any> {
-    if (this.platform.isNativePlatform) {
-      return this.nativeAuth.sendPasswordResetEmail(email);
-    } else {
-      return this.angularAuth.sendPasswordResetEmail(email);
-    }
+  private async getCurrentUser(): Promise<User> {
+    const result = await FirebaseAuthentication.getCurrentUser();
+    return result.user;
+  };
+
+  sendPasswordResetEmail(email: string): Promise<void> {
+    return FirebaseAuthentication.sendPasswordResetEmail({
+      email: email
+    });
   }
 
-  signInWithApple(identityToken: string): Promise<any> {
-    if (this.platform.isNativePlatform) {
-      return this.nativeAuth.signInWithApple(identityToken);
-    } else {
-      return Promise.reject(this._signInNotSupportedError('Apple'));
-    }
+  signInWithApple(): Promise<SignInResult> {
+    return FirebaseAuthentication.signInWithApple();
   }
 
-  signInWithFacebook(accessToken: string): Promise<any | firebase.auth.AuthProvider> {
-    if (this.platform.isNativePlatform) {
-      return this.nativeAuth.signInWithFacebook(accessToken);
-    } else {
-      return Promise.reject(this._signInNotSupportedError('Facebook'));
-    }
+  signInWithFacebook(): Promise<SignInResult> {
+    return FirebaseAuthentication.signInWithFacebook({
+      scopes: ['email', 'public_profile']
+    });
   }
 
-  signInWithGoogle(idToken: string, accessToken: string): Promise<any> {
-    if (this.platform.isNativePlatform) {
-      return this.nativeAuth.signInWithGoogle(idToken, accessToken);
-    } else {
-      return Promise.reject(this._signInNotSupportedError('Google'));
-    }
+  signInWithGoogle(): Promise<SignInResult> {
+    return FirebaseAuthentication.signInWithGoogle();
   }
 
-  async getIdToken(forceRefresh: boolean): Promise<string | null> {
-    if (this.platform.isNativePlatform) {
-      return this.nativeAuth.getIdToken(forceRefresh);
+  async getIdToken(forceRefresh: boolean): Promise<string> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return;
     }
-    return (await this.angularAuth.currentUser)?.getIdToken();
+    const result = await FirebaseAuthentication.getIdToken({
+      forceRefresh: forceRefresh
+    });
+    return result.token;
   }
 
-  setLanguageCode(languageCode: string): void {
-    if (this.platform.isNativePlatform) {
-      this.nativeAuth.setLanguageCode(languageCode);
-    } else {
-      this.angularAuth.languageCode = new Promise(() => languageCode);
-    }
+  setLanguageCode(languageCode: string): Promise<void> {
+    return FirebaseAuthentication.setLanguageCode({
+      languageCode: languageCode
+    })
   }
 
-  onAuthStateChanged(): Observable<any | firebase.User> {
-    if (this.platform.isNativePlatform) {
-      return this.nativeAuth.onAuthStateChanged()
-    } else {
-      return new Observable<firebase.User>(observer => {
-        this.angularAuth.onAuthStateChanged(user => observer.next(user || undefined), error => observer.error(error), () => observer.complete());
-      });
-    }
+  signInWithEmailAndPassword(email: string, password: string): Promise<SignInResult> {
+    return FirebaseAuthentication.signInWithEmailAndPassword({
+      email: email,
+      password: password
+    });
   }
 
-  signInWithEmailAndPassword(email: string, password: string): Promise<any | firebase.auth.UserCredential> {
-    if (this.platform.isNativePlatform) {
-      return this.nativeAuth.signInWithEmailAndPassword(email, password);
-    } else {
-      return this.angularAuth.signInWithEmailAndPassword(email, password);
-    }
-  }
-
-  signOut(): Promise<any> {
-    if (this.platform.isNativePlatform) {
-      return this.nativeAuth.signOut();
-    } else {
-      return this.angularAuth.signOut();
-    }
-  }
-
-  // Helper
-
-  private _signInNotSupportedError(providerName: string): CustomError {
-    return new CustomError(
-      CustomErrorType.NotSupportedWebFeature,
-      `SignIn with ${providerName} is not supported yet`
-    );
+  signOut(): Promise<void> {
+    return FirebaseAuthentication.signOut();
   }
 
 }

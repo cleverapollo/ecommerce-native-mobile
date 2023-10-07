@@ -8,9 +8,10 @@ import { LoadingService } from '@core/services/loading.service';
 import { MockWishListStoreService } from '@core/services/wish-list-store-mock.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { WishListTestData } from '@core/test/wish-list-data';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 
+import { Router } from '@angular/router';
 import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
 import { WishListOverviewPage } from './wish-list-overview.page';
 
@@ -20,10 +21,10 @@ class DummyComponent { }
 describe('WishListOverviewPage', () => {
   let component: WishListOverviewPage;
   let fixture: ComponentFixture<WishListOverviewPage>;
+  let router: Router;
 
   const wishListBirthday = WishListTestData.wishListBirthday;
   const wishListStoreFake = new MockWishListStoreService([wishListBirthday]);
-  const navControllerSpy: jasmine.SpyObj<NavController> = jasmine.createSpyObj('navController', ['navigateForward']);
   const analyticsServiceSpy: jasmine.SpyObj<AnalyticsService> = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
   const affiliateDataStoreSpy: jasmine.SpyObj<AffiliateDataStoreService> = jasmine.createSpyObj('affiliateDataStore', ['affiliateProgrammes', 'loadData']);
   const loadingServiceSpy: jasmine.SpyObj<LoadingService> = jasmine.createSpyObj('loadingService', ['showLoadingSpinner', 'stopLoadingSpinner']);
@@ -37,7 +38,6 @@ describe('WishListOverviewPage', () => {
       ],
       providers: [
         { provide: WishListStoreService, useValue: wishListStoreFake },
-        { provide: NavController, useValue: navControllerSpy },
         { provide: AnalyticsService, useValue: analyticsServiceSpy },
         { provide: AffiliateDataStoreService, useValue: affiliateDataStoreSpy },
         { provide: LoadingService, useValue: loadingServiceSpy }
@@ -53,6 +53,7 @@ describe('WishListOverviewPage', () => {
 
     fixture = TestBed.createComponent(WishListOverviewPage);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   }));
 
@@ -106,13 +107,23 @@ describe('WishListOverviewPage', () => {
   describe('selectWishList', () => {
 
     it('navigates to the right wish list', () => {
+      const routerSpy = spyOn(router, 'navigate');
+
       let wishList = WishListTestData.wishListBirthday;
       component.selectWishList(wishList);
-      expect(navControllerSpy.navigateForward).toHaveBeenCalledWith('secure/home/wish-list/1');
+      expect(routerSpy).toHaveBeenCalledWith(['secure/home/wish-list', wishList.id], {
+        state: {
+          wishList: wishList
+        }
+      });
 
       wishList = WishListTestData.wishListWedding;
       component.selectWishList(wishList);
-      expect(navControllerSpy.navigateForward).toHaveBeenCalledWith('secure/home/wish-list/2')
+      expect(routerSpy).toHaveBeenCalledWith(['secure/home/wish-list', wishList.id], {
+        state: {
+          wishList: wishList
+        }
+      })
     })
 
   });

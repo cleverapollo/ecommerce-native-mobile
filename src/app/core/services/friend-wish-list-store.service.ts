@@ -63,8 +63,10 @@ export class FriendWishListStoreService implements FriendWishListStore {
     )
   }
 
-  removeWishListById(wishListId: string): Promise<void> {
-    return this.sharedWishListApiService.removeWishListById(wishListId).toPromise();
+  async removeWishListById(wishListId: string): Promise<void> {
+    await this.sharedWishListApiService.removeWishListById(wishListId).toPromise();
+    await this.cache.removeItem(this.cacheKeyWishList(wishListId));
+    return this.removeCachedWishLists();
   }
 
   removeCachedWishLists(): Promise<void> {
@@ -72,16 +74,14 @@ export class FriendWishListStoreService implements FriendWishListStore {
   }
 
   loadWishList(id: string, forceRefresh: boolean = false): Observable<FriendWishList> {
-    let request = this.sharedWishListApiService.getWishListById(id);
-    let cacheKey = this.cacheKeyWishList(id);
     if (this.platformService.isWeb) {
-      request = this.publicResourceApiService.getSharedWishList(id);
-      cacheKey = this.cacheKeyPublicWishList(id);
+      return this.publicResourceApiService.getSharedWishList(id);
     }
-    if (forceRefresh) {
-      return this.cache.loadFromDelayedObservable(cacheKey, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all')
-    }
-    return this.cache.loadFromObservable(cacheKey, request, this.CACHE_GROUP_KEY)
+    const request = this.sharedWishListApiService.getWishListById(id);
+    const cacheKey = this.cacheKeyWishList(id);
+    return forceRefresh ?
+      this.cache.loadFromDelayedObservable(cacheKey, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all') :
+      this.cache.loadFromObservable(cacheKey, request, this.CACHE_GROUP_KEY);
   }
 
   updateCachedWishList(wishList: FriendWishList): void {
@@ -97,6 +97,21 @@ export class FriendWishListStoreService implements FriendWishListStore {
     }, () => {
       this.removeCachedWishLists();
     });
+  }
+
+  /**
+   * Is this a wish list from a friend?
+   * @param wishListId Id of the wish list.
+   * @returns True or false
+   */
+  async isSharedWishList(wishListId: string): Promise<boolean> {
+    try {
+      const wishLists = await this.loadWishLists().toPromise();
+      const wishList = wishLists.find((w) => w.id === wishListId);
+      return wishList !== undefined;
+    } catch (error) {
+      return false;
+    }
   }
 
 }

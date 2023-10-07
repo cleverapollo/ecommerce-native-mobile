@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { PlatformService } from '@core/services/platform.service';
@@ -10,7 +11,7 @@ import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
 import { finalize, first } from 'rxjs/operators';
-import { getTaBarPath, TabBarRoute } from 'src/app/tab-bar/tab-bar-routes';
+import { TabBarRoute, getTaBarPath } from 'src/app/tab-bar/tab-bar-routes';
 import { ShareExtensionExplanationComponent } from '../share-extension-explanation/share-extension-explanation.component';
 
 @Component({
@@ -52,6 +53,8 @@ export class WishSearchOverviewPage implements OnInit {
     return this.platformService.isAndroid;
   }
 
+  private wishList: WishListDto | null = null;
+
   constructor(
     private readonly productSearchService: ProductSearchService,
     private readonly formBuilder: FormBuilder,
@@ -64,6 +67,7 @@ export class WishSearchOverviewPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.wishList = this.router.getCurrentNavigation()?.extras?.state?.wishList;
     this._setupForms();
   }
 
@@ -90,7 +94,11 @@ export class WishSearchOverviewPage implements OnInit {
       next: _ => {
         const targetUrl = `${getTaBarPath(TabBarRoute.WISH_SEARCH, true)}/search-by-amazon`;
         this.form.reset();
-        this.router.navigateByUrl(targetUrl);
+        this.router.navigateByUrl(targetUrl, {
+          state: {
+            wishList: this.wishList
+          }
+        });
       }
     })
   }

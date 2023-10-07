@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginForm } from './login-form';
-import { NavController } from '@ionic/angular';
-import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
+import { Router } from '@angular/router';
+import { AuthProvider } from '@core/models/signup.model';
+import { AnalyticsService } from '@core/services/analytics.service';
 import { AuthenticationService } from '@core/services/authentication.service';
-import { CustomValidation } from '@shared/custom-validation';
+import { LoadingService } from '@core/services/loading.service';
 import { Logger } from '@core/services/log.service';
 import { CoreToastService } from '@core/services/toast.service';
-import { AnalyticsService } from '@core/services/analytics.service';
-import { LoadingService } from '@core/services/loading.service';
-import { AuthProvider } from '@core/models/signup.model';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
+import { CustomValidation } from '@shared/custom-validation';
+import { LoginForm } from './login-form';
 
 @Component({
   selector: 'app-login',
@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
   }
 
   private createForm() {
-    const email = this.router.getCurrentNavigation().extras.state?.email ?? '';
+    const email = this.router.getCurrentNavigation()?.extras.state?.email ?? '';
     this.loginForm = this.formBuilder.group({
       email: this.formBuilder.control(email, {
         validators: [Validators.required, CustomValidation.email]

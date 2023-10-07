@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { AffiliateDataStoreService } from '@core/data/affiliate-data-store.service';
 import { WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
-import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
@@ -21,8 +21,8 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   private subscription?: Subscription;
 
   constructor(
+    private router: Router,
     private wishListStore: WishListStoreService,
-    private navController: NavController,
     private analyticsService: AnalyticsService,
     private affiliateDataStore: AffiliateDataStoreService,
     private loadingService: LoadingService
@@ -61,7 +61,11 @@ export class WishListOverviewPage implements OnInit, OnDestroy {
   }
 
   selectWishList(wishList: WishListDto) {
-    this.navController.navigateForward(`secure/home/wish-list/${wishList.id}`);
+    this.router.navigate(['secure/home/wish-list', wishList.id], {
+      state: {
+        wishList: wishList
+      }
+    });
   }
 
   async forceRefresh(event: Event) {

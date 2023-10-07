@@ -5,7 +5,6 @@ import { AuthGuard } from '@guards/auth.guard';
 import { AutoLoginGuard } from '@guards/auto-login.guard';
 import { FirebaseRouteGuard } from '@guards/firebase-route.guard';
 import { SharedWishListAccessGuard } from '@guards/shared-wish-list-access.guard';
-import { SharedWishListResolver } from '@wishLists/shared-wish-list/shared-wish-list.resolver';
 import { EmailVerificationStatusResolver } from './email-verification/email-verification-status.resolver';
 
 const routes: Routes = [
@@ -37,7 +36,6 @@ const routes: Routes = [
   {
     path: 'meine-wunschliste/:wishListId',
     canActivate: [SharedWishListAccessGuard],
-    resolve: { data: SharedWishListResolver },
     loadChildren: () => import('@wishLists/shared-wish-list/shared-wish-list.module').then(m => m.SharedWishListPageModule)
   },
   {

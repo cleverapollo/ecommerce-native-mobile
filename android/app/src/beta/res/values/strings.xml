@@ -4,10 +4,6 @@
     <string name="title_activity_main" translatable="false">wantic beta</string>
     <string name="package_name" translatable="false">io.wantic.app.beta</string>
     <string name="custom_url_scheme" translatable="false">io.wantic.app.beta</string>
-    <string name="fb_app_id" translatable="false">494614765250156</string>
-    <string name="fb_app_name" translatable="false">wantic</string>
-    <bool name="fb_auto_log_app_events_enabled">true</bool>
-    <bool name="fb_advertiser_id_collection_enabled">true</bool>
     <string name="ionic_app_id" translatable="false">0f41e38b</string>
     <string name="ionic_channel_name" translatable="false">Master</string>
     <string name="ionic_update_method" translatable="false">background</string>

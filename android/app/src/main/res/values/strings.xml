@@ -48,4 +48,8 @@
 
     <!-- Switch is favorite -->
     <string name="switch_is_favorite_text">Mark wish as favourite</string>
+
+    <string name="facebook_app_id" translatable="false">494614765250156</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb494614765250156</string>
+    <string name="facebook_client_token" translatable="false">bc1039ad950f1be9b2ce6d8792472a65</string>
 </resources>
