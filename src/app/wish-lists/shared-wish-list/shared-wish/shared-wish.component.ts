@@ -76,10 +76,6 @@ export class SharedWishComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initState();
-  }
-
-  private initState() {
     if (this.wish.bought) {
       this.state = SharedWishListState.CANCELLABLE;
     } else if (this.wish.reservedByFriend) {
@@ -113,6 +109,7 @@ export class SharedWishComponent implements OnInit {
         const message = 'Dein Wunsch konnte aufgrund eines Fehlers leider nicht reserviert werden.';
         this.toastService.presentErrorToast(message);
         this.state = SharedWishListState.RESERVABLE;
+        this.storageService.remove(this.cacheKey);
       }
     });
   }
