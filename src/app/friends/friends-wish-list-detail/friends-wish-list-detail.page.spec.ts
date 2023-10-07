@@ -15,7 +15,8 @@ import { MockToastService } from '@core/services/toast-mock.service';
 import { CoreToastService, ToastService } from '@core/services/toast.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule, NavController } from '@ionic/angular';
-import { Observable, of, Subscription, throwError } from 'rxjs';
+import { OwnerNamesPipe } from '@shared/pipes/owner-names.pipe';
+import { Observable, of, Subscription } from 'rxjs';
 import { FriendsWishListDetailPage } from './friends-wish-list-detail.page';
 
 describe('FriendsWishListDetailPage', () => {
@@ -42,7 +43,7 @@ describe('FriendsWishListDetailPage', () => {
     createParamMapSpy();
 
     TestBed.configureTestingModule({
-      declarations: [ FriendsWishListDetailPage ],
+      declarations: [FriendsWishListDetailPage, OwnerNamesPipe],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         { provide: AnalyticsService, useValue: analyticsService },
@@ -54,10 +55,20 @@ describe('FriendsWishListDetailPage', () => {
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         DatePipe
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     router = TestBed.inject(Router);
+    spyOn(router, 'getCurrentNavigation').and.callFake(() => {
+      return {
+        extras: {
+          state: {
+            wishList: WishListTestData.sharedWishListWedding
+          }
+        }
+      } as any
+    })
+
     fixture = TestBed.createComponent(FriendsWishListDetailPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -81,7 +92,7 @@ describe('FriendsWishListDetailPage', () => {
     });
 
     activatedRouteStub = {
-        paramMap: paramMapObservable
+      paramMap: paramMapObservable
     };
   }
 
@@ -108,31 +119,6 @@ describe('FriendsWishListDetailPage', () => {
     });
   });
 
-  describe('ngOnDestroy', () => {
-    it('should unsubscribe param map subscription', () => {
-      component.ngOnDestroy();
-
-      expect(paramMapSubscription.unsubscribe).toHaveBeenCalled();
-    });
-
-    it('should unsubscribe sharedWishListStore loadWishList subscription', () => {
-      const observable = new Observable<FriendWishList>();
-      const subscription = new Subscription();
-      spyOn(sharedWishListStore, 'loadWishList').and.returnValue(observable);
-
-      spyOn(subscription, 'unsubscribe').and.callThrough();
-      spyOn(observable, 'subscribe').and.callFake((fn: any): Subscription => {
-        return subscription;
-      });
-
-      component.ionViewWillEnter();
-
-      component.ngOnDestroy();
-
-      expect(subscription.unsubscribe).toHaveBeenCalled();
-    });
-  });
-
   describe('ionViewDidEnter', () => {
     it('should send analytics event', () => {
       component.ionViewDidEnter();
@@ -154,9 +140,11 @@ describe('FriendsWishListDetailPage', () => {
       loadWishListSpy.and.returnValue(of(WishListTestData.sharedWishListWedding));
 
       component.wishList = WishListTestData.sharedWishListWedding;
-      component.forceRefresh({ target: {
-        complete() { completed = true; }
-      }});
+      component.forceRefresh({
+        target: {
+          complete() { completed = true; }
+        }
+      });
 
       tick();
 
@@ -214,7 +202,7 @@ describe('FriendsWishListDetailPage', () => {
 
       expect(showLoadingServiceSpy).toHaveBeenCalledTimes(1);
       expect(dismissLoadingServiceSpy).toHaveBeenCalledTimes(1);
-      expect(navigateSpy).toHaveBeenCalledWith('/secure/friends-home/friends-wish-list-overview?forceRefresh=true');
+      expect(navigateSpy).toHaveBeenCalledWith('/secure/friends-home/friends-wish-list-overview');
 
       flush();
     }));

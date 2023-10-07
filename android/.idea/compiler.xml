@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="12" />
+    <bytecodeTargetLevel target="12">
+      <module name="android.app" target="17" />
+      <module name="android.appsflyer-capacitor-plugin" target="17" />
+      <module name="android.capacitor-android" target="17" />
+      <module name="android.capacitor-app" target="17" />
+      <module name="android.capacitor-browser" target="17" />
+      <module name="android.capacitor-community-firebase-analytics" target="17" />
+      <module name="android.capacitor-cordova-android-plugins" target="17" />
+      <module name="android.capacitor-device" target="17" />
+      <module name="android.capacitor-firebase-analytics" target="17" />
+      <module name="android.capacitor-firebase-authentication" target="17" />
+      <module name="android.capacitor-haptics" target="17" />
+      <module name="android.capacitor-keyboard" target="17" />
+      <module name="android.capacitor-preferences" target="17" />
+      <module name="android.capacitor-secure-storage-plugin" target="17" />
+      <module name="android.capacitor-share" target="17" />
+      <module name="android.capacitor-splash-screen" target="17" />
+      <module name="android.capacitor-status-bar" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

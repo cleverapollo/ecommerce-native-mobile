@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { WishListApiMockService } from '@core/api/wish-list-mock.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { MockLoadingService } from '@core/services/loading-mock.service';
 import { LoadingService } from '@core/services/loading.service';
@@ -12,6 +11,7 @@ import { CoreToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { IonicModule } from '@ionic/angular';
 
+import { MockWishListStoreService } from '@core/services/wish-list-store-mock.service';
 import { WishUpdatePage } from './wish-update.page';
 
 describe('WishUpdatePage', () => {
@@ -19,7 +19,7 @@ describe('WishUpdatePage', () => {
   let fixture: ComponentFixture<WishUpdatePage>;
 
   const loadingServiceFake = new MockLoadingService();
-  const wishListStoreFake = new WishListApiMockService();
+  const wishListStoreMock = new MockWishListStoreService();
   const toastServiceFake = new MockToastService();
   const searchResultDataServiceSpy = jasmine.createSpyObj<SearchResultDataService>('searchResultDataService', ['clear']);
   const analyticsServiceSpy = jasmine.createSpyObj<AnalyticsService>('analyticsService', ['setFirebaseScreenName']);
@@ -29,7 +29,7 @@ describe('WishUpdatePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WishUpdatePage ],
+      declarations: [WishUpdatePage],
       imports: [
         IonicModule.forRoot(),
         RouterTestingModule.withRoutes(routes),
@@ -38,7 +38,7 @@ describe('WishUpdatePage', () => {
       providers: [
         FormBuilder,
         { provide: LoadingService, useValue: loadingServiceFake },
-        { provide: WishListStoreService, useValue: wishListStoreFake },
+        { provide: WishListStoreService, useValue: wishListStoreMock },
         { provide: CoreToastService, useValue: toastServiceFake },
         { provide: SearchResultDataService, useValue: searchResultDataServiceSpy },
         { provide: AnalyticsService, useValue: analyticsServiceSpy },

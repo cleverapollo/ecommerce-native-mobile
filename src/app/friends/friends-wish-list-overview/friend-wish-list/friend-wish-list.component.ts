@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FriendWishList } from '@core/models/wish-list.model';
+import { NO_DATE_SELECTED } from '@core/ui.constants';
 import { WishImageComponentStyles } from '@shared/components/wish-image/wish-image.component';
 
 @Component({
@@ -13,7 +14,7 @@ export class FriendWishListComponent {
   @Input() wishList: FriendWishList;
 
   get date(): string {
-    let dateString  = 'noch kein Datum festgelegt';
+    let dateString = NO_DATE_SELECTED;
     if (this.wishList.date) {
       dateString = this.datePipe.transform(this.wishList.date.toString());
     }

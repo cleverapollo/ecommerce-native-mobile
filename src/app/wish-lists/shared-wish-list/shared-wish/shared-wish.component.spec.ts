@@ -1,10 +1,10 @@
-import { waitForAsync, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush, tick, waitForAsync } from '@angular/core/testing';
 import { PublicResourceApiMockService } from '@core/api/public-resource-api-mock-service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { BrowserService } from '@core/services/browser.service';
-import { StorageService } from '@core/services/storage.service';
 import { MockStorageService } from '@core/services/storage-mock.service';
-import { CoreToastService, ToastService } from '@core/services/toast.service';
+import { StorageService } from '@core/services/storage.service';
+import { CoreToastService } from '@core/services/toast.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { WishListTestDataUtils } from '@core/test/wish-list-data.utils';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -23,7 +23,7 @@ describe('SharedWishComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharedWishComponent ],
+      declarations: [SharedWishComponent],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: StorageService, useValue: storageService },
@@ -34,7 +34,7 @@ describe('SharedWishComponent', () => {
       ]
     }).compileComponents();
 
-;
+    ;
 
     fixture = TestBed.createComponent(SharedWishComponent);
     component = fixture.componentInstance;
@@ -137,6 +137,7 @@ describe('SharedWishComponent', () => {
     tick();
 
     spyOn(storageService, 'set');
+    spyOn(storageService, 'remove');
     spyOn(component.wishStateChanged, 'emit');
 
     component.reserve();
@@ -144,6 +145,7 @@ describe('SharedWishComponent', () => {
     expect(SharedWishListState[component.state]).toBe(SharedWishListState[SharedWishListState.RESERVABLE]);
     expect(toastServiceSpy.presentErrorToast).toHaveBeenCalledTimes(1);
     expect(storageService.set).not.toHaveBeenCalledWith('sharedWish_1', true);
+    expect(storageService.remove).toHaveBeenCalledWith('sharedWish_1');
     expect(component.wishStateChanged.emit).not.toHaveBeenCalled();
 
     flush();

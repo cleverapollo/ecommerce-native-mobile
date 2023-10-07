@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
 import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpHeaders,
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpResponse,
-  HttpHeaders,
-  HttpErrorResponse
+  HttpResponse
 } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
-import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
+import { Injectable } from '@angular/core';
+import { HTTP, HTTPResponse } from '@awesome-cordova-plugins/http/ngx';
 import { Logger } from '@core/services/log.service';
 import { DefaultPlatformService } from '@core/services/platform.service';
+import { Observable, from } from 'rxjs';
 
 type HttpMethod =
   | 'get'
@@ -26,15 +26,15 @@ type HttpMethod =
 type NativeHttpRequestOptions = {
   method: 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete' | 'options' | 'upload' | 'download';
   data?: {
-      [index: string]: any;
+    [index: string]: any;
   };
   params?: {
-      [index: string]: string | number;
+    [index: string]: string | number;
   };
   serializer?: 'json' | 'urlencoded' | 'utf8' | 'multipart';
   timeout?: number;
   headers?: {
-      [index: string]: string;
+    [index: string]: string;
   };
   filePath?: string | string[];
   name?: string | string[];
@@ -48,7 +48,7 @@ export class NativeHttpInterceptor implements HttpInterceptor {
     private nativeHttp: HTTP,
     private platform: DefaultPlatformService,
     private logger: Logger
-  ) {}
+  ) { }
 
   public intercept(
     request: HttpRequest<any>,
@@ -176,21 +176,21 @@ export class NativeHttpInterceptor implements HttpInterceptor {
 
   private logRequestBody(request: HttpRequest<any>) {
     this.logger.info('— Request body');
-    this.logger.info(request.body);
+    this.logger.info(JSON.stringify(request.body));
   }
 
   private logRequestHeaders(request: HttpRequest<any>) {
     this.logger.info('— Request headers');
-    this.logger.info(request.headers);
+    this.logger.info(JSON.stringify(request.headers));
   }
 
   private logResponse(response: HttpResponse<any>) {
     this.logger.info('— Response success');
-    this.logger.info(response);
+    this.logger.info(JSON.stringify(response));
   }
 
   private logError(error: any) {
     this.logger.error('— Response error');
-    this.logger.error(error);
+    this.logger.error(JSON.stringify(error));
   }
 }

@@ -1,15 +1,17 @@
 import { DatePipe } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, QueryList, TrackByFunction, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserDto } from '@core/models/user.model';
 import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 import { AlertService } from '@core/services/alert.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
+import { LOADING_STRING, NO_DATE_SELECTED } from '@core/ui.constants';
 import { NavController } from '@ionic/angular';
 import { Masonry } from '@shared/masonry';
-import { Observable, of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
 @Component({
@@ -22,24 +24,32 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   @ViewChild('masonry') masonry: ElementRef<HTMLDivElement>;
   @ViewChildren('bricks') masonryBricks: QueryList<ElementRef<HTMLDivElement>>;
 
-  wishList: FriendWishList;
-  wishes$: Observable<FriendWish[]> = of([]);
+  wishList: FriendWishList = null;
+  wishes: FriendWish[] = [];
 
   get date(): string {
-    let dateString  = 'noch kein Datum festgelegt';
-    if (this.wishList.date) {
+    let dateString = NO_DATE_SELECTED;
+    if (!this.wishList) {
+      dateString = LOADING_STRING;
+    } else if (this.wishList?.date) {
       dateString = this.datePipe.transform(this.wishList.date.toString());
     }
     return dateString;
   }
 
+  get owners(): UserDto[] {
+    return this.wishList?.owners || [];
+  }
+
+  get name(): string {
+    return this.wishList?.name || LOADING_STRING;
+  }
+
   trackByWishId: TrackByFunction<FriendWish> = (idx, wish) => wish.id;
 
-  private wishListId: string;
-
-  // subscriptions
-  private loadWishListSubscription: Subscription = null;
-  private routeParamSubscription: Subscription = null;
+  private wishListId: string = null;
+  private subscriptions: Subscription = new Subscription();
+  private isInitialized = false;
 
   constructor(
     private navController: NavController,
@@ -54,10 +64,12 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   ) { }
 
   ngOnInit() {
-    this.routeParamSubscription = this.route.paramMap.subscribe(paramMap => {
+    this.wishList = this.router.getCurrentNavigation()?.extras.state?.wishList;
+    this.wishes = this.wishList?.wishes;
+    this.subscriptions.add(this.route.paramMap.subscribe(paramMap => {
       this.wishListId = paramMap.get('wishListId');
-      this.wishes$ = this.sharedWishListStore.loadWishes(this.wishListId);
-    })
+      this.isInitialized = true;
+    }));
   }
 
   ngAfterViewChecked(): void {
@@ -66,9 +78,12 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   }
 
   ionViewWillEnter() {
-    this.loadWishListSubscription = this.sharedWishListStore.loadWishList(this.wishListId).subscribe(wishList => {
-      this.wishList = wishList;
-    })
+    if (this.isInitialized) {
+      this.sharedWishListStore.loadWishList(this.wishListId, true).subscribe(wishList => {
+        this.wishList = wishList;
+        this.wishes = this.wishList.wishes;
+      })
+    }
   }
 
   ionViewDidEnter() {
@@ -76,8 +91,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   }
 
   ngOnDestroy() {
-    this.routeParamSubscription?.unsubscribe();
-    this.loadWishListSubscription?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   goBack() {
@@ -85,7 +99,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   }
 
   updateWish(updatedWish: FriendWish) {
-    const index = this.wishList.wishes.findIndex( w => w.id === updatedWish.id );
+    const index = this.wishList.wishes.findIndex(w => w.id === updatedWish.id);
     if (index !== -1) {
       this.wishList.wishes[index] = updatedWish;
       this.sharedWishListStore.updateCachedWishList(this.wishList);
@@ -114,7 +128,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
       await this.sharedWishListStore.removeWishListById(this.wishListId);
       await this.loadingService.stopLoadingSpinner();
       await this.toastService.presentSuccessToast('Du hast die Wunschliste erfolgreich verlassen.');
-      return await this.router.navigateByUrl('/secure/friends-home/friends-wish-list-overview?forceRefresh=true');
+      return await this.router.navigateByUrl('/secure/friends-home/friends-wish-list-overview');
     } catch (error) {
       this.loadingService.stopLoadingSpinner().catch(() => Promise.resolve());
       return Promise.resolve();
@@ -123,16 +137,16 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
 
   forceRefresh(event: any) {
     this.sharedWishListStore.loadWishList(this.wishList.id, true)
-    .pipe(
-      first(),
-      finalize(() => {
-        event.target.complete();
-      })
-    )
-    .subscribe({
-      next: wishList => {
-        this.wishList = wishList;
-      }
-    });
+      .pipe(
+        first(),
+        finalize(() => {
+          event.target.complete();
+        })
+      )
+      .subscribe({
+        next: wishList => {
+          this.wishList = wishList;
+        }
+      });
   }
 }

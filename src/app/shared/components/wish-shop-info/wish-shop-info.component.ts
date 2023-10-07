@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FriendWish, WishDto } from '@core/models/wish-list.model';
 import { CoreToastService } from '@core/services/toast.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
+import { LOADING_STRING } from '@core/ui.constants';
 import { finalize, first } from 'rxjs/operators';
 
 export interface WishShopInfoComponentStyles {
@@ -25,7 +26,7 @@ export class WishShopInfoComponent {
   @Output() wishUpdate = new EventEmitter<boolean>();
 
   get priceDisplayString(): string {
-    return this.wish?.price?.displayString || 'Lädt ...';
+    return this.wish?.price?.displayString || LOADING_STRING;
   }
 
   get fillIconCSSClass(): string {
@@ -36,14 +37,14 @@ export class WishShopInfoComponent {
     return cssClass;
   }
 
-  get shopLogoUrl(): string | null {
+  get shopLogoUrl(): string | null {
     return null;
   }
 
   private get defaultStyles(): WishShopInfoComponentStyles {
     return {
       shopInfoOverlay: {
-        'min-width':  '42px',
+        'min-width': '42px',
         'min-height': '39px',
         'text-align': 'center',
         'margin-top': '-2px' // - var(--wish-card-border-width);
@@ -79,7 +80,7 @@ export class WishShopInfoComponent {
     if (!this.toggleIsFavorite || this.isUpdating) {
       return;
     }
-    const wish = {...this.wish};
+    const wish = { ...this.wish };
     wish.isFavorite = !this.wish.isFavorite;
 
     this.isUpdating = true;

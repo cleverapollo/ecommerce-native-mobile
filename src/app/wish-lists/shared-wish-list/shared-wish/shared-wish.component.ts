@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
+import { UserDto } from '@core/models/user.model';
 import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
 import { BrowserService } from '@core/services/browser.service';
 import { StorageService } from '@core/services/storage.service';
@@ -58,6 +59,10 @@ export class SharedWishComponent implements OnInit {
     return this.state === SharedWishListState.LOADING;
   }
 
+  get owners(): UserDto[] {
+    return this.wishList?.owners || [];
+  }
+
   private get cacheKey(): string {
     return `sharedWish_${this.wish?.id ?? '0'}`
   }
@@ -71,10 +76,6 @@ export class SharedWishComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initState();
-  }
-
-  private initState() {
     if (this.wish.bought) {
       this.state = SharedWishListState.CANCELLABLE;
     } else if (this.wish.reservedByFriend) {
@@ -108,6 +109,7 @@ export class SharedWishComponent implements OnInit {
         const message = 'Dein Wunsch konnte aufgrund eines Fehlers leider nicht reserviert werden.';
         this.toastService.presentErrorToast(message);
         this.state = SharedWishListState.RESERVABLE;
+        this.storageService.remove(this.cacheKey);
       }
     });
   }
@@ -115,9 +117,9 @@ export class SharedWishComponent implements OnInit {
   private createSuccessMessage(): string {
     const defaultMessage = 'Dein Geschenk ist nun für dich reserviert';
     let message = defaultMessage;
-    if (this.wishList.owners.length && this.wishList.owners.length === 1) {
-      const owner = this.wishList.owners[0];
-      message = `Toll, dass du ${ owner.firstName }s Wunsch erfüllst. ${ owner.firstName } wird sich sehr freuen. ${defaultMessage}`;
+    if (this.owners.length && this.owners.length === 1) {
+      const owner = this.owners[0];
+      message = `Toll, dass du ${owner.firstName}s Wunsch erfüllst. ${owner.firstName} wird sich sehr freuen. ${defaultMessage}`;
     }
     return message;
   }

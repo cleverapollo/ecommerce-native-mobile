@@ -9,23 +9,23 @@
   </ion-refresher>
 
   <section class="ion-text-center wish-list-detail-container">
-    <app-owners-info [owners]="wishList.owners"></app-owners-info>
+    <app-owners-info [owners]="owners"></app-owners-info>
     <div class="details">
-      <h1 class="wish-list-name">{{ wishList.name }}</h1>
-      <p class="wish-list-date">{{  wishList.date ? (wishList.date | date) : 'noch kein Datum festgelegt' }}</p>
+      <h1 class="wish-list-name">{{ name }}</h1>
+      <p class="wish-list-date">{{ date }}</p>
     </div>
   </section>
 
   <div class="divide"></div>
 
   <section class="ion-text-center page-actions">
-    <a routerLink="/secure/wish-search">
+    <a role="button" (click)="navigateToWishSearchPage()" [class.disabled]="!wishList">
       <ion-icon src="assets/icon/plus.svg" ></ion-icon>
     </a>
-    <a role="button" [routerLink]="['edit']">
+    <a role="button" (click)="navigateToWishListEditPage()" [class.disabled]="!wishList">
       <ion-icon src="assets/icon/pencil.svg"></ion-icon>
     </a>
-    <a role="button" (click)="share()">
+    <a role="button" (click)="share()" [class.disabled]="!wishList">
       <ion-icon src="assets/icon/share.svg"></ion-icon>
     </a>
   </section>

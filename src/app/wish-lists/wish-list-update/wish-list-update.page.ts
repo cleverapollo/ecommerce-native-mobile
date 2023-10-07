@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { WishListDto, WishListUpdateRequest } from '@core/models/wish-list.model';
 import { AlertService } from '@core/services/alert.service';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -54,14 +54,13 @@ export class WishListUpdatePage implements OnInit {
     private alertService: AlertService,
     private toastService: CoreToastService,
     private wishListStore: WishListStoreService,
-    private route: ActivatedRoute,
     private router: Router,
     private loadingService: LoadingService,
     private analyticsService: AnalyticsService
   ) { }
 
   ngOnInit() {
-    this.wishList = this.route.snapshot.data.wishList;
+    this.wishList = this.router.getCurrentNavigation()?.extras?.state?.wishList;
     this.setupForm();
   }
 
@@ -75,7 +74,7 @@ export class WishListUpdatePage implements OnInit {
 
   async deleteWishList() {
     const header = 'Wunschliste löschen';
-    const message =  `Möchtest du deine Wunschliste ${this.wishList.name} wirklich löschen?`;
+    const message = `Möchtest du deine Wunschliste ${this.wishList.name} wirklich löschen?`;
     const alert = await this.alertService.createDeleteAlert(header, message, this.onDeleteConfirmation);
     alert.present();
   }
@@ -105,7 +104,7 @@ export class WishListUpdatePage implements OnInit {
     }
     const wishList: WishListUpdateRequest = {
       id: this.wishList.id,
-      name:  this.form?.controls.name.value,
+      name: this.form?.controls.name.value,
       showReservedWishes: this.form?.controls.showReservedWishes.value,
       date: this.form?.controls.date.value
     };
