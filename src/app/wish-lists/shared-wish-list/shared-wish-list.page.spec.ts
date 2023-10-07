@@ -67,11 +67,14 @@ describe('SharedWishListPage', () => {
   });
 
   describe('updateWishList', () => {
-    it('should update wish in wish list', () => {
+    it('should update wish in wish list', async () => {
+      component.wishList = WishListTestData.sharedWishListWedding;
+
       const wish = component.wishList.wishes[0];
       const updatedWish = WishListTestDataUtils.fakeCancelReservationStateChange(wish);
 
       component.updateWishList(updatedWish);
+      await fixture.whenStable();
 
       expect(component.wishList.wishes.includes(updatedWish)).toBeTruthy();
       expect(component.wishList.wishes.includes(wish)).toBeFalsy();

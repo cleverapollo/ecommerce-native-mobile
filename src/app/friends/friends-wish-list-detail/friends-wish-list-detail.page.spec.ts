@@ -15,6 +15,7 @@ import { MockToastService } from '@core/services/toast-mock.service';
 import { CoreToastService, ToastService } from '@core/services/toast.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule, NavController } from '@ionic/angular';
+import { OwnerNamesPipe } from '@shared/pipes/owner-names.pipe';
 import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
 import { Observable, of, Subscription } from 'rxjs';
@@ -44,7 +45,7 @@ describe('FriendsWishListDetailPage', () => {
     createParamMapSpy();
 
     TestBed.configureTestingModule({
-      declarations: [FriendsWishListDetailPage, NavToolbarComponentFake, EmailUnverifiedHintComponentFake],
+      declarations: [FriendsWishListDetailPage, NavToolbarComponentFake, EmailUnverifiedHintComponentFake, OwnerNamesPipe],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         { provide: AnalyticsService, useValue: analyticsService },
