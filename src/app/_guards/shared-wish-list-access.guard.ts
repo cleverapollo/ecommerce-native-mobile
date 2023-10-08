@@ -4,7 +4,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { BrowserService } from '@core/services/browser.service';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { Logger } from '@core/services/log.service';
-import { DefaultPlatformService } from '@core/services/platform.service';
+import { PlatformService } from '@core/services/platform.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { Observable } from 'rxjs';
 import { APP_URL } from 'src/environments/environment';
@@ -16,7 +16,7 @@ export class SharedWishListAccessGuard implements CanActivate {
 
   constructor(
     private authService: AuthenticationService,
-    private platform: DefaultPlatformService,
+    private platform: PlatformService,
     private browserService: BrowserService,
     private friendWishListStore: FriendWishListStoreService,
     private wishListStore: WishListStoreService,
