@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserApiService } from '@core/api/user-api.service';
 import { Gender } from '@core/models/user.model';
@@ -19,10 +19,10 @@ export class SignupMailTwoPage implements OnInit {
   birthday?: Date;
   gender?: Gender;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private logger: Logger,
     private analyticsService: AnalyticsService,

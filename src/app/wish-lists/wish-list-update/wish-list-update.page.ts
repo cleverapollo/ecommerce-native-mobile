@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WishListDto, WishListUpdateRequest } from '@core/models/wish-list.model';
 import { AlertService } from '@core/services/alert.service';
@@ -20,7 +20,7 @@ import { finalize, first } from 'rxjs/operators';
 })
 export class WishListUpdatePage implements OnInit {
 
-  form: FormGroup | undefined;
+  form: UntypedFormGroup | undefined;
   /** ISO Date string */
   minDate = new Date().toISOString();
   /** ISO Date string */
@@ -49,7 +49,7 @@ export class WishListUpdatePage implements OnInit {
   private wishList = new WishListDto();
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private navController: NavController,
     private alertService: AlertService,
     private toastService: CoreToastService,

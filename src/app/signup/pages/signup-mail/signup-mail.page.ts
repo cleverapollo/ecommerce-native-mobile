@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthProvider, SignupRequest } from '@core/models/signup.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -20,7 +20,7 @@ export class SignupMailPage implements OnInit {
 
   @ViewChildren(IonInput) inputs: Array<IonInput>;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   validationMessages: ValidationMessages = {
     firstName: [
       new ValidationMessage('required', 'Gib bitte deinen Namen an.')
@@ -41,7 +41,7 @@ export class SignupMailPage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private analyticsService: AnalyticsService,
     private router: Router,
     private authService: AuthenticationService,

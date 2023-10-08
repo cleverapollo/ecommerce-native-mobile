@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { CustomValidation } from '@shared/custom-validation';
 import { UserApiService } from '@core/api/user-api.service';
 import { NavController } from '@ionic/angular';
@@ -32,7 +32,7 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
   oobCode: string;
   token: string; // deprecated
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   validationMessages: ValidationMessages = {
     /*password: [
       new ValidationMessage('passwordDoesNotMatch', 'Die Passwört stimmen nicht überein.'),
@@ -50,7 +50,7 @@ export class ChangePasswordPage implements OnInit, OnDestroy {
   private queryParamSubscription: Subscription;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private authApi: AuthService,
     private api: UserApiService,
     private navController: NavController,

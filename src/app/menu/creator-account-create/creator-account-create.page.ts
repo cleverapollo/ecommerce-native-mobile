@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
 import { WanticError } from '@core/models/error.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -27,7 +27,7 @@ export class CreatorAccountCreatePage implements OnInit {
   private readonly URL_MAX_LENGTH = 2048;
   private readonly URL_MIN_LENGTH = 25;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   get validationMessages(): ValidationMessages {
     return {
@@ -55,7 +55,7 @@ export class CreatorAccountCreatePage implements OnInit {
   }
 
   constructor(
-    private readonly formBuilder: FormBuilder,
+    private readonly formBuilder: UntypedFormBuilder,
     private readonly analyticsService: AnalyticsService,
     private readonly userProfileStore: UserProfileStore,
     private readonly contentCreatorApi: ContentCreatorApiService,

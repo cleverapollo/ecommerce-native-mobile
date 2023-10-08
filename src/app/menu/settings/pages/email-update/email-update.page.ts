@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserApiService } from '@core/api/user-api.service';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
@@ -22,7 +22,7 @@ import { first } from 'rxjs/operators';
 })
 export class EmailUpdatePage implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   userProfile: UserProfile;
 
   get validationMessages(): ValidationMessages {
@@ -47,7 +47,7 @@ export class EmailUpdatePage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private api: UserApiService,
     private logger: Logger,
     private loadingService: LoadingService,

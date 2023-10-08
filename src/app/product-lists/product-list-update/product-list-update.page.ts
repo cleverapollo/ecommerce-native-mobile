@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductList } from '@core/models/product-list.model';
 import { AlertService } from '@core/services/alert.service';
@@ -19,7 +19,7 @@ import { finalize, first } from 'rxjs/operators';
 })
 export class ProductListUpdatePage implements OnInit, OnDestroy {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   productList: ProductList;
 
   get validationMessages(): ValidationMessages {
@@ -36,7 +36,7 @@ export class ProductListUpdatePage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private analyticsService: AnalyticsService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private alertService: AlertService,
     private loadingService: LoadingService,
     private productListStore: ProductListStoreService,

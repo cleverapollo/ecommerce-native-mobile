@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
 import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -20,7 +20,7 @@ export class CreatorNameUpdatePage implements OnInit {
   private readonly NAME_MIN_LENGTH = 2;
   private readonly NAME_MAX_LENGTH = 63;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   user: UserProfile;
 
   get validationMessages(): ValidationMessages {
@@ -39,7 +39,7 @@ export class CreatorNameUpdatePage implements OnInit {
   }
 
   constructor(
-    private readonly formBuilder: FormBuilder,
+    private readonly formBuilder: UntypedFormBuilder,
     private readonly loadingService: LoadingService,
     private readonly toastService: CoreToastService,
     private readonly userStore: UserProfileStore,

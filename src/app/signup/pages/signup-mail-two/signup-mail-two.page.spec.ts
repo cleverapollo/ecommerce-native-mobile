@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserApiService } from '@core/api/user-api.service';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -36,7 +36,7 @@ describe('SignupMailTwoPage', () => {
       declarations: [SignupMailTwoPage, NavToolbarComponentFake],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
-        { provide: FormBuilder, useValue: formBuilder },
+        { provide: UntypedFormBuilder, useValue: formBuilder },
         { provide: Logger, useValue: logger },
         { provide: AnalyticsService, useValue: analyticsService },
         { provide: LoadingService, useValue: loadingService },

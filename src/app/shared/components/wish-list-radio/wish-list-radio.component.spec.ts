@@ -1,6 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush, tick, waitForAsync } from '@angular/core/testing';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishListApiMockService } from '@core/api/wish-list-mock.service';
@@ -30,7 +30,7 @@ describe('WishListRadioComponent', () => {
       declarations: [WishListRadioComponent],
       imports: [IonicModule.forRoot(), LoggerTestingModule, FormsModule, ReactiveFormsModule],
       providers: [
-        FormBuilder,
+        UntypedFormBuilder,
         { provide: WishListApiService, useValue: wishListApiService },
         { provide: WishListStoreService, useValue: wishListStoreService },
         { provide: Logger, useValue: logger }

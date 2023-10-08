@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { UserApiService } from '@core/api/user-api.service';
 import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -19,7 +19,7 @@ import { UserProfileStore } from '../../user-profile-store.service';
 })
 export class BirthdayUpdatePage implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   get maxDate(): string {
     const now = new Date();
@@ -37,7 +37,7 @@ export class BirthdayUpdatePage implements OnInit {
   constructor(
     private loadingService: LoadingService,
     private toastService: CoreToastService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private api: UserApiService,
     private logger: Logger,
     private userProfileStore: UserProfileStore,

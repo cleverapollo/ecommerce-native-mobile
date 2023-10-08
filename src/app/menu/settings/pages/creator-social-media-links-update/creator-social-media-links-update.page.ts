@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
 import { UserProfile } from '@core/models/user.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -20,7 +20,7 @@ export class CreatorSocialMediaLinksUpdatePage implements OnInit {
   private readonly URL_MAX_LENGTH = 2048;
   private readonly URL_MIN_LENGTH = 25;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   user: UserProfile;
   showNoChangesMessage = false;
 
@@ -52,7 +52,7 @@ export class CreatorSocialMediaLinksUpdatePage implements OnInit {
   }
 
   constructor(
-    private readonly formBuilder: FormBuilder,
+    private readonly formBuilder: UntypedFormBuilder,
     private readonly loadingService: LoadingService,
     private readonly toastService: CoreToastService,
     private readonly userStore: UserProfileStore,

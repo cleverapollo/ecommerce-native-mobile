@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -21,8 +21,8 @@ import { ShareExtensionExplanationComponent } from '../share-extension-explanati
 })
 export class WishSearchOverviewPage implements OnInit {
 
-  form: FormGroup;
-  urlForm: FormGroup;
+  form: UntypedFormGroup;
+  urlForm: UntypedFormGroup;
 
   get validationMessages(): ValidationMessages {
     return {
@@ -57,7 +57,7 @@ export class WishSearchOverviewPage implements OnInit {
 
   constructor(
     private readonly productSearchService: ProductSearchService,
-    private readonly formBuilder: FormBuilder,
+    private readonly formBuilder: UntypedFormBuilder,
     private readonly router: Router,
     private readonly loadingService: LoadingService,
     private readonly userProfileStore: UserProfileStore,

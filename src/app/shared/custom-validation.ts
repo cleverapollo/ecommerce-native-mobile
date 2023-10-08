@@ -1,4 +1,4 @@
-import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, UntypedFormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class CustomValidation {
 
@@ -55,10 +55,10 @@ export class CustomValidation {
     }
   }
 
-  static validateFormGroup(formGroup: FormGroup) {
+  static validateFormGroup(formGroup: UntypedFormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
-      if (control instanceof FormGroup) {
+      if (control instanceof UntypedFormGroup) {
         this.validateFormGroup(control);
       }
       control.markAsTouched({ onlySelf: true });

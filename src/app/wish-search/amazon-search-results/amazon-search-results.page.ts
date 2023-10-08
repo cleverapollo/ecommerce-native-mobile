@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, TrackByFunction, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchResult, SearchResultItem, SearchResultItemMapper } from '@core/models/search-result-item';
 import { WishDto, WishListDto } from '@core/models/wish-list.model';
@@ -27,7 +27,7 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
   page = 1;
   maxPageCount = 1;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading = false;
 
   searchSuggestions = [
@@ -77,7 +77,7 @@ export class AmazonSearchResultsPage implements OnInit, OnDestroy, AfterViewInit
 
   constructor(
     private searchService: ProductSearchService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private logger: Logger,

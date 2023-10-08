@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthProvider } from '@core/models/signup.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -19,7 +19,7 @@ import { LoginForm } from './login-form';
 })
 export class LoginPage implements OnInit {
 
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   validationMessages: ValidationMessages = {
     email: [
       new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private navController: NavController,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private authService: AuthenticationService,
     private logger: Logger,
     private toastService: CoreToastService,

@@ -1,5 +1,5 @@
 import { Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
 import { ContentCreatorAccount } from '@core/models/content-creator.model';
@@ -18,7 +18,7 @@ export class CreatorSearchPage implements OnInit {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  searchField: FormControl = new FormControl(null);
+  searchField: UntypedFormControl = new UntypedFormControl(null);
   searchResult: ContentCreatorAccount[] = [];
   displayResult: ContentCreatorAccount[] = [];
   isSearching = false;

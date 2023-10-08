@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, UntypedFormBuilder, UntypedFormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { WishListSelectOptionDto } from '@core/models/wish-list.model';
 import { Logger } from '@core/services/log.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
@@ -24,7 +24,7 @@ export class WishListRadioComponent implements OnInit, ControlValueAccessor {
   @Input() _wishListId: string | null = null;
   @Input() initialValue: string | null = null;
 
-  form = new FormGroup({});
+  form = new UntypedFormGroup({});
   isEditMode = false;
   wishListSelectOptions$: Observable<WishListSelectOptionDto[]> = of([]);
 
@@ -65,7 +65,7 @@ export class WishListRadioComponent implements OnInit, ControlValueAccessor {
 
   constructor(
     private wishListStore: WishListStoreService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private logger: Logger
   ) {
   }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchResultItem } from '@core/models/search-result-item';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -19,7 +19,7 @@ import { finalize, first } from 'rxjs/operators';
 })
 export class UrlSearchResultsPage implements OnInit, OnDestroy {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading: boolean = false;
 
   get validationMessages(): ValidationMessages {
@@ -54,7 +54,7 @@ export class UrlSearchResultsPage implements OnInit, OnDestroy {
 
   constructor(
     private readonly analyticsService: AnalyticsService,
-    private readonly formBuilder: FormBuilder,
+    private readonly formBuilder: UntypedFormBuilder,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly productSearchService: ProductSearchService,

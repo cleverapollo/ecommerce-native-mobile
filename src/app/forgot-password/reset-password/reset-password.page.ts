@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
 import { CustomValidation } from '@shared/custom-validation';
@@ -20,7 +20,7 @@ export class ResetPasswordPage implements OnInit {
 
   passwordResetRequestSuccessful: boolean;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   validationMessages: ValidationMessages = {
     email: [
       new ValidationMessage('required', 'Gib bitte deine E-Mail Adresse an.'),
@@ -29,7 +29,7 @@ export class ResetPasswordPage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private authService: AuthenticationService,
     private logger: Logger,
     private analyticsService: AnalyticsService,

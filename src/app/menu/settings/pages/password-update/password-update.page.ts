@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
 import { UserApiService } from '@core/api/user-api.service';
@@ -16,7 +16,7 @@ import { finalize, first } from 'rxjs/operators';
 })
 export class PasswordUpdatePage implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   get validationMessages(): ValidationMessages {
     return {
@@ -36,7 +36,7 @@ export class PasswordUpdatePage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private api: UserApiService,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService,

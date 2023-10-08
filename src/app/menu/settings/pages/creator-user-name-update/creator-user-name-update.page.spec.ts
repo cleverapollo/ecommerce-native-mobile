@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
@@ -31,7 +31,7 @@ describe('CreatorUserNameUpdatePage', () => {
       declarations: [CreatorUserNameUpdatePage, NavToolbarComponentFake, ValidationMessagesComponentFake],
       imports: [IonicModule.forRoot()],
       providers: [
-        FormBuilder,
+        UntypedFormBuilder,
         { provide: AnalyticsService, useValue: analyticsService },
         { provide: LoadingService, useValue: loadingService },
         { provide: CoreToastService, useValue: toastService },

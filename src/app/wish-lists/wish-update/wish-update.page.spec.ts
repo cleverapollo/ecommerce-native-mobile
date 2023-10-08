@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -39,7 +39,7 @@ describe('WishUpdatePage', () => {
         FormsModule, ReactiveFormsModule
       ],
       providers: [
-        FormBuilder,
+        UntypedFormBuilder,
         { provide: LoadingService, useValue: loadingServiceFake },
         { provide: WishListStoreService, useValue: wishListStoreMock },
         { provide: CoreToastService, useValue: toastServiceFake },

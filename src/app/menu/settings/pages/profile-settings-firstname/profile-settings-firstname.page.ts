@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ValidationMessages, ValidationMessage } from '@shared/components/validation-messages/validation-message';
 import { UserApiService } from '@core/api/user-api.service';
 import { UserProfileStore } from '../../user-profile-store.service';
@@ -16,7 +16,7 @@ import { finalize, first } from 'rxjs/operators';
 })
 export class ProfileSettingsFirstnamePage implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   get validationMessages(): ValidationMessages {
     return {
@@ -30,7 +30,7 @@ export class ProfileSettingsFirstnamePage implements OnInit {
 
   constructor(
     private loadingService: LoadingService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private api: UserApiService,
     private userProfileStore: UserProfileStore,
     private toastService: CoreToastService,

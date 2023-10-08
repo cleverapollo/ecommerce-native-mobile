@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
@@ -17,7 +17,7 @@ import { finalize, first } from 'rxjs/operators';
 })
 export class ProductListCreatePage implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   get validationMessages(): ValidationMessages {
     return {
@@ -28,7 +28,7 @@ export class ProductListCreatePage implements OnInit {
   };
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private analyticsService: AnalyticsService,
     private navController: NavController,
     private loadingService: LoadingService,

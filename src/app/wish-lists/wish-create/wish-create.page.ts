@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PriceDto, WishDto, WishListDto } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
@@ -22,7 +22,7 @@ export class WishCreatePage implements OnInit {
 
   wish = new WishDto();
   wishList = new WishListDto();
-  form: FormGroup | undefined;
+  form: UntypedFormGroup | undefined;
 
   get validationMessages(): ValidationMessages {
     return {
@@ -58,7 +58,7 @@ export class WishCreatePage implements OnInit {
     private searchResultDataService: SearchResultDataService,
     private analyticsService: AnalyticsService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: UntypedFormBuilder
   ) { }
 
   ngOnInit() {
