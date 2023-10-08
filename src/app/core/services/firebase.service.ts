@@ -1,13 +1,37 @@
 import { Injectable } from '@angular/core';
 import { FirebaseAuthentication, SignInResult, User } from '@capacitor-firebase/authentication';
+import { Capacitor } from '@capacitor/core';
+import { environment } from '@env/environment';
+import { getApp, initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  indexedDBLocalPersistence,
+  initializeAuth,
+} from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
+  constructor() {
+    if (!Capacitor.isNativePlatform()) {
+      initializeApp(environment.firebaseConfig);
+    }
+  }
+
+  async getFirebaseAuth() {
+    if (Capacitor.isNativePlatform()) {
+      return initializeAuth(getApp(), {
+        persistence: indexedDBLocalPersistence,
+      });
+    } else {
+      return getAuth();
+    }
+  };
+
   async sendEmailVerification(): Promise<any> {
-    const currentUser = this.getCurrentUser();
+    const currentUser = await this.getCurrentUser();
     if (!currentUser) {
       return;
     }
@@ -40,7 +64,7 @@ export class FirebaseService {
   }
 
   async getIdToken(forceRefresh: boolean): Promise<string> {
-    const currentUser = this.getCurrentUser();
+    const currentUser = await this.getCurrentUser();
     if (!currentUser) {
       return;
     }
