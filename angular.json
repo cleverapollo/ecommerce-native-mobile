@@ -211,8 +211,7 @@
             "dev": {
               "browserTarget": "app:build:dev"
             },
-            "ci": {
-            }
+            "ci": {}
           }
         },
         "extract-i18n": {
