@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 import { FirebaseAuthentication, SignInResult, User } from '@capacitor-firebase/authentication';
-import { PluginListenerHandle } from '@capacitor/core';
+import { Capacitor, PluginListenerHandle } from '@capacitor/core';
 import { AuthService } from '@core/api/auth.service';
 import { CustomError, CustomErrorType } from '@core/error';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
@@ -13,7 +13,6 @@ import { CacheService } from 'ionic-cache';
 import { BehaviorSubject } from 'rxjs';
 import { FirebaseService } from './firebase.service';
 import { Logger } from './log.service';
-import { PlatformService } from './platform.service';
 import { StorageKeys, StorageService } from './storage.service';
 
 @Injectable({
@@ -28,7 +27,6 @@ export class AuthenticationService {
 
   constructor(
     private storageService: StorageService,
-    private platformService: PlatformService,
     private cache: CacheService,
     private nativeHttpClient: HTTP,
     private logger: Logger,
@@ -36,11 +34,8 @@ export class AuthenticationService {
     private firebaseService: FirebaseService
   ) {
     this.firebaseService.setLanguageCode('de-DE');
-
-    if (this.platformService.isNativePlatform) {
-      this.setupFirebaseIdToken(false);
-      this.setupOnAuthStateChangedListener();
-    }
+    this.setupFirebaseIdToken(false);
+    this.setupOnAuthStateChangedListener();
   }
 
   private setupOnAuthStateChangedListener(): Promise<PluginListenerHandle> {
@@ -80,7 +75,7 @@ export class AuthenticationService {
   }
 
   private updateAuthorizationHeaderForNativeHttpClient(token: string | null) {
-    if (!this.platformService.isNativePlatform) { return }
+    if (!Capacitor.isNativePlatform()) { return }
     const value = token ? `Bearer ${token}` : null;
     this.nativeHttpClient.setHeader(SERVER_URL, 'Authorization', value as any);
   }
@@ -178,7 +173,8 @@ export class AuthenticationService {
   }
 
   async setupFirebaseIdToken(forceRefresh: boolean = false): Promise<string | null> {
-    if (this.platformService.isWeb) {
+    if (!Capacitor.isNativePlatform()) {
+      this.isAuthenticated.next(false);
       return null;
     }
 
