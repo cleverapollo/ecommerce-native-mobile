@@ -15,6 +15,9 @@ import { ScriptLoadingStatus, ScriptService } from '@core/services/script.servic
 import { BackendConfigType } from '@env/backend-config-type';
 import { CacheService } from 'ionic-cache';
 import { environment } from 'src/environments/environment';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-root',

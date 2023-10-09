@@ -44,9 +44,9 @@ ion-header {
 }
 
 ion-content {
-    ion-slides {
+    swiper-container {
         height: 100%;
-        ion-slide {
+        swiper-slide {
             display: block;
         }
     }

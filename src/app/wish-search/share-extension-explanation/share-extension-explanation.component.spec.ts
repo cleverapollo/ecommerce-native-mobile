@@ -6,6 +6,7 @@ import { PlatformService } from '@core/services/platform.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ShareExtensionExplanationComponent } from './share-extension-explanation.component';
 
 describe('OnboardingSlidesComponent', () => {
@@ -25,6 +26,7 @@ describe('OnboardingSlidesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [ShareExtensionExplanationComponent],
       imports: [IonicModule.forRoot()],
       providers: [

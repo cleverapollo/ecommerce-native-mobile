@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -42,6 +42,7 @@ export function jwtOptionsFactory(authService: AuthenticationService) {
 }
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent],
   imports: [
     BrowserModule,

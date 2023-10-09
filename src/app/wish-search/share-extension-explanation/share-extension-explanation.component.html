@@ -11,16 +11,16 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-text-center" slots="fixed" scrollY="false">
-  <ion-slides pager="true" (ionSlideNextEnd)="onSlideNextEnd()" (ionSlidePrevEnd)="onSlidePrevEnd()" (ionSlideReachStart)="onSlideReachStart()" (ionSlideReachEnd)="onSlideReachEnd()">
-    <ion-slide *ngFor="let item of slidesItems"> 
+  <swiper-container #swiper pager="true" (slidenexttransitionend)="onSlideNextEnd()" (slideprevtransitionend)="onSlidePrevEnd()" (reachbeginning)="onSlideReachStart()" (reachend)="onSlideReachEnd()">
+    <swiper-slide *ngFor="let item of slidesItems"> 
       <p class="ion-text-center" [innerHTML]="item.description"></p>
       <div class="center-container">
         <div class="center">
           <img [src]="item.imgSrc" [alt]="item.imgAlt" />
         </div>
       </div>
-    </ion-slide>
-  </ion-slides>
+    </swiper-slide>
+  </swiper-container>
 </ion-content>
 <ion-footer class="ion-no-border">
   <ion-button *ngIf="!showCompleteButton" class="wantic-save-button" color="primary" expand="block" (click)="slideNext();">

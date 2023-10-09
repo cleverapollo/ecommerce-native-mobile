@@ -1,13 +1,14 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserApiService } from '@core/api/user-api.service';
 import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { ASSETS_IMAGES_PATH } from '@core/ui.constants';
-import { IonSlides, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+import Swiper from 'swiper';
 
 class WanticSlideItem {
   imgSrc: string;
@@ -22,7 +23,7 @@ class WanticSlideItem {
 })
 export class ShareExtensionExplanationComponent {
 
-  @ViewChild(IonSlides) slides: IonSlides;
+  @ViewChild('swiper') swiperRef: ElementRef | undefined;
 
   showBackButton = false;
   showCompleteButton = false;
@@ -36,6 +37,10 @@ export class ShareExtensionExplanationComponent {
     }
     return items;
   };
+
+  get swiper(): Swiper | undefined {
+    return this.swiperRef?.nativeElement.swiper;
+  }
 
   constructor(
     private modalController: ModalController,
@@ -102,12 +107,12 @@ export class ShareExtensionExplanationComponent {
 
   slideNext() {
     this.showBackButton = true;
-    this.slides.slideNext();
+    this.swiper?.slideNext();
   }
 
   slidePrev() {
     this.showCompleteButton = false;
-    this.slides.slidePrev();
+    this.swiper?.slidePrev();
   }
 
   onSlideNextEnd() {
