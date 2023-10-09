@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { SERVER_URL } from '@env/environment';
-import { from, Observable, of, Subject, throwError } from 'rxjs';
+import { Observable, Subject, from, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
 
     private refreshTokenInProgress = false;
 
-    private tokenRefreshedSource = new Subject();
+    private tokenRefreshedSource = new Subject<void>();
     private tokenRefreshed$ = this.tokenRefreshedSource.asObservable();
 
     constructor(
