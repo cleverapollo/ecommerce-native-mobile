@@ -276,44 +276,6 @@
             }
           }
         },
-        "ionic-cordova-build": {
-          "builder": "@ionic/angular-toolkit:cordova-build",
-          "options": {
-            "browserTarget": "app:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "app:build:production"
-            },
-            "beta": {
-              "browserTarget": "app:build:beta"
-            },
-            "dev": {
-              "browserTarget": "app:build:dev"
-            }
-          }
-        },
-        "ionic-cordova-serve": {
-          "builder": "@ionic/angular-toolkit:cordova-serve",
-          "options": {
-            "cordovaBuildTarget": "app:ionic-cordova-build",
-            "devServerTarget": "app:serve"
-          },
-          "configurations": {
-            "production": {
-              "cordovaBuildTarget": "app:ionic-cordova-build:production",
-              "devServerTarget": "app:serve:production"
-            },
-            "beta": {
-              "cordovaBuildTarget": "app:ionic-cordova-build:beta",
-              "devServerTarget": "app:serve:beta"
-            },
-            "dev": {
-              "cordovaBuildTarget": "app:ionic-cordova-build:dev",
-              "devServerTarget": "app:serve:dev"
-            }
-          }
-        },
         "cypress-run": {
           "builder": "@cypress/schematic:cypress",
           "options": {
