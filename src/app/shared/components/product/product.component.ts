@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '@core/models/product-list.model';
 import { BrowserService } from '@core/services/browser.service';
 
@@ -7,7 +7,7 @@ import { BrowserService } from '@core/services/browser.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent {
 
   @Input() product: Product;
   @Input() view: 'creator' | 'search' | 'public' = 'public';
@@ -27,8 +27,6 @@ export class ProductComponent implements OnInit {
   }
 
   constructor(private browserService: BrowserService) { }
-
-  ngOnInit() { }
 
   onEditButtonClicked() {
     this.editButtonClick.emit(this.product);

@@ -7,9 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class DashboardButtonComponent {
 
-  @Input() icon = 'plus'
-
-  constructor() { }
+  @Input() icon = 'plus';
 
   get iconSrc(): string {
     return `assets/icon/${this.icon}.svg`

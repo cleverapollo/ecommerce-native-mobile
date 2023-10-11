@@ -1,4 +1,4 @@
-import { Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TrackByFunction, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchResult, SearchResultItem } from '@core/models/search-result-item';
@@ -19,7 +19,7 @@ import { finalize, first } from 'rxjs/operators';
   templateUrl: './product-search-amazon.page.html',
   styleUrls: ['./product-search-amazon.page.scss'],
 })
-export class ProductSearchAmazonPage implements OnInit {
+export class ProductSearchAmazonPage implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
@@ -71,7 +71,7 @@ export class ProductSearchAmazonPage implements OnInit {
 
   private _results: SearchResultItem[] = [];
   private _clearCache = true;
-  private _subscription?: Subscription | null = null;
+  private _subscription = new Subscription();
 
   constructor(
     private searchService: ProductSearchService,
@@ -85,39 +85,41 @@ export class ProductSearchAmazonPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this._subscription = this.searchService.$lastAmazonSearchQuery.subscribe(query => {
-      console.log(query);
-      this._createForm(query.searchTerm);
-      this.results = query.results;
-      this.page = query.pageCount;
-      this.maxPageCount = this.pagingService.calcMaxPageCount(query.totalResultCount);
-      this._disableInfitineScrollIfNeeded();
-    }, error => {
-      this.logger.error(error);
-      this._createForm('');
-    });
+    this._subscription.add(this.searchService.$lastAmazonSearchQuery.subscribe({
+      next: query => {
+        this._createForm(query.searchTerm);
+        this.results = query.results;
+        this.page = query.pageCount;
+        this.maxPageCount = this.pagingService.calcMaxPageCount(query.totalResultCount);
+        this._disableInfitineScrollIfNeeded();
+      },
+      error: error => {
+        this.logger.error(error);
+        this._createForm('');
+      }
+    }));
   }
 
   ngOnDestroy(): void {
-    this._subscription?.unsubscribe();
+    this._subscription.unsubscribe();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.infiniteScroll.disabled = this._results?.length === 0;
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     this.analyticsService.setFirebaseScreenName('search_amazon');
     this._clearCache = true;
   }
 
-  ionViewDidLeave() {
+  ionViewDidLeave(): void {
     if (this._clearCache) {
       this.searchService.clearResults();
     }
   }
 
-  search() {
+  search(): void {
     if (this.form.invalid) {
       CustomValidation.validateFormGroup(this.form);
       return;
@@ -144,7 +146,7 @@ export class ProductSearchAmazonPage implements OnInit {
     });
   }
 
-  loadMoreSearchResults(event) {
+  loadMoreSearchResults(event): void {
     this.page++;
     this.searchService.searchByAmazonApi(this.keywords, this.page).subscribe({
       next: searchResult => {
@@ -164,7 +166,7 @@ export class ProductSearchAmazonPage implements OnInit {
     });
   }
 
-  navigateToProductNewPage(item: SearchResultItem) {
+  navigateToProductNewPage(item: SearchResultItem): void {
     this._clearCache = false;
     this.router.navigate(['product-new'], {
       relativeTo: this.route,
@@ -177,19 +179,19 @@ export class ProductSearchAmazonPage implements OnInit {
     });
   }
 
-  onSearchSuggestionClick(suggestion: string) {
+  onSearchSuggestionClick(suggestion: string): void {
     this.keywords = suggestion;
     this.search();
   }
 
-  private _disableInfitineScrollIfNeeded() {
+  private _disableInfitineScrollIfNeeded(): void {
     if (this.page === this.maxPageCount && this.infiniteScroll) {
       // disable infinite scroll
       this.infiniteScroll.disabled = true;
     }
   }
 
-  private _updateDisplayedSearchResults(newSearchResult: SearchResult) {
+  private _updateDisplayedSearchResults(newSearchResult: SearchResult): void {
     this.results = this.results.concat(newSearchResult.items);
     this.maxPageCount = this.pagingService.calcMaxPageCount(newSearchResult.totalResultCount);
     this.searchService.updateResults({
@@ -201,7 +203,7 @@ export class ProductSearchAmazonPage implements OnInit {
     });
   }
 
-  private _createForm(value: string) {
+  private _createForm(value: string): void {
     this.form = this.formBuilder.group({
       keywords: [value, {
         validators: [Validators.required, Validators.minLength(2)],
