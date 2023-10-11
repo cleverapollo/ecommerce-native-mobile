@@ -35,6 +35,18 @@
             "style": "camelCase",
             "type": "attribute"
           }
+        ],
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          {
+            "suffixes": ["Component", "Page", "Fake", "Mock"]
+          }
+        ],
+        "@angular-eslint/directive-class-suffix": [
+          "error",
+          {
+            "suffixes": ["Directive", "Fake", "Mock"]
+          }
         ]
       }
     },

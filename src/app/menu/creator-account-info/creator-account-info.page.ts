@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AnalyticsService } from '@core/services/analytics.service';
 
 @Component({
@@ -6,12 +6,9 @@ import { AnalyticsService } from '@core/services/analytics.service';
   templateUrl: './creator-account-info.page.html',
   styleUrls: ['./creator-account-info.page.scss'],
 })
-export class CreatorAccountInfoPage implements OnInit {
+export class CreatorAccountInfoPage {
 
   constructor(private readonly analyticsService: AnalyticsService) { }
-
-  ngOnInit() {
-  }
 
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('creator_info');
