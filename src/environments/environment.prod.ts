@@ -22,25 +22,11 @@ export const environment: EnvironmentConfig = {
     appId: '1:553198243306:web:5b9f05bbb60fb8528c3693',
     measurementId: 'G-KW4T4N2DQE'
   },
-  angularFire: {
-    APP_NAME: 'wantic',
-    APP_VERSION: appVersion,
-    DEBUG_MODE: false
-  },
-  googleSignInAndroidClientId: '553198243306-cdqvmtcn23oejp3n3dsm1ll5ultjvuui.apps.googleusercontent.com',
   appsflyerConfig: {
     devKey: 's8xKbYNUpxszQP8CWguA5L',
     appID: '1536006626',
     isDebug: false
-  },
-  android: {
-    packageName: 'io.wantic.app'
-  },
-  ios: {
-    bundleId: 'io.wantic.app',
-    appStoreId: 'id1536006626'
-  },
-  dynamicLinksDomain: 'https://wantic.page.link' // ToDo
+  }
 };
 
 const serverConfig = environment.serverConfig;

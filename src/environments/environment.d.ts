@@ -13,19 +13,5 @@ export interface EnvironmentConfig {
         port?: number
     },
     firebaseConfig: FirebaseOptions,
-    angularFire: {
-        APP_NAME: string,
-        APP_VERSION: string,
-        DEBUG_MODE: boolean
-    },
-    googleSignInAndroidClientId?: string,
-    appsflyerConfig?: AFInit,
-    android: {
-        packageName: string;
-    },
-    ios: {
-        bundleId: string,
-        appStoreId: string
-    },
-    dynamicLinksDomain: string
+    appsflyerConfig?: AFInit
 }

@@ -23,21 +23,7 @@ export const environment: EnvironmentConfig = {
     messagingSenderId: '',
     appId: '',
     measurementId: ''
-  },
-  angularFire: {
-    APP_NAME: 'wantic',
-    APP_VERSION: appVersion,
-    DEBUG_MODE: false
-  },
-  googleSignInAndroidClientId: '',
-  android: {
-    packageName: ''
-  },
-  ios: {
-    bundleId: '',
-    appStoreId: ''
-  },
-  dynamicLinksDomain: ''
+  }
 };
 
 export const SERVER_URL = '';
