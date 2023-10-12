@@ -31,10 +31,8 @@ export class ShowHidePasswordComponent implements ControlValueAccessor {
 
   showPassword = false;
 
-  propagateChange = (_: any) => {};
+  propagateChange = (_: any) => { };
   onTouched: any = (_: any) => { };
-
-  constructor() { }
 
   toggleShow() {
     this.showPassword = !this.showPassword;
