@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { ProductList } from '@core/models/product-list.model';
 import { Logger } from '@core/services/log.service';
 import { ProductListStoreService } from '@core/services/product-list-store.service';
@@ -38,7 +38,9 @@ export class ProductListRadioComponent implements OnInit, OnDestroy, ControlValu
 
   @Input() initialValue: string | null = null;
 
-  form = new FormGroup({});
+  form = this.formBuilder.group({
+    name: ['', [Validators.required]]
+  });
   isEditMode = false;
   productLists: List[] = [];
 
@@ -60,9 +62,9 @@ export class ProductListRadioComponent implements OnInit, OnDestroy, ControlValu
   set requestIsRunning(requestIsRunning: boolean) {
     this._requestIsRunning = requestIsRunning;
     if (requestIsRunning) {
-      this.form?.controls.name.disable();
+      this.form.controls.name.disable();
     } else {
-      this.form?.controls.name.enable();
+      this.form.controls.name.enable();
     }
   }
 
@@ -87,46 +89,12 @@ export class ProductListRadioComponent implements OnInit, OnDestroy, ControlValu
   }
 
   ngOnInit() {
-    this.setupForm();
-    this.setupProductListId();
-    this.setupData();
+    this._setupProductListId();
+    this._setupData();
   }
 
   ngOnDestroy(): void {
     this._subscriptions.unsubscribe();
-  }
-
-  private setupForm() {
-    this.form = this.formBuilder.group({
-      name: this.formBuilder.control('', {
-        validators: [Validators.required]
-      })
-    })
-  }
-
-  private setupProductListId() {
-    if (this.initialValue) {
-      this.productListId = this.initialValue;
-    }
-  }
-
-  private setupData() {
-    [
-      this.productListStore.getAll(false).pipe(first()),
-      this.productListStore.productLists$
-    ].forEach(observable => {
-      this._subscriptions.add(observable
-        .pipe(map(productLists => mapLists(productLists)))
-        .subscribe(productLists => this._updateData(productLists))
-      );
-    });
-  }
-
-  private _updateData(productLists: List[]): void {
-    this.productLists = productLists;
-    if (this.productListId === null) {
-      this.productListId = productLists[0]?.id ?? null;
-    }
   }
 
   writeValue(selectedOption: ProductList | string): void {
@@ -180,5 +148,30 @@ export class ProductListRadioComponent implements OnInit, OnDestroy, ControlValu
 
   propagateChange = (_: any) => { };
   onTouched: any = (_: any) => { };
+
+  private _setupProductListId() {
+    if (this.initialValue) {
+      this.productListId = this.initialValue;
+    }
+  }
+
+  private _setupData() {
+    [
+      this.productListStore.getAll(false).pipe(first()),
+      this.productListStore.productLists$
+    ].forEach(observable => {
+      this._subscriptions.add(observable
+        .pipe(map(productLists => mapLists(productLists)))
+        .subscribe(productLists => this._updateData(productLists))
+      );
+    });
+  }
+
+  private _updateData(productLists: List[]): void {
+    this.productLists = productLists;
+    if (this.productListId === null) {
+      this.productListId = productLists[0]?.id ?? null;
+    }
+  }
 
 }
