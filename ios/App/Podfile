@@ -1,15 +1,4 @@
-def assertDeploymentTarget(installer)
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      # ensure IPHONEOS_DEPLOYMENT_TARGET is at least 13.0
-      deployment_target = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f
-      should_upgrade = deployment_target < 13.0 && deployment_target != 0.0
-      if should_upgrade
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-      end
-    end
-  end
-end
+require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
 
 platform :ios, '13.0'
 use_frameworks!
@@ -41,22 +30,28 @@ def capacitor_pods
 end
 
 target 'Wantic' do
-  pod 'GoogleUtilities', '~> 7.7.0'
+  pod 'GoogleUtilities', '~> 7.8.0'
   capacitor_pods
   # Add your Pods here
+  pod 'CapacitorFirebaseAnalytics/AnalyticsWithoutAdIdSupport', :path => '../../node_modules/@capacitor-firebase/analytics'
+  pod 'CapacitorFirebaseAuthentication/Facebook', :path => '../../node_modules/@capacitor-firebase/authentication'
+  pod 'CapacitorFirebaseAuthentication/Google', :path => '../../node_modules/@capacitor-firebase/authentication'
 end
 
 target 'Wantic Beta' do
-  pod 'GoogleUtilities', '~> 7.7.0'
+  pod 'GoogleUtilities', '~> 7.8.0'
   capacitor_pods
   # Add your Pods here
+  pod 'CapacitorFirebaseAnalytics/AnalyticsWithoutAdIdSupport', :path => '../../node_modules/@capacitor-firebase/analytics'
+  pod 'CapacitorFirebaseAuthentication/Facebook', :path => '../../node_modules/@capacitor-firebase/authentication'
+  pod 'CapacitorFirebaseAuthentication/Google', :path => '../../node_modules/@capacitor-firebase/authentication'
 end
 
 def share_extension_pods
   pod 'SVGKit', :git => 'https://github.com/SVGKit/SVGKit.git', :branch => '3.x'
-  pod 'GoogleUtilities', '~> 7.7.0'
-  pod 'Firebase/Analytics', '~> 8.8.0'
-  pod 'Firebase/Auth', '~> 8.8.0'
+  pod 'GoogleUtilities', '~> 7.8.0'
+  pod 'Firebase/Analytics', '~> 10.8.0'
+  pod 'Firebase/Auth', '~> 10.8.0'
 end
 
 target 'Share' do
@@ -82,4 +77,14 @@ post_install do |installer|
             config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = deployment_target
         end
     end
+
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+          if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+              target.build_configurations.each do |config|
+                  config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+              end
+          end
+      end
+  end
 end

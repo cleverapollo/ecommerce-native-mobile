@@ -111,7 +111,7 @@ struct Network<T: Decodable>: Networkable {
             return
         }
         
-        guard let statusCode = HttpStatusCode(rawValue: response.statusCode), statusCode == .ok   else {
+        guard let statusCode = HttpStatusCode(rawValue: response.statusCode), statusCode == .ok || statusCode == .created   else {
             completionHandler(.failure(.unexpected(code: response.statusCode)))
             return
         }
