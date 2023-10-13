@@ -66,7 +66,7 @@ PODS:
   - CocoaLumberjack (3.8.1):
     - CocoaLumberjack/Core (= 3.8.1)
   - CocoaLumberjack/Core (3.8.1)
-  - CordovaPlugins (5.4.2):
+  - CordovaPlugins (5.5.0):
     - CapacitorCordova
   - FBAEMKit (16.0.1):
     - FBSDKCoreKit_Basics (= 16.0.1)
@@ -321,7 +321,7 @@ SPEC CHECKSUMS:
   CapacitorSplashScreen: 5fa2ab5e46cf5cc530cf16a51c80c7a986579ccd
   CapacitorStatusBar: 565c0a1ebd79bb40d797606a8992b4a105885309
   CocoaLumberjack: 5c7e64cdb877770859bddec4d3d5a0d7c9299df9
-  CordovaPlugins: 04c2ceb8847b04768c4ec32d5ec22c9f295373b9
+  CordovaPlugins: 96119afabcccb273c92d2f30c6e7ad35504bda97
   FBAEMKit: daac7466b918752f020345be5c7d9787f98cfc07
   FBSDKCoreKit: 2cb033464b2134af0138f87d20b859eb3f9be359
   FBSDKCoreKit_Basics: d37280da2e65872f0e931d15f45d97ea324fec37
@@ -345,4 +345,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a154bd7d308bad37a6d3e4c40efbc2046299c940
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.13.0
