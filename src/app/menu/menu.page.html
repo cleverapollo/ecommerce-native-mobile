@@ -8,7 +8,7 @@
 
   <div class="display-flex align-items-center wantic-margin-right-left">
     <div (click)="switchAccount()">
-      <app-user-initials *ngIf="!image" [firstName]="displayFirstName" [lastName]="displayLastName" size="size-m" [showSwitchImage]="true"></app-user-initials>
+      <app-user-initials *ngIf="!image" [firstName]="displayFirstName" [lastName]="displayLastName" size="size-m" [showSwitchImage]="hasCreatorAccount"></app-user-initials>
       <app-photo *ngIf="image" [src]="image" [readOnly]="true" size="s"></app-photo>
     </div>
     <div class="margin-left-14">
