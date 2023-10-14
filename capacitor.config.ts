@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
   webDir: 'www',
   plugins: {
     CapacitorHttp: {
-      enabled: true,
+      enabled: false,
     },
     SplashScreen: {
       launchAutoHide: false,
