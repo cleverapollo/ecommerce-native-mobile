@@ -6,8 +6,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { AuthenticationService } from '@core/services/authentication.service';
+import { FirebaseService } from '@core/services/firebase.service';
 import { SERVER_URL } from '@env/environment';
-import { Observable, Subject, from, of, throwError } from 'rxjs';
+import { Observable, Subject, from, lastValueFrom, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 
 @Injectable()
@@ -19,8 +20,9 @@ export class NativeTokenInterceptor implements HttpInterceptor {
     private tokenRefreshed$ = this.tokenRefreshedSource.asObservable();
 
     constructor(
-        private router: Router,
-        private authService: AuthenticationService
+        private readonly router: Router,
+        private readonly authService: AuthenticationService,
+        private readonly firebaseService: FirebaseService
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
@@ -36,14 +38,14 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         return from(this.handle(request, next));
     }
 
-    async handle(request: HttpRequest<any>, next: HttpHandler) {
-        const authToken = await this.authService.setupFirebaseIdToken(false);
+    async handle(request: HttpRequest<any>, next: HttpHandler): Promise<any> {
+        const authToken = await this.firebaseService.getIdToken(false);
         if (authToken) {
             request = this.addAuthToken(request, authToken);
         }
-        return next.handle(request).pipe(catchError(error => {
+        return lastValueFrom(next.handle(request).pipe(catchError(error => {
             return this.handleResponseError(error, request, next);
-        })).toPromise();
+        })));
     }
 
     handleResponseError(error: any, request: HttpRequest<any>, next: HttpHandler): Observable<any> {
@@ -85,7 +87,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
             // Redirect to the maintenance page
         }
 
-        return throwError(error);
+        throwError(() => error);
     }
 
     async handleRequestAfterTokenRefresh(request: HttpRequest<any>, next: HttpHandler) {
@@ -93,7 +95,7 @@ export class NativeTokenInterceptor implements HttpInterceptor {
         if (authToken) {
             request = this.addAuthToken(request, authToken);
         }
-        return next.handle(request).toPromise();
+        return lastValueFrom(next.handle(request));
     }
 
     private refreshToken(): Observable<any> {

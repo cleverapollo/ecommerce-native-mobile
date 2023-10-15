@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HTTP } from '@awesome-cordova-plugins/http/ngx';
-import { FirebaseAuthentication, SignInResult, User } from '@capacitor-firebase/authentication';
-import { Capacitor, PluginListenerHandle } from '@capacitor/core';
+import { SignInResult } from '@capacitor-firebase/authentication';
+import { Capacitor } from '@capacitor/core';
 import { AuthService } from '@core/api/auth.service';
 import { CustomError, CustomErrorType } from '@core/error';
 import { HttpStatusCodes } from '@core/models/http-status-codes';
@@ -10,7 +10,7 @@ import { SignInResponse, SignupRequest } from '@core/models/signup.model';
 import { UserProfile } from '@core/models/user.model';
 import { SERVER_URL } from '@env/environment';
 import { CacheService } from 'ionic-cache';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { FirebaseService } from './firebase.service';
 import { Logger } from './log.service';
 import { StorageKeys, StorageService } from './storage.service';
@@ -23,41 +23,20 @@ export class AuthenticationService {
   isAuthenticated = new BehaviorSubject<boolean>(null);
   isEmailVerified = new BehaviorSubject<boolean>(null);
 
-  private firebaseUser = new BehaviorSubject<User>(null);
-
   constructor(
-    private storageService: StorageService,
-    private cache: CacheService,
-    private nativeHttpClient: HTTP,
-    private logger: Logger,
-    private authApiService: AuthService,
-    private firebaseService: FirebaseService
+    private readonly storageService: StorageService,
+    private readonly cache: CacheService,
+    private readonly nativeHttpClient: HTTP,
+    private readonly logger: Logger,
+    private readonly authApiService: AuthService,
+    private readonly firebaseService: FirebaseService
   ) {
-    this.firebaseService.setLanguageCode('de-DE');
-    this.setupFirebaseIdToken(false);
-    this.setupOnAuthStateChangedListener();
-  }
-
-  private setupOnAuthStateChangedListener(): Promise<PluginListenerHandle> {
-    return FirebaseAuthentication.addListener('authStateChange', state => {
-      const user = state.user;
+    this.firebaseService.firebaseUser$.subscribe(user => {
       if (user) {
-        this.updateEmailVerificationState(user);
+        this.setupFirebaseIdToken(false);
+        this.isEmailVerified.next(user?.emailVerified);
       }
-      this.storageService.set(StorageKeys.FIREBASE_USER_INFO, user, true);
-      this.firebaseUser.next(user);
     });
-  }
-
-  private async updateEmailVerificationState(user: User) {
-    try {
-      const isEmailVerified = await this.storageService.get<boolean>(StorageKeys.FIREBASE_EMAIL_VERIFIED, true);
-      const nextValue = isEmailVerified ?? user.emailVerified
-      this.isEmailVerified.next(nextValue);
-    } catch (error) {
-      this.logger.error(error);
-      this.isEmailVerified.next(user.emailVerified);
-    }
   }
 
   async logout(): Promise<void> {
@@ -67,10 +46,8 @@ export class AuthenticationService {
       await this.firebaseService.signOut();
       this.updateAuthorizationHeaderForNativeHttpClient(null);
       this.isAuthenticated.next(false);
-      return Promise.resolve();
     } catch (error) {
       this.logger.error(error);
-      return Promise.resolve();
     }
   }
 
@@ -82,7 +59,7 @@ export class AuthenticationService {
 
   async signup(signupRequest: SignupRequest) {
     try {
-      await this.authApiService.signup(signupRequest).toPromise();
+      await lastValueFrom(this.authApiService.signup(signupRequest));
       await this.emailPasswordSignIn(signupRequest.email, signupRequest.password);
       await this.sendVerificationMail();
       return Promise.resolve();
@@ -93,10 +70,10 @@ export class AuthenticationService {
 
   async emailPasswordSignIn(email: string, password: string): Promise<SignInResponse> {
     try {
-      const signInResponse = await this.authApiService.signInWithEmailAndPassword({
+      const signInResponse = await lastValueFrom(this.authApiService.signInWithEmailAndPassword({
         username: email,
         password
-      }).toPromise();
+      }));
 
       // firebase sign in
       await this.firebaseService.signInWithEmailAndPassword(email, password);
@@ -162,46 +139,29 @@ export class AuthenticationService {
   }
 
   async wanticSignIn(): Promise<SignInResponse> {
-    const userInfo = this.firebaseUser.value;
+    const userInfo = await this.firebaseService.firebaseUser;
     if (userInfo?.uid && userInfo?.email) {
-      const signInRequestBody = { uid: userInfo.uid, email: userInfo.email };
-      return await this.authApiService.signInWithThirdPartyAuthProvider(signInRequestBody).toPromise();
+      return lastValueFrom(this.authApiService.signInWithThirdPartyAuthProvider({
+        uid: userInfo.uid,
+        email: userInfo.email
+      }));
     }
     const error = new CustomError(CustomErrorType.SignInError, 'email or uid missing ');
     this.logger.error(error.message, userInfo);
     return Promise.reject(error);
   }
 
-  async setupFirebaseIdToken(forceRefresh: boolean = false): Promise<string | null> {
-    if (!Capacitor.isNativePlatform()) {
-      this.isAuthenticated.next(false);
-      return null;
-    }
-
-    try {
-      const idToken = await this.firebaseService.getIdToken(forceRefresh);
-      if (idToken) {
-        await this.updateToken(idToken);
-        return idToken;
-      }
+  async setupFirebaseIdToken(forceRefresh = false): Promise<string | null> {
+    const idToken = await this.firebaseService.getIdToken(forceRefresh);
+    if (idToken) {
+      await this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, idToken, true);
+      this.updateAuthorizationHeaderForNativeHttpClient(idToken);
+      this.isAuthenticated.next(true);
       return idToken;
-    } catch (error) {
-      this.logger.error('failed to refresh firebase id token', error);
-      if (this.isAuthenticated.value === null) {
-        this.isAuthenticated.next(false);
-      }
-      throw error;
     }
-  }
-
-  private async updateToken(token: string): Promise<void> {
-    if (!token) {
-      this.isAuthenticated.next(false);
-      throw new Error('token to upate is invalid');
-    }
-    await this.storageService.set(StorageKeys.FIREBASE_ID_TOKEN, token, true);
-    this.updateAuthorizationHeaderForNativeHttpClient(token);
-    this.isAuthenticated.next(true);
+    await this.storageService.remove(StorageKeys.FIREBASE_ID_TOKEN, true);
+    this.isAuthenticated.next(false);
+    return null;
   }
 
   private getFirebaseAuthErrorMessage(error: any): string | null {
@@ -218,17 +178,16 @@ export class AuthenticationService {
 
   resetPassword(email: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.authApiService.resetPassword(email).toPromise().then(() => {
+      lastValueFrom(this.authApiService.resetPassword(email)).then(() => {
         this.firebaseService.sendPasswordResetEmail(email)
           .then(() => resolve())
-          .catch(() => reject())
-      }, () => reject())
+          .catch(error => reject(error))
+      }, error => reject(error))
     })
   }
 
   updateEmailVerificationStatus(emailVerified: boolean) {
     this.isEmailVerified.next(emailVerified);
-    this.storageService.set(StorageKeys.FIREBASE_EMAIL_VERIFIED, emailVerified, true);
   }
 
   async removeDeprecatedAuthToken(): Promise<void> {
