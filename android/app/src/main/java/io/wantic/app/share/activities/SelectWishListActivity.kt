@@ -154,9 +154,11 @@ class SelectWishListActivity : AppCompatActivity() {
         wishListListView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 clearFocusOnEditTextAndKeyboard()
-                val wishList: WishList = this.wishLists[position]
-                wish = Wish.create(productInfo, wishList.id)
-                wishListArrayAdapter.selectItem(position)
+                if (this.wishLists.isNotEmpty()) {
+                    val wishList: WishList = this.wishLists[position]
+                    wish = Wish.create(productInfo, wishList.id)
+                    wishListArrayAdapter.selectItem(position)
+                }
             }
     }
 

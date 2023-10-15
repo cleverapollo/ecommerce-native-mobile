@@ -112,28 +112,28 @@ export class AuthenticationService {
   }
 
   async facebookSignIn(): Promise<{ facebookLoginResponse: SignInResult, user: UserProfile }> {
-    const facebookLoginResponse = await this.firebaseService.signInWithFacebook();
+    const signInResult = await this.firebaseService.signInWithFacebook();
     const wanticSignInResponse = await this.wanticSignIn();
     return {
-      facebookLoginResponse,
+      facebookLoginResponse: signInResult,
       user: wanticSignInResponse.user
     }
   }
 
   async googlePlusSignIn(): Promise<{ googlePlusLoginResponse: SignInResult, user: UserProfile }> {
-    const googlePlusLoginResponse = await this.firebaseService.signInWithGoogle();
+    const signInResult = await this.firebaseService.signInWithGoogle();
     const wanticSignInResponse = await this.wanticSignIn();
     return {
-      googlePlusLoginResponse,
+      googlePlusLoginResponse: signInResult,
       user: wanticSignInResponse.user
     }
   }
 
   async appleSignIn(): Promise<{ appleSignInResponse: SignInResult, user: UserProfile }> {
-    const appleSignInResponse = await this.firebaseService.signInWithApple();
+    const signInResult = await this.firebaseService.signInWithApple();
     const wanticSignInResponse = await this.wanticSignIn();
     return {
-      appleSignInResponse,
+      appleSignInResponse: signInResult,
       user: wanticSignInResponse.user
     };
   }
