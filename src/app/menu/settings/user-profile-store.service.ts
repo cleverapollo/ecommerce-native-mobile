@@ -6,8 +6,8 @@ import { UserProfile } from '@core/models/user.model';
 import { Logger } from '@core/services/log.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { CacheService } from 'ionic-cache';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { first, mergeMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
+import { mergeMap, tap } from 'rxjs/operators';
 
 enum ItemKeys {
   userProfile = 'userProfile',
@@ -38,7 +38,9 @@ export class UserProfileStore {
     private creatorApi: ContentCreatorApiService,
     private logger: Logger
   ) {
-    this._initData();
+    this.storage.get<string>(StorageKeys.ACTIVE_CREATOR_ACCOUNT).then(isCreatorAccountActive => {
+      this.isCreatorAccountActive$.next(isCreatorAccountActive === 'true');
+    });
   }
 
   loadUserProfile(forceRefresh: boolean = false): Observable<UserProfile> {
@@ -120,22 +122,9 @@ export class UserProfileStore {
   }
 
   async updateCreatorAccount(creatorAccount: ContentCreatorAccount) {
-    const user = await this.loadUserProfile().toPromise();
+    const user = await lastValueFrom(this.loadUserProfile());
     user.creatorAccount = creatorAccount;
     return this.updateCachedUserProfile(user);
-  }
-
-  private async _initData(): Promise<void> {
-    const isCreatorAccountActive = await this.storage.get<string>(StorageKeys.ACTIVE_CREATOR_ACCOUNT);
-    this.isCreatorAccountActive$.next(isCreatorAccountActive === 'true');
-
-    this.loadUserProfile().pipe(
-      first()
-    ).subscribe({
-      next: user => {
-        this.user$.next(user);
-      }
-    })
   }
 
   private async _clearUserImage(): Promise<void> {

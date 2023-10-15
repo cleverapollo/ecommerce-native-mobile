@@ -3,7 +3,7 @@ import { CanLoad, Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { Logger } from '@core/services/log.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 @Injectable({
@@ -19,17 +19,16 @@ export class AutoLoginGuard implements CanLoad {
   ) { }
 
   canLoad(): Observable<boolean> {
-    return combineLatest([this.authService.isAuthenticated, this.userService.isCreatorAccountActive$]).pipe(
-      filter(state => { return state[0] !== null }),
+    return this.authService.isAuthenticated.pipe(
+      filter(isAuthenticated => isAuthenticated !== null),
       take(1),
-      map(state => {
-        if (!state[0]) {
+      map(isAuthenticated => {
+        if (!isAuthenticated) {
           this.logger.info('no auto login');
           return true;
         }
-        const url = state[1] ? '/secure/product-lists/product-list-overview' : '/secure/home'
         this.logger.info('auto login');
-        this.router.navigateByUrl(url, { replaceUrl: true });
+        this.router.navigateByUrl('/secure/home', { replaceUrl: true });
         return false;
       })
     )

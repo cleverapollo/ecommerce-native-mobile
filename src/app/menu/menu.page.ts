@@ -65,7 +65,7 @@ export class MenuPage implements OnInit {
   }
 
   private async _initUserInfo() {
-    const user$ = this.userStore.user$.pipe(filter((user): user is UserProfile => !!user));
+    const user$ = this.userStore.loadUserProfile().pipe(filter((user): user is UserProfile => !!user));
     const isCreatorAccountActive$ = this.userStore.isCreatorAccountActive$;
     combineLatest([user$, isCreatorAccountActive$]).pipe(
       map(result => ({ user: result[0], isCreatorAccountActive: result[1] }))
