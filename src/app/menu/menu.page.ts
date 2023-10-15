@@ -75,8 +75,8 @@ export class MenuPage implements OnInit {
         this.isCreatorAccountActive = value.isCreatorAccountActive;
         this.firstName = user.firstName;
         this.lastName = user.lastName || '';
-        this.hasCreatorAccount = user.creatorAccount ? true : false;
-        if (this.hasCreatorAccount) {
+        if (user.creatorAccount) {
+          this.hasCreatorAccount = true;
           this.creatorName = user.creatorAccount.name;
         }
         this.displayFirstName = this.isCreatorAccountActive ? this.creatorName : this.firstName;
