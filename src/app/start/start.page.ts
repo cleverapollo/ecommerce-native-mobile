@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignInResult } from '@capacitor-firebase/authentication';
+import { Capacitor } from '@capacitor/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { UserApiService } from '@core/api/user-api.service';
 import { AuthProvider } from '@core/models/signup.model';
@@ -12,6 +13,7 @@ import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { PrivacyPolicyService } from '@core/services/privacy-policy.service';
 import { CoreToastService } from '@core/services/toast.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-start',
@@ -24,10 +26,10 @@ export class StartPage {
     return this.platformService.isIOS;
   }
   get showFacebookSignIn(): boolean {
-    return this.platformService.isIOS || this.platformService.isAndroid;
+    return Capacitor.isNativePlatform();
   }
   get showGooglePlusSignIn(): boolean {
-    return this.platformService.isIOS || this.platformService.isAndroid;
+    return Capacitor.isNativePlatform();
   }
 
   constructor(
@@ -103,15 +105,13 @@ export class StartPage {
 
   private async updateLastNameIfNeeded(lastName: string, user: UserProfile): Promise<void> {
     if (!user?.lastName && lastName) {
-      await this.userApiService.partialUpdateLastName(lastName).toPromise();
+      await lastValueFrom(this.userApiService.partialUpdateLastName(lastName));
     }
-    return;
   }
 
   private async updateFirstNameIfNeeded(firstName: string, user: UserProfile): Promise<void> {
     if (!user?.firstName && firstName) {
-      await this.userApiService.partialUpdateFirstName(firstName).toPromise();
+      await lastValueFrom(this.userApiService.partialUpdateFirstName(firstName));
     }
-    return;
   }
 }
