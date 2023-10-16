@@ -35,6 +35,8 @@ export class AuthenticationService {
       if (user) {
         this.setupFirebaseIdToken(false);
         this.isEmailVerified.next(user?.emailVerified);
+      } else {
+        this.isAuthenticated.next(false);
       }
     });
   }
