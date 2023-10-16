@@ -2,14 +2,26 @@
 
 Welcome to our Git repository for the ultimate wishlist and wish list management app! Whether you're dreaming of the perfect gift or compiling a list of your most coveted items, our app has got you covered.
 
+## Environments
+
+- **DEV**: Develop / Local environment
+- **BETA**: Testing / Staging environment 
+- **PROD**: Production
+
+## Setup
+
+- **iOS**: XCode 14, Swift 5
+- **Android**: Android Studio Flamingo, Java 17 / Kotlin 1.8
+- **Web / Hybrid**: Visual Studio Code, Angular 15, Iconic 7, Capacitor 5, Typescript, Node 18
+
 ## Development
 
 Make sure you have node and npm installed on your local maschine. 
 
 ```cmd
-npm install // installs all dependencies 
-npm run mock:server // starts a simple mock server on your local maschine
-npm start // starts the web app on local dev env
+npm install           // install dependencies 
+npm run mock:server   // starts a simple mock server on your local maschine
+npm start             // starts the web app on local dev env
 ```
 
 See scripts in package.json for other commands, like for building an android or ios app. 
@@ -19,12 +31,12 @@ See scripts in package.json for other commands, like for building an android or 
 XXX = JIRA Ticket number
 
 ```cmd
-master // current release version
-develop // current develop state
-feature/WANTIC-XXX // specific feature branch
-bugfix/WANTIC-XXX // branch for a bugfix which is not urgent
-hotfix/WANTIC-XXX // branch for bugfix that need to be deployed asap
-release/X_X_x // branch to save state for specific app versions, e.g. 1_5_x for v1.5.1, v1.5.2, ...
+master                // current release version
+develop               // current develop state 
+feature/WANTIC-XXX    // specific feature branch (merged to develop)
+bugfix/WANTIC-XXX     // branch for a bugfix which is not urgent (merged to develop)
+hotfix/WANTIC-XXX     // branch for bugfix that need to be deployed asap (merged to release branch)
+release/X_X_x         // branch to save state for specific app versions, e.g. 1_5_x for v1.5.1, v1.5.2, ...
 ```
 
 ### Android
