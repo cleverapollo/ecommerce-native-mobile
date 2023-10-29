@@ -66,7 +66,7 @@ export class ListComponent {
   constructor(private logger: Logger, private userStore: UserProfileStore) { }
 
   share() {
-    const userName = this.userStore.user$.value.creatorAccount?.userName;
+    const userName = this.userStore.user$.value?.creatorAccount?.userName;
     const message = `Folge der Liste "${this.list.name}" von @${userName} auf wantic und lass dich inspirieren! 🥳🎁🤩`;
     const link = `${APP_URL}/creator/${userName}/${this.list.name}`;
     shareLink(link, `👉 Folge der Liste "${this.list.name}" von @${userName}`, message).catch(error => {

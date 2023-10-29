@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -59,6 +60,7 @@ export class WishCreatePage implements OnInit {
     private searchResultDataService: SearchResultDataService,
     private analyticsService: AnalyticsService,
     private router: Router,
+    private location: Location,
     private formBuilder: UntypedFormBuilder
   ) { }
 
@@ -91,7 +93,7 @@ export class WishCreatePage implements OnInit {
         this.searchResultDataService.clear();
         this.analyticsService.logAddToWishListEvent(createdWish);
         this.toastService.presentSuccessToast('Dein Wunsch wurde erfolgreich erstellt.');
-        this._navigateToWishListDetailPage(this.wish.wishListId);
+        this._handleNavigation(this.wish.wishListId);
       },
       error: _ => {
         const message = 'Bei der Erstellung deines Wunsches ist ein Fehler aufgetreten. Bitte versuche es später erneut.'
@@ -100,11 +102,14 @@ export class WishCreatePage implements OnInit {
     })
   }
 
-  private async _navigateToWishListDetailPage(wishListId: string): Promise<boolean> {
+  private async _handleNavigation(wishListId: string): Promise<boolean> {
     const wishSearchTabPath = getTaBarPath(TabBarRoute.WISH_SEARCH, true);
     const url = `/secure/home/wish-list/${wishListId}?forceRefresh=true`;
     if (this.router.url.includes(wishSearchTabPath)) {
       return this.router.navigateByUrl(wishSearchTabPath);
+    } else if (this.router.url.includes(getTaBarPath(TabBarRoute.CREATOR_SEARCH, true))) {
+      this.location.back();
+      return true;
     }
     return this.router.navigateByUrl(url);
   }

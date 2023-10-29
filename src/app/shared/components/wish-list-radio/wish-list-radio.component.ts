@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, UntypedFormBuilder, UntypedFormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { WishListSelectOptionDto } from '@core/models/wish-list.model';
 import { Logger } from '@core/services/log.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
@@ -91,7 +91,7 @@ export class WishListRadioComponent implements OnInit, ControlValueAccessor {
   }
 
   private setupData() {
-    this.wishListSelectOptions$ = this.wishListStore.wishLists.pipe(
+    this.wishListSelectOptions$ = this.wishListStore.loadWishLists().pipe(
       map(wishLists => {
         return wishLists
           .map(wishList => WishListSelectOptionDto.forWishList(wishList))
@@ -156,7 +156,7 @@ export class WishListRadioComponent implements OnInit, ControlValueAccessor {
     this.isEditMode = true;
   }
 
-  propagateChange = (_: any) => {};
+  propagateChange = (_: any) => { };
   onTouched: any = (_: any) => { };
 
 }

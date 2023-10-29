@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
 import { ProductApiService } from '@core/api/product-api.service';
 import { ProductListApiService } from '@core/api/product-list-api.service';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { Product, ProductList, ProductListCommand, SharedProductList } from '@core/models/product-list.model';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, lastValueFrom, of } from 'rxjs';
 import { concatMap, first, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -20,7 +21,8 @@ export class ProductListStoreService {
   constructor(
     private productListApi: ProductListApiService,
     private productApi: ProductApiService,
-    private publicResourceApi: PublicResourceApiService
+    private publicResourceApi: PublicResourceApiService,
+    private creatorApi: ContentCreatorApiService
   ) { }
 
   get productLists$(): Observable<ProductList[]> {
@@ -104,6 +106,14 @@ export class ProductListStoreService {
     )
   }
 
+  getProductListsForCreator(userName: string): Promise<ProductList[]> {
+    return lastValueFrom(this.creatorApi.getProductLists(userName));
+  }
+
+  getProductList(userName: string, listId: string): Promise<SharedProductList> {
+    return lastValueFrom(this.creatorApi.getProductList(userName, listId));
+  }
+
   create(productList: ProductListCommand): Observable<ProductList> {
     return this.productListApi.create(productList).pipe(
       tap(createdList => this._upsertProductList(createdList))
@@ -111,9 +121,9 @@ export class ProductListStoreService {
   }
 
   createProduct(product: Product): Promise<Product> {
-    return this.productApi.create(product).pipe(
+    return lastValueFrom(this.productApi.create(product).pipe(
       tap(createdProduct => this._upsertProduct(createdProduct))
-    ).toPromise();
+    ));
   }
 
   update(productList: ProductList): Observable<ProductList> {
@@ -124,14 +134,14 @@ export class ProductListStoreService {
 
   updateProduct(product: Product, productListId: string): Promise<Product> {
     const switchProductList = product.productListId !== productListId;
-    return this.productApi.update(product).pipe(
+    return lastValueFrom(this.productApi.update(product).pipe(
       tap(updatedProduct => {
         if (switchProductList) {
           this._deleteProduct(product.id);
         }
         this._upsertProduct(updatedProduct);
       })
-    ).toPromise();
+    ));
   }
 
   deleteById(id: string): Observable<void> {
@@ -141,9 +151,9 @@ export class ProductListStoreService {
   }
 
   deleteProduct(id: string): Promise<void> {
-    return this.productApi.delete(id).pipe(
+    return lastValueFrom(this.productApi.delete(id).pipe(
       tap(() => this._deleteProduct(id))
-    ).toPromise();
+    ));
   }
 
   private _upsertProductList(productList: ProductList): void {

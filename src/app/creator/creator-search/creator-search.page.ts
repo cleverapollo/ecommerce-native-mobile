@@ -91,10 +91,12 @@ export class CreatorSearchPage implements OnInit {
     infiniteScrollEvent.target.complete();
   }
 
-  selectItem(creator: ContentCreatorAccount) {
+  selectItem(creator: ContentCreatorAccount): void {
     this.analyticsService.logSelectItemEvent(creator.userName, 'Content Creators');
     this.creatorService.setSelectedCreator(creator);
-    this.router.navigate(['creator-detail'], { relativeTo: this.route });
+    this.router.navigate([creator.userName], {
+      relativeTo: this.route,
+    });
   }
 
   private _resetResult() {

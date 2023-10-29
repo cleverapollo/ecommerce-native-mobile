@@ -1,0 +1,28 @@
+<ion-grid>
+  <ion-row class="wish-images-container-top">
+    <ion-col size="6" class="wish-image-container wish-one">
+      <app-wish-image *ngIf="productList.products.length > 0" [src]="productList.products[0].imageUrl" [alt]="productList.products[0].name" [styles]="wishComponentStyles"></app-wish-image>
+    </ion-col>
+    <ion-col size="6" class="wish-image-container">
+      <app-wish-image *ngIf="productList.products.length > 1" [src]="productList.products[1].imageUrl" [alt]="productList.products[1].name" [styles]="wishComponentStyles"></app-wish-image>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="6" class="wish-image-container wish-three">
+      <app-wish-image *ngIf="productList.products.length > 2" [src]="productList.products[2].imageUrl" [alt]="productList.products[2].name" [styles]="wishComponentStyles"></app-wish-image>
+    </ion-col>
+    <ion-col size="6" class="wish-image-container">
+      <app-wish-image *ngIf="productList.products.length > 3" [src]="productList.products[3].imageUrl" [alt]="productList.products[3].name" [styles]="wishComponentStyles"></app-wish-image>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<div class="product-list-description">
+  <div class="product-list-name font-size-14">{{ productList.name }}</div>
+  <div class="product-count margin-bottom-8 font-size-14" [ngPlural]="productList.products.length">
+    <ng-template ngPluralCase="0">0 Produkte</ng-template>
+    <ng-template ngPluralCase="1">1 Produkt</ng-template>
+    <ng-template ngPluralCase="other">{{ productList.products.length }} Produkte</ng-template>
+  </div>
+</div>

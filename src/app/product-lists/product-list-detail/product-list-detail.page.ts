@@ -77,7 +77,7 @@ export class ProductListDetailPage implements OnInit, AfterViewChecked, OnDestro
   }
 
   share() {
-    const userName = this.userStore.user$.value.creatorAccount.userName;
+    const userName = this.userStore.user$.value?.creatorAccount.userName;
     const message = `Folge der Liste "${this.productList.name}" von @${userName} auf wantic und lass dich inspirieren! 🥳🎁🤩`;
     const link = `${APP_URL}/creator/${userName}/${this.productList.name}`;
     shareLink(link, 'Einladung zur Liste', message).catch(reason => {

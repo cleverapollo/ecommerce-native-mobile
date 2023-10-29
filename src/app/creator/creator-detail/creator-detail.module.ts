@@ -8,6 +8,7 @@ import { CreatorDetailPageRoutingModule } from './creator-detail-routing.module'
 
 import { SharedModule } from '@shared/shared.module';
 import { CreatorDetailPage } from './creator-detail.page';
+import { ProductListComponent } from './product-list/product-list.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { CreatorDetailPage } from './creator-detail.page';
     CreatorDetailPageRoutingModule,
     SharedModule
   ],
-  declarations: [CreatorDetailPage]
+  declarations: [CreatorDetailPage, ProductListComponent]
 })
 export class CreatorDetailPageModule { }

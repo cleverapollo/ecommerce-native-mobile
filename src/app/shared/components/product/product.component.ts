@@ -13,6 +13,7 @@ export class ProductComponent {
   @Input() view: 'creator' | 'search' | 'public' = 'public';
 
   @Output() editButtonClick = new EventEmitter<Product>();
+  @Output() addButtonClick = new EventEmitter<Product>();
 
   get priceDisplayString(): string {
     return this.product?.price?.displayString || 'Lädt ...';
@@ -37,7 +38,7 @@ export class ProductComponent {
   }
 
   onAddButtonClicked() {
-
+    this.addButtonClick.emit(this.product);
   }
 
 }

@@ -6,10 +6,10 @@ import { CreatorSearchPage } from './creator-search.page';
 const routes: Routes = [
   {
     path: '',
-    component: CreatorSearchPage
+    component: CreatorSearchPage,
   },
   {
-    path: 'creator-detail',
+    path: ':userName',
     loadChildren: () => import('./../creator-detail/creator-detail.module').then(m => m.CreatorDetailPageModule)
   }
 ];

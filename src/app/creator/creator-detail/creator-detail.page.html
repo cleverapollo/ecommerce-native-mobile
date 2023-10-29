@@ -4,4 +4,15 @@
 
 <ion-content>
   <app-creator [account]="account"></app-creator>
+
+  <ion-grid class="wantic-container">
+    <ion-row>
+      <ion-col *ngFor="let productList of productLists; let i = index;" size="6" (click)="selectProductList(productList)">
+        <div class="product-list-container">
+          <app-product-list [productList]="productList"></app-product-list>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

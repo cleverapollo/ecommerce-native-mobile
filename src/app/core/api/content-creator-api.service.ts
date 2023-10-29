@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ContentCreatorAccount, NewCreator, SocialMediaLinks } from '@core/models/content-creator.model';
 import { WanticError } from '@core/models/error.model';
+import { ProductList, SharedProductList } from '@core/models/product-list.model';
 import { Observable, lastValueFrom, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiVersion } from './api-version';
@@ -31,6 +32,18 @@ export class ContentCreatorApiService {
 
   searchForAccounts(searchTerm: string): Observable<ContentCreatorAccount[]> {
     return this.apiService.get<ContentCreatorAccount[]>(`${ApiVersion.v1}/${ContentCreatorApiService.PUBLIC_REST_END_POINT}?searchTerm=${searchTerm}`).pipe(
+      catchError(error => throwError(() => new WanticError(error)))
+    );
+  }
+
+  getProductLists(userName: string): Observable<ProductList[]> {
+    return this.apiService.get<ProductList[]>(`${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}/${userName}/product-lists`).pipe(
+      catchError(error => throwError(() => new WanticError(error)))
+    );
+  }
+
+  getProductList(userName: string, listId: string): Observable<SharedProductList> {
+    return this.apiService.get<SharedProductList>(`${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}/${userName}/product-lists/${listId}`).pipe(
       catchError(error => throwError(() => new WanticError(error)))
     );
   }

@@ -13,7 +13,7 @@ export class UserInitialsComponent implements OnChanges {
   @Input() showSwitchImage = false;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.showSwitchImage.currentValue !== this.showSwitchImage) {
+    if (changes.showSwitchImage && changes.showSwitchImage.currentValue !== this.showSwitchImage) {
       this.showSwitchImage = changes.showSwitchImage.currentValue;
     }
   }

@@ -1,0 +1,28 @@
+.product-list-name {
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.product-list-description {
+    border-top: 1px dashed #F0EDE3;
+    padding-left: 11px;
+    > div {
+        margin-bottom: 2px;
+    }
+    .product-count {
+        color: #A0A0A0;
+    }
+}
+
+img {
+    max-height: 100px;
+}
+
+ion-img {
+    max-height: 100px;
+    img {
+        max-height: 100px;
+    }
+}

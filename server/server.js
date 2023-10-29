@@ -31,6 +31,8 @@ server.use((req, res, next) => {
 
 // Middleware to handle file uploads
 server.use(upload.single('file'));
+server.use(middleware);
+server.use(jsonServer.bodyParser);
 
 apiFiles.forEach(filePath => {
     const api = require(filePath);
@@ -158,9 +160,13 @@ server.post('/v1/content-creators/image', (req, res) => {
     res.status(200).send(user);
   });
 
+server.post('/v1/wishes', (req, res) => {
+    console.log(req.body);
+    const wish = req.body;
+    wish.id = randomUUID();
+    res.status(200).send(wish);
+});
 
-
-server.use(middleware);
 
 const port = 3000;
 server.listen(port, () => {

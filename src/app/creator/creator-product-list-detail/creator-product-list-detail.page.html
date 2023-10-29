@@ -1,0 +1,29 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <ion-toolbar class="ion-text-center">
+    <img src="assets/icon/wantic-logo.svg" alt="Wantic Logo" />
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <section class="ion-text-center" *ngIf="!errorMessage">
+    <p class="font-size-18 margin-bottom-2"><strong>{{ listName }}</strong></p>
+    <p class="font-size-14 margin-top-2">{{ creatorName }}</p>
+    <p class="font-size-11 color-primary margin-top-11" [ngPlural]="products.length">
+      <ng-template ngPluralCase="0">0 Produkte</ng-template>
+      <ng-template ngPluralCase="1">1 Produkt</ng-template>
+      <ng-template ngPluralCase="other">{{ products.length }} Produkte</ng-template>
+    </p>
+  </section>
+
+  <p class="ion-text-center wantic-info-box" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+
+  <div class="masonry" #masonry>
+    <div class="brick" *ngFor="let product of products; trackBy:trackById" #bricks>
+      <app-product [product]="product" view="search" (addButtonClick)="addProduct($event)"></app-product>
+    </div>
+  </div>
+
+ </ion-content>
