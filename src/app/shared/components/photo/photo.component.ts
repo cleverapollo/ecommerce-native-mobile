@@ -5,6 +5,7 @@ import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { IonModal } from '@ionic/angular';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { LocalFile, checkPhotoPermissions, convertBlobToBase64, convertToArrayBuffer, getFileSizeInMB, loadFileData, mkdir } from '@shared/helpers/file.helper';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -35,6 +36,8 @@ export class PhotoComponent implements OnInit, OnChanges {
   style = {};
   sizeCssClass = 'size-l';
   showError = false;
+  btnColor: 'primary' | 'primary-purple' = 'primary';
+  btnContainerClass = {};
 
   get image(): Image {
     return this._image;
@@ -54,11 +57,20 @@ export class PhotoComponent implements OnInit, OnChanges {
   constructor(
     private logger: Logger,
     private platformService: PlatformService,
-    private toastService: CoreToastService
+    private toastService: CoreToastService,
+    private userService: UserProfileStore
   ) { }
 
   ngOnInit() {
     this.sizeCssClass = `size-${this.size}`;
+    this.userService.isCreatorAccountActive$.subscribe(isActive => {
+      if (isActive) {
+        this.btnContainerClass = 'primary-purple-gradient';
+        this.btnColor = 'primary-purple';
+      } else {
+        this.btnColor = 'primary';
+      }
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -1,10 +1,12 @@
 <div class="container">
   <div class="avatar" [style]="style" [ngClass]="sizeCssClass" appBackgroundImage [src]="src | secure"></div>
   <div *ngIf="!readOnly">
-    <ion-button slot="end" class="wantic-save-button" id="open-modal"> 
-      <ion-icon slot="start" name="camera"></ion-icon>
-      Bearbeiten
-    </ion-button>
+    <div [ngClass]="btnContainerClass">
+      <ion-button slot="end" class="wantic-save-button" id="open-modal" [color]="btnColor"> 
+        <ion-icon slot="start" name="camera"></ion-icon>
+        Bearbeiten
+      </ion-button>
+    </div>
   </div>
 </div>
 
