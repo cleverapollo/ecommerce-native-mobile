@@ -5,7 +5,7 @@ import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-image-update',
@@ -79,7 +79,7 @@ export class ProfileImageUpdatePage implements OnInit {
   }
 
   private _initUser() {
-    const user$ = this.userStore.user$.pipe(filter((user): user is UserProfile => !!user));
+    const user$ = this.userStore.loadUserProfile();
     const isCreatorAccountActive$ = this.userStore.isCreatorAccountActive$;
     combineLatest([user$, isCreatorAccountActive$]).pipe(
       map(result => ({ user: result[0], isCreatorAccountActive: result[1] }))
