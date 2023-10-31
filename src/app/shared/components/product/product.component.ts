@@ -27,7 +27,9 @@ export class ProductComponent {
     return this.view === 'creator' ? 'assets/icon/coupon-purple.svg' : 'assets/icon/coupon.svg'
   }
 
-  constructor(private browserService: BrowserService) { }
+  constructor(
+    private readonly browserService: BrowserService
+  ) { }
 
   onEditButtonClicked() {
     this.editButtonClick.emit(this.product);

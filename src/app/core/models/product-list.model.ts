@@ -20,7 +20,6 @@ export interface Product {
     isFavorite: boolean;
     id?: string;
     name: string;
-    url: string;
     price: PriceDto;
     imageUrl: string;
     productUrl: string;

@@ -1,10 +1,10 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormBuilder, Validators } from '@angular/forms';
 import { WishListSelectOptionDto } from '@core/models/wish-list.model';
 import { Logger } from '@core/services/log.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { sortWishListsByName } from '@core/wish-list.utils';
-import { Observable, of } from 'rxjs';
+import { lastValueFrom, Observable, of } from 'rxjs';
 import { finalize, first, map, tap } from 'rxjs/operators';
 
 @Component({
@@ -24,7 +24,9 @@ export class WishListRadioComponent implements OnInit, ControlValueAccessor {
   @Input() _wishListId: string | null = null;
   @Input() initialValue: string | null = null;
 
-  form = new UntypedFormGroup({});
+  form = this.formBuilder.group({
+    name: ['', [Validators.required]]
+  });
   isEditMode = false;
   wishListSelectOptions$: Observable<WishListSelectOptionDto[]> = of([]);
 
@@ -64,24 +66,15 @@ export class WishListRadioComponent implements OnInit, ControlValueAccessor {
   private _requestIsRunning = false;
 
   constructor(
-    private wishListStore: WishListStoreService,
-    private formBuilder: UntypedFormBuilder,
-    private logger: Logger
+    private readonly wishListStore: WishListStoreService,
+    private readonly formBuilder: UntypedFormBuilder,
+    private readonly logger: Logger
   ) {
   }
 
   ngOnInit() {
-    this.setupForm();
     this.setupWishListId();
     this.setupData();
-  }
-
-  private setupForm() {
-    this.form = this.formBuilder.group({
-      name: this.formBuilder.control('', {
-        validators: [Validators.required]
-      })
-    })
   }
 
   private setupWishListId() {
@@ -90,8 +83,9 @@ export class WishListRadioComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  private setupData() {
-    this.wishListSelectOptions$ = this.wishListStore.loadWishLists().pipe(
+  private async setupData() {
+    await lastValueFrom(this.wishListStore.loadWishLists());
+    this.wishListSelectOptions$ = this.wishListStore.wishLists.pipe(
       map(wishLists => {
         return wishLists
           .map(wishList => WishListSelectOptionDto.forWishList(wishList))

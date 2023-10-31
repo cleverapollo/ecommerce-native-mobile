@@ -22,7 +22,7 @@
 
   <div class="masonry" #masonry>
     <div class="brick" *ngFor="let product of products; trackBy:trackById" #bricks>
-      <app-product [product]="product" view="search" (addButtonClick)="addProduct($event)"></app-product>
+      <app-product [product]="product" view="search" (addButtonClick)="addProduct(product)"></app-product>
     </div>
   </div>
 

@@ -7,7 +7,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 
 import com.getcapacitor.BridgeActivity;
-import com.getcapacitor.community.firebaseanalytics.FirebaseAnalytics;
 
 public class MainActivity extends BridgeActivity {
     @Override

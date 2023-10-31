@@ -76,7 +76,7 @@ export class CreatorProductListDetailPage implements OnInit, OnDestroy, AfterVie
           asin: product.asin,
           name: product.name,
           price: product.price,
-          productUrl: product.url,
+          productUrl: product.productUrl,
           imageUrl: product.imageUrl
         }
       }

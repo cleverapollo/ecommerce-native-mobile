@@ -10,8 +10,8 @@ import { APP_URL } from '@env/environment';
 import { NavController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { shareLink } from '@shared/helpers/share.helper';
-import { Subscription } from 'rxjs';
-import { filter, finalize, first } from 'rxjs/operators';
+import { Subscription, lastValueFrom } from 'rxjs';
+import { filter, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list-overview',
@@ -35,8 +35,8 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription.add(this._loadUser());
-    this.subscription.add(this._loadProductLists());
+    this._loadUser();
+    this._loadProductLists();
   }
 
   ionViewDidEnter() {
@@ -74,23 +74,20 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
     ).catch(error => this.logger.error(error));
   }
 
-  private _loadUser(): Subscription {
-    return this.userStore.user$.pipe(
+  private _loadUser(): void {
+    this.subscription.add(this.userStore.user$.pipe(
       filter((user): user is UserProfile => !!user)
     ).subscribe(user => {
       this.account = user.creatorAccount;
     }
-    )
+    ))
   }
 
-  private _loadProductLists(): Subscription {
-    this.loadingService.showLoadingSpinner().then(() => {
-      this.productListStore.getAll().pipe(
-        first(),
-        finalize(() => this.loadingService.stopLoadingSpinner()
-        )).subscribe();
-    });
-    return this.productListStore.productLists$.subscribe(productLists => this.productLists = productLists);
+  private async _loadProductLists(): Promise<void> {
+    await this.loadingService.showLoadingSpinner();
+    await lastValueFrom(this.productListStore.getAll());
+    await this.loadingService.stopLoadingSpinner();
+    this.subscription.add(this.productListStore.productLists$.subscribe(productLists => this.productLists = productLists));
   }
 
 }

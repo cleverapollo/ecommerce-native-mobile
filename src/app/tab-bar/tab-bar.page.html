@@ -10,11 +10,11 @@
       <ion-icon class="icon-add" [ngClass]="{ 'stroke-orange': !isCreatorAccountActive, 'stroke-purple': isCreatorAccountActive  }" src="assets/icon/tab-icon-add.svg" ></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button  *ngIf="!isCreatorAccountActive" tab="friends-home" (click)="onTabButtonClicked('friends-home')" [ngClass]="{ 'color-orange': !isCreatorAccountActive, 'color-purple': isCreatorAccountActive  }">
+    <ion-tab-button *ngIf="!isCreatorAccountActive" tab="friends-home" (click)="onTabButtonClicked('friends-home')" class="color-orange">
       <ion-icon class="icon-friends stroke-orange" src="assets/icon/tab-icon-friends.svg"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button  *ngIf="!isCreatorAccountActive" tab="creator-search" (click)="onTabButtonClicked(tabHome)" [ngClass]="{ 'color-orange': !isCreatorAccountActive, 'color-purple': isCreatorAccountActive  }">
+    <ion-tab-button *ngIf="!isCreatorAccountActive" tab="creator-search" (click)="onTabButtonClicked('creator-search')" class="color-orange">
       <ion-icon class="icon-creator-search stroke-orange" src="assets/icon/tab-icon-creator-search.svg"></ion-icon>
     </ion-tab-button>
 

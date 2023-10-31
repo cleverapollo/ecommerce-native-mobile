@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 
 import { IonicModule } from '@ionic/angular';
 
 import { WishCreatePageRoutingModule } from './wish-create-routing.module';
 
-import { WishCreatePage } from './wish-create.page';
 import { SharedModule } from '@shared/shared.module';
+import { WishCreatePage } from './wish-create.page';
 
 @NgModule({
   imports: [
@@ -18,4 +17,4 @@ import { SharedModule } from '@shared/shared.module';
   ],
   declarations: [WishCreatePage]
 })
-export class WishCreatePageModule {}
+export class WishCreatePageModule { }

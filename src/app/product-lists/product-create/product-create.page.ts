@@ -100,6 +100,7 @@ export class ProductCreatePage implements OnInit {
       await this.loadingService.showLoadingSpinner();
       const createdProduct = await this.productListStore.createProduct({
         ...this.form.value,
+        imageUrl: this.product.imageUrl,
         price: PriceDto.fromAmount(this.priceAmount)
       });
       await this.loadingService.stopLoadingSpinner();

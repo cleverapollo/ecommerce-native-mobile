@@ -35,7 +35,7 @@ export class WishImageComponent implements OnInit {
     const fallback = {};
     switch (this.imgType) {
       case ImageType.NONE:
-        return fallback;
+        break;
       case ImageType.WISH_IMAGE:
         return this.styles.img || fallback;
       case ImageType.PLACEHOLDER:
@@ -43,9 +43,8 @@ export class WishImageComponent implements OnInit {
       case ImageType.ERROR:
         return this.styles.errorImg || fallback;
     }
+    return fallback;
   }
-
-  constructor() {}
 
   ngOnInit() {
     if (this.src) {
@@ -54,7 +53,7 @@ export class WishImageComponent implements OnInit {
       this.src = WISH_PLACEHOLDER_IMAGE_ASSET_URL;
       this.imgType = ImageType.PLACEHOLDER;
     }
-    this.styles = this.styles ? this.styles : { };
+    this.styles = this.styles ? this.styles : {};
     this.imgClass = this.imgClass ? this.imgClass + ' hide' : 'hide';
   }
 
