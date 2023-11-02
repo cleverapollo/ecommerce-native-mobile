@@ -9,7 +9,10 @@ import { CoreToastService } from '@core/services/toast.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
+import { iife } from '@shared/helpers/common.helper';
+import { lastValueFrom } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
+import { TabBarRoute, getTaBarPath } from 'src/app/tab-bar/tab-bar-routes';
 
 @Component({
   selector: 'app-creator-account-create',
@@ -91,26 +94,28 @@ export class CreatorAccountCreatePage implements OnInit {
       }
     }).pipe(
       first(),
-      finalize(() => {
-        this.loadingService.stopLoadingSpinner();
-      })
+      finalize(() => iife(this.loadingService.stopLoadingSpinner()))
     ).subscribe(({
-      next: _ => {
-        this.toastService.presentSuccessToast('Dein Creator Profil wurde erfolgreich erstellt.');
-        this.userProfileStore.toggleIsCreatorAccountActive();
-        this.userProfileStore.clearUserProfile();
-        this.navService.root('secure/product-list-overview')
-      },
-      error: error => {
-        let message = 'Bei der Erstellung deines Profils ist ein Fehler aufgetreten.';
-        if (error instanceof WanticError) {
-          if (error.httpStatusCode === 409) {
-            message = 'Der Benutzername ist bereits vergeben.'
-          }
-        }
-        this.toastService.presentErrorToast(message);
-      }
+      next: _ => iife(this._onSuccess()),
+      error: error => iife(this._onError(error))
     }))
+  }
+
+  private async _onSuccess(): Promise<void> {
+    await this.toastService.presentSuccessToast('Dein Creator Profil wurde erfolgreich erstellt.');
+    await this.userProfileStore.toggleIsCreatorAccountActive();
+    await this.userProfileStore.clearUserProfile();
+    await this.navService.root(getTaBarPath(TabBarRoute.PRODUCT_LISTS, true));
+  }
+
+  private async _onError(error: any): Promise<void> {
+    let message = 'Bei der Erstellung deines Profils ist ein Fehler aufgetreten.';
+    if (error instanceof WanticError) {
+      if (error.httpStatusCode === 409) {
+        message = 'Der Benutzername ist bereits vergeben.'
+      }
+    }
+    await this.toastService.presentErrorToast(message);
   }
 
   private async _setupForm() {
@@ -158,7 +163,7 @@ export class CreatorAccountCreatePage implements OnInit {
 
   private async _getFullName(): Promise<string> {
     try {
-      const userProfile = await this.userProfileStore.loadUserProfile().toPromise();
+      const userProfile = await lastValueFrom(this.userProfileStore.loadUserProfile());
       let fullName = userProfile.firstName;
       if (userProfile.lastName) {
         fullName += ` ${userProfile.lastName}`

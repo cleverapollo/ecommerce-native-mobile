@@ -8,6 +8,7 @@ import { CoreToastService } from '@core/services/toast.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
 import { CustomValidation } from '@shared/custom-validation';
+import { lastValueFrom } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
 @Component({
@@ -79,7 +80,7 @@ export class CreatorIntroTextUpdatePage implements OnInit {
   }
 
   private async _setupForm() {
-    this.user = await this.userStore.loadUserProfile().toPromise();
+    this.user = await lastValueFrom(this.userStore.loadUserProfile());
     this.form = this.formBuilder.group({
       description: this.formBuilder.control(this.user.creatorAccount.description ?? '', {
         validators: [

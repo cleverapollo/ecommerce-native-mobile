@@ -28,7 +28,7 @@ export class ProductListDetailPage implements OnInit, AfterViewChecked, OnDestro
     products: []
   }
 
-  private subscription: Subscription;
+  private subscriptions = new Subscription();
 
   constructor(
     private analyticsService: AnalyticsService,
@@ -49,12 +49,12 @@ export class ProductListDetailPage implements OnInit, AfterViewChecked, OnDestro
   }
 
   ngOnInit() {
-    this.subscription = this.route.params.subscribe(params => {
+    this.subscriptions.add(this.route.params.subscribe(params => {
       const productListId = params['productListId'];
       if (productListId) {
         this._loadProductList(productListId);
       }
-    });
+    }));
   }
 
   ionViewWillEnter() {
@@ -70,10 +70,13 @@ export class ProductListDetailPage implements OnInit, AfterViewChecked, OnDestro
 
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('productlist');
+    this.subscriptions.add(this.productListStore.productLists$.subscribe(productLists => {
+      this.productList = productLists.find(productList => productList.id === this.productList.id);
+    }));
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.subscriptions?.unsubscribe();
   }
 
   share() {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ContentCreatorAccount } from '@core/models/content-creator.model';
 import { ProductList } from '@core/models/product-list.model';
 import { UserProfile } from '@core/models/user.model';
@@ -10,15 +10,15 @@ import { APP_URL } from '@env/environment';
 import { NavController } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { shareLink } from '@shared/helpers/share.helper';
-import { Subscription, lastValueFrom } from 'rxjs';
-import { filter, first } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { filter, finalize, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list-overview',
   templateUrl: './product-list-overview.page.html',
   styleUrls: ['./product-list-overview.page.scss'],
 })
-export class ProductListOverviewPage implements OnInit, OnDestroy {
+export class ProductListOverviewPage implements OnInit, AfterViewInit, OnDestroy {
 
   productLists: ProductList[] = [];
 
@@ -34,12 +34,16 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
     private loadingService: LoadingService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._loadUser();
     this._loadProductLists();
   }
 
-  ionViewDidEnter() {
+  ngAfterViewInit(): void {
+    this.subscription.add(this.productListStore.productLists$.subscribe(productLists => this.productLists = productLists));
+  }
+
+  ionViewDidEnter(): void {
     this.analyticsService.setFirebaseScreenName('creator_overview');
   }
 
@@ -47,7 +51,7 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  selectProductList(productList: ProductList) {
+  selectProductList(productList: ProductList): void {
     this.navController.navigateForward(`secure/product-lists/product-list/${productList.id}`);
   }
 
@@ -85,9 +89,12 @@ export class ProductListOverviewPage implements OnInit, OnDestroy {
 
   private async _loadProductLists(): Promise<void> {
     await this.loadingService.showLoadingSpinner();
-    await lastValueFrom(this.productListStore.getAll());
-    await this.loadingService.stopLoadingSpinner();
-    this.subscription.add(this.productListStore.productLists$.subscribe(productLists => this.productLists = productLists));
+    this.productListStore.getAll().pipe(
+      first(),
+      finalize(() => {
+        this.loadingService.stopLoadingSpinner();
+      })
+    ).subscribe();
   }
 
 }
