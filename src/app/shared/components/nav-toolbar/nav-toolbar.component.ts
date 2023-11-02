@@ -14,12 +14,13 @@ export class NavToolbarComponent implements OnInit {
   @Input() defaultHref: string | undefined = undefined;
   @Input() showBackButton = true;
   @Input() logo = 'assets/icon/wantic-logo.svg';
+  @Input() logoColor?: 'orange' | 'purple';
 
   @Input() disableNextButton = false;
   @Output() nextButtonClick = new EventEmitter();
 
   get canSkip(): boolean {
-    return this.skipToPath ? true : false;
+    return !!this.skipToPath;
   }
 
   get showNextButton(): boolean {
@@ -32,9 +33,13 @@ export class NavToolbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userService.isCreatorAccountActive$.subscribe(isActive => {
-      this.logo = isActive ? 'assets/icon/wantic-logo-purple.svg' : 'assets/icon/wantic-logo.svg'
-    })
+    if (this.logoColor) {
+      this.logo = this.logoColor === 'orange' ? 'assets/icon/wantic-logo.svg' : 'assets/icon/wantic-logo-purple.svg';
+    } else {
+      this.userService.isCreatorAccountActive$.subscribe(isActive => {
+        this.logo = isActive ? 'assets/icon/wantic-logo-purple.svg' : 'assets/icon/wantic-logo.svg'
+      })
+    }
   }
 
   skip() {

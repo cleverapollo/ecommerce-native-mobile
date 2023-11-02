@@ -5,6 +5,7 @@ import { Logger } from '@core/services/log.service';
 import { APP_URL } from '@env/environment';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { shareLink } from '@shared/helpers/share.helper';
+import { lastValueFrom } from 'rxjs';
 import { WishImageComponentStyles } from '../wish-image/wish-image.component';
 
 @Component({
@@ -16,8 +17,15 @@ export class ListComponent {
 
   @Input() list: ProductList | WishListDto;
   @Input() index: number;
+  @Input() shareBtnColor: 'orange' | 'purple' = 'purple';
 
   @Output() listSelected = new EventEmitter<ProductList | WishListDto>();
+
+  get shareBtnIcon(): string {
+    return this.shareBtnColor === 'purple' ?
+      'assets/icon/share-purple.svg' :
+      'assets/icon/share.svg'
+  }
 
   get side(): string {
     if (this.index % 2 === 0) {
@@ -65,8 +73,8 @@ export class ListComponent {
 
   constructor(private logger: Logger, private userStore: UserProfileStore) { }
 
-  share() {
-    const userName = this.userStore.user$.value?.creatorAccount?.userName;
+  async share() {
+    const userName = (await lastValueFrom(this.userStore.loadUserProfile())).creatorAccount?.userName;
     const message = `Folge der Liste "${this.list.name}" von @${userName} auf wantic und lass dich inspirieren! 🥳🎁🤩`;
     const link = `${APP_URL}/creator/${userName}/${this.list.name}`;
     shareLink(link, `👉 Folge der Liste "${this.list.name}" von @${userName}`, message).catch(error => {
