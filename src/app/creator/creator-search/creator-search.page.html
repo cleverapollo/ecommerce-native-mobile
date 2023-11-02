@@ -51,10 +51,8 @@
     <ion-list class="search-results">
       <ion-item *ngFor="let creator of displayResult; trackBy:trackByUserName" (click)="selectItem(creator)" lines="none">
         <ion-icon slot="end" src="assets/icon/arrow-right.svg" class="arrow-right"></ion-icon>
-        <ion-avatar slot="start">
-          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-        </ion-avatar>
-        <ion-label>
+        <app-creator-image [creator]="creator"></app-creator-image>
+        <ion-label class="margin-left-14">
           <h2>{{ creator.name }}</h2>
           <p>{{ '@' + creator.userName }}</p>
         </ion-label>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AffiliateLinkDebugInfoComponent } from './components/affiliate-link-debug-info/affiliate-link-debug-info.component';
+import { CreatorImageComponent } from './components/creator-image/creator-image.component';
 import { CreatorComponent } from './components/creator/creator.component';
 import { DashboardButtonComponent } from './components/dashboard-button/dashboard-button.component';
 import { DatetimeComponent } from './components/datetime/datetime.component';
@@ -28,6 +29,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
 @NgModule({
   declarations: [
     CreatorComponent,
+    CreatorImageComponent,
     DashboardButtonComponent,
     DatetimeComponent,
     SecurePipe,
@@ -59,6 +61,7 @@ import { TruncateNamePipe } from './pipes/truncate-name.pipe';
   exports: [
     BackgroundImageDirective,
     CreatorComponent,
+    CreatorImageComponent,
     DashboardButtonComponent,
     DatetimeComponent,
     SecurePipe,

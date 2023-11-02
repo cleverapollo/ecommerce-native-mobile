@@ -38,13 +38,13 @@ export class CreatorComponent {
   hasLink(socialMedia: string): boolean {
     switch (socialMedia) {
       case SocialMedia.Facebook:
-        return this.account.socialMediaLinks.facebookUrl ? true : false;
+        return !!this.account.socialMediaLinks?.facebookUrl;
       case SocialMedia.TikTok:
-        return this.account.socialMediaLinks.tiktokUrl ? true : false;
+        return !!this.account.socialMediaLinks?.tiktokUrl;
       case SocialMedia.Instagram:
-        return this.account.socialMediaLinks.instagramUrl ? true : false;
+        return !!this.account.socialMediaLinks?.instagramUrl;
       case SocialMedia.YouTube:
-        return this.account.socialMediaLinks.youtubeUrl ? true : false;
+        return !!this.account.socialMediaLinks?.youtubeUrl;
       default: return false;
     }
   }

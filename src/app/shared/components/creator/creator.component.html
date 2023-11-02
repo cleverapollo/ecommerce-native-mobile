@@ -1,8 +1,8 @@
 <div *ngIf="account && !isLoading" class="wantic-container wantic-margin-right-left">
   <div style="display: flex; align-items: center; justify-content: space-evenly;">
     <div>
-      <app-user-initials *ngIf="!image" [firstName]="account.name" size="size-m"></app-user-initials>
-      <app-photo *ngIf="image" [src]="image" [readOnly]="true" size="s"></app-photo>
+      <app-user-initials *ngIf="!account.hasImage" [firstName]="account.name" size="size-m"></app-user-initials>
+      <app-creator-image *ngIf="account.hasImage" [creator]="account" avatarClass="height-70 width-70"></app-creator-image>
     </div>
     <div class="margin-left-8">
       <p class="name"><strong>{{ account.name }}</strong></p>

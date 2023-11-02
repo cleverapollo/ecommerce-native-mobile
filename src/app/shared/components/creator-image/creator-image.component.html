@@ -1,0 +1,4 @@
+<ion-avatar [ngClass]="avatarClass">
+  <ion-spinner *ngIf="isLoading" name="bubbles" color="primary"></ion-spinner>
+  <img [src]="src" [alt]="alt" (error)="onError($event)" (load)="onLoad($event)" [ngClass]="imgClass"/>
+</ion-avatar>
