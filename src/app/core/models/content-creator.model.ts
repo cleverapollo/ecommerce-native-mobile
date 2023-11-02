@@ -1,3 +1,5 @@
+import { ProductList } from "./product-list.model";
+
 export interface NewCreator {
     name: string;
     userName: string;
@@ -10,6 +12,7 @@ export interface ContentCreatorAccount {
     userName: string;
     description: string;
     socialMediaLinks: SocialMediaLinks;
+    productLists: ProductList[];
     hasImage: boolean;
 }
 

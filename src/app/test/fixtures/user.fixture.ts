@@ -12,7 +12,8 @@ export const creatorMax: ContentCreatorAccount = {
         facebookUrl: 'https://de-de.facebook.com/knossi/',
         youtubeUrl: 'https://www.youtube.com/channel/UCtckLvYloMnsey8E5qTwWwA',
         tiktokUrl: 'https://www.tiktok.com/@therealknossi'
-    }
+    },
+    productLists: []
 }
 
 export const userMax: UserProfile = {
