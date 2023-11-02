@@ -8,6 +8,7 @@ export const environment: EnvironmentConfig = {
   backendType: BackendConfigType.prod,
   production: true,
   debugMessage: 'running on prod environment',
+  imageDomain: 'https://rest-prd.wantic.io',
   serverConfig: {
     networkProtocol: 'https',
     secondLevelDomain: 'rest-prd.wantic.io',

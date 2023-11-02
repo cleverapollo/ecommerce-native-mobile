@@ -1,0 +1,25 @@
+<ion-header class="ion-no-border safe-area-inset-top">
+  <app-nav-toolbar defaultHref="/secure/menu/settings"></app-nav-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <h1 class="ion-text-center wantic-page-header">Creator Profil bearbeiten</h1>
+  <p class="wantic-margin-right-left ion-text-center">Möchtest du dein Creator Profil wirklich löschen?</p>
+
+  <div class="primary-purple-gradient">
+    <ion-button  type="submit" class="wantic-save-button" color="primary-purple" expand="block" (click)="deleteAccount()">
+      ACCOUNT LÖSCHEN
+    </ion-button>
+  </div>
+
+  <div class="wantic-margin-right-left">
+    <p><u>Hinweis:</u></p>
+    <p>
+      Wenn du dein Creator Profil löschst, werden dein öffentliches Profil und deine Produktlisten <strong><u>dauerhaft gelöscht.</u></strong><br><br>
+      Nachdem dein Konto gelöscht wurde, können wir dein Konto nicht wiederherstellen.<br><br>
+      Dein Hauptkonto ist davon nicht betroffen. 
+    </p>
+  </div>
+
+</ion-content>

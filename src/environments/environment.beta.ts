@@ -8,6 +8,7 @@ export const environment: EnvironmentConfig = {
     backendType: BackendConfigType.beta,
     production: false,
     debugMessage: 'running on beta environment',
+    imageDomain: 'https://rest-dev.wantic.io',
     serverConfig: {
         networkProtocol: 'https',
         secondLevelDomain: 'rest-dev.wantic.io',

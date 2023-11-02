@@ -10,6 +10,7 @@ export const environment: EnvironmentConfig = {
   backendType: BackendConfigType.unknown,
   production: false,
   debugMessage: '',
+  imageDomain: '',
   serverConfig: {
     networkProtocol: '',
     secondLevelDomain: '',

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ContentCreatorAccount, NewCreator, SocialMediaLinks } from '@core/models/content-creator.model';
 import { WanticError } from '@core/models/error.model';
 import { ProductList, SharedProductList } from '@core/models/product-list.model';
+import { environment } from '@env/environment';
 import { Observable, lastValueFrom, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiVersion } from './api-version';
@@ -79,9 +80,13 @@ export class ContentCreatorApiService {
   }
 
   getImageByUserName(userName: string): Observable<Blob> {
-    return this.apiService.downloadFile(this._buildPublicUrl(userName, 'image')).pipe(
+    return this.apiService.downloadFile(this.getPublicImageUrl(userName)).pipe(
       catchError(error => throwError(() => new WanticError(error)))
     );
+  }
+
+  getPublicImageUrl(userName: string): string {
+    return `${environment.imageDomain}/${this._buildPublicUrl(userName, 'image')}`;
   }
 
   async updateImage(file: ArrayBuffer): Promise<void> {
@@ -94,6 +99,12 @@ export class ContentCreatorApiService {
 
   deleteImage(): Observable<ContentCreatorAccount> {
     return this.apiService.delete<ContentCreatorAccount>(this._buildUrl('image')).pipe(
+      catchError(error => throwError(() => new WanticError(error)))
+    );
+  }
+
+  deleteAccount(): Observable<void> {
+    return this.apiService.delete<void>(`${ApiVersion.v1}/${ContentCreatorApiService.REST_END_POINT}`).pipe(
       catchError(error => throwError(() => new WanticError(error)))
     );
   }

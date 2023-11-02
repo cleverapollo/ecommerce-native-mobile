@@ -58,7 +58,11 @@ const routes: Routes = [
   {
     path: 'creator-social-media-links-update',
     loadChildren: () => import('./pages/creator-social-media-links-update/creator-social-media-links-update.module').then(m => m.CreatorSocialMediaLinksUpdatePageModule)
+  },  {
+    path: 'creator-account-delete',
+    loadChildren: () => import('./pages/creator-account-delete/creator-account-delete.module').then( m => m.CreatorAccountDeletePageModule)
   }
+
 ];
 
 @NgModule({

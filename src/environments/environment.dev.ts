@@ -8,6 +8,7 @@ export const environment: EnvironmentConfig = {
     backendType: BackendConfigType.dev,
     production: false,
     debugMessage: 'running on dev environment',
+    imageDomain: 'http://localhost:3000',
     serverConfig: {
         networkProtocol: 'http',
         thirdLevelDomain: '',

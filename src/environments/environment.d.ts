@@ -6,6 +6,7 @@ export interface EnvironmentConfig {
     backendType: BackendConfigType,
     production: boolean,
     debugMessage: string,
+    imageDomain: string,
     serverConfig: {
         networkProtocol: string,
         thirdLevelDomain?: string,
