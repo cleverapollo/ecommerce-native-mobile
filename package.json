@@ -17,6 +17,7 @@
     "deploy:web:prod": "ionic build --prod && firebase deploy -P prod",
     "test": "ng test --code-coverage",
     "lint": "npx ng lint",
+    "lint:fix": "npx ng lint --fix",
     "mock:server": "nodemon server/server.js --ext js,ts,json.html",
     "e2e": "ng e2e --configuration=dev",
     "ci:build": "ionic build --configuration=beta",
