@@ -14,8 +14,7 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-account-delete',
-  templateUrl: './account-delete.page.html',
-  styleUrls: ['./account-delete.page.scss'],
+  templateUrl: './account-delete.page.html'
 })
 export class AccountDeletePage {
 
@@ -27,13 +26,13 @@ export class AccountDeletePage {
   }
 
   constructor(
-    private userApiService: UserApiService,
-    private authService: AuthenticationService,
-    private navController: NavController,
-    private loadingService: LoadingService,
-    private toastService: CoreToastService,
-    private logger: Logger,
-    private analyticsService: AnalyticsService
+    private readonly userApiService: UserApiService,
+    private readonly authService: AuthenticationService,
+    private readonly navController: NavController,
+    private readonly loadingService: LoadingService,
+    private readonly toastService: CoreToastService,
+    private readonly logger: Logger,
+    private readonly analyticsService: AnalyticsService
   ) { }
 
   ionViewDidEnter() {
