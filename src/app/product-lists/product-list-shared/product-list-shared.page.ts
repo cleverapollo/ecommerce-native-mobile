@@ -4,6 +4,7 @@ import { Product, SharedProductList } from '@core/models/product-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { LoadingService } from '@core/services/loading.service';
 import { ProductListStoreService } from '@core/services/product-list-store.service';
+import { iife } from '@shared/helpers/common.helper';
 import { Masonry } from '@shared/masonry';
 import { Subscription } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
@@ -20,6 +21,7 @@ export class ProductListSharedPage implements OnInit, OnDestroy, AfterViewChecke
 
   productList: SharedProductList;
   errorMessage: string | null = null;
+  defaultHref?: string;
 
   private subscription: Subscription = new Subscription();
 
@@ -55,6 +57,7 @@ export class ProductListSharedPage implements OnInit, OnDestroy, AfterViewChecke
       const userName = paramMap.get('userName');
       const listName = paramMap.get('listName');
       if (userName && listName) {
+        this.defaultHref = `/creator/${userName}`;
         this._loadProductList(userName, listName);
       }
     }));
@@ -77,7 +80,7 @@ export class ProductListSharedPage implements OnInit, OnDestroy, AfterViewChecke
     await this.loadingService.showLoadingSpinner();
     this.productListStore.getSharedListByName(userName, listName).pipe(
       first(),
-      finalize(() => this.loadingService.stopLoadingSpinner())
+      finalize(() => iife(this.loadingService.stopLoadingSpinner()))
     ).subscribe({
       next: productList => {
         this.productList = productList;
