@@ -35,7 +35,7 @@ export class ProductListStoreService {
 
   getById(id: string, forceRefresh: boolean = false): Observable<ProductList> {
     const request = this.productListApi.getById(id).pipe(
-      tap(productList => this._upsertProductList(productList))
+      tap(productList => this._updateProductList(productList))
     );
     return this.productLists$.pipe(
       concatMap(productLists => {
@@ -54,7 +54,7 @@ export class ProductListStoreService {
   getProduct(productId: string, forceRefresh: boolean = false): Observable<Product> {
     const request = this.productApi.get(productId).pipe(
       first(),
-      tap(product => this._upsertProduct(product))
+      tap(product => this._updateProduct(product))
     )
     return this.productLists$.pipe(
       concatMap(productLists => {
@@ -76,7 +76,7 @@ export class ProductListStoreService {
 
   getSharedListByName(userName: string, listName: string, forceRefresh: boolean = false): Observable<SharedProductList> {
     const request = this.publicResourceApi.getProductList(userName, listName).pipe(
-      tap(productList => this._upsertSharedProductList(productList))
+      tap(productList => this._updateSharedProductList(productList))
     )
     return this.sharedProductLists$.pipe(
       concatMap(productLists => {
@@ -116,19 +116,19 @@ export class ProductListStoreService {
 
   create(productList: ProductListCommand): Observable<ProductList> {
     return this.productListApi.create(productList).pipe(
-      tap(createdList => this._upsertProductList(createdList))
+      tap(createdList => this._addProductList(createdList))
     )
   }
 
   createProduct(product: Product): Promise<Product> {
     return lastValueFrom(this.productApi.create(product).pipe(
-      tap(createdProduct => this._upsertProduct(createdProduct))
+      tap(createdProduct => this._addProduct(createdProduct))
     ));
   }
 
   update(productList: ProductList): Observable<ProductList> {
     return this.productListApi.update(productList).pipe(
-      tap(updatedList => this._upsertProductList(updatedList))
+      tap(updatedList => this._updateProductList(updatedList))
     )
   }
 
@@ -139,7 +139,7 @@ export class ProductListStoreService {
         if (switchProductList) {
           this._deleteProduct(product.id);
         }
-        this._upsertProduct(updatedProduct);
+        this._updateProduct(updatedProduct);
       })
     ));
   }
@@ -156,18 +156,23 @@ export class ProductListStoreService {
     ));
   }
 
-  private _upsertProductList(productList: ProductList): void {
-    this._upsertList(this._productLists, productList);
+  private _addProductList(productList: ProductList): void {
+    this._productLists.value.push(productList);
+    this._productLists.next(this._productLists.value);
   }
 
-  private _upsertSharedProductList(productList: SharedProductList): void {
-    this._upsertList(this._sharedProductLists, productList);
+  private _updateProductList(productList: ProductList): void {
+    this._updateList(this._productLists, productList);
   }
 
-  private _upsertList(lists$: BehaviorSubject<ProductList[] | SharedProductList[]>, listToUpsert: ProductList | SharedProductList): void {
+  private _updateSharedProductList(productList: SharedProductList): void {
+    this._updateList(this._sharedProductLists, productList);
+  }
+
+  private _updateList(lists$: BehaviorSubject<ProductList[] | SharedProductList[]>, listToUpdate: ProductList | SharedProductList): void {
     lists$.next(
       lists$.value.map(list =>
-        list.id === listToUpsert.id ? listToUpsert : list
+        list.id === listToUpdate.id ? listToUpdate : list
       )
     )
   }
@@ -180,11 +185,34 @@ export class ProductListStoreService {
     )
   }
 
-  private _upsertProduct(product: Product): void {
+  private _addProduct(product: Product): void {
+    const add = (products: Product[]): Product[] => {
+      products.push(product);
+      return products;
+    }
+
     this._productLists.next(
       this._productLists.value.map(list =>
         list.id === product.productListId ?
-          { ...list, products: list.products.map(item => item.id === product.id ? product : item) } :
+          {
+            ...list,
+            products: add(list.products)
+          } :
+          list
+      )
+    )
+  }
+
+  private _updateProduct(product: Product): void {
+    this._productLists.next(
+      this._productLists.value.map(list =>
+        list.id === product.productListId ?
+          {
+            ...list,
+            products: list.products.map(item =>
+              item.id === product.id ? product : item
+            )
+          } :
           list
       )
     )

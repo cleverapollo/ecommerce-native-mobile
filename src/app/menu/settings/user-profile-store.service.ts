@@ -44,12 +44,12 @@ export class UserProfileStore {
   }
 
   loadUserProfile(forceRefresh: boolean = false): Observable<UserProfile> {
-    const request = this.api.getProfile().pipe(
-      tap(user => this.user$.next(user))
-    );
-    return forceRefresh ?
+    const request = this.api.getProfile();
+    return (forceRefresh ?
       this.cache.loadFromDelayedObservable(cacheObject.itemKey, request, cacheObject.groupKey, cacheObject.ttl, 'all') :
-      this.cache.loadFromObservable(cacheObject.itemKey, request, cacheObject.groupKey);
+      this.cache.loadFromObservable(cacheObject.itemKey, request, cacheObject.groupKey)).pipe(
+        tap(user => this.user$.next(user))
+      )
   }
 
   async updateUserImage(file: ArrayBuffer): Promise<void> {
@@ -59,12 +59,12 @@ export class UserProfileStore {
   }
 
   downloadUserImage(forceRefresh: boolean = false): Observable<Blob> {
-    const request = this.api.getImage().pipe(
-      tap(blob => this.userImage$.next(blob))
-    );
-    return forceRefresh ?
+    const request = this.api.getImage();
+    return (forceRefresh ?
       this.cache.loadFromDelayedObservable(ItemKeys.userImage, request, cacheObject.groupKey, cacheObject.ttl, 'all') :
-      this.cache.loadFromObservable(ItemKeys.userImage, request, cacheObject.groupKey);
+      this.cache.loadFromObservable(ItemKeys.userImage, request, cacheObject.groupKey)).pipe(
+        tap(blob => this.userImage$.next(blob))
+      )
   }
 
   deleteUserImage(): Observable<void> {
@@ -77,12 +77,12 @@ export class UserProfileStore {
   }
 
   downloadCreatorImage(forceRefresh: boolean = false): Observable<Blob> {
-    const request = this.creatorApi.getImage().pipe(
-      tap(blob => this.creatorImage$.next(blob))
-    )
-    return forceRefresh ?
+    const request = this.creatorApi.getImage();
+    return (forceRefresh ?
       this.cache.loadFromDelayedObservable(ItemKeys.creatorImage, request, cacheObject.groupKey, cacheObject.ttl, 'all') :
-      this.cache.loadFromObservable(ItemKeys.creatorImage, request, cacheObject.groupKey);
+      this.cache.loadFromObservable(ItemKeys.creatorImage, request, cacheObject.groupKey)).pipe(
+        tap(blob => this.creatorImage$.next(blob))
+      );
   }
 
   async updateCreatorImage(file: ArrayBuffer): Promise<void> {
