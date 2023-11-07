@@ -2,7 +2,7 @@
   <label class="wtc-label-stacked">{{ label }}</label>
 </div>
 <ion-item lines="none" [ngStyle]="containerStyle">
-  <ion-input [placeholder]="placeholder" readonly="true" [value]="formattedDate" (click)="openModal()" [ngClass]="inputClass"></ion-input>
+  <ion-input [placeholder]="placeholder" readonly="true" [value]="formattedDate" (click)="openModal()" [ngClass]="inputClass" legacy="true"></ion-input>
   <ion-icon class="clear-input-icon" slot="end" src="assets/icon/clear-input-icon.svg" (click)="clearInput()" *ngIf="selectedDate"></ion-icon>
   <ion-icon slot="end" icon="calendar" [ngClass]="iconColor" (click)="openModal()"></ion-icon>
 </ion-item>

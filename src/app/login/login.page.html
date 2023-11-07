@@ -5,14 +5,14 @@
 <ion-content>
   <h1 class="ion-text-center registration">Login</h1>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    
+
     <ion-item lines="none">
-      <ion-input id="login-input-email" inputmode="email" name="email" type="email" autocomplete="email" placeholder="E-Mail" formControlName="email" enterkeyhint="next" required="true" clearInput="true"></ion-input>
+      <ion-input id="login-input-email" inputmode="email" name="email" type="email" autocomplete="email" placeholder="E-Mail" formControlName="email" enterkeyhint="next" required="true" clearInput="true" legacy="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="loginForm.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
 
     <app-show-hide-password>
-      <ion-input formControlName="password" name="password" type="password" placeholder="Passwort"  autocomplete="current-password"></ion-input>
+      <ion-input formControlName="password" name="password" type="password" placeholder="Passwort"  autocomplete="current-password" legacy="true"></ion-input>
     </app-show-hide-password>
     <app-validation-messages [control]="loginForm.get('password')" [validationMessages]="validationMessages.password"></app-validation-messages>
 

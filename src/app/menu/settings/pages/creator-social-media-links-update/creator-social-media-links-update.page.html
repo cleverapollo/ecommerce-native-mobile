@@ -12,8 +12,9 @@
       <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-instagram"></ion-icon>&nbsp;Instagram URL</ion-label>
       <ion-input type="url" class="form-field-creator"
                   placeholder="https://www.instagram.com/dein.name42/"
-                  formControlName="instagramUrl" 
-                  clearInput="true">
+                  formControlName="instagramUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('instagramUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
@@ -22,8 +23,9 @@
       <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-facebook"></ion-icon>&nbsp;Facebook URL</ion-label>
       <ion-input type="url" class="form-field-creator"
                   placeholder="https://de-de.facebook.com/dein.name42/"
-                  formControlName="facebookUrl" 
-                  clearInput="true">
+                  formControlName="facebookUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('facebookUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
@@ -32,8 +34,9 @@
       <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-youtube"></ion-icon>&nbsp;Youtube URL</ion-label>
       <ion-input type="url" class="form-field-creator"
                   placeholder="https://www.youtube.com/channel/deinKanal"
-                  formControlName="youtubeUrl" 
-                  clearInput="true">
+                  formControlName="youtubeUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('youtubeUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
@@ -42,8 +45,9 @@
       <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-tiktok"></ion-icon>&nbsp;TikTok URL</ion-label>
       <ion-input type="url" class="form-field-creator"
                   placeholder="https://www.tiktok.com/@dein.name42"
-                  formControlName="tiktokUrl" 
-                  clearInput="true">
+                  formControlName="tiktokUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('tiktokUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>

@@ -7,7 +7,7 @@
 
   <form [formGroup]="form" (ngSubmit)="search()">
     <ion-item lines="none">
-      <ion-input type="search" inputmode="search" enterkeyhint="search" placeholder="z.B. Holzspielzeug" formControlName="keywords" clearInput="true"></ion-input>
+      <ion-input type="search" inputmode="search" enterkeyhint="search" placeholder="z.B. Holzspielzeug" formControlName="keywords" clearInput="true" legacy="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('keywords')" [validationMessages]="validationMessages.keywords"></app-validation-messages>
   </form>

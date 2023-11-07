@@ -3,7 +3,7 @@
   <form *ngIf="showForm" (ngSubmit)="createNewProductList()" style="overflow-y: scroll;" class="form-create-new-product-list">
     <ion-item [formGroup]="form" class="first-item input-product-list-name">
       <ion-input name="name" formControlName="name" placeholder="Gib einen Namen ein" enterkeyhint="done"
-        autocapitalize="on" clear-input="true" inputmode="text" required="true"></ion-input>
+        autocapitalize="on" clear-input="true" inputmode="text" required="true" legacy="true"></ion-input>
       <ion-button type="submit" *ngIf="showSaveProductListButton" size="small" color="dark" [disabled]="form.invalid"
         class="save-product-list-button">Fertig</ion-button>
       <ion-spinner *ngIf="showLoading" color="primary-purple"></ion-spinner>

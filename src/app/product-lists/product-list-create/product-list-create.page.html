@@ -10,7 +10,7 @@
       <label class="wtc-label-stacked">Name der Liste</label>
     </div>
     <ion-item lines="none">
-      <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name" clearInput="true" autocapitalize="true" enterkeyhint="next" inputmode="text" required="true" spellcheck="true" class="form-field-creator"></ion-input>
+      <ion-input type="text" placeholder="z.B. Geburtstag" formControlName="name" clearInput="true" autocapitalize="true" enterkeyhint="next" inputmode="text" required="true" spellcheck="true" legacy="true" class="form-field-creator"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 

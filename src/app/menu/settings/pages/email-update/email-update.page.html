@@ -11,13 +11,13 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">E-Mail Adresse</ion-label>
-      <ion-input type="text" formControlName="email" clearInput="true"></ion-input>
+      <ion-input type="text" formControlName="email" clearInput="true" legacy="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
 
     <p class="wantic-margin-right-left password-label">Passwort</p>
     <app-show-hide-password>
-      <ion-input name="password" formControlName="password" type="password" placeholder="Passwort"  autocomplete="current-password"></ion-input>
+      <ion-input name="password" formControlName="password" type="password" placeholder="Passwort" autocomplete="current-password" legacy="true"></ion-input>
     </app-show-hide-password>
     <app-validation-messages [control]="form.get('password')" [validationMessages]="validationMessages.password"></app-validation-messages>
 

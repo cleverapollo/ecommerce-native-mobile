@@ -12,11 +12,12 @@
       <ion-label position="stacked">Name</ion-label>
       <ion-input type="text" class="form-field-creator"
                   placeholder="Anzeigename"
-                  formControlName="name" 
-                  [autocapitalize]="true" 
-                  [clearInput]="true" 
+                  formControlName="name"
+                  [autocapitalize]="true"
+                  [clearInput]="true"
                   [required]="true"
-                  minlength="2">
+                  minlength="2"
+                  legacy="true">
     </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>

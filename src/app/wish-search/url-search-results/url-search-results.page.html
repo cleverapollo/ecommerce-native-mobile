@@ -11,7 +11,7 @@
       <ion-icon src="assets/icon/icon-link-1.svg"></ion-icon>&nbsp;URL deines Wunsches einfügen
     </p>
     <ion-item lines="none">
-      <ion-input type="url" enterkeyhint="search" placeholder="z.B. www.meinlieblingsshop.de/…" formControlName="url" clearInput="true" inputmode="url"></ion-input>
+      <ion-input type="url" enterkeyhint="search" placeholder="z.B. www.meinlieblingsshop.de/…" formControlName="url" clearInput="true" inputmode="url" legacy="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('url')" [validationMessages]="validationMessages.url"></app-validation-messages>
   </form>

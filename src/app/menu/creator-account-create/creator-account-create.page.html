@@ -10,37 +10,39 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">Name *</ion-label>
-      <ion-input type="text" 
+      <ion-input type="text"
                   placeholder="Anzeigename"
-                  formControlName="name" 
-                  autocapitalize="true" 
-                  clearInput="true" 
+                  formControlName="name"
+                  autocapitalize="true"
+                  clearInput="true"
                   required="true"
-                  minlength="2">
+                  minlength="2"
+                  legacy="true">
     </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('name')" [validationMessages]="validationMessages.name"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked">Benutzername *</ion-label>
-      <ion-input type="text" 
+      <ion-input type="text"
                   placeholder="z.B. dein.name42"
-                  formControlName="userName" 
-                  clearInput="true" 
-                  required="true">
+                  formControlName="userName"
+                  clearInput="true"
+                  required="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('userName')" [validationMessages]="validationMessages.userName"></app-validation-messages>
 
     <ion-item lines="none" counter="true">
       <ion-label position="stacked">Intro Text *</ion-label>
-      <ion-textarea formControlName="description" 
-                    name="description" 
+      <ion-textarea formControlName="description"
+                    name="description"
                     placeholder="Eine kurze Profilbeschreibung"
-                    [autoGrow]="true" 
-                    rows="3" 
-                    [spellcheck]="true" 
-                    maxlength="150" 
+                    [autoGrow]="true"
+                    rows="3"
+                    [spellcheck]="true"
+                    maxlength="150"
                     [required]="true">
       </ion-textarea>
     </ion-item>
@@ -48,40 +50,44 @@
 
     <ion-item lines="none">
       <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-instagram"></ion-icon>&nbsp;Instagram URL</ion-label>
-      <ion-input type="url" 
+      <ion-input type="url"
                   placeholder="https://www.instagram.com/dein.name42/"
-                  formControlName="instagramUrl" 
-                  clearInput="true">
+                  formControlName="instagramUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('instagramUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-facebook"></ion-icon>&nbsp;Facebook URL</ion-label>
-      <ion-input type="url" 
+      <ion-input type="url"
                   placeholder="https://de-de.facebook.com/dein.name42/"
-                  formControlName="facebookUrl" 
-                  clearInput="true">
+                  formControlName="facebookUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('facebookUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-youtube"></ion-icon>&nbsp;Youtube URL</ion-label>
-      <ion-input type="url" 
+      <ion-input type="url"
                   placeholder="https://www.youtube.com/channel/deinKanal"
-                  formControlName="youtubeUrl" 
-                  clearInput="true">
+                  formControlName="youtubeUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('youtubeUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>
 
     <ion-item lines="none">
       <ion-label position="stacked" class="display-flex align-items-center"><ion-icon name="logo-tiktok"></ion-icon>&nbsp;TikTok URL</ion-label>
-      <ion-input type="url" 
+      <ion-input type="url"
                   placeholder="https://www.tiktok.com/@dein.name42"
-                  formControlName="tiktokUrl" 
-                  clearInput="true">
+                  formControlName="tiktokUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('tiktokUrl')" [validationMessages]="validationMessages.socialMediaUrl"></app-validation-messages>

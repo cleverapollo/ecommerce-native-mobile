@@ -12,30 +12,30 @@
   <form [formGroup]="form" *ngIf="form" (ngSubmit)="next()" class="form-signup">
 
     <ion-item lines="none">
-      <ion-input (keypress)="handleKeyboardEventOnFirstNameInput($event.keyCode)" formControlName="firstName" type="text" placeholder="Vorname" autocapitalize="on" autocomplete="given-name" autofocus="true" clearInput="true" enterkeyhint="next" inputmode="text" required="true"></ion-input>
+      <ion-input (keypress)="handleKeyboardEventOnFirstNameInput($event.keyCode)" formControlName="firstName" type="text" placeholder="Vorname" autocapitalize="on" autocomplete="given-name" autofocus="true" clearInput="true" enterkeyhint="next" inputmode="text" required="true" legacy="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('firstName')" [validationMessages]="validationMessages.firstName"></app-validation-messages>
 
     <ion-item lines="none">
-      <ion-input (keypress)="handleKeyboardEventOnLastNameInput($event.keyCode)" formControlName="lastName" type="text" placeholder="Nachname" autocapitalize="on" autocomplete="family-name" clearInput="true" enterkeyhint="next" inputmode="text"></ion-input>
+      <ion-input (keypress)="handleKeyboardEventOnLastNameInput($event.keyCode)" formControlName="lastName" type="text" placeholder="Nachname" autocapitalize="on" autocomplete="family-name" clearInput="true" enterkeyhint="next" inputmode="text" legacy="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('lastName')" [validationMessages]="validationMessages.lastName"></app-validation-messages>
 
     <br>
 
     <ion-item lines="none">
-      <ion-input name="email" (keypress)="handleKeyboardEventOnEmailInput($event.keyCode)" formControlName="email" type="email" placeholder="E-Mail Adresse" autocomplete="email" clearInput="true" enterkeyhint="next" inputmode="email" required="true"></ion-input>
+      <ion-input name="email" (keypress)="handleKeyboardEventOnEmailInput($event.keyCode)" formControlName="email" type="email" placeholder="E-Mail Adresse" autocomplete="email" clearInput="true" enterkeyhint="next" inputmode="email" required="true" legacy="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('email')" [validationMessages]="validationMessages.email"></app-validation-messages>
 
 
     <div formGroupName="password">
       <app-show-hide-password ionItemStyles="{ 'margin-bottom': 7px; }">
-        <ion-input (keypress)="handleKeyboardEventOnPasswordInput($event.keyCode)" name="password" formControlName="value" type="password" placeholder="Passwort" autocomplete="new-password" enterkeyhint="next" required="true"></ion-input>
+        <ion-input (keypress)="handleKeyboardEventOnPasswordInput($event.keyCode)" name="password" formControlName="value" type="password" placeholder="Passwort" autocomplete="new-password" enterkeyhint="next" required="true" legacy="true"></ion-input>
       </app-show-hide-password>
       <app-validation-messages [control]="form.get('password.value')" [validationMessages]="validationMessages.passwordValue"></app-validation-messages>
       <ion-item lines="none">
-        <ion-input (keypress)="handleKeyboardEventOnPasswordConfirmInput($event.keyCode)" name="passwordConfirm" formControlName="confirm" type="password" placeholder="Passwort wiederholen" required="true" enterkeyhint="next"></ion-input>
+        <ion-input (keypress)="handleKeyboardEventOnPasswordConfirmInput($event.keyCode)" name="passwordConfirm" formControlName="confirm" type="password" placeholder="Passwort wiederholen" required="true" enterkeyhint="next" legacy="true"></ion-input>
       </ion-item>
       <app-validation-messages [control]="form.get('password.confirm')" [validationMessages]="validationMessages.passwordConfirm"></app-validation-messages>
     </div>

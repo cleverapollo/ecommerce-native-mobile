@@ -11,7 +11,7 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">Nachname</ion-label>
-      <ion-input type="text" formControlName="lastName" autocomplete="family-name" clearInput="true" required="true" spellcheck="true"></ion-input>
+      <ion-input type="text" formControlName="lastName" autocomplete="family-name" clearInput="true" required="true" spellcheck="true" legacy="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('lastName')" [validationMessages]="validationMessages.lastName"></app-validation-messages>
 

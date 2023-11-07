@@ -28,7 +28,7 @@
     <!--price-->
     <ion-item lines="none">
       <ion-label position="stacked">Preis (in €) *</ion-label>
-      <ion-input class="form-field-creator" type="number" inputmode="decimal" min="0" formControlName="price" clearInput="true" required="true"></ion-input>
+      <ion-input class="form-field-creator" type="number" inputmode="decimal" min="0" formControlName="price" clearInput="true" required="true" legacy="true"></ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('price')" [validationMessages]="validationMessages.price"></app-validation-messages>
 
@@ -36,23 +36,23 @@
       <!--coupon code-->
       <ion-item lines="none">
         <ion-label position="stacked">Gutschein-Code</ion-label>
-        <ion-input class="form-field-creator" formControlName="code" clearInput="true"></ion-input>
+        <ion-input class="form-field-creator" formControlName="code" clearInput="true" legacy="true"></ion-input>
       </ion-item>
       <app-validation-messages [control]="form.get('coupon.code')" [validationMessages]="validationMessages.couponCode"></app-validation-messages>
 
       <!--coupon value-->
       <ion-item lines="none">
         <ion-label position="stacked">Gutschein-Wert</ion-label>
-        <ion-input class="form-field-creator" formControlName="value" clearInput="true"></ion-input>
+        <ion-input class="form-field-creator" formControlName="value" clearInput="true" legacy="true"></ion-input>
       </ion-item>
       <app-validation-messages [control]="form.get('coupon.value')" [validationMessages]="validationMessages.couponValue"></app-validation-messages>
 
       <!--coupon expiration date-->
       <ion-item lines="none">
         <ion-label position="stacked">Gutschein-Ablaufdatum</ion-label>
-        <app-datetime class="form-field-creator" formControlName="expirationDate" placeholder="31.12.2023" 
-          iconColor="color-secondary-purple" 
-          modalColor="primary-purple" 
+        <app-datetime class="form-field-creator" formControlName="expirationDate" placeholder="31.12.2023"
+          iconColor="color-secondary-purple"
+          modalColor="primary-purple"
           inputClass="form-field-creator"
           [containerStyle]="{ 'margin': '0px' }">
         </app-datetime>
@@ -65,8 +65,9 @@
       <ion-label position="stacked" class="display-flex align-items-center">URL *</ion-label>
       <ion-input type="url" required="true" class="form-field-creator"
                   placeholder="z.B. www.meinlieblingsshop.de/…"
-                  formControlName="productUrl" 
-                  clearInput="true">
+                  formControlName="productUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('productUrl')" [validationMessages]="validationMessages.productUrl"></app-validation-messages>
@@ -76,8 +77,9 @@
       <ion-label position="stacked" class="display-flex align-items-center">Affiliate URL</ion-label>
       <ion-input type="url" class="form-field-creator"
                   placeholder="z.B. www.meinlieblingsshop.de/…"
-                  formControlName="affiliateUrl" 
-                  clearInput="true">
+                  formControlName="affiliateUrl"
+                  clearInput="true"
+                  legacy="true">
       </ion-input>
     </ion-item>
     <app-validation-messages [control]="form.get('affiliateUrl')" [validationMessages]="validationMessages.affiliateUrl"></app-validation-messages>

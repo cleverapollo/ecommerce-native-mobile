@@ -3,7 +3,7 @@
   <form *ngIf="showForm" (ngSubmit)="createNewWishList()" style="overflow-y: scroll;" class="form-create-new-wish-list">
     <ion-item [formGroup]="form" class="first-item input-wish-list-name">
       <ion-input name="name" formControlName="name" placeholder="Gib einen Namen ein" enterkeyhint="done"
-        autocapitalize="on" clear-input="true" inputmode="text" required="true"></ion-input>
+        autocapitalize="on" clear-input="true" inputmode="text" required="true" legacy="true"></ion-input>
       <ion-button type="submit" *ngIf="showSaveWishListButton" size="small" color="dark" [disabled]="form.invalid"
         class="save-wish-list-button">Fertig</ion-button>
       <ion-spinner *ngIf="showLoading" color="primary"></ion-spinner>
