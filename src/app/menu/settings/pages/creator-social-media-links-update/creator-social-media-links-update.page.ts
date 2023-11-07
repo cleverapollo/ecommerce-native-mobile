@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
-import { UserProfile } from '@core/models/user.model';
-import { AnalyticsService } from '@core/services/analytics.service';
-import { LoadingService } from '@core/services/loading.service';
-import { CoreToastService } from '@core/services/toast.service';
-import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { Component, OnInit } from '@angular/core';
 import { ValidationMessage, ValidationMessages } from '@shared/components/validation-messages/validation-message';
-import { CustomValidation } from '@shared/custom-validation';
 import { finalize, first } from 'rxjs/operators';
+
+import { AnalyticsService } from '@core/services/analytics.service';
+import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
+import { CoreToastService } from '@core/services/toast.service';
+import { CustomValidation } from '@shared/custom-validation';
+import { LoadingService } from '@core/services/loading.service';
+import { UserProfile } from '@core/models/user.model';
+import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 
 @Component({
   selector: 'app-creator-social-media-links-update',
@@ -115,12 +116,12 @@ export class CreatorSocialMediaLinksUpdatePage implements OnInit {
 
     this.user = await this.userStore.loadUserProfile().toPromise();
 
-    const socialMediaLinks = this.user.creatorAccount.socialMediaLinks;
+    const socialMediaLinks = this.user.creatorAccount?.socialMediaLinks;
     this.form = this.formBuilder.group({
-      instagramUrl: buildSocialMediaUrlControl(socialMediaLinks.instagramUrl),
-      facebookUrl: buildSocialMediaUrlControl(socialMediaLinks.facebookUrl),
-      youtubeUrl: buildSocialMediaUrlControl(socialMediaLinks.youtubeUrl),
-      tiktokUrl: buildSocialMediaUrlControl(socialMediaLinks.tiktokUrl)
+      instagramUrl: buildSocialMediaUrlControl(socialMediaLinks?.instagramUrl),
+      facebookUrl: buildSocialMediaUrlControl(socialMediaLinks?.facebookUrl),
+      youtubeUrl: buildSocialMediaUrlControl(socialMediaLinks?.youtubeUrl),
+      tiktokUrl: buildSocialMediaUrlControl(socialMediaLinks?.tiktokUrl)
     });
   }
 
