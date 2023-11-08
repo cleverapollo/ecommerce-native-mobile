@@ -1,6 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32.5" height="32.5" viewBox="0 0 32.5 32.5">
-  <g id="Gruppe_60" data-name="Gruppe 60" transform="translate(70.75 -133.25)">
-    <line id="Linie_9" data-name="Linie 9" y2="30" transform="translate(-54.5 134.5)" fill="none" stroke-linecap="round" stroke-width="2.5"/>
-    <line id="Linie_10" data-name="Linie 10" y2="30" transform="translate(-39.5 149.5) rotate(90)" fill="none" stroke-linecap="round" stroke-width="2.5"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25">
+  <path d="M23.0106 11.4693H12.9894V1.03067C12.9894 0.461741 12.5462 0 12 0C11.4538 0 11.0106 0.461741 11.0106 1.03067V11.4693H0.989446C0.443272 11.4693 0 11.9311 0 12.5C0 13.0689 0.443272 13.5307 0.989446 13.5307H11.0106V23.9693C11.0106 24.5383 11.4538 25 12 25C12.5462 25 12.9894 24.5383 12.9894 23.9693V13.5307H23.0106C23.5567 13.5307 24 13.0689 24 12.5C24 11.9311 23.5567 11.4693 23.0106 11.4693Z"/>
 </svg>

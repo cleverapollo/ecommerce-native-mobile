@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="29.281" height="25.5" viewBox="0 0 29.281 25.5">
-  <g id="Burger_Menu" data-name="Burger Menu" transform="translate(1.25 1.25)">
-    <line id="Linie_1" data-name="Linie 1" x2="26.281" transform="translate(0.5)" fill="none" stroke-linecap="round" stroke-width="2.5"/>
-    <line id="Linie_2" data-name="Linie 2" x2="26.781" transform="translate(0 12)" fill="none" stroke-linecap="round" stroke-width="2.5"/>
-    <line id="Linie_3" data-name="Linie 3" x2="16.281" transform="translate(10.5 23)" fill="none" stroke-linecap="round" stroke-width="2.5"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="29" height="25" viewBox="0 0 29 25">
+  <path d="M1.49417 2.00842H27.193C27.7473 2.00842 28.1972 1.55853 28.1972 1.00421C28.1972 0.449885 27.7473 0 27.193 0H1.49417C0.939861 0 0.48999 0.449885 0.48999 1.00421C0.48999 1.55853 0.939861 2.00842 1.49417 2.00842Z" />
+  <path d="M27.1931 11.7373H1.00418C0.44987 11.7373 0 12.1872 0 12.7415C0 13.2958 0.44987 13.7457 1.00418 13.7457H27.1931C27.7474 13.7457 28.1972 13.2958 28.1972 12.7415C28.1972 12.1872 27.7474 11.7373 27.1931 11.7373Z"/>
+  <path d="M27.193 22.4863H11.2708C10.7165 22.4863 10.2666 22.9362 10.2666 23.4905C10.2666 24.0449 10.7165 24.4947 11.2708 24.4947H27.193C27.7473 24.4947 28.1971 24.0449 28.1971 23.4905C28.1971 22.9362 27.7473 22.4863 27.193 22.4863Z" />
 </svg>

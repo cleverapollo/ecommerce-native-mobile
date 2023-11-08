@@ -31,22 +31,10 @@ ion-tabs {
             ion-icon.icon-creator-search {
                 width: 35px;
             }
-            ion-icon.stroke-orange {
-                stroke: var(--ion-color-secondary);
-            }
-            ion-icon.stroke-purple {
-                stroke: var(--ion-color-secondary-purple);
-            }
         }
         ion-tab-button.tab-selected {
             border-top: 2px solid;
             padding-bottom: 2px;
-            ion-icon.icon-add.stroke-orange, ion-icon.icon-friends.stroke-orange, ion-icon.icon-home.stroke-orange, ion-icon.icon-burger-menu.stroke-orange, ion-icon.icon-creator-search.stroke-orange {
-                stroke: var(--ion-color-primary);
-            }
-            ion-icon.icon-add.stroke-purple, ion-icon.icon-friends.stroke-purple, ion-icon.icon-home.stroke-purple, ion-icon.icon-burger-menu.stroke-purple, ion-icon.icon-creator-search.stroke-purple {
-                stroke: var(--ion-color-primary-purple);
-            }
         }
     }
 }

@@ -4,7 +4,6 @@ import { SearchResultDataService } from '@core/services/search-result-data.servi
 import { IonTabs } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { Subscription } from 'rxjs';
-import { TabBarRoute, getTaBarPath } from './tab-bar-routes';
 
 @Component({
   selector: 'app-tab-bar',
@@ -16,8 +15,6 @@ export class TabBarPage implements OnInit, OnDestroy {
   @ViewChild(IonTabs)
   public tabs: IonTabs;
 
-  tabHome = 'home';
-  tabSearch = 'wish-search';
   isCreatorAccountActive: boolean = false;
 
   private subscription: Subscription;
@@ -31,8 +28,6 @@ export class TabBarPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.userStore.isCreatorAccountActive$.subscribe(isCreatorAccountActive => {
       this.isCreatorAccountActive = isCreatorAccountActive;
-      this.tabHome = isCreatorAccountActive ? getTaBarPath(TabBarRoute.PRODUCT_LISTS, false) : getTaBarPath(TabBarRoute.HOME, false);
-      this.tabSearch = isCreatorAccountActive ? getTaBarPath(TabBarRoute.PRODUCT_SEARCH, false) : getTaBarPath(TabBarRoute.WISH_SEARCH, false);
     });
   }
 
