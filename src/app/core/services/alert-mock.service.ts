@@ -1,4 +1,4 @@
-import { alertCompletionHandler, AppAlertService } from './alert.service';
+import { AppAlertService, alertCompletionHandler } from './alert.service';
 export class MockAlert {
     public visible: boolean;
     public header: string;
@@ -54,4 +54,13 @@ export class MockAlertService implements AppAlertService {
         });
         return alert;
     }
+
+    createActionAlert(header: string, message: string, actionBtnText: string, actionHandler: alertCompletionHandler): Promise<HTMLIonAlertElement> {
+        const alert = this.alertController.create({ header, message });
+        alert.then(() => {
+            actionHandler(true);
+        });
+        return alert;
+    }
+
 }

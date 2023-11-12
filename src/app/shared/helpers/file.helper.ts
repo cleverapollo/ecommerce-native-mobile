@@ -1,4 +1,4 @@
-import { Camera, CameraPermissionType } from "@capacitor/camera";
+import { Camera, CameraPermissionState, CameraPermissionType } from "@capacitor/camera";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 
 export interface LocalFile {
@@ -66,15 +66,7 @@ export const getFileSizeInMB = (arrayBuffer: ArrayBuffer): number => {
     return arrayBuffer.byteLength / (1024 * 1024);
 }
 
-export const checkPhotoPermissions = async (permissionType: CameraPermissionType): Promise<void> => {
+export const checkPhotoPermissions = async (permissionType: CameraPermissionType): Promise<CameraPermissionState> => {
     const permissions = await Camera.checkPermissions();
-    if (permissions[permissionType] === 'granted') {
-        return;
-    }
-    const status = await Camera.requestPermissions({
-        permissions: [permissionType]
-    });
-    if (status[permissionType] !== 'granted') {
-        throw new Error(`User ${status[permissionType]} ${permissionType} permission!`);
-    }
+    return permissions[permissionType];
 }

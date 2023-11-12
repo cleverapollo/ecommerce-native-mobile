@@ -1,14 +1,17 @@
+import { AndroidSettings, IOSSettings, NativeSettings } from 'capacitor-native-settings';
+import { Camera, CameraPermissionState, CameraPermissionType, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Directory, Filesystem, ReaddirResult } from '@capacitor/filesystem';
-import { Logger } from '@core/services/log.service';
-import { PlatformService } from '@core/services/platform.service';
+import { LocalFile, checkPhotoPermissions, convertBlobToBase64, convertToArrayBuffer, getFileSizeInMB, loadFileData, mkdir } from '@shared/helpers/file.helper';
+
+import { AlertService } from '@core/services/alert.service';
+import { App } from '@capacitor/app';
 import { CoreToastService } from '@core/services/toast.service';
 import { IonModal } from '@ionic/angular';
+import { Logger } from '@core/services/log.service';
+import { PlatformService } from '@core/services/platform.service';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
-import { LocalFile, checkPhotoPermissions, convertBlobToBase64, convertToArrayBuffer, getFileSizeInMB, loadFileData, mkdir } from '@shared/helpers/file.helper';
 import { v4 as uuidv4 } from 'uuid';
-
 
 const IMAGE_DIR = 'stored-images';
 const FALLBACK_IMG = 'https://ionicframework.com/docs/img/demos/avatar.svg';
@@ -59,7 +62,8 @@ export class PhotoComponent implements OnInit, OnChanges {
     private logger: Logger,
     private platformService: PlatformService,
     private toastService: CoreToastService,
-    private userService: UserProfileStore
+    private userService: UserProfileStore,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -83,28 +87,57 @@ export class PhotoComponent implements OnInit, OnChanges {
     }
   }
 
-  async pickImageFromGallery() {
+  async getPhoto(fromSource: CameraSource, currPermission?: CameraPermissionState): Promise<void> {
     try {
-      await checkPhotoPermissions('photos');
-      await this._selectPhoto(CameraSource.Photos);
-      await this.modal?.dismiss();
+      const permissionType: CameraPermissionType = fromSource === CameraSource.Camera ? 'camera' : 'photos';
+      const permission = currPermission ?? await checkPhotoPermissions(permissionType);
+      if (permission === 'granted' || permission === 'limited') {
+        await this._selectPhoto(fromSource);
+        await this.modal?.dismiss();
+        return;
+      }
+
+      if (permission === 'denied') {
+        const message = permissionType === 'photos' ?
+         'Um ein Bild auzuwählen erlaube bitte den Zugriff auf Deine Bilder in den Einstellungen.' :
+         'Um ein Bild aufzunehmen erlaube bitte den Zugriff auf Deine Kamera in den Einstellungen.';
+        const appName = (await App.getInfo()).name;
+        const alert = await this.alertService.createActionAlert(
+          `"${appName}" ohne Zugriff auf deine ${permissionType === 'photos' ? 'Bilder' : 'Kamera'}`,
+          message,
+          'Einstellungen öffnen',
+          async () => {
+            await NativeSettings.open({
+              optionAndroid: AndroidSettings.ApplicationDetails,
+              optionIOS: IOSSettings.App
+            });
+          });
+        await alert.present();
+        return;
+      }
+
+      if (permission === 'prompt' || permission === 'prompt-with-rationale') {
+        return this.getPhoto(fromSource, (await Camera.requestPermissions({
+          permissions: [permissionType]
+        }))[permissionType]);
+      }
+
+      throw new Error(`Unhandled permission state ${permission}`);
     } catch (error) {
       this.logger.error(error);
-      this.toastService.presentErrorToast('Um ein Foto auzuwählen, erlaube bitte den Zugriff auf Deine Gallerie.')
+      this.toastService.presentErrorToast('Ein unbekannter Fehler ist aufgetreten.')
     }
   }
 
-  async takePhoto() {
-    try {
-      await checkPhotoPermissions('camera');
-      await this._selectPhoto(CameraSource.Camera);
-      await this.modal?.dismiss();
-    } catch (error) {
-      this.toastService.presentErrorToast('Um ein Foto aufzunehmen, erlaube bitte den Zugriff auf Deine Kamera.')
-    }
+  pickImageFromGallery(): Promise<void> {
+    return this.getPhoto(CameraSource.Photos);
   }
 
-  async deletePhoto() {
+  takePhoto(): Promise<void> {
+    return this.getPhoto(CameraSource.Camera);
+  }
+
+  async deletePhoto(): Promise<void> {
     if (!this.image) {
       await this.toastService.presentInfoToast('Kein Bild zum Löschen vorhanden')
       return;
@@ -117,10 +150,10 @@ export class PhotoComponent implements OnInit, OnChanges {
     }
 
     this.fileDeleted.emit();
-    return this.modal?.dismiss();
+    await this.modal?.dismiss();
   }
 
-  private async _selectPhoto(cameraSource: CameraSource) {
+  private async _selectPhoto(cameraSource: CameraSource): Promise<void> {
     let photo: Photo;
     try {
       photo = await Camera.getPhoto({
@@ -172,7 +205,7 @@ export class PhotoComponent implements OnInit, OnChanges {
     }
   }
 
-  private async readAsBase64(photo: Photo) {
+  private async readAsBase64(photo: Photo): Promise<string | Blob> {
     if (this.platformService.isNativePlatform) {
       const file = await Filesystem.readFile({
         path: photo.path

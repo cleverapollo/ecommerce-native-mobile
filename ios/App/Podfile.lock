@@ -52,6 +52,8 @@ PODS:
     - Capacitor
   - CapacitorKeyboard (5.0.6):
     - Capacitor
+  - CapacitorNativeSettings (5.0.1):
+    - Capacitor
   - CapacitorPreferences (5.0.6):
     - Capacitor
   - CapacitorSecureStoragePlugin (0.5.1):
@@ -218,6 +220,7 @@ DEPENDENCIES:
   - "CapacitorFirebaseAuthentication/Google (from `../../node_modules/@capacitor-firebase/authentication`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - CapacitorNativeSettings (from `../../node_modules/capacitor-native-settings`)
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
   - CapacitorSecureStoragePlugin (from `../../node_modules/capacitor-secure-storage-plugin`)
   - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
@@ -279,6 +282,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
     :path: "../../node_modules/@capacitor/keyboard"
+  CapacitorNativeSettings:
+    :path: "../../node_modules/capacitor-native-settings"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
   CapacitorSecureStoragePlugin:
@@ -315,6 +320,7 @@ SPEC CHECKSUMS:
   CapacitorFirebaseAuthentication: a90743b8923b81945c4b5c772b95de1f9c50820f
   CapacitorHaptics: 1fffc1217c7e64a472d7845be50fb0c2f7d4204c
   CapacitorKeyboard: b978154b024a5f65e044908e37d15b7de58b9d12
+  CapacitorNativeSettings: 6e94ed3c0465206756f320df18efc52f053ce3c7
   CapacitorPreferences: f03954bcb0ff09c792909e46bff88e3183c16b10
   CapacitorSecureStoragePlugin: 66e194d0ff9d910fc68a4fa38c024c4d4a54b745
   CapacitorShare: cd41743331cb71d217c029de54b681cbd91e0fcc
@@ -343,6 +349,6 @@ SPEC CHECKSUMS:
   SVGKit: 9bc0f0982df559e65b96f2150ff9c15a61e453ac
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
 
-PODFILE CHECKSUM: a154bd7d308bad37a6d3e4c40efbc2046299c940
+PODFILE CHECKSUM: b20fdb0105247d8d82e4121758bc0e5d37bbe51e
 
 COCOAPODS: 1.13.0
