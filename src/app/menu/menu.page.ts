@@ -27,6 +27,8 @@ export class MenuPage implements OnInit, OnDestroy {
   isCreatorAccountActive = false;
   image: Blob | null = null;
 
+  user?: UserProfile;
+
   get appVersion(): string {
     return appVersion
   }
@@ -81,19 +83,18 @@ export class MenuPage implements OnInit, OnDestroy {
       map(result => ({ user: result[0], isCreatorAccountActive: result[1] }))
     ).subscribe({
       next: value => {
-        console.log('new user', value);
-        const user = value.user;
+        this.user = value.user;
         this.isCreatorAccountActive = value.isCreatorAccountActive;
-        this.firstName = user.firstName;
-        this.lastName = user.lastName || '';
-        this.hasCreatorAccount = !!user.creatorAccount;
-        this.creatorName = user.creatorAccount?.name;
+        this.firstName = this.user.firstName;
+        this.lastName = this.user.lastName || '';
+        this.hasCreatorAccount = !!this.user.creatorAccount;
+        this.creatorName = this.user.creatorAccount?.name;
         this.displayFirstName = this.isCreatorAccountActive ? this.creatorName : this.firstName;
         this.displayLastName = this.isCreatorAccountActive ? null : this.lastName;
 
         this.isCreatorAccountActive ?
-          this._updatePhoto(user.creatorAccount?.hasImage, this.userStore.downloadCreatorImage()) :
-          this._updatePhoto(user?.hasImage, this.userStore.downloadUserImage());
+          this._updatePhoto(this.user.creatorAccount?.hasImage, this.userStore.downloadCreatorImage()) :
+          this._updatePhoto(this.user?.hasImage, this.userStore.downloadUserImage());
       }
     }));
   }

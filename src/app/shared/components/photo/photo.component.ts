@@ -27,6 +27,7 @@ export class PhotoComponent implements OnInit, OnChanges {
   @Input() size: 's' | 'm' | 'l' = 'l';
   @Input() readOnly = false;
   @Input() fileName?: string;
+  @Input() showSwitchImage = false;
 
   @Output() fileChanged = new EventEmitter<ArrayBuffer>();
   @Output() fileDeleted = new EventEmitter<void>();
@@ -34,7 +35,7 @@ export class PhotoComponent implements OnInit, OnChanges {
   @ViewChild('modal') modal?: IonModal;
 
   style = {};
-  sizeCssClass = 'size-l';
+  avatarCssClass = 'size-l';
   showError = false;
   btnColor: 'primary' | 'primary-purple' = 'primary';
   btnContainerClass = {};
@@ -62,7 +63,10 @@ export class PhotoComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.sizeCssClass = `size-${this.size}`;
+    this.avatarCssClass = `size-${this.size}`;
+    if (this.showSwitchImage) {
+      this.avatarCssClass += ' opacity-80';
+    }
     this.userService.isCreatorAccountActive$.subscribe(isActive => {
       if (isActive) {
         this.btnContainerClass = 'primary-purple-gradient';

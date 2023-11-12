@@ -8,12 +8,22 @@
     margin: 7px 0 0 5px;
     background-size: cover;
     background-position: center center;
+    position: relative;
+}
+
+.switch-image {
+    position: absolute;
+    top: 7px;
+    left: 6px;
+    width: 90%;
+    height: 90%;
 }
 
 .container {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    position: relative;
 }
 
 .size-s {
@@ -37,4 +47,8 @@
 
 .margin-top-8 {
     margin-top: 8px;
+}
+
+.opacity-80 {
+    opacity: 0.8;
 }
