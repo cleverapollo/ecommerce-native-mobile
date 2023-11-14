@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -175,6 +175,18 @@
 		B1FA5E8427AECB89004AA41C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA5E8327AECB89004AA41C /* Constants.swift */; };
 		B1FA5E8527AECB89004AA41C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA5E8327AECB89004AA41C /* Constants.swift */; };
 		D94ED42B35E26405D9628EFA /* Pods_Wantic_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2382B3E3D7FA845C94EADA /* Pods_Wantic_Beta.framework */; };
+		E4C7CBA52B03BDE4001716C2 /* ProductListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBA42B03BDE4001716C2 /* ProductListRequest.swift */; };
+		E4C7CBA62B03BE44001716C2 /* ProductListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBA42B03BDE4001716C2 /* ProductListRequest.swift */; };
+		E4C7CBA82B03BE54001716C2 /* ProductRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBA72B03BE54001716C2 /* ProductRequest.swift */; };
+		E4C7CBA92B03BE54001716C2 /* ProductRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBA72B03BE54001716C2 /* ProductRequest.swift */; };
+		E4C7CBAB2B03BF1D001716C2 /* ProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBAA2B03BF1D001716C2 /* ProductList.swift */; };
+		E4C7CBAC2B03BF1D001716C2 /* ProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBAA2B03BF1D001716C2 /* ProductList.swift */; };
+		E4C7CBAE2B03BF95001716C2 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBAD2B03BF95001716C2 /* Coupon.swift */; };
+		E4C7CBAF2B03BF95001716C2 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBAD2B03BF95001716C2 /* Coupon.swift */; };
+		E4C7CBB42B03D3FF001716C2 /* Wish.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBB32B03D3FF001716C2 /* Wish.swift */; };
+		E4C7CBB52B03D407001716C2 /* Wish.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBB32B03D3FF001716C2 /* Wish.swift */; };
+		E4C7CBB72B03D415001716C2 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBB62B03D415001716C2 /* WishList.swift */; };
+		E4C7CBB82B03D417001716C2 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBB62B03D415001716C2 /* WishList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -348,6 +360,12 @@
 		C46CE12E54A108283CA10339 /* Pods-Wantic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.release.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.release.xcconfig"; sourceTree = "<group>"; };
 		C9F092FFCD18C67EAE08E2E1 /* Pods-Wantic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.debug.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.debug.xcconfig"; sourceTree = "<group>"; };
 		D0CDC2C6C77D06D5150EC842 /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4C7CBA42B03BDE4001716C2 /* ProductListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListRequest.swift; sourceTree = "<group>"; };
+		E4C7CBA72B03BE54001716C2 /* ProductRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRequest.swift; sourceTree = "<group>"; };
+		E4C7CBAA2B03BF1D001716C2 /* ProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductList.swift; sourceTree = "<group>"; };
+		E4C7CBAD2B03BF95001716C2 /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
+		E4C7CBB32B03D3FF001716C2 /* Wish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wish.swift; sourceTree = "<group>"; };
+		E4C7CBB62B03D415001716C2 /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
 		E80D998C06A088495E3F8961 /* Pods-Share Beta.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.xctest.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.xctest.xcconfig"; sourceTree = "<group>"; };
 		F8B7F4479C217A1ED6A93A0C /* Pods-Wantic Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.release.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -507,9 +525,9 @@
 		B14880CD25B2FF2000D0106B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B16360CF25FE13DA00D19F73 /* Price.swift */,
-				B1A8285927BC2EA900F2B0C5 /* WebPageImage.swift */,
-				B1A80F9F258A281600F0917F /* WebPageInfo.swift */,
+				E4C7CBB22B03D3E6001716C2 /* Wish */,
+				E4C7CBB12B03D3D1001716C2 /* Web */,
+				E4C7CBB02B03D3B3001716C2 /* Product */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -666,6 +684,36 @@
 				B19B46702819B7AF00E9E075 /* CustomSwitch.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E4C7CBB02B03D3B3001716C2 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				B16360CF25FE13DA00D19F73 /* Price.swift */,
+				E4C7CBA42B03BDE4001716C2 /* ProductListRequest.swift */,
+				E4C7CBA72B03BE54001716C2 /* ProductRequest.swift */,
+				E4C7CBAA2B03BF1D001716C2 /* ProductList.swift */,
+				E4C7CBAD2B03BF95001716C2 /* Coupon.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		E4C7CBB12B03D3D1001716C2 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				B1A8285927BC2EA900F2B0C5 /* WebPageImage.swift */,
+				B1A80F9F258A281600F0917F /* WebPageInfo.swift */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		E4C7CBB22B03D3E6001716C2 /* Wish */ = {
+			isa = PBXGroup;
+			children = (
+				E4C7CBB32B03D3FF001716C2 /* Wish.swift */,
+				E4C7CBB62B03D415001716C2 /* WishList.swift */,
+			);
+			path = Wish;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1121,6 +1169,7 @@
 				B1A8285E27BC365700F2B0C5 /* WebCrawler.swift in Sources */,
 				B19B46722819B7AF00E9E075 /* CustomSwitch.swift in Sources */,
 				B19A51EF2610CE8000984207 /* WishListResouce.swift in Sources */,
+				E4C7CBA62B03BE44001716C2 /* ProductListRequest.swift in Sources */,
 				B1913C2127ADBC1200BD8F4A /* Color.swift in Sources */,
 				B19A51F02610CE8000984207 /* WebPageInfo.swift in Sources */,
 				B19A51F12610CE8000984207 /* SelfSizedTableView.swift in Sources */,
@@ -1136,6 +1185,7 @@
 				B1913C2427ADBE4C00BD8F4A /* Font.swift in Sources */,
 				B1A8285227BADAC600F2B0C5 /* Alert.swift in Sources */,
 				B1FA5E8527AECB89004AA41C /* Constants.swift in Sources */,
+				E4C7CBB82B03D417001716C2 /* WishList.swift in Sources */,
 				B1A8285827BC27EB00F2B0C5 /* Image.swift in Sources */,
 				B122318A27C285CF00FDC943 /* ActivityIndicator.swift in Sources */,
 				B19A51F72610CE8000984207 /* Decimal+Extensions.swift in Sources */,
@@ -1148,6 +1198,7 @@
 				B19A51FC2610CE8000984207 /* WanticTextView.swift in Sources */,
 				B122318427C2687200FDC943 /* Logger.swift in Sources */,
 				B1A410BC2731D40B000DB58C /* String+Extensions.swift in Sources */,
+				E4C7CBAC2B03BF1D001716C2 /* ProductList.swift in Sources */,
 				B19A523A2610D11400984207 /* AppConfig.swift in Sources */,
 				B1913C1E27ADB36300BD8F4A /* NewWishListTextField.swift in Sources */,
 				B19A51FD2610CE8000984207 /* WishListTableViewController.swift in Sources */,
@@ -1155,10 +1206,13 @@
 				B19A51FE2610CE8000984207 /* UIImageView+Extensions.swift in Sources */,
 				B19A51FF2610CE8000984207 /* FooterView.swift in Sources */,
 				B1A8285B27BC2EA900F2B0C5 /* WebPageImage.swift in Sources */,
+				E4C7CBB52B03D407001716C2 /* Wish.swift in Sources */,
 				B12EA4D72691C4F1001654EA /* UIImage+Extensions.swift in Sources */,
 				B19A52002610CE8000984207 /* ProductImageViewController.swift in Sources */,
+				E4C7CBA92B03BE54001716C2 /* ProductRequest.swift in Sources */,
 				B1FA5E7627AE9F9B004AA41C /* Icon.swift in Sources */,
 				B1F81F6B26430D1500C277FB /* WanticShareNavigationController.swift in Sources */,
+				E4C7CBAF2B03BF95001716C2 /* Coupon.swift in Sources */,
 				B19A52012610CE8000984207 /* EditDetailsViewController.swift in Sources */,
 				B19A52022610CE8000984207 /* Price.swift in Sources */,
 				B1FA5E8227AEC4F7004AA41C /* UITextView+Extensions.swift in Sources */,
@@ -1174,6 +1228,7 @@
 				B1A8285D27BC365700F2B0C5 /* WebCrawler.swift in Sources */,
 				B19B46712819B7AF00E9E075 /* CustomSwitch.swift in Sources */,
 				B1A80FC5258B3F9B00F0917F /* WishListResouce.swift in Sources */,
+				E4C7CBA52B03BDE4001716C2 /* ProductListRequest.swift in Sources */,
 				B1913C2027ADBC1200BD8F4A /* Color.swift in Sources */,
 				B1A80FA0258A281600F0917F /* WebPageInfo.swift in Sources */,
 				B16E1FB325BF3290009EEFDE /* SelfSizedTableView.swift in Sources */,
@@ -1189,6 +1244,7 @@
 				B1913C2327ADBE4C00BD8F4A /* Font.swift in Sources */,
 				B1A8285127BADAC600F2B0C5 /* Alert.swift in Sources */,
 				B1FA5E8427AECB89004AA41C /* Constants.swift in Sources */,
+				E4C7CBB72B03D415001716C2 /* WishList.swift in Sources */,
 				B1A8285727BC27EB00F2B0C5 /* Image.swift in Sources */,
 				B122318927C285CF00FDC943 /* ActivityIndicator.swift in Sources */,
 				B19A52482610D1A500984207 /* AppConfig.swift in Sources */,
@@ -1201,6 +1257,7 @@
 				B14880B825B20FE800D0106B /* WishResource.swift in Sources */,
 				B122318327C2687200FDC943 /* Logger.swift in Sources */,
 				B1A410BB2731D40B000DB58C /* String+Extensions.swift in Sources */,
+				E4C7CBAB2B03BF1D001716C2 /* ProductList.swift in Sources */,
 				B17B404225C482E6003363E9 /* WanticTextView.swift in Sources */,
 				B1913C1D27ADB36300BD8F4A /* NewWishListTextField.swift in Sources */,
 				B148809C25B202CE00D0106B /* WishListTableViewController.swift in Sources */,
@@ -1208,10 +1265,13 @@
 				B1A80FA4258A2A0E00F0917F /* UIImageView+Extensions.swift in Sources */,
 				B17B403C25C4717F003363E9 /* FooterView.swift in Sources */,
 				B1A8285A27BC2EA900F2B0C5 /* WebPageImage.swift in Sources */,
+				E4C7CBB42B03D3FF001716C2 /* Wish.swift in Sources */,
 				B12EA4D62691C4F1001654EA /* UIImage+Extensions.swift in Sources */,
 				B1247FAF25BC612C009CEF57 /* ProductImageViewController.swift in Sources */,
+				E4C7CBA82B03BE54001716C2 /* ProductRequest.swift in Sources */,
 				B1FA5E7527AE9F9B004AA41C /* Icon.swift in Sources */,
 				B1F81F6A26430D1500C277FB /* WanticShareNavigationController.swift in Sources */,
+				E4C7CBAE2B03BF95001716C2 /* Coupon.swift in Sources */,
 				B1A80FA8258A705100F0917F /* EditDetailsViewController.swift in Sources */,
 				B16360D025FE13DA00D19F73 /* Price.swift in Sources */,
 				B1FA5E8127AEC4F7004AA41C /* UITextView+Extensions.swift in Sources */,

@@ -90,7 +90,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     
     private func setupActionButton() {
         
-        nextButton.applyGradient()
+        nextButton.applyPrivatGradient()
         enableNextButton(false)
     }
     

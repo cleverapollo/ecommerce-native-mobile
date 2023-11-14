@@ -1,22 +1,6 @@
 import Foundation
 import UIKit
 
-// MARK: - Models
-
-struct WishList: Codable {
-    
-    let id: UUID
-    let name: String
-}
-
-struct WishListCreateRequest: Codable {
-    
-    let name: String
-    var showReservedWishes: Bool = false
-}
-
-// MARK: - API
-
 protocol WishListApi: NetworkResource {
     
     static func queryWishLists(completionHandler: @escaping (Result<NetworkResponse<[WishList]>, NetworkError>) -> Void)

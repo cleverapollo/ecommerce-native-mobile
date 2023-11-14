@@ -4,9 +4,15 @@ import UIKit
 
 extension UIButton {
     
-    func applyGradient() {
+    func applyPrivatGradient() {
         
-        self.applyGradient(colours: [Color.get(.gradientStart), Color.get(.gradientEnd)],
+        self.applyGradient(colours: [Color.get(.gradientPrivatStart), Color.get(.gradientPrivatEnd)],
+                      angle: 113.0)
+    }
+    
+    func applyCreatorGradient() {
+        
+        self.applyGradient(colours: [Color.get(.gradientCreatorStart), Color.get(.gradientCreatorEnd)],
                       angle: 113.0)
     }
     
