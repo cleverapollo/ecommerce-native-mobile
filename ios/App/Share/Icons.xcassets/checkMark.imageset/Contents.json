@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Icon Bestätigte Auswahl.png",
+      "filename" : "checkMark@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Icon Bestätigte Auswahl@2x.png",
+      "filename" : "checkMark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Icon Bestätigte Auswahl@3x.png",
+      "filename" : "checkMark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

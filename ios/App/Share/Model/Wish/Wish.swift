@@ -14,9 +14,11 @@ struct Wish: Codable {
     var name: String?
     var note: String?
     var price: Price
+    var coupon: Coupon?
     var productUrl: String?
     var imageUrl: String?
     var isFavorite: Bool = false
+    var isCreator: Bool? = false
     
     var isValid: Bool {
         wishListId != nil && name != nil && productUrl != nil
@@ -26,7 +28,7 @@ struct Wish: Codable {
         self.price = Price(amount: 0.00)
     }
     
-    init(_ webPageInfo: WebPageInfo, webPageImage: WebPageImage?) {
+    init(_ webPageInfo: WebPageInfo, webPageImage: WebPageImage?, isCreator: Bool? = false) {
         
         if let webPageImageName = webPageImage?.name, !webPageImageName.isEmpty {
             name = webPageImageName
@@ -38,5 +40,7 @@ struct Wish: Codable {
         productUrl = webPageInfo.url
         imageUrl = webPageImage?.url
         price = webPageInfo.price
+        coupon = webPageInfo.coupon
+        self.isCreator = isCreator
     }
 }

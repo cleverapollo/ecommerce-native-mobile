@@ -1,4 +1,5 @@
 import UIKit
+import BetterSegmentedControl
 import MobileCoreServices
 
 private let reuseIdentifier = "ProductInfoCell"
@@ -12,14 +13,15 @@ class ProductInfoCell: UICollectionViewCell {
 class ProductImageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // MARK: - Views
+    @IBOutlet weak var navigationBar: DesignableNavigationItem!
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var headerStackView: UIStackView!
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var nextButton: UIButton!
     
     @IBOutlet weak var noImagesFoundView: UIView!
+    @IBOutlet weak var noImageConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var closeButton: UIBarButtonItem!
     @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
@@ -27,6 +29,8 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
             WishDataStore.shared.reset()
         })
     }
+    
+    @IBOutlet weak var segmentController: BetterSegmentedControl!
     
     private var loadingIndicatorView: UIVisualEffectView?
     
@@ -59,7 +63,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         }
         WishDataStore.shared.update(Wish(webPageInfo, webPageImage: webPageImage))
     }
-        
+    
     // MARK: - lifecycle
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,8 +84,9 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupActionButton()
+        setupSegmentButton()
+        setupTitleImage()
         showNoImagesFoundView(false)
         
         collectionView.delegate = self
@@ -89,9 +94,12 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func setupActionButton() {
-        
         nextButton.applyPrivatGradient()
         enableNextButton(false)
+    }
+    
+    private func setupTitleImage() {
+        navigationBar.updateView(self.segmentController.index == 0 ? UIImage(resource: ImageResource.logo) : UIImage(resource: ImageResource.logoCreator))
     }
     
     private func enableNextButton(_ enable: Bool) {
@@ -107,11 +115,23 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.noImagesFoundView.isHidden = !show
+            self.noImageConstraint.constant = show ? 48 : 0
         }
     }
     
+    private func setupSegmentButton() {
+        segmentController.segments = LabelSegment.segments(withTitles: ["PRIVAT", "CREATOR"],
+                                                           normalFont:UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.bold), 
+                                                           normalTextColor: UIColor(hex: "#3E3E3E"),
+                                                           selectedFont: UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.bold),
+                                                           selectedTextColor: .white
+                                                           
+        )
+        segmentController.indicatorView.applyPrivatGradient()
+    }
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let viewController = segue.destination as? EditDetailsViewController else {
@@ -135,7 +155,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProductInfoCell else {
             return UICollectionViewCell()
         }
-    
+        
         guard let image = webPageInfo?.images[indexPath.row] else {
             return UICollectionViewCell()
         }
@@ -252,7 +272,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         var imageUrl: URL? = nil
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
         let matches = detector.matches(in: description, options: [], range: NSRange(location: 0, length: description.utf16.count))
-
+        
         for match in matches {
             guard let range = Range(match.range, in: description) else { continue }
             let urlString = description[range]
@@ -289,7 +309,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         
         let totalCellWidth = cellWidth * cellsInRow
         let totalSpacingWidth = 14.0 * (cellsInRow - 1)
-
+        
         let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
         let rightInset = leftInset
         return UIEdgeInsets(top: 10, left: leftInset, bottom: 10, right: rightInset)
@@ -301,6 +321,24 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
             guard let self = self else { return }
             self.present(alert, animated: true)
         }
+    }
+    
+    // MARK: - Segment Change
+    @IBAction func segmentChanged(_ sender: Any) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.segmentController.indicatorView.layer.sublayers?.removeFirst()
+            self.nextButton.layer.sublayers?.removeFirst()
+            setupTitleImage()
+            if (self.segmentController.index == 0) {
+                self.segmentController.indicatorView.applyPrivatGradient()
+                self.nextButton.applyPrivatGradient()
+            } else {
+                self.segmentController.indicatorView.applyCreatorGradient()
+                self.nextButton.applyCreatorGradient()
+            }
+        }
+        
     }
     
 }

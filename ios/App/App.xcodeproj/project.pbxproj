@@ -28,8 +28,6 @@
 		B122318D27C29A9D00FDC943 /* CAGradientLayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122318B27C29A9D00FDC943 /* CAGradientLayer+Extensions.swift */; };
 		B122318F27C29B2100FDC943 /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122318E27C29B2100FDC943 /* UINavigationItem+Extensions.swift */; };
 		B122319027C29B2100FDC943 /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122318E27C29B2100FDC943 /* UINavigationItem+Extensions.swift */; };
-		B122319227C2A72A00FDC943 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122319127C2A72A00FDC943 /* UIButton+Extensions.swift */; };
-		B122319327C2A72A00FDC943 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122319127C2A72A00FDC943 /* UIButton+Extensions.swift */; };
 		B1247FAF25BC612C009CEF57 /* ProductImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1247FAE25BC612C009CEF57 /* ProductImageViewController.swift */; };
 		B12EA4D62691C4F1001654EA /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4D52691C4F1001654EA /* UIImage+Extensions.swift */; };
 		B12EA4D72691C4F1001654EA /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4D52691C4F1001654EA /* UIImage+Extensions.swift */; };
@@ -279,7 +277,6 @@
 		B122318827C285CF00FDC943 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		B122318B27C29A9D00FDC943 /* CAGradientLayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Extensions.swift"; sourceTree = "<group>"; };
 		B122318E27C29B2100FDC943 /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
-		B122319127C2A72A00FDC943 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		B1247F9B25BC4AA5009CEF57 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		B1247F9C25BC4AA5009CEF57 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		B1247F9D25BC4AA5009CEF57 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
@@ -659,7 +656,6 @@
 			isa = PBXGroup;
 			children = (
 				B122318B27C29A9D00FDC943 /* CAGradientLayer+Extensions.swift */,
-				B122319127C2A72A00FDC943 /* UIButton+Extensions.swift */,
 				B114E13425B8A56A00F92599 /* UIColor+Extensions.swift */,
 				B12EA4D52691C4F1001654EA /* UIImage+Extensions.swift */,
 				B1A80FA3258A2A0E00F0917F /* UIImageView+Extensions.swift */,
@@ -1176,7 +1172,6 @@
 				B1FA5E7927AEA418004AA41C /* NewWishListView.swift in Sources */,
 				B1A8284827B80CF900F2B0C5 /* Network.swift in Sources */,
 				B19A51F32610CE8000984207 /* UIViewController+Extensions.swift in Sources */,
-				B122319327C2A72A00FDC943 /* UIButton+Extensions.swift in Sources */,
 				B1FA5E7327AE9F51004AA41C /* NewWishListButton.swift in Sources */,
 				B1B7B79A281C612C005D5962 /* Validation.swift in Sources */,
 				B19A51F42610CE8000984207 /* Authentication.swift in Sources */,
@@ -1235,7 +1230,6 @@
 				B1FA5E7827AEA418004AA41C /* NewWishListView.swift in Sources */,
 				B1A8284727B80CF900F2B0C5 /* Network.swift in Sources */,
 				B14880D125B3057300D0106B /* UIViewController+Extensions.swift in Sources */,
-				B122319227C2A72A00FDC943 /* UIButton+Extensions.swift in Sources */,
 				B1FA5E7227AE9F51004AA41C /* NewWishListButton.swift in Sources */,
 				B1B7B799281C612C005D5962 /* Validation.swift in Sources */,
 				B1A80FC9258B40D900F0917F /* Authentication.swift in Sources */,
