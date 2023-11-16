@@ -6,7 +6,7 @@ struct WebCrawler {
         
         WebPageInfo(title: getStringValue(dict, key: "title"),
                     url: getStringValue(dict, key: "url"),
-                    price: getPrice(dict),
+                    price: getPrice(dict), coupon: nil,
                     images: getImages(dict))
     }
     

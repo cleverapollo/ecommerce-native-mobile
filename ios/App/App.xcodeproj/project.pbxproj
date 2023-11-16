@@ -173,6 +173,10 @@
 		B1FA5E8427AECB89004AA41C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA5E8327AECB89004AA41C /* Constants.swift */; };
 		B1FA5E8527AECB89004AA41C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA5E8327AECB89004AA41C /* Constants.swift */; };
 		D94ED42B35E26405D9628EFA /* Pods_Wantic_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2382B3E3D7FA845C94EADA /* Pods_Wantic_Beta.framework */; };
+		E44DF34E2B06594F0032C381 /* ManagerStoryBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44DF34D2B06594F0032C381 /* ManagerStoryBoard.swift */; };
+		E44DF34F2B06594F0032C381 /* ManagerStoryBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44DF34D2B06594F0032C381 /* ManagerStoryBoard.swift */; };
+		E44DF3512B066D670032C381 /* CreateProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44DF3502B066D670032C381 /* CreateProductViewController.swift */; };
+		E44DF3522B066D670032C381 /* CreateProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44DF3502B066D670032C381 /* CreateProductViewController.swift */; };
 		E4C7CBA52B03BDE4001716C2 /* ProductListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBA42B03BDE4001716C2 /* ProductListRequest.swift */; };
 		E4C7CBA62B03BE44001716C2 /* ProductListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBA42B03BDE4001716C2 /* ProductListRequest.swift */; };
 		E4C7CBA82B03BE54001716C2 /* ProductRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBA72B03BE54001716C2 /* ProductRequest.swift */; };
@@ -357,6 +361,8 @@
 		C46CE12E54A108283CA10339 /* Pods-Wantic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.release.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.release.xcconfig"; sourceTree = "<group>"; };
 		C9F092FFCD18C67EAE08E2E1 /* Pods-Wantic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic.debug.xcconfig"; path = "Target Support Files/Pods-Wantic/Pods-Wantic.debug.xcconfig"; sourceTree = "<group>"; };
 		D0CDC2C6C77D06D5150EC842 /* Pods_Wantic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wantic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E44DF34D2B06594F0032C381 /* ManagerStoryBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerStoryBoard.swift; sourceTree = "<group>"; };
+		E44DF3502B066D670032C381 /* CreateProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProductViewController.swift; sourceTree = "<group>"; };
 		E4C7CBA42B03BDE4001716C2 /* ProductListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListRequest.swift; sourceTree = "<group>"; };
 		E4C7CBA72B03BE54001716C2 /* ProductRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRequest.swift; sourceTree = "<group>"; };
 		E4C7CBAA2B03BF1D001716C2 /* ProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductList.swift; sourceTree = "<group>"; };
@@ -515,6 +521,7 @@
 				B1247FAE25BC612C009CEF57 /* ProductImageViewController.swift */,
 				B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */,
 				B18F1CC426874EF800FD7528 /* WebViewController.swift */,
+				E44DF3502B066D670032C381 /* CreateProductViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -655,6 +662,7 @@
 		B1FA5E8627AED37F004AA41C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E44DF34D2B06594F0032C381 /* ManagerStoryBoard.swift */,
 				B122318B27C29A9D00FDC943 /* CAGradientLayer+Extensions.swift */,
 				B114E13425B8A56A00F92599 /* UIColor+Extensions.swift */,
 				B12EA4D52691C4F1001654EA /* UIImage+Extensions.swift */,
@@ -1167,6 +1175,8 @@
 				B19A51EF2610CE8000984207 /* WishListResouce.swift in Sources */,
 				E4C7CBA62B03BE44001716C2 /* ProductListRequest.swift in Sources */,
 				B1913C2127ADBC1200BD8F4A /* Color.swift in Sources */,
+				E44DF3522B066D670032C381 /* CreateProductViewController.swift in Sources */,
+				E44DF34F2B06594F0032C381 /* ManagerStoryBoard.swift in Sources */,
 				B19A51F02610CE8000984207 /* WebPageInfo.swift in Sources */,
 				B19A51F12610CE8000984207 /* SelfSizedTableView.swift in Sources */,
 				B1FA5E7927AEA418004AA41C /* NewWishListView.swift in Sources */,
@@ -1225,6 +1235,8 @@
 				B1A80FC5258B3F9B00F0917F /* WishListResouce.swift in Sources */,
 				E4C7CBA52B03BDE4001716C2 /* ProductListRequest.swift in Sources */,
 				B1913C2027ADBC1200BD8F4A /* Color.swift in Sources */,
+				E44DF3512B066D670032C381 /* CreateProductViewController.swift in Sources */,
+				E44DF34E2B06594F0032C381 /* ManagerStoryBoard.swift in Sources */,
 				B1A80FA0258A281600F0917F /* WebPageInfo.swift in Sources */,
 				B16E1FB325BF3290009EEFDE /* SelfSizedTableView.swift in Sources */,
 				B1FA5E7827AEA418004AA41C /* NewWishListView.swift in Sources */,

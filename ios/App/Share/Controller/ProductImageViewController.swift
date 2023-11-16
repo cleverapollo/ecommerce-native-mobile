@@ -61,7 +61,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         if let selectedImage = self.selectedImage {
             webPageImage = selectedImage
         }
-        WishDataStore.shared.update(Wish(webPageInfo, webPageImage: webPageImage))
+        WishDataStore.shared.update(Wish(webPageInfo, webPageImage: webPageImage, isCreator: self.segmentController.index == 1))
     }
     
     // MARK: - lifecycle
@@ -121,7 +121,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     
     private func setupSegmentButton() {
         segmentController.segments = LabelSegment.segments(withTitles: ["PRIVAT", "CREATOR"],
-                                                           normalFont:UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.bold), 
+                                                           normalFont:UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.bold),
                                                            normalTextColor: UIColor(hex: "#3E3E3E"),
                                                            selectedFont: UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.bold),
                                                            selectedTextColor: .white
@@ -129,8 +129,6 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         )
         segmentController.indicatorView.applyPrivatGradient()
     }
-    
-    // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -197,7 +195,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.frame.size.width
         // in case you you want the cell to be 40% of your controllers view
-        return CGSize(width: width * 0.4, height: width * 0.4)
+        return CGSize(width: (width - 66)/2, height: (width - 66)/2)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -340,6 +338,30 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         }
         
     }
+    
+    // MARK: - Navigate to create page
+    
+    @IBAction func openCreatePage(_ sender: Any) {
+        guard let webPageInfo = webPageInfo else {
+            return
+        }
+        if (self.segmentController.index == 0) {
+            let vc =  UIStoryboard.editDetailsViewController()
+            if let selectedImage = self.selectedImage {
+                vc?.webPageImage = selectedImage
+            }
+            vc?.webPageInfo = webPageInfo
+            self.present(UINavigationController(rootViewController: vc!), animated: true, completion: nil)
+        } else {
+            let vc =  UIStoryboard.createProductViewController()
+            if let selectedImage = self.selectedImage {
+                vc?.webPageImage = selectedImage
+            }
+            vc?.webPageInfo = webPageInfo
+            self.present(UINavigationController(rootViewController: vc!), animated: true, completion: nil)
+        }
+    }
+    
     
 }
 

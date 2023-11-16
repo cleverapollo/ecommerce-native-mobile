@@ -17,6 +17,7 @@ struct Wish: Codable {
     var coupon: Coupon?
     var productUrl: String?
     var imageUrl: String?
+    var affiliateUrl: String?
     var isFavorite: Bool = false
     var isCreator: Bool? = false
     
