@@ -34,6 +34,8 @@ export enum InvitationStatus {
 export class UserDto {
     firstName: string;
     lastName: string;
+    email: EmailDto;
+    hasImage: boolean;
     emailVerificationStatus: EmailVerificationStatus;
 }
 
@@ -41,6 +43,7 @@ export class UserWishListDto {
     firstName: string;
     lastName?: string;
     email: string;
+    hasImage: boolean;
     emailVerificationStatus: EmailVerificationStatus;
     invitationStatus: InvitationStatus;
 }

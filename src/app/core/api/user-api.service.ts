@@ -4,14 +4,14 @@ import { HttpStatusCodes } from '@core/models/http-status-codes';
 import { ChangePasswordRequest, LoginResponse, UpdatePasswordRequest } from '@core/models/login.model';
 import {
   AccountDto,
+  EmailDto,
   EmailVerificationDto,
   Gender,
   PublicEmailVerificationStatus,
   UpdateEmailChangeRequest,
   UserProfile
 } from '@core/models/user.model';
-import { Logger } from '@core/services/log.service';
-import { Observable, throwError } from 'rxjs';
+import { Observable, lastValueFrom, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiErrorHandlerService } from './api-error-handler.service';
 import { ApiVersion } from './api-version';
@@ -26,8 +26,7 @@ export class UserApiService {
 
   constructor(
     private apiService: ApiService,
-    private errorHandler: ApiErrorHandlerService,
-    private logger: Logger
+    private errorHandler: ApiErrorHandlerService
   ) { }
 
   get apiV1(): string {
@@ -95,13 +94,19 @@ export class UserApiService {
 
   getImage(): Observable<Blob> {
     return this.apiService.downloadFile(`${this.apiV1}/profile/image`).pipe(
-      catchError(error => throwError(new WanticError(error)))
+      catchError(error => throwError(() => new WanticError(error)))
+    );
+  }
+
+  getImageForUser(email: EmailDto): Observable<Blob> {
+    return this.apiService.downloadFile(`${this.apiV1}/${email.value}/image`).pipe(
+      catchError(error => throwError(() => new WanticError(error)))
     );
   }
 
   async updateImage(file: ArrayBuffer): Promise<void> {
     try {
-      return await this.apiService.uploadFile<void>(`${this.apiV1}/profile/image`, file).toPromise();
+      return await lastValueFrom(this.apiService.uploadFile<void>(`${this.apiV1}/profile/image`, file));
     } catch (error) {
       throw new WanticError(error);
     }
@@ -109,7 +114,7 @@ export class UserApiService {
 
   deleteImage(): Observable<UserProfile> {
     return this.apiService.delete<UserProfile>(`${this.apiV1}/profile/image`).pipe(
-      catchError(error => throwError(new WanticError(error)))
+      catchError(error => throwError(() => new WanticError(error)))
     );
   }
 
@@ -139,9 +144,9 @@ export class UserApiService {
 
   async verifyEmail(emailVerficationToken: string): Promise<PublicEmailVerificationStatus> {
     try {
-      await this.apiService.patch<void>(`${this.apiV1}/email-verification`, {
+      await lastValueFrom(this.apiService.patch<void>(`${this.apiV1}/email-verification`, {
         emailVerficationToken
-      }).toPromise()
+      }));
       return PublicEmailVerificationStatus.VERIFIED;
     } catch (error) {
       if (error?.status === HttpStatusCodes.UNAUTHORIZED) {

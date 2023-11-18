@@ -43,11 +43,10 @@ export class FriendWishListStoreService implements FriendWishListStore {
   ) { }
 
   loadWishLists(forceRefresh: boolean = false): Observable<FriendWishList[]> {
-    const request = this.sharedWishListApiService.getWishLists() as Observable<FriendWishList[]>;
-    if (forceRefresh) {
-      return this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all');
-    }
-    return this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY);
+    const request = this.sharedWishListApiService.getWishLists();
+    return forceRefresh ?
+      this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all') :
+      this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY);
   }
 
   loadWishes(wishListId: string): Observable<FriendWish[]> {

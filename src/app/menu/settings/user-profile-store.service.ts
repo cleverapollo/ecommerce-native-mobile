@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ContentCreatorApiService } from '@core/api/content-creator-api.service';
 import { UserApiService } from '@core/api/user-api.service';
 import { ContentCreatorAccount } from '@core/models/content-creator.model';
-import { UserProfile } from '@core/models/user.model';
+import { EmailDto, UserProfile } from '@core/models/user.model';
 import { Logger } from '@core/services/log.service';
 import { StorageKeys, StorageService } from '@core/services/storage.service';
 import { CacheService } from 'ionic-cache';
@@ -12,13 +12,19 @@ import { mergeMap, tap } from 'rxjs/operators';
 enum ItemKeys {
   userProfile = 'userProfile',
   userImage = 'userImage',
-  creatorImage = 'creatorImage'
+  creatorImage = 'creatorImage',
+  friendImagePrefix = 'friendImage'
+}
+
+enum GroupKeys {
+  user = 'user',
+  friends = 'friends'
 }
 
 const cacheObject = {
   ttl: 60 * 60,
   itemKey: ItemKeys.userProfile,
-  groupKey: 'user'
+  groupKey: GroupKeys.user
 }
 
 @Injectable({
@@ -65,6 +71,14 @@ export class UserProfileStore {
       this.cache.loadFromObservable(ItemKeys.userImage, request, cacheObject.groupKey)).pipe(
         tap(blob => this.userImage$.next(blob))
       )
+  }
+
+  downloadFriendImage(email: EmailDto, forceRefresh = false): Observable<Blob> {
+    const request = this.api.getImageForUser(email);
+    const itemKey = `${ItemKeys.friendImagePrefix}_${email.value}`;
+    return (forceRefresh ?
+      this.cache.loadFromDelayedObservable(itemKey, request, GroupKeys.friends, cacheObject.ttl, 'all') :
+      this.cache.loadFromObservable(itemKey, request, GroupKeys.friends))
   }
 
   deleteUserImage(): Observable<void> {

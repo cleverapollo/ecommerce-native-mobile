@@ -22,7 +22,8 @@ server.use(cors());
 // Exclude the file upload route from the bodyParser middleware
 server.use((req, res, next) => {
     const isDownload = req.path.indexOf('download') > -1;
-    if (req.path === '/upload' || isDownload || '/v1/content-creators/image') {
+    const isImage = req.path.indexOf('/image') > -1;
+    if (req.path === '/upload' || isDownload || isImage || '/v1/content-creators/image') {
       next();
     } else {
       jsonServer.bodyParser(req, res, next);
@@ -131,6 +132,10 @@ server.get('/download/:fileName', (req, res) => {
     console.log(fileName);
     // const file = fs.readFileSync(`${__dirname}/uploads/${fileName}`)
     res.download(`${__dirname}/uploads/${fileName}`);
+})
+
+server.get('/v1/users/:email/image', (req, res) => {
+    res.download(`${__dirname}/uploads/knossi.jpg`);
 })
 
 server.post('/v1/users/profile/image', (req, res) => {

@@ -11,11 +11,11 @@
   </div>
 </div>
 
-<p>
+<p *ngIf="!readOnly">
   <span *ngIf="showError">Dein Bild ist zu groß</span>
 </p>
 
-<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]" *ngIf="!readOnly">
   <ng-template>
     <ion-content>
       <ion-item lines="none" class="margin-top-8" button (click)="pickImageFromGallery()">

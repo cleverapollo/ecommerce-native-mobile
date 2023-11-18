@@ -128,7 +128,6 @@ export class ProductUpdatePage implements OnInit {
 
   async update(): Promise<void> {
     if (this.form?.invalid) {
-      console.log(this.form.value);
       CustomValidation.validateFormGroup(this.form);
       return;
     }

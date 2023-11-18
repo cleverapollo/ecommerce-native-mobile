@@ -1,32 +1,33 @@
 <ion-grid>
-
-  <ion-row *ngIf="wishList.owners?.length === 1" class="user-initials-container">
-    <ion-col class="centered-user-initials user-initials-overlay">
-      <app-user-initials [firstName]="wishList.owners[0].firstName" [lastName]="wishList.owners[0].lastName" ></app-user-initials>
+  <ion-row *ngIf="owner" class="user-initials-container">
+    <ion-col class="user-initials-overlay" [ngClass]="{ 'centered-user-initials': !owner.hasImage, 'display-flex': loading, 'ion-justify-content-center': loading }">
+      <app-user-initials *ngIf="!image && !loading" [firstName]="owner.firstName" [lastName]="owner.lastName"></app-user-initials>
+      <ion-spinner *ngIf="loading" name="bubbles" color="primary" class="width-height-40"></ion-spinner>
+      <app-photo *ngIf="image && !loading" [src]="image" [readOnly]="true" size="xs" avatarMargin="no-margin"></app-photo>
     </ion-col>
   </ion-row>
 
   <ion-row class="wish-images-container-top">
     <ion-col size="6" class="wish-image-container wish-one">
-      <app-wish-image *ngIf="wishList.wishes.length > 0" [src]="wishList.wishes[0].imageUrl" [alt]="wishList.wishes[0].name" [styles]="wishComponentStyles"></app-wish-image>
+      <app-wish-image *ngIf="wishes.length > 0" [src]="wishes[0].imageUrl" [alt]="wishes[0].name" [styles]="wishComponentStyles"></app-wish-image>
     </ion-col>
     <ion-col size="6" class="wish-image-container">
-      <app-wish-image *ngIf="wishList.wishes.length > 1" [src]="wishList.wishes[1].imageUrl" [alt]="wishList.wishes[1].name" [styles]="wishComponentStyles"></app-wish-image>
+      <app-wish-image *ngIf="wishes.length > 1" [src]="wishes[1].imageUrl" [alt]="wishes[1].name" [styles]="wishComponentStyles"></app-wish-image>
     </ion-col>
   </ion-row>
 
   <ion-row>
     <ion-col size="6" class="wish-image-container wish-three">
-      <app-wish-image *ngIf="wishList.wishes.length > 2" [src]="wishList.wishes[2].imageUrl" [alt]="wishList.wishes[2].name" [styles]="wishComponentStyles"></app-wish-image>
+      <app-wish-image *ngIf="wishes.length > 2" [src]="wishes[2].imageUrl" [alt]="wishes[2].name" [styles]="wishComponentStyles"></app-wish-image>
     </ion-col>
     <ion-col size="6" class="wish-image-container">
-      <app-wish-image *ngIf="wishList.wishes.length > 3" [src]="wishList.wishes[3].imageUrl" [alt]="wishList.wishes[3].name" [styles]="wishComponentStyles"></app-wish-image>
+      <app-wish-image *ngIf="wishes.length > 3" [src]="wishes[3].imageUrl" [alt]="wishes[3].name" [styles]="wishComponentStyles"></app-wish-image>
     </ion-col>
   </ion-row>
 </ion-grid>
 
 <div class="wish-list-description">
-  <div class="friend-name">{{ wishList.owners | ownerNames }}</div>
+  <div class="friend-name">{{ owners | ownerNames }}</div>
   <div class="wish-list-name">{{ wishList.name }}</div>
   <div class="wish-list-date">{{ date }}</div>
 </div>

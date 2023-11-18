@@ -1,15 +1,15 @@
-import { AndroidSettings, IOSSettings, NativeSettings } from 'capacitor-native-settings';
-import { Camera, CameraPermissionState, CameraPermissionType, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Camera, CameraPermissionState, CameraPermissionType, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Directory, Filesystem, ReaddirResult } from '@capacitor/filesystem';
 import { LocalFile, checkPhotoPermissions, convertBlobToBase64, convertToArrayBuffer, getFileSizeInMB, loadFileData, mkdir } from '@shared/helpers/file.helper';
+import { AndroidSettings, IOSSettings, NativeSettings } from 'capacitor-native-settings';
 
-import { AlertService } from '@core/services/alert.service';
 import { App } from '@capacitor/app';
-import { CoreToastService } from '@core/services/toast.service';
-import { IonModal } from '@ionic/angular';
+import { AlertService } from '@core/services/alert.service';
 import { Logger } from '@core/services/log.service';
 import { PlatformService } from '@core/services/platform.service';
+import { CoreToastService } from '@core/services/toast.service';
+import { IonModal } from '@ionic/angular';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,7 +27,8 @@ type Image = string | Blob | null;
 export class PhotoComponent implements OnInit, OnChanges {
 
   @Input() src: Image = null;
-  @Input() size: 's' | 'm' | 'l' = 'l';
+  @Input() size: 's' | 'm' | 'l' | 'xs' = 'l';
+  @Input() avatarMargin = 'default-margin';
   @Input() readOnly = false;
   @Input() fileName?: string;
   @Input() showSwitchImage = false;
@@ -99,8 +100,8 @@ export class PhotoComponent implements OnInit, OnChanges {
 
       if (permission === 'denied') {
         const message = permissionType === 'photos' ?
-         'Um ein Bild auzuwählen erlaube bitte den Zugriff auf Deine Bilder in den Einstellungen.' :
-         'Um ein Bild aufzunehmen erlaube bitte den Zugriff auf Deine Kamera in den Einstellungen.';
+          'Um ein Bild auzuwählen erlaube bitte den Zugriff auf Deine Bilder in den Einstellungen.' :
+          'Um ein Bild aufzunehmen erlaube bitte den Zugriff auf Deine Kamera in den Einstellungen.';
         const appName = (await App.getInfo()).name;
         const alert = await this.alertService.createActionAlert(
           `"${appName}" ohne Zugriff auf deine ${permissionType === 'photos' ? 'Bilder' : 'Kamera'}`,

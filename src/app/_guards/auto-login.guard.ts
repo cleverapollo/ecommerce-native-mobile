@@ -23,10 +23,10 @@ export class AutoLoginGuard implements CanLoad {
       filter(isAuthenticated => isAuthenticated !== null),
       take(1),
       map(isAuthenticated => {
-        if (!isAuthenticated) {
+        /*if (!isAuthenticated) {
           this.logger.info('no auto login');
           return true;
-        }
+        }*/
         this.logger.info('auto login');
         this.router.navigateByUrl('/secure/home', { replaceUrl: true });
         return false;
