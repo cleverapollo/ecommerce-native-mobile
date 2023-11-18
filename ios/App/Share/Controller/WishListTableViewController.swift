@@ -115,21 +115,10 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         
         wishListId = WishDataStore.shared.wish.wishListId
-        
-        setupImage()
         setupActionButton()
         setupTableView()
         
         loadWishLists()
-    }
-    
-    private func setupImage() {
-        
-        if let imageUrl = WishDataStore.shared.wish.imageUrl {
-            self.selectedWishImageView.setImageFromURl(imageUrlString: imageUrl)
-        } else {
-            self.selectedWishImageView.image = Image.get(.fallbackWishImage)
-        }
     }
     
     private func setupTableView() {
@@ -141,7 +130,6 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func setupActionButton() {
-        
         saveButton.isEnabled = WishDataStore.shared.wish.isValid
         saveButton.applyPrivatGradient()
     }

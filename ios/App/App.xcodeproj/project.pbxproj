@@ -189,6 +189,14 @@
 		E4C7CBB52B03D407001716C2 /* Wish.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBB32B03D3FF001716C2 /* Wish.swift */; };
 		E4C7CBB72B03D415001716C2 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBB62B03D415001716C2 /* WishList.swift */; };
 		E4C7CBB82B03D417001716C2 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C7CBB62B03D415001716C2 /* WishList.swift */; };
+		E4F1EF0B2B09232C00813088 /* ProductListResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F1EF0A2B09232C00813088 /* ProductListResource.swift */; };
+		E4F1EF0C2B09232C00813088 /* ProductListResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F1EF0A2B09232C00813088 /* ProductListResource.swift */; };
+		E4F1EF0E2B09234D00813088 /* ProductResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F1EF0D2B09234D00813088 /* ProductResource.swift */; };
+		E4F1EF0F2B09234D00813088 /* ProductResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F1EF0D2B09234D00813088 /* ProductResource.swift */; };
+		E4F1EF112B09251E00813088 /* ProductListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F1EF102B09251E00813088 /* ProductListTableViewController.swift */; };
+		E4F1EF122B09251E00813088 /* ProductListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F1EF102B09251E00813088 /* ProductListTableViewController.swift */; };
+		E4F1EF142B09270500813088 /* ProductDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F1EF132B09270500813088 /* ProductDataStore.swift */; };
+		E4F1EF152B09270500813088 /* ProductDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F1EF132B09270500813088 /* ProductDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -369,6 +377,10 @@
 		E4C7CBAD2B03BF95001716C2 /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
 		E4C7CBB32B03D3FF001716C2 /* Wish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wish.swift; sourceTree = "<group>"; };
 		E4C7CBB62B03D415001716C2 /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
+		E4F1EF0A2B09232C00813088 /* ProductListResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListResource.swift; sourceTree = "<group>"; };
+		E4F1EF0D2B09234D00813088 /* ProductResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResource.swift; sourceTree = "<group>"; };
+		E4F1EF102B09251E00813088 /* ProductListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListTableViewController.swift; sourceTree = "<group>"; };
+		E4F1EF132B09270500813088 /* ProductDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDataStore.swift; sourceTree = "<group>"; };
 		E80D998C06A088495E3F8961 /* Pods-Share Beta.xctest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Beta.xctest.xcconfig"; path = "Target Support Files/Pods-Share Beta/Pods-Share Beta.xctest.xcconfig"; sourceTree = "<group>"; };
 		F8B7F4479C217A1ED6A93A0C /* Pods-Wantic Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wantic Beta.release.xcconfig"; path = "Target Support Files/Pods-Wantic Beta/Pods-Wantic Beta.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -522,6 +534,7 @@
 				B1F81F6926430D1500C277FB /* WanticShareNavigationController.swift */,
 				B18F1CC426874EF800FD7528 /* WebViewController.swift */,
 				E44DF3502B066D670032C381 /* CreateProductViewController.swift */,
+				E4F1EF102B09251E00813088 /* ProductListTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -628,6 +641,8 @@
 				B1A8284627B80CF900F2B0C5 /* Network.swift */,
 				B1A80FC4258B3F9B00F0917F /* WishListResouce.swift */,
 				B14880B725B20FE800D0106B /* WishResource.swift */,
+				E4F1EF0A2B09232C00813088 /* ProductListResource.swift */,
+				E4F1EF0D2B09234D00813088 /* ProductResource.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -637,6 +652,7 @@
 			children = (
 				B1A8284A27B8262500F2B0C5 /* SecretStore.swift */,
 				B14880BD25B2143700D0106B /* WishDataStore.swift */,
+				E4F1EF132B09270500813088 /* ProductDataStore.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1173,12 +1189,15 @@
 				B1A8285E27BC365700F2B0C5 /* WebCrawler.swift in Sources */,
 				B19B46722819B7AF00E9E075 /* CustomSwitch.swift in Sources */,
 				B19A51EF2610CE8000984207 /* WishListResouce.swift in Sources */,
+				E4F1EF152B09270500813088 /* ProductDataStore.swift in Sources */,
 				E4C7CBA62B03BE44001716C2 /* ProductListRequest.swift in Sources */,
+				E4F1EF0C2B09232C00813088 /* ProductListResource.swift in Sources */,
 				B1913C2127ADBC1200BD8F4A /* Color.swift in Sources */,
 				E44DF3522B066D670032C381 /* CreateProductViewController.swift in Sources */,
 				E44DF34F2B06594F0032C381 /* ManagerStoryBoard.swift in Sources */,
 				B19A51F02610CE8000984207 /* WebPageInfo.swift in Sources */,
 				B19A51F12610CE8000984207 /* SelfSizedTableView.swift in Sources */,
+				E4F1EF122B09251E00813088 /* ProductListTableViewController.swift in Sources */,
 				B1FA5E7927AEA418004AA41C /* NewWishListView.swift in Sources */,
 				B1A8284827B80CF900F2B0C5 /* Network.swift in Sources */,
 				B19A51F32610CE8000984207 /* UIViewController+Extensions.swift in Sources */,
@@ -1190,6 +1209,7 @@
 				B1913C2427ADBE4C00BD8F4A /* Font.swift in Sources */,
 				B1A8285227BADAC600F2B0C5 /* Alert.swift in Sources */,
 				B1FA5E8527AECB89004AA41C /* Constants.swift in Sources */,
+				E4F1EF0F2B09234D00813088 /* ProductResource.swift in Sources */,
 				E4C7CBB82B03D417001716C2 /* WishList.swift in Sources */,
 				B1A8285827BC27EB00F2B0C5 /* Image.swift in Sources */,
 				B122318A27C285CF00FDC943 /* ActivityIndicator.swift in Sources */,
@@ -1233,12 +1253,15 @@
 				B1A8285D27BC365700F2B0C5 /* WebCrawler.swift in Sources */,
 				B19B46712819B7AF00E9E075 /* CustomSwitch.swift in Sources */,
 				B1A80FC5258B3F9B00F0917F /* WishListResouce.swift in Sources */,
+				E4F1EF142B09270500813088 /* ProductDataStore.swift in Sources */,
 				E4C7CBA52B03BDE4001716C2 /* ProductListRequest.swift in Sources */,
+				E4F1EF0B2B09232C00813088 /* ProductListResource.swift in Sources */,
 				B1913C2027ADBC1200BD8F4A /* Color.swift in Sources */,
 				E44DF3512B066D670032C381 /* CreateProductViewController.swift in Sources */,
 				E44DF34E2B06594F0032C381 /* ManagerStoryBoard.swift in Sources */,
 				B1A80FA0258A281600F0917F /* WebPageInfo.swift in Sources */,
 				B16E1FB325BF3290009EEFDE /* SelfSizedTableView.swift in Sources */,
+				E4F1EF112B09251E00813088 /* ProductListTableViewController.swift in Sources */,
 				B1FA5E7827AEA418004AA41C /* NewWishListView.swift in Sources */,
 				B1A8284727B80CF900F2B0C5 /* Network.swift in Sources */,
 				B14880D125B3057300D0106B /* UIViewController+Extensions.swift in Sources */,
@@ -1250,6 +1273,7 @@
 				B1913C2327ADBE4C00BD8F4A /* Font.swift in Sources */,
 				B1A8285127BADAC600F2B0C5 /* Alert.swift in Sources */,
 				B1FA5E8427AECB89004AA41C /* Constants.swift in Sources */,
+				E4F1EF0E2B09234D00813088 /* ProductResource.swift in Sources */,
 				E4C7CBB72B03D415001716C2 /* WishList.swift in Sources */,
 				B1A8285727BC27EB00F2B0C5 /* Image.swift in Sources */,
 				B122318927C285CF00FDC943 /* ActivityIndicator.swift in Sources */,

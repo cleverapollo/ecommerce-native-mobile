@@ -7,6 +7,7 @@ enum Alert {
     case generalError(message: String, retryAction: (UIAlertAction) -> Void)
     case noImagesFound
     case addedWishSuccessful(wishListId: UUID)
+    case addedProductSuccessful(productListId: UUID)
     
     static func present(_ alert: Alert, on parent: UIViewController) {
         
@@ -22,6 +23,8 @@ enum Alert {
                 alertController = createNoImagesFoundAlert(vc: parent)
             case .addedWishSuccessful(let wishListId):
                 alertController = createWishAddedAlert(vc: parent, wishListId: wishListId)
+            case .addedProductSuccessful(let productListId):
+                alertController = createWishAddedAlert(vc: parent, wishListId: productListId)
             }
             parent.present(alertController, animated: true)
         }

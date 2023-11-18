@@ -10,9 +10,9 @@ import Foundation
 struct ProductList: Codable {
     
     var name: String
-    var id: String
+    var id: UUID
     
-    init(id: String, name: String) {
+    init(id: UUID, name: String) {
         self.name = name
         self.id = id
     }

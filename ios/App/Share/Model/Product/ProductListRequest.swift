@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct ProductListRequest: Codable {
+struct ProductListCreateRequest: Codable {
     
     var name: String
     

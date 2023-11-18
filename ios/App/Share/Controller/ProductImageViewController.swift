@@ -99,7 +99,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func setupTitleImage() {
-        navigationBar.updateView(self.segmentController.index == 0 ? UIImage(resource: ImageResource.logo) : UIImage(resource: ImageResource.logoCreator))
+        navigationBar.updateView(self.segmentController.index == 0 ? UIImage(resource: .logo) : UIImage(resource: .logoCreator))
     }
     
     private func enableNextButton(_ enable: Bool) {
@@ -128,21 +128,6 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                                                            
         )
         segmentController.indicatorView.applyPrivatGradient()
-    }
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let viewController = segue.destination as? EditDetailsViewController else {
-            return
-        }
-        guard let webPageInfo = webPageInfo else {
-            return
-        }
-        
-        if let selectedImage = self.selectedImage {
-            viewController.webPageImage = selectedImage
-        }
-        viewController.webPageInfo = webPageInfo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -331,9 +316,11 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
             if (self.segmentController.index == 0) {
                 self.segmentController.indicatorView.applyPrivatGradient()
                 self.nextButton.applyPrivatGradient()
+                WishDataStore.shared.wish.isCreator = false
             } else {
                 self.segmentController.indicatorView.applyCreatorGradient()
                 self.nextButton.applyCreatorGradient()
+                WishDataStore.shared.wish.isCreator = true
             }
         }
         
