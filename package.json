@@ -5,7 +5,7 @@
   "homepage": "https://www.wantic.io",
   "scripts": {
     "ng": "ng",
-    "start": "ionic serve --configuration=dev",
+    "start": "concurrently --kill-others \"ionic serve --configuration=dev\" \"npm run mock:server\"",
     "app:beta:web": "ionic serve --configuration=beta",
     "app:beta:ios": "ionic capacitor build ios --configuration=beta && npx cap copy ios && npx cap open ios",
     "app:beta:android": "ionic capacitor build android --configuration=beta && npx cap copy android && npx cap open android",
@@ -107,6 +107,7 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "cypress": "latest",
     "eslint": "^8.28.0",
