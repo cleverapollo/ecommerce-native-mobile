@@ -1,16 +1,16 @@
-import { BehaviorSubject, of } from 'rxjs';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { BehaviorSubject } from 'rxjs';
 
+import { MockAlertService } from '@core/services/alert-mock.service';
 import { AlertService } from '@core/services/alert.service';
-import { BackgroundImageDirectiveFake } from '@test/directives/background-image.directive.mock';
+import { Logger } from '@core/services/log.service';
+import { PlatformService } from '@core/services/platform.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { IonicModule } from '@ionic/angular';
-import { Logger } from '@core/services/log.service';
-import { MockAlertService } from '@core/services/alert-mock.service';
-import { PhotoComponent } from './photo.component';
-import { PlatformService } from '@core/services/platform.service';
-import { SecurePipe } from '@shared/pipes/secure.pipe';
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
+import { SecurePipe } from '@shared/pipes/secure.pipe';
+import { BackgroundImageDirectiveFake } from '@test/directives/background-image.directive.mock';
+import { PhotoComponent } from './photo.component';
 
 describe('PhotoComponent', () => {
   let component: PhotoComponent;

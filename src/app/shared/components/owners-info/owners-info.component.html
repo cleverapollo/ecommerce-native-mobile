@@ -1,7 +1,7 @@
 <div class="owner-info" *ngFor="let owner of owners; let first = first; let last = last;">
   <div class="user-initials creator-image" [ngClass]="cssClass(first, last)">
-    <app-user-initials *ngIf="!images[getEmail(owner.email)]?.blob && !images[getEmail(owner.email)]?.loading" [firstName]="owner.firstName" [lastName]="owner.lastName"></app-user-initials>
-    <ion-spinner *ngIf="images[getEmail(owner.email)]?.loading" name="bubbles" color="primary" class="width-height-40"></ion-spinner>
-    <app-photo *ngIf="images[getEmail(owner.email)]?.blob && !images[getEmail(owner.email)]?.loading" [src]="images[getEmail(owner.email)].blob" [readOnly]="true" size="xs" avatarMargin="no-margin"></app-photo>
+    <app-user-initials *ngIf="showInitials(owner)" [firstName]="owner.firstName" [lastName]="owner.lastName"></app-user-initials>
+    <ion-spinner *ngIf="showSpinner(owner)" name="bubbles" color="primary" class="width-height-40"></ion-spinner>
+    <app-photo *ngIf="showPhoto(owner)" [src]="getPhoto(owner)" [readOnly]="true" size="xs" avatarMargin="no-margin"></app-photo>
   </div>
 </div>

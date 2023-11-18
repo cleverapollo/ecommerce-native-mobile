@@ -1,6 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush, tick, waitForAsync } from '@angular/core/testing';
-import { UntypedFormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { WishListApiService } from '@core/api/wish-list-api.service';
 import { WishListApiMockService } from '@core/api/wish-list-mock.service';
@@ -191,7 +191,8 @@ describe('WishListRadioComponent', () => {
           firstName: 'Max',
           email: 'max@mustermann.de',
           emailVerificationStatus: EmailVerificationStatus.VERIFIED,
-          invitationStatus: InvitationStatus.ACCEPTED
+          invitationStatus: InvitationStatus.ACCEPTED,
+          hasImage: false
         }
       ],
       showReservedWishes: false

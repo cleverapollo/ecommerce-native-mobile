@@ -3,6 +3,10 @@ import { EmailDto, EmailVerificationStatus, UserDto, UserWishListDto } from '@co
 import { UserProfileStore } from '@menu/settings/user-profile-store.service';
 import { finalize, first } from 'rxjs';
 
+const getEmail = (email: string | EmailDto): string => {
+  return typeof email === 'string' ? email : email.value;
+}
+
 @Component({
   selector: 'app-owners-info',
   templateUrl: './owners-info.component.html',
@@ -31,7 +35,7 @@ export class OwnersInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.owners.forEach(owner => {
-      const email = typeof owner.email === 'string' ? owner.email : owner.email.value;
+      const email = getEmail(owner.email);
       this.images[email] = {};
       if (owner.hasImage) {
         this.images[email].loading = true;
@@ -47,8 +51,20 @@ export class OwnersInfoComponent implements OnInit {
     })
   }
 
-  getEmail(email: string | EmailDto) {
-    return typeof email === 'string' ? email : email.value;
+  showSpinner(owner: UserDto | UserWishListDto): boolean {
+    return this.images[getEmail(owner.email)]?.loading
+  }
+
+  showPhoto(owner: UserDto | UserWishListDto): boolean {
+    return this.getPhoto(owner) && !this.images[getEmail(owner.email)]?.loading
+  }
+
+  showInitials(owner: UserDto | UserWishListDto): boolean {
+    return !this.getPhoto(owner) && !this.images[getEmail(owner.email)]?.loading
+  }
+
+  getPhoto(owner: UserDto | UserWishListDto): Blob | undefined {
+    return this.images[getEmail(owner.email)]?.blob;
   }
 
 }

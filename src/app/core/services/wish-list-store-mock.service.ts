@@ -1,6 +1,6 @@
 import { EmailVerificationStatus, InvitationStatus } from '@core/models/user.model';
 import { WishDto, WishListCreateRequest, WishListDto, WishListUpdateRequest } from '@core/models/wish-list.model';
-import { BehaviorSubject, defer, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import * as uuid from 'uuid';
 import { WishListStore } from './wish-list-store.service';
 
@@ -11,7 +11,7 @@ export class MockWishListStoreService implements WishListStore {
     wish: WishDto = new WishDto();
 
     constructor(wishLists: WishListDto[] = []) {
-        this.wishLists =  new BehaviorSubject<WishListDto[]>(wishLists);
+        this.wishLists = new BehaviorSubject<WishListDto[]>(wishLists);
     }
 
     loadWishLists(forceRefresh: boolean): Observable<WishListDto[]> {
@@ -43,7 +43,8 @@ export class MockWishListStoreService implements WishListStore {
                     lastName: 'Mustermann',
                     email: 'max@mustermann.de',
                     emailVerificationStatus: EmailVerificationStatus.VERIFIED,
-                    invitationStatus: InvitationStatus.ACCEPTED
+                    invitationStatus: InvitationStatus.ACCEPTED,
+                    hasImage: false
                 }
             ]
         }
