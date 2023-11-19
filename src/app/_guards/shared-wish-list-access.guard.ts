@@ -65,7 +65,7 @@ export class SharedWishListAccessGuard implements CanActivate {
       }
 
       await this.wishListStore.followWishList(wishListId);
-      await this.friendWishListStore.removeCachedWishLists();
+      this.friendWishListStore.clearCache();
       return await this.router.navigateByUrl(`/secure/friends-home/wish-list/${wishListId}`);
     } catch (error) {
       this.logger.error(error);

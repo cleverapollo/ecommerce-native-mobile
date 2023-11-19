@@ -10,9 +10,9 @@ import { LoadingService } from '@core/services/loading.service';
 import { CoreToastService } from '@core/services/toast.service';
 import { LOADING_STRING, NO_DATE_SELECTED } from '@core/ui.constants';
 import { NavController } from '@ionic/angular';
+import { isAppPath } from '@shared/helpers/common.helper';
 import { Masonry } from '@shared/masonry';
 import { Subscription } from 'rxjs';
-import { finalize, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-friends-wish-list-detail',
@@ -49,13 +49,12 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
 
   private wishListId: string = null;
   private subscriptions: Subscription = new Subscription();
-  private isInitialized = false;
 
   constructor(
     private navController: NavController,
     private route: ActivatedRoute,
     private router: Router,
-    private sharedWishListStore: FriendWishListStoreService,
+    private store: FriendWishListStoreService,
     private analyticsService: AnalyticsService,
     private alertService: AlertService,
     private loadingService: LoadingService,
@@ -68,22 +67,15 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
     this.wishes = this.wishList?.wishes;
     this.subscriptions.add(this.route.paramMap.subscribe(paramMap => {
       this.wishListId = paramMap.get('wishListId');
-      this.isInitialized = true;
+      if (this.wishListId) {
+        this._subscribeForChanges();
+      }
     }));
   }
 
   ngAfterViewChecked(): void {
     const masonry = new Masonry(this.masonry, this.masonryBricks);
     masonry.resizeBricks();
-  }
-
-  ionViewWillEnter() {
-    if (this.isInitialized) {
-      this.sharedWishListStore.loadWishList(this.wishListId, true).subscribe(wishList => {
-        this.wishList = wishList;
-        this.wishes = this.wishList.wishes;
-      })
-    }
   }
 
   ionViewDidEnter() {
@@ -99,11 +91,9 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   }
 
   updateWish(updatedWish: FriendWish) {
-    const index = this.wishList.wishes.findIndex(w => w.id === updatedWish.id);
-    if (index !== -1) {
-      this.wishList.wishes[index] = updatedWish;
-      this.sharedWishListStore.updateCachedWishList(this.wishList);
-    }
+    isAppPath(this.router.url) ?
+      this.store.updateSharedWish(updatedWish) :
+      this.store.updatePublicSharedWish(updatedWish);
   }
 
   async showDeleteAlert() {
@@ -125,7 +115,7 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
   private onDeleteConfirmation = async () => {
     try {
       await this.loadingService.showLoadingSpinner();
-      await this.sharedWishListStore.removeWishListById(this.wishListId);
+      await this.store.removeWishListById(this.wishListId);
       await this.loadingService.stopLoadingSpinner();
       await this.toastService.presentSuccessToast('Du hast die Wunschliste erfolgreich verlassen.');
       return await this.router.navigateByUrl('/secure/friends-home/friends-wish-list-overview');
@@ -135,18 +125,36 @@ export class FriendsWishListDetailPage implements OnInit, OnDestroy, AfterViewCh
     }
   }
 
-  forceRefresh(event: any) {
-    this.sharedWishListStore.loadWishList(this.wishList.id, true)
-      .pipe(
-        first(),
-        finalize(() => {
-          event.target.complete();
-        })
-      )
-      .subscribe({
-        next: wishList => {
-          this.wishList = wishList;
+  async forceRefresh(event: any): Promise<void> {
+    try {
+      isAppPath(this.router.url) ?
+        await this.store.loadSharedWishList(this.wishList.id, true) :
+        await this.store.loadPublicSharedWishList(this.wishList.id, true);
+      event.target.complete();
+    } catch (error) {
+      event.target.complete();
+    }
+  }
+
+  private _subscribeForChanges(): void {
+    if (isAppPath(this.router.url)) {
+      this.subscriptions.add(this.store.sharedWishLists$.subscribe(
+        wishLists => {
+          this.wishList = wishLists.find((w) => w.id === this.wishListId);
+          if (this.wishList) {
+            this.wishes = this.wishList.wishes;
+          }
         }
-      });
+      ));
+    } else {
+      this.subscriptions.add(this.store.publicSharedWishLists$.subscribe(
+        wishLists => {
+          this.wishList = wishLists.find((w) => w.id === this.wishListId);
+          if (this.wishList) {
+            this.wishes = this.wishList.wishes;
+          }
+        }
+      ));
+    }
   }
 }

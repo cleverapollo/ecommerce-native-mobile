@@ -12,7 +12,7 @@ import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { WishListTestData } from '@core/test/wish-list-data';
 import { IonicModule } from '@ionic/angular';
 import { LoggerTestingModule } from 'ngx-logger/testing';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { WishListRadioComponent } from './wish-list-radio.component';
@@ -232,7 +232,7 @@ describe('WishListRadioComponent', () => {
     }));
 
     it('logs error if server request failed', fakeAsync(() => {
-      const wishListApiSpy = spyOn(wishListStoreService, 'createWishList').and.returnValue(throwError('something went wrong'));
+      const wishListApiSpy = spyOn(wishListStoreService, 'createWishList').and.throwError('something went wrong');
       component.form.controls.name.setValue('Christmas 2022');
 
       component.createNewWishList();

@@ -7,7 +7,6 @@ import { FriendWishList } from '@core/models/wish-list.model';
 import { MockAlertService } from '@core/services/alert-mock.service';
 import { AlertService, AppAlertService } from '@core/services/alert.service';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { MockFriendWishListStoreService } from '@core/services/friend-wish-list-store-mock.service';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { MockLoadingService } from '@core/services/loading-mock.service';
 import { AppLoadingService, LoadingService } from '@core/services/loading.service';
@@ -18,13 +17,12 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { OwnerNamesPipe } from '@shared/pipes/owner-names.pipe';
 import { EmailUnverifiedHintComponentFake } from '@test/components/email-unverified-hint.component.mock';
 import { NavToolbarComponentFake } from '@test/components/nav-toolbar.component.mock';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FriendsWishListDetailPage } from './friends-wish-list-detail.page';
 
 describe('FriendsWishListDetailPage', () => {
 
   const navController: NavController = jasmine.createSpyObj('navController', ['navigateBack']);
-  const sharedWishListStore: MockFriendWishListStoreService = new MockFriendWishListStoreService();
   const analyticsService: AnalyticsService = jasmine.createSpyObj('analyticsService', ['setFirebaseScreenName']);
   const alertService: AppAlertService = new MockAlertService();
   const loadingService: AppLoadingService = new MockLoadingService();
@@ -40,9 +38,17 @@ describe('FriendsWishListDetailPage', () => {
   let component: FriendsWishListDetailPage;
   let fixture: ComponentFixture<FriendsWishListDetailPage>;
   let router: Router;
+  let storeSpy: jasmine.SpyObj<FriendWishListStoreService>
 
   beforeEach(waitForAsync(() => {
     createParamMapSpy();
+
+    const friendWishListStoreSpy = jasmine.createSpyObj<FriendWishListStoreService>('FriendWishListStoreService', [
+      'loadSharedWishList',
+      'loadPublicSharedWishList',
+      'updatePublicSharedWish',
+      'removeWishListById'
+    ])
 
     TestBed.configureTestingModule({
       declarations: [FriendsWishListDetailPage, NavToolbarComponentFake, EmailUnverifiedHintComponentFake, OwnerNamesPipe],
@@ -52,7 +58,7 @@ describe('FriendsWishListDetailPage', () => {
         { provide: LoadingService, useValue: loadingService },
         { provide: CoreToastService, useValue: toastService },
         { provide: AlertService, useValue: alertService },
-        { provide: FriendWishListStoreService, useValue: sharedWishListStore },
+        { provide: FriendWishListStoreService, useValue: friendWishListStoreSpy },
         { provide: NavController, useValue: navController },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         DatePipe
@@ -61,6 +67,7 @@ describe('FriendsWishListDetailPage', () => {
     }).compileComponents();
 
     router = TestBed.inject(Router);
+    storeSpy = TestBed.inject(FriendWishListStoreService) as jasmine.SpyObj<FriendWishListStoreService>;
     spyOn(router, 'getCurrentNavigation').and.callFake(() => {
       return {
         extras: {
@@ -108,19 +115,6 @@ describe('FriendsWishListDetailPage', () => {
     });
   });
 
-  describe('ionViewWillEnter', () => {
-    it('should subscribe sharedWishListStore loadWishList', () => {
-      const observable = new Observable<FriendWishList>();
-      const observableSpy = spyOn(observable, 'subscribe');
-
-      spyOn(sharedWishListStore, 'loadWishList').and.returnValue(observable);
-
-      component.ionViewWillEnter();
-
-      expect(observableSpy).toHaveBeenCalled();
-    });
-  });
-
   describe('ionViewDidEnter', () => {
     it('should send analytics event', () => {
       component.ionViewDidEnter();
@@ -138,8 +132,7 @@ describe('FriendsWishListDetailPage', () => {
   describe('forceRefresh', () => {
     it('should refresh wish list on pull-to-refresh action', fakeAsync(() => {
       let completed = false;
-      const loadWishListSpy = spyOn(sharedWishListStore, 'loadWishList');
-      loadWishListSpy.and.returnValue(of(WishListTestData.sharedWishListWedding));
+      const spy = storeSpy.loadPublicSharedWishList.and.returnValue(Promise.resolve(WishListTestData.sharedWishListWedding));
 
       component.wishList = WishListTestData.sharedWishListWedding;
       component.forceRefresh({
@@ -150,7 +143,7 @@ describe('FriendsWishListDetailPage', () => {
 
       tick();
 
-      expect(loadWishListSpy).toHaveBeenCalledWith('2', true);
+      expect(spy).toHaveBeenCalledWith('2', true);
       expect(completed).toBeTruthy();
 
       flush();
@@ -159,27 +152,12 @@ describe('FriendsWishListDetailPage', () => {
 
   describe('updateWish', () => {
     it('should update a wish', () => {
-      const updateCachedWishListSpy = spyOn(sharedWishListStore, 'updateCachedWishList');
-      const updatedWish = WishListTestData.sharedWishKindle;
-      updatedWish.name = 'Updated Name';
-      component.wishList = WishListTestData.sharedWishListWedding;
-
-      expect(component.wishList.wishes[1].name).toEqual('Kindle');
-
+      const updatedWish = {
+        ...WishListTestData.sharedWishKindle,
+        name: 'Updated Name'
+      };
       component.updateWish(updatedWish);
-
-      expect(component.wishList.wishes[1].name).toEqual('Updated Name');
-      expect(updateCachedWishListSpy).toHaveBeenCalledWith(component.wishList);
-    });
-
-    it('should not throw or modify wish list', () => {
-      const updateCachedWishListSpy = spyOn(sharedWishListStore, 'updateCachedWishList');
-      const unknownWish = WishListTestData.sharedWishVanityUnit;
-
-      component.wishList = WishListTestData.sharedWishListWedding;
-      component.updateWish(unknownWish);
-
-      expect(updateCachedWishListSpy).not.toHaveBeenCalled();
+      expect(storeSpy.updatePublicSharedWish).toHaveBeenCalledWith(updatedWish);
     });
   });
 
@@ -197,7 +175,7 @@ describe('FriendsWishListDetailPage', () => {
     })
 
     it('shows delete alert', fakeAsync(() => {
-      sharedWishListStore.removeWishListByIdResponse = Promise.resolve();
+      storeSpy.removeWishListById.and.returnValue(Promise.resolve());
       component.showDeleteAlert();
 
       tick();
@@ -212,7 +190,7 @@ describe('FriendsWishListDetailPage', () => {
     it('dismisses the loading spinner if something goes wrong', fakeAsync(() => {
       dismissLoadingServiceSpy.and.returnValue(Promise.resolve());
       // fake error response
-      sharedWishListStore.removeWishListByIdResponse = Promise.reject();
+      storeSpy.removeWishListById.and.throwError('any error');
 
       component.showDeleteAlert();
 

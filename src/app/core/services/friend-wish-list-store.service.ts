@@ -2,100 +2,130 @@ import { Injectable } from '@angular/core';
 import { PublicResourceApiService } from '@core/api/public-resource-api.service';
 import { SharedWishListApiService } from '@core/api/shared-wish-list-api.service';
 import { FriendWish, FriendWishList } from '@core/models/wish-list.model';
-import { sortWishesByIsFavorite } from '@core/wish-list.utils';
-import { CacheService } from 'ionic-cache';
-import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { Logger } from './log.service';
-import { PlatformService } from './platform.service';
-
-export interface FriendWishListStore {
-  loadWishLists(forceRefresh: boolean): Observable<FriendWishList[]>;
-  loadWishList(id: string, forceRefresh: boolean): Observable<FriendWishList>;
-  removeWishListById(wishListId: string): Promise<void>;
-  removeCachedWishLists(): Promise<void>;
-  updateCachedWishList(wishList: FriendWishList): void;
-}
 
 @Injectable({
   providedIn: 'root'
 })
-export class FriendWishListStoreService implements FriendWishListStore {
+export class FriendWishListStoreService {
 
-  private readonly CACHE_DEFAULT_TTL = 60 * 60;
-  private readonly CACHE_GROUP_KEY = 'friendWishList';
-  private readonly CACHE_KEY_WISH_LISTS = 'friendWishLists'
+  private readonly _sharedWishLists = new BehaviorSubject<FriendWishList[]>([]);
+  private readonly _publicSharedWishLists = new BehaviorSubject<FriendWishList[]>([]);
 
-  private cacheKeyWishList(id: string): string {
-    return `getFriendWishList${id}`;
-  }
-
-  private cacheKeyPublicWishList(id: string): string {
-    return `publicSharedWishList${id}`;
-  }
+  readonly sharedWishLists$ = this._sharedWishLists.asObservable();
+  readonly publicSharedWishLists$ = this._publicSharedWishLists.asObservable();
 
   constructor(
-    private sharedWishListApiService: SharedWishListApiService,
-    private publicResourceApiService: PublicResourceApiService,
-    private platformService: PlatformService,
-    private cache: CacheService,
+    private api: SharedWishListApiService,
+    private publicApi: PublicResourceApiService,
     private logger: Logger
   ) { }
 
-  loadWishLists(forceRefresh: boolean = false): Observable<FriendWishList[]> {
-    const request = this.sharedWishListApiService.getWishLists();
-    return forceRefresh ?
-      this.cache.loadFromDelayedObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all') :
-      this.cache.loadFromObservable(this.CACHE_KEY_WISH_LISTS, request, this.CACHE_GROUP_KEY);
+  get sharedWishLists(): FriendWishList[] {
+    return this._sharedWishLists.getValue();
   }
 
-  loadWishes(wishListId: string): Observable<FriendWish[]> {
-    return this.loadWishList(wishListId, false).pipe(
-      map(wishList => {
-        const wishes = wishList.wishes;
-        return wishes.sort(sortWishesByIsFavorite);
-      }),
-      catchError(error => {
-        this.logger.error(error);
-        return [];
-      })
-    )
+  set sharedWishLists(sharedWishLists: FriendWishList[]) {
+    this._sharedWishLists.next(sharedWishLists);
+  }
+
+  get publicSharedWishLists(): FriendWishList[] {
+    return this._publicSharedWishLists.getValue();
+  }
+
+  set publicSharedWishLists(sharedWishLists: FriendWishList[]) {
+    this._publicSharedWishLists.next(sharedWishLists);
+  }
+
+  async loadSharedWishLists(forceRefresh: boolean = false): Promise<FriendWishList[]> {
+    const wishLists = this._sharedWishLists.getValue();
+    if (!forceRefresh && wishLists.length) {
+      return wishLists;
+    }
+
+    try {
+      this.sharedWishLists = await lastValueFrom(this.api.getWishLists());
+      return this.sharedWishLists;
+    } catch (error) {
+      this.logger.error(error);
+      return [];
+    }
   }
 
   async removeWishListById(wishListId: string): Promise<void> {
-    await this.sharedWishListApiService.removeWishListById(wishListId).toPromise();
-    await this.cache.removeItem(this.cacheKeyWishList(wishListId));
-    return this.removeCachedWishLists();
+    await lastValueFrom(this.api.removeWishListById(wishListId));
+    this.sharedWishLists = this.sharedWishLists.filter(wishList => wishList.id !== wishListId);
   }
 
-  removeCachedWishLists(): Promise<void> {
-    return this.cache.removeItem(this.CACHE_KEY_WISH_LISTS);
-  }
-
-  loadWishList(id: string, forceRefresh: boolean = false): Observable<FriendWishList> {
-    if (this.platformService.isWeb) {
-      return this.publicResourceApiService.getSharedWishList(id);
+  async loadSharedWishList(id: string, forceRefresh = false): Promise<FriendWishList> {
+    const cachedList = this.sharedWishLists.find(list => list.id === id);
+    if (!forceRefresh && cachedList) {
+      return cachedList;
     }
-    const request = this.sharedWishListApiService.getWishListById(id);
-    const cacheKey = this.cacheKeyWishList(id);
-    return forceRefresh ?
-      this.cache.loadFromDelayedObservable(cacheKey, request, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL, 'all') :
-      this.cache.loadFromObservable(cacheKey, request, this.CACHE_GROUP_KEY);
+
+    const wishList = await lastValueFrom(this.api.getWishListById(id));
+    if (cachedList) {
+      const index = this.sharedWishLists.indexOf(cachedList);
+      this.sharedWishLists[index] = wishList;
+      this.sharedWishLists = [...this.sharedWishLists];
+    } else {
+      this.sharedWishLists.push(wishList);
+    }
+    return wishList;
   }
 
-  updateCachedWishList(wishList: FriendWishList): void {
-    this.cache.saveItem(this.cacheKeyWishList(wishList.id), wishList, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
-    this.cache.getItem(this.CACHE_KEY_WISH_LISTS).then((wishLists: FriendWishList[]) => {
-      const wishListIndex = wishLists.findIndex(w => w.id === wishList.id);
-      if (wishListIndex !== -1) {
-        wishLists[wishListIndex] = wishList;
-        this.cache.saveItem(this.CACHE_KEY_WISH_LISTS, wishLists, this.CACHE_GROUP_KEY, this.CACHE_DEFAULT_TTL);
+  async loadPublicSharedWishList(id: string, forceRefresh = false): Promise<FriendWishList> {
+    const cachedList = this.publicSharedWishLists.find(list => list.id === id);
+    if (!forceRefresh && cachedList) {
+      return cachedList;
+    }
+
+    const wishList = await lastValueFrom(this.publicApi.getSharedWishList(id));
+    if (cachedList) {
+      const index = this.publicSharedWishLists.indexOf(cachedList);
+      this.publicSharedWishLists[index] = wishList;
+      this.publicSharedWishLists = [...this.publicSharedWishLists];
+    } else {
+      this.publicSharedWishLists.push(wishList);
+    }
+    return wishList;
+  }
+
+  updateSharedWish(updatedWish: FriendWish): void {
+    const list = this.sharedWishLists.find(wish => wish.id === updatedWish.wishListId);
+    if (list) {
+      const listIndex = this.sharedWishLists.indexOf(list);
+      const itemIndex = list.wishes.findIndex(wish => wish.id === updatedWish.id);
+      if (itemIndex !== -1) {
+        list.wishes[itemIndex] = updatedWish;
       } else {
-        this.removeCachedWishLists();
+        this.logger.warn(`Wish "${updatedWish.id}" not found in list "${list.id}"`);
+        list.wishes.push(updatedWish);
       }
-    }, () => {
-      this.removeCachedWishLists();
-    });
+      this.sharedWishLists[listIndex] = list;
+      this.sharedWishLists = [...this.sharedWishLists];
+    } else {
+      this.logger.warn(`Wish list with id "${updatedWish.wishListId}" not found`);
+    }
+  }
+
+  updatePublicSharedWish(updatedWish: FriendWish): void {
+    const list = this.publicSharedWishLists.find(wish => wish.id === updatedWish.wishListId);
+    if (list) {
+      const listIndex = this.publicSharedWishLists.indexOf(list);
+      const itemIndex = list.wishes.findIndex(wish => wish.id === updatedWish.id);
+      if (itemIndex !== -1) {
+        list.wishes[itemIndex] = updatedWish;
+      } else {
+        this.logger.warn(`Wish "${updatedWish.id}" not found in list "${list.id}"`);
+        list.wishes.push(updatedWish);
+      }
+      this.publicSharedWishLists[listIndex] = list;
+      this.publicSharedWishLists = [...this.publicSharedWishLists];
+    } else {
+      this.logger.warn(`Wish list with id "${updatedWish.wishListId}" not found`);
+    }
   }
 
   /**
@@ -105,12 +135,17 @@ export class FriendWishListStoreService implements FriendWishListStore {
    */
   async isSharedWishList(wishListId: string): Promise<boolean> {
     try {
-      const wishLists = await this.loadWishLists().toPromise();
+      const wishLists = await this.loadSharedWishLists();
       const wishList = wishLists.find((w) => w.id === wishListId);
       return wishList !== undefined;
     } catch (error) {
       return false;
     }
+  }
+
+  clearCache(): void {
+    this.sharedWishLists = [];
+    this.publicSharedWishLists = [];
   }
 
 }

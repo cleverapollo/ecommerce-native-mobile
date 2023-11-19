@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
-import { Observable } from 'rxjs';
-import { ApiErrorHandlerService } from './api-error-handler.service';
-import { catchError } from 'rxjs/operators';
-import { ApiVersion } from './api-version';
 import { FriendWishList } from '@core/models/wish-list.model';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ApiErrorHandlerService } from './api-error-handler.service';
+import { ApiVersion } from './api-version';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class SharedWishListApiService {
 
   constructor(private apiService: ApiService, private errorHandler: ApiErrorHandlerService) { }
 
-  getWishLists(): Observable<Array<FriendWishList>> {
-    return this.apiService.get<Array<FriendWishList>>(`${ApiVersion.v1}/${SharedWishListApiService.REST_END_POINT}`).pipe(
+  getWishLists(): Observable<FriendWishList[]> {
+    return this.apiService.get<FriendWishList[]>(`${ApiVersion.v1}/${SharedWishListApiService.REST_END_POINT}`).pipe(
       catchError(error => this.errorHandler.handleError(error))
     );
   }

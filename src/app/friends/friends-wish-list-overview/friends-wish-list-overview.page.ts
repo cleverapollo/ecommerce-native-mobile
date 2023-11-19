@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FriendWishList } from '@core/models/wish-list.model';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { FriendWishListStoreService } from '@core/services/friend-wish-list-store.service';
 import { LoadingService } from '@core/services/loading.service';
-import { finalize, first } from 'rxjs/operators';
+import { iife } from '@shared/helpers/common.helper';
+import { Subscription } from 'rxjs';
 import { TabBarRoute, getTaBarPath } from 'src/app/tab-bar/tab-bar-routes';
 
 @Component({
@@ -12,47 +13,32 @@ import { TabBarRoute, getTaBarPath } from 'src/app/tab-bar/tab-bar-routes';
   templateUrl: './friends-wish-list-overview.page.html',
   styleUrls: ['./friends-wish-list-overview.page.scss'],
 })
-export class FriendsWishListOverviewPage implements OnInit {
+export class FriendsWishListOverviewPage implements OnInit, OnDestroy {
 
   wishLists: FriendWishList[] = [];
 
-  private isInitialized = false;
+  private subscriptions = new Subscription();
 
   constructor(
     private router: Router,
-    private friendWishListStore: FriendWishListStoreService,
+    private store: FriendWishListStoreService,
     private analyticsService: AnalyticsService,
     private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
-    this.loadWishLists(true);
-  }
-
-  private async loadWishLists(showLoadingSpinner = false) {
-    if (showLoadingSpinner) {
-      await this.loadingService.showLoadingSpinner();
-    }
-
-    this.friendWishListStore.loadWishLists(true).pipe(
-      first(),
-      finalize(() => {
-        this.isInitialized = true;
-        this.loadingService.stopLoadingSpinner();
-      })
-    ).subscribe(wishLists => {
+    iife(this._initWishLists());
+    this.subscriptions.add(this.store.sharedWishLists$.subscribe(wishLists => {
       this.wishLists = wishLists;
-    });
-  }
-
-  ionViewWillEnter() {
-    if (this.isInitialized) {
-      this.loadWishLists();
-    }
+    }));
   }
 
   ionViewDidEnter() {
     this.analyticsService.setFirebaseScreenName('family_friends');
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   selectWishList(wishList: FriendWishList) {
@@ -63,19 +49,23 @@ export class FriendsWishListOverviewPage implements OnInit {
     });
   }
 
-  forceRefresh(event) {
-    this.friendWishListStore.loadWishLists(true)
-      .pipe(
-        first(),
-        finalize(() => {
-          event.target.complete();
-        })
-      )
-      .subscribe({
-        next: wishLists => {
-          this.wishLists = wishLists;
-        }
-      });
+  async forceRefresh(event): Promise<void> {
+    try {
+      await this.store.loadSharedWishLists(true);
+      event.target.complete();
+    } catch (error) {
+      event.target.complete();
+    }
+  }
+
+  private async _initWishLists(): Promise<void> {
+    await this.loadingService.showLoadingSpinner();
+    try {
+      this.wishLists = await this.store.loadSharedWishLists(true);
+      await this.loadingService.stopLoadingSpinner();
+    } catch (error) {
+      await this.loadingService.stopLoadingSpinner();
+    }
   }
 
 }

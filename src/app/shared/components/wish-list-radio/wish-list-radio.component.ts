@@ -4,6 +4,7 @@ import { WishListSelectOptionDto } from '@core/models/wish-list.model';
 import { Logger } from '@core/services/log.service';
 import { WishListStoreService } from '@core/services/wish-list-store.service';
 import { sortWishListsByName } from '@core/wish-list.utils';
+import { iife } from '@shared/helpers/common.helper';
 import { lastValueFrom, Observable, of } from 'rxjs';
 import { finalize, first, map, tap } from 'rxjs/operators';
 
@@ -73,17 +74,13 @@ export class WishListRadioComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
-    this.setupWishListId();
-    this.setupData();
-  }
-
-  private setupWishListId() {
     if (this.initialValue) {
       this.wishListId = this.initialValue;
     }
+    iife(this.setupData());
   }
 
-  private async setupData() {
+  private async setupData(): Promise<void> {
     await lastValueFrom(this.wishListStore.loadWishLists());
     this.wishListSelectOptions$ = this.wishListStore.wishLists.pipe(
       map(wishLists => {
