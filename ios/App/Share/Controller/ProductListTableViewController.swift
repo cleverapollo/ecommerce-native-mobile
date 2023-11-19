@@ -57,19 +57,19 @@ enum ProductListsLoadingState {
     case inProgress
     case none
     case error
-    case done(ProductListCount: Int)
+    case done(productListCount: Int)
     
     func infoText() -> String? {
         var text: String? = nil
         switch self {
         case .inProgress:
-            text = "Wunschlisten werden geladen ..."
-        case .done(let ProductListCount):
-            if ProductListCount == 0 {
-                text = "Keine Wunschlisten vorhanden"
+            text = "Produkt werden geladen ..."
+        case .done(let productListCount):
+            if productListCount == 0 {
+                text = "Das Produkt wurde deiner Liste hinzugefügt"
             }
         case .error:
-            text = "Fehler beim Laden deiner Wunschlisten"
+            text = "Das Produkt konnte nicht hinzugefügt werden"
         case .none:
             text = nil
         }
@@ -125,7 +125,6 @@ class ProductListTableViewController: UIViewController, UITableViewDelegate, UIT
         setupImage()
         setupActionButton()
         setupTableView()
-        
         loadProductLists()
     }
     
@@ -338,7 +337,7 @@ extension ProductListTableViewController {
             switch result {
             case .success(let response):
                 let productLists = response.data
-                self.productListsLoadingState = .done(ProductListCount: productLists.count)
+                self.productListsLoadingState = .done(productListCount: productLists.count)
                 self.productLists = productLists
                 self.selectFirstProductList()
             case .failure(let error):
@@ -374,7 +373,7 @@ extension ProductListTableViewController {
     
     private func handleLoadProductListsError(_ error: NetworkError) {
         
-        let message = "Beim Laden deiner Wunschlisten ist ein Fehler aufgetreten."
+        let message = "Beim Laden deiner Produktlisten ist ein Fehler aufgetreten."
         handleError(error, message: message) { [weak self] _ in
             
             guard let self = self else { return }
@@ -384,7 +383,7 @@ extension ProductListTableViewController {
     
     private func handleCreateNewProductListError(_ error: NetworkError, ProductListName: String) {
         
-        let message = "Beim Speichern deiner Wunschliste ist ein Fehler aufgetreten."
+        let message = "Beim Speichern deiner Produktliste ist ein Fehler aufgetreten."
         handleError(error, message: message) { [weak self] _ in
             
             guard let self = self else { return }
@@ -394,7 +393,7 @@ extension ProductListTableViewController {
     
     private func handleSaveProductError(_ error: NetworkError, Product: Product) {
         
-        let message = "Beim Speichern deines Wunsches ist ein Fehler aufgetreten."
+        let message = "Das Produkt konnte nicht hinzugefügt werden"
         handleError(error, message: message) { [weak self] _ in
             
             guard let self = self else { return }

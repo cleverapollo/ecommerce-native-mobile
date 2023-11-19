@@ -32,6 +32,19 @@ struct Product: Codable {
         self.price = Price(amount: 0.00)
     }
     
+    init(_ webPageInfo: WebPageInfo, webPageImage: WebPageImage?) {
+        
+        if let webPageImageName = webPageImage?.name, !webPageImageName.isEmpty {
+            name = webPageImageName
+        } else {
+            name = webPageInfo.title
+        }
+        name?.truncateIfNeeded()
+        productUrl = webPageInfo.url
+        price = webPageInfo.price
+        coupon = webPageInfo.coupon
+    }
+    
     var isValid: Bool {
         productListId != nil && name != nil && productUrl != nil
     }

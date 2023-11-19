@@ -81,7 +81,7 @@
                                     <constraint firstItem="CGM-qe-Q1y" firstAttribute="centerX" secondItem="O3D-J7-2Rf" secondAttribute="centerX" id="Ogn-0f-kJy"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xle-ml-5QQ" customClass="BetterSegmentedControl" customModule="BetterSegmentedControl">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xle-ml-5QQ" customClass="BetterSegmentedControl" customModule="BetterSegmentedControl">
                                 <rect key="frame" x="84.5" y="185" width="245" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -190,7 +190,9 @@
                     <connections>
                         <outlet property="closeButton" destination="Bkv-LH-5Jw" id="Wxp-zM-gC9"/>
                         <outlet property="collectionView" destination="CYO-4j-u0K" id="yrC-3u-3eW"/>
+                        <outlet property="headerTitle" destination="CGM-qe-Q1y" id="MVX-5D-KhJ"/>
                         <outlet property="headerView" destination="O3D-J7-2Rf" id="vt8-bL-Ss3"/>
+                        <outlet property="heightSegmentConstraint" destination="hdG-SX-Obh" id="0pp-7m-5oX"/>
                         <outlet property="navigationBar" destination="jaN-cT-vZZ" id="IUF-p1-H32"/>
                         <outlet property="nextButton" destination="xXC-xZ-q13" id="r9u-38-hUX"/>
                         <outlet property="noImageConstraint" destination="r8n-j3-YDC" id="Abe-Q5-shd"/>
@@ -906,7 +908,7 @@
                                                     <constraint firstAttribute="height" constant="48" id="mjP-GS-Og3"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="continue"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="continue"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="25"/>
@@ -996,10 +998,10 @@
                                                 </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zbg-ao-E99">
-                                                <rect key="frame" x="304" y="860" width="40" height="40"/>
+                                                <rect key="frame" x="291" y="860" width="53" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="DXY-gI-0g2"/>
-                                                    <constraint firstAttribute="width" constant="40" id="Ioo-wl-YFj"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="Ioo-wl-YFj"/>
                                                 </constraints>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
@@ -1147,7 +1149,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1KG-Jk-pGR" userLabel="Header View">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="34"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wunschliste auswählen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYa-48-azq">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Produktliste auswählen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYa-48-azq">
                                         <rect key="frame" x="8" y="5" width="398" height="24"/>
                                         <fontDescription key="fontDescription" name="PlayfairDisplay-Regular" family="Playfair Display" pointSize="18"/>
                                         <color key="textColor" name="textColor"/>
@@ -1178,11 +1180,11 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vS4-A5-G5b" customClass="NewWishListButton" customModule="Share" customModuleProvider="target">
                                                     <rect key="frame" x="6" y="0.0" width="282" height="54.5"/>
                                                     <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" image="add" imagePlacement="leading" title="Neue Wunschliste anlegen" imagePadding="10" titleAlignment="leading">
+                                                    <buttonConfiguration key="configuration" style="plain" image="add" imagePlacement="leading" title="Neue Produktlist anlegen" imagePadding="10" titleAlignment="leading">
                                                         <fontDescription key="titleFontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                                     </buttonConfiguration>
                                                     <connections>
-                                                        <action selector="newWishListButtonPressed:" destination="06D-hh-WvX" eventType="touchUpInside" id="BtZ-c0-E9c"/>
+                                                        <action selector="newProductListButtonPressed:" destination="06D-hh-WvX" eventType="touchUpInside" id="dL9-Q5-prS"/>
                                                     </connections>
                                                 </button>
                                                 <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Djc-OF-TFn" customClass="NewWishListTextField" customModule="Share" customModuleProvider="target">
@@ -1203,8 +1205,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="newWishListButton" destination="vS4-A5-G5b" id="M0M-HK-Znq"/>
-                                            <outlet property="newWishListTextField" destination="Djc-OF-TFn" id="1xc-5e-r49"/>
+                                            <outlet property="newProductListButton" destination="vS4-A5-G5b" id="E3Z-Sh-DdZ"/>
+                                            <outlet property="newProductListTextField" destination="Djc-OF-TFn" id="LFg-4c-3gm"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProductListTableViewCell" id="fpL-sA-GH9" customClass="ProductListTableViewCell" customModule="Share" customModuleProvider="target">
@@ -1217,8 +1219,8 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unchecked" translatesAutoresizingMaskIntoConstraints="NO" id="Dzl-b9-d0O">
                                                     <rect key="frame" x="264" y="6" width="24" height="25"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wunschlistenname" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzb-eP-sv4">
-                                                    <rect key="frame" x="16" y="10" width="119.5" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Produktlistenname" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzb-eP-sv4">
+                                                    <rect key="frame" x="16" y="10" width="119" height="17"/>
                                                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1363,7 +1365,7 @@
             <size key="intrinsicContentSize" width="218" height="31.5"/>
         </designable>
         <designable name="vS4-A5-G5b">
-            <size key="intrinsicContentSize" width="218" height="31.5"/>
+            <size key="intrinsicContentSize" width="209.5" height="31.5"/>
         </designable>
         <designable name="xTn-lq-At6">
             <size key="intrinsicContentSize" width="4" height="18.5"/>

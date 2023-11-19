@@ -17,6 +17,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var headerView: UIView!
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var headerTitle: UILabel!
     
     @IBOutlet weak var nextButton: UIButton!
     
@@ -27,10 +28,12 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     @IBAction func onCloseButtonTaped(_ sender: UIBarButtonItem) {
         extensionContext?.completeRequest(returningItems: nil, completionHandler: {_ in
             WishDataStore.shared.reset()
+            ProductDataStore.shared.reset()
         })
     }
     
     @IBOutlet weak var segmentController: BetterSegmentedControl!
+    @IBOutlet weak var heightSegmentConstraint: NSLayoutConstraint!
     
     private var loadingIndicatorView: UIVisualEffectView?
     
@@ -61,7 +64,11 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         if let selectedImage = self.selectedImage {
             webPageImage = selectedImage
         }
-        WishDataStore.shared.update(Wish(webPageInfo, webPageImage: webPageImage, isCreator: self.segmentController.index == 1))
+        if segmentController.index == 0 {
+            WishDataStore.shared.update(Wish(webPageInfo, webPageImage: webPageImage))
+        } else {
+            ProductDataStore.shared.update(Product(webPageInfo, webPageImage: webPageImage))
+        }
     }
     
     // MARK: - lifecycle
@@ -78,6 +85,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
             }
         }
         WishDataStore.shared.reset()
+        ProductDataStore.shared.reset()
         
         FirebaseAnalytics.logScreenEvent("share_extension-picture")
     }
@@ -128,6 +136,20 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                                                            
         )
         segmentController.indicatorView.applyPrivatGradient()
+        ProfileResource.getProfile(completionHandler: { result in
+            DispatchQueue.main.async { [weak self] in
+                switch result {
+                case .success(let response):
+                    let profile = response.data
+                    self?.heightSegmentConstraint.constant = profile.creatorAccount != nil ? 40 : 0
+                    self?.segmentController.isHidden = profile.creatorAccount == nil
+                case .failure(_):
+                    self?.heightSegmentConstraint.constant = 0
+                }
+            }
+            
+        })
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -159,7 +181,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         
         let cell = collectionView.cellForItem(at: indexPath) as! ProductInfoCell
         let webPageImage = webPageInfo.images[indexPath.row]
-        let wish = Wish(webPageInfo, webPageImage: webPageImage)
+        
         let cellIsSelectedCell = selectedCell == cell
         
         cell.layer.borderWidth = cellIsSelectedCell ? 0.0 : 2.0
@@ -168,7 +190,12 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         selectedCell = cellIsSelectedCell ? nil : cell
         selectedImage = cellIsSelectedCell ? nil : webPageImage
         
-        WishDataStore.shared.update(wish)
+        if segmentController.index == 0 {
+            WishDataStore.shared.update(Wish(webPageInfo, webPageImage: webPageImage))
+        } else {
+            ProductDataStore.shared.update(Product(webPageInfo, webPageImage: webPageImage))
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -316,11 +343,11 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
             if (self.segmentController.index == 0) {
                 self.segmentController.indicatorView.applyPrivatGradient()
                 self.nextButton.applyPrivatGradient()
-                WishDataStore.shared.wish.isCreator = false
+                self.headerTitle.text = "Wunsch auswählen"
             } else {
                 self.segmentController.indicatorView.applyCreatorGradient()
                 self.nextButton.applyCreatorGradient()
-                WishDataStore.shared.wish.isCreator = true
+                self.headerTitle.text = "Produkt auswählen"
             }
         }
         

@@ -13,4 +13,5 @@ struct Constants {
     
     // Validation
     static let maxAllowedChars = 255
+    static let maxAllowedURLs = 2048
 }
