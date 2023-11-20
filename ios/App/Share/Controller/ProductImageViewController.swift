@@ -67,7 +67,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         if segmentController.index == 0 {
             WishDataStore.shared.update(Wish(webPageInfo, webPageImage: webPageImage))
         } else {
-            ProductDataStore.shared.update(Product(webPageInfo, webPageImage: webPageImage))
+            ProductDataStore.shared.update(ProductRequest(webPageInfo, webPageImage: webPageImage))
         }
     }
     
@@ -193,7 +193,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
         if segmentController.index == 0 {
             WishDataStore.shared.update(Wish(webPageInfo, webPageImage: webPageImage))
         } else {
-            ProductDataStore.shared.update(Product(webPageInfo, webPageImage: webPageImage))
+            ProductDataStore.shared.update(ProductRequest(webPageInfo, webPageImage: webPageImage))
         }
         
     }

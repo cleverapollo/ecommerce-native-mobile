@@ -7,16 +7,22 @@
 
 import Foundation
 
-struct Coupon: Codable {
+struct CouponRequest: Codable {
     
-    var code: String
-    var value: String
-    var expirationDate: String
+    var code: String?
+    var value: String?
+    var expirationDate: String?
     
     init(code: String, value: String, expirationDate: String) {
         self.code = code
         self.value = value
         self.expirationDate = expirationDate
     }
+}
+
+struct Coupon: Codable {
     
+    var code: String?
+    var value: String?
+    var expirationDate: Int?
 }

@@ -230,7 +230,7 @@ extension CreateProductViewController: UITextFieldDelegate {
     
     private func updateCouponCode(_ couponCode: String) {
         if ProductDataStore.shared.product.coupon == nil {
-            ProductDataStore.shared.product.coupon = Coupon(code: couponCode, value: "", expirationDate: "")
+            ProductDataStore.shared.product.coupon = CouponRequest(code: couponCode, value: "", expirationDate: "")
         } else {
             ProductDataStore.shared.product.coupon?.code = couponCode
         }
@@ -238,7 +238,7 @@ extension CreateProductViewController: UITextFieldDelegate {
     
     private func updateCouponValue(_ couponValue: String) {
         if ProductDataStore.shared.product.coupon == nil {
-            ProductDataStore.shared.product.coupon = Coupon(code: "", value: couponValue, expirationDate: "")
+            ProductDataStore.shared.product.coupon = CouponRequest(code: "", value: couponValue, expirationDate: "")
         } else {
             ProductDataStore.shared.product.coupon?.value = couponValue
         }
@@ -246,7 +246,7 @@ extension CreateProductViewController: UITextFieldDelegate {
     
     private func updateExpireDate(_ date: String) {
         if ProductDataStore.shared.product.coupon == nil {
-            ProductDataStore.shared.product.coupon = Coupon(code: "", value: "", expirationDate:  date)
+            ProductDataStore.shared.product.coupon = CouponRequest(code: "", value: "", expirationDate:  date)
         } else {
             ProductDataStore.shared.product.coupon?.expirationDate = date
         }

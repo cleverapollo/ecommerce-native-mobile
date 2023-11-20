@@ -11,14 +11,14 @@ import Foundation
 
 protocol ProductApi: NetworkResource {
     
-    static func createProduct(_ product: Product, completionHandler: @escaping (Result<NetworkResponse<Product>, NetworkError>) -> Void)
+    static func createProduct(_ product: ProductRequest, completionHandler: @escaping (Result<NetworkResponse<Product>, NetworkError>) -> Void)
 }
 
 struct ProductResource: ProductApi {
     
     static var baseUrl: URL = URL(string: "\(AppConfig.backendUrl)/v1/products")!
     
-    static func createProduct(_ product: Product, completionHandler: @escaping (Result<NetworkResponse<Product>, NetworkError>) -> Void) {
+    static func createProduct(_ product: ProductRequest, completionHandler: @escaping (Result<NetworkResponse<Product>, NetworkError>) -> Void) {
         let httpBody = try! JSONEncoder().encode(product)
         Network.post(baseUrl, bodyData: httpBody, completionHandler: completionHandler)
     }

@@ -391,7 +391,7 @@ extension ProductListTableViewController {
         }
     }
     
-    private func handleSaveProductError(_ error: NetworkError, Product: Product) {
+    private func handleSaveProductError(_ error: NetworkError, Product: ProductRequest) {
         
         let message = "Das Produkt konnte nicht hinzugefügt werden"
         handleError(error, message: message) { [weak self] _ in

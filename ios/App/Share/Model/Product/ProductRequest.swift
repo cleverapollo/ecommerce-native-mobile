@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Product: Codable {
+struct ProductRequest: Codable {
     var name: String?
     var note: String?
     var productUrl: String?
@@ -15,9 +15,9 @@ struct Product: Codable {
     var imageUrl: String?
     var productListId: UUID?
     var price: Price
-    var coupon: Coupon?
+    var coupon: CouponRequest?
     
-    init(name: String, note: String, productUrl: String, imageUrl: String, affiliateUrl: String, productListId: UUID, price: Price, coupon: Coupon) {
+    init(name: String, note: String, productUrl: String, imageUrl: String, affiliateUrl: String, productListId: UUID, price: Price, coupon: CouponRequest) {
         self.name = name
         self.note = note
         self.productUrl = productUrl
@@ -49,4 +49,15 @@ struct Product: Codable {
     var isValid: Bool {
         productListId != nil && name != nil && productUrl != nil
     }
+}
+
+struct Product: Codable {
+    var name: String?
+    var note: String?
+    var productUrl: String?
+    var affiliateUrl: String?
+    var imageUrl: String?
+    var productListId: UUID?
+    var price: Price
+    var coupon: Coupon?
 }
