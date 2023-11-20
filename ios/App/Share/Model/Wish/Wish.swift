@@ -15,6 +15,7 @@ struct Wish: Codable {
     var note: String?
     var price: Price
     var productUrl: String?
+    var imageUrl: String?
     var isFavorite: Bool = false
     
     var isValid: Bool {
@@ -35,5 +36,6 @@ struct Wish: Codable {
         name?.truncateIfNeeded()
         productUrl = webPageInfo.url
         price = webPageInfo.price
+        imageUrl = webPageImage?.url
     }
 }

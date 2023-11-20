@@ -161,6 +161,9 @@ extension CreateProductViewController: UITextFieldDelegate {
         case txtUrl:
             updateURL(value)
             break
+        case txtAffilateUrl:
+            updateAffiliateUrl(value)
+            break
         case txtCouponCode:
             updateCouponCode(value)
             break

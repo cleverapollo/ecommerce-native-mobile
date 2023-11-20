@@ -43,6 +43,7 @@ struct Product: Codable {
         productUrl = webPageInfo.url
         price = webPageInfo.price
         coupon = webPageInfo.coupon
+        imageUrl = webPageImage?.url
     }
     
     var isValid: Bool {
