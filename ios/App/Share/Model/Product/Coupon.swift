@@ -19,10 +19,3 @@ struct CouponRequest: Codable {
         self.expirationDate = expirationDate
     }
 }
-
-struct Coupon: Codable {
-    
-    var code: String?
-    var value: String?
-    var expirationDate: Int?
-}

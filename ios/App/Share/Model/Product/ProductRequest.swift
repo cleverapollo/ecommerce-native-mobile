@@ -50,14 +50,3 @@ struct ProductRequest: Codable {
         productListId != nil && name != nil && productUrl != nil
     }
 }
-
-struct Product: Codable {
-    var name: String?
-    var note: String?
-    var productUrl: String?
-    var affiliateUrl: String?
-    var imageUrl: String?
-    var productListId: UUID?
-    var price: Price
-    var coupon: Coupon?
-}
