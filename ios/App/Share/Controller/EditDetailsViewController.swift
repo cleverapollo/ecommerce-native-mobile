@@ -111,7 +111,7 @@ class EditDetailsViewController: UIViewController {
         // add spacing below the table view
         tableView.contentInset = Constants.tableViewInsets
         // add gradient to the button
-        nextButton.applyPrivatGradient()
+        nextButton.applyOrangeGradient()
         // set enable state for action button depending on form validation
         validateForm()
     }

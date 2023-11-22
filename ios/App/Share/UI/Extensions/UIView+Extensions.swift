@@ -186,15 +186,15 @@ extension UIView {
         layer.addSublayer(border)
     }
     
-    func applyPrivatGradient() {
+    func applyOrangeGradient() {
         
-        self.applyGradient(colours: [Color.get(.gradientPrivatStart), Color.get(.gradientPrivatEnd)],
+        self.applyGradient(colours: [Color.get(.gradientOrangeStart), Color.get(.gradientOrangeEnd)],
                       angle: 113.0)
     }
     
-    func applyCreatorGradient() {
-        
-        self.applyGradient(colours: [Color.get(.gradientCreatorStart), Color.get(.gradientCreatorEnd)],
+    func applyPurpleGradient() {
+
+        self.applyGradient(colours: [Color.get(.gradientPurpleStart), Color.get(.gradientPurpleEnd)],
                       angle: 113.0)
     }
     

@@ -5,7 +5,7 @@ struct WebPageInfo: CustomStringConvertible {
     let title: String
     let url: String
     let price: Price
-    let coupon: CouponRequest?
+    let coupon: Coupon?
     let images: [WebPageImage]
     
     // MARK: CustomStringConvertible

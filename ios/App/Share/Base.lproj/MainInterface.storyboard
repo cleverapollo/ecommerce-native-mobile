@@ -997,12 +997,8 @@
                                                     <outlet property="delegate" destination="IhE-Z0-HNZ" id="RDu-f9-hcY"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zbg-ao-E99">
-                                                <rect key="frame" x="291" y="860" width="53" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="DXY-gI-0g2"/>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="Ioo-wl-YFj"/>
-                                                </constraints>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zbg-ao-E99">
+                                                <rect key="frame" x="54" y="850.5" width="306" height="59.5"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="calendar" title=" " subtitle=" "/>
@@ -1014,6 +1010,7 @@
                                         <color key="backgroundColor" name="backgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="DgV-WK-SJd" secondAttribute="trailing" constant="54" id="2Hz-JZ-m4v"/>
+                                            <constraint firstItem="Zbg-ao-E99" firstAttribute="height" secondItem="xTn-lq-At6" secondAttribute="height" multiplier="1.23958" id="3ED-yu-fQ8"/>
                                             <constraint firstItem="c4U-rs-KFY" firstAttribute="top" secondItem="7Ty-PW-gum" secondAttribute="bottom" constant="16" id="3Th-sJ-7UB"/>
                                             <constraint firstAttribute="trailing" secondItem="ZVS-ek-DQG" secondAttribute="trailing" constant="54" id="8cI-Pr-Ejc"/>
                                             <constraint firstItem="ZVS-ek-DQG" firstAttribute="leading" secondItem="HRH-TM-0DK" secondAttribute="leading" constant="54" id="8va-ot-nNN"/>
@@ -1023,7 +1020,6 @@
                                             <constraint firstItem="DgV-WK-SJd" firstAttribute="leading" secondItem="HRH-TM-0DK" secondAttribute="leading" constant="54" id="FMs-Nb-LO5"/>
                                             <constraint firstItem="xTn-lq-At6" firstAttribute="leading" secondItem="HRH-TM-0DK" secondAttribute="leading" constant="54" id="Hnc-Xt-rDc"/>
                                             <constraint firstAttribute="trailing" secondItem="c4U-rs-KFY" secondAttribute="trailing" constant="54" id="JL1-QZ-M2L"/>
-                                            <constraint firstAttribute="trailing" secondItem="Zbg-ao-E99" secondAttribute="trailing" constant="70" id="JSP-va-FWg"/>
                                             <constraint firstItem="I3R-Ze-F3V" firstAttribute="top" secondItem="ZVS-ek-DQG" secondAttribute="bottom" constant="24" id="KA2-Tu-7og"/>
                                             <constraint firstItem="Elz-YK-w0z" firstAttribute="trailing" secondItem="W8a-rt-2l8" secondAttribute="trailing" id="KcE-YL-6Zk"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7Ty-PW-gum" secondAttribute="trailing" symbolic="YES" id="MPs-FD-nJb"/>
@@ -1042,6 +1038,7 @@
                                             <constraint firstItem="V0e-Kz-CVR" firstAttribute="top" secondItem="ZMi-c4-7Wt" secondAttribute="bottom" constant="24" id="cqD-Wa-ZD1"/>
                                             <constraint firstItem="Gsn-5c-R0V" firstAttribute="leading" secondItem="HRH-TM-0DK" secondAttribute="leading" constant="54" id="djp-t7-ui9"/>
                                             <constraint firstAttribute="bottom" secondItem="Gsn-5c-R0V" secondAttribute="bottom" constant="24" id="eas-wq-ZAT"/>
+                                            <constraint firstItem="Zbg-ao-E99" firstAttribute="width" secondItem="xTn-lq-At6" secondAttribute="width" id="fOh-AP-rqo"/>
                                             <constraint firstItem="DDu-yd-ljW" firstAttribute="leading" secondItem="HRH-TM-0DK" secondAttribute="leading" constant="54" id="gLT-XD-GIZ"/>
                                             <constraint firstItem="ZMi-c4-7Wt" firstAttribute="leading" secondItem="HRH-TM-0DK" secondAttribute="leading" constant="54" id="hLl-SU-RtN"/>
                                             <constraint firstItem="Elz-YK-w0z" firstAttribute="leading" secondItem="W8a-rt-2l8" secondAttribute="leading" id="i5C-PT-SCo"/>
@@ -1061,6 +1058,7 @@
                                             <constraint firstItem="Gsn-5c-R0V" firstAttribute="top" secondItem="DDu-yd-ljW" secondAttribute="bottom" constant="16" id="wdv-27-bzS"/>
                                             <constraint firstItem="Zbg-ao-E99" firstAttribute="centerY" secondItem="xTn-lq-At6" secondAttribute="centerY" id="wo6-7K-re8"/>
                                             <constraint firstItem="Elz-YK-w0z" firstAttribute="top" secondItem="V0e-Kz-CVR" secondAttribute="bottom" constant="16" id="wuW-aE-abR"/>
+                                            <constraint firstItem="Zbg-ao-E99" firstAttribute="centerX" secondItem="xTn-lq-At6" secondAttribute="centerX" id="xsP-43-GS3"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="V0e-Kz-CVR" secondAttribute="trailing" symbolic="YES" id="xzx-0C-gIk"/>
                                             <constraint firstItem="ZVS-ek-DQG" firstAttribute="top" secondItem="3g3-v8-Loq" secondAttribute="bottom" constant="24" id="z4n-EY-1Kb"/>
                                             <constraint firstItem="ZMi-c4-7Wt" firstAttribute="top" secondItem="ssh-aD-4rS" secondAttribute="bottom" constant="24" id="zcv-7G-buQ"/>
@@ -1103,7 +1101,7 @@
                                 <color key="backgroundColor" name="borderColor"/>
                                 <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="10"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="SPEICHERN"/>
+                                <state key="normal" title="WEITER"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="20"/>
@@ -1120,18 +1118,18 @@
                     </navigationItem>
                     <size key="freeformSize" width="414" height="1284"/>
                     <connections>
+                        <outlet property="affiliateUrlTextfield" destination="Gsn-5c-R0V" id="Jmy-Z9-tkM"/>
                         <outlet property="bottomConstraint" destination="eas-wq-ZAT" id="gXK-Em-qGV"/>
-                        <outlet property="btnCalendar" destination="Zbg-ao-E99" id="dqh-0m-CJ8"/>
+                        <outlet property="calendarButton" destination="Zbg-ao-E99" id="dqh-0m-CJ8"/>
+                        <outlet property="couponCodeTextfield" destination="PXl-6E-Jw7" id="66k-nR-GCN"/>
+                        <outlet property="couponValueTextfield" destination="ZVS-ek-DQG" id="yMz-MF-eyL"/>
+                        <outlet property="expiredDateTextfield" destination="xTn-lq-At6" id="C2R-WI-OsD"/>
                         <outlet property="imgProduct" destination="W8a-rt-2l8" id="ZoR-cp-zaa"/>
+                        <outlet property="nameTextfield" destination="Elz-YK-w0z" id="l4G-9w-bls"/>
                         <outlet property="navigationBar" destination="fuT-v5-fSm" id="Hko-Wk-Gy6"/>
                         <outlet property="nextButton" destination="82y-S8-Y4I" id="lj4-36-RyH"/>
-                        <outlet property="txtAffilateUrl" destination="Gsn-5c-R0V" id="Jmy-Z9-tkM"/>
-                        <outlet property="txtCouponCode" destination="PXl-6E-Jw7" id="66k-nR-GCN"/>
-                        <outlet property="txtCouponValue" destination="ZVS-ek-DQG" id="yMz-MF-eyL"/>
-                        <outlet property="txtDate" destination="xTn-lq-At6" id="C2R-WI-OsD"/>
-                        <outlet property="txtName" destination="Elz-YK-w0z" id="l4G-9w-bls"/>
-                        <outlet property="txtPrice" destination="DgV-WK-SJd" id="zg4-f5-U53"/>
-                        <outlet property="txtUrl" destination="c4U-rs-KFY" id="E09-C0-9FF"/>
+                        <outlet property="priceTextfield" destination="DgV-WK-SJd" id="zg4-f5-U53"/>
+                        <outlet property="urlTextfield" destination="c4U-rs-KFY" id="E09-C0-9FF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hr6-ac-beH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

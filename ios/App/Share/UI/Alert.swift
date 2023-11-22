@@ -24,7 +24,7 @@ enum Alert {
             case .addedWishSuccessful(let wishListId):
                 alertController = createWishAddedAlert(vc: parent, wishListId: wishListId)
             case .addedProductSuccessful(let productListId):
-                alertController = createWishAddedAlert(vc: parent, wishListId: productListId)
+                alertController = createProductAddedAlert(vc: parent, productListId: productListId)
             }
             parent.present(alertController, animated: true)
         }
@@ -83,6 +83,30 @@ enum Alert {
         return alert
     }
     
+    // MARK: - added product successful
+
+    private static func createProductAddedAlert(vc: UIViewController, productListId: UUID) -> UIAlertController {
+        
+        let title = "Produkt erfolgreich gespeichert"
+        let message = "Dein Produkt wurde deiner Liste hinzugefügt."
+        let alert = createAlertController(title: title, message: message)
+        let alertActionShowWish = createAlertAction(title: "Anzeigen") { _ in
+            if let url = URL(string: "\(AppConfig.appLinkHost):secure/product-lists/product-list/\(productListId)?forceRefresh=true") {
+                vc.redirectToHostApp(url: url)
+            } else {
+                vc.closeShareExtension()
+            }
+        }
+        alert.addAction(alertActionShowWish)
+        
+        let alertActionCloseShareExtension = createAlertAction(title: "Fertig", style: .cancel) { _ in
+            vc.closeShareExtension()
+        }
+        alert.addAction(alertActionCloseShareExtension)
+        
+        return alert
+    }
+    
     // MARK: - unauthorized
     
     private static func createUnauthorizedAlert(vc: UIViewController) -> UIAlertController {
@@ -118,14 +142,14 @@ enum Alert {
         alert.view.backgroundColor = .white
         alert.view.alpha = 0.5
         alert.view.layer.cornerRadius = 15
-        alert.view.tintColor = Color.get(.primary)
+        alert.view.tintColor = WishDataStore.shared.wish.isValid ? Color.get(.primary) : Color.get(.gradientPurpleEnd)
         return alert
     }
     
-    private static func createAlertAction(title: String, style: UIAlertAction.Style = .default, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+    static func createAlertAction(title: String, style: UIAlertAction.Style = .default, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
         
         let alertAction = UIAlertAction(title: title, style: style, handler: handler)
-        alertAction.setValue(Color.get(.primary), forKey: "titleTextColor")
+        alertAction.setValue(WishDataStore.shared.wish.isValid ? Color.get(.primary) : Color.get(.gradientPurpleEnd), forKey: "titleTextColor")
         return alertAction
     }
 }

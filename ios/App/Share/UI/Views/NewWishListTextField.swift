@@ -54,7 +54,7 @@ class NewWishListTextField: UITextField  {
         
         let placeholderText = "Gib einen Namen ein"
         let attributes: [NSAttributedString.Key : Any] = [
-            .foregroundColor: Color.get(.secondary),
+            .foregroundColor: WishDataStore.shared.wish.isValid ? Color.get(.secondary) : Color.get(.gradientPurpleStart),
             .font: Font.get(.Italic, family: .Roboto, size: 14.0)
         ]
         attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)

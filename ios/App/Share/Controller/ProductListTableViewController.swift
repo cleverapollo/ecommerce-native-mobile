@@ -63,13 +63,13 @@ enum ProductListsLoadingState {
         var text: String? = nil
         switch self {
         case .inProgress:
-            text = "Produkt werden geladen ..."
+            text = "Produktlisten werden geladen ..."
         case .done(let productListCount):
             if productListCount == 0 {
-                text = "Das Produkt wurde deiner Liste hinzugefügt"
+                text = "Keine Produktlisten vorhanden"
             }
         case .error:
-            text = "Das Produkt konnte nicht hinzugefügt werden"
+            text = "Fehler beim Laden deiner Produktlisten"
         case .none:
             text = nil
         }
@@ -115,7 +115,7 @@ class ProductListTableViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        FirebaseAnalytics.logScreenEvent("share_extension-Productlist")
+        FirebaseAnalytics.logScreenEvent("share_extension-productlist")
     }
     
     override func viewDidLoad() {
@@ -147,7 +147,7 @@ class ProductListTableViewController: UIViewController, UITableViewDelegate, UIT
     
     private func setupActionButton() {
         saveButton.isEnabled = ProductDataStore.shared.product.isValid
-        saveButton.applyCreatorGradient()
+        saveButton.applyPurpleGradient()
     }
     
     private func selectFirstProductList() {
@@ -211,7 +211,7 @@ class ProductListTableViewController: UIViewController, UITableViewDelegate, UIT
         // setup corners
         cell.layer.cornerRadius = Constants.cornerRadius
         cell.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        cell.newProductListButton.setImage(UIImage(resource: .add).withTintColor(Color.get(.gradientCreatorEnd)), for: .normal)
+        cell.newProductListButton.setImage(Icon.get(.add).withTintColor(Color.get(.gradientPurpleEnd)), for: .normal)
         
         return cell
     }

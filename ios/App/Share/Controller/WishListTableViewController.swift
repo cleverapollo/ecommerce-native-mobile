@@ -131,7 +131,7 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     private func setupActionButton() {
         saveButton.isEnabled = WishDataStore.shared.wish.isValid
-        saveButton.applyPrivatGradient()
+        saveButton.applyOrangeGradient()
     }
     
     private func selectFirstWishList() {

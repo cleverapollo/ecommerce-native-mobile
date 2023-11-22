@@ -15,9 +15,9 @@ struct ProductRequest: Codable {
     var imageUrl: String?
     var productListId: UUID?
     var price: Price
-    var coupon: CouponRequest?
+    var coupon: Coupon?
     
-    init(name: String, note: String, productUrl: String, imageUrl: String, affiliateUrl: String, productListId: UUID, price: Price, coupon: CouponRequest) {
+    init(name: String, note: String, productUrl: String, imageUrl: String, affiliateUrl: String, productListId: UUID, price: Price, coupon: Coupon) {
         self.name = name
         self.note = note
         self.productUrl = productUrl

@@ -40,7 +40,7 @@ import UIKit
     
     private func setupLabel() {
         
-        let text = WishDataStore.shared.wish.isValid ? "Neue Wunschliste anlegen" : "Neue Produktlist anlegen"
+        let text = WishDataStore.shared.wish.isValid ? "Neue Wunschliste anlegen" : "Neue Produktliste anlegen"
         let font = Font.get(.Medium, family: .Roboto, size: Constants.defaultFontSize)
         let labelAttributes: [NSAttributedString.Key: Any] = [
             .font: font

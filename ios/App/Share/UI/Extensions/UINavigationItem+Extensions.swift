@@ -9,7 +9,7 @@ class DesignableNavigationItem: UINavigationItem {
         }
     }
     
-    func updateView(_ image: UIImage? = UIImage(resource: ImageResource.logo)) {
+    func updateView(_ image: UIImage? = Icon.get(.logo)) {
             let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
             imageView.contentMode = .scaleAspectFit
             imageView.image = image

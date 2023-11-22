@@ -102,12 +102,12 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func setupActionButton() {
-        nextButton.applyPrivatGradient()
+        nextButton.applyOrangeGradient()
         enableNextButton(false)
     }
     
     private func setupTitleImage() {
-        navigationBar.updateView(self.segmentController.index == 0 ? UIImage(resource: .logo) : UIImage(resource: .logoCreator))
+        navigationBar.updateView(self.segmentController.index == 0 ? Icon.get(.logo) : Icon.get(.logoCreator))
     }
     
     private func enableNextButton(_ enable: Bool) {
@@ -135,7 +135,7 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                                                            selectedTextColor: .white
                                                            
         )
-        segmentController.indicatorView.applyPrivatGradient()
+        segmentController.indicatorView.applyOrangeGradient()
         ProfileResource.getProfile(completionHandler: { result in
             DispatchQueue.main.async { [weak self] in
                 switch result {
@@ -341,12 +341,12 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
             self.nextButton.layer.sublayers?.removeFirst()
             setupTitleImage()
             if (self.segmentController.index == 0) {
-                self.segmentController.indicatorView.applyPrivatGradient()
-                self.nextButton.applyPrivatGradient()
+                self.segmentController.indicatorView.applyOrangeGradient()
+                self.nextButton.applyOrangeGradient()
                 self.headerTitle.text = "Wunsch auswählen"
             } else {
-                self.segmentController.indicatorView.applyCreatorGradient()
-                self.nextButton.applyCreatorGradient()
+                self.segmentController.indicatorView.applyPurpleGradient()
+                self.nextButton.applyPurpleGradient()
                 self.headerTitle.text = "Produkt auswählen"
             }
         }
@@ -365,14 +365,14 @@ class ProductImageViewController: UIViewController, UICollectionViewDelegate, UI
                 vc?.webPageImage = selectedImage
             }
             vc?.webPageInfo = webPageInfo
-            self.present(UINavigationController(rootViewController: vc!), animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc!, animated: true)
         } else {
             let vc =  UIStoryboard.createProductViewController()
             if let selectedImage = self.selectedImage {
                 vc?.webPageImage = selectedImage
             }
             vc?.webPageInfo = webPageInfo
-            self.present(UINavigationController(rootViewController: vc!), animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc!, animated: true)
         }
     }
     

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CouponRequest: Codable {
+struct Coupon: Codable {
     
     var code: String?
     var value: String?

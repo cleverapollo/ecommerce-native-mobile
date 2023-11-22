@@ -14,9 +14,13 @@ enum Icon: String {
     case checkMark
     case unchecked
     case creatorChecked
+    case logo
+    case logoCreator
     
     static func get(_ icon: Icon) -> UIImage {
-        UIImage(named: icon.rawValue)!
+        Logger.success(icon)
+        Logger.success(icon.rawValue)
+        return UIImage(named: icon.rawValue)!
     }
     
 }

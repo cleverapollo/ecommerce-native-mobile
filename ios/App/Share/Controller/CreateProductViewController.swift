@@ -13,14 +13,14 @@ class CreateProductViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var navigationBar: DesignableNavigationItem!
     @IBOutlet weak var imgProduct: UIImageView!
-    @IBOutlet weak var txtName: TextFieldInnerPadding!
-    @IBOutlet weak var txtPrice: TextFieldInnerPadding!
-    @IBOutlet weak var txtCouponCode: TextFieldInnerPadding!
-    @IBOutlet weak var txtCouponValue: TextFieldInnerPadding!
-    @IBOutlet weak var txtDate: TextFieldInnerPadding!
-    @IBOutlet weak var txtUrl: TextFieldInnerPadding!
-    @IBOutlet weak var txtAffilateUrl: TextFieldInnerPadding!
-    @IBOutlet weak var btnCalendar: UIButton!
+    @IBOutlet weak var nameTextfield: TextFieldInnerPadding!
+    @IBOutlet weak var priceTextfield: TextFieldInnerPadding!
+    @IBOutlet weak var couponCodeTextfield: TextFieldInnerPadding!
+    @IBOutlet weak var couponValueTextfield: TextFieldInnerPadding!
+    @IBOutlet weak var expiredDateTextfield: TextFieldInnerPadding!
+    @IBOutlet weak var urlTextfield: TextFieldInnerPadding!
+    @IBOutlet weak var affiliateUrlTextfield: TextFieldInnerPadding!
+    @IBOutlet weak var calendarButton: UIButton!
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
@@ -61,16 +61,16 @@ class CreateProductViewController: UIViewController {
     }
     
     private func setupView() {
-        nextButton.applyCreatorGradient()
-        btnCalendar.setTitle(nil, for: .normal)
-        navigationBar.updateView(UIImage(resource: ImageResource.logoCreator))
-        txtPrice.delegate = self
-        txtName.delegate = self
-        txtUrl.delegate = self
-        txtPrice.delegate = self
-        txtCouponCode.delegate = self
-        txtAffilateUrl.delegate = self
-        txtCouponValue.delegate = self
+        nextButton.applyPurpleGradient()
+        calendarButton.setTitle(nil, for: .normal)
+        navigationBar.updateView(Icon.get(.logoCreator))
+        priceTextfield.delegate = self
+        nameTextfield.delegate = self
+        urlTextfield.delegate = self
+        priceTextfield.delegate = self
+        couponCodeTextfield.delegate = self
+        affiliateUrlTextfield.delegate = self
+        couponValueTextfield.delegate = self
         validateForm()
     }
     
@@ -81,17 +81,17 @@ class CreateProductViewController: UIViewController {
             displayName = imageName
         }
         displayName.truncateIfNeeded()
-        txtName.text = displayName
+        nameTextfield.text = displayName
         if let webPageImage = webPageImage {
             imgProduct.setImageFromURl(imageUrlString: webPageImage.url)
         } else {
             imgProduct.image = Image.get(.fallbackWishImage)
         }
         
-        txtPrice.text = "\(webPageInfo.price.amount)"
-        txtCouponCode.text = "\(webPageInfo.coupon?.code ?? "")"
-        txtCouponValue.text = "\(webPageInfo.coupon?.value ?? "")"
-        txtUrl.text = "\(webPageInfo.url)"
+        priceTextfield.text = "\(webPageInfo.price.amount)"
+        couponCodeTextfield.text = "\(webPageInfo.coupon?.code ?? "")"
+        couponValueTextfield.text = "\(webPageInfo.coupon?.value ?? "")"
+        urlTextfield.text = "\(webPageInfo.url)"
     }
     
     private func setupNotifications() {
@@ -119,7 +119,7 @@ class CreateProductViewController: UIViewController {
     // MARK: Form
     
     private func validateForm() {
-        nextButton.isEnabled = !txtName.isEmpty() && !txtPrice.isEmpty()
+        nextButton.isEnabled = !nameTextfield.isEmpty() && !priceTextfield.isEmpty()
     }
     
     // MARK: Select Date
@@ -130,16 +130,19 @@ class CreateProductViewController: UIViewController {
         alert.addDatePicker(mode: .date, date: Date(), minimumDate: nil, maximumDate: nil) { date in
             self.dateSelected = date
         }
-        
-        alert.addAction(UIAlertAction(title: "Übernehmen", style: .default, handler: { _ in
+        let confirmAction = Alert.createAlertAction(title: "Anzeigen") { _ in
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
             let formatterShow = DateFormatter()
             formatterShow.dateFormat = "dd.MM.yyyy"
-            self.txtDate.text = formatterShow.string(from: self.dateSelected)
+            self.expiredDateTextfield.text = formatterShow.string(from: self.dateSelected)
             self.updateExpireDate(formatter.string(from: self.dateSelected))
-        }))
-        alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: nil))
+        }
+        
+        alert.addAction(confirmAction)
+        
+        let cancelAction = Alert.createAlertAction(title: "Abbrechen", style: .cancel)
+        alert.addAction(cancelAction)
         self.present(alert, animated: true)
     }
 }
@@ -153,21 +156,21 @@ extension CreateProductViewController: UITextFieldDelegate {
         validateForm()
         let value = textField.text ?? "0"
         switch textField {
-        case txtName:
+        case nameTextfield:
             updateName(value)
-        case txtPrice:
+        case priceTextfield:
             updatePrice(value)
             break
-        case txtUrl:
+        case urlTextfield:
             updateURL(value)
             break
-        case txtAffilateUrl:
+        case affiliateUrlTextfield:
             updateAffiliateUrl(value)
             break
-        case txtCouponCode:
+        case couponCodeTextfield:
             updateCouponCode(value)
             break
-        case txtCouponValue:
+        case couponValueTextfield:
             updateCouponValue(value)
             break
         default:
@@ -175,7 +178,7 @@ extension CreateProductViewController: UITextFieldDelegate {
         }
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == txtPrice {
+        if textField == priceTextfield {
             switch string {
             case "0","1","2","3","4","5","6","7","8","9":
                 return true
@@ -200,7 +203,7 @@ extension CreateProductViewController: UITextFieldDelegate {
                 }
                 return false
             }
-        } else if textField == txtUrl || textField == txtAffilateUrl {
+        } else if textField == urlTextfield || textField == affiliateUrlTextfield {
             let newText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
             let numberOfChars = newText.count
             return numberOfChars < Constants.maxAllowedURLs
@@ -230,7 +233,7 @@ extension CreateProductViewController: UITextFieldDelegate {
     
     private func updateCouponCode(_ couponCode: String) {
         if ProductDataStore.shared.product.coupon == nil {
-            ProductDataStore.shared.product.coupon = CouponRequest(code: couponCode, value: "", expirationDate: "")
+            ProductDataStore.shared.product.coupon = Coupon(code: couponCode, value: "", expirationDate: "")
         } else {
             ProductDataStore.shared.product.coupon?.code = couponCode
         }
@@ -238,7 +241,7 @@ extension CreateProductViewController: UITextFieldDelegate {
     
     private func updateCouponValue(_ couponValue: String) {
         if ProductDataStore.shared.product.coupon == nil {
-            ProductDataStore.shared.product.coupon = CouponRequest(code: "", value: couponValue, expirationDate: "")
+            ProductDataStore.shared.product.coupon = Coupon(code: "", value: couponValue, expirationDate: "")
         } else {
             ProductDataStore.shared.product.coupon?.value = couponValue
         }
@@ -246,7 +249,7 @@ extension CreateProductViewController: UITextFieldDelegate {
     
     private func updateExpireDate(_ date: String) {
         if ProductDataStore.shared.product.coupon == nil {
-            ProductDataStore.shared.product.coupon = CouponRequest(code: "", value: "", expirationDate:  date)
+            ProductDataStore.shared.product.coupon = Coupon(code: "", value: "", expirationDate:  date)
         } else {
             ProductDataStore.shared.product.coupon?.expirationDate = date
         }

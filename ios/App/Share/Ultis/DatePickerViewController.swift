@@ -26,7 +26,7 @@ final class DatePickerViewController: UIViewController {
         datePicker.minimumDate = minimumDate
         datePicker.maximumDate = maximumDate
         datePicker.locale = Locale(identifier: "de_DE")
-        datePicker.tintColor = Color.get(.gradientCreatorEnd)
+        datePicker.tintColor = Color.get(.gradientPurpleEnd)
         if #available(iOSApplicationExtension 14.0, *) {
             datePicker.preferredDatePickerStyle = .inline
         } else {
