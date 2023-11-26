@@ -45,16 +45,15 @@ class NewWishListTextField: UITextField  {
         addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
         setupRightView()
-        setupPlaceholder()
     }
     
     // MARK: - Style
     
-    private func setupPlaceholder() {
+    func setupPlaceholder(_ color: UIColor) {
         
         let placeholderText = "Gib einen Namen ein"
         let attributes: [NSAttributedString.Key : Any] = [
-            .foregroundColor: WishDataStore.shared.wish.isValid ? Color.get(.secondary) : Color.get(.gradientPurpleStart),
+            .foregroundColor: color,
             .font: Font.get(.Italic, family: .Roboto, size: 14.0)
         ]
         attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)

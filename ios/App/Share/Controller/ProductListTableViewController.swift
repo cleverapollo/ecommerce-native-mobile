@@ -203,6 +203,9 @@ class ProductListTableViewController: UIViewController, UITableViewDelegate, UIT
             return UITableViewCell()
         }
         
+        // setup placeholder
+        cell.newProductListTextField.setupPlaceholder(Color.get(.gradientPurpleStart))
+        
         // setup action handler
         cell.newProductListTextField.onButtonClick = { ProductListName in
             self.saveNewProductList(ProductListName: ProductListName)

@@ -187,6 +187,9 @@ class WishListTableViewController: UIViewController, UITableViewDelegate, UITabl
             return UITableViewCell()
         }
         
+        // setup placeholder
+        cell.newWishListTextField.setupPlaceholder(Color.get(.secondary))
+        
         // setup action handler
         cell.newWishListTextField.onButtonClick = { wishListName in
             self.saveNewWishList(wishListName: wishListName)
