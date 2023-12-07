@@ -11,7 +11,8 @@ PODS:
   - AppsFlyerFramework (6.12.1):
     - AppsFlyerFramework/Main (= 6.12.1)
   - AppsFlyerFramework/Main (6.12.1)
-  - Capacitor (5.4.2):
+  - BetterSegmentedControl (2.0.1)
+  - Capacitor (5.5.1):
     - CapacitorCordova
   - CapacitorApp (5.0.6):
     - Capacitor
@@ -19,7 +20,7 @@ PODS:
     - Capacitor
   - CapacitorCamera (5.0.7):
     - Capacitor
-  - CapacitorCordova (5.4.2)
+  - CapacitorCordova (5.5.1)
   - CapacitorDevice (5.0.6):
     - Capacitor
   - CapacitorFilesystem (5.1.4):
@@ -206,6 +207,7 @@ PODS:
 
 DEPENDENCIES:
   - AppsflyerCapacitorPlugin (from `../../node_modules/appsflyer-capacitor-plugin`)
+  - BetterSegmentedControl (~> 2.0)
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorBrowser (from `../../node_modules/@capacitor/browser`)"
@@ -236,6 +238,7 @@ SPEC REPOS:
   trunk:
     - AppAuth
     - AppsFlyerFramework
+    - BetterSegmentedControl
     - CocoaLumberjack
     - FBAEMKit
     - FBSDKCoreKit
@@ -309,11 +312,12 @@ SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   AppsflyerCapacitorPlugin: 0094cd9f754091410f30237ab7f21b2604db12f5
   AppsFlyerFramework: e29b63fc5441400a38a31c5501c1da500b9d53d0
-  Capacitor: 8a9db42d105f55843cd8ed2a3cb54e2b78e7f102
+  BetterSegmentedControl: 09607b27861d49cbce48b7673b74f9150a3d371a
+  Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
   CapacitorApp: 024e1b1bea5f883d79f6330d309bc441c88ad04a
   CapacitorBrowser: 7a0fb6a1011abfaaf2dfedfd8248f942a8eda3d6
   CapacitorCamera: 084b0b228bba7d00587910337b1c89e93b1d32ab
-  CapacitorCordova: cfcc06b698481da655415985eeb2b8da363f8451
+  CapacitorCordova: e128cc7688c070ca0bfa439898a5f609da8dbcfe
   CapacitorDevice: 2c968f98a1ec4d22357418c1521e7ddc46c675e6
   CapacitorFilesystem: af704badfbc69f6f8623d9ed313e5490e3723dcb
   CapacitorFirebaseAnalytics: 8e42f3392e19f4331e21be373f4520412487bb69
@@ -349,6 +353,6 @@ SPEC CHECKSUMS:
   SVGKit: 9bc0f0982df559e65b96f2150ff9c15a61e453ac
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
 
-PODFILE CHECKSUM: b20fdb0105247d8d82e4121758bc0e5d37bbe51e
+PODFILE CHECKSUM: a3ed3500742f8225622bd7ef0ec77d781dc3ec51
 
 COCOAPODS: 1.13.0
